@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>framework-mobile</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.adobe.flexbuilder.project.flexbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.adobe.flexbuilder.project.aslibnature</nature>
+		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>[source path] feathers</name>
+			<type>2</type>
+			<locationURI>feathers</locationURI>
+		</link>
+		<link>
+			<name>[source path] flox</name>
+			<type>2</type>
+			<locationURI>flox</locationURI>
+		</link>
+		<link>
+			<name>[source path] graphics</name>
+			<type>2</type>
+			<locationURI>graphics</locationURI>
+		</link>
+		<link>
+			<name>[source path] gs</name>
+			<type>2</type>
+			<locationURI>gs</locationURI>
+		</link>
+		<link>
+			<name>[source path] particles</name>
+			<type>2</type>
+			<locationURI>particles</locationURI>
+		</link>
+		<link>
+			<name>[source path] starling</name>
+			<type>2</type>
+			<locationURI>starling</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>
