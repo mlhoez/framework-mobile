@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Récupération des Key Hash Android (Dev et Prod) pour Facebook SSO">
+
+    <!-- Config -->
+    <property file="build.config"/>
+
+    <!-- Test -->
+    <target name="Get Key Hash" description="Get Key Hash Description">
+    	<exec executable="/bin/sh">
+    		<arg value="get_android_key_hash.sh"/>
+    		<arg value="${DEBUG_CERT_PATH}"/>
+    		<arg value="${DEBUG_CERT_PASSWORD}"/>
+    		<arg value="${PROD_CERT_PATH}"/>
+    		<arg value="${PROD_CERT_PASSWORD}"/>
+    	</exec>
+    </target>
+
+</project>
