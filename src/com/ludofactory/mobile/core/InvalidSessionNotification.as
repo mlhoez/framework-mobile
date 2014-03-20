@@ -16,7 +16,6 @@ package com.ludofactory.mobile.core
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
-	import app.AppEntryPoint;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;

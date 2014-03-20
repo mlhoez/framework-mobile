@@ -18,7 +18,6 @@ package com.ludofactory.mobile.core.test.event
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.engine.EventPushNotification;
 	
-	import app.AppEntryPoint;
 	
 	import starling.core.Starling;
 	import starling.events.Event;

@@ -66,7 +66,13 @@ package com.ludofactory.mobile.core
 			/**
 			 * This is the prefix used by <code>StoreData</code> to build the
 			 * correct product id registered in both Google Play and iTunes
-			 * Connect. The dot is automatically added in StoreData.
+			 * Connect. The dot after the prefix is automatically added in
+			 * StoreData.
+			 * 
+			 * <p>Note that there is nothing to do in Php side, because the
+			 * offer is only linked with the number id, not the full id
+			 * registered in both Google Play and iTunes Connect.</p>
+			 * 
 			 * @see com.ludofactory.mobile.store.StoreData */		
 			public static var PRODUCT_ID_PREFIX:String;
 			
@@ -78,7 +84,9 @@ package com.ludofactory.mobile.core
 			
 			/**
 			 * The Google Cloud Messaging sender ID.
-			 * Can be found here : https://cloud.google.com/console/project
+			 * 
+			 * <p>Can be found here : https://cloud.google.com/console/project</p>
+			 * 
 			 * See : http://developer.android.com/google/gcm/gs.html */		
 			public static var GCM_SENDER_ID:String;
 			
