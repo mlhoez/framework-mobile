@@ -36,7 +36,7 @@
         <key>dataFormat</key>
         <string>sparrow</string>
         <key>textureFileName</key>
-        <filename>../../../media/assets/splash/splash.png</filename>
+        <filename>../../media/assets/splash/splash.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -127,7 +127,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../media/assets/splash/splash.xml</filename>
+                <filename>../../media/assets/splash/splash.xml</filename>
             </struct>
             <key>java</key>
             <struct type="DataFile">

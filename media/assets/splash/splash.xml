@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:f006d49dd72891e9e12907b491b1b57b:e4ba8cef7a9913da661eba3491a45aa2:f5ed5fde8d852378b774e9a243bd0845$ -->
+<TextureAtlas imagePath="splash.png">
+    <SubTexture name="orange-background" x="3" y="3" width="320" height="480"/>
+    <SubTexture name="progress-bar-background" x="37" y="487" width="30" height="17"/>
+    <SubTexture name="progress-bar-fill" x="3" y="487" width="30" height="17"/>
+    <SubTexture name="splash-logo" x="327" y="3" width="652" height="365" frameX="-12" frameY="-12" frameWidth="680" frameHeight="393"/>
+</TextureAtlas>

@@ -41,19 +41,25 @@ package com.ludofactory.mobile.core.remoting
 		private const AMF_PATH:String = "/amfphp2/";
 		
 		// url quand on n'est pas sur le réseau local
-		//private const PORT:int = 9999;
-		//private const URL:String = "http://ludomobile.ludokado.com";
+		private const DEV_PORT:int = 9999;
+		private const DEV_URL:String = "http://ludomobile.ludokado.com";
 		
 		// urls et port quand on est sur le réseau local
-		private const PORT:int = 80;
-		private const URL:String = "http://ludomobile.ludokado.dev";
-		//private const URL:String = "http://ludokado.dev"; // Ne pas utiliser
-		//private const URL:String = "http://ludokadom.mlhoez.ludofactory.dev";
-		//private const URL:String = "http://ludokado.pterrier.ludofactory.dev";
-		//private const URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
-		//private const URL:String = "http://filrouge.ludokado.com";
-		//private const URL:String = "http://semiprod.ludokado.com";
-		//private const URL:String = "http://www.ludokado.com";
+		//private const DEV_PORT:int = 80;
+		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
+		//private const DEV_URL:String = "http://ludokadom.mlhoez.ludofactory.dev";
+		//private const DEV_URL:String = "http://ludokado.pterrier.ludofactory.dev";
+		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
+		//private const DEV_URL:String = "http://semiprod.ludokado.com";
+		
+		/**
+		 * Production PORT. Automatically used when the GlobalConfig.DEBUG variable
+		 * is set to true. */		
+		private const PROD_PORT:int = 80;
+		/**
+		 * Production URL. Automatically used when the GlobalConfig.DEBUG variable
+		 * is set to true. */		
+		private const PROD_URL:String = "http://www.ludokado.com";
 		
 		private var _netConnectionManager:NetConnectionManager;
 		
@@ -63,8 +69,8 @@ package com.ludofactory.mobile.core.remoting
 				throw new Error("Erreur : Echec de l'instanciation : Utiliser Remote.getInstance() au lieu de new.");
 				
 			_netConnectionManager = new NetConnectionManager();
-			_netConnectionManager.baseGatewayUrl = URL;
-			_netConnectionManager.gatewayPortNumber = PORT;
+			_netConnectionManager.baseGatewayUrl = GlobalConfig.DEBUG ? DEV_URL : PROD_URL;
+			_netConnectionManager.gatewayPortNumber = GlobalConfig.DEBUG ? DEV_PORT : PROD_PORT;
 			_netConnectionManager.amfPath = AMF_PATH;
 			_netConnectionManager.appName = "LudoMobile";
 			_netConnectionManager.bridgeName = "LudoMobileEncryption.callAction";

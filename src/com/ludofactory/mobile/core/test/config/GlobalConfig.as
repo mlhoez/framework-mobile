@@ -12,7 +12,17 @@ package com.ludofactory.mobile.core.test.config
     public class GlobalConfig
     {
 		/**
-		 * Debug variable */		
+		 * Debug variable.
+		 * 
+		 * <strong>
+		 * <p>When set to true, no log will be shown in the console (but it will
+		 * be reported to Flow anyway.</p>
+		 * 
+		 * <p>When set to true, the PROD_PORT and PROD_URL will automatically be
+		 * used in Remote.</p>
+		 * </strong> 
+		 * 
+		 * @see com.ludofactory.mobile.core.remoting.Remote */		
 		public static const DEBUG:Boolean = true;
 		
 		/**
