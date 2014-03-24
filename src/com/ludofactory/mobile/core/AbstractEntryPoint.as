@@ -217,7 +217,7 @@ package com.ludofactory.mobile.core
 		private static var _header:Header;
 		/**
 		 * Screen navigator. */		
-		private static var _screenNavigator:AdvancedScreenNavigator;
+		protected static var _screenNavigator:AdvancedScreenNavigator;
 		/**
 		 * Screen transition. */		
 		private var _transitionManager:ScreenFadeTransitionManager;
