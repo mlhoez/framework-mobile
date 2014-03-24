@@ -358,8 +358,8 @@ package com.ludofactory.mobile.core.theme
 			infoManagerOverlay = AbstractEntryPoint.assets.getTexture("overlay-skin");
 			
 			// logos
-			gameLogoTexture     = AbstractEntryPoint.assets.getTexture("LogoGame");
-			ludokadoLogoTexture = AbstractEntryPoint.assets.getTexture("LogoLudokado");
+			gameLogoTexture     = AbstractEntryPoint.assets.getTexture("logo-game");
+			ludokadoLogoTexture = AbstractEntryPoint.assets.getTexture("logo-ludokado");
 			gameCenterTexture   = AbstractEntryPoint.assets.getTexture("game-center");
 			blackLoaderTextures = AbstractEntryPoint.assets.getTextures("MiniLoader");
 			
@@ -392,9 +392,9 @@ package com.ludofactory.mobile.core.theme
 			buttonNewsUpSkinTextures                  = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-news-up-skin"), BUTTON_AD_GRID);
 			buttonFlatGreenSkinTextures               = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-sponsor"), BUTTON_FLAT_GREEN_GRID);
 			buttonAdUpSkinTextures                    = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-ad-up-skin"), BUTTON_AD_GRID);
-			buttonTransparentWhiteUpSkinTextures      = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-transparent-up-skin"), NEW_BUTTON_SCALE9_GRID);
-			buttonTransparentBlueUpSkinTextures       = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-transparent-blue-up-skin"), NEW_BUTTON_SCALE9_GRID);
-			buttonTransparentBlueDarkerUpSkinTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-transparent-blue-darker-up-skin"), NEW_BUTTON_SCALE9_GRID);
+			buttonTransparentWhiteUpSkinTextures      = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-transparent"), BUTTON_GRID);
+			buttonTransparentBlueUpSkinTextures       = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-transparent-blue"), BUTTON_GRID);
+			buttonTransparentBlueDarkerUpSkinTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-transparent-blue-darker"), BUTTON_GRID);
 			
 			// ToggleSwitch
 			toggleSwitchBackgroundSkinTextures              = new Scale9Textures(AbstractEntryPoint.assets.getTexture("toggle-switch-background"), TOGGLE_SWITCH_BACKGROUND_GRID);
@@ -439,10 +439,10 @@ package com.ludofactory.mobile.core.theme
 			// GameTypeSelection
 			gameTypeSelectionFrontTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("game-type-selection-front-skin"), GAME_TYPE_SELECTION_POPUP_FRONT_GRID);
 			gameTypeSelectionBackgroundTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("game-type-selection-background-skin"), GAME_TYPE_SELECTION_POPUP_BACKGROUND_GRID);
-			topLeftLeavesTexture = AbstractEntryPoint.assets.getTexture("leaves-top-left");
-			bottomLeftLeavesTexture = AbstractEntryPoint.assets.getTexture("leaves-bottom-left");
-			bottomMiddleLeavesTexture = AbstractEntryPoint.assets.getTexture("leaves-bottom-middle");
-			bottomRightLeavesTexture = AbstractEntryPoint.assets.getTexture("leaves-bottom-right");
+			topLeftLeavesTexture = AbstractEntryPoint.assets.getTexture("game-type-selection-deco-top-left");
+			bottomLeftLeavesTexture = AbstractEntryPoint.assets.getTexture("game-type-selection-deco-bottom-left");
+			bottomMiddleLeavesTexture = AbstractEntryPoint.assets.getTexture("game-type-selection-deco-bottom-middle");
+			bottomRightLeavesTexture = AbstractEntryPoint.assets.getTexture("game-type-selection-deco-bottom-right");
 			leftChainTexture = AbstractEntryPoint.assets.getTexture("lock-left");
 			rightChainTexture = AbstractEntryPoint.assets.getTexture("lock-right");
 			lockClosed = AbstractEntryPoint.assets.getTexture("lock");
@@ -453,7 +453,7 @@ package com.ludofactory.mobile.core.theme
 			// AbstractNotification
 			notificationContainerBackgroundSkinTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("notification-background-skin"), NOTIFICATION_CONTAINER_GRID);
 			notificationContainerTopDecorationSkinTextures = new Scale3Textures(AbstractEntryPoint.assets.getTexture("notification-top-decoration"), NOTIFICATION_CONTAINER_TOP_DECORATION_REGION1, NOTIFICATION_CONTAINER_TOP_DECORATION_REGION2, Scale3Textures.DIRECTION_HORIZONTAL);
-			notificationContainerBottomDecorationSkinTextures = new Scale3Textures(AbstractEntryPoint.assets.getTexture("notification-bottom-decoration"), NOTIFICATION_CONTAINER_BOTTOM_DECORATION_REGION1, NOTIFICATION_CONTAINER_TOP_DECORATION_REGION2, Scale3Textures.DIRECTION_HORIZONTAL);
+			notificationContainerBottomDecorationSkinTextures = new Scale3Textures(AbstractEntryPoint.assets.getTexture("notification-bottom-decoration"), NOTIFICATION_CONTAINER_BOTTOM_DECORATION_REGION1, NOTIFICATION_CONTAINER_BOTTOM_DECORATION_REGION2, Scale3Textures.DIRECTION_HORIZONTAL);
 			
 			// Trophies (display and list)
 			trophyBackgroundSkinTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("trophy-background-skin"), TROPHY_BACKGROUND_GRID);
@@ -1303,7 +1303,6 @@ package com.ludofactory.mobile.core.theme
 //	Transparent normal, white and blue (lighter and darker)
 		
 		public static const BUTTON_EMPTY:String = "button-empty";
-		protected static const NEW_BUTTON_SCALE9_GRID:Rectangle = new Rectangle(25, 25, 18, 18);
 		
 		/**
 		 * Transparent button used for the rules in the home screen */		
@@ -1980,9 +1979,10 @@ package com.ludofactory.mobile.core.theme
 		protected var notificationContainerBottomDecorationSkinTextures:Scale3Textures;
 		protected var notificationContainerTopDecorationSkinTextures:Scale3Textures;
 		protected static const NOTIFICATION_CONTAINER_GRID:Rectangle = new Rectangle(30, 50, 4, 2);
-		protected static const NOTIFICATION_CONTAINER_TOP_DECORATION_REGION1:int = 135; // the x position westart to slice
-		protected static const NOTIFICATION_CONTAINER_BOTTOM_DECORATION_REGION1:int = 66; // the x position westart to slice
-		protected static const NOTIFICATION_CONTAINER_TOP_DECORATION_REGION2:int = 2; // the width after the x position
+		protected static var NOTIFICATION_CONTAINER_TOP_DECORATION_REGION1:int = 135; // the x position westart to slice
+		protected static var NOTIFICATION_CONTAINER_TOP_DECORATION_REGION2:int = 2; // the width after the x position
+		protected static var NOTIFICATION_CONTAINER_BOTTOM_DECORATION_REGION1:int = 66; // the x position westart to slice
+		protected static var NOTIFICATION_CONTAINER_BOTTOM_DECORATION_REGION2:int = 2; // the width after the x position
 		
 		/**
 		 * AbstractNotification

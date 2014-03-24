@@ -8,10 +8,10 @@ package com.ludofactory.mobile.core.test.engine
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.Localizer;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.home.RuleData;
 	import com.ludofactory.mobile.core.test.home.RuleItemRenderer;
@@ -109,7 +109,7 @@ package com.ludofactory.mobile.core.test.engine
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.65);
+				_logo.width = actualWidth * (GlobalConfig.isPhone ? GlobalConfig.homeScreenLogoScaleWidthPhone : GlobalConfig.homeScreenLogoScaleWidthTablet);
 				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
 				_logo.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
 				_logo.validate();

@@ -2,12 +2,12 @@ package com.ludofactory.mobile.core.test.home
 {
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
 	import com.ludofactory.mobile.core.scoring.ScoreToPointsContainer;
 	import com.ludofactory.mobile.core.scoring.ScoreToStarsContainer;
+	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.ImageLoader;
@@ -91,7 +91,7 @@ package com.ludofactory.mobile.core.test.home
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.85 : 0.75);
+				_logo.width = actualWidth * (GlobalConfig.isPhone ? GlobalConfig.homeScreenLogoScaleWidthPhone : GlobalConfig.homeScreenLogoScaleWidthTablet);
 				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
 				_logo.validate();
 				

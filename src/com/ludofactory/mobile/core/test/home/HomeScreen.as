@@ -126,9 +126,10 @@ package com.ludofactory.mobile.core.test.home
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.85 : 0.75);
+				_logo.width = actualWidth * (GlobalConfig.isPhone ? GlobalConfig.homeScreenLogoScaleWidthPhone : GlobalConfig.homeScreenLogoScaleWidthTablet);
 				_logo.validate();
-				_logo.y = ((actualHeight * 0.5) - _logo.height - scaleAndRoundToDpi(40)) << 0;
+				// header height + padding, then centered
+				_logo.y = scaleAndRoundToDpi(60) + (((actualHeight * 0.5) - scaleAndRoundToDpi(60)) - _logo.height) << 0;
 				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
 				
 				if( GlobalConfig.ios && GameCenterManager.available )

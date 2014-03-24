@@ -88,5 +88,17 @@ package com.ludofactory.mobile.core.test.config
 		/**
 		 * Current stage height (updated in Main when the orientation change). */		
 		public static var stageHeight:Number;
+		
+		/**
+		 * Scale factor used to scale the game logo at the home screen.
+		 * Because the logos have different ratio, we need to customize
+		 * these values for each game. */		
+		public static var homeScreenLogoScaleWidthPhone:Number = 0.85;
+		
+		/**
+		 * Scale factor used to scale the game logo at the home screen.
+		 * Because the logos have different ratio, we need to customize
+		 * these values for each game. */		
+		public static var homeScreenLogoScaleWidthTablet:Number = 0.75;
     }
 }
