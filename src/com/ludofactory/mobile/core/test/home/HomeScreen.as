@@ -75,7 +75,7 @@ package com.ludofactory.mobile.core.test.home
 			addChild(_logo);
 			
 			_playButton = new Button();
-			_playButton.nameList.add( (GlobalConfig.ios && GameCenterManager.available) ? Theme.BUTTON_SPECIAL_SQUARED_RIGHT : Theme.BUTTON_SPECIAL );
+			_playButton.nameList.add( (GlobalConfig.ios && GameCenterManager.available) ? Theme.BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER : Theme.BUTTON_SPECIAL_BIGGER );
 			_playButton.label = Localizer.getInstance().translate("HOME.PLAY_BUTTON_LABEL");
 			_playButton.addEventListener(Event.TRIGGERED, onPlay);
 			addChild(_playButton);

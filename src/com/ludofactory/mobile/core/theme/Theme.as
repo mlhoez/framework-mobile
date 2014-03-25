@@ -205,7 +205,8 @@ package com.ludofactory.mobile.core.theme
 			// Button
 			buttonTextFormat                      = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(42), COLOR_BROWN);
 			buttonBlueTextFormat                  = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(42), COLOR_WHITE);
-			buttonSpecialTextFormat               = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(60), COLOR_BROWN); // TODO A voir une couleur spéciale plutôt
+			buttonSpecialTextFormat               = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(42), COLOR_BROWN); // TODO A voir une couleur spéciale plutôt
+			buttonSpecialBiggerTextFormat         = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(60), COLOR_BROWN); // TODO A voir une couleur spéciale plutôt
 			buttonNewsTextFormat                  = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(28), COLOR_BROWN);
 			buttonFlatGreenTextFormat             = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_WHITE, true);
 			buttonFlatGreenDisabledTextFormat     = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_GREEN, true);
@@ -515,9 +516,11 @@ package com.ludofactory.mobile.core.theme
 			setInitializerForClass(Button, buttonInitializer);
 			setInitializerForClass(Button, buttonYellowSquaredLeftInitializer, BUTTON_YELLOW_SQUARED_LEFT);
 			setInitializerForClass(Button, buttonYellowSquaredRightInitializer, BUTTON_YELLOW_SQUARED_RIGHT);
+			setInitializerForClass(Button, buttonSpecialBiggerInitializer, BUTTON_SPECIAL_BIGGER);
 			setInitializerForClass(Button, buttonSpecialInitializer, BUTTON_SPECIAL);
 			setInitializerForClass(Button, buttonSpecialSquaredLeftInitializer, BUTTON_SPECIAL_SQUARED_LEFT);
 			setInitializerForClass(Button, buttonSpecialSquaredRightInitializer, BUTTON_SPECIAL_SQUARED_RIGHT);
+			setInitializerForClass(Button, buttonSpecialSquaredRightBiggerInitializer, BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER);
 			setInitializerForClass(Button, buttonBlueInitializer, BUTTON_BLUE);
 			setInitializerForClass(Button, buttonBlueSquaredRightInitializer, BUTTON_BLUE_SQUARED_RIGHT);
 			setInitializerForClass(Button, buttonRedInitializer, BUTTON_RED);
@@ -991,10 +994,12 @@ package com.ludofactory.mobile.core.theme
 //------------------------------------------------------------------------------------------------------------
 //	Special (different for each game)
 		
+		protected var buttonSpecialBiggerTextFormat:TextFormat;
 		protected var buttonSpecialTextFormat:TextFormat;
 		
 		/**
 		 * Special button */	
+		public static const BUTTON_SPECIAL_BIGGER:String = "button-special-bigger";
 		public static const BUTTON_SPECIAL:String = "button-special";
 		protected var buttonSpecialSkinTextures:Scale9Textures;
 		
@@ -1005,15 +1010,16 @@ package com.ludofactory.mobile.core.theme
 		
 		/**
 		 * Special button squared on the right */		
+		public static const BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER:String = "button-special-squared-right-bigger";
 		public static const BUTTON_SPECIAL_SQUARED_RIGHT:String = "button-special-squared-right";
 		protected var buttonSpecialSquaredRightUpSkinTextures:Scale9Textures;
 		
 		/**
 		 * Base button special initializer.
 		 */		
-		protected function baseButtonSpecialInitializer(button:Button):void
+		protected function baseButtonSpecialInitializer(button:Button, bigger:Boolean = false):void
 		{
-			button.defaultLabelProperties.textFormat = this.buttonSpecialTextFormat;
+			button.defaultLabelProperties.textFormat = bigger ? this.buttonSpecialBiggerTextFormat : this.buttonSpecialTextFormat;
 			
 			button.scaleWhenDown = true;
 			button.paddingTop = button.paddingBottom = 10 * this.scaleFactor;
@@ -1040,6 +1046,24 @@ package com.ludofactory.mobile.core.theme
 			button.stateToSkinFunction = skinSelector.updateValue;
 			//button.defaultLabelProperties.filters = [ new GlowFilter(0x2a5c02, 1, 12, 12, 10) ];
 			this.baseButtonSpecialInitializer(button);
+		}
+		
+		/**
+		 * Special button.
+		 */		
+		protected function buttonSpecialBiggerInitializer(button:Button):void
+		{
+			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
+			skinSelector.defaultValue = this.buttonSpecialSkinTextures;
+			skinSelector.displayObjectProperties =
+				{
+					width: 114 * this.scaleFactor,
+						height: (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor,
+						textureScale: this.scaleFactor
+				};
+			button.stateToSkinFunction = skinSelector.updateValue;
+			//button.defaultLabelProperties.filters = [ new GlowFilter(0x2a5c02, 1, 12, 12, 10) ];
+			this.baseButtonSpecialInitializer(button, true);
 		}
 		
 		/**
@@ -1074,6 +1098,22 @@ package com.ludofactory.mobile.core.theme
 				};
 			button.stateToSkinFunction = skinSelector.updateValue;
 			this.baseButtonSpecialInitializer(button);
+		}
+		/**
+		 * Special button with right side squared
+		 */		
+		protected function buttonSpecialSquaredRightBiggerInitializer(button:Button):void
+		{
+			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
+			skinSelector.defaultValue = this.buttonSpecialSquaredRightUpSkinTextures;
+			skinSelector.displayObjectProperties =
+				{
+					width: 114 * this.scaleFactor,
+						height: (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor,
+						textureScale: this.scaleFactor
+				};
+			button.stateToSkinFunction = skinSelector.updateValue;
+			this.baseButtonSpecialInitializer(button, true);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
