@@ -349,6 +349,9 @@ package com.ludofactory.mobile.core.theme
 			
 			// SummaryElement
 			summaryElementTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 46), COLOR_WHITE);
+			
+			// PauseView
+			pauseViewLabelTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(34), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER)
 		}
 		
 		protected function initializeTextures():void
@@ -2859,6 +2862,18 @@ package com.ludofactory.mobile.core.theme
 //------------------------------------------------------------------------------------------------------------
 		
 		public static var summaryElementTextFormat:TextFormat;
+		
+//------------------------------------------------------------------------------------------------------------
+//
+//
+//
+//								P A U S E  V I E W
+//
+//
+//
+//------------------------------------------------------------------------------------------------------------
+		
+		public static var pauseViewLabelTextFormat:TextFormat;
 		
 	}
 }

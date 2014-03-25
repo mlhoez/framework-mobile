@@ -74,7 +74,8 @@ package com.ludofactory.mobile.core.test.pause
 			_titleLabel.alpha = 0;
 			_titleLabel.text = Localizer.getInstance().translate("COMMON.PAUSE");
 			addChild(_titleLabel);
-			_titleLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(28), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
+			_titleLabel.textRendererProperties.textFormat = Theme.pauseViewLabelTextFormat;
+			_titleLabel.textRendererProperties.wordWrap = false;
 			
 			_resumeButton = new feathers.controls.Button();
 			_resumeButton.alpha = 0;
@@ -105,25 +106,21 @@ package com.ludofactory.mobile.core.test.pause
 			{
 				//var rect:Rectangle = AdMobAdType.getPixelSize( AdMobAdType.IAB_MRECT );
 				
-				_titleLabel.width = _darkness.width;
-				_titleLabel.validate();
-				_titleLabel.y = (_darkness.height * 0.5 - _titleLabel.height) * 0.5;
-				
-				_resumeButton.width = _exitButton.width = _darkness.width * 0.5;
+				_resumeButton.width = _exitButton.width = GlobalConfig.stageWidth * ((GlobalConfig.stageWidth > GlobalConfig.stageHeight) ? 0.5 : 0.8);
 				_resumeButton.validate();
 				_exitButton.validate();
 				
-				_resumeButton.x = (_darkness.width - _resumeButton.width) * 0.5;
-				_resumeButton.y = _darkness.height * 0.5 - _resumeButton.height - scaleAndRoundToDpi(10);
+				_resumeButton.x = _exitButton.x = (GlobalConfig.stageWidth - _resumeButton.width) * 0.5;
+				_resumeButton.y = (GlobalConfig.stageHeight * 0.5) - _resumeButton.height - scaleAndRoundToDpi(10);
+				_exitButton.y = (GlobalConfig.stageHeight * 0.5) + scaleAndRoundToDpi(10);
 				
-				_exitButton.x = (_darkness.width - _exitButton.width) * 0.5;
-				_exitButton.y = _darkness.height * 0.5 + scaleAndRoundToDpi(10);
+				_titleLabel.validate();
+				_titleLabel.x = (GlobalConfig.stageWidth - _titleLabel.width) * 0.5;
+				_titleLabel.y = _resumeButton.y - _titleLabel.height - scaleAndRoundToDpi(20);
 				
-				_fxButton.x = (_darkness.width * 0.5) - _fxButton.width;
-				_fxButton.y = _exitButton.y + _exitButton.height + scaleAndRoundToDpi(10);
-				
-				_musicButton.x = (_darkness.width * 0.5);
-				_musicButton.y = _exitButton.y + _exitButton.height + scaleAndRoundToDpi(10);
+				_fxButton.x = (GlobalConfig.stageWidth * 0.5) - _fxButton.width;
+				_musicButton.x = (GlobalConfig.stageWidth * 0.5);
+				_fxButton.y = _musicButton.y = _exitButton.y + _exitButton.height + scaleAndRoundToDpi(10);
 			}
 		}
 		
