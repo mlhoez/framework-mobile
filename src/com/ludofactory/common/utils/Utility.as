@@ -72,11 +72,34 @@ package com.ludofactory.common.utils
 			
 			for(var i:int = 0; i < howMany; i++)
 			{
-				rdm1 = Math.random() * length;
-				rdm2 = Math.random() * length;
+				rdm1 = getRandomArrayIndex(length);
+				rdm2 = getRandomArrayIndex(length);
 				val = arr[rdm1];
 				arr[rdm1] = arr[rdm2];
 				arr[rdm2] = val;    
+			}
+			val = null;
+		}
+		
+		public static function shuffleVector(vect:Object, nb:int):void
+		{
+			var length:int  = (vect as Vector.<*>).length;
+			var howMany:int = length * nb;
+			var rdm1:int    = 0;
+			var rdm2:int    = 0;
+			var val:*;
+			
+			for(var i:int = 0; i < howMany; i++)
+			{
+				rdm1 = getRandomArrayIndex(length);
+				do
+				{
+					rdm2 = getRandomArrayIndex(length);
+				}while( rdm2 == rdm1)
+				
+				val = (vect as Vector.<*>)[rdm1];
+				(vect as Vector.<*>)[rdm1] = (vect as Vector.<*>)[rdm2];
+				(vect as Vector.<*>)[rdm2] = val;    
 			}
 			val = null;
 		}
