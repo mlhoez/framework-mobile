@@ -26,6 +26,13 @@ package com.ludofactory.mobile.core.test.config
 		public static const DEBUG:Boolean = true;
 		
 		/**
+		 * Enables the demo mode, displaying the touch inputs on the screen
+		 * with the TouchMarkerManager. Is should be disabled when in production !
+		 * 
+		 * @see com.ludofactory.mobile.debug.TouchMarkerManager */		
+		public static const DEMO_MODE:Boolean = false;
+		
+		/**
 		 * Determines if we are on a phone or tablet */		
 		public static var isPhone:Boolean;
 		

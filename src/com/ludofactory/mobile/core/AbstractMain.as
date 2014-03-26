@@ -17,6 +17,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.pause.PauseManager;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.debug.TouchMarkerManager;
 	
 	import flash.desktop.NativeApplication;
 	import flash.display.Bitmap;
@@ -243,6 +244,9 @@ package com.ludofactory.mobile.core
 			
 			appl.loadTheme(bgTexture);
 			_starling.start();
+			
+			if( GlobalConfig.DEMO_MODE )
+				new TouchMarkerManager();
 		}
 		
 		/**
