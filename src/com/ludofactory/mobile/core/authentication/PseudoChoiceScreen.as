@@ -316,7 +316,7 @@ package com.ludofactory.mobile.core.authentication
 		private function onPseudoCreateFailure(error:Object = null):void
 		{
 			this.isEnabled = true;
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 		
