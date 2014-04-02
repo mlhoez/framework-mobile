@@ -40,6 +40,9 @@ package com.ludofactory.mobile.core.storage
 			
 		public function Storage(sk:SecurityKey)
 		{
+			// TODO Si la version actuelle est supériure à l'ancienne version, faire un
+			// reset du storage pour récupérer les bonnes valeurs ?
+			
 			registerClassAlias("DictionaryClass", Dictionary);
 			registerClassAlias("ScoreToPointsDataClass", ScoreToPointsData);
 			registerClassAlias("ScoreToStarsDataClass", ScoreToStarsData);
