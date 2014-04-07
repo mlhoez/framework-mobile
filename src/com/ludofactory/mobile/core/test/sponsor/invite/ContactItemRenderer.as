@@ -351,7 +351,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 		{
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
-				Flox.logEvent("Nombre d'envoi de " + (_data.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Total:"Total" });
+				Flox.logEvent("Parrainage par " + (_data.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Total:"Total" });
 				
 				_isInviting = true;
 				touchable = false;
@@ -390,7 +390,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			{
 				case 0: // error
 				{
-					Flox.logEvent("Nombre d'envoi de " + (_data.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Etat:"Echec" });
+					Flox.logEvent("Parrainage par " + (_data.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Echec" });
 					InfoManager.showTimed(result.txt, 1.5, InfoContent.ICON_CROSS);
 					onParrainageFailure();
 					break;
@@ -403,7 +403,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 					{
 						case 0:
 						{
-							Flox.logEvent("Nombre d'envoi de " + (_data.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Etat:"Echec" });
+							Flox.logEvent("Parrainage par " + (_data.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Echec" });
 							
 							_isInvited = true;
 							touchable = false;
@@ -417,7 +417,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 						}
 						case 1:
 						{
-							Flox.logEvent("Nombre d'envoi de " + (_data.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Etat:"Succes" });
+							Flox.logEvent("Parrainage par " + (_data.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Succes" });
 							
 							_isInvited = true;
 							touchable = false;
@@ -447,7 +447,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 		 */		
 		private function onParrainageFailure(error:Object = null):void
 		{
-			Flox.logEvent("Nombre d'envoi de " + (_data.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Etat:"Echec" });
+			Flox.logEvent("Parrainage par " + (_data.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Echec" });
 			
 			_isInviting = false;
 			touchable = true;

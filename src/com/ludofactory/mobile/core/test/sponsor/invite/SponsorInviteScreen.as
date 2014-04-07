@@ -500,7 +500,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 					Flox.logInfo("Envoi d'un {0} de parrainage (via le bouton inviter tous) à <strong>{1}</strong> personnes", (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), contactsToInvite.length);
 					
 					for(var k:int = 0; k < contactsToInvite.length; k++)
-						Flox.logEvent("Nombre d'envoi de " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Total:"Total" });
+						Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Total:"Total" });
 					
 					TweenMax.to(_inviteAllButton, 0.75, { scaleX:0, scaleY:0, autoAlpha:0, ease:Bounce.easeOut });
 					TweenMax.to(_loader, 0.75, { delay:0.5, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, autoAlpha:1, ease:Bounce.easeOut });
@@ -542,7 +542,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			{
 				case 0:
 				{
-					Flox.logEvent("Nombre d'envoi de " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Etat:"Echec" });
+					Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Echec" });
 					InfoManager.showTimed(result.txt, 1.5, InfoContent.ICON_CROSS);
 					
 					for(i = 0; i < len; i++)
@@ -601,7 +601,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 		 */		
 		private function onParrainageFailure(error:Object = null):void
 		{
-			Flox.logEvent("Nombre d'envoi de " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Etat:"Echec" });
+			Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Echec" });
 			TweenMax.to(_inviteAllButton, 0.75, { delay:0.5, scaleX:1, scaleY:1, autoAlpha:1, ease:Bounce.easeOut });
 			TweenMax.to(_loader, 0.75, { scaleX:0, scaleY:0, autoAlpha:0, ease:Bounce.easeOut });
 		}
@@ -727,7 +727,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			{
 				InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
 				Flox.logInfo("Envoi d'un {0} de parrainage (via la popup) à <strong>{1}</strong>", (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), _singleInviteMailInput.text);
-				Flox.logEvent("Nombre d'envoi de " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Total:"Total" });
+				Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Total:"Total" });
 				_singleInviteNameInput.clearFocus();
 				_singleInviteMailInput.clearFocus();
 				Remote.getInstance().parrainer(advancedOwner.screenData.sponsorType, [ { identifiant:_singleInviteMailInput.text, filleul:_singleInviteNameInput.text } ], onSingleParrainageSuccess, onSingleParrainageFailure, onSingleParrainageFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
@@ -759,7 +759,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			{
 				case 0: // error
 				{
-					Flox.logEvent("Nombre d'envoi de " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Etat:"Echec" });
+					Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Echec" });
 					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 					_singleInviteMailInput.setFocus();
 					break;
@@ -778,7 +778,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 						{
 							_singleInviteNameInput.text = "";
 							_singleInviteMailInput.text = "";
-							Flox.logEvent("Nombre d'envoi de " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Etat:"Succes" });
+							Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Succes" });
 							InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME);
 							break;
 						}
@@ -794,7 +794,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 					
 				default:
 				{
-					Flox.logEvent("Nombre d'envoi de " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Etat:"Echec" });
+					Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Echec" });
 					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 					break;
 				}
@@ -807,7 +807,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 		 */		
 		private function onSingleParrainageFailure(error:Object = null):void
 		{
-			Flox.logEvent("Nombre d'envoi de " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email") + " de parrainage", { Etat:"Echec" });
+			Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Echec" });
 			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
