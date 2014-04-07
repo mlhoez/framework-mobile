@@ -272,7 +272,8 @@ package com.ludofactory.mobile.core.purchases
 		{
 			log("[Store] Item purchased : " + itemId);
 			
-			Flox.logEvent("Achats du pack [" + itemId+ "]", {Etat:"Valide", Total:"Total"});
+			Flox.logEvent("Achats du pack [" + itemId+ "]", { Etat:"Valide" } );
+			Flox.logWarning("Achat validé pour le pack " + itemId + " offrant " + numCreditsBought + " crédits.");
 			
 			_currentProductData = null;
 			_currentRequest = null;
@@ -322,7 +323,7 @@ package com.ludofactory.mobile.core.purchases
 		{
 			log("[Store] Item purchase cancelled : " + itemId);
 			
-			Flox.logEvent("Achats du pack [" + itemId+ "]", {Etat:"Annule", Total:"Total"});
+			Flox.logEvent("Achats du pack [" + itemId+ "]", { Etat:"Annule" });
 			
 			_currentProductData = null;
 			_currentRequest = null;
@@ -373,7 +374,7 @@ package com.ludofactory.mobile.core.purchases
 		{
 			log("[Store] Item not purchased : " + itemId);
 			
-			Flox.logEvent("Achats du pack [" + itemId+ "]", {Etat:"Echec", Total:"Total"});
+			Flox.logEvent("Achats du pack [" + itemId+ "]", { Etat:"Echec" });
 			
 			_currentProductData = null;
 			_currentRequest = null;
