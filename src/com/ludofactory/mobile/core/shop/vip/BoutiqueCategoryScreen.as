@@ -1,5 +1,5 @@
 /*
-LudoFactory
+Copyright © 2006-2014 Ludo Factory
 Framework mobile
 Author  : Maxime Lhoez
 Created : 22 août 2013
@@ -248,7 +248,7 @@ package com.ludofactory.mobile.core.shop.vip
 		
 		/**
 		 * If the shop is not available, we need to redirect the user to
-		 * the onine shop of Ludokado / LudoFactory.
+		 * the onine shop of Ludokado / Copyright © 2006-2014 Ludo Factory.
 		 */		
 		private function onGoOnlineShop(event:starling.events.Event):void
 		{

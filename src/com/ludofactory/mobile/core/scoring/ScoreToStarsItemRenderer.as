@@ -1,5 +1,5 @@
 /*
-LudoFactory
+Copyright © 2006-2014 Ludo Factory
 Framework mobile
 Author  : Maxime Lhoez
 Created : 26 juil. 2013
