@@ -31,7 +31,7 @@ package com.ludofactory.mobile.core.scoring
 		 */		
 		public function convertScore(score:int, price:String, type:String):int
 		{
-			return type == GameSession.TYPE_FREE ? convertFreeGameScore(score, price) : convertTournamentGameScore(score, price);
+			return type == GameSession.TYPE_CLASSIC ? convertFreeGameScore(score, price) : convertTournamentGameScore(score, price);
 		}
 		
 		private function convertFreeGameScore(score:int, price:String):int

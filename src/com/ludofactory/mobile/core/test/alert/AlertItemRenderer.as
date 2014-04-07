@@ -206,7 +206,7 @@ package com.ludofactory.mobile.core.test.alert
 								
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-game-session-simple-icon");
 								
-								_message.text = formatString(Localizer.getInstance().translate( GameSession(_data).gameType == GameSession.TYPE_FREE ? ("ALERT.GAME_SESSION_MESSAGE_FREE_" + (GameSession(_data).numStarsOrPointsEarned > 1 ? "PLURAL" : "SINGULAR")) : ("ALERT.GAME_SESSION_MESSAGE_TOURNAMENT_" + (GameSession(_data).numStarsOrPointsEarned > 1 ? "PLURAL" : "SINGULAR"))),
+								_message.text = formatString(Localizer.getInstance().translate( GameSession(_data).gameType == GameSession.TYPE_CLASSIC ? ("ALERT.GAME_SESSION_MESSAGE_FREE_" + (GameSession(_data).numStarsOrPointsEarned > 1 ? "PLURAL" : "SINGULAR")) : ("ALERT.GAME_SESSION_MESSAGE_TOURNAMENT_" + (GameSession(_data).numStarsOrPointsEarned > 1 ? "PLURAL" : "SINGULAR"))),
 									GameSession(_data).numStarsOrPointsEarned);
 								
 								break;

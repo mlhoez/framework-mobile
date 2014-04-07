@@ -268,7 +268,7 @@ package com.ludofactory.mobile.core.test.engine
 		private function onContinue(event:Event = null):void
 		{
 			TweenMax.killAll();
-			advancedOwner.showScreen( this.advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? ScreenIds.FREE_GAME_END_SCREEN:ScreenIds.TOURNAMENT_GAME_END_SCREEN) );
+			advancedOwner.showScreen( this.advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? ScreenIds.FREE_GAME_END_SCREEN:ScreenIds.TOURNAMENT_GAME_END_SCREEN) );
 		}
 		
 		private function animate():void

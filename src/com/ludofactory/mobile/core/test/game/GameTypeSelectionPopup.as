@@ -319,7 +319,7 @@ package com.ludofactory.mobile.core.test.game
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
-				AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_FREE;
+				AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_CLASSIC;
 				AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 			}
 			else
@@ -333,7 +333,7 @@ package com.ludofactory.mobile.core.test.game
 				else
 				{
 					AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
-					AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_FREE;
+					AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_CLASSIC;
 					AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 				}
 				

@@ -124,7 +124,7 @@ package com.ludofactory.mobile.core.test.game
 		 */		
 		private function onUpdateData(event:Event = null):void
 		{
-			_isEnabled = MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty( AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) ? true:false;
+			_isEnabled = MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty( AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) ? true:false;
 			
 			HeartBeat.unregisterFunction(update);
 			
@@ -136,16 +136,16 @@ package com.ludofactory.mobile.core.test.game
 			
 			if( _isEnabled )
 			{
-				_label.text = formatString( Localizer.getInstance().translate( Storage.getInstance().getProperty( _gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE) > 1 ? "GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_PLURAL":"GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_SINGULAR"),
-					Storage.getInstance().getProperty( _gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
+				_label.text = formatString( Localizer.getInstance().translate( Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE) > 1 ? "GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_PLURAL":"GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_SINGULAR"),
+					Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
 				_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), 0x0d2701);
 			}
 			else
 			{
 				if( MemberManager.getInstance().getNumFreeGameSessions() != 0 || !MemberManager.getInstance().isLoggedIn() )
 				{
-					_label.text = formatString( Localizer.getInstance().translate( Storage.getInstance().getProperty( _gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE) > 1 ? "GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_PLURAL":"GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_SINGULAR"),
-						Storage.getInstance().getProperty( _gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
+					_label.text = formatString( Localizer.getInstance().translate( Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE) > 1 ? "GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_PLURAL":"GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_SINGULAR"),
+						Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
 					_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), 0x2d2d2d);
 				}
 				else

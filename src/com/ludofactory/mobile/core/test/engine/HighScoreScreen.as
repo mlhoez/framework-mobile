@@ -243,7 +243,7 @@ package com.ludofactory.mobile.core.test.engine
 			}
 			else
 			{
-				advancedOwner.showScreen( advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? ScreenIds.FREE_GAME_END_SCREEN:ScreenIds.TOURNAMENT_GAME_END_SCREEN) );
+				advancedOwner.showScreen( advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? ScreenIds.FREE_GAME_END_SCREEN:ScreenIds.TOURNAMENT_GAME_END_SCREEN) );
 			}
 		}
 		
