@@ -152,7 +152,7 @@ package com.ludofactory.mobile.core.authentication
 				// track the log in
 				if( Analytics.isSupported() && AbstractEntryPoint.tracker )
 					AbstractEntryPoint.tracker.buildEvent("Connexions", "-").withLabel("Compte (" + memberId + ")").track();
-				log("Connexion du joueur " + memberId);
+				log("<strong>Connexion du joueur " + memberId + "</strong>");
 			}
 			
 			// update the values of the footer
@@ -213,7 +213,7 @@ package com.ludofactory.mobile.core.authentication
 			// track the log off
 			if( Analytics.isSupported() && AbstractEntryPoint.tracker )
 				AbstractEntryPoint.tracker.buildEvent("Déconnexions", "-").withLabel("Compte prédécent (" + _member.id + ")").track();
-			log("Joueur (" + _member.id + ") déconnecté de son compte.");
+			log("<strong>Déconnexion du joueur (" + _member.id + ")</strong>");
 			
 			// before the user log off, we save the state of the tournament and
 			// we set the the animation pending to false for the current user

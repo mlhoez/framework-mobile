@@ -386,9 +386,7 @@ package com.ludofactory.mobile.core
 			
 			GlobalConfig.isPhone = DeviceCapabilities.isPhone( Starling.current.nativeStage );
 			
-			Flox.logInfo("Type d'appareil : <strong>{0}</strong>", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"));
-			Flox.logInfo("Configuration appareil : <strong>{0}</strong>", JSON.stringify(GlobalConfig.userHardwareData));
-			Flox.logInfo("Système d'exploitation : <strong>{0}</strong>", (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
+			Flox.logInfo("Type d'appareil : <strong>{0}</strong> sur {1}", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
 			
 			_alertData = new AlertData();
 			_alertData.addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onPushUpdate);

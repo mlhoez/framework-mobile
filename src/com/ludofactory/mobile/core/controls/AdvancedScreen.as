@@ -33,7 +33,7 @@ package com.ludofactory.mobile.core.controls
 				AbstractEntryPoint.tracker.buildView(screenID).track();
 			
 			// log the navigation in Flox
-			Flox.logInfo("\t&rarr; Affichage de l'écran <strong>{0}</strong>", screenID);
+			Flox.logInfo("\t<strong>&rarr; " + screenID + "</strong>");
 			
 			this.backButtonHandler = onBack;
 		}
