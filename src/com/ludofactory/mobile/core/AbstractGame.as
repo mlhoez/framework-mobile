@@ -135,7 +135,7 @@ package com.ludofactory.mobile.core
 			// if the user can really play, we now initialize a game session which will be saved until the
 			// end of the game and we decrement the associated stake (whether free game sessions, points or credits).
 			log("Démarrage d'une partie en mode <strong>" + advancedOwner.screenData.gameType + ", mise : " + advancedOwner.screenData.gamePrice + "</strong>");
-			Flox.logEvent("Parties", { "1. Nombre total de parties":"Total", Mise:advancedOwner.screenData.gamePrice, Mode:(advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? "Classique":"Tournoi") });
+			Flox.logEvent("Parties", { "1. Nombre total de parties":"Total", "2. Mode":(advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? "Classique":"Tournoi"), "3. Mise":advancedOwner.screenData.gamePrice });
 			
 			// create banners in order to display them faster when the game is paused
 			AdManager.createiAdBanner(IAdBannerAlignment.BOTTOM);
@@ -290,7 +290,7 @@ package com.ludofactory.mobile.core
 			// to override
 			
 			InfoManager.show(Localizer.getInstance().translate("GAME.VALIDATION"));
-			Flox.logEvent("Parties", { Statut:( AirNetworkInfo.networkInfo.isConnected() ? "Connecte" : "Deconnecte"), Etat:(event ? "Abandonnee" : "Terminee") });
+			Flox.logEvent("Parties", { "4. Etat de la partie":(event ? "Abandonnee" : "Terminee"), "5. Connectivité en fin de partie":( AirNetworkInfo.networkInfo.isConnected() ? "Connecte" : "Deconnecte") });
 			
 			// update tutorial state
 			if( MemberManager.getInstance().getDisplayTutorial() == true )
