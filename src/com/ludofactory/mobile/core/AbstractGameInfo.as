@@ -49,6 +49,17 @@ package com.ludofactory.mobile.core
 			public static var FLOX_KEY:String;
 			
 			/**
+			 * The Flox debug id.
+			 * 
+			 * @see http://www.flox.cc */		
+			public static var FLOX_DEBUG_ID:String;
+			/**
+			 * The Flox debug key.
+			 * 
+			 * @see http://www.flox.cc */		
+			public static var FLOX_DEBUG_KEY:String;
+			
+			/**
 			 * The Google Analytics tracker id. */		
 			public static var GOOGLE_ANALYTICS_TRACKER:String;
 			

@@ -105,8 +105,7 @@ package com.ludofactory.mobile.core
 			// if the user can really play, we know initialize a game session which will
 			// be saved until the end of the game and we decrement the associated values
 			// (chather free game sessions, points or credits).
-			log("[AbstractGame] Game started, type is : " + this.advancedOwner.screenData.gameType + " and price is : " + this.advancedOwner.screenData.gamePrice);
-			Flox.logWarning("Démarrage d'une partie de jeu <strong>[" + this.advancedOwner.screenData.gameType + " &rarr; " + advancedOwner.screenData.gamePrice + "]</strong>");
+			log("Démarrage d'une partie en mode <strong>[" + this.advancedOwner.screenData.gameType + ", mise : " + advancedOwner.screenData.gamePrice + "</strong>");
 			Flox.logEvent("Parties classiques vs. parties en tournoi", {Etat:(this.advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? "Classique":"Tournoi")});
 			Flox.logEvent("Parties gratuites vs. a credit vs. a points", {Etat:this.advancedOwner.screenData.gamePrice});
 			

@@ -6,6 +6,7 @@ Created : 9 août 2013
 */
 package com.ludofactory.mobile.core.test.home.summary
 {
+	import com.gamua.flox.Flox;
 	import com.greensock.TweenLite;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
@@ -249,8 +250,6 @@ package com.ludofactory.mobile.core.test.home.summary
 		 */		
 		public function animateChange(newValue:int):void
 		{
-			log("[SummaryElement] Animate change, value is " + newValue);
-			
 			//(_animationLabel.textRendererProperties.textFormat as TextFormat).color = newValue < 0 ? 0xB00909 : 0x57C40E;
 			
 			_oldTweenValue = int(_label.text.split(" ").join(""));

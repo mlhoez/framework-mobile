@@ -188,7 +188,7 @@ package com.ludofactory.mobile.core
 			
 			setGameInfo();
 			
-			Flox.init(AbstractGameInfo.FLOX_ID, AbstractGameInfo.FLOX_KEY, GlobalConfig.DEBUG ? ("debug_" + AbstractGameInfo.GAME_VERSION) : AbstractGameInfo.GAME_VERSION);
+			Flox.init(GlobalConfig.DEBUG ? AbstractGameInfo.FLOX_DEBUG_ID : AbstractGameInfo.FLOX_ID, GlobalConfig.DEBUG ? AbstractGameInfo.FLOX_DEBUG_KEY : AbstractGameInfo.FLOX_KEY, AbstractGameInfo.GAME_VERSION);
 			Flox.traceLogs = false;
 			Flox.logInfo("Mode debug : " + GlobalConfig.DEBUG);
 			
