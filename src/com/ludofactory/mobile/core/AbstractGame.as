@@ -10,9 +10,11 @@ package com.ludofactory.mobile.core
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.utils.Utility;
 	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
+	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -22,24 +24,45 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.test.achievements.GameCenterManager;
 	import com.ludofactory.mobile.core.test.achievements.TrophyManager;
 	import com.ludofactory.mobile.core.test.ads.AdManager;
+	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.test.pause.PauseManager;
 	import com.ludofactory.mobile.core.test.push.GameSession;
 	import com.ludofactory.mobile.core.test.push.PushType;
+	import com.ludofactory.mobile.core.theme.Theme;
 	import com.milkmangames.nativeextensions.ios.IAdBannerAlignment;
 	
 	import flash.display.StageAspectRatio;
 	import flash.events.Event;
+	import flash.filesystem.File;
+	
+	import feathers.controls.Button;
 	
 	import starling.core.Starling;
+	import starling.display.Image;
+	import starling.display.MovieClip;
 	import starling.events.Event;
 	
 	/**
 	 * AbstractGame
 	 */	
-	public class AbstractGame extends AdvancedScreen
+	public class AbstractGame extends AdvancedScreen implements IGame
 	{
 		/**
 		 * The game session. */		
 		private var _gameSession:GameSession;
+		
+		/**
+		 * Loader */		
+		private var _loader:MovieClip;
+		
+		/**
+		 * The transparent black overlay. */		
+		protected var _playOverlay:Image;
+		/**
+		 * The play button displayed at the begining of a game session. */		
+		protected var _playButton:Button;
+		
+		private var _nextScreenId:String;
 		
 		/**
 		 * @param isLandscape
@@ -57,34 +80,38 @@ package com.ludofactory.mobile.core
 		{
 			super.initialize();
 			
-			Flox.logEvent("Parties jouees vs. parties abandonnees", {Total:"Total"});
-			
-			AdManager.createiAdBanner(IAdBannerAlignment.BOTTOM);
-			AdManager.crateAdMobBanner();
-			
-			// We need to check here if the user can really play, this case can can happen if
-			// the user played while logged out, and at the end of the game, he chooses to play
-			// again and then logged in but the account didn't have enought free game sessions /
-			// points or credits.
-			switch( this.advancedOwner.screenData.gamePrice )
+			// We need to check first if the user can really play, this case can can happen if the user played
+			// while being logged out and at the end of the game, he chooses to play again and then logged in
+			// but the account didn't have enought free game sessions points or credits.
+			switch( advancedOwner.screenData.gamePrice )
 			{
 				case GameSession.PRICE_FREE:
 				{
-					if( MemberManager.getInstance().getNumFreeGameSessions() < Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) )
+					if( MemberManager.getInstance().getNumFreeGameSessions() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) )
 					{
-						this.advancedOwner.screenData.purgeData();
-						this.advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
+						advancedOwner.screenData.purgeData();
+						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
 						return;
+					}
+					else
+					{
+						// he can play with free game sessions
+						MemberManager.getInstance().setNumFreeGameSessions( MemberManager.getInstance().getNumFreeGameSessions() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) );
 					}
 					break;
 				}
 				case GameSession.PRICE_CREDIT:
 				{
-					if( MemberManager.getInstance().getCredits() < Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) )
+					if( MemberManager.getInstance().getCredits() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) )
 					{
-						this.advancedOwner.screenData.purgeData();
-						this.advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
+						advancedOwner.screenData.purgeData();
+						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
 						return;
+					}
+					else
+					{
+						// he can play with credits
+						MemberManager.getInstance().setCredits( MemberManager.getInstance().getCredits() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
 					}
 					break;
 				}
@@ -92,34 +119,33 @@ package com.ludofactory.mobile.core
 				{
 					if( MemberManager.getInstance().getPoints() < Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) )
 					{
-						this.advancedOwner.screenData.purgeData();
-						this.advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
+						advancedOwner.screenData.purgeData();
+						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
 						return;
+					}
+					else
+					{
+						// he can play with points
+						MemberManager.getInstance().setPoints( MemberManager.getInstance().getPoints() - Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) );
 					}
 					break;
 				}
 			}
 			
+			// if the user can really play, we now initialize a game session which will be saved until the
+			// end of the game and we decrement the associated stake (whether free game sessions, points or credits).
+			log("Démarrage d'une partie en mode <strong>" + advancedOwner.screenData.gameType + ", mise : " + advancedOwner.screenData.gamePrice + "</strong>");
+			Flox.logEvent("Parties", { "1. Nombre total de parties":"Total", Mise:advancedOwner.screenData.gamePrice, Mode:(advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? "Classique":"Tournoi") });
+			
+			// create banners in order to display them faster when the game is paused
+			AdManager.createiAdBanner(IAdBannerAlignment.BOTTOM);
+			AdManager.crateAdMobBanner();
+			
 			advancedOwner.screenData.displayPopupOnHome = false;
 			
-			// if the user can really play, we know initialize a game session which will
-			// be saved until the end of the game and we decrement the associated values
-			// (chather free game sessions, points or credits).
-			log("Démarrage d'une partie en mode <strong>[" + this.advancedOwner.screenData.gameType + ", mise : " + advancedOwner.screenData.gamePrice + "</strong>");
-			Flox.logEvent("Parties classiques vs. parties en tournoi", {Etat:(this.advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? "Classique":"Tournoi")});
-			Flox.logEvent("Parties gratuites vs. a credit vs. a points", {Etat:this.advancedOwner.screenData.gamePrice});
-			
-			if( advancedOwner.screenData.gameType == GameSession.TYPE_FREE )
-			{
-				Flox.logEvent("Nombre de parties en mode classique", {Type:"Classique", Mise:advancedOwner.screenData.gamePrice});
-			}
-			else
-			{
-				Flox.logEvent("Nombre de parties en mode tournoi", {Type:"Tournoi", Mise:advancedOwner.screenData.gamePrice});
-			}
-			
+			// disable the push manager while playing
 			AbstractEntryPoint.pushManager.isEnabled = false;
-			_gameSession = new GameSession(PushType.GAME_SESSION, this.advancedOwner.screenData.gameType, this.advancedOwner.screenData.gamePrice );
+			_gameSession = new GameSession(PushType.GAME_SESSION, advancedOwner.screenData.gameType, advancedOwner.screenData.gamePrice );
 			
 			TrophyManager.getInstance().currentGameSession = _gameSession;
 			
@@ -131,25 +157,6 @@ package com.ludofactory.mobile.core
 			{
 				MemberManager.getInstance().getAnonymousGameSessions().push( _gameSession );
 				MemberManager.getInstance().setAnonymousGameSessions( MemberManager.getInstance().getAnonymousGameSessions() );
-			}
-			
-			switch(this.advancedOwner.screenData.gamePrice)
-			{
-				case GameSession.PRICE_FREE:
-				{
-					MemberManager.getInstance().setNumFreeGameSessions( MemberManager.getInstance().getNumFreeGameSessions() - Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) );
-					break;
-				}
-				case GameSession.PRICE_CREDIT:
-				{
-					MemberManager.getInstance().setCredits( MemberManager.getInstance().getCredits() - Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
-					break;
-				}
-				case GameSession.PRICE_POINT:
-				{
-					MemberManager.getInstance().setPoints( MemberManager.getInstance().getPoints() - Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) );
-					break;
-				}
 			}
 			
 			if( _isLandscape )
@@ -174,7 +181,7 @@ package com.ludofactory.mobile.core
 		 * the game. Depending on which type of device we are we will load a specific
 		 * size of the game assets so that it fits any device.
 		 * 
-		 * <p>Whe we initialize the game, we need to store the current GameSession
+		 * <p>When we initialize the game, we need to store the current GameSession
 		 * so that we can push it at the end of the game if possible and if not, later
 		 * in the PushManager. Thus, while the user plays, we disable the PushManager
 		 * so that no information is pushed while he is playing.</p>
@@ -185,9 +192,111 @@ package com.ludofactory.mobile.core
 		 * @see com.ludofactory.mobile.push.PushManager
 		 * @see com.ludofactory.mobile.push.GameSession
 		 */		
-		protected function initializeGame():void
+		private function initializeGame():void
+		{
+			// create the loader
+			_loader = new MovieClip( AbstractEntryPoint.assets.getTextures("Loader") );
+			_loader.x = (GlobalConfig.stageWidth - _loader.width) * 0.5;
+			_loader.y = (GlobalConfig.stageHeight - _loader.height) * 0.5;
+			Starling.juggler.add(_loader);
+			addChild(_loader);
+			
+			var basePath:String = File.applicationDirectory.resolvePath( GlobalConfig.isPhone ? "assets/game/sd/" : "assets/game/hd/").url;
+			AbstractEntryPoint.assets.enqueue( basePath + "/game.png" );
+			AbstractEntryPoint.assets.enqueue( basePath + "/game.xml" );
+			AbstractEntryPoint.assets.loadQueue( function onLoading(ratio:Number):void{ if(ratio == 1) initializeContent(); });
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		public function initializeSounds():void
+		{
+			// to override in GameScreen
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		public function initializeContent():void
+		{
+			// initialize sounds
+			initializeSounds();
+			
+			Starling.juggler.remove(_loader);
+			_loader.removeFromParent(true);
+			_loader = null;
+			
+			// create the overlay and play button
+			_playOverlay = new Image(AbstractEntryPoint.assets.getTexture("overlay-skin"));
+			_playOverlay.width = GlobalConfig.stageWidth;
+			_playOverlay.height = GlobalConfig.stageHeight;
+			addChild(_playOverlay);
+			
+			_playButton = new feathers.controls.Button();
+			_playButton.nameList.add( Theme.BUTTON_SPECIAL_BIGGER );
+			_playButton.label = Localizer.getInstance().translate("GAME.START_BUTTON_LABEL");
+			_playButton.addEventListener(starling.events.Event.TRIGGERED, onPlay);
+			addChild(_playButton);
+			_playButton.height = scaleAndRoundToDpi(118);
+			_playButton.validate();
+			_playButton.width += scaleAndRoundToDpi(60);
+			_playButton.x = (GlobalConfig.stageWidth - _playButton.width) * 0.5;
+			_playButton.y = (GlobalConfig.stageHeight - _playButton.height) * 0.5;
+			
+			// enable the pause view and listeners
+			PauseManager.isPlaying = true;
+			PauseManager.dispatcher.addEventListener(LudoEventType.EXIT, gameOver);
+			PauseManager.dispatcher.addEventListener(LudoEventType.RESUME, resume);
+		}
+		
+		
+		/**
+		 * The user touched the play button.
+		 */		
+		protected function onPlay(event:starling.events.Event):void
+		{
+			_playOverlay.removeFromParent(true);
+			_playOverlay = null;
+			
+			_playButton.removeEventListener(starling.events.Event.TRIGGERED, onPlay);
+			_playButton.removeFromParent(true);
+			_playButton = null;
+			
+			startLevel();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		public function startLevel():void
 		{
 			// to override
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		public function resume(event:starling.events.Event):void
+		{
+			// to override
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		public function gameOver(event:starling.events.Event = null):void
+		{
+			// to override
+			
+			InfoManager.show(Localizer.getInstance().translate("GAME.VALIDATION"));
+			Flox.logEvent("Parties", { Statut:( AirNetworkInfo.networkInfo.isConnected() ? "Connecte" : "Deconnecte"), Etat:(event ? "Abandonnee" : "Terminee") });
+			
+			// update tutorial state
+			if( MemberManager.getInstance().getDisplayTutorial() == true )
+				MemberManager.getInstance().setDisplayTutorial(false);
+			
+			PauseManager.isPlaying = false;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -245,13 +354,11 @@ package com.ludofactory.mobile.core
 			{
 				if( AirNetworkInfo.networkInfo.isConnected() )
 				{
-					Flox.logEvent("Ratio de parties jouees connecte / déconnecte", {Etat:"Connecte"});
 					_gameSession.connected = true;
 					Remote.getInstance().pushGame(_gameSession, onGamePushSuccess, onGamePushFailure, onGamePushFailure, 1);
 				}
 				else
 				{
-					Flox.logEvent("Ratio de parties jouees connecte / déconnecte", {Etat:"Déconnecte"});
 					onGamePushFailure();
 				}
 			}
@@ -398,31 +505,29 @@ package com.ludofactory.mobile.core
 		}
 		
 		/**
-		 * The game session could not be validated or there is no connection.
+		 * The game session could not be validated or there was no connection when we
+		 * tried to push it to our server.
 		 * 
-		 * <p>In this case wee need to save this game session so that it can
-		 * be pushed later.</p>
+		 * <p>In this case wee need to save this game session so that it can be pushed
+		 * later.</p>
 		 * 
-		 * <p>The points 'in free mode) or the ncumulated stars number (in
-		 * tournament mode) will be updated here so that it matches we the
-		 * user just earned. Those values might be overridden at any time
-		 * when a <code>obj_membre_mobile</code> is returned by a query.</p>
+		 * <p>The points (in classic mode) or the cumulated stars (in tournament mode)
+		 * will be updated here so that it matches what the user just earned. Those values
+		 * might be replaced at any time when a <code>obj_membre_mobile</code> is returned
+		 * by a query in <code>Remote</code>.</p>
 		 */		
 		private function onGamePushFailure(error:Object = null):void
 		{
-			//AlertManager.hide("", ProgressPopup.SUCCESS_ICON_NOTHING, 0);
 			advancedOwner.screenData.gameData.gameSessionPushed = false;
 			
 			// update earned values in any cases
-			if( _gameSession.gameType == GameSession.TYPE_FREE )
-				MemberManager.getInstance().setPoints( MemberManager.getInstance().getPoints() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
-			else
-				MemberManager.getInstance().setCumulatedStars( MemberManager.getInstance().getCumulatedStars() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+			if( _gameSession.gameType == GameSession.TYPE_FREE ) MemberManager.getInstance().setPoints( MemberManager.getInstance().getPoints() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+			else MemberManager.getInstance().setCumulatedStars( MemberManager.getInstance().getCumulatedStars() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			
-			_nextScreenId = _gameSession.gameType == GameSession.TYPE_FREE ? ScreenIds.FREE_GAME_END_SCREEN:ScreenIds.TOURNAMENT_GAME_END_SCREEN;
+			_nextScreenId = _gameSession.gameType == GameSession.TYPE_FREE ? ScreenIds.FREE_GAME_END_SCREEN : ScreenIds.TOURNAMENT_GAME_END_SCREEN;
 			if( MemberManager.getInstance().getHighscore() != 0 && _gameSession.score > MemberManager.getInstance().getHighscore() )
 			{
-				// the user did a new high score
+				// the user got a new high score
 				MemberManager.getInstance().setHighscore( _gameSession.score );
 				if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 				{
@@ -432,17 +537,14 @@ package com.ludofactory.mobile.core
 				else
 				{
 					InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-					advancedOwner.showScreen( ScreenIds.NEW_HIGH_SCORE_SCREEN );
+					advancedOwner.showScreen( _nextScreenId );
 				}
 			}
 			else
 			{
+				// set up the new high score, because this is the first one
 				if( MemberManager.getInstance().getHighscore() == 0 )
-				{
-					// set up the new high score (this is the first one
 					MemberManager.getInstance().setHighscore(_gameSession.score);
-				}
-				// else no new high score
 				
 				if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 				{
@@ -466,13 +568,46 @@ package com.ludofactory.mobile.core
 			AbstractEntryPoint.pushManager.isEnabled = true;
 		}
 		
-		private var _nextScreenId:String;
-		
+		/**
+		 * All the trophies have been displayed, in this case we can show the next screen.
+		 */		
 		private function onTrophiesDisplayed(event:starling.events.Event):void
 		{
-			TrophyManager.getInstance().removeEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
 			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+			TrophyManager.getInstance().removeEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
 			AbstractEntryPoint.screenNavigator.showScreen( _nextScreenId ); // bug des fois si AdvancedOwner utilisé à la place
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Dispose
+		
+		override public function dispose():void
+		{
+			PauseManager.isPlaying = false;
+			PauseManager.dispatcher.removeEventListener(LudoEventType.EXIT, gameOver);
+			PauseManager.dispatcher.removeEventListener(LudoEventType.RESUME, resume);
+			
+			if( _loader )
+			{
+				Starling.juggler.remove(_loader);
+				_loader.removeFromParent(true);
+				_loader = null;
+			}
+			
+			if( _playOverlay )
+			{
+				_playOverlay.removeFromParent(true);
+				_playOverlay = null;
+			}
+			
+			if( _playButton )
+			{
+				_playButton.removeEventListener(starling.events.Event.TRIGGERED, onPlay);
+				_playButton.removeFromParent(true);
+				_playButton = null;
+			}
+			
+			super.dispose();
 		}
 		
 	}
