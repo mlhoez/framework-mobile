@@ -1,7 +1,10 @@
 package com.ludofactory.mobile.core
 {
 	import starling.events.Event;
-
+	
+	/**
+	 * IGame interface that must be implemented in every GameScreen class.
+	 */	
 	public interface IGame
 	{
 		/**
@@ -25,17 +28,33 @@ package com.ludofactory.mobile.core
 		
 		/**
 		 * Starts the level.
+		 * 
+		 * <p>You should start the game here, launching the timer, etc.</p>
 		 */		
 		function startLevel():void;
 		
 		/**
-		 * Resumes the game.
+		 * Called when the player touches the "Resume" button within the pause view.
+		 * 
+		 * <p>Override this function if you need to do some special actions whenever
+		 * the game is resume (i.e unhide cards).</p>
 		 */		
 		function resume(event:Event):void;
+		/**
+		 * Called when the player touches the "Give up" button within the pause view.
+		 * 
+		 * <p>This function will set up a variable that will determine whether the
+		 * game session have been finished or not.</p>
+		 */		
+		function giveUp(event:Event):void;
 		
 		/**
-		 * Game over.
+		 * The game is over, whether because the player gave up, because the timer is
+		 * over or because the player is stuck.
+		 * 
+		 * <p>Override this function to do some special treatement such as checking
+		 * trophies.</p>
 		 */		
-		function gameOver(event:Event = null):void;
+		function gameOver():void;
 	}
 }

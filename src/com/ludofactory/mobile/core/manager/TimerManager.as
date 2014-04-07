@@ -232,6 +232,11 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
+		/**
+		 * The total elapsed time.
+		 * 
+		 * <p>Use totalElapsedTime / 1000 to get the time in seconds.</p>
+		 */		
 		public function get totalElapsedTime():int { return _totalElapsedTime; }
 		
 //------------------------------------------------------------------------------------------------------------

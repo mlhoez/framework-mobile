@@ -65,6 +65,10 @@ package com.ludofactory.mobile.core
 		private var _nextScreenId:String;
 		
 		/**
+		 * Whether the player gave up this game session. */		
+		private var _gaveUp:Boolean;
+		
+		/**
 		 * @param isLandscape
 		 */		
 		public function AbstractGame(isLandscape:Boolean)
@@ -74,6 +78,7 @@ package com.ludofactory.mobile.core
 			_fullScreen = true;
 			_isLandscape = isLandscape;
 			_canBack = false;
+			_gaveUp = false;
 		}
 		
 		override protected function initialize():void
@@ -87,7 +92,7 @@ package com.ludofactory.mobile.core
 			{
 				case GameSession.PRICE_FREE:
 				{
-					if( MemberManager.getInstance().getNumFreeGameSessions() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) )
+					if( MemberManager.getInstance().getNumFreeGameSessions() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) )
 					{
 						advancedOwner.screenData.purgeData();
 						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
@@ -96,13 +101,13 @@ package com.ludofactory.mobile.core
 					else
 					{
 						// he can play with free game sessions
-						MemberManager.getInstance().setNumFreeGameSessions( MemberManager.getInstance().getNumFreeGameSessions() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) );
+						MemberManager.getInstance().setNumFreeGameSessions( MemberManager.getInstance().getNumFreeGameSessions() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) );
 					}
 					break;
 				}
 				case GameSession.PRICE_CREDIT:
 				{
-					if( MemberManager.getInstance().getCredits() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) )
+					if( MemberManager.getInstance().getCredits() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) )
 					{
 						advancedOwner.screenData.purgeData();
 						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
@@ -111,7 +116,7 @@ package com.ludofactory.mobile.core
 					else
 					{
 						// he can play with credits
-						MemberManager.getInstance().setCredits( MemberManager.getInstance().getCredits() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
+						MemberManager.getInstance().setCredits( MemberManager.getInstance().getCredits() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
 					}
 					break;
 				}
@@ -135,7 +140,7 @@ package com.ludofactory.mobile.core
 			// if the user can really play, we now initialize a game session which will be saved until the
 			// end of the game and we decrement the associated stake (whether free game sessions, points or credits).
 			log("Démarrage d'une partie en mode <strong>" + advancedOwner.screenData.gameType + ", mise : " + advancedOwner.screenData.gamePrice + "</strong>");
-			Flox.logEvent("Parties", { "1. Nombre total de parties":"Total", "2. Mode":(advancedOwner.screenData.gameType == GameSession.TYPE_FREE ? "Classique":"Tournoi"), "3. Mise":advancedOwner.screenData.gamePrice });
+			Flox.logEvent("Parties", { "1. Nombre total de parties":"Total", "2. Mode":(advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? "Classique":"Tournoi"), "3. Mise":advancedOwner.screenData.gamePrice });
 			
 			// create banners in order to display them faster when the game is paused
 			AdManager.createiAdBanner(IAdBannerAlignment.BOTTOM);
@@ -246,7 +251,7 @@ package com.ludofactory.mobile.core
 			
 			// enable the pause view and listeners
 			PauseManager.isPlaying = true;
-			PauseManager.dispatcher.addEventListener(LudoEventType.EXIT, gameOver);
+			PauseManager.dispatcher.addEventListener(LudoEventType.EXIT, giveUp);
 			PauseManager.dispatcher.addEventListener(LudoEventType.RESUME, resume);
 		}
 		
@@ -277,6 +282,16 @@ package com.ludofactory.mobile.core
 		/**
 		 * @inheritDoc
 		 */		
+		public function giveUp(event:starling.events.Event):void
+		{
+			// to override
+			_gaveUp = true;
+			gameOver();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
 		public function resume(event:starling.events.Event):void
 		{
 			// to override
@@ -285,12 +300,12 @@ package com.ludofactory.mobile.core
 		/**
 		 * @inheritDoc
 		 */		
-		public function gameOver(event:starling.events.Event = null):void
+		public function gameOver():void
 		{
 			// to override
 			
 			InfoManager.show(Localizer.getInstance().translate("GAME.VALIDATION"));
-			Flox.logEvent("Parties", { "4. Etat de la partie":(event ? "Abandonnee" : "Terminee"), "5. Connectivité en fin de partie":( AirNetworkInfo.networkInfo.isConnected() ? "Connecte" : "Deconnecte") });
+			Flox.logEvent("Parties", { "4. Etat de la partie":(_gaveUp ? "Abandonnee" : "Terminee"), "5. Connectivité en fin de partie":( AirNetworkInfo.networkInfo.isConnected() ? "Connecte" : "Deconnecte") });
 			
 			// update tutorial state
 			if( MemberManager.getInstance().getDisplayTutorial() == true )
@@ -300,67 +315,40 @@ package com.ludofactory.mobile.core
 		}
 		
 //------------------------------------------------------------------------------------------------------------
-//	
-//------------------------------------------------------------------------------------------------------------
+//	Game validation
 		
 		/**
-		 * <p>This function will calculate the final score (base score + bonuses) and then
-		 * convert it to the appropriate gain : whether stars or points depending on which
-		 * type of game have been choose (tournament or free game).</p>
+		 * <p>This function will convert the final score to retrieve the appropriate gain : whether
+		 * stars or points depending on which type of game have been choose (classic or tournament).</p>
 		 * 
-		 * <p>The score is updated in the GameSession object (which have been initialized
-		 * at the beginning of the game) so that we can push it right after (if we can).</p>
+		 * <p>The score is updated in the GameSession object (which have been initialized at the beginning
+		 * of the game) so that we can push it right after (if we can).</p>
 		 * 
-		 * <p>Those informations (socre and gain) are also sotred in the <code>_data</code>
+		 * <p>Those informations (score and gain) are also stored in the <code>advancedOwner.screenData.gameData</code>
 		 * object in order to be passed to the next screen.</p>
-		 * 
-		 * Some fake data to use
-		 * 
-		 * var result:Object = {};
-		 * result.code = 1;
-		 * result.isHighscore = 1;
-		 * result.highscore = 159;
-		 * result.etoiles = 100;
-		 * result.classement = 95;
-		 * result.top = 999;
-		 * result.lot_actuel = "Une Xbox 360";
-		 * result.lot_suivant = {};
-		 * result.lot_suivant.lot = "1000€";
-		 * result.lot_suivant.nb_etoiles = 2000;
-		 * result.podium = 1;
-		 * result.gains = 5;
-		 * 
-		 * onGameSessionValidated(result);
-		 * 
 		 */		
 		protected function validateGame(finalScore:int, totalElapsedTime:int):void
 		{
+			log("Score <strong>" + finalScore + "</strong> made in <strong>" + (totalElapsedTime / 1000) +" seconds</strong>.");
 			TrophyManager.getInstance().currentGameSession = null;
 			AdManager.disposeBanners();
 			
-			// update the score and the gain (Note taht this last value
-			// will be overridden if the push is a success)
+			// update the score and the gain (note that the value of gain might be replaced if the push is a success
+			// and if the scoring have changed in the server side)
 			var scoreConverter:ScoreConverter = new ScoreConverter();
 			_gameSession.score = finalScore;
 			_gameSession.elapsedTime = totalElapsedTime;
-			this.advancedOwner.screenData.gameData.score = _gameSession.score;
-			GameCenterManager.reportLeaderboardScore(AbstractGameInfo.LEADERBOARD_HIGHSCORE, _gameSession.score);
-			
-			// those values be overridden if the push is a success
+			advancedOwner.screenData.gameData.score = _gameSession.score;
 			advancedOwner.screenData.gameData.numStarsOrPointsEarned = _gameSession.numStarsOrPointsEarned = scoreConverter.convertScore(_gameSession.score, _gameSession.gamePrice, _gameSession.gameType);
 			
+			// report iOS Leaderboard
+			GameCenterManager.reportLeaderboardScore(AbstractGameInfo.LEADERBOARD_HIGHSCORE, _gameSession.score);
+			
 			// Try to directly push this game session
-			if( MemberManager.getInstance().isLoggedIn() )
+			if( MemberManager.getInstance().isLoggedIn() &&  AirNetworkInfo.networkInfo.isConnected() )
 			{
-				if( AirNetworkInfo.networkInfo.isConnected() )
-				{
-					_gameSession.connected = true;
-					Remote.getInstance().pushGame(_gameSession, onGamePushSuccess, onGamePushFailure, onGamePushFailure, 1);
-				}
-				else
-				{
-					onGamePushFailure();
-				}
+				_gameSession.connected = true;
+				Remote.getInstance().pushGame(_gameSession, onGamePushSuccess, onGamePushFailure, onGamePushFailure, 1);
 			}
 			else
 			{
@@ -368,29 +356,35 @@ package com.ludofactory.mobile.core
 			}
 		}
 		
+//------------------------------------------------------------------------------------------------------------
+//	Game validation callbacks
+		
 		/**
-		 * The game session was pushed, we can remove it from the push manager
-		 * and go to the next screen.
+		 * The game session was pushed, we can remove it from the push manager and go to the next screen.
 		 */		
 		private function onGamePushSuccess(result:Object):void
 		{
-			log("[GameScreen] GameSession validated : " + result.code + " => " + result.txt);
+			log("[AbstractGame] GameSession validated : " + result.code + " => " + result.txt);
 			
 			AbstractEntryPoint.pushManager.removeLastGameSession(_gameSession);
 			
 			switch(result.code)
 			{
-				case 0: // invalid data
-				case 3: // cannot retreive the score to points array in php
-				case 5: // id jeux arcade not defined in config
-				case 9: // cannot retreive the score to stars array in php
-				case 2: // game with credits but not enough in database ( ask to buy credits ? )
-				case 4: // not enough free game sessions
-				case 6: // not tournament actually for this game
-				case 7: // not enough points for this tournament
-				case 8: // not enough credits for this tournament
+				case 0:  // invalid data
+				case 2:  // game with credits but not enough in database ( ask to buy credits ? )
+				case 3:  // cannot retreive the score to points array in php
+				case 4:  // game with free game but not enough free game sessions in database
+				case 5:  // id jeux arcade not defined in config
+				case 6:  // not tournament actually for this game
+				case 7:  // not enough points for this tournament
+				case 8:  // not enough credits for this tournament
+				case 9:  // cannot retreive the score to stars array in php
+				case 10: // given date is higher than the one of the server
+				case 11: // the game session could not be counted because the tournament is over
+				case 12: // classic game too old to be taken in account
+				case 13: // game session already pushed
 				{
-					// false = no update because even if there is an error, an object membre_mobile
+					// false = no update because even if there is an error, an object obj_membre_mobile
 					// will be returned
 					onGamePushFailure(false);
 					break;
@@ -399,7 +393,7 @@ package com.ludofactory.mobile.core
 				{
 					advancedOwner.screenData.gameData.gameSessionPushed = true;
 					
-					// Facebook data (returned only when the user is connected to Facebook)
+					// Facebook data - only returned when the user is connected with Facebook and have a valid token
 					if( result.hasOwnProperty("fb_hs_friends") && result.fb_hs_friends )
 					{
 						if( result.fb_hs_friends.hasOwnProperty("classement") && (result.fb_hs_friends.classement as Array).length > 0 )
@@ -429,11 +423,9 @@ package com.ludofactory.mobile.core
 						}
 					}
 					
-					
-					if( _gameSession.gameType == GameSession.TYPE_FREE )
+					if( _gameSession.gameType == GameSession.TYPE_CLASSIC )
 					{
-						// free game
-						// add points only in free mode
+						// classic game
 						this.advancedOwner.screenData.gameData.numStarsOrPointsEarned = int(result.gains);
 						if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 						{
@@ -449,18 +441,18 @@ package com.ludofactory.mobile.core
 					else
 					{
 						// tournament
-						this.advancedOwner.screenData.gameData.numStarsOrPointsEarned = int(result.etoiles);
-						this.advancedOwner.screenData.gameData.position = int(result.classement);
-						this.advancedOwner.screenData.gameData.top = int(result.top);
-						this.advancedOwner.screenData.gameData.actualGiftImageUrl = result.lot_actuel.image;
-						this.advancedOwner.screenData.gameData.actualGiftName = Utility.replaceCurrency(result.lot_actuel.nom);
-						this.advancedOwner.screenData.gameData.nextGiftImageUrl = result.lot_suivant.image;
-						this.advancedOwner.screenData.gameData.nextGiftName = Utility.replaceCurrency(result.lot_suivant.nom);
-						this.advancedOwner.screenData.gameData.numStarsForNextGift = int(result.lot_suivant.nb_etoiles);
-						this.advancedOwner.screenData.gameData.hasReachNewTop = int(result.podium) == 1 ? true:false;
-						this.advancedOwner.screenData.gameData.timeUntilTournamentEnd = int(result.temps_fin_tournoi);
-						this.advancedOwner.screenData.gameData.displayPushAlert = int(result.afficher_alerte_push) == 1 ? true : false;
-						this.advancedOwner.screenData.gameData.topDotationName = result.top_dotation;
+						advancedOwner.screenData.gameData.numStarsOrPointsEarned = int(result.etoiles);
+						advancedOwner.screenData.gameData.position = int(result.classement);
+						advancedOwner.screenData.gameData.top = int(result.top);
+						advancedOwner.screenData.gameData.actualGiftImageUrl = result.lot_actuel.image;
+						advancedOwner.screenData.gameData.actualGiftName = Utility.replaceCurrency(result.lot_actuel.nom);
+						advancedOwner.screenData.gameData.nextGiftImageUrl = result.lot_suivant.image;
+						advancedOwner.screenData.gameData.nextGiftName = Utility.replaceCurrency(result.lot_suivant.nom);
+						advancedOwner.screenData.gameData.numStarsForNextGift = int(result.lot_suivant.nb_etoiles);
+						advancedOwner.screenData.gameData.hasReachNewTop = int(result.podium) == 1 ? true:false;
+						advancedOwner.screenData.gameData.timeUntilTournamentEnd = int(result.temps_fin_tournoi);
+						advancedOwner.screenData.gameData.displayPushAlert = int(result.afficher_alerte_push) == 1 ? true : false;
+						advancedOwner.screenData.gameData.topDotationName = result.top_dotation;
 						
 						if( result.isHighscore == 1 )
 						{
@@ -521,10 +513,10 @@ package com.ludofactory.mobile.core
 			advancedOwner.screenData.gameData.gameSessionPushed = false;
 			
 			// update earned values in any cases
-			if( _gameSession.gameType == GameSession.TYPE_FREE ) MemberManager.getInstance().setPoints( MemberManager.getInstance().getPoints() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+			if( _gameSession.gameType == GameSession.TYPE_CLASSIC ) MemberManager.getInstance().setPoints( MemberManager.getInstance().getPoints() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			else MemberManager.getInstance().setCumulatedStars( MemberManager.getInstance().getCumulatedStars() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			
-			_nextScreenId = _gameSession.gameType == GameSession.TYPE_FREE ? ScreenIds.FREE_GAME_END_SCREEN : ScreenIds.TOURNAMENT_GAME_END_SCREEN;
+			_nextScreenId = _gameSession.gameType == GameSession.TYPE_CLASSIC ? ScreenIds.FREE_GAME_END_SCREEN : ScreenIds.TOURNAMENT_GAME_END_SCREEN;
 			if( MemberManager.getInstance().getHighscore() != 0 && _gameSession.score > MemberManager.getInstance().getHighscore() )
 			{
 				// the user got a new high score
@@ -584,7 +576,7 @@ package com.ludofactory.mobile.core
 		override public function dispose():void
 		{
 			PauseManager.isPlaying = false;
-			PauseManager.dispatcher.removeEventListener(LudoEventType.EXIT, gameOver);
+			PauseManager.dispatcher.removeEventListener(LudoEventType.EXIT, giveUp);
 			PauseManager.dispatcher.removeEventListener(LudoEventType.RESUME, resume);
 			
 			if( _loader )
