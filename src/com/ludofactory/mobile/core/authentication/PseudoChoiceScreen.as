@@ -295,8 +295,8 @@ package com.ludofactory.mobile.core.authentication
 						if( Analytics.isSupported() && AbstractEntryPoint.tracker )
 							AbstractEntryPoint.tracker.buildEvent("Inscription", "Inscription").withLabel("Inscription").track();
 						
-						Flox.logWarning("Nouvelle inscription, membre : (" + MemberManager.getInstance().getId() + ")");
-						Flox.logEvent("Nouvelle inscription", {Total:"Total"});
+						Flox.logWarning("Nouvelle inscription Facebook du membre : (" + MemberManager.getInstance().getId() + ")");
+						Flox.logEvent("Inscriptions", { Type:"Facebook" });
 					}
 					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ((MemberManager.getInstance().getFacebookId() != 0) ? ScreenIds.HOME_SCREEN : ScreenIds.REGISTER_COMPLETE_SCREEN) ]);
 					break;

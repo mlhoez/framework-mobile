@@ -97,8 +97,8 @@ package com.ludofactory.mobile.core.authentication
 				
 			}
 			
-			Flox.logWarning("Nouvelle inscription, membre : (" + MemberManager.getInstance().getId() + ")");
-			Flox.logEvent("Nouvelle inscription", {Total:"Total"});
+			Flox.logWarning("Nouvelle inscription du membre : (" + MemberManager.getInstance().getId() + ")");
+			Flox.logEvent("Inscriptions", { Type:"Normale" });
 		}
 		
 		override protected function draw():void
