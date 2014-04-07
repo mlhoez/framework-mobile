@@ -6,8 +6,8 @@ Created : 12 Août 2013
 */
 package com.ludofactory.mobile.core.authentication
 {
-	import com.gamua.flox.Flox;
 	import com.ludofactory.common.encryption.Encryption;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -152,7 +152,7 @@ package com.ludofactory.mobile.core.authentication
 				// track the log in
 				if( Analytics.isSupported() && AbstractEntryPoint.tracker )
 					AbstractEntryPoint.tracker.buildEvent("Connexions", "-").withLabel("Compte (" + memberId + ")").track();
-				Flox.logWarning("Connexion du joueur " + _member.id);
+				log("Connexion du joueur " + memberId);
 			}
 			
 			// update the values of the footer
@@ -213,7 +213,7 @@ package com.ludofactory.mobile.core.authentication
 			// track the log off
 			if( Analytics.isSupported() && AbstractEntryPoint.tracker )
 				AbstractEntryPoint.tracker.buildEvent("Déconnexions", "-").withLabel("Compte prédécent (" + _member.id + ")").track();
-			Flox.logWarning("Joueur (" + _member.id + ") déconnecté de son compte.");
+			log("Joueur (" + _member.id + ") déconnecté de son compte.");
 			
 			// before the user log off, we save the state of the tournament and
 			// we set the the animation pending to false for the current user

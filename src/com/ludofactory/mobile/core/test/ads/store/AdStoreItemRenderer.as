@@ -285,7 +285,7 @@ package com.ludofactory.mobile.core.test.ads.store
 						}
 						else
 						{
-							Flox.logWarning("Aucune redirection car aucun lien défini.");
+							Flox.logError("Aucune redirection car aucun lien défini.");
 						}
 					}
 				}

@@ -332,7 +332,7 @@ package com.ludofactory.mobile.core.authentication
 				case 6:
 				{
 					// The user have successfully logged in with his Facebook account
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ /*this.advancedOwner.screenData.completeScreenId*/ ScreenIds.HOME_SCREEN ] );
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ScreenIds.HOME_SCREEN ] );
 					break;
 				}
 				case 7:
