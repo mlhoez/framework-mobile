@@ -7,12 +7,27 @@ Created : 17 sept. 2012
 package com.ludofactory.common.utils
 {
 	import com.ludofactory.mobile.core.Localizer;
+	
+	import flash.desktop.NativeApplication;
 
 	public class Utility
 	{
 		/**
 		 * Whether the tracer is enabled. */		
 		private static var _isLogEnabled:Boolean = false;
+		
+//------------------------------------------------------------------------------------------------------------
+//	Colors
+		
+		/**
+		 * Returns the App version defined in the application descriptor.
+		 */		
+		public static function getAppVersion():String
+		{
+			var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor;
+			var ns:Namespace = appXml.namespace();
+			return String(appXml.ns::versionNumber[0]).substr(0, 3); // remove the last .0 automatically added
+		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Colors
