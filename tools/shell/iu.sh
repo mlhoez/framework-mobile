@@ -55,9 +55,10 @@ cloneRepo ()
 	
 	if [ ! -z "$4" ]
 	then
-		git lg master..upstream/master
+		git lg master..upstream/master # difference between local et upstream commits (to see what's missing)
 		git pull upstream master
 		#git merge upstream/master
+		git push origin master # when we have pulled upstream commits, we need to push them after the local branch being rebased / merged
 	fi
 	
 	git lg master..origin/master
@@ -67,7 +68,7 @@ cloneRepo ()
 
 echo "${blue}Cloning / Updating libraries...${nc}"
 
-cloneRepo "$libs_path" "$lib_starling_repo" "$lib_starling_name"
+cloneRepo "$libs_path" "$lib_starling_repo" "$lib_starling_name" "$lib_starling_us"
 cloneRepo "$libs_path" "$lib_graphics_repo" "$lib_graphics_name"
 cloneRepo "$libs_path" "$lib_particles_repo" "$lib_particles_name"
 cloneRepo "$libs_path" "$lib_flox_repo" "$lib_flox_name"
