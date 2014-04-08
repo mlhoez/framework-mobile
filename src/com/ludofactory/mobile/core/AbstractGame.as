@@ -69,6 +69,12 @@ package com.ludofactory.mobile.core
 		private var _gaveUp:Boolean;
 		
 		/**
+		 * Whether the screen is validating. This is added for security reason
+		 * in order to avoird multiple validations.
+		 */		
+		private var _isValidatingGame:Boolean = false;
+		
+		/**
 		 * @param isLandscape
 		 */		
 		public function AbstractGame(isLandscape:Boolean)
@@ -329,30 +335,36 @@ package com.ludofactory.mobile.core
 		 */		
 		protected function validateGame(finalScore:int, totalElapsedTime:int):void
 		{
-			log("Score <strong>" + finalScore + "</strong> made in <strong>" + (totalElapsedTime / 1000) +" seconds</strong>.");
-			TrophyManager.getInstance().currentGameSession = null;
-			AdManager.disposeBanners();
-			
-			// update the score and the gain (note that the value of gain might be replaced if the push is a success
-			// and if the scoring have changed in the server side)
-			var scoreConverter:ScoreConverter = new ScoreConverter();
-			_gameSession.score = finalScore;
-			_gameSession.elapsedTime = totalElapsedTime;
-			advancedOwner.screenData.gameData.score = _gameSession.score;
-			advancedOwner.screenData.gameData.numStarsOrPointsEarned = _gameSession.numStarsOrPointsEarned = scoreConverter.convertScore(_gameSession.score, _gameSession.gamePrice, _gameSession.gameType);
-			
-			// report iOS Leaderboard
-			GameCenterManager.reportLeaderboardScore(AbstractGameInfo.LEADERBOARD_HIGHSCORE, _gameSession.score);
-			
-			// Try to directly push this game session
-			if( MemberManager.getInstance().isLoggedIn() &&  AirNetworkInfo.networkInfo.isConnected() )
+			if( !_isValidatingGame )
 			{
-				_gameSession.connected = true;
-				Remote.getInstance().pushGame(_gameSession, onGamePushSuccess, onGamePushFailure, onGamePushFailure, 1);
-			}
-			else
-			{
-				onGamePushFailure();
+				// we add this by security
+				_isValidatingGame = true;
+				
+				log("Score <strong>" + finalScore + "</strong> made in <strong>" + (totalElapsedTime / 1000) +" seconds</strong>.");
+				TrophyManager.getInstance().currentGameSession = null;
+				AdManager.disposeBanners();
+				
+				// update the score and the gain (note that the value of gain might be replaced if the push is a success
+				// and if the scoring have changed in the server side)
+				var scoreConverter:ScoreConverter = new ScoreConverter();
+				_gameSession.score = finalScore;
+				_gameSession.elapsedTime = totalElapsedTime;
+				advancedOwner.screenData.gameData.score = _gameSession.score;
+				advancedOwner.screenData.gameData.numStarsOrPointsEarned = _gameSession.numStarsOrPointsEarned = scoreConverter.convertScore(_gameSession.score, _gameSession.gamePrice, _gameSession.gameType);
+				
+				// report iOS Leaderboard
+				GameCenterManager.reportLeaderboardScore(AbstractGameInfo.LEADERBOARD_HIGHSCORE, _gameSession.score);
+				
+				// Try to directly push this game session
+				if( MemberManager.getInstance().isLoggedIn() &&  AirNetworkInfo.networkInfo.isConnected() )
+				{
+					_gameSession.connected = true;
+					Remote.getInstance().pushGame(_gameSession, onGamePushSuccess, onGamePushFailure, onGamePushFailure, 1);
+				}
+				else
+				{
+					onGamePushFailure();
+				}
 			}
 		}
 		
