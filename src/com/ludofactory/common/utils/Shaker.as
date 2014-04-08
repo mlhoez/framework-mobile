@@ -60,7 +60,7 @@ package com.ludofactory.common.utils
 		 */		
 		private static function shake(elapsedTime:int):void
 		{
-			if (_cameraShakeValue > 0)
+			if (_cameraShakeValue > 0 && _elementToShake != null)
 			{
 				_cameraShakeValue -= 0.1;
 				_elementToShake.x = _elementToShakeStartX + Math.random() * _cameraShakeValue - _cameraShakeValue * 0.5; // Shake left right randomly.
@@ -69,8 +69,11 @@ package com.ludofactory.common.utils
 			else
 			{
 				HeartBeat.unregisterFunction(shake);
-				_elementToShake.x = _elementToShakeStartX;
-				_elementToShake.y = _elementToShakeStartY;
+				if( _elementToShake )
+				{
+					_elementToShake.x = _elementToShakeStartX;
+					_elementToShake.y = _elementToShakeStartY;
+				}
 				_elementToShake = null; // clear reference
 				dispatcher.dispatchEventWith(Event.COMPLETE);
 			}
