@@ -918,7 +918,7 @@ package com.ludofactory.mobile.core.remoting
 					params.parties.push( { info_client:GlobalConfig.userHardwareData, type_mise:gameSession.gamePrice, type_partie:gameSession.gameType, score:gameSession.score, date_partie:gameSession.playDate, connected:gameSession.connected, coupes:gameSession.trophiesWon, temps_ecoule:gameSession.elapsedTime, id_partie:gameSession.uniqueId } );
 				}
 				
-				Flox.logEvent("Nombre de parties jouees avant une inscription / connexion", { Nombre:len });
+				Flox.logEvent("Nombre de parties jouées avant authentification", { Nombre:len });
 			}
 			return params;
 		}
