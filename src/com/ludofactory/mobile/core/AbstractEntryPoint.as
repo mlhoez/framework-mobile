@@ -398,27 +398,43 @@ package com.ludofactory.mobile.core
 					// just in case
 					NativeDeviceInfo.parse();
 					
-					log("<tr style='background-color: rgb(117, 221, 255);'>" +
-							"<td style='width: 148px; color: grey; text-align: center;'><strong>Device details :</strong></td>" +
-							"<td style='word-break: break-all;'>" + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_BRAND).value + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_MODEL).value + " (" + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_NAME).value + ")</td>" +
+					log("<strong>Device informations :</strong><tr style='font-weight:bold;'>" +
+							"<td style='width: 148px; color: black; text-align: right;'><strong>Device details :</strong></td>" +
+							"<td style='word-break: break-all;'>" + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_BRAND).value +  " " + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_MODEL).value + " (" + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_NAME).value + ")</td>" +
+						"</tr>" +
+						"<tr style='font-weight:bold;'>" +
+							"<td />" + 
 							"<td style='word-break: break-all;'>Manufactured by " + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_MANUFACTURER).value + "</td>" +
 						"</tr>" +
-						"<tr style='background-color: rgb(117, 221, 255);'>" +
-							"<td style='width: 148px; color: grey; text-align: center;'><strong>Screen details :</strong></td>" +
-							"<td style='word-break: break-all;'>OS name " + NativeDevicePropertiesData(NativeDeviceProperties.OS_NAME).value + ((GlobalConfig.android || GlobalConfig.ios) ? "" : "(Simulateur)") + " sur " + (GlobalConfig.isPhone ? "Smartphone" : "Tablette") + "</td>" +
-							"<td style='word-break: break-all;'>OS version " + NativeDevicePropertiesData(NativeDeviceProperties.OS_VERSION).value + " (Build : " + NativeDevicePropertiesData(NativeDeviceProperties.OS_BUILD).value + "</td>" +
-							"<td style='word-break: break-all;'>SDK version " + NativeDevicePropertiesData(NativeDeviceProperties.OS_SDK_VERSION).value + " (" + NativeDevicePropertiesData(NativeDeviceProperties.OS_SDK_DESCRIPTION).value + "</td>" +
+						"<tr style='font-weight:bold;'>" +
+							"<td style='width: 148px; color: black; text-align: right;'><strong>OS details :</strong></td>" +
+							"<td style='word-break: break-all;'>" + NativeDevicePropertiesData(NativeDeviceProperties.OS_NAME).value + ((GlobalConfig.android || GlobalConfig.ios) ? "" : "(Simulateur)") + " sur " + (GlobalConfig.isPhone ? "Smartphone" : "Tablette") + "</td>" +
 						"</tr>" +
-						"<tr style='background-color: rgb(117, 221, 255);'>" +
-							"<td style='width: 148px; color: grey; text-align: center;'><strong>Screen details :</strong></td>" +
-							"<td style='word-break: break-all;'>Density " + NativeDevicePropertiesData(NativeDeviceProperties.LCD_DENSITY).value + " - résolution " + Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY + "</td>" +
+						"<tr style='font-weight:bold;'>" +
+							"<td />" + 
+							"<td style='word-break: break-all;'>OS version " + NativeDevicePropertiesData(NativeDeviceProperties.OS_VERSION).value + " (Build : " + NativeDevicePropertiesData(NativeDeviceProperties.OS_BUILD).value + ")</td>" +
 						"</tr>" +
-						"<tr style='background-color: rgb(117, 221, 255);'>" +
-							"<td style='width: 148px; color: grey; text-align: center;'><strong>Hardware and software details :</strong></td>" +
-							"<td style='word-break: break-all;'>Board " +  NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_BOARD).value + "</td>" +
-							"<td style='word-break: break-all;'>CPU " +  NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_CPU).value + "</td>" +
+						"<tr style='font-weight:bold;'>" +
+							"<td />" + 
+							"<td style='word-break: break-all;'>SDK version " + NativeDevicePropertiesData(NativeDeviceProperties.OS_SDK_VERSION).value + " (" + NativeDevicePropertiesData(NativeDeviceProperties.OS_SDK_DESCRIPTION).value + ")</td>" +
+						"</tr>" +
+						"<tr style='font-weight:bold;'>" +
+							"<td style='width: 148px; color: black; text-align: right;'><strong>Screen details :</strong></td>" +
+							"<td style='word-break: break-all;'>Density " + NativeDevicePropertiesData(NativeDeviceProperties.LCD_DENSITY).value + " dpi - résolution " + Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY + "</td>" +
+						"</tr>" +
+						"<tr style='font-weight:bold;'>" +
+							"<td style='width: 148px; color: black; text-align: right;'><strong>Other details :</strong></td>" +
+							"<td style='word-break: break-all;'>Board : " +  NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_BOARD).value + "</td>" +
+						"</tr>" +
+						"<tr style='font-weight:bold;'>" +
+							"<td />" + 
+							"<td style='word-break: break-all;'>CPU : " +  NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_CPU).value + "</td>" +
+						"<tr style='font-weight:bold;'>" +
+							"<td />" + 
 							"<td style='word-break: break-all;'>OpenGL ES version " +  NativeDevicePropertiesData(NativeDeviceProperties.OPENGLES_VERSION).value + "</td>" +
-							"<td style='word-break: break-all;'>Heap size " +  NativeDevicePropertiesData(NativeDeviceProperties.DALVIK_HEAPSIZE).value + "</td>" +
+						"<tr style='font-weight:bold;'>" +
+							"<td />" + 
+							"<td style='word-break: break-all;'>Heap size : " +  NativeDevicePropertiesData(NativeDeviceProperties.DALVIK_HEAPSIZE).value + "</td>" +
 						"</tr>"
 					);
 				} 
