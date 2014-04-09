@@ -12,11 +12,18 @@ package com.ludofactory.common.utils
 	 * Scales to the current dpi value and round the result to avoid
 	 * blury effects when positioning objects with this function.
 	 * 
-	 * Note that << 0 will always round the value of the parameter down
-	 * to the nearest integer.
+	 * <p>Note that << 0 will always round the value of the parameter down
+	 * to the nearest integer. In this case, for some devices it could
+	 * cause some errors when creating Quads for stripes, because the dpiScale
+	 * was less than 0.5, to the rounded result was 0 which is not an allowed
+	 * size for a Quad creation.</p>
 	 */	
 	public function scaleAndRoundToDpi(value:Number):int
 	{
-		return (value * GlobalConfig.dpiScale) << 0;
+		// Round DOWN to nearest - equals Math.floor(value)
+		//return (value * GlobalConfig.dpiScale) << 0;
+		
+		// round UP to nearest - equals Math.ceil(value)
+		return ((value * GlobalConfig.dpiScale) + 1) << 0;
 	}
 }
