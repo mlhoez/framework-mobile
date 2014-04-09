@@ -325,12 +325,9 @@ package com.ludofactory.mobile.core
 		{	
 			try
 			{
-				// FIXME A améliorer
 				var stackTrace:String = Error(event.error).getStackTrace();
 				if (event.error is Error)
-					Flox.logError(event.error, "<br><br><strong>Uncaught error :</strong><br>[{0}] {1}<br><br><strong>Occured at :</strong><br>{2}", Error(event.error).errorID, Error(event.error).message, stackTrace);
-				else if (event.error is ErrorEvent)
-					Flox.logError(event.error, "<br><br><strong>Uncaught error :</strong><br>[{0}] {1}<br><br>{2}<br><br><strong>Occured at :</strong><br>{3}<br><br><strong>target : {4}</strong>", ErrorEvent(event.error).errorID, (event.error as ErrorEvent).text, Error(event.error).message, stackTrace, ErrorEvent(event.error).target);
+					Flox.logError("<strong>Uncaught error :</strong>", "[{0}] {1}<br><br><strong>Occured at :</strong><br>{2}", Error(event.error).errorID, Error(event.error).message, stackTrace);
 				else
 					log(stackTrace);
 				
