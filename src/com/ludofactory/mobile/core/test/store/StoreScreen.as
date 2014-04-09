@@ -166,8 +166,6 @@ package com.ludofactory.mobile.core.test.store
 			{
 				_authenticationContainer.visible = true;
 			}
-			
-			Flox.logEvent("Clics banniere suite a l'affichage des achats integres", {Affichages:"Total"});
 		}
 		
 		override protected function draw():void

@@ -268,7 +268,7 @@ package com.ludofactory.mobile.core.test.ads.store
 					var isInBounds:Boolean = this.hitTest(HELPER_POINT, true) != null;
 					if(isInBounds)
 					{
-						Flox.logEvent("Clics banniere suite a l'affichage des achats integres", {Redirection:"Clics banniere"});
+						Flox.logEvent("Clics banniere suite a l'affichage des achats integres", { Total:"Total" });
 						if( _data.link != null && _data.link != "" )
 						{
 							Flox.logInfo("Redirection vers {0}", _data.link);
