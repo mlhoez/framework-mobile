@@ -75,6 +75,7 @@ cloneRepo "$libs_path" "$lib_flox_repo" "$lib_flox_name"
 cloneRepo "$libs_path" "$lib_gs_repo" "$lib_gs_name"
 cloneRepo "$libs_path" "$lib_feathers_repo" "$lib_feathers_name" "$lib_feathers_us"
 cloneRepo "$libs_path" "$lib_pixel_mask_repo" "$lib_pixel_mask_name"
+cloneRepo "$libs_path" "$lib_android_device_info_repo" "$lib_android_device_info_name"
 
 echo "${blue}Cloning / Updating ANEs...${nc}"
 
