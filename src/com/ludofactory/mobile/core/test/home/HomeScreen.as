@@ -105,7 +105,7 @@ package com.ludofactory.mobile.core.test.home
 			{
 				if( AbstractEntryPoint.gameTypeSelectionManager )
 				{
-					Flox.logInfo("Affichage de la popup de choix de mode de jeu");
+					Flox.logInfo("<strong>&rarr; Affichage du choix du mode de jeu (auto)</strong>");
 					advancedOwner.screenData.displayPopupOnHome = false;
 					if( (MemberManager.getInstance().getTournamentUnlocked() && MemberManager.getInstance().getTournamentAnimPending()) )
 						AbstractEntryPoint.gameTypeSelectionManager.show( false );
@@ -172,7 +172,7 @@ package com.ludofactory.mobile.core.test.home
 		 */		
 		private function onPlay(event:Event):void
 		{
-			Flox.logInfo("Affichage de la popup de choix de mode de jeu");
+			Flox.logInfo("<strong>&rarr; Affichage du choix du mode de jeu</strong>");
 			AbstractEntryPoint.gameTypeSelectionManager.show();
 		}
 		

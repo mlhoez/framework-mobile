@@ -91,7 +91,7 @@ package com.ludofactory.mobile.core.test.game
 		 */		
 		private function onClosePopup():void
 		{
-			Flox.logInfo("Fermeture de la popup de choix du mode de jeu");
+			Flox.logInfo("<strong>&rarr; Fermeture du choix du mode de jeu</strong>");
 			_blackOverlay.removeEventListener(TouchEvent.TOUCH, onClose);
 			TweenMax.to(_blackOverlay, 0.25, { autoAlpha:0 });
 			
