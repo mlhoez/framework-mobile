@@ -23,7 +23,6 @@ package com.ludofactory.mobile.core.manager
 	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.MovieClip;
-	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	
@@ -74,7 +73,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * Blac overlay. */		
-		private var _overlay:Quad;
+		private var _overlay:Image;
 		
 		/**
 		 * Label that tells the user to touch the screen
