@@ -815,12 +815,9 @@ package com.ludofactory.mobile.core.remoting
 		 */ 
 		protected function onQueryFail(error:Object, queryName:String, callback:Function):void
 		{
-			//trace("[RemoteConnection] onQueryFail [" + error.code + "] : [" + error.description + "].");
-			
-			if( error )
-				error.queryName = queryName;
-			else
-				error = { queryName:queryName }
+			// set up query name in the object
+			if( error ) error.queryName = queryName;
+			else error = { queryName:queryName }
 			
 			if( callback )
 				callback( error );
@@ -828,8 +825,8 @@ package com.ludofactory.mobile.core.remoting
 			try
 			{
 				if( error.queryName == "useClass" )
-					error.queryName += "\n Problablement connecté sur le mauvais dépôt amf (recompiler l'appli en changeant d'url ou vérifie le wifi).";
-				Flox.logError(log(error), "<br><br><strong>Erreur PHP :</strong><br><strong>Requête : </strong>{0}<br><br><strong>FaultCode : </strong>{1}<br><br><strong>FaultString : </strong>{2}<br><br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail);
+					error.queryName += "\n onQueryFail : Une requête a échoué.";
+				Flox.logError(log(error), "<br><br><strong>Erreur PHP :</strong><br><strong>Requête : </strong>{0}<br><strong>FaultCode : </strong>{1}<br><strong>FaultString : </strong>{2}<br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail);
 				if( GlobalConfig.DEBUG )
 					ErrorDisplayer.showError(formatString("<strong>Erreur PHP :</strong><br><br><strong>Requête : </strong>{0}<br><br><strong>FaultCode : </strong>{1}<br><br><strong>FaultString : </strong>{2}<br><br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail));
 			} 
