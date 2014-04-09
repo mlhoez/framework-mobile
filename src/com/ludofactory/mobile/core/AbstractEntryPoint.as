@@ -907,7 +907,7 @@ package com.ludofactory.mobile.core
 					_mainMenu.updateContent();
 				}
 				
-				Flox.logInfo("Affichage du <strong>Menu</strong>");
+				Flox.logInfo("<strong>&rarr; Menu</strong>");
 				
 				_footer.displayNewsIcon(false, true);
 				

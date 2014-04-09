@@ -7,9 +7,7 @@ Created : 17 Août 2013
 package com.ludofactory.mobile.navigation.menu
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.gamua.flox.Flox;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.AuthenticationManager;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
