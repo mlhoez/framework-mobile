@@ -829,7 +829,7 @@ package com.ludofactory.mobile.core.remoting
 			{
 				if( error.queryName == "useClass" )
 					error.queryName += "\n Problablement connecté sur le mauvais dépôt amf (recompiler l'appli en changeant d'url ou vérifie le wifi).";
-				Flox.logError(error, "<br><br><strong>Erreur PHP :</strong><br><strong>Requête : </strong>{0}<br><br><strong>FaultCode : </strong>{1}<br><br><strong>FaultString : </strong>{2}<br><br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail);
+				Flox.logError(log(error), "<br><br><strong>Erreur PHP :</strong><br><strong>Requête : </strong>{0}<br><br><strong>FaultCode : </strong>{1}<br><br><strong>FaultString : </strong>{2}<br><br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail);
 				if( GlobalConfig.DEBUG )
 					ErrorDisplayer.showError(formatString("<strong>Erreur PHP :</strong><br><br><strong>Requête : </strong>{0}<br><br><strong>FaultCode : </strong>{1}<br><br><strong>FaultString : </strong>{2}<br><br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail));
 			} 
