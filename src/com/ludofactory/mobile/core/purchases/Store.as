@@ -32,33 +32,59 @@ package com.ludofactory.mobile.core.purchases
 	
 	import starling.events.EventDispatcher;
 	
+	/**
+	 * Store that handles In-App Purchases for the Android, Amazon and Apple Store.
+	 */	
 	public class Store extends EventDispatcher
 	{
 		/**
-		 * Whether the user can make purchases : if the store is available
-		 * on this platform and also if the user have the rights to make
-		 * purchases. */		
+		 * Flox only : for logging purpose when a purchase is cancelled. */		
+		private static const PURCHASE_TYPE_CANCELLED:String = "Annule"
+		/**
+		 * Flox only : for logging purpose when a purchase is validated. */		
+		private static const PURCHASE_TYPE_SUCCEED:String = "Valide"
+		/**
+		 * Flox only : for logging purpose when a purchase has failed. */		
+		private static const PURCHASE_TYPE_FAILED:String = "Echec"
+		
+		/**
+		 * Whether the user can make purchases : if the store is available on this
+		 * platform and also if the user have the rights to make purchases. */		
 		private var _available:Boolean = false;
-		
-		private var _temporaryItemDetails:Vector.<AndroidItemDetails>;
-		
+		/**
+		 * Whether the store have been initialized. */			
+		private var _isInitialized:Boolean = false;
+		/**
+		 * Whether the Android store has been initialized. */		
 		private var _androidInitialized:Boolean = false;
 		
-		private var _currentProductData:StoreData;
-		private var _currentRequest:Object;
+		/**
+		 * Android item details. They are saved here because after the inventory was
+		 * loaded, it is possible that some items must be consumed, so we need to
+		 * cosume them and when it's all complete, we can dispatch an event with those
+		 * item details. */		
+		private var _temporaryItemDetails:Vector.<AndroidItemDetails>;
 		
-		private var _isInitialized:Boolean = false;
+		
+		/**
+		 * Current product data, saved in order track the product being purchased through our whole
+		 * purchase workflow (purchase -> request -> validation -> request validation, etc). */		
+		private var _currentProductData:StoreData;
+		/**
+		 * Current request, saved in order track the product being purchased through our whole
+		 * purchase workflow (purchase -> request -> validation -> request validation, etc). */		
+		private var _currentRequest:Object;
 		
 		public function Store()
 		{
-			
+			// nothing to do
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //
 //
 //
-//												COMMON API
+//											COMMON EXPOSED API
 //
 //
 //
@@ -76,24 +102,22 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		public function initialize():void
 		{
-			log("Amazon supported ? " + AmazonPurchase.isSupported() );
-			
 			if( GlobalConfig.android )
 			{
 				if( GlobalConfig.amazon )
 				{
-					log("[Store] Running Amazon Store.");
+					log("[Store] Initializing Amazon Store.");
 					initializeAmazon();
 				}
 				else
 				{
-					log("[Store] Running Android Store.");
+					log("[Store] Initializing Android Store.");
 					initializeAndroid();
 				}
 			}
 			else if ( GlobalConfig.ios )
 			{
-				log("[Store] Running Apple Store.");
+				log("[Store] Initializing Apple Store.");
 				initializeApple();
 			}
 			else
@@ -106,17 +130,14 @@ package com.ludofactory.mobile.core.purchases
 		}
 		
 		/**
-		 * Request the product details.
+		 * Requests the product details from the OS store.
 		 * 
-		 * <p>In any cases, the Store will dispatch an event of
-		 * type LudoEventType.STORE_PRODUCTS_LOADED.</p>
+		 * <p>If the products could be loaded, the event data won't be null and will contains a vector
+		 * of product details.</p>
 		 * 
-		 * <p>If the products could be loaded, the event data won't be
-		 * null and will contains a vector of product details.<br />
-		 * Depending on the os, the vector will contain objects
-		 * of type <code>AndroidItemDetails</code> if we are on
-		 * Android and objects of type <code>StoreKitProduct</code>
-		 * if we are on iOS.</p>
+		 * <p>Depending on the OS, the vector will contain objects of type <code>AndroidItemDetails
+		 * </code> if we are on Android and objects of type <code>StoreKitProduct</code> if we are 
+		 * on iOS.</p>
 		 */		
 		public function requestProductDetails( productDetails:Vector.<String> ):void
 		{
@@ -129,8 +150,6 @@ package com.ludofactory.mobile.core.purchases
 						var productDetailsArray:Array = [];
 						for(var i:int = 0; i < productDetails.length; i++)
 							productDetailsArray.push( productDetails[i] );
-						productDetailsArray.pop();
-						//TweenMax.delayedCall(10, AmazonPurchase.amazonPurchase.loadItemData, [ productDetailsArray ]);
 						AmazonPurchase.amazonPurchase.loadItemData(productDetailsArray);
 					}
 					else
@@ -140,32 +159,45 @@ package com.ludofactory.mobile.core.purchases
 				}
 				else if( GlobalConfig.ios )
 				{
-					StoreKit.storeKit.loadProductDetails( productDetails );
+					StoreKit.storeKit.loadProductDetails(productDetails);
 				}
 			}
 		}
 		
+//------------------------------------------------------------------------------------------------------------
+//	Purchase request / ticket creation
+		
 		/**
-		 * Request purchase
+		 * Creates a purchase request in the server before calling the native function to
+		 * really buy the pack given in parameters.
 		 * 
-		 * save current product id
+		 * <p>This request will be then saved in order to track the status of the current
+		 * purchase : it will be updated according to the status of the request, whether
+		 * completed, cancelled or failed.</p>
 		 */		
 		public function requestPurchase(productData:StoreData):void
 		{
 			log("[Store] Creating request for " + productData.generatedId);
 			InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+			
+			// save product data in order to track it through the whole process
 			_currentProductData = productData;
+			// create a request in the server
 			Remote.getInstance().createRequest( _currentProductData.databaseOfferId, onRequestPurchaseSuccess, onRequestPurchaseFailure, onRequestPurchaseFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 		}
 		
 		/**
-		 * The request have been created, now we can allow the user to buy the item.
+		 * The request have been created in the server.
+		 * 
+		 * <p>This request is temporary saved here in order to be updated through
+		 * the purchase process. Now we have saved a request, we can start a purchase
+		 * request with the native store functions.</p>
 		 */		
 		private function onRequestPurchaseSuccess(result:Object):void
 		{
 			switch(result.code)
 			{
-				case 1: // ok
+				case 1:
 				{
 					log("[Store] Request created for " + _currentProductData.generatedId);
 					_currentRequest = result.demande;
@@ -173,34 +205,27 @@ package com.ludofactory.mobile.core.purchases
 					break;
 				}
 					
-				default:
-				{
-					onRequestPurchaseFailure();
-					break;
-				}
+				default: { onRequestPurchaseFailure(); break; }
 			}
 		}
 		
 		/**
-		 * The request could not be created.
+		 * The request could not be created in the server.
 		 */		
 		private function onRequestPurchaseFailure(error:Object = null):void
 		{
 			log("[Store] Could not create request for " + _currentProductData.generatedId);
 			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, 5);
-			_currentProductData = null;  
-			
+			_currentProductData = null;
 		}
 		
 		/**
 		 * Purchase a product by its id.
 		 * 
-		 * <p>On android, when the purchase is done we need to
-		 * "consume" the item or the user won't be able to
-		 * purchase it again. If consume is done, we can
-		 * </p>
+		 * <p>On android, when the purchase is done we need to "consume" the item or the
+		 * user won't be able to purchase it again later.</p>
 		 * 
-		 * @param productId Id of the product to purchase.
+		 * @param productId Id of the product to purchase (the id filled in the website).
 		 */		
 		private function purchaseItem(productId:String):void
 		{
@@ -235,13 +260,14 @@ package com.ludofactory.mobile.core.purchases
 //	Success handlers
 		
 		/**
-		 * When a request is validated, we need to update the request
-		 * state in the database (if possible).
+		 * The purchase have been validated by the OS Store.
 		 * 
-		 * result is the result from ios or android, always stringified
-		 * as a JSON.
+		 * <p>This function will update the purchase request / ticket accordingly
+		 * in our server.</p>
+		 * 
+		 * <p>Note that the <code>result</code> parameter is always a JSON.</p>
 		 */		
-		private function validateRequest( result:Object ):void
+		private function validateRequest(result:Object):void
 		{
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
@@ -253,15 +279,22 @@ package com.ludofactory.mobile.core.purchases
 			}
 		}
 		
+		/**
+		 * The request have been validated in our server, here we can notify the user
+		 * and give him the number of credits bought.
+		 */		
 		private function onValidatePurchaseSuccess(result:Object = null):void
 		{
-			log("[Store] Request " + _currentRequest.id + " validated");
+			log("[Store] Request " + _currentRequest.id + " validated.");
 			onPurchaseSuccess( _currentProductData.generatedId, result.nb_credits_ajouter, result.txt, int(result.changement_rang) == 1 ? true : false );
 		}
 		
+		/**
+		 * The request could not be validated in our server.
+		 */		
 		private function onValidatePurchaseFailure(error:Object = null):void
 		{
-			log("[Store]  Request " + _currentRequest.id + " NOT validated");
+			log("[Store]  Request " + _currentRequest.id + " NOT validated.");
 			onPurchaseFail( _currentProductData.generatedId );
 		}
 		
@@ -270,13 +303,12 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function onPurchaseSuccess(itemId:String, numCreditsBought:int, textValue:String, newRank:Boolean):void
 		{
-			log("[Store] Item purchased : " + itemId);
-			
-			Flox.logEvent("Achats du pack [" + itemId+ "]", { Etat:"Valide" } );
-			Flox.logWarning("Achat validé pour le pack " + itemId + " offrant " + numCreditsBought + " crédits.");
-			
+			// clear tracked request and product data
 			_currentProductData = null;
 			_currentRequest = null;
+			
+			Flox.logWarning("Item " + itemId + " successfully purchased, giving " + numCreditsBought + " Game Credits.");
+			logPurchaseEvent(itemId, PURCHASE_TYPE_SUCCEED);
 			
 			dispatchEventWith(LudoEventType.STORE_PURCHASE_SUCCESS, false, { value:numCreditsBought, id:itemId, txt:textValue, newRank:newRank });
 		}
@@ -285,8 +317,10 @@ package com.ludofactory.mobile.core.purchases
 //	Cancel handlers
 		
 		/**
-		 * When a request is cancelled, we need to update the request
-		 * state in the database (if possible).
+		 * The purchase have been cancelled by the user.
+		 * 
+		 * <p>This function will update the purchase request / ticket accordingly
+		 * in our server.</p>
 		 */		
 		private function cancelRequest():void
 		{
@@ -321,14 +355,14 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function onPurchaseCancelled(itemId:String):void
 		{
-			log("[Store] Item purchase cancelled : " + itemId);
-			
-			Flox.logEvent("Achats du pack [" + itemId+ "]", { Etat:"Annule" });
-			
+			// clear tracked request and product data
 			_currentProductData = null;
 			_currentRequest = null;
 			
-			InfoManager.hide(Localizer.getInstance().translate("STORE.PURCHASE_CANCELLED"), InfoContent.ICON_CROSS, 2);
+			log("[Store] Item purchase cancelled : " + itemId);
+			logPurchaseEvent(itemId, PURCHASE_TYPE_CANCELLED);
+			
+			InfoManager.hide(Localizer.getInstance().translate("STORE.PURCHASE_CANCELLED"), InfoContent.ICON_CROSS, 3);
 			dispatchEventWith(LudoEventType.STORE_PURCHASE_CANCELLED, false, itemId);
 		}
 		
@@ -336,8 +370,10 @@ package com.ludofactory.mobile.core.purchases
 //	Failure handlers
 		
 		/**
-		 * When a request is cancelled, we need to update the request
-		 * state in the database (if possible).
+		 * The purchase have failed.
+		 * 
+		 * <p>This function will update the purchase request / ticket accordingly
+		 * in our server.</p>
 		 */		
 		private function failRequest():void
 		{
@@ -372,14 +408,14 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function onPurchaseFail(itemId:String):void
 		{
-			log("[Store] Item not purchased : " + itemId);
-			
-			Flox.logEvent("Achats du pack [" + itemId+ "]", { Etat:"Echec" });
-			
+			// clear tracked request and product data
 			_currentProductData = null;
 			_currentRequest = null;
 			
-			InfoManager.hide(Localizer.getInstance().translate("STORE.PURCHASE_FAILURE"), InfoContent.ICON_CROSS, 2);
+			log("[Store] Failure purchasng item : " + itemId);
+			logPurchaseEvent(itemId, PURCHASE_TYPE_FAILED);
+			
+			InfoManager.hide(Localizer.getInstance().translate("STORE.PURCHASE_FAILURE"), InfoContent.ICON_CROSS, 3);
 			dispatchEventWith(LudoEventType.STORE_PURCHASE_FAILURE, false, itemId);
 		}
 		
@@ -480,7 +516,7 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function onInventoryLoaded(event:AndroidBillingEvent):void
 		{
-			log("[Store] inventory loaded - there are [" + event.itemDetails.length + "] items loaded.");
+			log("[Store] Android inventory loaded - there are " + event.itemDetails.length + " items loaded.");
 			
 			if( event.itemDetails.length > 0 )
 				_temporaryItemDetails = event.itemDetails;
@@ -514,7 +550,7 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function onInventoryNotLoaded(event:AndroidBillingErrorEvent):void
 		{
-			log("Inventaire non chargé : " + log(event) );
+			log("Android inventory not loaded : " + log(event) );
 			if( !_androidInitialized )
 			{
 				dispatchEventWith(LudoEventType.STORE_PRODUCTS_NOT_LOADED, false, event.text);
@@ -749,7 +785,7 @@ package com.ludofactory.mobile.core.purchases
 //
 //
 //
-//													A M A Z O N
+//												A M A Z O N
 //
 //
 //
@@ -762,7 +798,7 @@ package com.ludofactory.mobile.core.purchases
 		{
 			if( !AmazonPurchase.isSupported() )
 			{
-				log("[Store] Amazon store is not available on this platform.");
+				log("[Store] Le store Amazon n'est pas disponible sur cette plateforme.");
 				_available = false;
 				dispatchEventWith(LudoEventType.STORE_INITIALIZED);
 				return;
@@ -844,15 +880,31 @@ package com.ludofactory.mobile.core.purchases
 		}
 		
 //------------------------------------------------------------------------------------------------------------
-//	GET
-//------------------------------------------------------------------------------------------------------------
+//	Getters and utility functions
 		
 		public function get available():Boolean { return _available; }
 		public function get isInitialized():Boolean { return _isInitialized; }
 		
+		/**
+		 * Custom log function to display nicer stats in Flox.
+		 */		
+		private function logPurchaseEvent(itemId:String, purchaseReturnType:String):void
+		{
+			var packNumber:int = int(itemId.charAt( itemId.length - 1 ));
+			switch(packNumber)
+			{
+				case 1:  { Flox.logEvent("Achats", { "Pack 1":purchaseReturnType }); break; }
+				case 2:  { Flox.logEvent("Achats", { "Pack 2":purchaseReturnType }); break; }
+				case 3:  { Flox.logEvent("Achats", { "Pack 3":purchaseReturnType }); break; }
+				case 4:  { Flox.logEvent("Achats", { "Pack 4":purchaseReturnType }); break; }
+				case 5:  { Flox.logEvent("Achats", { "Pack 5":purchaseReturnType }); break; }
+				case 6:  { Flox.logEvent("Achats", { "Pack 6":purchaseReturnType }); break; }
+				default: { Flox.logError("Impossible de loguer l'event " + purchaseReturnType + " du pack " + itemId); break; }
+			}
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Dispose the store.
