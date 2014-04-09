@@ -441,12 +441,13 @@ package com.ludofactory.mobile.core
 				catch(error:Error) 
 				{
 					Flox.logWarning("Impossible de parser le fichier build.prop du téléphone.");
+					Flox.logInfo("Type d'appareil : <strong>{0} sur {1}</strong>", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
 				}
 			}
 			else
 			{
 				// for ios
-				Flox.logInfo("Type d'appareil : <strong>{0}</strong> sur {1}", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
+				Flox.logInfo("Type d'appareil : <strong>{0} sur {1}</strong>", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
 			}
 			
 			_alertData = new AlertData();
