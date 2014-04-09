@@ -13,6 +13,7 @@ package com.ludofactory.mobile.core
 	import com.greensock.TweenMax;
 	import com.hasoffers.nativeExtensions.MobileAppTracker;
 	import com.ludofactory.common.sound.SoundManager;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.authentication.AuthenticationManager;
 	import com.ludofactory.mobile.core.authentication.AuthenticationScreen;
@@ -81,9 +82,13 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.debug.DebugScreen;
 	import com.ludofactory.mobile.navigation.menu.Menu;
 	import com.milkmangames.nativeextensions.GoViral;
+	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceInfo;
+	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceProperties;
+	import com.nl.funkymonkey.android.deviceinfo.NativeDevicePropertiesData;
 	
 	import flash.filesystem.File;
 	import flash.geom.Rectangle;
+	import flash.system.Capabilities;
 	
 	import eu.alebianco.air.extensions.analytics.Analytics;
 	import eu.alebianco.air.extensions.analytics.api.ITracker;
@@ -385,8 +390,48 @@ package com.ludofactory.mobile.core
 			}
 			
 			GlobalConfig.isPhone = DeviceCapabilities.isPhone( Starling.current.nativeStage );
-			
-			Flox.logInfo("Type d'appareil : <strong>{0}</strong> sur {1}", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
+			if( GlobalConfig.android )
+			{
+				// only for android
+				try
+				{
+					// just in case
+					NativeDeviceInfo.parse();
+					
+					log("<tr style='background-color: rgb(117, 221, 255);'>" +
+							"<td style='width: 148px; color: grey; text-align: center;'><strong>Device details :</strong></td>" +
+							"<td style='word-break: break-all;'>" + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_BRAND).value + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_MODEL).value + " (" + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_NAME).value + ")</td>" +
+							"<td style='word-break: break-all;'>Manufactured by " + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_MANUFACTURER).value + "</td>" +
+						"</tr>" +
+						"<tr style='background-color: rgb(117, 221, 255);'>" +
+							"<td style='width: 148px; color: grey; text-align: center;'><strong>Screen details :</strong></td>" +
+							"<td style='word-break: break-all;'>OS name " + NativeDevicePropertiesData(NativeDeviceProperties.OS_NAME).value + ((GlobalConfig.android || GlobalConfig.ios) ? "" : "(Simulateur)") + " sur " + (GlobalConfig.isPhone ? "Smartphone" : "Tablette") + "</td>" +
+							"<td style='word-break: break-all;'>OS version " + NativeDevicePropertiesData(NativeDeviceProperties.OS_VERSION).value + " (Build : " + NativeDevicePropertiesData(NativeDeviceProperties.OS_BUILD).value + "</td>" +
+							"<td style='word-break: break-all;'>SDK version " + NativeDevicePropertiesData(NativeDeviceProperties.OS_SDK_VERSION).value + " (" + NativeDevicePropertiesData(NativeDeviceProperties.OS_SDK_DESCRIPTION).value + "</td>" +
+						"</tr>" +
+						"<tr style='background-color: rgb(117, 221, 255);'>" +
+							"<td style='width: 148px; color: grey; text-align: center;'><strong>Screen details :</strong></td>" +
+							"<td style='word-break: break-all;'>Density " + NativeDevicePropertiesData(NativeDeviceProperties.LCD_DENSITY).value + " - résolution " + Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY + "</td>" +
+						"</tr>" +
+						"<tr style='background-color: rgb(117, 221, 255);'>" +
+							"<td style='width: 148px; color: grey; text-align: center;'><strong>Hardware and software details :</strong></td>" +
+							"<td style='word-break: break-all;'>Board " +  NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_BOARD).value + "</td>" +
+							"<td style='word-break: break-all;'>CPU " +  NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_CPU).value + "</td>" +
+							"<td style='word-break: break-all;'>OpenGL ES version " +  NativeDevicePropertiesData(NativeDeviceProperties.OPENGLES_VERSION).value + "</td>" +
+							"<td style='word-break: break-all;'>Heap size " +  NativeDevicePropertiesData(NativeDeviceProperties.DALVIK_HEAPSIZE).value + "</td>" +
+						"</tr>"
+					);
+				} 
+				catch(error:Error) 
+				{
+					Flox.logWarning("Impossible de parser le fichier build.prop du téléphone.");
+				}
+			}
+			else
+			{
+				// for ios
+				Flox.logInfo("Type d'appareil : <strong>{0}</strong> sur {1}", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
+			}
 			
 			_alertData = new AlertData();
 			_alertData.addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onPushUpdate);
