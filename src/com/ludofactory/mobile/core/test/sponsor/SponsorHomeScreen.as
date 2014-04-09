@@ -122,10 +122,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			
 			_rewardValueLabel = new Label();
 			_rewardValueLabel.touchable = false;
-			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 )
-				_rewardValueLabel.text = Utility.splitThousands( Number(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_VALUE)) );
-			else
-				_rewardValueLabel.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_VALUE);
+			_rewardValueLabel.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_VALUE); // always a String well formatted : whether "30 €" or "100 000"
 			_mainContainer.addChild(_rewardValueLabel);
 			_rewardValueLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 110 : 140), 0xffe900, false, false, null, null, null, TextFormatAlign.CENTER);
 			_rewardValueLabel.textRendererProperties.nativeFilters = [ new GlowFilter(0x006173, 1, scaleAndRoundToDpi(12), scaleAndRoundToDpi(12), scaleAndRoundToDpi(10)) ];
@@ -241,14 +238,7 @@ package com.ludofactory.mobile.core.test.sponsor
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE, result.parrainage_gain_type);
 				
 				_byFilleulLabel.text = Localizer.getInstance().translate( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? "SPONSOR_HOME.BY_FILLEUL_POINTS" : "SPONSOR_HOME.BY_FILLEUL_EURO" );
-				
-				// avant
-				//_rewardValueLabel.text = Utility.splitThousands( Number(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_VALUE)) );
-				// FIXME peut être faire un test is String ...
-				if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 )
-					_rewardValueLabel.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_VALUE);
-				else
-					_rewardValueLabel.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_VALUE);
+				_rewardValueLabel.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_VALUE);
 			}
 		}
 		

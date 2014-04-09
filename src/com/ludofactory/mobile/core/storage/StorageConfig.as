@@ -221,7 +221,7 @@ package com.ludofactory.mobile.core.storage
 		 * Whether some points or money (ex : "40€" or "100 000").
 		 * Default is "100000"
 		 */		
-		public static const DEFAULT_SPONSOR_REWARD_VALUE:String = "100000";
+		public static const DEFAULT_SPONSOR_REWARD_VALUE:String = "100 000";
 		
 		/**
 		 * <strong>This is the default value for the sponsor
