@@ -275,7 +275,14 @@ package com.ludofactory.mobile.core.remoting
 			if( commandName in _activeCalls )
 				return;
 			
-			log("[NetConnectionManager] Calling " + commandName + " with parameters : " + JSON.stringify( args[2] ));
+			if( GlobalConfig.DEBUG )
+			{
+				log("[NetConnectionManager] Calling " + commandName + " with parameters : " + JSON.stringify( args[2] ));
+			}
+			else
+			{
+				log("[NetConnectionManager] Calling " + commandName + (args[1] == "pushPartie" ? " with parameters : " + _cryptageDef.encrypt(JSON.stringify(args[2])) : "") );
+			}
 			
 			var responderManager:NetResponder = createResponder(callbacks, commandName, maxAttempts, screenName, args);
 			
