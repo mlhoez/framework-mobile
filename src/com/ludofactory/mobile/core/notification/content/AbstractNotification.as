@@ -147,7 +147,7 @@ package com.ludofactory.mobile.core.notification.content
 			_topRightDecoration.scaleX = -1;
 			_topLeftDecoration.y = _topRightDecoration.y = padTopDeco;
 			_topLeftDecoration.x = padSideDeco;
-			_topRightDecoration.x = this.actualWidth - padSideDeco - _topRightDecoration.width;
+			_topRightDecoration.x = (this.actualWidth - padSideDeco - _topRightDecoration.width) << 0;
 			
 			_container.validate();
 			if( _container.height > maximumContainerHeight )
