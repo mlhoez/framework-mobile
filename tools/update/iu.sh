@@ -19,8 +19,8 @@
 #
 # Open the Terminal and navigate to the folder where this script is located.
 #
-# Before running the script, duplicate the file "sdks.config.example" and replace the actual
-# paths by the ones matching your computer and rename to file for 'sdks.config'.
+# Before running the script, duplicate the file "sdks.config.example" whithin the "config/" folder
+# and replace the actual paths by the ones matching your computer and rename to file for 'sdks.config'.
 #
 # Then run the script by typing "sh iu.sh" in the Terminal.
 #
@@ -37,9 +37,7 @@ then
 fi
 
 # Reading config files
-source ./config/init.config
-source ./config/repos.config
-source ./config/sdks.config
+source ./build.config
 
 cloneRepo ()
 {

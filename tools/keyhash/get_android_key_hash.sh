@@ -1,12 +1,28 @@
 #!/bin/sh
 
+# -------------------------------------------
+# Copyright © 2006-2014 Ludo Factory
+# Framework mobile
+# Author  : Maxime Lhoez
+# Created : 10 avril 2013
+#
+# This is a script used to retrieve the two KeyHash
+# of an Android application :
+# 	- The first is for the debug mode of the app
+#	- The second is for the release mode of the app
+#
+# -------------------------------------------
+
+# Reading config files
+source ./build.config
+
 # Développement
 echo "Key Hash de développement"
-keytool -export -alias 1 -keystore "$1" -storetype pkcs12 -storepass "$2" | openssl sha1 -binary | openssl enc -a -e
+keytool -export -alias 1 -keystore "${debug_cert_path}" -storetype pkcs12 -storepass "${debug_cert_password}" | openssl sha1 -binary | openssl enc -a -e
 
 # Production
 echo "Key Hash de production :"
-keytool -export -alias 1 -keystore "$3" -storetype pkcs12 -storepass "$4" | openssl sha1 -binary | openssl enc -a -e
+keytool -export -alias 1 -keystore "${prod_cert_path}" -storetype pkcs12 -storepass "${prod_cert_password}" | openssl sha1 -binary | openssl enc -a -e
 
 ###########################################################
 # Sauvegarde

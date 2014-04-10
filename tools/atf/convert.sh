@@ -25,11 +25,16 @@
 #
 # Enjoy !
 #
+# No block compression            : ./png2atf -q 20 -n 0,0 -r -i gui_1.png -o gui_1.atf
+# Block compression (Android)     : ./png2atf -c d,e -n 0,0 -r -i gui_1.png -o gui_1.atf
+# Block compression (Apple)       : ./png2atf -c p -n 0,0 -r -i gui_1.png -o gui_1.atf
+# Block compression (All formats) : ./png2atf -c -n 0,0 -r -i gui_1.png -o gui_1.atf
+#
 # ----------------------------------------------------------------------------------------
 
 clear
 
-echo $(uname -s)
+# echo $(uname -s)
 
 # navigate to "input" folder
 cd "input"
@@ -38,18 +43,4 @@ do
 	# convert all pngs in the folder and output the result in the "output" folder
 	echo "Converting ${i%.*}..."
 	../png2atf -q 20 -n 0,0 -r -i "${i}" -o "../output/${i%.*}.atf"
-done  
-
-#./png2atf -i "toconvert/${file}.png" -o "converted/${file}.atf"
-
-# Bons paramètres :
-#./png2atf -q 20 -n 0,0 -r -i gui_1.png -o gui_1.atf
-
-# Compressé format Android, résultat bof bof
-#./png2atf -c d,e -n 0,0 -r -i gui_1.png -o gui_1.atf
-
-# Compressé format Apple, résultat bof bof
-#./png2atf -c p -n 0,0 -r -i gui_1.png -o gui_1.atf
-
-# Compressé tous formats, résultat bof bof
-#./png2atf -c -n 0,0 -r -i gui_1.png -o gui_1.atf
+done

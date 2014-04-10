@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Mobile tools">
+
+    <!-- Key Hash -->
+    <target name="Get Android Key Hash" description="Retrieve Android Key Hashes (debug and release mode)">
+    	<exec dir="keyhash" executable="/bin/sh">
+    		<arg value="get_android_key_hash.sh"/>
+    	</exec>
+    </target>
+    
+     <!-- ATF -->
+    <target name="Create ATF" description="Generates ATF files from PNGs.">
+    	<exec dir="atf" executable="/bin/sh">
+    		<arg value="convert.sh"/>
+    	</exec>
+    </target>
+    
+     <!-- Libraries and ANEs -->
+    <target name="Update libraries and ANEs" description="Updates all the mobile libraries and ANEs">
+    	<exec dir="update" executable="/bin/sh">
+    		<arg value="iu.sh"/>
+    	</exec>
+    </target>
+
+</project>
