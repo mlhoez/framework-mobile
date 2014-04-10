@@ -80,7 +80,7 @@ package com.ludofactory.mobile.core.storage
 				// get here at each launch., all other properties will be initialized the
 				// first time they are used.
 				
-				log("[Storage] First initialization.");
+				log("[Storage] This is the first launch of the app.");
 				EncryptedLocalStore.reset();
 				setProperty(StorageConfig.PROPERTY_FIRST_LAUNCH, true);
 			}
