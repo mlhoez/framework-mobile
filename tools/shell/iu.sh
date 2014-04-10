@@ -1,6 +1,32 @@
 #!/bin/sh
 
-# Initializes (if necessary) and updates all repositories (libraries and ANEs)
+# -------------------------------------------
+# Copyright © 2006-2014 Ludo Factory
+# Framework mobile
+# Author  : Maxime Lhoez
+# Created : 9 avril 2013
+#
+# This is a script used to automate the creation
+# and update of all git repositories (libraries
+# and ANEs) - whether from remote and upstream
+# sources - related to the mobile development.
+#
+# -------------------------------------------
+
+# ----------------------------------------------------------------------------------------
+#
+# 									HOW TO USE THE SCRIPT ?
+#
+# Open the Terminal and navigate to the folder where this script is located.
+#
+# Before running the script, duplicate the file "sdks.config.example" and replace the actual
+# paths by the ones matching your computer and rename to file for 'sdks.config'.
+#
+# Then run the script by typing "sh iu.sh" in the Terminal.
+#
+# Enjoy !
+#
+# ----------------------------------------------------------------------------------------
 
 clear
 
