@@ -123,7 +123,7 @@ package com.ludofactory.mobile.core.test.store
 		
 		override protected function layout():void
 		{
-			width = owner.width / ( GlobalConfig.isPhone ? 2 : 3);
+			width = owner.width / ( GlobalConfig.isPhone ? (GlobalConfig.LANDSCAPE ? 3 : 2) : 3);
 			height = scaleAndRoundToDpi(270);
 			
 			_backgroundSkin.width = actualWidth - _paddingLeft - _paddingRight;

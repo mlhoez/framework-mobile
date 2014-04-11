@@ -97,13 +97,13 @@ package com.ludofactory.mobile.core.shop.bid
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_message.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
+				_message.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? (GlobalConfig.LANDSCAPE ? 5 : 10) : (GlobalConfig.LANDSCAPE ? 15 : 30));
 				_message.width = actualWidth * 0.9;
 				_message.x = (actualWidth - _message.width) * 0.5;
 				_message.validate();
 				
 				_bidsMenu.width = actualWidth;
-				_bidsMenu.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				_bidsMenu.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? (GlobalConfig.LANDSCAPE ? 10 : 20) : (GlobalConfig.LANDSCAPE ? 20 : 40));
 				_bidsMenu.validate();
 				
 				_pendingBidsContainer.y = _listBackground.y = _bidsMenu.y + _bidsMenu.height;

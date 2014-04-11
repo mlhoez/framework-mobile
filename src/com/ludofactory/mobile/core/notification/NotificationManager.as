@@ -1,9 +1,9 @@
 package com.ludofactory.mobile.core.notification
 {
 	import com.greensock.TweenMax;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
+	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
@@ -60,18 +60,18 @@ package com.ludofactory.mobile.core.notification
 			const calculatedRoot:DisplayObjectContainer = Starling.current.stage;
 			
 			_overlay = defaultOverlayFactory();
-			_overlay.width = calculatedRoot.stage.stageWidth;
-			_overlay.height = calculatedRoot.stage.stageHeight;
+			_overlay.width = GlobalConfig.stageWidth;
+			_overlay.height = GlobalConfig.stageHeight;
 			calculatedRoot.addChild(_overlay);
 			
 			_currentNotification = notificationContent;
 			_currentNotification.visible = true;
 			_currentNotification.touchable = false;
-			_currentNotification.width = calculatedRoot.stage.stageWidth;
+			_currentNotification.width = GlobalConfig.stageWidth;
 			_currentNotification.addEventListener(LudoEventType.CLOSE_NOTIFICATION, removeNotification);
 			calculatedRoot.addChild(_currentNotification);
 			_currentNotification.validate();
-			_currentNotification.y = calculatedRoot.stage.stageHeight;
+			_currentNotification.y = GlobalConfig.stageHeight;
 			if( flatten )
 				_currentNotification.flatten();
 			
@@ -91,7 +91,7 @@ package com.ludofactory.mobile.core.notification
 		 */		
 		public static function replaceNotification():void
 		{
-			const correctNotificationY:Number = Starling.current.stage.stage.stageHeight - _currentNotification.height;
+			const correctNotificationY:Number = GlobalConfig.stageHeight - _currentNotification.height;
 			if( _currentNotification.y != correctNotificationY )
 			{
 				//TweenMax.killTweensOf(_currentNotification); // lag
@@ -145,7 +145,9 @@ package com.ludofactory.mobile.core.notification
 			if( !_currentNotification )
 				return;
 			
-			Starling.current.root.filter = null;
+			// doing this will avoid a bug where the onComplete function of replaceNotification()
+			// is called after the tweened popup have been removed
+			TweenMax.killTweensOf(_currentNotification);
 			
 			_overlay.removeEventListener(TouchEvent.TOUCH, onCloseNotification);
 			

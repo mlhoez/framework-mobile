@@ -70,18 +70,21 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 			
 			_headerTitle = Localizer.getInstance().translate("MY_GIFTS.HEADER_TITLE");
 			
-			_logo = new Image( AbstractEntryPoint.assets.getTexture( "menu-icon-my-gifts" ) );
-			_logo.scaleX = _logo.scaleY = GlobalConfig.dpiScale;
-			addChild( _logo );
-			
-			_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
-			_listShadow.setVertexColor(0, 0xffffff);
-			_listShadow.setVertexAlpha(0, 0);
-			_listShadow.setVertexColor(1, 0xffffff);
-			_listShadow.setVertexAlpha(1, 0);
-			_listShadow.setVertexAlpha(2, 0.1);
-			_listShadow.setVertexAlpha(3, 0.1);
-			addChild(_listShadow);
+			if( !GlobalConfig.LANDSCAPE )
+			{
+				_logo = new Image( AbstractEntryPoint.assets.getTexture( "menu-icon-my-gifts" ) );
+				_logo.scaleX = _logo.scaleY = GlobalConfig.dpiScale;
+				addChild( _logo );
+				
+				_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
+				_listShadow.setVertexColor(0, 0xffffff);
+				_listShadow.setVertexAlpha(0, 0);
+				_listShadow.setVertexColor(1, 0xffffff);
+				_listShadow.setVertexAlpha(1, 0);
+				_listShadow.setVertexAlpha(2, 0.1);
+				_listShadow.setVertexAlpha(3, 0.1);
+				addChild(_listShadow);
+			}
 			
 			_list = new CustomGroupedList();
 			_list.isSelectable = false;
@@ -123,13 +126,16 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_logo.x = (actualWidth - _logo.width) * 0.5;
-				_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+				if( !GlobalConfig.LANDSCAPE )
+				{
+					_logo.x = (actualWidth - _logo.width) * 0.5;
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					
+					_listShadow.y = _logo.y + _logo.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );;
+					_listShadow.width = this.actualWidth;
+				}
 				
-				_listShadow.y = _logo.y + _logo.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );;
-				_listShadow.width = this.actualWidth;
-				
-				_list.y = _listShadow.y + _listShadow.height;
+				_list.y = GlobalConfig.LANDSCAPE ? 0 : (_listShadow.y + _listShadow.height);
 				_list.width = this.actualWidth;
 				_list.height = this.actualHeight - _list.y;
 				
@@ -356,11 +362,17 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 		
 		override public function dispose():void
 		{
-			_logo.removeFromParent(true);
-			_logo = null;
+			if( _logo )
+			{
+				_logo.removeFromParent(true);
+				_logo = null;
+			}
 			
-			_listShadow.removeFromParent(true);
-			_listShadow = null;
+			if( _listShadow )
+			{
+				_listShadow.removeFromParent(true);
+				_listShadow = null;
+			}
 			
 			_list.removeEventListener(LudoEventType.LIST_BOTTOM_UPDATE, onBottomUpdate);
 			_list.removeFromParent(true);

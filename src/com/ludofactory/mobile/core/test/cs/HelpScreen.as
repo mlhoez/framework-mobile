@@ -85,26 +85,26 @@ package com.ludofactory.mobile.core.test.cs
 			
 			_faqIcon = new ImageLoader();
 			_faqIcon.source = AbstractEntryPoint.assets.getTexture("help-icon");
-			_faqIcon.scaleX = _faqIcon.scaleY = GlobalConfig.dpiScale;
+			_faqIcon.scaleX = _faqIcon.scaleY = GlobalConfig.dpiScale * (GlobalConfig.LANDSCAPE ? 0.5 : 1);
 			_faqIcon.snapToPixels = true;
 			
 			_faqButton = new Button();
 			_faqButton.nameList.add( Theme.BUTTON_TRANSPARENT_BLUE );
 			_faqButton.defaultIcon = _faqIcon;
-			_faqButton.iconPosition = Button.ICON_POSITION_TOP;
+			_faqButton.iconPosition = GlobalConfig.LANDSCAPE ? Button.ICON_POSITION_LEFT : Button.ICON_POSITION_TOP;
 			_faqButton.addEventListener(Event.TRIGGERED, onFaqSelected);
 			_faqButton.label = Localizer.getInstance().translate("CUSTOMER_SERVICE_HOME.FAQ_BUTTON_LABEL");
 			addChild(_faqButton);
 			
 			_csIcon = new ImageLoader();
 			_csIcon.source = AbstractEntryPoint.assets.getTexture("cs-icon");
-			_csIcon.scaleX = _csIcon.scaleY = GlobalConfig.dpiScale;
+			_csIcon.scaleX = _csIcon.scaleY = GlobalConfig.dpiScale * (GlobalConfig.LANDSCAPE ? 0.5 : 1);
 			_csIcon.snapToPixels = true;
 			
 			_contactCustomerServiceButton = new Button();
 			_contactCustomerServiceButton.nameList.add( Theme.BUTTON_TRANSPARENT_BLUE );
 			_contactCustomerServiceButton.defaultIcon = _csIcon;
-			_contactCustomerServiceButton.iconPosition = Button.ICON_POSITION_TOP;
+			_contactCustomerServiceButton.iconPosition = GlobalConfig.LANDSCAPE ? Button.ICON_POSITION_LEFT : Button.ICON_POSITION_TOP;
 			_contactCustomerServiceButton.addEventListener(Event.TRIGGERED, onContactCustomerServiceSelected);
 			_contactCustomerServiceButton.label = Localizer.getInstance().translate("CUSTOMER_SERVICE_HOME.CONTACT_BUTTON_LABEL");
 			addChild(_contactCustomerServiceButton);

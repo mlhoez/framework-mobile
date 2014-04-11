@@ -165,8 +165,8 @@ package com.ludofactory.mobile.core.shop.vip
 		{
 			if( !_elementsPositioned )
 			{
-				this.width = _stripe.width = _title.width = this.owner.width / 3;
-				this.height = this.owner.height / 3;
+				this.width = _stripe.width = _title.width = this.owner.width / (GlobalConfig.LANDSCAPE ? 4 : 3);
+				this.height = this.owner.height / (GlobalConfig.LANDSCAPE ? 2 : 3);
 				
 				_stripe.y = this.actualHeight - _stripe.height;
 				_title.validate();

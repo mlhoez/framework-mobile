@@ -88,17 +88,20 @@ package com.ludofactory.mobile.core.test.highscore
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 48), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
-			_shadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
-			_shadow.setVertexColor(0, 0xffffff);
-			_shadow.setVertexAlpha(0, 0);
-			_shadow.setVertexColor(1, 0xffffff);
-			_shadow.setVertexAlpha(1, 0);
-			_shadow.setVertexAlpha(2, 0.1);
-			_shadow.setVertexAlpha(3, 0.1);
-			addChild(_shadow);
-			
-			_background = new Quad(5, 5);
-			addChild(_background);
+			if( !GlobalConfig.LANDSCAPE )
+			{
+				_shadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
+				_shadow.setVertexColor(0, 0xffffff);
+				_shadow.setVertexAlpha(0, 0);
+				_shadow.setVertexColor(1, 0xffffff);
+				_shadow.setVertexAlpha(1, 0);
+				_shadow.setVertexAlpha(2, 0.1);
+				_shadow.setVertexAlpha(3, 0.1);
+				addChild(_shadow);
+				
+				_background = new Quad(5, 5);
+				addChild(_background);
+			}
 			
 			_internationalIcon = new ImageLoader();
 			_internationalIcon.source = AbstractEntryPoint.assets.getTexture("flag-international");
@@ -166,39 +169,65 @@ package com.ludofactory.mobile.core.test.highscore
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_icon.x = (actualWidth - _icon.width) * 0.5;
-				_icon.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
-				
-				_message.y = _icon.y + _icon.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
-				_message.width = actualWidth * 0.8;
-				_message.x = (actualWidth - _message.width) * 0.5;
-				_message.validate();
-				
-				_shadow.y = _message.y + _message.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
-				_shadow.width = this.actualWidth;
-				
-				_background.y = _shadow.y + _shadow.height;
-				_background.width = actualWidth;
-				_background.height = actualHeight - _background.y;
-				
-				var gap:int = (actualHeight - _shadow.y - _shadow.y) / 4;
-				
-				_internationalButton.width = _nationalButton.width = _facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-				_internationalButton.x = _nationalButton.x = _facebookButton.x = (actualWidth - _internationalButton.width) * 0.5;
-				
-				_internationalButton.y = _background.y + gap;
-				_internationalButton.validate();
-				
-				_nationalButton.y = _internationalButton.y + _internationalButton.height + gap;
-				_nationalButton.validate();
-				
-				_facebookButton.y = _nationalButton.y + _nationalButton.height + gap;
+				if( GlobalConfig.LANDSCAPE )
+				{
+					_icon.x = (((actualWidth * 0.45) - _icon.width) * 0.5) << 0;
+					
+					_message.width = actualWidth * 0.8;
+					_message.x = (((actualWidth * 0.5) - _message.width) * 0.5) << 0;
+					_message.validate();
+					
+					_icon.y =  ( (actualHeight - (_icon.height + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 25 : 50))) * 0.5) << 0;
+					_message.y = _icon.y + _icon.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 25 : 50 );
+					
+					_internationalButton.width = _nationalButton.width = _facebookButton.width = actualWidth * 0.45;
+					_internationalButton.x = _nationalButton.x = _facebookButton.x = actualWidth * 0.5 + ((actualWidth * 0.5) - _internationalButton.width) * 0.5;
+					
+					_internationalButton.validate();
+					var gap:int = (actualHeight - (_internationalButton.height * 3)) / 4;
+					
+					_internationalButton.y = gap;
+					
+					_nationalButton.y = _internationalButton.y + _internationalButton.height + gap;
+					_nationalButton.validate();
+					
+					_facebookButton.y = _nationalButton.y + _nationalButton.height + gap;
+				}
+				else
+				{
+					_icon.x = (actualWidth - _icon.width) * 0.5;
+					_icon.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					
+					_message.y = _icon.y + _icon.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					_message.width = actualWidth * 0.8;
+					_message.x = (actualWidth - _message.width) * 0.5;
+					_message.validate();
+					
+					_shadow.y = _message.y + _message.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					_shadow.width = this.actualWidth;
+					
+					_background.y = _shadow.y + _shadow.height;
+					_background.width = actualWidth;
+					_background.height = actualHeight - _background.y;
+					
+					var gap:int = (actualHeight - _shadow.y - _shadow.y) / 4;
+					
+					_internationalButton.width = _nationalButton.width = _facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_internationalButton.x = _nationalButton.x = _facebookButton.x = (actualWidth - _internationalButton.width) * 0.5;
+					
+					_internationalButton.y = _background.y + gap;
+					_internationalButton.validate();
+					
+					_nationalButton.y = _internationalButton.y + _internationalButton.height + gap;
+					_nationalButton.validate();
+					
+					_facebookButton.y = _nationalButton.y + _nationalButton.height + gap;
+				}
 			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Show international ranking.
@@ -232,10 +261,48 @@ package com.ludofactory.mobile.core.test.highscore
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{
+			_icon.removeFromParent(true);
+			_icon = null;
+			
+			_message.removeFromParent(true);
+			_message = null;
+			
+			if( _shadow )
+			{
+				_shadow.removeFromParent(true);
+				_shadow = null;
+			}
+			
+			if( _background )
+			{
+				_background.removeFromParent(true);
+				_background = null;
+			}
+			
+			_internationalIcon.removeFromParent(true);
+			_internationalIcon = null;
+			
+			_internationalButton.removeEventListener(Event.TRIGGERED, onShowInternational);
+			_internationalButton.removeFromParent(true);
+			_internationalButton = null;
+			
+			_nationalIcon.removeFromParent(true);
+			_nationalIcon = null;
+			
+			_nationalButton.removeEventListener(Event.TRIGGERED, onShowNational);
+			_nationalButton.removeFromParent(true);
+			_nationalButton = null;
+			
+			_facebookIcon.removeFromParent(true);
+			_facebookIcon = null;
+			
+			_facebookButton.removeEventListener(Event.TRIGGERED, onShowFacebook);
+			_facebookButton.removeFromParent(true);
+			_facebookButton = null;
+			
 			
 			super.dispose();
 		}

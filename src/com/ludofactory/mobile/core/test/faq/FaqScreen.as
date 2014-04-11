@@ -59,23 +59,26 @@ package com.ludofactory.mobile.core.test.faq
 			
 			_headerTitle = Localizer.getInstance().translate("FAQ.HEADER_TITLE");
 			
-			_logo = new Image( AbstractEntryPoint.assets.getTexture( "help-big-icon" ) );
-			_logo.scaleX = _logo.scaleY = GlobalConfig.dpiScale;
-			addChild( _logo );
+			if( !GlobalConfig.LANDSCAPE )
+			{
+				_logo = new Image( AbstractEntryPoint.assets.getTexture( "help-big-icon" ) );
+				_logo.scaleX = _logo.scaleY = GlobalConfig.dpiScale;
+				addChild( _logo );
+				
+				_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
+				_listShadow.setVertexColor(0, 0xffffff);
+				_listShadow.setVertexAlpha(0, 0);
+				_listShadow.setVertexColor(1, 0xffffff);
+				_listShadow.setVertexAlpha(1, 0);
+				_listShadow.setVertexAlpha(2, 0.1);
+				_listShadow.setVertexAlpha(3, 0.1);
+				addChild(_listShadow);
+			}
 			
 			_loader = new MovieClip( AbstractEntryPoint.assets.getTextures("MiniLoader") );
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
 			Starling.juggler.add( _loader );
 			addChild(_loader);
-			
-			_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
-			_listShadow.setVertexColor(0, 0xffffff);
-			_listShadow.setVertexAlpha(0, 0);
-			_listShadow.setVertexColor(1, 0xffffff);
-			_listShadow.setVertexAlpha(1, 0);
-			_listShadow.setVertexAlpha(2, 0.1);
-			_listShadow.setVertexAlpha(3, 0.1);
-			addChild(_listShadow);
 			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
@@ -92,21 +95,25 @@ package com.ludofactory.mobile.core.test.faq
 			
 			if( isInvalid( INVALIDATION_FLAG_SIZE ) )
 			{
-				_logo.x = (actualWidth - _logo.width) * 0.5;
-				_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
 				
-				_listShadow.y = _logo.y + _logo.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
-				_listShadow.width = this.actualWidth;
+				if( !GlobalConfig.LANDSCAPE )
+				{
+					_logo.x = (actualWidth - _logo.width) * 0.5;
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					
+					_listShadow.y = _logo.y + _logo.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					_listShadow.width = this.actualWidth;
+				}
 				
 				if( _loader )
 				{
 					_loader.x = this.actualWidth * 0.5;
-					_loader.y = (_listShadow.y + _listShadow.height) + ((actualHeight - (_listShadow.y + _listShadow.height)) - _loader.height) * 0.5;
+					_loader.y = GlobalConfig.LANDSCAPE ? ((actualHeight - _loader.height) * 0.5) : ((_listShadow.y + _listShadow.height) + ((actualHeight - (_listShadow.y + _listShadow.height)) - _loader.height) * 0.5);
 				}
 				
 				if( _accordion )
 				{
-					_accordion.y = _listShadow.y + _listShadow.height;
+					_accordion.y = GlobalConfig.LANDSCAPE ? 0 : (_listShadow.y + _listShadow.height);
 					_accordion.width = this.actualWidth;
 					_accordion.height = this.actualHeight - _accordion.y;
 				}

@@ -26,6 +26,10 @@ package com.ludofactory.mobile.core.test.config
 		public static const DEBUG:Boolean = true;
 		
 		/**
+		 * Whether the screen is in landscape mode. */		
+		public static const LANDSCAPE:Boolean = true;
+		
+		/**
 		 * Enables the demo mode, displaying the touch inputs on the screen
 		 * with the TouchMarkerManager. Is should be disabled when in production !
 		 * 

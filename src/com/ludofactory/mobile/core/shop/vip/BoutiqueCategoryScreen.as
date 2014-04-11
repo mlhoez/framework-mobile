@@ -149,13 +149,12 @@ package com.ludofactory.mobile.core.shop.vip
 			{
 				if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SHOP_ENABLED) == true )
 				{
-					_message.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
+					_message.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? (GlobalConfig.LANDSCAPE ? 5 : 10) : (GlobalConfig.LANDSCAPE ? 15 : 30));
 					_message.width = actualWidth * 0.9;
 					_message.x = (actualWidth - _message.width) * 0.5;
 					_message.validate();
 					
-					
-					_listShadow.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_listShadow.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? (GlobalConfig.LANDSCAPE ? 10 : 20) : (GlobalConfig.LANDSCAPE ? 20 : 40));
 					_listShadow.width = actualWidth;
 					
 					_list.y = _retryContainer.y = _listShadow.y + _listShadow.height;
