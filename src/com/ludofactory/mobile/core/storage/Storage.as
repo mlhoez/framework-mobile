@@ -283,8 +283,6 @@ package com.ludofactory.mobile.core.storage
 		 * @param propertyName Name of the property to retrieve.
 		 * 
 		 * @return The value assigned to the property given in parameter.
-		 * 
-		 * @see
 		 */		
 		public function getProperty(propertyName:String):*
 		{
