@@ -26,7 +26,6 @@ package com.ludofactory.mobile.core
 	import flash.display.StageAlign;
 	import flash.display.StageOrientation;
 	import flash.display.StageScaleMode;
-	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.events.UncaughtErrorEvent;
 	import flash.filesystem.File;
@@ -83,13 +82,14 @@ package com.ludofactory.mobile.core
 				stage.align = StageAlign.TOP_LEFT;
 			}
 			
+			SoundMixer.audioPlaybackMode = AudioPlaybackMode.AMBIENT;
 			mouseEnabled = mouseChildren = false;
 			showLaunchImage();
 			loaderInfo.addEventListener(flash.events.Event.COMPLETE, onAppLoaded);
 		}
 		
 		/**
-		 * Add the Splash Screen
+		 * Adds the Splash Screen.
 		 * 
 		 * A png file for the landscape mode is needed only if the application can start in 
 		 * this orientation, which is not our case because we force the portrait orientation
@@ -188,23 +188,19 @@ package com.ludofactory.mobile.core
 			
 			setGameInfo();
 			
-			Flox.init(GlobalConfig.DEBUG ? AbstractGameInfo.FLOX_DEBUG_ID : AbstractGameInfo.FLOX_ID, GlobalConfig.DEBUG ? AbstractGameInfo.FLOX_DEBUG_KEY : AbstractGameInfo.FLOX_KEY, AbstractGameInfo.GAME_VERSION);
+			Flox.init(AbstractGameInfo.FLOX_ID, AbstractGameInfo.FLOX_KEY, AbstractGameInfo.GAME_VERSION);
 			Flox.traceLogs = false;
-			Flox.logInfo("Mode debug : " + GlobalConfig.DEBUG);
 			
-			SoundMixer.audioPlaybackMode = AudioPlaybackMode.AMBIENT;
-			
-			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0 ? true:false;
-			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0 ? true:false;
+			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0 ? true : false;
+			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0 ? true : false;
 			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
-			GlobalConfig.platformName = GlobalConfig.ios ? "ios":"android";
+			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : "android";
 			GlobalConfig.deviceId = AirDeviceId.getInstance().getID("ludofactory");
 			
 			// launch Starling
 			Starling.multitouchEnabled = false;  // useful on mobile devices
 			Starling.handleLostContext = !GlobalConfig.ios;  // not necessary on iOS. Saves a lot of memory!
-			
-			_starling = new Starling(_rootClass, stage);
+			_starling = new Starling(_rootClass, stage, null, null, "auto", "auto");
 			_starling.enableErrorChecking = GlobalConfig.DEBUG;
 			_starling.simulateMultitouch  = false;
 			_starling.addEventListener(starling.events.Event.ROOT_CREATED, onRootCreated);
