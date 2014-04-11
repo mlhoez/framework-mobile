@@ -213,7 +213,7 @@ package com.ludofactory.mobile.core
 			addChild(_loader);
 			
 			var basePath:String = File.applicationDirectory.resolvePath( GlobalConfig.isPhone ? "assets/game/sd/" : "assets/game/hd/").url;
-			AbstractEntryPoint.assets.enqueue( basePath + "/game.png" );
+			AbstractEntryPoint.assets.enqueue( basePath + "/game.atf" );
 			AbstractEntryPoint.assets.enqueue( basePath + "/game.xml" );
 			AbstractEntryPoint.assets.loadQueue( function onLoading(ratio:Number):void{ if(ratio == 1) initializeContent(); });
 		}
