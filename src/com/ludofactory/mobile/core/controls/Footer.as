@@ -94,6 +94,8 @@ package com.ludofactory.mobile.core.controls
 		{
 			super.initialize();
 			
+			// TODO Faire un simple scale9Image pour tout (ou presque) le footer pour optimiser ?
+			
 			_backgroundImage = new Scale3Image( new Scale3Textures(AbstractEntryPoint.assets.getTexture("footer-background-skin"), 10, 10), GlobalConfig.dpiScale );
 			_backgroundImage.touchable = false;
 			_backgroundImage.blendMode = BlendMode.NONE;

@@ -731,6 +731,8 @@ package com.ludofactory.mobile.core.test.engine
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				TweenMax.killAll();
+				_homeButton.isEnabled = false;
+				_playAgainButton.isEnabled = false;
 				advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
 			}
 			else
@@ -750,6 +752,8 @@ package com.ludofactory.mobile.core.test.engine
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				TweenMax.killAll();
+				_homeButton.isEnabled = false;
+				_playAgainButton.isEnabled = false;
 				advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
 			}
 			else
