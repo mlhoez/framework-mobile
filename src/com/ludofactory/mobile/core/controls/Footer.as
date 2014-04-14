@@ -87,7 +87,7 @@ package com.ludofactory.mobile.core.controls
 			
 			_iconPadding = scaleAndRoundToDpi(10);
 			_decorationPadding = scaleAndRoundToDpi(4);
-			this.height = scaleAndRoundToDpi(GlobalConfig.LANDSCAPE ? 98 : 118);
+			this.height = scaleAndRoundToDpi(GlobalConfig.LANDSCAPE ? 88 : 118);
 		}
 		
 		override protected function initialize():void

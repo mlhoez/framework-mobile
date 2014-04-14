@@ -169,6 +169,7 @@ package com.ludofactory.mobile.core.test.highscore
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				var gap:int;
 				if( GlobalConfig.LANDSCAPE )
 				{
 					_icon.x = (((actualWidth * 0.45) - _icon.width) * 0.5) << 0;
@@ -184,7 +185,7 @@ package com.ludofactory.mobile.core.test.highscore
 					_internationalButton.x = _nationalButton.x = _facebookButton.x = actualWidth * 0.5 + ((actualWidth * 0.5) - _internationalButton.width) * 0.5;
 					
 					_internationalButton.validate();
-					var gap:int = (actualHeight - (_internationalButton.height * 3)) / 4;
+					gap = (actualHeight - (_internationalButton.height * 3)) / 4;
 					
 					_internationalButton.y = gap;
 					
@@ -210,7 +211,7 @@ package com.ludofactory.mobile.core.test.highscore
 					_background.width = actualWidth;
 					_background.height = actualHeight - _background.y;
 					
-					var gap:int = (actualHeight - _shadow.y - _shadow.y) / 4;
+					gap = (actualHeight - _shadow.y - _shadow.y) / 4;
 					
 					_internationalButton.width = _nationalButton.width = _facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
 					_internationalButton.x = _nationalButton.x = _facebookButton.x = (actualWidth - _internationalButton.width) * 0.5;

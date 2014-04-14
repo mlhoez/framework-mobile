@@ -9,7 +9,6 @@ package com.ludofactory.mobile.core.test.sponsor
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
-	import com.ludofactory.common.utils.Utility;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -141,13 +140,16 @@ package com.ludofactory.mobile.core.test.sponsor
 			_mainContainer.addChild(_knowMoreButton);
 			_knowMoreButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_WHITE);
 			
-			const hlayout:HorizontalLayout = new HorizontalLayout();
-			hlayout.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_CENTER;
-			hlayout.paddingTop = scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60);
-			_buttonsContainer = new LayoutGroup();
-			_buttonsContainer.clipContent = false;
-			_buttonsContainer.layout = hlayout;
-			_mainContainer.addChild( _buttonsContainer );
+			if( !GlobalConfig.LANDSCAPE )
+			{
+				const hlayout:HorizontalLayout = new HorizontalLayout();
+				hlayout.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_CENTER;
+				hlayout.paddingTop = scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60);
+				_buttonsContainer = new LayoutGroup();
+				_buttonsContainer.clipContent = false;
+				_buttonsContainer.layout = hlayout;
+				_mainContainer.addChild( _buttonsContainer );
+			}
 			
 			_emailIcon = new ImageLoader();
 			_emailIcon.source = AbstractEntryPoint.assets.getTexture("SponsorMailIcon");
@@ -156,10 +158,10 @@ package com.ludofactory.mobile.core.test.sponsor
 			
 			_emailButton = new Button();
 			_emailButton.addEventListener(Event.TRIGGERED, onEmailSelected);
-			_emailButton.nameList.add( Theme.BUTTON_YELLOW_SQUARED_RIGHT);
+			_emailButton.nameList.add( GlobalConfig.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_RIGHT);
 			_emailButton.defaultIcon = _emailIcon;
 			_emailButton.label = Localizer.getInstance().translate("SPONSOR_HOME.TYPE_EMAIL");
-			_buttonsContainer.addChild(_emailButton);
+			GlobalConfig.LANDSCAPE ? addChild(_emailButton) : _buttonsContainer.addChild(_emailButton);
 			_emailButton.gap = GlobalConfig.isPhone ? 0 : 20;
 			_emailButton.minHeight = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
 			
@@ -170,10 +172,10 @@ package com.ludofactory.mobile.core.test.sponsor
 			
 			_smsButton = new Button();
 			_smsButton.addEventListener(Event.TRIGGERED, onSmsSelected);
-			_smsButton.nameList.add( Theme.BUTTON_YELLOW_SQUARED_LEFT);
+			_smsButton.nameList.add( GlobalConfig.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_LEFT);
 			_smsButton.defaultIcon = _smsIcon;
 			_smsButton.label = Localizer.getInstance().translate("SPONSOR_HOME.TYPE_SMS");
-			_buttonsContainer.addChild(_smsButton);
+			GlobalConfig.LANDSCAPE ? addChild(_smsButton) : _buttonsContainer.addChild(_smsButton);
 			_smsButton.gap = GlobalConfig.isPhone ? 0 : 20;
 			_smsButton.minHeight = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
 			
@@ -199,28 +201,54 @@ package com.ludofactory.mobile.core.test.sponsor
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_mainContainer.width = _rewardValueLabel.width = _titleLabel.width = _byFilleulLabel.width = actualWidth;
-				_mainContainer.validate();
-				_mainContainer.y = (actualHeight - _mainContainer.height) * 0.1;
-				
-				_buttonsContainer.width = actualWidth * (GlobalConfig.isPhone ? 1 : 0.9);
-				_buttonsContainer.x = (actualWidth - _buttonsContainer.width) * 0.5;
-				_smsButton.width = _emailButton.width = _buttonsContainer.width * 0.5;
-				
-				_glow.x = _mainContainer.x + (_mainContainer.width * 0.5);
-				_glow.y = _mainContainer.y + (_mainContainer.height * 0.35);
-				
-				
-				_myFriendsButton.width = actualWidth * 0.7;
-				_myFriendsButton.x = (actualWidth - _myFriendsButton.width) * 0.5;
-				_myFriendsButton.validate();
-				_myFriendsButton.y = _mainContainer.y + _mainContainer.height + ((actualHeight - _mainContainer.y - _mainContainer.height) - _myFriendsButton.height) * 0.75;
-				
-				_friendsImage.y = _myFriendsButton.y - (_friendsImage.height * 0.6);
-				_friendsImage.x = (actualWidth - _friendsImage.width) * 0.5;
-				
-				TweenMax.to(_glow, 1.25, { alpha:0.1, repeat:-1, yoyo:true, ease:Linear.easeNone });
-				TweenMax.to(_glow, 25, { rotation:deg2rad(360), repeat:-1, ease:Linear.easeNone });
+				if( GlobalConfig.LANDSCAPE )
+				{
+					_mainContainer.width = _rewardValueLabel.width = _titleLabel.width = _byFilleulLabel.width = actualWidth * 0.5;
+					_mainContainer.validate();
+					_mainContainer.y = (actualHeight - _mainContainer.height) * 0.1;
+					
+					_glow.x = _mainContainer.x + (_mainContainer.width * 0.5);
+					_glow.y = _mainContainer.y + (_mainContainer.height * 0.35);
+					
+					_myFriendsButton.width = _emailButton.width = _smsButton.width = actualWidth * 0.4;
+					_myFriendsButton.x = _emailButton.x = _smsButton.x = actualWidth * 0.5 + ((actualWidth * 0.5) - _myFriendsButton.width) * 0.5;
+					_myFriendsButton.validate();
+					_myFriendsButton.y = actualHeight - _myFriendsButton.height - scaleAndRoundToDpi(20);
+					
+					_friendsImage.y = _myFriendsButton.y - (_friendsImage.height * 0.6);
+					_friendsImage.x = _myFriendsButton.x + (_myFriendsButton.width - _friendsImage.width) * 0.5;
+					
+					_emailButton.validate();
+					_emailButton.y = ((_myFriendsButton.y - (_emailButton.height * 2) - scaleAndRoundToDpi(60)) / 3) << 0
+					_smsButton.y = _emailButton.y + _emailButton.height + scaleAndRoundToDpi(20);
+					
+					TweenMax.to(_glow, 1.25, { alpha:0.1, repeat:-1, yoyo:true, ease:Linear.easeNone });
+					TweenMax.to(_glow, 25, { rotation:deg2rad(360), repeat:-1, ease:Linear.easeNone });
+				}
+				else
+				{
+					_mainContainer.width = _rewardValueLabel.width = _titleLabel.width = _byFilleulLabel.width = actualWidth;
+					_mainContainer.validate();
+					_mainContainer.y = (actualHeight - _mainContainer.height) * 0.1;
+					
+					_buttonsContainer.width = actualWidth * (GlobalConfig.isPhone ? 1 : 0.9);
+					_buttonsContainer.x = (actualWidth - _buttonsContainer.width) * 0.5;
+					_smsButton.width = _emailButton.width = _buttonsContainer.width * 0.5;
+					
+					_glow.x = _mainContainer.x + (_mainContainer.width * 0.5);
+					_glow.y = _mainContainer.y + (_mainContainer.height * 0.35);
+					
+					_myFriendsButton.width = actualWidth * 0.7;
+					_myFriendsButton.x = (actualWidth - _myFriendsButton.width) * 0.5;
+					_myFriendsButton.validate();
+					_myFriendsButton.y = _mainContainer.y + _mainContainer.height + ((actualHeight - _mainContainer.y - _mainContainer.height) - _myFriendsButton.height) * 0.75;
+					
+					_friendsImage.y = _myFriendsButton.y - (_friendsImage.height * 0.6);
+					_friendsImage.x = (actualWidth - _friendsImage.width) * 0.5;
+					
+					TweenMax.to(_glow, 1.25, { alpha:0.1, repeat:-1, yoyo:true, ease:Linear.easeNone });
+					TweenMax.to(_glow, 25, { rotation:deg2rad(360), repeat:-1, ease:Linear.easeNone });
+				}
 			}
 		}
 		
@@ -319,8 +347,11 @@ package com.ludofactory.mobile.core.test.sponsor
 			_emailButton.removeFromParent(true);
 			_emailButton = null;
 			
-			_buttonsContainer.removeFromParent(true);
-			_buttonsContainer = null;
+			if( _buttonsContainer )
+			{
+				_buttonsContainer.removeFromParent(true);
+				_buttonsContainer = null;
+			}
 			
 			_myFriendsButton.removeEventListener(Event.TRIGGERED, onMyFriendsSelected);
 			_myFriendsButton.removeFromParent(true);

@@ -128,12 +128,6 @@ package com.ludofactory.mobile.core.test.home
 			{
 				if( GlobalConfig.LANDSCAPE )
 				{
-					_logo.width = actualWidth * 0.45;
-					//_logo.height = actualHeight * 0.;
-					_logo.validate();
-					_logo.y = ((actualHeight - _logo.height) * 0.5) << 0;
-					_logo.x = (((actualWidth * 0.5) - _logo.width) * 0.5) << 0;
-					
 					if( GlobalConfig.ios && GameCenterManager.available )
 					{
 						_gameCenterButton.height = _playButton.height = scaleAndRoundToDpi(118);
@@ -146,16 +140,22 @@ package com.ludofactory.mobile.core.test.home
 					}
 					else
 					{
-						_playButton.width = actualWidth * (GlobalConfig.isPhone ? 0.7 : 0.6);
+						_playButton.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5);
 						_playButton.height = scaleAndRoundToDpi(118);
 						_playButton.x = (actualWidth - _playButton.width) * 0.5;
-						_playButton.y = actualHeight * 0.5 + scaleAndRoundToDpi(40);
 					}
 					
-					_giftsButton.y = _playButton.y + _playButton.height + scaleAndRoundToDpi(40);
-					_giftsButton.width = actualWidth * (GlobalConfig.isPhone ? ( GameCenterManager.available ? 0.7 : 0.6) : 0.5);
+					
+					_giftsButton.width = actualWidth * (GlobalConfig.isPhone ? ( GameCenterManager.available ? 0.6 : 0.5) : 0.4);
 					_giftsButton.x = (actualWidth - _giftsButton.width) * 0.5;
 					
+					_logo.height = actualHeight - _playButton.height - _giftsButton.height - scaleAndRoundToDpi(60);
+					_logo.validate();
+					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
+					
+					_playButton.y = _logo.y + _logo.height + scaleAndRoundToDpi(20);
+					_giftsButton.y = _playButton.y + _playButton.height + scaleAndRoundToDpi(20);
+						
 					if( GlobalConfig.DEBUG )
 					{
 						_debugButton.validate();

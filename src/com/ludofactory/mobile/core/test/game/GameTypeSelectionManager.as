@@ -42,7 +42,7 @@ package com.ludofactory.mobile.core.test.game
 			(_savedRoot as AbstractEntryPoint).addChild(_blackOverlay);
 			
 			_popup = new GameTypeSelectionPopup();
-			_popup.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.89 : 0.69);
+			_popup.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? (GlobalConfig.LANDSCAPE ? 0.7: 0.9) : (GlobalConfig.LANDSCAPE ? 0.5 : 0.7));
 			_popup.x = (GlobalConfig.stageWidth - _popup.width) * 0.5;
 			(_savedRoot as AbstractEntryPoint).addChild(_popup);
 			_popup.validate();
