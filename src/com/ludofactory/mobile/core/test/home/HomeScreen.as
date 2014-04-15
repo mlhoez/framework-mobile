@@ -159,8 +159,8 @@ package com.ludofactory.mobile.core.test.home
 					if( GlobalConfig.DEBUG )
 					{
 						_debugButton.validate();
-						_debugButton.x = (actualWidth - _debugButton.width) * 0.5;
-						_debugButton.y = actualHeight - _debugButton.height - scaleAndRoundToDpi(10);
+						_debugButton.x = actualWidth - _debugButton.width - scaleAndRoundToDpi(5);
+						_debugButton.y = actualHeight - _debugButton.height;
 					}
 				}
 				else
