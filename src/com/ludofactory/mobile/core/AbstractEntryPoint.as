@@ -98,7 +98,7 @@ package com.ludofactory.mobile.core
 	import feathers.controls.ProgressBar;
 	import feathers.display.Scale9Image;
 	import feathers.events.FeathersEventType;
-	import feathers.motion.transitions.ScreenFadeTransitionManager;
+	import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 	import feathers.system.DeviceCapabilities;
 	import feathers.textures.Scale9Textures;
 	
@@ -225,7 +225,7 @@ package com.ludofactory.mobile.core
 		protected static var _screenNavigator:AdvancedScreenNavigator;
 		/**
 		 * Screen transition. */		
-		private var _transitionManager:ScreenFadeTransitionManager;
+		private var _transitionManager:ScreenSlidingStackTransitionManager;
 		/**
 		 * The footer */		
 		private static var _footer:Footer;
@@ -490,8 +490,8 @@ package com.ludofactory.mobile.core
 			_drawer.openGesture = Drawers.OPEN_GESTURE_NONE;
 			addChild(_drawer);
 			
-			_transitionManager = new ScreenFadeTransitionManager( _screenNavigator );
-			_transitionManager.duration = .5;
+			//_transitionManager = new ScreenSlidingStackTransitionManager( _screenNavigator );
+			//_transitionManager.duration = .5;
 			
 			// Header
 			_header = new Header();
