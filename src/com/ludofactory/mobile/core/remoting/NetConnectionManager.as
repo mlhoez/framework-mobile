@@ -296,7 +296,7 @@ package com.ludofactory.mobile.core.remoting
 					} 
 					catch(error:Error) 
 					{
-						Flox.logError(error, "[NetConnectionManager] Try/Catch du call du NetConnectionManager");
+						Flox.logWarning("[NetConnectionManager] Try/Catch du call du NetConnectionManager");
 						if( GlobalConfig.DEBUG ) throw error;
 					}
 				}
@@ -310,7 +310,7 @@ package com.ludofactory.mobile.core.remoting
 						} 
 						catch(error:Error) 
 						{
-							Flox.logError(error, "[NetConnectionManager] Try/Catch du call du NetConnectionManager");
+							Flox.logWarning("[NetConnectionManager] Try/Catch du call du NetConnectionManager");
 							if( GlobalConfig.DEBUG ) throw error;
 						}
 					}
@@ -376,7 +376,7 @@ package com.ludofactory.mobile.core.remoting
 					} 
 					catch(error:Error) 
 					{
-						Flox.logError(error, "[NetConnectionManager] Try/Catch du reCall du NetConnectionManager");
+						Flox.logWarning("[NetConnectionManager] Try/Catch du reCall du NetConnectionManager");
 						if( GlobalConfig.DEBUG ) throw error;
 					}
 				}
@@ -441,7 +441,7 @@ package com.ludofactory.mobile.core.remoting
 				} 
 				catch(error:Error) 
 				{
-					Flox.logError(error, "[NetConnectionManager] Try/Catch of onValidCall.");
+					Flox.logWarning("[NetConnectionManager] Try/Catch of onValidCall.");
 					if( GlobalConfig.DEBUG ) throw error;
 				}
 			}
@@ -456,7 +456,7 @@ package com.ludofactory.mobile.core.remoting
 					} 
 					catch(error:Error) 
 					{
-						Flox.logError(error, "[NetConnectionManager] Try/Catch of onValidCall.");
+						Flox.logWarning("[NetConnectionManager] Try/Catch of onValidCall.");
 						if( GlobalConfig.DEBUG ) throw error;
 					}
 				}
@@ -493,7 +493,7 @@ package com.ludofactory.mobile.core.remoting
 				} 
 				catch(error:Error) 
 				{
-					Flox.logError(error, "[NetConnectionManager] Try/Catch of onErrorCall.");
+					Flox.logWarning("[NetConnectionManager] Try/Catch of onErrorCall.");
 					if( GlobalConfig.DEBUG ) throw error;
 				}
 			}
@@ -508,7 +508,7 @@ package com.ludofactory.mobile.core.remoting
 					} 
 					catch(error:Error) 
 					{
-						Flox.logError(error, "[NetConnectionManager] Try/Catch of onErrorCall.");
+						Flox.logWarning("[NetConnectionManager] Try/Catch of onErrorCall.");
 						if( GlobalConfig.DEBUG ) throw error;
 					}
 				}
