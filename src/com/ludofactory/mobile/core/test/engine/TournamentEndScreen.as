@@ -370,7 +370,7 @@ package com.ludofactory.mobile.core.test.engine
 			_tournamentTimeLeftContainer = new ScrollContainer();
 			_tournamentTimeLeftContainer.alpha = 0;
 			_tournamentTimeLeftContainer.visible = false;
-			_tournamentTimeLeftContainer.nameList.add( Theme.SCROLL_CONTAINER_RESULT_GREY );
+			_tournamentTimeLeftContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_GREY;
 			addChild(_tournamentTimeLeftContainer);
 			_tournamentTimeLeftContainer.layout = hlayoutInfo;
 			_tournamentTimeLeftContainer.padding = scaleAndRoundToDpi(-5);
@@ -403,7 +403,7 @@ package com.ludofactory.mobile.core.test.engine
 			_buttonsContainer.addChild(_continueButton);
 			
 			_homeButton = new Button();
-			_homeButton.nameList.add( Theme.BUTTON_BLUE );
+			_homeButton.styleName = Theme.BUTTON_BLUE;
 			_homeButton.label = Localizer.getInstance().translate("FREE_GAME_END.HOME_BUTTON_LABEL");
 			_homeButton.addEventListener(starling.events.Event.TRIGGERED, onGoHome);
 			_buttonsContainer.addChild(_homeButton);
@@ -446,7 +446,7 @@ package com.ludofactory.mobile.core.test.engine
 				_currentGiftContainer.visible = false;
 				_currentGiftContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 				_currentGiftContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-				_currentGiftContainer.nameList.add( Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_LEFT );
+				_currentGiftContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_LEFT;
 				addChild(_currentGiftContainer);
 				_currentGiftContainer.layout["padding"] = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 				_currentGiftContainer.layout["gap"] = scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 10);
@@ -475,7 +475,7 @@ package com.ludofactory.mobile.core.test.engine
 				_nextGiftContainer.visible = false;
 				_nextGiftContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 				_nextGiftContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-				_nextGiftContainer.nameList.add( Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_RIGHT );
+				_nextGiftContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_RIGHT;
 				addChild(_nextGiftContainer);
 				_nextGiftContainer.layout["padding"] = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 				_nextGiftContainer.layout["gap"] = scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 10);
@@ -509,7 +509,7 @@ package com.ludofactory.mobile.core.test.engine
 				_resultArrowContainer.layout = hlayoutArrow;
 				_resultArrowContainer.alpha = 0;
 				_resultArrowContainer.visible = false;
-				_resultArrowContainer.nameList.add( Theme.TOURNAMENT_END_ARROW_CONTAINER );
+				_resultArrowContainer.styleName = Theme.TOURNAMENT_END_ARROW_CONTAINER;
 				addChild(_resultArrowContainer);
 				
 				_resultArrowLabel = new Label();
@@ -539,7 +539,7 @@ package com.ludofactory.mobile.core.test.engine
 				_notConnectedContainer = new ScrollContainer();
 				_notConnectedContainer.alpha = 0;
 				_notConnectedContainer.visible = false;
-				_notConnectedContainer.nameList.add( Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_LEFT );
+				_notConnectedContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_LEFT;
 				addChild( _notConnectedContainer );
 				_notConnectedContainer.padding = 0;
 				_notConnectedContainer.layout = hlayoutNotConnectedInfo;

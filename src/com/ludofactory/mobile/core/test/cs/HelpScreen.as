@@ -89,7 +89,7 @@ package com.ludofactory.mobile.core.test.cs
 			_faqIcon.snapToPixels = true;
 			
 			_faqButton = new Button();
-			_faqButton.nameList.add( Theme.BUTTON_TRANSPARENT_BLUE );
+			_faqButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE;
 			_faqButton.defaultIcon = _faqIcon;
 			_faqButton.iconPosition = GlobalConfig.LANDSCAPE ? Button.ICON_POSITION_LEFT : Button.ICON_POSITION_TOP;
 			_faqButton.addEventListener(Event.TRIGGERED, onFaqSelected);
@@ -102,7 +102,7 @@ package com.ludofactory.mobile.core.test.cs
 			_csIcon.snapToPixels = true;
 			
 			_contactCustomerServiceButton = new Button();
-			_contactCustomerServiceButton.nameList.add( Theme.BUTTON_TRANSPARENT_BLUE );
+			_contactCustomerServiceButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE;
 			_contactCustomerServiceButton.defaultIcon = _csIcon;
 			_contactCustomerServiceButton.iconPosition = GlobalConfig.LANDSCAPE ? Button.ICON_POSITION_LEFT : Button.ICON_POSITION_TOP;
 			_contactCustomerServiceButton.addEventListener(Event.TRIGGERED, onContactCustomerServiceSelected);

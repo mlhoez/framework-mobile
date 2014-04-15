@@ -95,7 +95,7 @@ package com.ludofactory.mobile.core.authentication
 			
 			_cancelButton = new Button();
 			_cancelButton.label = Localizer.getInstance().translate("SPONSOR.CANCEL_BUTTON_LABEL");
-			_cancelButton.nameList.add( Theme.BUTTON_BLUE );
+			_cancelButton.styleName = Theme.BUTTON_BLUE;
 			_cancelButton.addEventListener(Event.TRIGGERED, onIgnoreStep);
 			addChild( _cancelButton );
 		}

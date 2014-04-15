@@ -85,7 +85,7 @@ package com.ludofactory.mobile.core.test.alert
 			addChild(_list);
 			
 			_closeButton = new Button();
-			_closeButton.nameList.add( Theme.BUTTON_EMPTY );
+			_closeButton.styleName = Theme.BUTTON_EMPTY;
 			_closeButton.addEventListener(Event.TRIGGERED, onClose);
 			_closeButton.label = Localizer.getInstance().translate("ALERT.CLOSE_BUTTON_LABEL");
 			addChild(_closeButton);

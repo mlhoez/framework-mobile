@@ -129,7 +129,7 @@ package com.ludofactory.mobile.core.test.cs.thread
 				_sendButtonIcon.scaleX = _sendButtonIcon.scaleY = GlobalConfig.dpiScale;
 				_sendButton = new Button();
 				_sendButton.defaultIcon = _sendButtonIcon;
-				_sendButton.nameList.add( Theme.BUTTON_EMPTY );
+				_sendButton.styleName = Theme.BUTTON_EMPTY;
 				_sendButton.visible = false;
 				_sendButton.addEventListener(Event.TRIGGERED, onSendMessage);
 				addChild(_sendButton);

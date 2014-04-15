@@ -141,7 +141,7 @@ package com.ludofactory.mobile.core.test.cs
 			_themesList = new GroupedList();
 			_themesList.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_themesList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_themesList.nameList.add(Theme.SUB_CATEGORY_GROUPED_LIST);
+			_themesList.styleName = Theme.SUB_CATEGORY_GROUPED_LIST;
 			_themesList.dataProvider = new HierarchicalCollection([ { header:"", children:Storage.getInstance().getProperty(StorageConfig.PROPERTY_CUSTOMER_SERVICE_THEMES) } ]);
 			_themesList.typicalItem = "Theme name";
 			_themesList.isSelectable = true;

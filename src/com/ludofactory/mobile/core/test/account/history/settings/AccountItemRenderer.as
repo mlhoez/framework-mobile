@@ -198,7 +198,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 					if( _data.hasOwnProperty("isSaveButton") )
 					{
 						_saveButton = new Button();
-						_saveButton.nameList.add( Theme.BUTTON_FLAT_GREEN );
+						_saveButton.styleName = Theme.BUTTON_FLAT_GREEN;
 						_saveButton.label = Localizer.getInstance().translate("ACCOUNT.SAVE");
 						_saveButton.addEventListener(Event.TRIGGERED, onSave);
 						addChild(_saveButton);

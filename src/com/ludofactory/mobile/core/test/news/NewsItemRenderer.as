@@ -141,7 +141,7 @@ package com.ludofactory.mobile.core.test.news
 			_message.textRendererProperties.textFormat = Theme.newsIRMessageTextFormat;
 			
 			_button = new Button();
-			_button.nameList.add( Theme.BUTTON_NEWS );
+			_button.styleName = Theme.BUTTON_NEWS;
 			addChild(_button);
 			
 			_bottomStripe = new Quad(this.width, _strokeThickness, 0xbfbfbf);

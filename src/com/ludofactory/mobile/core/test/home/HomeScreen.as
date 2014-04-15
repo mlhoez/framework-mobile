@@ -75,7 +75,7 @@ package com.ludofactory.mobile.core.test.home
 			addChild(_logo);
 			
 			_playButton = new Button();
-			_playButton.nameList.add( (GlobalConfig.ios && GameCenterManager.available) ? Theme.BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER : Theme.BUTTON_SPECIAL_BIGGER );
+			_playButton.styleName = (GlobalConfig.ios && GameCenterManager.available) ? Theme.BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER : Theme.BUTTON_SPECIAL_BIGGER;
 			_playButton.label = Localizer.getInstance().translate("HOME.PLAY_BUTTON_LABEL");
 			_playButton.addEventListener(Event.TRIGGERED, onPlay);
 			addChild(_playButton);
@@ -89,13 +89,13 @@ package com.ludofactory.mobile.core.test.home
 				
 				_gameCenterButton = new Button();
 				_gameCenterButton.defaultIcon = _gameCenterIcon;
-				_gameCenterButton.nameList.add( Theme.BUTTON_SPECIAL_SQUARED_LEFT );
+				_gameCenterButton.styleName = Theme.BUTTON_SPECIAL_SQUARED_LEFT;
 				_gameCenterButton.addEventListener(Event.TRIGGERED, onShowGameCenterAchievements);
 				addChild(_gameCenterButton);
 			}
 			
 			_giftsButton = new Button();
-			_giftsButton.nameList.add( Theme.BUTTON_TRANSPARENT_WHITE );
+			_giftsButton.styleName = Theme.BUTTON_TRANSPARENT_WHITE;
 			_giftsButton.label = Localizer.getInstance().translate("HOME.WIN_GIFTS_BUTTON_LABEL");
 			_giftsButton.addEventListener(Event.TRIGGERED, onShowRules);
 			_giftsButton.visible = Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN);

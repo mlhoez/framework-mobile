@@ -72,7 +72,7 @@ package com.ludofactory.mobile.navigation.menu
 			
 			_cancelButton = new Button();
 			_cancelButton.label = Localizer.getInstance().translate("DISCONNECT_NOTIFICATION.CANCEL_BUTTON_LABEL");
-			_cancelButton.nameList.add( Theme.BUTTON_BLUE );
+			_cancelButton.styleName = Theme.BUTTON_BLUE;
 			_cancelButton.addEventListener(Event.TRIGGERED, onCancel);
 			_container.addChild(_cancelButton);
 		}

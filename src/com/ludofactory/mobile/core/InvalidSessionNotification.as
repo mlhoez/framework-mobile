@@ -82,7 +82,7 @@ package com.ludofactory.mobile.core
 			
 			_cancelButton = new Button();
 			_cancelButton.label = Localizer.getInstance().translate("INVALID_SESSION.LATER_BUTTON");
-			_cancelButton.nameList.add( Theme.BUTTON_BLUE );
+			_cancelButton.styleName = Theme.BUTTON_BLUE;
 			_cancelButton.addEventListener(Event.TRIGGERED, onCancel);
 			_container.addChild(_cancelButton);
 		}

@@ -141,7 +141,7 @@ package com.ludofactory.mobile.core.test.engine
 			
 			_continueButton = new Button();
 			_continueButton.addEventListener(Event.TRIGGERED, onContinue);
-			_continueButton.nameList.add(Theme.BUTTON_EMPTY);
+			_continueButton.styleName = Theme.BUTTON_EMPTY;
 			_continueButton.label = Localizer.getInstance().translate("COMMON.CONTINUE");
 			addChild(_continueButton);
 			_continueButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, true, true);

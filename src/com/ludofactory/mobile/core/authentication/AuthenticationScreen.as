@@ -100,7 +100,7 @@ package com.ludofactory.mobile.core.authentication
 			_loginIcon.snapToPixels = true;
 			
 			_loginButton = new Button();
-			_loginButton.nameList.add( Theme.BUTTON_TRANSPARENT_BLUE );
+			_loginButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE;
 			_loginButton.defaultIcon = _loginIcon;
 			_loginButton.iconPosition = Button.ICON_POSITION_TOP;
 			_loginButton.addEventListener(Event.TRIGGERED, onGoToLoginScreen);
@@ -114,7 +114,7 @@ package com.ludofactory.mobile.core.authentication
 			_registerIcon.snapToPixels = true;
 			
 			_registerButton = new Button();
-			_registerButton.nameList.add( Theme.BUTTON_TRANSPARENT_BLUE );
+			_registerButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE;
 			_registerButton.defaultIcon = _registerIcon;
 			_registerButton.iconPosition = Button.ICON_POSITION_TOP;
 			_registerButton.addEventListener(Event.TRIGGERED, onGoToRegisterScreen);

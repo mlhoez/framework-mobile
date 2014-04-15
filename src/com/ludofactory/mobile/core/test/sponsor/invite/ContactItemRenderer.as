@@ -163,7 +163,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			addChild(_arrowDown);
 			
 			_inviteButton = new Button();
-			_inviteButton.nameList.add( Theme.BUTTON_FLAT_GREEN );
+			_inviteButton.styleName = Theme.BUTTON_FLAT_GREEN;
 			_inviteButton.label = Localizer.getInstance().translate("SPONSOR_INVITE.INVITE_BUTTON_LABEL");
 			_inviteButton.addEventListener(Event.TRIGGERED, onInvite);
 			addChild(_inviteButton);
@@ -180,7 +180,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			_contactElementsList = new GroupedList();
 			_contactElementsList.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_contactElementsList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_contactElementsList.nameList.add(Theme.SUB_CATEGORY_GROUPED_LIST);
+			_contactElementsList.styleName = Theme.SUB_CATEGORY_GROUPED_LIST;
 			_contactElementsList.typicalItem = { nom: "Item 1000" };
 			_contactElementsList.isSelectable = true;
 			_contactElementsList.itemRendererProperties.labelField = "nom";

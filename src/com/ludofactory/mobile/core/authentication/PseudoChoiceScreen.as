@@ -103,7 +103,7 @@ package com.ludofactory.mobile.core.authentication
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 38), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_defaultChoiceContainer = new ScrollContainer();
-			_defaultChoiceContainer.nameList.add( Theme.SCROLL_CONTAINER_LABEL );
+			_defaultChoiceContainer.styleName = Theme.SCROLL_CONTAINER_LABEL;
 			_defaultChoiceContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_defaultChoiceContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			addChild(_defaultChoiceContainer);

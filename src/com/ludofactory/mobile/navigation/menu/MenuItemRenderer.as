@@ -71,7 +71,7 @@ package com.ludofactory.mobile.navigation.menu
 			
 			_badgeContainer = new ScrollContainer();
 			_badgeContainer.touchable = false;
-			_badgeContainer.nameList.add( Theme.SCROLL_CONTAINER_BADGE );
+			_badgeContainer.styleName = Theme.SCROLL_CONTAINER_BADGE;
 			addChild( _badgeContainer );
 			
 			_badgeLabel = new Label();

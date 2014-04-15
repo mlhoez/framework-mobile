@@ -118,7 +118,7 @@ package com.ludofactory.mobile.core.controls
 			var uiRenderer:IFeathersControl = IFeathersControl(_fakeHeaderItemRenderer);
 			if(this._headerRendererName && this._headerRendererName.length > 0)
 			{
-				uiRenderer.nameList.add(this._headerRendererName);
+				uiRenderer.styleName = this._headerRendererName;
 			}
 			_fakeClipRectContainer.addChild(DisplayObject(_fakeHeaderItemRenderer));
 			_fakeHeaderItemRenderer.visible = false;

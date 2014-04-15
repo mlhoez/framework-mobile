@@ -104,7 +104,7 @@ package com.ludofactory.mobile.core.test.sponsor.info
 			hlayout.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_CENTER;
 			hlayout.padding = scaleAndRoundToDpi(5);
 			_bonusContainer = new ScrollContainer();
-			_bonusContainer.nameList.add( Theme.SCROLL_CONTAINER_WHITE );
+			_bonusContainer.styleName = Theme.SCROLL_CONTAINER_WHITE;
 			_bonusContainer.layout = hlayout;
 			_container.addChild( _bonusContainer );
 			

@@ -117,7 +117,7 @@ package com.ludofactory.mobile.core.test.news
 			
 			_cguLabel = new Button();
 			_cguLabel.label = Localizer.getInstance().translate("NEWS_CGU");
-			_cguLabel.nameList.add( Theme.BUTTON_EMPTY );
+			_cguLabel.styleName = Theme.BUTTON_EMPTY;
 			_cguLabel.addEventListener(Event.TRIGGERED, onTouchCgu);
 			_mainCcontainer.addChild(_cguLabel);
 			_cguLabel.minHeight = _cguLabel.minTouchHeight = scaleAndRoundToDpi(50);

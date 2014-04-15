@@ -94,13 +94,13 @@ package com.ludofactory.mobile.core.test.engine
 			
 			_backButton = new Button();
 			_backButton.label = Localizer.getInstance().translate("SMALL_RULES.BACK_BUTTON_LABEL");
-			_backButton.nameList.add( Theme.BUTTON_BLUE_SQUARED_RIGHT );
+			_backButton.styleName = Theme.BUTTON_BLUE_SQUARED_RIGHT;
 			_backButton.addEventListener(Event.TRIGGERED, onBackTouched);
 			addChild(_backButton);
 			
 			_playButton = new Button();
 			_playButton.label = Localizer.getInstance().translate("SMALL_RULES.PLAY_BUTTON_LABEL");
-			_playButton.nameList.add( Theme.BUTTON_YELLOW_SQUARED_LEFT );
+			_playButton.styleName = Theme.BUTTON_YELLOW_SQUARED_LEFT;
 			_playButton.addEventListener(Event.TRIGGERED, onPlay);
 			addChild(_playButton);
 		}

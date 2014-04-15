@@ -183,7 +183,7 @@ package com.ludofactory.mobile.core.test.engine
 				_continueButton = new Button();
 				_continueButton.alpha = 0;
 				_continueButton.addEventListener(starling.events.Event.TRIGGERED, onContinue);
-				_continueButton.nameList.add(Theme.BUTTON_EMPTY);
+				_continueButton.styleName = Theme.BUTTON_EMPTY;
 				_continueButton.label = Localizer.getInstance().translate("COMMON.CONTINUE");
 				addChild(_continueButton);
 				_continueButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, true, true, null, null, null, TextFormatAlign.CENTER);

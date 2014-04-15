@@ -245,7 +245,7 @@ package com.ludofactory.mobile.core
 			addChild(_playOverlay);
 			
 			_playButton = new feathers.controls.Button();
-			_playButton.nameList.add( Theme.BUTTON_SPECIAL_BIGGER );
+			_playButton.styleName = Theme.BUTTON_SPECIAL_BIGGER;
 			_playButton.label = Localizer.getInstance().translate("GAME.START_BUTTON_LABEL");
 			_playButton.addEventListener(starling.events.Event.TRIGGERED, onPlay);
 			addChild(_playButton);

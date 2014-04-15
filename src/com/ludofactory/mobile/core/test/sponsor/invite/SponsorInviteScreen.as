@@ -148,7 +148,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			
 			_inviteAllButton = new Button();
 			_inviteAllButton.visible = false
-			_inviteAllButton.nameList.add( Theme.BUTTON_FLAT_GREEN );
+			_inviteAllButton.styleName = Theme.BUTTON_FLAT_GREEN;
 			_inviteAllButton.label = Localizer.getInstance().translate("SPONSOR_INVITE.INVITE_ALL_BUTTON_LABEL");
 			_inviteAllButton.addEventListener(Event.TRIGGERED, onInviteAll);
 			addChild(_inviteAllButton);
@@ -207,7 +207,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			_singleInviteGroup.addChild(_singleInviteArrow);
 			
 			_singleInviteButton = new Button();
-			_singleInviteButton.nameList.add( Theme.BUTTON_EMPTY );
+			_singleInviteButton.styleName = Theme.BUTTON_EMPTY;
 			_singleInviteButton.addEventListener(Event.TRIGGERED, onSingleInvite);
 			_singleInviteButton.label = Localizer.getInstance().translate( advancedOwner.screenData.sponsorType == SponsorTypes.EMAIL ? "SPONSOR_INVITE.FILL_EMAIL" : "SPONSOR_INVITE.FILL_SMS");
 			_singleInviteGroup.addChild(_singleInviteButton);
@@ -629,7 +629,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			_singleInviteNameInput.addEventListener(FeathersEventType.ENTER, onEnter);
 			_singleInviteNameInput.setFocus();
 			_singleInviteNameInput.alpha = 0;
-			_singleInviteNameInput.nameList.add(Theme.TEXTINPUT_FIRST);
+			_singleInviteNameInput.styleName = Theme.TEXTINPUT_FIRST;
 			addChild(_singleInviteNameInput);
 			
 			_singleInviteMailInput = new TextInput();
@@ -638,7 +638,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			_singleInviteMailInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
 			_singleInviteMailInput.addEventListener(FeathersEventType.ENTER, onInvite);
 			_singleInviteMailInput.alpha = 0;
-			_singleInviteMailInput.nameList.add(Theme.TEXTINPUT_LAST);
+			_singleInviteMailInput.styleName = Theme.TEXTINPUT_LAST;
 			addChild(_singleInviteMailInput);
 			
 			_validateSingleInviteButton = new Button();

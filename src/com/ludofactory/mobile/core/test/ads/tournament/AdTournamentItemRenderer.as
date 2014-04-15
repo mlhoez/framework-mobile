@@ -93,7 +93,7 @@ package com.ludofactory.mobile.core.test.ads.tournament
 			addChild(_highlightAd);
 			
 			_adButton = new Button();
-			_adButton.nameList.add(Theme.BUTTON_AD);
+			_adButton.styleName = Theme.BUTTON_AD;
 			addChild(_adButton);
 			
 			_giftImage = new ImageLoader();

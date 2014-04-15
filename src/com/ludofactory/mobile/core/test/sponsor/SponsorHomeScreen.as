@@ -135,7 +135,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			
 			_knowMoreButton = new Button();
 			_knowMoreButton.addEventListener(Event.TRIGGERED, onKnowMoreSelected);
-			_knowMoreButton.nameList.add( Theme.BUTTON_TRANSPARENT_WHITE );
+			_knowMoreButton.styleName = Theme.BUTTON_TRANSPARENT_WHITE;
 			_knowMoreButton.label = Localizer.getInstance().translate("SPONSOR_HOME.KNOW_MORE_BUTTON");
 			_mainContainer.addChild(_knowMoreButton);
 			_knowMoreButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_WHITE);
@@ -158,7 +158,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			
 			_emailButton = new Button();
 			_emailButton.addEventListener(Event.TRIGGERED, onEmailSelected);
-			_emailButton.nameList.add( GlobalConfig.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_RIGHT);
+			_emailButton.styleName = GlobalConfig.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_RIGHT;
 			_emailButton.defaultIcon = _emailIcon;
 			_emailButton.label = Localizer.getInstance().translate("SPONSOR_HOME.TYPE_EMAIL");
 			GlobalConfig.LANDSCAPE ? addChild(_emailButton) : _buttonsContainer.addChild(_emailButton);
@@ -172,7 +172,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			
 			_smsButton = new Button();
 			_smsButton.addEventListener(Event.TRIGGERED, onSmsSelected);
-			_smsButton.nameList.add( GlobalConfig.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_LEFT);
+			_smsButton.styleName = GlobalConfig.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_LEFT;
 			_smsButton.defaultIcon = _smsIcon;
 			_smsButton.label = Localizer.getInstance().translate("SPONSOR_HOME.TYPE_SMS");
 			GlobalConfig.LANDSCAPE ? addChild(_smsButton) : _buttonsContainer.addChild(_smsButton);
@@ -186,7 +186,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			
 			_myFriendsButton = new Button();
 			_myFriendsButton.addEventListener(Event.TRIGGERED, onMyFriendsSelected);
-			_myFriendsButton.nameList.add( Theme.BUTTON_GREEN);
+			_myFriendsButton.styleName = Theme.BUTTON_GREEN;
 			_myFriendsButton.label = Localizer.getInstance().translate("SPONSOR_HOME.MY_FRIENDS");
 			addChild(_myFriendsButton);
 			

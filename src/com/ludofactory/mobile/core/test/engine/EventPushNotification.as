@@ -92,7 +92,7 @@ package com.ludofactory.mobile.core.test.engine
 			
 			_cancelButton = new Button();
 			_cancelButton.label = Localizer.getInstance().translate("PUSH_NOTIFICATION.LATER_BUTTON_LABEL");
-			_cancelButton.nameList.add( Theme.BUTTON_BLUE );
+			_cancelButton.styleName = Theme.BUTTON_BLUE;
 			_cancelButton.addEventListener(Event.TRIGGERED, onCancel);
 			_container.addChild(_cancelButton);
 		}

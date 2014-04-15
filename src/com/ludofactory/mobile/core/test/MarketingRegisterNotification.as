@@ -142,7 +142,7 @@ package com.ludofactory.mobile.core.test
 			
 			_laterButton = new Button();
 			_laterButton.label = Localizer.getInstance().translate("CREATE_ACCOUNT_NOTIFICATION.LATER_BUTTON_LABEL");
-			_laterButton.nameList.add( Theme.BUTTON_BLUE );
+			_laterButton.styleName = Theme.BUTTON_BLUE;
 			_laterButton.addEventListener(Event.TRIGGERED, onCancel);
 			_buttonGroup.addChild(_laterButton);
 			

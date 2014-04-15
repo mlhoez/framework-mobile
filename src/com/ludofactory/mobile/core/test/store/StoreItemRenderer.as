@@ -75,7 +75,7 @@ package com.ludofactory.mobile.core.test.store
 			_promoLabel.textRendererProperties.wordWrap = false;
 			
 			_priceButton = new Button();
-			_priceButton.nameList.add( Theme.BUTTON_GREEN );
+			_priceButton.styleName = Theme.BUTTON_GREEN;
 			addChild(_priceButton);
 			
 			addChild(_topOfferImage);

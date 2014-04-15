@@ -88,7 +88,7 @@ package com.ludofactory.mobile.core.authentication
 			addChild( _textInputsContainer );
 			
 			_mailInput = new TextInput();
-			_mailInput.nameList.add( Theme.TEXTINPUT_FIRST );
+			_mailInput.styleName = Theme.TEXTINPUT_FIRST;
 			_mailInput.prompt = Localizer.getInstance().translate("AUTHENTICATION.EMAIL_INPUT_HINT");
 			_mailInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.NEXT;
 			_mailInput.textEditorProperties.softKeyboardType = SoftKeyboardType.EMAIL;
@@ -96,7 +96,7 @@ package com.ludofactory.mobile.core.authentication
 			_textInputsContainer.addChild(_mailInput);
 			
 			_passwordInput = new TextInput();
-			_passwordInput.nameList.add( Theme.TEXTINPUT_LAST );
+			_passwordInput.styleName = Theme.TEXTINPUT_LAST;
 			_passwordInput.prompt = Localizer.getInstance().translate("AUTHENTICATION.PASSWORD_INPUT_HINT");
 			_passwordInput.textEditorProperties.displayAsPassword = true;
 			_passwordInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.NEXT;

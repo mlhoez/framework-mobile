@@ -191,7 +191,7 @@ package com.ludofactory.mobile.core.test.engine
 			_scoreContainer = new ScrollContainer();
 			_scoreContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_scoreContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_scoreContainer.nameList.add( Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_RIGHT );
+			_scoreContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_RIGHT;
 			addChild(_scoreContainer);
 			
 			_scoreTitle = new Label();
@@ -217,7 +217,7 @@ package com.ludofactory.mobile.core.test.engine
 			_pointsContainer = new ScrollContainer();
 			_pointsContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_pointsContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_pointsContainer.nameList.add( Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_LEFT );
+			_pointsContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_LEFT;
 			addChild(_pointsContainer);
 			
 			_pointsTitle = new Label();
@@ -279,7 +279,7 @@ package com.ludofactory.mobile.core.test.engine
 				_convertContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 				_convertContainer.alpha = 0;
 				_convertContainer.visible = false;
-				_convertContainer.nameList.add( Theme.SCROLL_CONTAINER_RESULT_GREY );
+				_convertContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_GREY;
 				addChild(_convertContainer);
 				_convertContainer.padding = 0;
 				
@@ -340,7 +340,7 @@ package com.ludofactory.mobile.core.test.engine
 					_convertContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 					_convertContainer.alpha = 0;
 					_convertContainer.visible = false;
-					_convertContainer.nameList.add( Theme.SCROLL_CONTAINER_RESULT_GREY );
+					_convertContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_GREY;
 					addChild(_convertContainer);
 					
 					_convertIcon = new Image( AbstractEntryPoint.assets.getTexture("points-to-gift-icon") );
@@ -371,7 +371,7 @@ package com.ludofactory.mobile.core.test.engine
 			_buttonsContainer.addChild(_continueButton);
 			
 			_homeButton = new Button();
-			_homeButton.nameList.add( Theme.BUTTON_BLUE );
+			_homeButton.styleName = Theme.BUTTON_BLUE;
 			_homeButton.label = Localizer.getInstance().translate("FREE_GAME_END.HOME_BUTTON_LABEL");
 			_homeButton.addEventListener(starling.events.Event.TRIGGERED, onGoHome);
 			_buttonsContainer.addChild(_homeButton);

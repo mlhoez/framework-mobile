@@ -80,12 +80,12 @@ package com.ludofactory.mobile.core.test.pause
 			_resumeButton = new feathers.controls.Button();
 			_resumeButton.alpha = 0;
 			_resumeButton.label = Localizer.getInstance().translate("COMMON.RESUME");
-			_resumeButton.nameList.add(Theme.BUTTON_SPECIAL);
+			_resumeButton.styleName = Theme.BUTTON_SPECIAL;
 			addChild(_resumeButton);
 			
 			_exitButton = new feathers.controls.Button();
 			_exitButton.alpha = 0;
-			_exitButton.nameList.add( Theme.BUTTON_RED );
+			_exitButton.styleName = Theme.BUTTON_RED;
 			_exitButton.label = Localizer.getInstance().translate("COMMON.QUIT");
 			addChild(_exitButton);
 			

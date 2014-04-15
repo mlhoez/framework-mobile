@@ -213,7 +213,7 @@ package com.ludofactory.mobile.core.shop
 			addChild(_vipInfoBlueStripe);
 			
 			_vipInfo = new Button();
-			_vipInfo.nameList.add( Theme.BUTTON_TRANSPARENT_WHITE );
+			_vipInfo.styleName = Theme.BUTTON_TRANSPARENT_WHITE;
 			_vipInfo.label = Localizer.getInstance().translate("BOUTIQUE_HOME.VIP_INFO_BUTTON");
 			_vipInfo.addEventListener(Event.TRIGGERED, onShowVipInfo);
 			addChild(_vipInfo);

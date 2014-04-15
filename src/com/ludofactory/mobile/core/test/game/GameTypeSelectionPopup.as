@@ -146,7 +146,7 @@ package com.ludofactory.mobile.core.test.game
 			
 			_rulesButton = new Button();
 			//_rulesButton.addEventListener(Event.TRIGGERED, onShowRules);
-			_rulesButton.nameList.add( Theme.BUTTON_TRANSPARENT_BLUE_DARKER );
+			_rulesButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE_DARKER;
 			_rulesButton.label = Localizer.getInstance().translate("HOME.RULES_BUTTON_LABEL");
 			addChild(_rulesButton);
 			

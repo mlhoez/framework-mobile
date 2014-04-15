@@ -96,7 +96,7 @@ package com.ludofactory.mobile.core.shop.vip
 			_arrowDown.snapToPixels = true;
 			
 			_subCategoryChoiceButton = new Button();
-			_subCategoryChoiceButton.nameList.add( Theme.BUTTON_TRANSPARENT_BLUE );
+			_subCategoryChoiceButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE;
 			_subCategoryChoiceButton.defaultIcon = _arrowDown;
 			_subCategoryChoiceButton.iconPosition = Button.ICON_POSITION_RIGHT;
 			_subCategoryChoiceButton.addEventListener(Event.TRIGGERED, onShowSubCategoriesListing);
@@ -112,7 +112,7 @@ package com.ludofactory.mobile.core.shop.vip
 			
 			_previousSubCatButton = new Button();
 			_previousSubCatButton.addEventListener(Event.TRIGGERED, onPreviousSubCat);
-			_previousSubCatButton.nameList.add( Theme.BUTTON_TRANSPARENT_BLUE );
+			_previousSubCatButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE;
 			_previousSubCatButton.defaultIcon = _arrowLeft;
 			addChild(_previousSubCatButton);
 			_previousSubCatButton.minHeight = scaleAndRoundToDpi(70);
@@ -125,7 +125,7 @@ package com.ludofactory.mobile.core.shop.vip
 			
 			_nextSubCatButton = new Button();
 			_nextSubCatButton.addEventListener(Event.TRIGGERED, onNextSubCat);
-			_nextSubCatButton.nameList.add( Theme.BUTTON_TRANSPARENT_BLUE );
+			_nextSubCatButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE;
 			_nextSubCatButton.defaultIcon = _arrowRight;
 			addChild(_nextSubCatButton);
 			_nextSubCatButton.minHeight = scaleAndRoundToDpi(70);
@@ -159,7 +159,7 @@ package com.ludofactory.mobile.core.shop.vip
 			_subCategoriesList = new GroupedList();
 			_subCategoriesList.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_subCategoriesList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_subCategoriesList.nameList.add(Theme.SUB_CATEGORY_GROUPED_LIST);
+			_subCategoriesList.styleName = Theme.SUB_CATEGORY_GROUPED_LIST;
 			_subCategoriesList.typicalItem = { nom: "Item 1000" };
 			_subCategoriesList.isSelectable = true;
 			_subCategoriesList.itemRendererProperties.labelField = "nom";

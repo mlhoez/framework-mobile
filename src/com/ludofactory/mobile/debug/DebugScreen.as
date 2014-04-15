@@ -92,12 +92,12 @@ package com.ludofactory.mobile.debug
 			_winAllTrophiesButton = new Button();
 			_winAllTrophiesButton.label = "Tester";
 			_winAllTrophiesButton.addEventListener(Event.TRIGGERED, onTestTrophies);
-			_winAllTrophiesButton.nameList.add(Theme.BUTTON_TRANSPARENT_BLUE_DARKER);
+			_winAllTrophiesButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE_DARKER;
 			
 			_getdefaultData = new Button();
 			_getdefaultData.label = "Go";
 			_getdefaultData.addEventListener(Event.TRIGGERED, onGetDefaultData);
-			_getdefaultData.nameList.add(Theme.BUTTON_TRANSPARENT_BLUE_DARKER);
+			_getdefaultData.styleName = Theme.BUTTON_TRANSPARENT_BLUE_DARKER;
 			
 			_tournamentToggleSwitch = new CustomToggleSwitch();
 			_tournamentToggleSwitch.onText = "";

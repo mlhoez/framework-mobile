@@ -43,7 +43,7 @@ package com.ludofactory.mobile.core.controls
 			
 			_badgeContainer = new ScrollContainer();
 			_badgeContainer.touchable = false;
-			_badgeContainer.nameList.add( Theme.SCROLL_CONTAINER_BADGE );
+			_badgeContainer.styleName = Theme.SCROLL_CONTAINER_BADGE;
 			addChild( _badgeContainer );
 			
 			_badgeLabel = new Label();
