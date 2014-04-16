@@ -376,18 +376,6 @@ package com.ludofactory.mobile.core.authentication
 		}
 		
 		/**
-		 * Updates the value of <code>displayRules</code>.
-		 */		
-		public function setDisplayRules(val:Boolean):void
-		{
-			if( _member.displayRules != val )
-			{
-				_member.displayRules = val;
-				setEncryptedMember();
-			}
-		}
-		
-		/**
 		 * Updates the value of <code>displayTutorial</code>.
 		 */		
 		public function setDisplayTutorial(val:Boolean):void
@@ -463,8 +451,6 @@ package com.ludofactory.mobile.core.authentication
 		public function getLastTrophyWonId():int { return _member.lastTrophyWonId; }
 		/** Returns */		
 		public function getCountryId():int { return _member.countryId; }
-		/** Returns */		
-		public function getDisplayRules():Boolean { return _member.displayRules; }
 		/** Returns */		
 		public function getDisplayTutorial():Boolean { return _member.displayTutorial; }
 		/** Returns */		

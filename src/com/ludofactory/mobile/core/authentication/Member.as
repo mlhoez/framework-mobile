@@ -24,10 +24,6 @@ package com.ludofactory.mobile.core.authentication
 		// Application specific data
 		
 		/**
-		 * Whether we need to display the rules the first time. */		
-		private var _displayRules:Boolean = true;
-		
-		/**
 		 * Whether we need to display the tutorial the first time. */		
 		private var _displayTutorial:Boolean = true;
 		
@@ -218,9 +214,6 @@ package com.ludofactory.mobile.core.authentication
 		
 		public function get countryId():int { return _countryId; }
 		public function set countryId(val:int):void { _countryId = val; }
-		
-		public function get displayRules():Boolean { return _displayRules; }
-		public function set displayRules(val:Boolean):void { _displayRules = val; }
 		
 		public function get displayTutorial():Boolean { return _displayTutorial; }
 		public function set displayTutorial(val:Boolean):void { _displayTutorial = val; }

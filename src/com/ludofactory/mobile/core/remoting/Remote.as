@@ -785,7 +785,6 @@ package com.ludofactory.mobile.core.remoting
 					MemberManager.getInstance().setTournamentUnlocked( int(result.acces_tournoi) == 1 ? true : false );
 					//MemberManager.getInstance().setTournamentAnimPending( false ); // sinon pas d'anim quand partie classique => popup marketing => inscription => acccueil
 					MemberManager.getInstance().setDisplayTutorial( int(result.acces_tournoi) == 1 ? false : true );
-					MemberManager.getInstance().setDisplayRules( int(result.acces_tournoi) == 1 ? false : true );
 				}
 				
 				if( callbackSuccess )

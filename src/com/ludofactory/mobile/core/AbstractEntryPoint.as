@@ -55,7 +55,6 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.test.engine.FreeGameEndScreen;
 	import com.ludofactory.mobile.core.test.engine.HighScoreScreen;
 	import com.ludofactory.mobile.core.test.engine.PodiumScreen;
-	import com.ludofactory.mobile.core.test.engine.SmallRulesScreen;
 	import com.ludofactory.mobile.core.test.engine.TournamentEndScreen;
 	import com.ludofactory.mobile.core.test.event.EventManager;
 	import com.ludofactory.mobile.core.test.faq.FaqScreen;
@@ -170,7 +169,6 @@ package com.ludofactory.mobile.core
 												{ id:ScreenIds.REGISTER_COMPLETE_SCREEN, clazz:RegisterCompleteScreen },
 												{ id:ScreenIds.PSEUDO_CHOICE_SCREEN, clazz:PseudoChoiceScreen },
 												{ id:ScreenIds.FORGOT_PASSWORD_SCREEN, clazz:ForgotPasswordScreen },
-												{ id:ScreenIds.SMALL_RULES_SCREEN, clazz:SmallRulesScreen },
 												{ id:ScreenIds.NEW_HIGH_SCORE_SCREEN, clazz:HighScoreScreen },
 												{ id:ScreenIds.FREE_GAME_END_SCREEN, clazz:FreeGameEndScreen },
 												{ id:ScreenIds.GAME_TYPE_SELECTION_SCREEN, clazz:GamePriceSelectionScreen },
@@ -481,6 +479,8 @@ package com.ludofactory.mobile.core
 			
 			initializeScreenNavigator();
 			
+			// Drawers : child = 0 => derrière le ScreenNavigator
+			
 			_drawer = new Drawers( _container );
 			_drawer.rightDrawer = _alertContainer;
 			_drawer.autoSizeMode = Drawers.AUTO_SIZE_MODE_CONTENT;
@@ -782,19 +782,23 @@ package com.ludofactory.mobile.core
 			{
 				_appClearBackground.visible = _appDarkBackground.visible = _whiteBackground.visible =
 					_howToWinGiftsBackground.visible = _blueBackground.visible = false;
-				_appClearBackground.alpha = _appDarkBackground.alpha = _whiteBackground.alpha = 
-					_blueBackground.alpha = _howToWinGiftsBackground.alpha = 0;
 			}
 			else
 			{
 				//_appClearBackground.blendMode = _appDarkBackground.blendMode = _whiteBackground.blendMode =
 				//	_howToWinGiftsBackground.blendMode = _blueBackground.blendMode = BlendMode.NORMAL;
 				
-				TweenMax.to(_appClearBackground,   0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).appClearBackground ? 1:0 });
+				/*TweenMax.to(_appClearBackground,   0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).appClearBackground ? 1:0 });
 				TweenMax.to(_appDarkBackground,   0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).appDarkBackground ? 1:0 });
 				TweenMax.to(_whiteBackground, 0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).whiteBackground ? 1:0 });
 				TweenMax.to(_blueBackground, 0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).blueBackground ? 1:0 });
-				TweenMax.to(_howToWinGiftsBackground, 0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).howToWinGiftsBackground ? 1:0 });
+				TweenMax.to(_howToWinGiftsBackground, 0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).howToWinGiftsBackground ? 1:0 });*/
+				
+				_appClearBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).appClearBackground ? true : false;
+				_appDarkBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).appDarkBackground ? true : false;
+				_whiteBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).whiteBackground ? true : false;
+				_blueBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).blueBackground ? true : false;
+				_howToWinGiftsBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).howToWinGiftsBackground ? true : false;
 			}
 		}
 		
@@ -823,6 +827,9 @@ package com.ludofactory.mobile.core
 		public function onResize():void
 		{
 			//TweenMax.killTweensOf(_screenNavigator);
+			
+			// FIXME : vérifier les Tweens ici, c'est effectué pour rien s'il n'y a pas de redimensionnement !!!!!
+			// en plus comme y'a plus de mini règles, y'a plus d'écrans intermédaire en full screen
 			
 			if( AdvancedScreen(_screenNavigator.activeScreen).fullScreen )
 			{

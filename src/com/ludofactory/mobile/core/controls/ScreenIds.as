@@ -111,8 +111,6 @@ package com.ludofactory.mobile.core.controls
 		public static const GAME_SCREEN:String = "Jeu";
 		/** Ecran de choix de la mise. */		
 		public static const GAME_TYPE_SELECTION_SCREEN:String = "Jeu - Choix de la mise";
-		/** Ecran des mini règles. */		
-		public static const SMALL_RULES_SCREEN:String = "Mini règles";
 		/** Ecran lors d'un nouvel high score. */		
 		public static const NEW_HIGH_SCORE_SCREEN:String = "Jeu - Nouveau High Score";
 		/** Ecran lors d'un changement de palier en tournoi. */		

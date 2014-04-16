@@ -212,7 +212,7 @@ package com.ludofactory.mobile.core.test.game
 		private function changeScreen():void
 		{
 			TweenMax.killAll();
-			advancedOwner.showScreen( MemberManager.getInstance().getDisplayRules() ? ScreenIds.SMALL_RULES_SCREEN : ScreenIds.GAME_SCREEN );
+			advancedOwner.showScreen( ScreenIds.GAME_SCREEN );
 		}
 		
 //------------------------------------------------------------------------------------------------------------
