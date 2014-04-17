@@ -104,11 +104,13 @@ package com.ludofactory.mobile.core
 			{
 				if(Capabilities.screenResolutionX == 1536 && Capabilities.screenResolutionY == 2048)
 				{
+					// iPad retina
 					var isCurrentlyPortrait:Boolean = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
 					filePath = isCurrentlyPortrait ? "Default-Portrait@2x.png" : "Default-Landscape@2x.png";
 				}
 				else if(Capabilities.screenResolutionX == 768 && Capabilities.screenResolutionY == 1024)
 				{
+					// iPad non retina
 					isCurrentlyPortrait = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
 					filePath = isCurrentlyPortrait ? "Default-Portrait.png" : "Default-Landscape.png";
 				}
@@ -117,15 +119,18 @@ package com.ludofactory.mobile.core
 					isPortraitOnly = true;
 					if(Capabilities.screenResolutionY == 1136)
 					{
+						// iPhone retina >= iPhone 5
 						filePath = "Default-568h@2x.png";
 					}
 					else
 					{
+						// iPhone retina < iPhone 5
 						filePath = "Default@2x.png";
 					}
 				}
 				else if(Capabilities.screenResolutionX == 320)
 				{
+					// iPhone non retina
 					isPortraitOnly = true;
 					filePath = "Default.png";
 				}
