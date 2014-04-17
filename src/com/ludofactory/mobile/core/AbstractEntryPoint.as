@@ -13,7 +13,6 @@ package com.ludofactory.mobile.core
 	import com.greensock.TweenMax;
 	import com.hasoffers.nativeExtensions.MobileAppTracker;
 	import com.ludofactory.common.sound.SoundManager;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.authentication.AuthenticationManager;
 	import com.ludofactory.mobile.core.authentication.AuthenticationScreen;
@@ -82,12 +81,9 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.menu.Menu;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceInfo;
-	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceProperties;
-	import com.nl.funkymonkey.android.deviceinfo.NativeDevicePropertiesData;
 	
 	import flash.filesystem.File;
 	import flash.geom.Rectangle;
-	import flash.system.Capabilities;
 	
 	import eu.alebianco.air.extensions.analytics.Analytics;
 	import eu.alebianco.air.extensions.analytics.api.ITracker;
@@ -102,6 +98,7 @@ package com.ludofactory.mobile.core
 	import feathers.textures.Scale9Textures;
 	
 	import starling.core.Starling;
+	import starling.display.BlendMode;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
@@ -374,10 +371,7 @@ package com.ludofactory.mobile.core
 				MobileAppTracker.instance.trackInstall(); // track install (or update)
 				MobileAppTracker.instance.trackAction("open"); // track daily open
 			} 
-			catch(error:Error) 
-			{
-				
-			}
+			catch(error:Error) { }
 			
 			if( Analytics.isSupported() )
 			{
@@ -387,6 +381,7 @@ package com.ludofactory.mobile.core
 				_tracker.appVersion = AbstractGameInfo.GAME_VERSION;
 			}
 			
+			// parse device info
 			GlobalConfig.isPhone = DeviceCapabilities.isPhone( Starling.current.nativeStage );
 			NativeDeviceInfo.parse();
 			
@@ -529,6 +524,10 @@ package com.ludofactory.mobile.core
 			_appClearBackground = new Image( _assets.getTexture("clear-background") );
 			_appClearBackground.touchable = _appClearBackground.visible = false;
 			_container.addChild(_appClearBackground);
+			
+			// TODO A checker
+			//_appClearBackground.blendMode = _appDarkBackground.blendMode = _whiteBackground.blendMode =
+			//	_howToWinGiftsBackground.blendMode = _blueBackground.blendMode = BlendMode.NONE;
 		}
 		
 		/**
@@ -543,7 +542,6 @@ package com.ludofactory.mobile.core
 			if( GlobalConfig.DEBUG ) SCREENS = SCREENS.concat(DEBUG_SCREENS);
 			_screenNavigator.addScreensFromArray(SCREENS);
 			_screenNavigator.addEventListener(FeathersEventType.TRANSITION_START, onScreenTransitionStarted);
-			//_screenNavigator.addEventListener(FeathersEventType.TRANSITION_COMPLETE, onScreenTransitionComplete);
 			_screenNavigator.addEventListener(LudoEventType.UPDATE_HEADER_TITLE, onUpdateHeaderTitle);
 			_screenNavigator.addEventListener(LudoEventType.SHOW_MAIN_MENU, onMenuButtonTouched);
 			_screenNavigator.addEventListener(LudoEventType.HIDE_MAIN_MENU, hideMenu);
@@ -686,16 +684,6 @@ package com.ludofactory.mobile.core
 //	Screen Management
 		
 		/**
-		 * When the transition is complete, we need to set the blendMode of each
-		 * background to NONE to improve performances.
-		 */		
-		private function onScreenTransitionComplete(event:starling.events.Event):void
-		{
-			//_appClearBackground.blendMode = _appDarkBackground.blendMode = _whiteBackground.blendMode =
-			//	_howToWinGiftsBackground.blendMode = _blueBackground.blendMode = BlendMode.NONE;
-		}
-		
-		/**
 		 * When the screen transition starts.
 		 */		
 		private function onScreenTransitionStarted(event:starling.events.Event):void
@@ -725,14 +713,6 @@ package com.ludofactory.mobile.core
 			}
 			else
 			{
-				//_appClearBackground.blendMode = _appDarkBackground.blendMode = _whiteBackground.blendMode =
-				//	_howToWinGiftsBackground.blendMode = _blueBackground.blendMode = BlendMode.NORMAL;
-				
-				/*TweenMax.to(_appClearBackground,   0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).appClearBackground ? 1:0 });
-				TweenMax.to(_appDarkBackground,   0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).appDarkBackground ? 1:0 });
-				TweenMax.to(_whiteBackground, 0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).whiteBackground ? 1:0 });
-				TweenMax.to(_blueBackground, 0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).blueBackground ? 1:0 });
-				TweenMax.to(_howToWinGiftsBackground, 0.25, { autoAlpha: (_screenNavigator.activeScreen as AdvancedScreen).howToWinGiftsBackground ? 1:0 });*/
 				
 				_appClearBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).appClearBackground ? true : false;
 				_appDarkBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).appDarkBackground ? true : false;
@@ -838,7 +818,7 @@ package com.ludofactory.mobile.core
 					// we need to add this now because the width and height equals to
 					// 0 if we do it before, and the list item renderers width and height
 					// will also be to 0
-					_container.addChildAt(_mainMenu, _container.getChildIndex(_footer) - 1);
+					_container.addChildAt(_mainMenu, _container.getChildIndex(_footer));
 					_mainMenu.scaleX = _mainMenu.scaleY = 1.3;
 					
 					// FIXME A vérifier
@@ -998,7 +978,8 @@ package com.ludofactory.mobile.core
 		}
 		
 		/**
-		 * Callback called when the header's title is updated from the shop.
+		 * Callback called when the header's title is updated from the settings screen
+		 * after the language have been changed.
 		 */		
 		private function onUpdateHeaderTitle( event:starling.events.Event ):void
 		{
