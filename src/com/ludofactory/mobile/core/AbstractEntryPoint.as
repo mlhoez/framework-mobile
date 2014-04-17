@@ -217,7 +217,7 @@ package com.ludofactory.mobile.core
 		private var _drawer:Drawers;
 		/**
 		 * The header. */		
-		private static var _header:Header;
+		private var _header:Header;
 		/**
 		 * Screen navigator. */		
 		protected static var _screenNavigator:AdvancedScreenNavigator;
@@ -388,65 +388,7 @@ package com.ludofactory.mobile.core
 			}
 			
 			GlobalConfig.isPhone = DeviceCapabilities.isPhone( Starling.current.nativeStage );
-			if( GlobalConfig.android )
-			{
-				// only for android
-				try
-				{
-					// just in case
-					NativeDeviceInfo.parse();
-					
-					log("<strong>Device informations :</strong><tr style='font-weight:bold;'>" +
-							"<td style='width: 148px; color: black; text-align: right;'><strong>Device details :</strong></td>" +
-							"<td style='word-break: break-all;'>" + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_BRAND).value +  " " + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_MODEL).value + " (" + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_NAME).value + ")</td>" +
-						"</tr>" +
-						"<tr style='font-weight:bold;'>" +
-							"<td />" + 
-							"<td style='word-break: break-all;'>Manufactured by " + NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_MANUFACTURER).value + "</td>" +
-						"</tr>" +
-						"<tr style='font-weight:bold;'>" +
-							"<td style='width: 148px; color: black; text-align: right;'><strong>OS details :</strong></td>" +
-							"<td style='word-break: break-all;'>" + NativeDevicePropertiesData(NativeDeviceProperties.OS_NAME).value + ((GlobalConfig.android || GlobalConfig.ios) ? "" : "(Simulateur)") + " sur " + (GlobalConfig.isPhone ? "Smartphone" : "Tablette") + "</td>" +
-						"</tr>" +
-						"<tr style='font-weight:bold;'>" +
-							"<td />" + 
-							"<td style='word-break: break-all;'>OS version " + NativeDevicePropertiesData(NativeDeviceProperties.OS_VERSION).value + " (Build : " + NativeDevicePropertiesData(NativeDeviceProperties.OS_BUILD).value + ")</td>" +
-						"</tr>" +
-						"<tr style='font-weight:bold;'>" +
-							"<td />" + 
-							"<td style='word-break: break-all;'>SDK version " + NativeDevicePropertiesData(NativeDeviceProperties.OS_SDK_VERSION).value + " (" + NativeDevicePropertiesData(NativeDeviceProperties.OS_SDK_DESCRIPTION).value + ")</td>" +
-						"</tr>" +
-						"<tr style='font-weight:bold;'>" +
-							"<td style='width: 148px; color: black; text-align: right;'><strong>Screen details :</strong></td>" +
-							"<td style='word-break: break-all;'>Density " + NativeDevicePropertiesData(NativeDeviceProperties.LCD_DENSITY).value + " dpi - résolution " + Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY + "</td>" +
-						"</tr>" +
-						"<tr style='font-weight:bold;'>" +
-							"<td style='width: 148px; color: black; text-align: right;'><strong>Other details :</strong></td>" +
-							"<td style='word-break: break-all;'>Board : " +  NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_BOARD).value + "</td>" +
-						"</tr>" +
-						"<tr style='font-weight:bold;'>" +
-							"<td />" + 
-							"<td style='word-break: break-all;'>CPU : " +  NativeDevicePropertiesData(NativeDeviceProperties.PRODUCT_CPU).value + "</td>" +
-						"<tr style='font-weight:bold;'>" +
-							"<td />" + 
-							"<td style='word-break: break-all;'>OpenGL ES version " +  NativeDevicePropertiesData(NativeDeviceProperties.OPENGLES_VERSION).value + "</td>" +
-						"<tr style='font-weight:bold;'>" +
-							"<td />" + 
-							"<td style='word-break: break-all;'>Heap size : " +  NativeDevicePropertiesData(NativeDeviceProperties.DALVIK_HEAPSIZE).value + "</td>" +
-						"</tr>"
-					);
-				} 
-				catch(error:Error) 
-				{
-					Flox.logWarning("Impossible de parser le fichier build.prop du téléphone.");
-					Flox.logInfo("Type d'appareil : <strong>{0} sur {1}</strong>", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
-				}
-			}
-			else
-			{
-				// for ios
-				Flox.logInfo("Type d'appareil : <strong>{0} sur {1}</strong>", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
-			}
+			NativeDeviceInfo.parse();
 			
 			_alertData = new AlertData();
 			_alertData.addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onPushUpdate);
@@ -896,7 +838,7 @@ package com.ludofactory.mobile.core
 					// we need to add this now because the width and height equals to
 					// 0 if we do it before, and the list item renderers width and height
 					// will also be to 0
-					_container.addChildAt(_mainMenu, _container.getChildIndex(_header) + 1);
+					_container.addChildAt(_mainMenu, _container.getChildIndex(_footer) - 1);
 					_mainMenu.scaleX = _mainMenu.scaleY = 1.3;
 					
 					// FIXME A vérifier
