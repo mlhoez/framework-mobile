@@ -456,7 +456,7 @@ package com.ludofactory.mobile.core
 			initializeBackgrounds();
 			
 			_alertContainer = new AlertContainer();
-			_alertContainer.addEventListener(LudoEventType.OPEN_ALERTS, onAlertButtonTouched);
+			_alertContainer.addEventListener(LudoEventType.OPEN_ALERTS_FROM_HEADER, onAlertButtonTouched);
 			addChild(_alertContainer);
 			
 			// controllrs
@@ -485,7 +485,7 @@ package com.ludofactory.mobile.core
 			_drawer.rightDrawer = _alertContainer;
 			_drawer.autoSizeMode = Drawers.AUTO_SIZE_MODE_CONTENT;
 			_drawer.openOrCloseDuration = 0.5;
-			_drawer.rightDrawerToggleEventType = LudoEventType.OPEN_ALERTS;
+			_drawer.rightDrawerToggleEventType = LudoEventType.OPEN_ALERTS_FROM_HEADER;
 			_drawer.addEventListener(FeathersEventType.BEGIN_INTERACTION, onStartInteractWithDrawer);
 			_drawer.openGesture = Drawers.OPEN_GESTURE_NONE;
 			addChild(_drawer);
@@ -495,7 +495,8 @@ package com.ludofactory.mobile.core
 			
 			// Header
 			_header = new Header();
-			_header.addEventListener(LudoEventType.OPEN_ALERTS, onAlertButtonTouched);
+			_header.addEventListener(LudoEventType.OPEN_ALERTS_FROM_HEADER, onAlertButtonTouched);
+			_header.addEventListener(LudoEventType.HEADER_VISIBILITY_CHANGED, onHeaderVisibilityChanged);
 			_container.addChild(_header);
 			
 			_footer = new Footer();
@@ -628,10 +629,7 @@ package com.ludofactory.mobile.core
 			_footer.width = GlobalConfig.stageWidth;
 			_footer.y = GlobalConfig.stageHeight - _footer.height;
 			
-			_header.width = GlobalConfig.stageWidth;
-			
-			_screenNavigator.y =  _header.height;
-			_screenNavigator.height = GlobalConfig.stageHeight - _header.height - _footer.height;
+			_screenNavigator.height = _footer.y;
 			
 			_pushManager.initialize();
 			
@@ -773,7 +771,7 @@ package com.ludofactory.mobile.core
 			if( _screenNavigator.activeScreenID == ScreenIds.HOME_SCREEN )
 				_eventManager.getEvent();
 			
-			_header.setTitle( AdvancedScreen(_screenNavigator.activeScreen).headerTitle );
+			AdvancedScreen(_screenNavigator.activeScreen).headerTitle == "" ? _header.hideTitle() : _header.showTitle( AdvancedScreen(_screenNavigator.activeScreen).headerTitle );
 			_footer.displayNewsIcon( _screenNavigator.activeScreenID == ScreenIds.HOME_SCREEN );
 			
 			_shadow.visible = _drawer.openGesture == Drawers.OPEN_GESTURE_NONE ? false : true;
@@ -826,11 +824,6 @@ package com.ludofactory.mobile.core
 		 */		
 		public function onResize():void
 		{
-			//TweenMax.killTweensOf(_screenNavigator);
-			
-			// FIXME : vérifier les Tweens ici, c'est effectué pour rien s'il n'y a pas de redimensionnement !!!!!
-			// en plus comme y'a plus de mini règles, y'a plus d'écrans intermédaire en full screen
-			
 			if( AdvancedScreen(_screenNavigator.activeScreen).fullScreen )
 			{
 				_drawer.openGesture = Drawers.OPEN_GESTURE_NONE;
@@ -839,23 +832,23 @@ package com.ludofactory.mobile.core
 				_screenNavigator.height = GlobalConfig.stageHeight;
 				_screenNavigator.width = GlobalConfig.stageWidth;
 				
-				TweenMax.to(_header, 0.25, { y:-_header.height, autoAlpha:0 });
+				_header.y = -500;
+				
 				TweenMax.to(_footer, 0.25, { y:(GlobalConfig.stageHeight + _footer.height), autoAlpha:0 });
 			}
 			else
 			{
-				if( _pushManager && _pushManager.isInitialized && _pushManager.numElementsToPush > 0 || _alertData.numAlerts > 0 )
+				if( (_pushManager && _pushManager.isInitialized && _pushManager.numElementsToPush > 0) || _alertData.numAlerts > 0 )
 					_drawer.openGesture = Drawers.OPEN_GESTURE_DRAG_CONTENT_EDGE;
 				else
 					_drawer.openGesture = Drawers.OPEN_GESTURE_NONE;
 				
-				_screenNavigator.y = _header.height;
-				_screenNavigator.height = GlobalConfig.stageHeight - _footer.height - _header.height;
-				_screenNavigator.width = GlobalConfig.stageWidth;
+				_header.y = 0;
 				
-				//TweenMax.to(_screenNavigator, 0.25, { y:_header.height, height:Math.max(GlobalConfig.stageHeight, GlobalConfig.stageWidth) - _header.height - _footer.height, width:Math.min(GlobalConfig.stageHeight, GlobalConfig.stageWidth) });
-				TweenMax.to(_header, 0.25, { y:0, autoAlpha:1 });
-				TweenMax.to(_footer, 0.25, { y:(GlobalConfig.stageHeight - _footer.height), autoAlpha:1 });
+				onHeaderVisibilityChanged();
+				
+				if( _footer.y > GlobalConfig.stageHeight )
+					TweenMax.to(_footer, 0.25, { y:(GlobalConfig.stageHeight - _footer.height), autoAlpha:1 });
 			}
 		}
 		
@@ -896,7 +889,7 @@ package com.ludofactory.mobile.core
 					_mainMenu.alpha = 0;
 					_mainMenu.visible = false;
 					_mainMenu.width = _screenNavigator.width;
-					_mainMenu.height = _screenNavigator.height + _header.height;
+					_mainMenu.height = GlobalConfig.stageHeight - _footer.height;
 					_mainMenu.alignPivot();
 					_mainMenu.x = _mainMenu.width * 0.5;
 					_mainMenu.y = /*_screenNavigator.y +*/ (_mainMenu.height * 0.5);
@@ -992,8 +985,33 @@ package com.ludofactory.mobile.core
 		private function onAlertButtonTouched(event:starling.events.Event = null):void
 		{
 			onStartInteractWithDrawer(event);
-			_container.dispatchEventWith( LudoEventType.OPEN_ALERTS );
+			_container.dispatchEventWith( LudoEventType.OPEN_ALERTS_FROM_HEADER );
 			hideMenu();
+		}
+		
+		/**
+		 * The header's visibiliy have changed.
+		 */		
+		private function onHeaderVisibilityChanged(event:starling.events.Event = null):void
+		{
+			if( _header.visible )
+			{
+				if( _screenNavigator.y == 0 )
+				{
+					// the screen navigator is too big and too high
+					_screenNavigator.y = _header.height;
+					_screenNavigator.height = GlobalConfig.stageHeight - _footer.height - _header.height; // FIXME A optimiser les .height
+				}
+			}
+			else
+			{
+				if( _screenNavigator.y != 0 )
+				{
+					// the screen navigator is too small and too low
+					_screenNavigator.y = 0;
+					_screenNavigator.height = GlobalConfig.stageHeight - _footer.height; // FIXME A optimiser les .height
+				}
+			}
 		}
 		
 		/**
@@ -1037,9 +1055,12 @@ package com.ludofactory.mobile.core
 			_footer.animateSummary( event.data );
 		}
 		
+		/**
+		 * Callback called when the header's title is updated from the shop.
+		 */		
 		private function onUpdateHeaderTitle( event:starling.events.Event ):void
 		{
-			_header.setTitle( String(event.data) );
+			_header.showTitle( String(event.data) );
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -126,7 +126,7 @@ package com.ludofactory.mobile.core.events
 		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
 		 * the AccordionElement class when a panel has fully collapsed.
 		 */
-		public static const OPEN_ALERTS:String = "openAlerts";
+		public static const OPEN_ALERTS_FROM_HEADER:String = "openAlerts";
 		/**
 		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
 		 * the AccordionElement class when a panel has fully collapsed.
@@ -198,6 +198,12 @@ package com.ludofactory.mobile.core.events
 		 * the AccordionElement class when a panel has fully collapsed.
 		 */
 		public static const SHOW_MAIN_MENU:String = "showMainMenu";
+		
+		/**
+		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
+		 * the AccordionElement class when a panel has fully collapsed.
+		 */
+		public static const HEADER_VISIBILITY_CHANGED:String = "headerVisibilityChanged";
 		
 //------------------------------------------------------------------------------------------------------------
 //	Game Center

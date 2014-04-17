@@ -18,27 +18,24 @@ package com.ludofactory.mobile.core.controls
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
-	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
-	import feathers.core.FeathersControl;
-	import feathers.display.Scale3Image;
-	import feathers.textures.Scale3Textures;
 	
+	import starling.display.Image;
+	import starling.display.Sprite;
 	import starling.events.Event;
 	
-	public class Header extends FeathersControl
+	/**
+	 * Application's header.
+	 */	
+	public class Header extends Sprite
 	{
 		/**
-		 * Invalidation flag to indicate that the dimensions of the UI control
-		 * have changed.
-		 */
-		public static const INVALIDATION_FLAG_TITLE:String = "title";
-		public static const INVALIDATION_FLAG_FIRST_INIT:String = "firstInit";
+		 * The AlertButton position when visible. */		
+		private var _alertButtonPosition:int;
 		
 		/**
 		 * The background. */		
-		private var _background:Scale3Image;
-		
+		private var _background:Image;
 		/**
 		 * The title. */		
 		private var _title:Label;
@@ -46,80 +43,103 @@ package com.ludofactory.mobile.core.controls
 		/**
 		 * Alert button. */		
 		private var _alertButton:BadgedButton;
-		
 		/**
 		 * Alert icon. */		
-		private var _alertIcon:ImageLoader;
+		private var _alertIcon:Image;
 		
+		/**
+		 * Whether the alert button is displaying (no by default). */		
 		private var _isAlertDisplaying:Boolean = false;
+		
+		/**
+		 * Whether the title is displaying (no by default). */		
+		private var _isTitleDisplaying:Boolean = false;
 		
 		public function Header()
 		{
 			super();
+			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
 		
-		override protected function initialize():void
+		/**
+		 * Initializes the component.
+		 */		
+		private function initialize(event:Event):void
 		{
-			super.initialize();
+			removeEventListener(Event.ADDED_TO_STAGE, initialize);
 			
-			this.height = scaleAndRoundToDpi(60);
+			// hidden by default
+			this.visible = false;
 			
-			// FIXME Mettre le header en visible = false lorsqu'il n'est pas affiché
-			
-			_background = new Scale3Image( new Scale3Textures(AbstractEntryPoint.assets.getTexture("header-background-skin"), 20, 20), GlobalConfig.dpiScale );
+			_background = new Image( AbstractEntryPoint.assets.getTexture("header-background-skin") );
+			_background.touchable = false;
+			_background.visible = false;
+			_background.alpha = 0;
 			addChild(_background);
 			
 			_title = new Label();
-			_title.text = "";
+			_title.touchable = false;
+			_title.text = "_";
 			addChild(_title);
-			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
-			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 10, 10) ];
 			
-			_alertIcon = new ImageLoader();
-			_alertIcon.source = AbstractEntryPoint.assets.getTexture("header-alert-icon");
-			_alertIcon.snapToPixels = true;
+			_alertIcon = new Image( AbstractEntryPoint.assets.getTexture("header-alert-icon") );
 			_alertIcon.scaleX = _alertIcon.scaleY = GlobalConfig.dpiScale;
 			
 			_alertButton = new BadgedButton();
 			_alertButton.defaultIcon = _alertIcon;
-			_alertButton.alpha = 0;
 			_alertButton.visible = false;
+			_alertButton.alpha = 0;
 			_alertButton.addEventListener(Event.TRIGGERED, onAlertButtonTouched);
 			addChild(_alertButton);
+			
+			draw();
 		}
 		
-		override protected function draw():void
+		private function draw():void
 		{
-			super.draw();
+			_background.width = _title.width = GlobalConfig.stageWidth;
 			
-			_background.width = _title.width = this.actualWidth;
-			_background.height = this.actualHeight;
+			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
+			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 10, 10) ];
+			_title.validate();
+			_title.y = ((_background.height - _title.height) * 0.5) << 0;
+			_title.text = "";
 			
-			if( isInvalid( INVALIDATION_FLAG_FIRST_INIT ) )
-			{
-				_alertButton.validate();
-				_alertButton.x = this.actualWidth;
-			}
-			
-			if( isInvalid( INVALIDATION_FLAG_TITLE ) )
-			{
-				_title.validate();
-				_title.y = (this.actualHeight - _title.height) * 0.5;
-				TweenMax.to(_background, 0.5, { autoAlpha:((_title.text == "" && !_isAlertDisplaying) ? 0 : 1) });
-			}
+			// off screen by default
+			_alertButton.validate();
+			_alertButton.x = GlobalConfig.stageWidth;
+			_alertButtonPosition = (GlobalConfig.stageWidth - _alertButton.width + scaleAndRoundToDpi(3)) << 0;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
-//	Utils
-//------------------------------------------------------------------------------------------------------------
+//	Utilities
 		
 		/**
-		 * Updates the header title.
+		 * Shows the title.
 		 */		
-		public function setTitle(val:String):void
+		public function showTitle(val:String):void
 		{
 			_title.text = val;
-			invalidate( INVALIDATION_FLAG_TITLE );
+			if( !_isAlertDisplaying && !_isTitleDisplaying )
+			{
+				_background.visible = this.visible = true;
+				_background.alpha = 1;
+			}
+			_isTitleDisplaying = true;
+		}
+		
+		/**
+		 * Hides the title.
+		 */		
+		public function hideTitle():void
+		{
+			_title.text = "";
+			if( !_isAlertDisplaying && _isTitleDisplaying )
+			{
+				_background.visible = this.visible = false;
+				_background.alpha = 0;
+			}
+			_isTitleDisplaying = false;
 		}
 		
 		/**
@@ -128,10 +148,20 @@ package com.ludofactory.mobile.core.controls
 		public function showAlertButton(count:int):void
 		{
 			updateAlertIcon();
-			_isAlertDisplaying = true;
-			TweenMax.to(_background, 0.5, { autoAlpha:((_title.text == "" && !_isAlertDisplaying) ? 0 : 1) });
 			_alertButton.badgeCount = count;
-			TweenMax.to(_alertButton, 0.5, { x:(this.actualWidth - _alertButton.width + scaleAndRoundToDpi(3)), autoAlpha:1 });
+			
+			if( !_isAlertDisplaying )
+			{
+				_isAlertDisplaying = true;
+				
+				if( !_isTitleDisplaying )
+				{
+					// title was not displaying then we can tween the header's background
+					this.visible = true;
+					TweenMax.to(_background, 0.5, { autoAlpha:1 });
+				}
+				TweenMax.to(_alertButton, 0.5, { x:_alertButtonPosition, autoAlpha:1 });
+			}
 		}
 		
 		/**
@@ -139,20 +169,27 @@ package com.ludofactory.mobile.core.controls
 		 */		
 		public function hideAlertButton():void
 		{
-			_isAlertDisplaying = false;
-			TweenMax.to(_background, 0.5, { autoAlpha:((_title.text == "" && !_isAlertDisplaying) ? 0 : 1) });
-			_alertButton.badgeCount = 0;
-			TweenMax.to(_alertButton, 0.5, { x:this.actualWidth, autoAlpha:0 });
+			if( _isAlertDisplaying )
+			{
+				_isAlertDisplaying = false;
+				_alertButton.badgeCount = 0;
+				if( !_isTitleDisplaying )
+				{
+					// title was not displaying then we can fade out the header's background
+					TweenMax.to(_background, 0.5, { autoAlpha:0, onComplete:hideHeader });
+				}
+				TweenMax.to(_alertButton, 0.5, { x:GlobalConfig.stageWidth, autoAlpha:0 });
+			}
+		}
+		
+		private function hideHeader():void
+		{
+			this.visible = false;
 		}
 		
 		/**
-		 * The alert button was touched, let's open the drawer.
+		 * Updates the alert icon, depending
 		 */		
-		private function onAlertButtonTouched(event:Event):void
-		{
-			dispatchEventWith(LudoEventType.OPEN_ALERTS);
-		}
-		
 		private function updateAlertIcon():void
 		{
 			var numChanges:int = 0;
@@ -215,7 +252,36 @@ package com.ludofactory.mobile.core.controls
 			if( numChanges > 1 )
 				sourceName = "header-alert-icon";
 			
-			_alertIcon.source = AbstractEntryPoint.assets.getTexture(sourceName);
+			_alertIcon.texture = AbstractEntryPoint.assets.getTexture(sourceName);
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Handlers
+		
+		/**
+		 * The alert button was touched, let's open the drawer.
+		 */		
+		private function onAlertButtonTouched(event:Event):void
+		{
+			dispatchEventWith(LudoEventType.OPEN_ALERTS_FROM_HEADER);
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Get / Set
+		
+		/**
+		 * Whether the header is displaying.
+		 */		
+		public function get isDisplaying():Boolean { return (_isTitleDisplaying || _isAlertDisplaying); }
+		
+		/**
+		 * When the visibility have changed, we can resize the screen navigator accordingly
+		 * to fit the entire available space.
+		 */		
+		override public function set visible(value:Boolean):void
+		{
+			super.visible = value;
+			dispatchEventWith(LudoEventType.HEADER_VISIBILITY_CHANGED);
 		}
 		
 	}

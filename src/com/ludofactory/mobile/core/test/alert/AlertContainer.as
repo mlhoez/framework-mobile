@@ -169,7 +169,7 @@ package com.ludofactory.mobile.core.test.alert
 		 */		
 		private function onClose(event:Event):void
 		{
-			dispatchEventWith(LudoEventType.OPEN_ALERTS);
+			dispatchEventWith(LudoEventType.OPEN_ALERTS_FROM_HEADER);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
