@@ -559,7 +559,7 @@ package com.ludofactory.mobile.core
 			_drawer.width = _appClearBackground.width = _appDarkBackground.width = _howToWinGiftsBackground.width = _whiteBackground.width = _blueBackground.width = GlobalConfig.stageWidth;
 			_drawer.height = _appClearBackground..height = _appDarkBackground.height = _howToWinGiftsBackground.height = _whiteBackground.height = _blueBackground.height = GlobalConfig.stageHeight;
 			
-			_alertContainer.width = GlobalConfig.stageWidth * 0.8;
+			_alertContainer.width = GlobalConfig.stageWidth * (GlobalConfig.LANDSCAPE ? 0.6 : 0.8);
 			_alertContainer.height = GlobalConfig.stageHeight;
 			_alertContainer.x = GlobalConfig.stageWidth - _alertContainer.width;
 			
@@ -736,7 +736,6 @@ package com.ludofactory.mobile.core
 				_alertContainer.updateContent();
 				_alertContainer.updateList();
 			}
-			//log("Shadow visible = " + _shadow.visible);
 		}
 		
 		/**
@@ -860,10 +859,9 @@ package com.ludofactory.mobile.core
 		}
 		
 		/**
-		 * Once the main menu is hidden, we need to set its visibility
-		 * to false to improve performance, and if we are currently on
-		 * the "Termes of Service" screen, we need to hide the scrollText
-		 * so that it doesn't appear below the menu.
+		 * Once the main menu is hidden, we need to set its visibility to false to improve
+		 * performance, and if we are currently on the "Termes of Service" screen, we need
+		 * to hide the scrollText so that it doesn't appear above the menu.
 		 */		
 		private static function onMenuHidden(event:starling.events.Event = null):void
 		{
@@ -1005,15 +1003,11 @@ package com.ludofactory.mobile.core
 			{
 				_header.showAlertButton( _pushManager.numElementsToPush + _alertData.numAlerts + (MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 0 ? 1 : 0) + (MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions() > 0 ? 1 : 0));
 				_drawer.openGesture = Drawers.OPEN_GESTURE_DRAG_CONTENT_EDGE;
-				
-				//TweenMax.to(_screenNavigator, 0.5, { y:_header.height, height:(GlobalConfig.stageHeight - _header.height - _footer.height) });
 			}
 			else
 			{
 				_header.hideAlertButton();
 				_drawer.openGesture = Drawers.OPEN_GESTURE_NONE;
-				
-				//TweenMax.to(_screenNavigator, 0.5, { y:0, height:(GlobalConfig.stageHeight - _footer.height) });
 			}
 		}
 		

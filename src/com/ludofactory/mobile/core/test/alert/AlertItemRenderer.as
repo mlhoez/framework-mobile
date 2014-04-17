@@ -104,7 +104,7 @@ package com.ludofactory.mobile.core.test.alert
 		{
 			super.initialize();
 			
-			this.width = _savedWidth = Math.min(GlobalConfig.stageWidth, GlobalConfig.stageHeight) * 0.8;
+			this.width = _savedWidth = GlobalConfig.stageWidth * (GlobalConfig.LANDSCAPE ? 0.6 : 0.8);
 			this.height = _minItemHeight;
 			
 			_background = new Quad(this.width, _minItemHeight, 0xff0000);
