@@ -6,11 +6,14 @@ Created : 4 oct. 2013
 */
 package com.ludofactory.mobile.core.test.alert
 {
+	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.ludofactory.mobile.core.test.home.AlertData;
 	import com.ludofactory.mobile.core.test.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.test.push.AlertType;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -32,7 +35,7 @@ package com.ludofactory.mobile.core.test.alert
 	/**
 	 * The alert container.
 	 */	
-	public class AlertContainer extends FeathersControl
+	public class AlertManager extends FeathersControl
 	{
 		/**
 		 * The background. */		
@@ -50,7 +53,11 @@ package com.ludofactory.mobile.core.test.alert
 		 * The close button. */		
 		private var _closeButton:Button;
 		
-		public function AlertContainer()
+		/**
+		 * The alert data. */		
+		private static var _alertData:AlertData;
+		
+		public function AlertManager()
 		{
 			super();
 		}
@@ -58,6 +65,9 @@ package com.ludofactory.mobile.core.test.alert
 		override protected function initialize():void
 		{
 			super.initialize();
+			
+			_alertData = new AlertData();
+			_alertData.addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onAlertUpdated);
 			
 			_background = new Quad(5, 5);
 			_background.touchable = false;
@@ -71,15 +81,11 @@ package com.ludofactory.mobile.core.test.alert
 			
 			const layout:VerticalLayout = new VerticalLayout();
 			layout.hasVariableItemDimensions = true;
-			layout.manageVisibility = true;
-			layout.useVirtualLayout = true;
 			
 			_list = new List();
-			//_list.dataProvider = new ListCollection( AbstractEntryPoint.pushManager.elementsToPush );
 			_list.layout = layout;
 			_list.verticalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_list.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FLOAT;
 			_list.isSelectable = false;
 			_list.itemRendererType = AlertItemRenderer;
 			addChild(_list);
@@ -112,6 +118,9 @@ package com.ludofactory.mobile.core.test.alert
 			_list.width = this.actualWidth;
 			_list.height = _closeButton.y - _list.y;
 		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Utilities
 		
 		public function updateContent():void
 		{
@@ -172,9 +181,37 @@ package com.ludofactory.mobile.core.test.alert
 			dispatchEventWith(LudoEventType.OPEN_ALERTS_FROM_HEADER);
 		}
 		
+		public function fetchAlerts():void
+		{
+			if( AirNetworkInfo.networkInfo.isConnected() && MemberManager.getInstance().isLoggedIn() )
+				Remote.getInstance().getAlerts(onGetAlertsSuccess, null, null, 1);
+		}
+		
+		/**
+		 * The alerts have been retreived from the server. In this case
+		 * we store them (update) so that we can display badges in the
+		 * main menu list.
+		 */		
+		private function onGetAlertsSuccess(result:Object):void
+		{
+			_alertData.parse( result.alertes );
+			dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
+		}
+		
+		private function onAlertUpdated(event:Event):void
+		{
+			dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
+		}
+		
+		public function get alertData():AlertData
+		{
+			return _alertData;
+		}
+		
+		public function get numAlerts():int { return _alertData.numAlerts }
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{

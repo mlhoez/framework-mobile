@@ -46,7 +46,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.test.achievements.GameCenterManager;
 	import com.ludofactory.mobile.core.test.achievements.TrophyScreen;
 	import com.ludofactory.mobile.core.test.ads.AdManager;
-	import com.ludofactory.mobile.core.test.alert.AlertContainer;
+	import com.ludofactory.mobile.core.test.alert.AlertManager;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.cs.HelpScreen;
 	import com.ludofactory.mobile.core.test.cs.thread.CSThreadScreen;
@@ -98,7 +98,6 @@ package com.ludofactory.mobile.core
 	import feathers.textures.Scale9Textures;
 	
 	import starling.core.Starling;
-	import starling.display.BlendMode;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
@@ -254,12 +253,10 @@ package com.ludofactory.mobile.core
 		 * The push manager */		
 		private static var _pushManager:PushManager;
 		
-		/**
-		 * The alert data. */		
-		private static var _alertData:AlertData;
+		
 		/**
 		 * The alert container. */		
-		private var _alertContainer:AlertContainer;
+		private static var _alertContainer:AlertManager;
 		
 		/**
 		 * Used to retrieve and display events. */		
@@ -385,15 +382,15 @@ package com.ludofactory.mobile.core
 			GlobalConfig.isPhone = DeviceCapabilities.isPhone( Starling.current.nativeStage );
 			NativeDeviceInfo.parse();
 			
-			_alertData = new AlertData();
-			_alertData.addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onPushUpdate);
+			
 			
 			_container = new Sprite();
 			
 			initializeBackgrounds();
 			
-			_alertContainer = new AlertContainer();
+			_alertContainer = new AlertManager();
 			_alertContainer.addEventListener(LudoEventType.OPEN_ALERTS_FROM_HEADER, onAlertButtonTouched);
+			_alertContainer.addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onPushUpdate);
 			addChild(_alertContainer);
 			
 			// controllrs
@@ -694,12 +691,12 @@ package com.ludofactory.mobile.core
 			if( _drawer.isRightDrawerOpen )
 				_drawer.toggleRightDrawer();
 			
-			// update the badges
-			if( AirNetworkInfo.networkInfo.isConnected() && MemberManager.getInstance().isLoggedIn() && _screenNavigator.activeScreenID == ScreenIds.HOME_SCREEN )
-				Remote.getInstance().getAlerts(onGetAlertsSuccess, null, null, 1);
-			
+			// update the badges and events
 			if( _screenNavigator.activeScreenID == ScreenIds.HOME_SCREEN )
+			{
+				_alertContainer.fetchAlerts();
 				_eventManager.getEvent();
+			}
 			
 			AdvancedScreen(_screenNavigator.activeScreen).headerTitle == "" ? _header.hideTitle() : _header.showTitle( AdvancedScreen(_screenNavigator.activeScreen).headerTitle );
 			_footer.displayNewsIcon( _screenNavigator.activeScreenID == ScreenIds.HOME_SCREEN );
@@ -759,7 +756,7 @@ package com.ludofactory.mobile.core
 			}
 			else
 			{
-				if( (_pushManager && _pushManager.isInitialized && _pushManager.numElementsToPush > 0) || _alertData.numAlerts > 0 )
+				if( (_pushManager && _pushManager.isInitialized && _pushManager.numElementsToPush > 0) || _alertContainer.numAlerts > 0 )
 					_drawer.openGesture = Drawers.OPEN_GESTURE_DRAG_CONTENT_EDGE;
 				else
 					_drawer.openGesture = Drawers.OPEN_GESTURE_NONE;
@@ -999,15 +996,21 @@ package com.ludofactory.mobile.core
 		 */		
 		private function onPushUpdate(event:starling.events.Event = null):void
 		{
-			if( _pushManager.numElementsToPush > 0 || _alertData.numAlerts > 0 || MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 0 || MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions() > 0)
+			if( _pushManager.numElementsToPush > 0 || _alertContainer.numAlerts > 0 || MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 0 || MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions() > 0)
 			{
-				_header.showAlertButton( _pushManager.numElementsToPush + _alertData.numAlerts + (MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 0 ? 1 : 0) + (MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions() > 0 ? 1 : 0));
+				_header.showAlertButton( _pushManager.numElementsToPush + _alertContainer.numAlerts + (MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 0 ? 1 : 0) + (MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions() > 0 ? 1 : 0));
 				_drawer.openGesture = Drawers.OPEN_GESTURE_DRAG_CONTENT_EDGE;
 			}
 			else
 			{
 				_header.hideAlertButton();
 				_drawer.openGesture = Drawers.OPEN_GESTURE_NONE;
+			}
+			
+			if( _drawer.isRightDrawerOpen )
+			{
+				_alertContainer.updateContent();
+				_alertContainer.updateList();
 			}
 		}
 		
@@ -1029,25 +1032,6 @@ package com.ludofactory.mobile.core
 //	Divers
 		
 		/**
-		 * The alerts have been retreived from the server. In this case
-		 * we store them (update) so that we can display badges in the
-		 * main menu list.
-		 */		
-		private function onGetAlertsSuccess(result:Object):void
-		{
-			_alertData.parse( result.alertes );
-			
-			// update header
-			onPushUpdate();
-			
-			if( _drawer.isRightDrawerOpen )
-			{
-				_alertContainer.updateContent();
-				_alertContainer.updateList();
-			}
-		}
-		
-		/**
 		 * When the user have not finished the account creation process (mainly
 		 * because he didn't choose a pseudo), we will lock the navigation to
 		 * force the user to finish the process. 
@@ -1061,8 +1045,8 @@ package com.ludofactory.mobile.core
 //------------------------------------------------------------------------------------------------------------
 //	Get / Set
 		
-		public static function get alertData():AlertData { return _alertData; }
-		public static function get numAlerts():int { return (_pushManager.numElementsToPush + _alertData.numAlerts); }
+		public static function get alertData():AlertData { return _alertContainer.alertData; }
+		public function get numAlerts():int { return (_pushManager.numElementsToPush + _alertContainer.numAlerts); }
 		public static function get assets():AssetManager { return _assets; }
 		public static function get pushManager():PushManager { return _pushManager; }
 		public static function get screenNavigator():AdvancedScreenNavigator { return _screenNavigator; }

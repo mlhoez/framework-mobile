@@ -285,7 +285,7 @@ package com.ludofactory.mobile.core
 			Flox.flushLocalData();
 			
 			if( AbstractEntryPoint.pushManager )
-				PushNotification.getInstance().setBadgeNumberValue( AbstractEntryPoint.numAlerts );
+				PushNotification.getInstance().setBadgeNumberValue( (_rootClass as AbstractEntryPoint).numAlerts );
 			PauseManager.pause();
 			NativeApplication.nativeApplication.addEventListener(flash.events.Event.ACTIVATE, onResume, false, 0, true);
 			
@@ -301,7 +301,7 @@ package com.ludofactory.mobile.core
 		private function onResume(event:flash.events.Event):void
 		{
 			if( AbstractEntryPoint.pushManager )
-				PushNotification.getInstance().setBadgeNumberValue( AbstractEntryPoint.numAlerts );
+				PushNotification.getInstance().setBadgeNumberValue( (_rootClass as AbstractEntryPoint).numAlerts );
 			NativeApplication.nativeApplication.removeEventListener(flash.events.Event.ACTIVATE, onResume);
 			PauseManager.resume();
 			

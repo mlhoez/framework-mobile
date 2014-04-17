@@ -9,7 +9,10 @@ package com.ludofactory.mobile.core.test.home
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	
 	import starling.events.EventDispatcher;
-
+	
+	/**
+	 * Alert data.
+	 */	
 	public class AlertData extends EventDispatcher
 	{
 		/**
@@ -52,6 +55,16 @@ package com.ludofactory.mobile.core.test.home
 			}
 		}
 		
+		public function onUserLoggedOut():void
+		{
+			_numGainAlerts = 0;
+			_numSponsorAlerts = 0;
+			_numCustomerServiceAlerts = 0;
+			_numCustomerServiceImportantAlerts = 0;
+			_numTrophiesAlerts = 0;
+			dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
+		}
+		
 		public function get numGainAlerts():int { return _numGainAlerts; }
 		public function set numGainAlerts(val:int):void
 		{
@@ -89,14 +102,5 @@ package com.ludofactory.mobile.core.test.home
 		
 		public function get numAlerts():int { return (_numGainAlerts + _numSponsorAlerts + _numCustomerServiceImportantAlerts + _numTrophiesAlerts) }
 		
-		public function onUserLoggedOut():void
-		{
-			_numGainAlerts = 0;
-			_numSponsorAlerts = 0;
-			_numCustomerServiceAlerts = 0;
-			_numCustomerServiceImportantAlerts = 0;
-			_numTrophiesAlerts = 0;
-			dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
-		}
 	}
 }
