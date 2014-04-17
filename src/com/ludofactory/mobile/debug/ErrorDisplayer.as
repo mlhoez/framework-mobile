@@ -4,7 +4,7 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 9 janv. 2014
 */
-package com.ludofactory.mobile.core.manager
+package com.ludofactory.mobile.debug
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;

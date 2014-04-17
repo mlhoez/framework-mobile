@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core.shop.vip
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -91,7 +91,7 @@ package com.ludofactory.mobile.core.shop.vip
 			_container.layout = vlayout;
 			
 			_giftName = new Label();
-			_giftName.text = Utility.replaceCurrency(_boutiqueItemData.title);
+			_giftName.text = Utilities.replaceCurrency(_boutiqueItemData.title);
 			_container.addChild(_giftName);
 			_giftName.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -117,7 +117,7 @@ package com.ludofactory.mobile.core.shop.vip
 			_container.addChild(_orderButton);
 			
 			_giftDescription = new Label();
-			_giftDescription.text = Utility.replaceCurrency(_boutiqueItemData.description);
+			_giftDescription.text = Utilities.replaceCurrency(_boutiqueItemData.description);
 			_container.addChild(_giftDescription);
 			_giftDescription.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, true, true);
 			

@@ -6,7 +6,7 @@ Created : 4 oct. 2013
 */
 package com.ludofactory.mobile.core.test.alert
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -178,7 +178,7 @@ package com.ludofactory.mobile.core.test.alert
 				{
 					_message.visible = _date.visible = true;
 					
-					_date.text = Utility.formatDate(_data.creationDate);
+					_date.text = Utilities.formatDate(_data.creationDate);
 					
 					_accessButton.visible = false;
 					

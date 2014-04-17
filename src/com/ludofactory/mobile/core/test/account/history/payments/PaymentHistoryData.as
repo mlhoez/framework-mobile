@@ -6,7 +6,7 @@ Created : 17 sept. 2013
 */
 package com.ludofactory.mobile.core.test.account.history.payments
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 
 	public class PaymentHistoryData
 	{
@@ -26,7 +26,7 @@ package com.ludofactory.mobile.core.test.account.history.payments
 		{
 			_type = data.type;
 			_date = data.date;
-			_offer = Utility.replaceCurrency(data.offre);
+			_offer = Utilities.replaceCurrency(data.offre);
 		}
 		
 		public function get type():String { return _type; }

@@ -6,7 +6,7 @@ Created : 14 oct. 2013
 */
 package com.ludofactory.mobile.core.test.tournament.listing
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -228,7 +228,7 @@ package com.ludofactory.mobile.core.test.tournament.listing
 				{
 					_title.visible = true;
 					
-					_title.text = Utility.replaceCurrency(String(_data));
+					_title.text = Utilities.replaceCurrency(String(_data));
 				}
 				else
 				{

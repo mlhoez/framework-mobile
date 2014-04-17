@@ -6,7 +6,7 @@ Created : 17 sept. 2013
 */
 package com.ludofactory.mobile.core.test.account.history
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -140,7 +140,7 @@ package com.ludofactory.mobile.core.test.account.history
 				{
 					_title.visible = true;
 					
-					_title.text = Utility.isToday(String(_data)) ? Localizer.getInstance().translate("MY_ACCOUNT.HEADER_RENDERER_TITLE_TODAY") : formatString(Localizer.getInstance().translate("MY_ACCOUNT.HEADER_RENDERER_TITLE"), String(_data));
+					_title.text = Utilities.isToday(String(_data)) ? Localizer.getInstance().translate("MY_ACCOUNT.HEADER_RENDERER_TITLE_TODAY") : formatString(Localizer.getInstance().translate("MY_ACCOUNT.HEADER_RENDERER_TITLE"), String(_data));
 				}
 				else
 				{

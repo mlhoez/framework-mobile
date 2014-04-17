@@ -6,7 +6,7 @@ Created : 5 août 2013
 */
 package com.ludofactory.mobile.core.scoring
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -153,7 +153,7 @@ package com.ludofactory.mobile.core.scoring
 			_pointsWithCreditsGroup.addChild( _creditsIcon );
 			
 			_multiplySixIcon = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().getRank() < 5 ? "X5" : "X6") + Localizer.getInstance().lang ) );
-			_multiplySixIcon.scaleX = _multiplySixIcon.scaleY = Utility.getScaleToFill(_multiplySixIcon.width, _multiplySixIcon.height, _creditsIcon.width, _creditsIcon.height);
+			_multiplySixIcon.scaleX = _multiplySixIcon.scaleY = Utilities.getScaleToFill(_multiplySixIcon.width, _multiplySixIcon.height, _creditsIcon.width, _creditsIcon.height);
 			_pointsWithCreditsGroup.addChild( _multiplySixIcon );
 			
 			_list = new List();

@@ -7,7 +7,7 @@ Created : 7 Juin 2013
 package com.ludofactory.mobile.core.authentication
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -175,7 +175,7 @@ package com.ludofactory.mobile.core.authentication
 		 */		
 		private function onValidate(event:Event = null):void
 		{
-			if( _mailInput.text == "" || !Utility.isValidMail(_mailInput.text) )
+			if( _mailInput.text == "" || !Utilities.isValidMail(_mailInput.text) )
 			{
 				InfoManager.showTimed( Localizer.getInstance().translate("REGISTER.INVALID_MAIL"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;

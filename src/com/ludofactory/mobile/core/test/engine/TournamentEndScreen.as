@@ -12,7 +12,7 @@ package com.ludofactory.mobile.core.test.engine
 	import com.greensock.easing.Expo;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Shaker;
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.HeartBeat;
@@ -351,7 +351,7 @@ package com.ludofactory.mobile.core.test.engine
 			_positionValueLabel = new Label();
 			if( advancedOwner.screenData.gameData.gameSessionPushed )
 			{
-				_positionValueLabel.text = formatString( Localizer.getInstance().translate(Utility.translatePosition(advancedOwner.screenData.gameData.position)), advancedOwner.screenData.gameData.position);
+				_positionValueLabel.text = formatString( Localizer.getInstance().translate(Utilities.translatePosition(advancedOwner.screenData.gameData.position)), advancedOwner.screenData.gameData.position);
 			}
 			else
 			{
@@ -807,7 +807,7 @@ package com.ludofactory.mobile.core.test.engine
 			/*_oldTweenValue =  ( MemberManager.getInstance().getCumulatedStars() - advancedOwner.screenData.gameData.numStarsOrPointsEarned < 0 ? 0:(MemberManager.getInstance().getCumulatedStars() - advancedOwner.screenData.gameData.numStarsOrPointsEarned) );
 			_targetTweenValue =  MemberManager.getInstance().getCumulatedStars();
 			TweenMax.to(this, 0.5, { delay:1.5, _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _cumulatedStarsValueLabel.text = Utility.splitThousands(_oldTweenValue); }, onComplete:onCumulatedStarsAnimationFinished, ease:Expo.easeInOut } );*/
-			TweenMax.delayedCall(1.5, function():void{ _cumulatedStarsValueLabel.text = Utility.splitThousands( MemberManager.getInstance().getCumulatedStars()); });
+			TweenMax.delayedCall(1.5, function():void{ _cumulatedStarsValueLabel.text = Utilities.splitThousands( MemberManager.getInstance().getCumulatedStars()); });
 			TweenMax.delayedCall(1.5, onCumulatedStarsAnimationFinished);
 		}
 		

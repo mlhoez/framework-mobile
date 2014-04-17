@@ -6,7 +6,7 @@ Created : 25 nov. 2013
 */
 package com.ludofactory.mobile.core.test.ads.tournament
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 
 	public class AdTournamentData
 	{
@@ -25,7 +25,7 @@ package com.ludofactory.mobile.core.test.ads.tournament
 		public function AdTournamentData( data:Object )
 		{
 			_giftImageUrl = data.img_lot;
-			_giftName = Utility.replaceCurrency(data.nom_lot);
+			_giftName = Utilities.replaceCurrency(data.nom_lot);
 			_buttonName = data.temps_restant;
 		}
 		

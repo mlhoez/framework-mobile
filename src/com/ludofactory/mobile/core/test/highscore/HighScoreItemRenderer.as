@@ -6,7 +6,7 @@ Created : 18 sept. 2013
 */
 package com.ludofactory.mobile.core.test.highscore
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -204,12 +204,12 @@ package com.ludofactory.mobile.core.test.highscore
 				{
 					_rankLabel.textRendererProperties.textFormat = _nameLabel.textRendererProperties.textFormat = _numStarsLabel.textRendererProperties.textFormat = _data.isMe ? _selectedTextFormat : _normalTextFormat;
 					
-					_rankLabel.text =  Utility.splitThousands( _data.rank );
+					_rankLabel.text =  Utilities.splitThousands( _data.rank );
 					if( !_data.countryCode )
 						_nameLabel.text = _data.truncatedPseudo;
 					else
 						_nameLabel.text = _data.truncatedPseudo + " (" + _data.countryCode + ")";
-					_numStarsLabel.text =  Utility.splitThousands( _data.score );
+					_numStarsLabel.text =  Utilities.splitThousands( _data.score );
 					
 					_selectedBackground.visible = _data.isMe ? true : false;
 					_idleBackground.visible = !_selectedBackground.visible;

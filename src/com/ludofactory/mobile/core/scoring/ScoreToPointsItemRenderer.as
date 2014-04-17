@@ -6,7 +6,7 @@ Created : 26 juil. 2013
 */
 package com.ludofactory.mobile.core.scoring
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -160,19 +160,19 @@ package com.ludofactory.mobile.core.scoring
 				{
 					if( _isFirstItem )
 					{
-						_level.text = "< " +  Utility.splitThousands( (_data.sup + 1) );
+						_level.text = "< " +  Utilities.splitThousands( (_data.sup + 1) );
 					}
 					else if( _isLastItem )
 					{
-						_level.text = "> " + Utility.splitThousands( (_data.inf - 1) );
+						_level.text = "> " + Utilities.splitThousands( (_data.inf - 1) );
 					}
 					else
 					{
-						_level.text = Utility.splitThousands( _data.inf ) + " " + Localizer.getInstance().translate("COMMON.TO") + " " + Utility.splitThousands( _data.sup );
+						_level.text = Utilities.splitThousands( _data.inf ) + " " + Localizer.getInstance().translate("COMMON.TO") + " " + Utilities.splitThousands( _data.sup );
 					}
 					
-					_pointsWithCredits.text = Utility.splitThousands( (MemberManager.getInstance().getRank() < 5 ? _data.pointsWithCreditsNormal : _data.pointsWithCreditsVip) );
-					_pointsWithFree.text = Utility.splitThousands( _data.pointsWithFree + ((_isLastItem && MemberManager.getInstance().getRank() >= 6) ? 10:0 ));
+					_pointsWithCredits.text = Utilities.splitThousands( (MemberManager.getInstance().getRank() < 5 ? _data.pointsWithCreditsNormal : _data.pointsWithCreditsVip) );
+					_pointsWithFree.text = Utilities.splitThousands( _data.pointsWithFree + ((_isLastItem && MemberManager.getInstance().getRank() >= 6) ? 10:0 ));
 				}
 				else
 				{

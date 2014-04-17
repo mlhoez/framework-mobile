@@ -13,7 +13,7 @@ package com.ludofactory.mobile.core.test.engine
 	import com.greensock.easing.Linear;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Shaker;
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -434,7 +434,7 @@ package com.ludofactory.mobile.core.test.engine
 				_cumulatedPointsValue.text = String(MemberManager.getInstance().getPoints()) + "  ";
 				_cumulatedPointsValue.validate();
 				_cumulatedPointsValue.width = _cumulatedPointsValue.width;
-				_cumulatedPointsValue.text = Utility.splitThousands( (MemberManager.getInstance().getPoints() - advancedOwner.screenData.gameData.numStarsOrPointsEarned) );
+				_cumulatedPointsValue.text = Utilities.splitThousands( (MemberManager.getInstance().getPoints() - advancedOwner.screenData.gameData.numStarsOrPointsEarned) );
 				
 				_scoreContainer.validate();
 				_pointsContainer.validate();
@@ -529,7 +529,7 @@ package com.ludofactory.mobile.core.test.engine
 					if( _targetTweenValue == 0 )
 						Starling.juggler.delayCall(animateLabelFromScoreToPoints, 1);
 					else
-						TweenMax.to(this, _targetTweenValue < 500 ? 1 : 2, { delay:0.5, _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _scoreValue.text = Utility.splitThousands(_oldTweenValue); }, onComplete:animateLabelFromScoreToPoints, ease:Expo.easeInOut } );
+						TweenMax.to(this, _targetTweenValue < 500 ? 1 : 2, { delay:0.5, _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _scoreValue.text = Utilities.splitThousands(_oldTweenValue); }, onComplete:animateLabelFromScoreToPoints, ease:Expo.easeInOut } );
 					TweenMax.to(_miniLueurImage, 10, { rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 } );
 				}
 				
@@ -567,7 +567,7 @@ package com.ludofactory.mobile.core.test.engine
 			
 			_oldTweenValue = 0;
 			_targetTweenValue = (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == GameSession.PRICE_CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().getRank() < 5 ? 0 : 1]) : 1 ));
-			TweenMax.to(this, 0.25, { _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _pointsValue.text = Utility.splitThousands(_oldTweenValue); }, onComplete:animateLabelFromPointsToCumulatedPoints, ease:Linear.easeNone } );
+			TweenMax.to(this, 0.25, { _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _pointsValue.text = Utilities.splitThousands(_oldTweenValue); }, onComplete:animateLabelFromPointsToCumulatedPoints, ease:Linear.easeNone } );
 		}
 		
 		private var _step:int;
@@ -632,7 +632,7 @@ package com.ludofactory.mobile.core.test.engine
 			else
 			{
 				value += _step;
-				_pointsValue.text = Utility.splitThousands( value );
+				_pointsValue.text = Utilities.splitThousands( value );
 				TweenMax.to(_pointsValue, 0.25, { scaleX:(GlobalConfig.dpiScale + 0.2), scaleY:(GlobalConfig.dpiScale + 0.2), yoyo:true, repeat:1 } );
 				TweenMax.delayedCall(0.5, animateBonus);
 			}
@@ -647,7 +647,7 @@ package com.ludofactory.mobile.core.test.engine
 			if( !_continueButton.isEnabled )
 				return;
 			
-			_cumulatedPointsValue.text = Utility.splitThousands( MemberManager.getInstance().getPoints() );
+			_cumulatedPointsValue.text = Utilities.splitThousands( MemberManager.getInstance().getPoints() );
 			TweenMax.delayedCall(0.5, onSkipAnimation);
 		}
 		
@@ -660,9 +660,9 @@ package com.ludofactory.mobile.core.test.engine
 			_continueButton.isEnabled = false;
 			
 			// display final points
-			_scoreValue.text = Utility.splitThousands( advancedOwner.screenData.gameData.score );
-			_pointsValue.text = Utility.splitThousands( advancedOwner.screenData.gameData.numStarsOrPointsEarned );
-			_cumulatedPointsValue.text = Utility.splitThousands( MemberManager.getInstance().getPoints() );
+			_scoreValue.text = Utilities.splitThousands( advancedOwner.screenData.gameData.score );
+			_pointsValue.text = Utilities.splitThousands( advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+			_cumulatedPointsValue.text = Utilities.splitThousands( MemberManager.getInstance().getPoints() );
 			
 			// hide continue button
 			TweenMax.to(_continueButton, 0.5, { width:0, autoAlpha:0 });

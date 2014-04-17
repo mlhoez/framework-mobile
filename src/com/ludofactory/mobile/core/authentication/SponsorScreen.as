@@ -6,7 +6,7 @@ Created : 30 juil. 2013
 */
 package com.ludofactory.mobile.core.authentication
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -134,7 +134,7 @@ package com.ludofactory.mobile.core.authentication
 		 */		
 		private function onValidate(event:Event):void
 		{
-			if( _sponsorInput.text == "" || !Utility.isNumberOnly(_sponsorInput.text))
+			if( _sponsorInput.text == "" || !Utilities.isNumberOnly(_sponsorInput.text))
 			{
 				InfoManager.showTimed( Localizer.getInstance().translate("SPONSOR.INVALID_SPONSOR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;

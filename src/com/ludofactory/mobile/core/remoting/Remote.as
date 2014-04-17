@@ -13,7 +13,7 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.core.manager.ErrorDisplayer;
+	import com.ludofactory.mobile.debug.ErrorDisplayer;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.notification.NotificationManager;

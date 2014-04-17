@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core.test.tournament
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
@@ -76,7 +76,7 @@ package com.ludofactory.mobile.core.test.tournament
 		{
 			super.initialize();
 			
-			_headerTitle = formatString( Localizer.getInstance().translate("PREVIOUS_TOURNAMENT_DETAILS.HEADER_TITLE"), Utility.splitThousands( advancedOwner.screenData.previousTournementId ) );
+			_headerTitle = formatString( Localizer.getInstance().translate("PREVIOUS_TOURNAMENT_DETAILS.HEADER_TITLE"), Utilities.splitThousands( advancedOwner.screenData.previousTournementId ) );
 			
 			Flox.logInfo("Affichage de l'ancien tournoi n°{0}", advancedOwner.screenData.previousTournementId);
 			
@@ -189,7 +189,7 @@ package com.ludofactory.mobile.core.test.tournament
 					{
 						_hasGiftToDisplay = true;
 						
-						_adContainer.title = Utility.replaceCurrency(result.lot);
+						_adContainer.title = Utilities.replaceCurrency(result.lot);
 					}
 					
 					if( result.classement.length == 0 )

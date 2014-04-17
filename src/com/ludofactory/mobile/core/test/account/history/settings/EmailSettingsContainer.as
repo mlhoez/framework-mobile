@@ -6,7 +6,7 @@ Created : 5 nov. 2013
 */
 package com.ludofactory.mobile.core.test.account.history.settings
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
@@ -81,7 +81,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			
 			_emailControl.touchable = false;
 			
-			if(_emailControl.text == "" || !Utility.isValidMail(_emailControl.text))
+			if(_emailControl.text == "" || !Utilities.isValidMail(_emailControl.text))
 			{
 				InfoManager.showTimed( Localizer.getInstance().translate("AUTHENTICATION.INVALID_MAIL"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				onUpdateMailComplete();
@@ -91,7 +91,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			if( _connexionInformations.mail != _emailControl.text )
 			{
 				change = true;
-				paramObject.nouveau_mail = Utility.isValidMail(_emailControl.text);
+				paramObject.nouveau_mail = Utilities.isValidMail(_emailControl.text);
 			}
 			
 			if( change )

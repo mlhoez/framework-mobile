@@ -6,7 +6,7 @@ Created : 8 sept. 2013
 */
 package com.ludofactory.mobile.core.test.tournament
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -165,7 +165,7 @@ package com.ludofactory.mobile.core.test.tournament
 					else
 					{
 						// previous tournaments
-						_title.text = formatString(Localizer.getInstance().translate("PREVIOUS_TOURNAMENTS.LIST_ITEM_RENDERER_TITLE"), Utility.splitThousands(_data.id));
+						_title.text = formatString(Localizer.getInstance().translate("PREVIOUS_TOURNAMENTS.LIST_ITEM_RENDERER_TITLE"), Utilities.splitThousands(_data.id));
 					}
 				}
 				else

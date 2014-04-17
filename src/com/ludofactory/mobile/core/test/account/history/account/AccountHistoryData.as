@@ -6,7 +6,7 @@ Created : 17 sept. 2013
 */
 package com.ludofactory.mobile.core.test.account.history.account
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 
 	public class AccountHistoryData
 	{
@@ -21,7 +21,7 @@ package com.ludofactory.mobile.core.test.account.history.account
 		public function AccountHistoryData(data:Object)
 		{
 			_date = data.date;
-			_text = Utility.replaceCurrency(data.txt);
+			_text = Utilities.replaceCurrency(data.txt);
 		}
 		
 		public function get date():String { return _date; }

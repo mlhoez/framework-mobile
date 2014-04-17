@@ -6,7 +6,7 @@ Created : 12 nov. 2013
 */
 package com.ludofactory.mobile.core.test.engine
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -100,7 +100,7 @@ package com.ludofactory.mobile.core.test.engine
 			addChild(_background);
 			
 			_scoreLabel = new Label();
-			_scoreLabel.text = Utility.splitThousands( Number(_previousScore) );
+			_scoreLabel.text = Utilities.splitThousands( Number(_previousScore) );
 			addChild(_scoreLabel);
 			_scoreLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_ORANGE, false, false, null, null, null, TextFormatAlign.RIGHT);
 			_scoreLabel.textRendererProperties.wordWrap = false;

@@ -6,7 +6,7 @@ Created : 26 juil. 2013
 */
 package com.ludofactory.mobile.core.test.tournament.listing
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -220,9 +220,9 @@ package com.ludofactory.mobile.core.test.tournament.listing
 				{
 					_rankLabel.textRendererProperties.textFormat = _nameLabel.textRendererProperties.textFormat = _numStarsLabel.textRendererProperties.textFormat = _data.isMe ? _selectedTextFormat : _normalTextFormat;
 					
-					_rankLabel.text =  Utility.splitThousands( _data.rank );
+					_rankLabel.text =  Utilities.splitThousands( _data.rank );
 					_nameLabel.text = _data.truncatedPseudo + " (" + _data.country + ")";
-					_numStarsLabel.text =  Utility.splitThousands( _data.stars );
+					_numStarsLabel.text =  Utilities.splitThousands( _data.stars );
 					
 					_selectedBackground.visible = _data.isMe ? true : false;
 					_idleBackground.visible = !_selectedBackground.visible;

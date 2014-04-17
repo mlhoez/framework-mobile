@@ -6,7 +6,7 @@ Created : 28 août 2013
 */
 package com.ludofactory.mobile.core.shop.bid.pending
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -123,7 +123,7 @@ package com.ludofactory.mobile.core.shop.bid.pending
 			Starling.juggler.add(_imageLoader);
 			
 			_giftName = new Label();
-			_giftName.text = Utility.replaceCurrency(_pendingBidItemData.name);
+			_giftName.text = Utilities.replaceCurrency(_pendingBidItemData.name);
 			_container.addChild(_giftName);
 			_giftName.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER) ;
 			
@@ -225,7 +225,7 @@ package com.ludofactory.mobile.core.shop.bid.pending
 		
 		private function onValidate(event:Event):void
 		{
-			if( !Utility.isNumberOnly( _bidInput.text ) )
+			if( !Utilities.isNumberOnly( _bidInput.text ) )
 			{
 				InfoManager.showTimed( Localizer.getInstance().translate("BID_PENDING_DETAIL.BID_IS_NOT_A_NUMBER_ERROR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;

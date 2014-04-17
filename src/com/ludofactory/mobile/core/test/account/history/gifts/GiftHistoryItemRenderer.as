@@ -7,7 +7,7 @@ Created : 17 sept. 2013
 package com.ludofactory.mobile.core.test.account.history.gifts
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
@@ -201,10 +201,10 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 				{
 					_title.visible = true;
 					
-					_title.text = formatString(Localizer.getInstance().translate("MY_GIFTS.FORMATTED_SENTENCE"), _data.hour, Utility.replaceCurrency(_data.description), _data.category, _data.status);
+					_title.text = formatString(Localizer.getInstance().translate("MY_GIFTS.FORMATTED_SENTENCE"), _data.hour, Utilities.replaceCurrency(_data.description), _data.category, _data.status);
 					
 					_exchangeWithPointsButton.label = _data.exchangeableWithPoints;
-					_exchangeWithChequeButton.label = Utility.replaceCurrency(_data.exchangeableWithCheque);
+					_exchangeWithChequeButton.label = Utilities.replaceCurrency(_data.exchangeableWithCheque);
 					
 					_exchangeWithChequeButton.visible = _data.exchangeableWithCheque;
 					_exchangeWithPointsButton.visible = _data.exchangeableWithPoints;

@@ -10,7 +10,7 @@ package com.ludofactory.common.utils
 	
 	import flash.desktop.NativeApplication;
 
-	public class Utility
+	public class Utilities
 	{
 		/**
 		 * Whether the tracer is enabled. */		

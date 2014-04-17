@@ -6,7 +6,7 @@ Created : 28 août 2013
 */
 package com.ludofactory.mobile.core.shop.bid.comingsoon
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -92,7 +92,7 @@ package com.ludofactory.mobile.core.shop.bid.comingsoon
 			Starling.juggler.add(_imageLoader);
 			
 			_giftName = new Label();
-			_giftName.text = Utility.replaceCurrency(_comingSoonBidItemData.name);
+			_giftName.text = Utilities.replaceCurrency(_comingSoonBidItemData.name);
 			_container.addChild(_giftName);
 			_giftName.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			

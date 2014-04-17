@@ -11,7 +11,7 @@ package com.ludofactory.mobile.core.test.engine
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Linear;
 	import com.ludofactory.common.sound.SoundManager;
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -124,7 +124,7 @@ package com.ludofactory.mobile.core.test.engine
 			
 			_highScoreLabel = new Label();
 			_highScoreLabel.alpha = 0;
-			_highScoreLabel.text = formatString(Localizer.getInstance().translate("HIGH_SCORE.TITLE"), Utility.splitThousands( advancedOwner.screenData.gameData.score ));
+			_highScoreLabel.text = formatString(Localizer.getInstance().translate("HIGH_SCORE.TITLE"), Utilities.splitThousands( advancedOwner.screenData.gameData.score ));
 			addChild(_highScoreLabel);
 			_highScoreLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 76), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_highScoreLabel.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];

@@ -11,7 +11,7 @@ package com.ludofactory.mobile.core.test.engine
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Bounce;
 	import com.greensock.easing.Linear;
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -138,7 +138,7 @@ package com.ludofactory.mobile.core.test.engine
 			
 			_podiumMessage = new Label();
 			_podiumMessage.alpha = 0;
-			_podiumMessage.text = formatString(Localizer.getInstance().translate("PODIUM.MESSAGE"), formatString(Localizer.getInstance().translate(Utility.translatePosition(advancedOwner.screenData.gameData.position)), this.advancedOwner.screenData.gameData.position));
+			_podiumMessage.text = formatString(Localizer.getInstance().translate("PODIUM.MESSAGE"), formatString(Localizer.getInstance().translate(Utilities.translatePosition(advancedOwner.screenData.gameData.position)), this.advancedOwner.screenData.gameData.position));
 			addChild(_podiumMessage);
 			_podiumMessage.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 76), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_podiumMessage.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];

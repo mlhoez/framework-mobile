@@ -6,7 +6,7 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.core.test.game
 {
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.HeartBeat;
@@ -161,7 +161,7 @@ package com.ludofactory.mobile.core.test.game
 						_label.text = formatString(Localizer.getInstance().translate("GAME_TYPE_SELECTION.LABEL_DISABLED_FREE"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 						_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_WHITE);
 						
-						var nowInFrance:Date = Utility.getLocalFrenchDate();
+						var nowInFrance:Date = Utilities.getLocalFrenchDate();
 						_totalTime = (86400 - (nowInFrance.hours * 60 * 60) - (nowInFrance.minutes * 60) - nowInFrance.seconds) * 1000;
 						_previousTime = getTimer();
 						HeartBeat.registerFunction(update);

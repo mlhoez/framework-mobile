@@ -12,7 +12,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Bounce;
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -282,8 +282,8 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 									tempPhoneNumbers = [];
 									for each(phoneNumberString in singleContact.phones)
 									{
-										if( Utility.isFrenchPortableOnly( phoneNumberString ) )
-											tempPhoneNumbers.push( Utility.isFrenchPortableOnly( phoneNumberString ) );
+										if( Utilities.isFrenchPortableOnly( phoneNumberString ) )
+											tempPhoneNumbers.push( Utilities.isFrenchPortableOnly( phoneNumberString ) );
 									}
 									
 									if( tempPhoneNumbers.length > 0 )
@@ -345,8 +345,8 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 				if( key.indexOf("phoneNumber_") != -1 )
 				{
 					temporaryPhoneNumber = key.split("_")[1];
-					if( Utility.isFrenchPortableOnly( temporaryPhoneNumber ) )
-						_temporaryContacts[contactData.compositeName].phones.push( Utility.isFrenchPortableOnly( temporaryPhoneNumber ) );
+					if( Utilities.isFrenchPortableOnly( temporaryPhoneNumber ) )
+						_temporaryContacts[contactData.compositeName].phones.push( Utilities.isFrenchPortableOnly( temporaryPhoneNumber ) );
 				}
 				if( key.indexOf("email_") != -1 )
 					_temporaryContacts[contactData.compositeName].emails.push( key.split("_")[1] );
@@ -706,7 +706,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			
 			if( advancedOwner.screenData.sponsorType == SponsorTypes.EMAIL )
 			{
-				if(_singleInviteMailInput.text == "" || !Utility.isValidMail(_singleInviteMailInput.text))
+				if(_singleInviteMailInput.text == "" || !Utilities.isValidMail(_singleInviteMailInput.text))
 				{
 					InfoManager.showTimed( Localizer.getInstance().translate("LOGIN.INVALID_MAIL"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 					_singleInviteMailInput.setFocus();
@@ -715,7 +715,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			}
 			else
 			{
-				if(_singleInviteMailInput.text == "" || !Utility.isFrenchPortableOnly(_singleInviteMailInput.text))
+				if(_singleInviteMailInput.text == "" || !Utilities.isFrenchPortableOnly(_singleInviteMailInput.text))
 				{
 					InfoManager.showTimed( Localizer.getInstance().translate("SPONSOR_INVITE.INVALID_NUMBER"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 					_singleInviteMailInput.setFocus();
