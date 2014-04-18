@@ -1061,7 +1061,7 @@ package com.ludofactory.mobile.core
 //	Get / Set
 		
 		public static function get alertData():AlertData { return _alertContainer.alertData; }
-		public function get numAlerts():int { return (_pushManager.numElementsToPush + _alertContainer.numAlerts); }
+		public static function get numAlerts():int { return (_pushManager.numElementsToPush + _alertContainer.numAlerts); }
 		public static function get assets():AssetManager { return _assets; }
 		public static function get pushManager():PushManager { return _pushManager; }
 		public static function get screenNavigator():AdvancedScreenNavigator { return _screenNavigator; }

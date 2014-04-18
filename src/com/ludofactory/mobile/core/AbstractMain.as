@@ -217,7 +217,6 @@ package com.ludofactory.mobile.core
 			}
 			
 			stage.addEventListener(flash.events.Event.RESIZE, onResize, false, int.MAX_VALUE, true);
-			NativeApplication.nativeApplication.addEventListener(flash.events.Event.DEACTIVATE, onPause, false, 0, true);
 		}
 		
 		protected function setGameInfo():void
@@ -248,6 +247,8 @@ package com.ludofactory.mobile.core
 			
 			if( GlobalConfig.DEMO_MODE )
 				new TouchMarkerManager();
+			
+			NativeApplication.nativeApplication.addEventListener(flash.events.Event.DEACTIVATE, onPause, false, 0, true);
 		}
 		
 		/**
@@ -290,7 +291,7 @@ package com.ludofactory.mobile.core
 			Flox.flushLocalData();
 			
 			if( AbstractEntryPoint.pushManager )
-				PushNotification.getInstance().setBadgeNumberValue( (_rootClass as AbstractEntryPoint).numAlerts );
+				PushNotification.getInstance().setBadgeNumberValue( AbstractEntryPoint.numAlerts );
 			PauseManager.pause();
 			NativeApplication.nativeApplication.addEventListener(flash.events.Event.ACTIVATE, onResume, false, 0, true);
 			
@@ -305,8 +306,9 @@ package com.ludofactory.mobile.core
 		 */		
 		private function onResume(event:flash.events.Event):void
 		{
-			if( AbstractEntryPoint.pushManager )
-				PushNotification.getInstance().setBadgeNumberValue( (_rootClass as AbstractEntryPoint).numAlerts );
+			// FIXME A remettre ?
+			//if( AbstractEntryPoint.pushManager )
+			//	PushNotification.getInstance().setBadgeNumberValue( AbstractEntryPoint.numAlerts );
 			NativeApplication.nativeApplication.removeEventListener(flash.events.Event.ACTIVATE, onResume);
 			PauseManager.resume();
 			
