@@ -28,7 +28,6 @@ package com.ludofactory.mobile.core.test.engine
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
 	
-	import flash.display.StageAspectRatio;
 	import flash.events.Event;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -114,6 +113,8 @@ package com.ludofactory.mobile.core.test.engine
 		{
 			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
 			
+			
+			
 			_highScoreGlow = new Image( AbstractEntryPoint.assets.getTexture("HighScoreGlow") );
 			_highScoreGlow.alpha = 0;
 			_highScoreGlow.scaleX = _highScoreGlow.scaleY = GlobalConfig.stageWidth / _highScoreGlow.width;
@@ -133,14 +134,22 @@ package com.ludofactory.mobile.core.test.engine
 			_highScoreLabel.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
 			
 			var fileStream:FileStream = new FileStream();
-			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_sparkles.pex" ), FileMode.READ );
+			//fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_sparkles.pex" ), FileMode.READ );
+			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_confetti.pex" ), FileMode.READ );
 			var onTouchParticlesXml:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
 			fileStream.close();
 			fileStream = null;
 			
-			_particles = new PDParticleSystem(onTouchParticlesXml, AbstractEntryPoint.assets.getTexture("ParticleGui"));
+			/*_particles = new PDParticleSystem(onTouchParticlesXml, AbstractEntryPoint.assets.getTexture("ParticleGui"));
 			_particles.touchable = false;
 			_particles.maxNumParticles = 500;
+			_particles.scaleX = _particles.scaleY = GlobalConfig.dpiScale;
+			addChild(_particles);
+			Starling.juggler.add(_particles);*/
+			
+			_particles = new PDParticleSystem(onTouchParticlesXml, Theme.particleConfettiTexture);
+			_particles.touchable = false;
+			_particles.maxNumParticles = AbstractGameInfo.LANDSCAPE ? 2000 : 1000;
 			_particles.scaleX = _particles.scaleY = GlobalConfig.dpiScale;
 			addChild(_particles);
 			Starling.juggler.add(_particles);
@@ -213,11 +222,15 @@ package com.ludofactory.mobile.core.test.engine
 					_highScoreLabel.y = (( (this.actualHeight - (_highScoreLogo.y + _highScoreLogo.height * 0.5)) - _highScoreLabel.height ) * 0.5) + _highScoreLogo.y + _highScoreLogo.height * 0.5;
 				TweenMax.to(_highScoreLabel, 0.75, { delay:1.5, alpha:1 } );
 				
-				_particles.x = _highScoreLogo.x;
+				/*_particles.x = _highScoreLogo.x;
 				_particles.y = _highScoreLogo.y;
 				_particles.emitterXVariance = _highScoreLogo.width * 0.5;
 				_particles.emitterYVariance = _highScoreLogo.height * 0.5;
-				TweenMax.delayedCall(0.5, _particles.start, [0.2]);
+				TweenMax.delayedCall(0.5, _particles.start, [0.2]);*/
+				
+				_particles.emitterX =_particles.emitterXVariance = actualWidth * 0.5;;
+				_particles.emitterY = scaleAndRoundToDpi(-60);
+				TweenMax.delayedCall(0.5, _particles.start, [3]);
 				
 				_highScoreLogo.scaleX = _highScoreLogo.scaleY = 0;
 				TweenMax.to(_highScoreLogo, 0.75, { delay:0.5, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, ease:Back.easeOut } );
