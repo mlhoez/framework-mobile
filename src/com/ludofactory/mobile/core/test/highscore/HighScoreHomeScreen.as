@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core.test.highscore
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -88,7 +89,7 @@ package com.ludofactory.mobile.core.test.highscore
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 48), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
-			if( !GlobalConfig.LANDSCAPE )
+			if( !AbstractGameInfo.LANDSCAPE )
 			{
 				_shadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
 				_shadow.setVertexColor(0, 0xffffff);
@@ -170,7 +171,7 @@ package com.ludofactory.mobile.core.test.highscore
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
 				var gap:int;
-				if( GlobalConfig.LANDSCAPE )
+				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_icon.x = (((actualWidth * 0.45) - _icon.width) * 0.5) << 0;
 					

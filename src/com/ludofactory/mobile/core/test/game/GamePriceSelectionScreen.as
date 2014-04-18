@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core.test.game
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -92,7 +93,7 @@ package com.ludofactory.mobile.core.test.game
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				if( GlobalConfig.LANDSCAPE )
+				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_title.width = actualWidth ;
 					_title.validate();

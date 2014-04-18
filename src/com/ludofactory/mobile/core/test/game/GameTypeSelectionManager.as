@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core.test.game
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	
 	import starling.display.DisplayObject;
@@ -42,7 +43,7 @@ package com.ludofactory.mobile.core.test.game
 			(_savedRoot as AbstractEntryPoint).addChild(_blackOverlay);
 			
 			_popup = new GameTypeSelectionPopup();
-			_popup.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? (GlobalConfig.LANDSCAPE ? 0.7: 0.9) : (GlobalConfig.LANDSCAPE ? 0.5 : 0.7));
+			_popup.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 0.7: 0.9) : (AbstractGameInfo.LANDSCAPE ? 0.5 : 0.7));
 			_popup.x = (GlobalConfig.stageWidth - _popup.width) * 0.5;
 			(_savedRoot as AbstractEntryPoint).addChild(_popup);
 			_popup.validate();

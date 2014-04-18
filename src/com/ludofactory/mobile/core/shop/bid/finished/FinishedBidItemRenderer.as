@@ -8,6 +8,7 @@ package com.ludofactory.mobile.core.shop.bid.finished
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -163,8 +164,8 @@ package com.ludofactory.mobile.core.shop.bid.finished
 		
 		private function layout():void
 		{
-			this.width = _stripe.width = _title.width = this.owner.width / (GlobalConfig.LANDSCAPE ? 4 : 3);
-			this.height = this.owner.height / (GlobalConfig.LANDSCAPE ? 2 : 3);
+			this.width = _stripe.width = _title.width = this.owner.width / (AbstractGameInfo.LANDSCAPE ? 4 : 3);
+			this.height = this.owner.height / (AbstractGameInfo.LANDSCAPE ? 2 : 3);
 			
 			_stripe.y = this.actualHeight - _stripe.height;
 			_title.validate();

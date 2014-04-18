@@ -11,6 +11,7 @@ package com.ludofactory.mobile.core.test.sponsor
 	import com.greensock.easing.Linear;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -140,7 +141,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			_mainContainer.addChild(_knowMoreButton);
 			_knowMoreButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_WHITE);
 			
-			if( !GlobalConfig.LANDSCAPE )
+			if( !AbstractGameInfo.LANDSCAPE )
 			{
 				const hlayout:HorizontalLayout = new HorizontalLayout();
 				hlayout.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_CENTER;
@@ -158,10 +159,10 @@ package com.ludofactory.mobile.core.test.sponsor
 			
 			_emailButton = new Button();
 			_emailButton.addEventListener(Event.TRIGGERED, onEmailSelected);
-			_emailButton.styleName = GlobalConfig.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_RIGHT;
+			_emailButton.styleName = AbstractGameInfo.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_RIGHT;
 			_emailButton.defaultIcon = _emailIcon;
 			_emailButton.label = Localizer.getInstance().translate("SPONSOR_HOME.TYPE_EMAIL");
-			GlobalConfig.LANDSCAPE ? addChild(_emailButton) : _buttonsContainer.addChild(_emailButton);
+			AbstractGameInfo.LANDSCAPE ? addChild(_emailButton) : _buttonsContainer.addChild(_emailButton);
 			_emailButton.gap = GlobalConfig.isPhone ? 0 : 20;
 			_emailButton.minHeight = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
 			
@@ -172,10 +173,10 @@ package com.ludofactory.mobile.core.test.sponsor
 			
 			_smsButton = new Button();
 			_smsButton.addEventListener(Event.TRIGGERED, onSmsSelected);
-			_smsButton.styleName = GlobalConfig.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_LEFT;
+			_smsButton.styleName = AbstractGameInfo.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_LEFT;
 			_smsButton.defaultIcon = _smsIcon;
 			_smsButton.label = Localizer.getInstance().translate("SPONSOR_HOME.TYPE_SMS");
-			GlobalConfig.LANDSCAPE ? addChild(_smsButton) : _buttonsContainer.addChild(_smsButton);
+			AbstractGameInfo.LANDSCAPE ? addChild(_smsButton) : _buttonsContainer.addChild(_smsButton);
 			_smsButton.gap = GlobalConfig.isPhone ? 0 : 20;
 			_smsButton.minHeight = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
 			
@@ -201,7 +202,7 @@ package com.ludofactory.mobile.core.test.sponsor
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				if( GlobalConfig.LANDSCAPE )
+				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_mainContainer.width = _rewardValueLabel.width = _titleLabel.width = _byFilleulLabel.width = actualWidth * 0.5;
 					_mainContainer.validate();

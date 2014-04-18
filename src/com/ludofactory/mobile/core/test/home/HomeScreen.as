@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core.test.home
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -126,7 +127,7 @@ package com.ludofactory.mobile.core.test.home
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				if( GlobalConfig.LANDSCAPE )
+				if( AbstractGameInfo.LANDSCAPE )
 				{
 					if( GlobalConfig.ios && GameCenterManager.available )
 					{

@@ -8,6 +8,7 @@ package com.ludofactory.mobile.navigation.menu
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AbstractListItemRenderer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
@@ -101,12 +102,12 @@ package com.ludofactory.mobile.navigation.menu
 			var newWidth:Number = this.explicitWidth;
 			if(needsWidth)
 			{
-				newWidth = GlobalConfig.stageWidth / (GlobalConfig.LANDSCAPE ? 4 : 3);
+				newWidth = GlobalConfig.stageWidth / (AbstractGameInfo.LANDSCAPE ? 4 : 3);
 			}
 			var newHeight:Number = this.explicitHeight;
 			if(needsHeight)
 			{
-				newHeight = owner.height / (GlobalConfig.LANDSCAPE ? 3 : 4);
+				newHeight = owner.height / (AbstractGameInfo.LANDSCAPE ? 3 : 4);
 			}
 			return this.setSizeInternal(newWidth, newHeight, false);
 		}

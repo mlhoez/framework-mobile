@@ -8,6 +8,7 @@ package com.ludofactory.mobile.core.test.store
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AbstractListItemRenderer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
@@ -123,7 +124,7 @@ package com.ludofactory.mobile.core.test.store
 		
 		override protected function layout():void
 		{
-			width = owner.width / ( GlobalConfig.isPhone ? (GlobalConfig.LANDSCAPE ? 3 : 2) : 3);
+			width = owner.width / ( GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 3 : 2) : 3);
 			height = scaleAndRoundToDpi(270);
 			
 			_backgroundSkin.width = actualWidth - _paddingLeft - _paddingRight;

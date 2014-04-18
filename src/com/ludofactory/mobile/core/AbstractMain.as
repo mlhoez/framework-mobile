@@ -274,8 +274,8 @@ package com.ludofactory.mobile.core
 				this._starling.showStatsAt(HAlign.LEFT, VAlign.TOP);
 		}
 		
-		//------------------------------------------------------------------------------------------------------------
-		//	Pause / Resume handlers
+//------------------------------------------------------------------------------------------------------------
+//	Pause / Resume handlers
 		
 		/**
 		 * Pauses the engine.
@@ -316,8 +316,8 @@ package com.ludofactory.mobile.core
 				SoundManager.getInstance().unmutePlaylist("music", 0.5);
 		}
 		
-		//------------------------------------------------------------------------------------------------------------
-		//	Uncaught errors
+//------------------------------------------------------------------------------------------------------------
+//	Uncaught errors
 		
 		/**
 		 * Log any uncaught error in Flox.

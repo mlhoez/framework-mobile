@@ -33,6 +33,9 @@ package com.ludofactory.mobile.core
 			/**
 			 * The game id in the database. */		
 			public static var GAME_ID:int;
+			/**
+			 * Whether the game is in landscape. */		
+			public static var LANDSCAPE:Boolean;
 			
 //------------------------------------------------------------------------------------------------------------
 //	Tracking and logging

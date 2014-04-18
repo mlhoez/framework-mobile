@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core.test.alert
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -104,7 +105,7 @@ package com.ludofactory.mobile.core.test.alert
 		{
 			super.initialize();
 			
-			this.width = _savedWidth = GlobalConfig.stageWidth * (GlobalConfig.LANDSCAPE ? 0.6 : 0.8);
+			this.width = _savedWidth = GlobalConfig.stageWidth * (AbstractGameInfo.LANDSCAPE ? 0.6 : 0.8);
 			this.height = _minItemHeight;
 			
 			_background = new Quad(this.width, _minItemHeight, 0xff0000);

@@ -556,7 +556,7 @@ package com.ludofactory.mobile.core
 			_drawer.width = _appClearBackground.width = _appDarkBackground.width = _howToWinGiftsBackground.width = _whiteBackground.width = _blueBackground.width = GlobalConfig.stageWidth;
 			_drawer.height = _appClearBackground..height = _appDarkBackground.height = _howToWinGiftsBackground.height = _whiteBackground.height = _blueBackground.height = GlobalConfig.stageHeight;
 			
-			_alertContainer.width = GlobalConfig.stageWidth * (GlobalConfig.LANDSCAPE ? 0.6 : 0.8);
+			_alertContainer.width = GlobalConfig.stageWidth * (AbstractGameInfo.LANDSCAPE ? 0.6 : 0.8);
 			_alertContainer.height = GlobalConfig.stageHeight;
 			_alertContainer.x = GlobalConfig.stageWidth - _alertContainer.width;
 			

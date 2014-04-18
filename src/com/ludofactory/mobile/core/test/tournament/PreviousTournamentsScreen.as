@@ -10,6 +10,7 @@ package com.ludofactory.mobile.core.test.tournament
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -60,7 +61,7 @@ package com.ludofactory.mobile.core.test.tournament
 			
 			_headerTitle = Localizer.getInstance().translate("PREVIOUS_TOURNAMENT.HEADER_TITLE");
 			
-			if( !GlobalConfig.LANDSCAPE )
+			if( !AbstractGameInfo.LANDSCAPE )
 			{
 				_logo = new Image( AbstractEntryPoint.assets.getTexture( "menu-icon-tournaments" ) );
 				_logo.scaleX = _logo.scaleY = GlobalConfig.dpiScale;
@@ -102,7 +103,7 @@ package com.ludofactory.mobile.core.test.tournament
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				if( !GlobalConfig.LANDSCAPE )
+				if( !AbstractGameInfo.LANDSCAPE )
 				{
 					_logo.x = (actualWidth - _logo.width) * 0.5;
 					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
@@ -111,7 +112,7 @@ package com.ludofactory.mobile.core.test.tournament
 					_listShadow.width = this.actualWidth;
 				}
 				
-				_list.y = GlobalConfig.LANDSCAPE ? 0 : (_listShadow.y + _listShadow.height);
+				_list.y = AbstractGameInfo.LANDSCAPE ? 0 : (_listShadow.y + _listShadow.height);
 				_list.width = this.actualWidth;
 				_list.height = this.actualHeight - _list.y;
 				
