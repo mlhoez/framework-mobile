@@ -145,6 +145,11 @@ package com.ludofactory.mobile.core.theme
 		 * Black loader textures. */		
 		public static var blackLoaderTextures:Vector.<Texture>;
 		
+		// Particles textures
+		/**
+		 * Particle texture used for cofettis in HighScore and PodiumScreen. */		
+		public static var particleConfettiTexture:Texture;
+		
 //------------------------------------------------------------------------------------------------------------
 //	Init
 		
@@ -362,10 +367,11 @@ package com.ludofactory.mobile.core.theme
 			infoManagerOverlay = AbstractEntryPoint.assets.getTexture("overlay-skin");
 			
 			// logos
-			gameLogoTexture     = AbstractEntryPoint.assets.getTexture("logo-game");
-			ludokadoLogoTexture = AbstractEntryPoint.assets.getTexture("logo-ludokado");
-			gameCenterTexture   = AbstractEntryPoint.assets.getTexture("game-center");
-			blackLoaderTextures = AbstractEntryPoint.assets.getTextures("MiniLoader");
+			gameLogoTexture         = AbstractEntryPoint.assets.getTexture("logo-game");
+			ludokadoLogoTexture     = AbstractEntryPoint.assets.getTexture("logo-ludokado");
+			gameCenterTexture       = AbstractEntryPoint.assets.getTexture("game-center");
+			blackLoaderTextures     = AbstractEntryPoint.assets.getTextures("MiniLoader");
+			particleConfettiTexture = AbstractEntryPoint.assets.getTexture("confetti");
 			
 			// OffsetTabBar
 			buttonOffsetTabBarLeftSelectedTextures   = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-rules-and-scores-left-selected-background-skin"), BUTTON_OFFSET_TAB_BAR_LEFT_GRID);
