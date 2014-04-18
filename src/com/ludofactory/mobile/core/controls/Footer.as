@@ -7,25 +7,29 @@ Created : 9 oct. 2013
 package com.ludofactory.mobile.core.controls
 {
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.home.summary.SummaryContainer;
+	import com.ludofactory.mobile.core.test.home.summary.SummaryElement;
+	import com.ludofactory.mobile.core.test.push.GameSession;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
+	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
 	
 	import feathers.controls.Button;
-	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.controls.ScrollContainer;
 	import feathers.core.FeathersControl;
-	import feathers.display.Scale3Image;
-	import feathers.textures.Scale3Textures;
+	import feathers.display.Scale9Image;
+	import feathers.textures.Scale9Textures;
 	
 	import starling.core.Starling;
 	import starling.display.BlendMode;
@@ -36,130 +40,110 @@ package com.ludofactory.mobile.core.controls
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	
+	//------------------------------------------------------------------------------------------------------------
+	//	TODO : Supprimer le summary container devenu useless
+	//------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * Application footer.
+	 */	
 	public class Footer extends FeathersControl
 	{
-		private var _iconPadding:int;
-		private var _decorationPadding:int;
 		/**
-		 * The base background. */		
-		private var _backgroundImage:Scale3Image;
+		 * Side padding (used to position buttons). */		
+		private var _sidePadding:int;
+		/**
+		 * The scaled height of the container (80 by default). */		
+		private var _containerHeight:Number;
 		
-		private var _shadow:Scale3Image;
-		
-		
-		private var _top:Scale3Image;
+		/**
+		 * The footer background. */		
+		private var _backgroundImage:Scale9Image;
 		
 		/**
 		 * The back button. */		
 		private var _backButton:Button;
 		/**
 		 * The back icon. */		
-		private var _backIcon:ImageLoader;
+		private var _backIcon:Image;
 		
 		/**
 		 * The news button. */		
 		private var _newsButton:Button;
 		/**
 		 * The news icon. */		
-		private var _newsIcon:ImageLoader;
+		private var _newsIcon:Image;
 		
 		/**
 		 * The menu button. */		
 		private var _menuButton:Button;
 		/**
 		 * The menu icon. */		
-		private var _menuIcon:ImageLoader;
+		private var _menuIcon:Image;
 		
 		/**
-		 * The left decorations. */		
-		private var _decorationLeft:ImageLoader;
+		 * The free container. */		
+		private var _freeContainer:SummaryElement;
 		/**
-		 * The right decorations. */		
-		private var _decorationRight:ImageLoader;
-		
+		 * The points container. */		
+		private var _pointsContainer:SummaryElement;
 		/**
-		 * The summary container. */		
-		private var _summaryContainer:SummaryContainer;
+		 * The credits container. */		
+		private var _creditsContainer:SummaryElement;
 		
 		public function Footer()
 		{
 			super();
 			
-			_iconPadding = scaleAndRoundToDpi(10);
-			_decorationPadding = scaleAndRoundToDpi(4);
-			this.height = scaleAndRoundToDpi(GlobalConfig.LANDSCAPE ? 88 : 118);
+			_sidePadding = scaleAndRoundToDpi(10);
+			_containerHeight = scaleAndRoundToDpi(80);
+			height = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 88 : 118);
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-			// TODO Faire un simple scale9Image pour tout (ou presque) le footer pour optimiser ?
-			
-			_backgroundImage = new Scale3Image( new Scale3Textures(AbstractEntryPoint.assets.getTexture("footer-background-skin"), 10, 10), GlobalConfig.dpiScale );
+			_backgroundImage = new Scale9Image( new Scale9Textures(AbstractEntryPoint.assets.getTexture("footer-skin"), new Rectangle(140, 54, 10, 10)), GlobalConfig.dpiScale );
 			_backgroundImage.touchable = false;
 			_backgroundImage.blendMode = BlendMode.NONE;
 			addChild(_backgroundImage);
 			
-			_shadow = new Scale3Image( new Scale3Textures(AbstractEntryPoint.assets.getTexture("footer-shadow"), 30, 60), GlobalConfig.dpiScale );
-			_shadow.touchable = false;
-			//_shadow.blendMode = BlendMode.NONE;
-			addChild(_shadow);
-			
-			_top = new Scale3Image( new Scale3Textures(AbstractEntryPoint.assets.getTexture("footer-top"), 60, 60), GlobalConfig.dpiScale );
-			_top.touchable = false;
-			//_top.blendMode = BlendMode.NONE
-			addChild(_top);
-			
-			_backIcon = new ImageLoader();
-			_backIcon.source = AbstractEntryPoint.assets.getTexture("footer-back-icon");
+			_backIcon = new Image( AbstractEntryPoint.assets.getTexture("footer-back-icon") );
 			_backIcon.scaleX = _backIcon.scaleY = GlobalConfig.dpiScale;
-			_backIcon.snapToPixels = true;
 			
 			_backButton = new Button();
-			_backButton.nameList.add( Theme.BUTTON_EMPTY );
+			_backButton.styleName = Theme.BUTTON_EMPTY;
 			_backButton.defaultIcon = _backIcon;
 			_backButton.addEventListener(Event.TRIGGERED, onBackButtonTouched);
 			addChild(_backButton);
 			
-			_newsIcon = new ImageLoader();
-			_newsIcon.source = AbstractEntryPoint.assets.getTexture("footer-news-icon");
+			_newsIcon = new Image( AbstractEntryPoint.assets.getTexture("footer-news-icon") );
 			_newsIcon.scaleX = _newsIcon.scaleY = GlobalConfig.dpiScale;
-			_newsIcon.snapToPixels = true;
 			
 			_newsButton = new Button();
-			_newsButton.nameList.add( Theme.BUTTON_EMPTY );
+			_newsButton.styleName = Theme.BUTTON_EMPTY;
 			_newsButton.defaultIcon = _newsIcon;
 			_newsButton.addEventListener(Event.TRIGGERED, onNewsButtonTouched);
 			addChild(_newsButton);
 			
-			_menuIcon = new ImageLoader();
-			_menuIcon.source = AbstractEntryPoint.assets.getTexture("footer-menu-icon");
+			_menuIcon = new Image( AbstractEntryPoint.assets.getTexture("footer-menu-icon") );
 			_menuIcon.scaleX = _menuIcon.scaleY = GlobalConfig.dpiScale;
-			_menuIcon.snapToPixels = true;
 			
 			_menuButton = new Button();
-			_menuButton.nameList.add( Theme.BUTTON_EMPTY );
+			_menuButton.styleName = Theme.BUTTON_EMPTY;
 			_menuButton.defaultIcon = _menuIcon;
 			_menuButton.addEventListener(Event.TRIGGERED, onMainMenuTouched);
 			addChild(_menuButton);
 			
-			_decorationLeft = new ImageLoader();
-			_decorationLeft.touchable = false;
-			_decorationLeft.source = AbstractEntryPoint.assets.getTexture("footer-decoration");
-			_decorationLeft.scaleX = _decorationLeft.scaleY = GlobalConfig.dpiScale;
-			_decorationLeft.snapToPixels = true;
-			addChild(_decorationLeft);
+			_freeContainer = new SummaryElement( GameSession.PRICE_FREE );
+			addChild(_freeContainer);
 			
-			_decorationRight = new ImageLoader();
-			_decorationRight.touchable = false;
-			_decorationRight.source = AbstractEntryPoint.assets.getTexture("footer-decoration");
-			_decorationRight.scaleX = _decorationRight.scaleY = GlobalConfig.dpiScale;
-			_decorationRight.snapToPixels = true;
-			addChild(_decorationRight);
+			_pointsContainer = new SummaryElement( GameSession.PRICE_POINT );
+			addChild(_pointsContainer);
 			
-			_summaryContainer = new SummaryContainer();
-			addChild(_summaryContainer);
+			_creditsContainer = new SummaryElement( GameSession.PRICE_CREDIT );
+			addChild(_creditsContainer);
 		}
 		
 		override protected function draw():void
@@ -168,58 +152,114 @@ package com.ludofactory.mobile.core.controls
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_backgroundImage.width = this.actualWidth;
-				_backgroundImage.height = this.actualHeight;
+				_backgroundImage.width = actualWidth;
+				_backgroundImage.height = actualHeight;
 				
-				_backIcon.validate();
 				_backButton.validate();
-				_newsIcon.validate();
 				_newsButton.validate();
-				_backButton.x = _newsButton.x = _iconPadding;
-				_backButton.y = (actualHeight - _backButton.height) * 0.5;
-				_newsButton.y = (actualHeight - _newsButton.height) * 0.5;
+				_backButton.x = _newsButton.x = _sidePadding;
+				_backButton.y = ((actualHeight - _backButton.height) * 0.5) << 0;
+				_newsButton.y = ((actualHeight - _newsButton.height) * 0.5) << 0;
 				
-				_menuIcon.validate();
 				_menuButton.validate();
-				_menuButton.x = actualWidth - _menuButton.width - _iconPadding;
-				_menuButton.y = (actualHeight - _menuButton.height) * 0.5;
+				_menuButton.x = (actualWidth - _menuButton.width - _sidePadding) << 0;
+				_menuButton.y = ((actualHeight - _menuButton.height) * 0.5) << 0;
 				
-				_decorationLeft.validate();
-				_decorationLeft.x = _backButton.x + _backButton.width + _decorationPadding;
-				_decorationLeft.y = (actualHeight - _decorationLeft.height) * 0.5;
+				var containersMaxWidth:int = actualWidth - scaleAndRoundToDpi(200); // 100 + 100 padding on each side
 				
-				_decorationRight.validate();
-				_decorationRight.x = _menuButton.x - _decorationRight.width - _decorationPadding;
-				_decorationRight.y = (actualHeight - _decorationRight.height) * 0.5;
+				_freeContainer.height = _pointsContainer.height = _creditsContainer.height = _containerHeight;
 				
-				_shadow.height = actualHeight - scaleAndRoundToDpi(3);
-				_shadow.width = _menuButton.x - (_backButton.x + _backButton.width);
-				_shadow.x = _decorationLeft.x - _decorationLeft.width * 0.5;
-				_shadow.y = scaleAndRoundToDpi(3);
+				_freeContainer.width = _creditsContainer.width = containersMaxWidth * 0.3 - scaleAndRoundToDpi(10);
+				_pointsContainer.width = containersMaxWidth * 0.4 - scaleAndRoundToDpi(10) * 2;
 				
-				_top.x = _decorationLeft.x + _decorationLeft.width;
-				_top.width = actualWidth - _decorationLeft.x - (actualWidth - _decorationRight.x + _decorationRight.width);
+				_freeContainer.x = scaleAndRoundToDpi(110);
+				_pointsContainer.x = (_freeContainer.x + _freeContainer.width + scaleAndRoundToDpi(10)) << 0;
+				_creditsContainer.x = (_pointsContainer.x + _pointsContainer.width + scaleAndRoundToDpi(10)) << 0;
 				
-				_summaryContainer.x = _top.x;
-				_summaryContainer.width = _top.width;
-				_summaryContainer.validate();
-				_summaryContainer.y = (actualHeight - _summaryContainer.height) * 0.4;
-				//_summaryContainer.y = _top.height - scaleAndRoundToDpi(4);
+				_freeContainer.validate();
+				_freeContainer.y = _pointsContainer.y = _creditsContainer.y = ((actualHeight - _freeContainer.height) * 0.5) << 0;
 			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
-//	Handlers
+//	Summary containers functions
 		
+		/**
+		 * Updates the labels in the summary elements.
+		 * 
+		 * <p>This is called when whether the number of free game sessions,
+		 * points or credits have changed.</p>
+		 */		
 		public function updateSummary():void
 		{
-			_summaryContainer.updateData();
+			// Gérer ici le cas = 0 etc.
+			
+			if( MemberManager.getInstance().isLoggedIn() )
+			{
+				_pointsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getPoints() ) );
+				_creditsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getCredits() ) );
+			}
+			else
+			{
+				_pointsContainer.setLabelText( "" + MemberManager.getInstance().getPoints() );
+				_creditsContainer.setLabelText( "-"  );
+			}
 		}
 		
+		/**
+		 * Animate a value above one of the containers.
+		 */		
 		public function animateSummary(data:Object):void
 		{
-			_summaryContainer.animateSummary(data);
+			switch(data.type)
+			{
+				case GameSession.PRICE_FREE:
+				{
+					_freeContainer.animateChange( data.value );
+					break;
+				}
+				case GameSession.PRICE_CREDIT:
+				{
+					_creditsContainer.animateChange( data.value );
+					break;
+				}
+				case GameSession.PRICE_POINT:
+				{
+					_pointsContainer.animateChange( data.value );
+					break;
+				}
+			}
 		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Buttons handlers
+		
+		/**
+		 * The main menu button was touched.
+		 */		
+		private function onMainMenuTouched(event:Event):void
+		{
+			dispatchEventWith(LudoEventType.MAIN_MENU_TOUCHED);
+		}
+		
+		/**
+		 * The back button was touched.
+		 */		
+		private function onBackButtonTouched(event:Event):void
+		{
+			dispatchEventWith(LudoEventType.BACK_BUTTON_TOUCHED);
+		}
+		
+		/**
+		 * The new button was touched.
+		 */		
+		private function onNewsButtonTouched(event:Event):void
+		{
+			dispatchEventWith(LudoEventType.NEWS_BUTTON_TOUCHED);
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Help
 		
 		private var _arrow:Image;
 		private var _backInfoContainer:ScrollContainer;
@@ -245,7 +285,6 @@ package com.ludofactory.mobile.core.controls
 			{
 				if( val == false && !isMainMenu && Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEED_HELP_ARROW) == true &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.GAME_TYPE_SELECTION_SCREEN &&
-					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.SMALL_RULES_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.FREE_GAME_END_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.TOURNAMENT_GAME_END_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.FACEBOOK_END_SCREEN &&
@@ -272,7 +311,7 @@ package com.ludofactory.mobile.core.controls
 					_backInfoContainer.alpha = 0;
 					_backInfoContainer.visible = false;
 					_backInfoContainer.touchable = false;
-					_backInfoContainer.nameList.add( Theme.SCROLL_CONTAINER_RESULT_DARK_CORNER_TOP_LEFT );
+					_backInfoContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_DARK_CORNER_TOP_LEFT;
 					(Starling.current.root as AbstractEntryPoint).addChild(_backInfoContainer);
 					_backInfoContainer.padding = 0;
 					_backInfoContainer.layout["padding"] = scaleAndRoundToDpi(20);
@@ -331,30 +370,6 @@ package com.ludofactory.mobile.core.controls
 			if( touch && touch.phase == TouchPhase.ENDED )
 				displayBackHelpIfNeeded(false, false);
 			touch = null;
-		}
-		
-		/**
-		 * The main menu was touched.
-		 */		
-		private function onMainMenuTouched(event:Event):void
-		{
-			dispatchEventWith(LudoEventType.MAIN_MENU_TOUCHED);
-		}
-		
-		/**
-		 * The main menu was touched.
-		 */		
-		private function onBackButtonTouched(event:Event):void
-		{
-			dispatchEventWith(LudoEventType.BACK_BUTTON_TOUCHED);
-		}
-		
-		/**
-		 * The main menu was touched.
-		 */		
-		private function onNewsButtonTouched(event:Event):void
-		{
-			dispatchEventWith(LudoEventType.NEWS_BUTTON_TOUCHED);
 		}
 		
 	}

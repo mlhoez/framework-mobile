@@ -28,7 +28,7 @@ package com.ludofactory.mobile.core.test.push
 	public class PushManager extends EventDispatcher
 	{
 		/**
-		 * The base uodate time (3000 = 3 sec) */		
+		 * The base update time (3000 = 3 sec) */		
 		private const BASE_TIME:int = 3000;
 		/**
 		 * The previous time. */		

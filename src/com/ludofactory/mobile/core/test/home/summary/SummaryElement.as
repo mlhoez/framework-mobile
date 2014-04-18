@@ -6,12 +6,10 @@ Created : 9 août 2013
 */
 package com.ludofactory.mobile.core.test.home.summary
 {
-	import com.gamua.flox.Flox;
 	import com.greensock.TweenLite;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
-	import com.ludofactory.common.utils.Utility;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
@@ -255,7 +253,7 @@ package com.ludofactory.mobile.core.test.home.summary
 			_oldTweenValue = int(_label.text.split(" ").join(""));
 			_targetTweenValue = _oldTweenValue + newValue;
 			if( newValue < 0 )
-				TweenMax.to(this, 0.75, { _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _label.text = Utility.splitThousands(_oldTweenValue); }, ease:Linear.easeNone } );
+				TweenMax.to(this, 0.75, { _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _label.text = Utilities.splitThousands(_oldTweenValue); }, ease:Linear.easeNone } );
 			_animationLabel.text = (newValue < 0 ? "- " : "+ ") + Math.abs(newValue);
 			_animationLabel.visible = false;
 			_animationLabel.alpha = 0;
@@ -382,24 +380,5 @@ package com.ludofactory.mobile.core.test.home.summary
 			
 			_isInterrogationDisplaying = false;
 		}
-		
-//------------------------------------------------------------------------------------------------------------
-//	Dispose
-//------------------------------------------------------------------------------------------------------------
-		
-		override public function dispose():void
-		{
-			_background.removeFromParent(true);
-			_background = null;
-			
-			_icon.removeFromParent(true);
-			_icon = null;
-			
-			_label.removeFromParent(true);
-			_label = null;
-			
-			super.dispose();
-		}
-		
 	}
 }

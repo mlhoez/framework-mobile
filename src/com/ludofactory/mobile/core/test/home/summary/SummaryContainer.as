@@ -7,7 +7,7 @@ Created : 8 août 2013
 package com.ludofactory.mobile.core.test.home.summary
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.HeartBeat;
 	import com.ludofactory.mobile.core.events.LudoEventType;
@@ -24,21 +24,18 @@ package com.ludofactory.mobile.core.test.home.summary
 		public static var IS_TIMER_OVER_AND_REQUEST_FAILED:Boolean = false;
 		
 		/**
-		 * The base height. */		
-		private const BASE_HEIGHT:int = 80;
-		/**
-		 * The scaled height. */		
-		private var _scaledHeight:Number;
+		 * The scaled height of the container (80 by default). */		
+		private var _containerHeight:Number;
 		
 		/**
 		 * The free container. */		
-		private var _freeContainer:SummaryElement;
+		//private var _freeContainer:SummaryElement;
 		/**
 		 * The points container. */		
-		private var _pointsContainer:SummaryElement;
+		//private var _pointsContainer:SummaryElement;
 		/**
 		 * The credits container. */		
-		private var _creditsContainer:SummaryElement;
+		//private var _creditsContainer:SummaryElement;
 		
 		/**
 		 * Timer variables. */		
@@ -50,21 +47,21 @@ package com.ludofactory.mobile.core.test.home.summary
 		{
 			super();
 			
-			_scaledHeight = scaleAndRoundToDpi(BASE_HEIGHT);
+			_containerHeight = scaleAndRoundToDpi(80);
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-			_freeContainer = new SummaryElement( GameSession.PRICE_FREE );
+			/*_freeContainer = new SummaryElement( GameSession.PRICE_FREE );
 			addChild(_freeContainer);
 			
 			_pointsContainer = new SummaryElement( GameSession.PRICE_POINT );
 			addChild(_pointsContainer);
 			
 			_creditsContainer = new SummaryElement( GameSession.PRICE_CREDIT );
-			addChild(_creditsContainer);
+			addChild(_creditsContainer);*/
 			
 			updateData();
 		}
@@ -73,7 +70,7 @@ package com.ludofactory.mobile.core.test.home.summary
 		{
 			super.draw();
 			
-			setSizeInternal(this.actualWidth, _scaledHeight, false);
+			/*setSizeInternal(this.actualWidth, _containerHeight, false);
 			
 			_freeContainer.height = _pointsContainer.height = _creditsContainer.height = this.actualHeight;
 			
@@ -85,48 +82,17 @@ package com.ludofactory.mobile.core.test.home.summary
 			_creditsContainer.x = (_pointsContainer.x + _pointsContainer.width + scaleAndRoundToDpi(10)) << 0;
 			
 			_freeContainer.validate();
-			_freeContainer.y = _pointsContainer.y = _creditsContainer.y = ((actualHeight - _freeContainer.height) * 0.5) << 0;
+			_freeContainer.y = _pointsContainer.y = _creditsContainer.y = ((actualHeight - _freeContainer.height) * 0.5) << 0;*/
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Timer handler
-//------------------------------------------------------------------------------------------------------------
 		
 		public function updateData():void
 		{
-			HeartBeat.unregisterFunction(update);
+			// Gérer ici le cas = 0 etc.
 			
-			if( MemberManager.getInstance().isLoggedIn() )
-			{
-				if( MemberManager.getInstance().getNumFreeGameSessions() > 0 )
-				{
-					IS_TIMER_OVER_AND_REQUEST_FAILED = false;
-					_freeContainer.setLabelText( "" + MemberManager.getInstance().getNumFreeGameSessions() );
-				}
-				else
-				{
-					if( IS_TIMER_OVER_AND_REQUEST_FAILED )
-					{
-						_freeContainer.setLabelText("???");
-					}
-					else
-					{
-						var nowInFrance:Date = Utility.getLocalFrenchDate();
-						_totalTime = (86400 - (nowInFrance.hours * 60 * 60) - (nowInFrance.minutes * 60) - nowInFrance.seconds) * 1000;
-						_previousTime = getTimer();
-						HeartBeat.registerFunction(update);
-					}
-				}
-				_pointsContainer.setLabelText( "" + Utility.splitThousands( MemberManager.getInstance().getPoints() ) );
-				_creditsContainer.setLabelText( "" + Utility.splitThousands( MemberManager.getInstance().getCredits() ) );
-			}
-			else
-			{
-				_freeContainer.setLabelText( "" + ( MemberManager.getInstance().isLoggedIn() ? (MemberManager.getInstance().getNumFreeGameSessions()) : (MemberManager.getInstance().getNumFreeGameSessions() == 0 ? "???" : MemberManager.getInstance().getNumFreeGameSessions())) );
-				//_pointsContainer.setLabelText( "" + ( MemberManager.getInstance().isLoggedIn() ? (MemberManager.getInstance().getPoints()) : (MemberManager.getInstance().getNumFreeGameSessions() == 0 ? "???" : MemberManager.getInstance().getPoints()))  );
-				_pointsContainer.setLabelText( "" + MemberManager.getInstance().getPoints() );
-				_creditsContainer.setLabelText( "-"  );
-			}
+			
 		}
 		
 		/**
@@ -134,24 +100,7 @@ package com.ludofactory.mobile.core.test.home.summary
 		 */		
 		public function animateSummary(data:Object):void
 		{
-			switch(data.type)
-			{
-				case GameSession.PRICE_FREE:
-				{
-					_freeContainer.animateChange( data.value );
-					break;
-				}
-				case GameSession.PRICE_CREDIT:
-				{
-					_creditsContainer.animateChange( data.value );
-					break;
-				}
-				case GameSession.PRICE_POINT:
-				{
-					_pointsContainer.animateChange( data.value );
-					break;
-				}
-			}
+			
 		}
 		
 		private var _h:int;
@@ -175,7 +124,7 @@ package com.ludofactory.mobile.core.test.home.summary
 			if( _h <= 0 && _m <= 0 && _s <= 0 )
 			{
 				HeartBeat.unregisterFunction(update);
-				_freeContainer.setLabelText( "00:00:00" );
+				//_freeContainer.setLabelText( "00:00:00" );
 				if( AirNetworkInfo.networkInfo.isConnected() )
 					Remote.getInstance().updateMises(onMisesUpdated, onMisesUpdated, onMisesUpdated, 1);
 				else
@@ -183,7 +132,7 @@ package com.ludofactory.mobile.core.test.home.summary
 			}
 			else
 			{
-				_freeContainer.setLabelText( (_h < 10 ? "0":"") + _h + ":" + (_m < 10 ? "0":"") + _m + ":" + (_s < 10 ? "0":"") + _s );
+				//_freeContainer.setLabelText( (_h < 10 ? "0":"") + _h + ":" + (_m < 10 ? "0":"") + _m + ":" + (_s < 10 ? "0":"") + _s );
 			}
 			
 		}
@@ -201,25 +150,5 @@ package com.ludofactory.mobile.core.test.home.summary
 		{
 			_freeContainer.setLabelText( formattedTime );
 		}*/
-		
-//------------------------------------------------------------------------------------------------------------
-//	Dispose
-//------------------------------------------------------------------------------------------------------------
-		
-		override public function dispose():void
-		{
-			HeartBeat.unregisterFunction(update);
-			
-			_freeContainer.removeFromParent(true);
-			_freeContainer = null;
-			
-			_pointsContainer.removeFromParent(true);
-			_pointsContainer = null;
-			
-			_creditsContainer.removeFromParent(true);
-			_creditsContainer = null;
-			
-			super.dispose();
-		}
 	}
 }
