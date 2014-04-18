@@ -138,7 +138,8 @@ package com.ludofactory.mobile.core.test.engine
 		{
 			super.initialize();
 			
-			if( GlobalConfig.stageWidth > GlobalConfig.stageHeight )
+			// FIXME A décommenter pour gérer l'orientation
+			/*if( GlobalConfig.stageWidth > GlobalConfig.stageHeight )
 			{
 				Starling.current.nativeStage.addEventListener(flash.events.Event.RESIZE, onResize, false, int.MAX_VALUE, true);
 				Starling.current.nativeStage.setAspectRatio(StageAspectRatio.PORTRAIT);
@@ -146,7 +147,9 @@ package com.ludofactory.mobile.core.test.engine
 			else
 			{
 				onResize();
-			}
+			}*/
+			
+			initContent();
 		}
 		
 		/**

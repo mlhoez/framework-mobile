@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
-	import com.ludofactory.common.utils.Utility;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
@@ -31,7 +31,6 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.milkmangames.nativeextensions.ios.IAdBannerAlignment;
 	
-	import flash.display.StageAspectRatio;
 	import flash.events.Event;
 	import flash.filesystem.File;
 	
@@ -170,15 +169,16 @@ package com.ludofactory.mobile.core
 				MemberManager.getInstance().setAnonymousGameSessions( MemberManager.getInstance().getAnonymousGameSessions() );
 			}
 			
-			if( _isLandscape )
+			// FIXME A décommenter pour gérer l'orientation
+			/*if( _isLandscape )
 			{
 				Starling.current.nativeStage.addEventListener(flash.events.Event.RESIZE, onOrientationChanged, false, int.MAX_VALUE, true);
 				Starling.current.nativeStage.setAspectRatio(StageAspectRatio.LANDSCAPE);
 			}
 			else
-			{
+			{*/
 				initializeGame();
-			}
+			//}
 		}
 		
 		private function onOrientationChanged(event:flash.events.Event):void
@@ -457,9 +457,9 @@ package com.ludofactory.mobile.core
 						advancedOwner.screenData.gameData.position = int(result.classement);
 						advancedOwner.screenData.gameData.top = int(result.top);
 						advancedOwner.screenData.gameData.actualGiftImageUrl = result.lot_actuel.image;
-						advancedOwner.screenData.gameData.actualGiftName = Utility.replaceCurrency(result.lot_actuel.nom);
+						advancedOwner.screenData.gameData.actualGiftName = Utilities.replaceCurrency(result.lot_actuel.nom);
 						advancedOwner.screenData.gameData.nextGiftImageUrl = result.lot_suivant.image;
-						advancedOwner.screenData.gameData.nextGiftName = Utility.replaceCurrency(result.lot_suivant.nom);
+						advancedOwner.screenData.gameData.nextGiftName = Utilities.replaceCurrency(result.lot_suivant.nom);
 						advancedOwner.screenData.gameData.numStarsForNextGift = int(result.lot_suivant.nb_etoiles);
 						advancedOwner.screenData.gameData.hasReachNewTop = int(result.podium) == 1 ? true:false;
 						advancedOwner.screenData.gameData.timeUntilTournamentEnd = int(result.temps_fin_tournoi);

@@ -90,8 +90,11 @@ package com.ludofactory.mobile.core.test.engine
 		{
 			super.initialize();
 			
-			Starling.current.nativeStage.addEventListener(flash.events.Event.RESIZE, onResize, false, int.MAX_VALUE, true);
-			Starling.current.nativeStage.setAspectRatio(StageAspectRatio.PORTRAIT);
+			// FIXME A décommenter pour gérer l'orientation
+			//Starling.current.nativeStage.addEventListener(flash.events.Event.RESIZE, onResize, false, int.MAX_VALUE, true);
+			//Starling.current.nativeStage.setAspectRatio(StageAspectRatio.PORTRAIT);
+			
+			initContent();
 		}
 		
 		/**
