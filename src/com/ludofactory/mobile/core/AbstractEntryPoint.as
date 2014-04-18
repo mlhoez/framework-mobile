@@ -104,6 +104,7 @@ package com.ludofactory.mobile.core
 	import starling.events.Event;
 	import starling.textures.Texture;
 	import starling.utils.AssetManager;
+	import starling.utils.deg2rad;
 	
 	/**
 	 * The Root class is the topmost display object in the game. It loads all the assets.
@@ -280,6 +281,7 @@ package com.ludofactory.mobile.core
 			// FIXME Essayer de le laisser à 1 sur les vieux appareils : http://forum.starling-framework.org/topic/setting-the-root-alpha-to-0999
 			this.alpha = 0.999; // http://wiki.starling-framework.org/manual/performance_optimization
 			
+			GlobalConfig.isPhone = DeviceCapabilities.isPhone( Starling.current.nativeStage );
 			GlobalConfig.stageWidth = Starling.current.viewPort.width;
 			GlobalConfig.stageHeight = Starling.current.viewPort.height;
 			
@@ -287,9 +289,22 @@ package com.ludofactory.mobile.core
 			{
 				// there is a launchImageTexture when we test on a device
 				// (it is the reference to the splash screen)
-				_loadingBackground = new Image( launchImageTexture );
+				
+				// OLD
+				/*_loadingBackground = new Image( launchImageTexture );
 				_loadingBackground.width = GlobalConfig.stageWidth;
 				_loadingBackground.height = GlobalConfig.stageHeight;
+				addChild( _loadingBackground );*/
+				
+				_loadingBackground = new Image( launchImageTexture );
+				if( (AbstractGameInfo.LANDSCAPE && GlobalConfig.android) || (GlobalConfig.ios && AbstractGameInfo.LANDSCAPE && GlobalConfig.isPhone) )
+				{
+					_loadingBackground.width = GlobalConfig.stageHeight;
+					_loadingBackground.height = GlobalConfig.stageWidth;
+					_loadingBackground.rotation = deg2rad(-90);
+					_loadingBackground.x = 0;
+					_loadingBackground.y = GlobalConfig.stageHeight;
+				}
 				addChild( _loadingBackground );
 			}
 			
@@ -379,7 +394,7 @@ package com.ludofactory.mobile.core
 			}
 			
 			// parse device info
-			GlobalConfig.isPhone = DeviceCapabilities.isPhone( Starling.current.nativeStage );
+			
 			NativeDeviceInfo.parse();
 			
 			
