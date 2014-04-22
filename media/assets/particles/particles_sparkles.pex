@@ -29,8 +29,8 @@
   <minRadius value="0"/>
   <rotatePerSecond value="0"/>
   <rotatePerSecondVariance value="0"/>
-  <blendFuncSource value="1"/>
-  <blendFuncDestination value="771"/>
+  <blendFuncSource value="770"/>
+  <blendFuncDestination value="1"/>
   <rotationStart value="0"/>
   <rotationStartVariance value="0"/>
   <rotationEnd value="0"/>
