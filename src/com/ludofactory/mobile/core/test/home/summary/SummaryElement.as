@@ -95,12 +95,6 @@ package com.ludofactory.mobile.core.test.home.summary
 			
 			_calloutLabel = new Label();
 			
-			var fileStream:FileStream = new FileStream();
-			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_slow.pex" ), FileMode.READ );
-			var onTouchParticlesXml:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
-			fileStream.close();
-			fileStream = null;
-			
 			switch(_type)
 			{
 				case GameSession.PRICE_FREE:
@@ -137,7 +131,7 @@ package com.ludofactory.mobile.core.test.home.summary
 			_icon.snapToPixels = true;
 			addChild(_icon);
 			
-			_particles = new PDParticleSystem(onTouchParticlesXml, AbstractEntryPoint.assets.getTexture(_iconTextureName));
+			_particles = new PDParticleSystem(Theme.particleSlowXml, AbstractEntryPoint.assets.getTexture(_iconTextureName));
 			_particles.touchable = false;
 			_particles.maxNumParticles = 100;
 			_particles.radialAccelerationVariance = 0;

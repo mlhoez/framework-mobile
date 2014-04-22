@@ -146,12 +146,6 @@ package com.ludofactory.mobile.core.test.engine
 			_podiumMessage.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 76), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_podiumMessage.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
 			
-			var fileStream:FileStream = new FileStream();
-			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_sparkles.pex" ), FileMode.READ );
-			var onTouchParticlesXml:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
-			fileStream.close();
-			fileStream = null;
-			
 			_animArray = new Array();
 			_numLetters = String(this.advancedOwner.screenData.gameData.top).length;
 			var particleSystem:PDParticleSystem;
@@ -165,7 +159,7 @@ package com.ludofactory.mobile.core.test.engine
 				scoreLabel.validate();
 				scoreLabel.alignPivot();
 				
-				particleSystem = new PDParticleSystem(onTouchParticlesXml, AbstractEntryPoint.assets.getTexture("ParticleGui"));
+				particleSystem = new PDParticleSystem(Theme.particleSparklesXml, Theme.particleSparklesTexture);
 				particleSystem.touchable = false;
 				particleSystem.maxNumParticles = 500;
 				particleSystem.emitterXVariance = scoreLabel.width * 0.25;

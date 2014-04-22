@@ -25,11 +25,11 @@ package com.ludofactory.mobile.core.test.engine
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.GameData;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.MarketingRegisterNotification;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
 	
 	import flash.display.StageAspectRatio;
 	import flash.events.Event;
@@ -418,22 +418,14 @@ package com.ludofactory.mobile.core.test.engine
 			
 			// particles
 			
-			var fileStream:FileStream = new FileStream();
-			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_stars.pex" ), FileMode.READ );
-			var onTouchParticlesXml:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
-			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_stars_logo.pex" ), FileMode.READ );
-			var logoParticlesXml:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
-			fileStream.close();
-			fileStream = null;
-			
-			_particles = new PDParticleSystem(onTouchParticlesXml, AbstractEntryPoint.assets.getTexture("ParticleStar"));
+			_particles = new PDParticleSystem(Theme.particleStarsXml, Theme.particleStarTexture);
 			_particles.touchable = false;
 			_particles.maxNumParticles = 300;
 			//_particles.scaleX = _particles.scaleY = Config.dpiScale; // Provoque un décalage sur les tablettes surtout
 			addChild(_particles);
 			Starling.juggler.add(_particles);
 			
-			_particlesLogo = new PDParticleSystem(logoParticlesXml, AbstractEntryPoint.assets.getTexture("ParticleStar"));
+			_particlesLogo = new PDParticleSystem(Theme.particleStarsLogoXml, Theme.particleStarTexture);
 			_particlesLogo.touchable = false;
 			_particlesLogo.maxNumParticles = 500;
 			//_particles.scaleX = _particles.scaleY = Config.dpiScale; // Provoque un décalage sur les tablettes surtout

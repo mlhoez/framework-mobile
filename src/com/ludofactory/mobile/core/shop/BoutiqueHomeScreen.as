@@ -116,13 +116,7 @@ package com.ludofactory.mobile.core.shop
 			
 			// Enchères
 			
-			var fileStream:FileStream = new FileStream();
-			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_slow.pex" ), FileMode.READ );
-			var onTouchParticlesXml:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
-			fileStream.close();
-			fileStream = null;
-			
-			_encheresParticles = new PDParticleSystem(onTouchParticlesXml, AbstractEntryPoint.assets.getTexture("ParticleRound"));
+			_encheresParticles = new PDParticleSystem(Theme.particleSlowXml, Theme.particleRoundTexture);
 			_encheresParticles.touchable = false;
 			_encheresParticles.maxNumParticles = 500;
 			addChild(_encheresParticles);

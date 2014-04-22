@@ -76,13 +76,7 @@ package com.ludofactory.mobile.core.test
 		{
 			super.initialize();
 			
-			var fileStream:FileStream = new FileStream();
-			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_slow.pex" ), FileMode.READ );
-			var onTouchParticlesXml:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
-			fileStream.close();
-			fileStream = null;
-			
-			_particles = new PDParticleSystem(onTouchParticlesXml, AbstractEntryPoint.assets.getTexture("ParticleRound"));
+			_particles = new PDParticleSystem(Theme.particleSlowXml, Theme.particleRoundTexture);
 			_particles.touchable = false;
 			_particles.maxNumParticles = 300;
 			_particles.startSizeVariance = 15;

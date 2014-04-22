@@ -20,6 +20,9 @@ package com.ludofactory.mobile.core.theme
 	import com.ludofactory.mobile.core.test.store.StoreItemRenderer;
 	import com.ludofactory.mobile.navigation.menu.MenuItemRenderer;
 	
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
 	import flash.geom.Rectangle;
 	import flash.text.AutoCapitalize;
 	import flash.text.TextFormat;
@@ -145,10 +148,30 @@ package com.ludofactory.mobile.core.theme
 		 * Black loader textures. */		
 		public static var blackLoaderTextures:Vector.<Texture>;
 		
-		// Particles textures
+		// Particles textures and XMLs
 		/**
-		 * Particle texture used for cofettis in HighScore and PodiumScreen. */		
+		 * Particle texture used for confettis in HighScore and Podium screens. */		
 		public static var particleConfettiTexture:Texture;
+		/**
+		 * Particle texture used for sparkles in HighScore and Podium screens. */		
+		public static var particleSparklesTexture:Texture;
+		/**
+		 * Particle texture used in Boutique, TrophyMessage and HowToWinGifts screens. */		
+		public static var particleRoundTexture:Texture;
+		/**
+		 * Particle texture used in the TournamentEndScreen. */		
+		public static var particleStarTexture:Texture;
+		
+		/**
+		 * Particle configuration used for confettis in HighScore and Podium screens. */		
+		public static var particleConfettiXml:XML;
+		/**
+		 * Particle configuration used for sparkles in HighScore and Podium screens
+		 * when the logos animates in. */		
+		public static var particleSparklesXml:XML;
+		public static var particleSlowXml:XML;
+		public static var particleStarsXml:XML;
+		public static var particleStarsLogoXml:XML;
 		
 //------------------------------------------------------------------------------------------------------------
 //	Init
@@ -169,6 +192,7 @@ package com.ludofactory.mobile.core.theme
 			initializeScale();
 			initializeFonts();
 			initializeTextures();
+			initializeParticles();
 			initializeGlobals();
 			setInitializers();
 			
@@ -371,7 +395,12 @@ package com.ludofactory.mobile.core.theme
 			ludokadoLogoTexture     = AbstractEntryPoint.assets.getTexture("logo-ludokado");
 			gameCenterTexture       = AbstractEntryPoint.assets.getTexture("game-center");
 			blackLoaderTextures     = AbstractEntryPoint.assets.getTextures("MiniLoader");
-			particleConfettiTexture = AbstractEntryPoint.assets.getTexture("confetti");
+			
+			// Particles
+			particleConfettiTexture = AbstractEntryPoint.assets.getTexture("particle-confetti");
+			particleSparklesTexture = AbstractEntryPoint.assets.getTexture("particle-sparkle");
+			particleRoundTexture    = AbstractEntryPoint.assets.getTexture("particle-round");
+			particleStarTexture     = AbstractEntryPoint.assets.getTexture("particle-star");
 			
 			// OffsetTabBar
 			buttonOffsetTabBarLeftSelectedTextures   = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-rules-and-scores-left-selected-background-skin"), BUTTON_OFFSET_TAB_BAR_LEFT_GRID);
@@ -494,6 +523,30 @@ package com.ludofactory.mobile.core.theme
 			// TrophyItemRenderer
 			trophyHighlightTexture = AbstractEntryPoint.assets.getTexture("trophy-highlight");
 			trophyOwnedTexture = AbstractEntryPoint.assets.getTexture("trophy-owned-corner-label");
+		}
+		
+		protected function initializeParticles():void
+		{
+			var fileStream:FileStream = new FileStream();
+			
+			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_confetti.pex" ), FileMode.READ );
+			particleConfettiXml = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
+			
+			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_sparkles.pex" ), FileMode.READ );
+			particleSparklesXml = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
+			
+			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_slow.pex" ), FileMode.READ );
+			particleSlowXml = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
+			
+			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_stars.pex" ), FileMode.READ );
+			particleStarsXml = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
+			
+			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_stars_logo.pex" ), FileMode.READ );
+			particleStarsLogoXml = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
+			
+			// dispose
+			fileStream.close();
+			fileStream = null;
 		}
 		
 		protected function initializeGlobals():void

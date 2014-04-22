@@ -243,12 +243,6 @@ package com.ludofactory.mobile.core.test.vip
 			var totalLabelWdth:int = 0;
 			var particleSystem:PDParticleSystem;
 			
-			var fileStream:FileStream = new FileStream();
-			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_sparkles.pex" ), FileMode.READ );
-			var onTouchParticlesXml:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
-			fileStream.close();
-			fileStream = null;
-			
 			// first we need to calculate the width of each single char
 			// so that we can position evrything correctly without gap
 			_animArray = [];
@@ -266,7 +260,7 @@ package com.ludofactory.mobile.core.test.vip
 				scoreLabel.validate();
 				scoreLabel.alignPivot();
 				
-				particleSystem = new PDParticleSystem(onTouchParticlesXml, AbstractEntryPoint.assets.getTexture("ParticleGui"));
+				particleSystem = new PDParticleSystem(Theme.particleSparklesXml, Theme.particleSparklesTexture);
 				particleSystem.touchable = false;
 				particleSystem.maxNumParticles = 500;
 				particleSystem.emitterXVariance = scoreLabel.width * 0.25;

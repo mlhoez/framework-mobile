@@ -158,7 +158,7 @@ package com.ludofactory.mobile.core.test.game
 					else
 					{
 						// mettre texte normal + timer
-						_label.text = formatString(Localizer.getInstance().translate("GAME_TYPE_SELECTION.LABEL_DISABLED_FREE"), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + "00:00:00";
+						_label.text = formatString(Localizer.getInstance().translate("GAME_TYPE_SELECTION.LABEL_DISABLED_FREE"), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + "--:--:--";
 						_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_WHITE);
 						
 						var nowInFrance:Date = Utilities.getLocalFrenchDate();

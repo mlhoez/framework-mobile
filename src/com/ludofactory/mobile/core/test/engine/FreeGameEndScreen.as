@@ -302,13 +302,7 @@ package com.ludofactory.mobile.core.test.engine
 				_lockImage.scaleX = _lockImage.scaleY = GlobalConfig.dpiScale;
 				_convertContainer.addChild(_lockImage);
 				
-				var fileStream:FileStream = new FileStream();
-				fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_sparkles.pex" ), FileMode.READ );
-				var onTouchParticlesXml:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
-				fileStream.close();
-				fileStream = null;
-				
-				_particles = new PDParticleSystem(onTouchParticlesXml, AbstractEntryPoint.assets.getTexture("ParticleGui"));
+				_particles = new PDParticleSystem(Theme.particleSparklesXml, Theme.particleSparklesTexture);
 				_particles.touchable = false;
 				_particles.maxNumParticles = 250;
 				//_particles.scaleX = _particles.scaleY = GlobalConfig.dpiScalez;

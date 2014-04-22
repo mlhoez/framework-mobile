@@ -800,7 +800,7 @@ package com.ludofactory.mobile.core.remoting
 					// then we need to update the stored game version so that we can later check if the update was
 					// made or not (i.e. if the actual game version is higher than the stored one at the moment we
 					// requested the update
-					log("[Remote] onQueryComplete : The user must update its application version (forceDownload = 1).");
+					log("[Remote] onQueryComplete : The user must update the app (forceDownload = 1).");
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE, true);
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_LINK, result.lien_application);
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_GAME_VERSION, AbstractGameInfo.GAME_VERSION);

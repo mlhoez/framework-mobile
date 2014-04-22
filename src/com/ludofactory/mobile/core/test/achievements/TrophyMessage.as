@@ -10,6 +10,7 @@ package com.ludofactory.mobile.core.test.achievements
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.Localizer;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -68,13 +69,7 @@ package com.ludofactory.mobile.core.test.achievements
 			
 			addChild(_background);
 			
-			var fileStream:FileStream = new FileStream();
-			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_slow.pex" ), FileMode.READ );
-			var onTouchParticlesXml:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
-			fileStream.close();
-			fileStream = null;
-			
-			_particles = new PDParticleSystem(onTouchParticlesXml, AbstractEntryPoint.assets.getTexture("ParticleRound"));
+			_particles = new PDParticleSystem(Theme.particleSlowXml, Theme.particleRoundTexture);
 			_particles.touchable = false;
 			_particles.maxNumParticles = 100;
 			_particles.startSizeVariance = 15;
