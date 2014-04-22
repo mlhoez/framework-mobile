@@ -95,7 +95,7 @@ package com.ludofactory.mobile.core.test.game
 			{
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_title.width = actualWidth ;
+					_title.width = actualWidth;
 					_title.validate();
 					
 					_withFree.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.35);
@@ -105,17 +105,14 @@ package com.ludofactory.mobile.core.test.game
 					if( _withPoints ) _withPoints.x = _withFree.x;
 					
 					_withFree.validate();
-					var buttonGap:int = (actualHeight - (_title.height - _withFree.height * (_withPoints ? 3 : 2))) / (_withPoints ? 4 : 3);
 					
-					_title.y == buttonGap;
+					_title.y = (actualHeight - (_title.height + scaleAndRoundToDpi(_withFree ? 40 : 140 ) + _withFree.height * (_withPoints ? 3 : 2))) * 0.5;
 					
-					_withFree.y = _title.y + _title.height + buttonGap;
-					_withCredits.y = _withFree.y + _withFree.height + buttonGap;
+					_withFree.y = _title.y + _title.height + buttonGap + scaleAndRoundToDpi(_withFree ? 20 : 60);
+					_withCredits.y = _withFree.y + _withFree.height + buttonGap + scaleAndRoundToDpi(_withFree ? 10 : 40);
 					
 					if( _withPoints )
-					{
-						_withPoints.y = _withCredits.y + _withFree.height + buttonGap;
-					}
+						_withPoints.y = _withCredits.y + _withFree.height + buttonGap + scaleAndRoundToDpi(_withFree ? 10 : 40);
 				}
 				else
 				{
@@ -123,14 +120,13 @@ package com.ludofactory.mobile.core.test.game
 					var titleGap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 60);
 					
 					// define width
-					_title.width = actualWidth * 0.8;
+					_title.width = actualWidth;
 					_withFree.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.55);
 					if( _withPoints ) _withPoints.width = _withFree.width;
 					
 					// then validate each element to calculate the title y position
 					_withFree.validate();
 					_title.validate();
-					_title.x = ((actualWidth - _title.width) * 0.5) << 0;
 					_title.y = ((actualHeight - (_title.height + (_withFree.height * (_withPoints ? 3 : 2)) + titleGap + (buttonGap * (_withPoints ? 1 : 2)))) * 0.5) << 0;
 					
 					_withFree.x = _withCredits.x = ((actualWidth - _withFree.width) * 0.5) << 0;

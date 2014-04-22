@@ -114,8 +114,8 @@ package com.ludofactory.mobile.core.test.game
 			_icon.y = _iconDisabled.y = (this.actualHeight - _icon.height) * 0.5;
 			
 			_label.width = actualWidth - _icon.x - _icon.width - _shadowThickness - scaleAndRoundToDpi(20);
-			_label.x = _icon.x + _icon.width + scaleAndRoundToDpi(20);
 			_label.validate();
+			_label.x = _icon.x + _icon.width + scaleAndRoundToDpi(20);
 			_label.y = (actualHeight - _label.height) * 0.5;
 		}
 		
@@ -158,7 +158,7 @@ package com.ludofactory.mobile.core.test.game
 					else
 					{
 						// mettre texte normal + timer
-						_label.text = formatString(Localizer.getInstance().translate("GAME_TYPE_SELECTION.LABEL_DISABLED_FREE"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+						_label.text = formatString(Localizer.getInstance().translate("GAME_TYPE_SELECTION.LABEL_DISABLED_FREE"), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + "00:00:00";
 						_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_WHITE);
 						
 						var nowInFrance:Date = Utilities.getLocalFrenchDate();
