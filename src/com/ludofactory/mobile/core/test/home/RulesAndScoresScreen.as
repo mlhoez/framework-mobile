@@ -2,6 +2,7 @@ package com.ludofactory.mobile.core.test.home
 {
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
@@ -91,9 +92,17 @@ package com.ludofactory.mobile.core.test.home
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_logo.width = actualWidth * (GlobalConfig.isPhone ? GlobalConfig.homeScreenLogoScaleWidthPhone : GlobalConfig.homeScreenLogoScaleWidthTablet);
-				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_logo.height = actualHeight * 0.3;
+				}
+				else
+				{
+					_logo.width = actualWidth * (GlobalConfig.isPhone ? GlobalConfig.homeScreenLogoScaleWidthPhone : GlobalConfig.homeScreenLogoScaleWidthTablet);
+				}
+				
 				_logo.validate();
+				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
 				
 				_tabMenu.y = _logo.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
 				_tabMenu.width = this.actualWidth;

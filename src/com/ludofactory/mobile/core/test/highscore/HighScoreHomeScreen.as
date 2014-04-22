@@ -183,6 +183,7 @@ package com.ludofactory.mobile.core.test.highscore
 					_message.y = _icon.y + _icon.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 25 : 50 );
 					
 					_internationalButton.width = _nationalButton.width = _facebookButton.width = actualWidth * 0.45;
+					_internationalButton.height = _nationalButton.height = _facebookButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
 					_internationalButton.x = _nationalButton.x = _facebookButton.x = actualWidth * 0.5 + ((actualWidth * 0.5) - _internationalButton.width) * 0.5;
 					
 					_internationalButton.validate();
@@ -215,6 +216,7 @@ package com.ludofactory.mobile.core.test.highscore
 					gap = (actualHeight - _shadow.y - _shadow.y) / 4;
 					
 					_internationalButton.width = _nationalButton.width = _facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_internationalButton.height = _nationalButton.height = _facebookButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
 					_internationalButton.x = _nationalButton.x = _facebookButton.x = (actualWidth - _internationalButton.width) * 0.5;
 					
 					_internationalButton.y = _background.y + gap;

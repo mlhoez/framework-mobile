@@ -190,6 +190,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			_myFriendsButton.styleName = Theme.BUTTON_GREEN;
 			_myFriendsButton.label = Localizer.getInstance().translate("SPONSOR_HOME.MY_FRIENDS");
 			addChild(_myFriendsButton);
+			_myFriendsButton.minHeight = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
 			
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
@@ -206,22 +207,24 @@ package com.ludofactory.mobile.core.test.sponsor
 				{
 					_mainContainer.width = _rewardValueLabel.width = _titleLabel.width = _byFilleulLabel.width = actualWidth * 0.5;
 					_mainContainer.validate();
-					_mainContainer.y = (actualHeight - _mainContainer.height) * 0.1;
+					_mainContainer.y = (actualHeight - _mainContainer.height) * 0.5;
 					
 					_glow.x = _mainContainer.x + (_mainContainer.width * 0.5);
 					_glow.y = _mainContainer.y + (_mainContainer.height * 0.35);
 					
 					_myFriendsButton.width = _emailButton.width = _smsButton.width = actualWidth * 0.4;
-					_myFriendsButton.x = _emailButton.x = _smsButton.x = actualWidth * 0.5 + ((actualWidth * 0.5) - _myFriendsButton.width) * 0.5;
-					_myFriendsButton.validate();
-					_myFriendsButton.y = actualHeight - _myFriendsButton.height - scaleAndRoundToDpi(20);
-					
-					_friendsImage.y = _myFriendsButton.y - (_friendsImage.height * 0.6);
-					_friendsImage.x = _myFriendsButton.x + (_myFriendsButton.width - _friendsImage.width) * 0.5;
 					
 					_emailButton.validate();
-					_emailButton.y = ((_myFriendsButton.y - (_emailButton.height * 2) - scaleAndRoundToDpi(60)) / 3) << 0
-					_smsButton.y = _emailButton.y + _emailButton.height + scaleAndRoundToDpi(20);
+					_emailButton.y = ( actualHeight - (_emailButton.height * 3 + _friendsImage.height * 0.4 + scaleAndRoundToDpi(GlobalConfig.isPhone ? 80 : 140)) ) * 0.5;
+					_smsButton.y = _emailButton.y + _emailButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					
+					_friendsImage.y = _smsButton.y  + _smsButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 100);
+					
+					_myFriendsButton.x = _emailButton.x = _smsButton.x = actualWidth * 0.5 + ((actualWidth * 0.5) - _myFriendsButton.width) * 0.5;
+					_myFriendsButton.validate();
+					_myFriendsButton.y = _friendsImage.y + _friendsImage.height * 0.6;
+					
+					_friendsImage.x = _myFriendsButton.x + (_myFriendsButton.width - _friendsImage.width) * 0.5;
 					
 					TweenMax.to(_glow, 1.25, { alpha:0.1, repeat:-1, yoyo:true, ease:Linear.easeNone });
 					TweenMax.to(_glow, 25, { rotation:deg2rad(360), repeat:-1, ease:Linear.easeNone });

@@ -14,6 +14,7 @@ package com.ludofactory.mobile.core.test.engine
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -26,11 +27,7 @@ package com.ludofactory.mobile.core.test.engine
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
 	
-	import flash.display.StageAspectRatio;
 	import flash.events.Event;
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
@@ -75,6 +72,10 @@ package com.ludofactory.mobile.core.test.engine
 		/**
 		 * The continue button. */		
 		private var _continueButton:Button;
+		
+		/**
+		 * Confettis. */		
+		private var _confettis:PDParticleSystem;
 		
 		private var _facebookManager:FacebookManager;
 		
@@ -130,20 +131,21 @@ package com.ludofactory.mobile.core.test.engine
 			
 			_podiumGlow = new Image( AbstractEntryPoint.assets.getTexture("HighScoreGlow") );
 			_podiumGlow.alpha = 0;
-			_podiumGlow.scaleX = _podiumGlow.scaleY = GlobalConfig.stageWidth / _podiumGlow.width;
+			_podiumGlow.scaleX = _podiumGlow.scaleY = GlobalConfig.stageWidth / (_podiumGlow.width * (AbstractGameInfo.LANDSCAPE ? 1.5 : 1));
 			_podiumGlow.alignPivot();
 			addChild( _podiumGlow );
 			
 			_podiumLogo = new Image( AbstractEntryPoint.assets.getTexture("Top") );
-			_podiumLogo.scaleX = _podiumLogo.scaleY = GlobalConfig.dpiScale;
+			_podiumLogo.scaleX = _podiumLogo.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? (0.2 * GlobalConfig.dpiScale) : 0);
 			_podiumLogo.alignPivot();
 			addChild( _podiumLogo );
 			
 			_podiumMessage = new Label();
 			_podiumMessage.alpha = 0;
-			_podiumMessage.text = formatString(Localizer.getInstance().translate("PODIUM.MESSAGE"), formatString(Localizer.getInstance().translate(Utilities.translatePosition(advancedOwner.screenData.gameData.position)), this.advancedOwner.screenData.gameData.position));
+			_podiumMessage.text = formatString(Localizer.getInstance().translate("PODIUM.MESSAGE" + (AbstractGameInfo.LANDSCAPE ? "_LANDSCAPE" : "_PORTRAIT")), formatString(Localizer.getInstance().translate(Utilities.translatePosition(advancedOwner.screenData.gameData.position)), this.advancedOwner.screenData.gameData.position));
 			addChild(_podiumMessage);
-			_podiumMessage.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 76), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
+			var test:int = ((GlobalConfig.isPhone ? 50 : 76) * _podiumLogo.scaleX) << 0;
+			_podiumMessage.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, test, Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_podiumMessage.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
 			
 			_animArray = new Array();
@@ -201,57 +203,106 @@ package com.ludofactory.mobile.core.test.engine
 				_facebookButton.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 			}
 			
-			invalidate(INVALIDATION_FLAG_SIZE);
+			_confettis = new PDParticleSystem(Theme.particleConfettiXml, Theme.particleConfettiTexture);
+			_confettis.touchable = false;
+			_confettis.maxNumParticles = AbstractGameInfo.LANDSCAPE ? 750 : 500;
+			_confettis.lifespan *= AbstractGameInfo.LANDSCAPE ? 1 : 2;
+			_confettis.scaleX = _confettis.scaleY = GlobalConfig.dpiScale;
+			addChild(_confettis);
+			Starling.juggler.add(_confettis);
+			
+			//invalidate(INVALIDATION_FLAG_SIZE);
 		}
 		
 		override protected function draw():void
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) && _podiumLogo )
 			{
-				_podiumGlow.x = this.actualWidth * 0.5;
-				_podiumGlow.y = this.actualHeight * (_facebookButton ? 0.3 : 0.4) + _podiumLogo.height * 0.1;
-				TweenMax.to(_podiumGlow, 0.75, { delay:0.75, alpha:1 } );
-				TweenMax.to(_podiumGlow, 10, { delay:0.75, rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 } );
-				
-				_podiumLogo.x = this.actualWidth * 0.5;
-				_podiumLogo.y = this.actualHeight * (_facebookButton ? 0.3 : 0.4);
-				
-				if( _facebookButton )
+				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_continueButton.validate();
-					_continueButton.x = (actualWidth - _continueButton.width) * 0.5;
-					_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(20);
+					_podiumLogo.x = this.actualWidth * 0.5;
+					_podiumLogo.y = (_podiumLogo.height * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 80);
 					
-					_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-					_facebookButton.validate();
-					_facebookButton.y = _continueButton.y - _facebookButton.height - scaleAndRoundToDpi(10);
-					_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
+					_podiumGlow.x = this.actualWidth * 0.5;
+					_podiumGlow.y = _podiumLogo.y + _podiumLogo.height * 0.1;
+					TweenMax.to(_podiumGlow, 0.75, { delay:0.75, alpha:1 } );
+					TweenMax.to(_podiumGlow, 10, { delay:0.75, rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 } );
 					
-					TweenMax.to(_facebookButton, 0.75, { delay:3, alpha:1 });
-					TweenMax.to(_continueButton, 0.75, { delay:3.5, alpha:1 });
+					if( _facebookButton )
+					{
+						_continueButton.validate();
+						_continueButton.x = (actualWidth - _continueButton.width) * 0.5;
+						_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(5);
+						
+						_facebookButton.width = actualWidth * 0.5;
+						_facebookButton.validate();
+						_facebookButton.y = _continueButton.y - _facebookButton.height;
+						_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
+						
+						TweenMax.to(_facebookButton, 0.75, { delay:3, alpha:1 });
+						TweenMax.to(_continueButton, 0.75, { delay:3.5, alpha:1 });
+					}
+					
+					_podiumMessage.width = this.actualWidth;
+					_podiumMessage.validate();
+					if( _facebookButton )
+						_podiumMessage.y = (_podiumLogo.y + _podiumLogo.height * 0.5) + ( ((_facebookButton.y - (_podiumLogo.y + _podiumLogo.height * 0.5)) - _podiumMessage.height ) * 0.5 )
+					else
+						_podiumMessage.y = (( (this.actualHeight - (_podiumLogo.y + _podiumLogo.height * 0.5)) - _podiumMessage.height ) * 0.5) + _podiumLogo.y + _podiumLogo.height * 0.5;
+					TweenMax.to(_podiumMessage, 0.75, { delay:2.5, alpha:1 } );
+				}
+				else
+				{
+					_podiumGlow.x = this.actualWidth * 0.5;
+					_podiumGlow.y = this.actualHeight * (_facebookButton ? 0.3 : 0.4) + _podiumLogo.height * 0.1;
+					TweenMax.to(_podiumGlow, 0.75, { delay:0.75, alpha:1 } );
+					TweenMax.to(_podiumGlow, 10, { delay:0.75, rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 } );
+					
+					_podiumLogo.x = this.actualWidth * 0.5;
+					_podiumLogo.y = this.actualHeight * (_facebookButton ? 0.3 : 0.4);
+					
+					if( _facebookButton )
+					{
+						_continueButton.validate();
+						_continueButton.x = (actualWidth - _continueButton.width) * 0.5;
+						_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(20);
+						
+						_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+						_facebookButton.validate();
+						_facebookButton.y = _continueButton.y - _facebookButton.height - scaleAndRoundToDpi(10);
+						_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
+						
+						TweenMax.to(_facebookButton, 0.75, { delay:3, alpha:1 });
+						TweenMax.to(_continueButton, 0.75, { delay:3.5, alpha:1 });
+					}
+					
+					_podiumMessage.width = this.actualWidth;
+					_podiumMessage.validate();
+					if( _facebookButton )
+						_podiumMessage.y = (_podiumLogo.y + _podiumLogo.height * 0.5) + ( ((_facebookButton.y - (_podiumLogo.y + _podiumLogo.height * 0.5)) - _podiumMessage.height ) * 0.5 )
+					else
+						_podiumMessage.y = (( (this.actualHeight - (_podiumLogo.y + _podiumLogo.height * 0.5)) - _podiumMessage.height ) * 0.5) + _podiumLogo.y + _podiumLogo.height * 0.5;
+					TweenMax.to(_podiumMessage, 0.75, { delay:2.5, alpha:1 } );
 				}
 				
-				_podiumMessage.width = this.actualWidth;
-				_podiumMessage.validate();
-				if( _facebookButton )
-					_podiumMessage.y = (_podiumLogo.y + _podiumLogo.height * 0.5) + ( ((_facebookButton.y - (_podiumLogo.y + _podiumLogo.height * 0.5)) - _podiumMessage.height ) * 0.5 )
-				else
-					_podiumMessage.y = (( (this.actualHeight - (_podiumLogo.y + _podiumLogo.height * 0.5)) - _podiumMessage.height ) * 0.5) + _podiumLogo.y + _podiumLogo.height * 0.5;
-				TweenMax.to(_podiumMessage, 0.75, { delay:2.5, alpha:1 } );
+				_confettis.emitterX =_confettis.emitterXVariance = actualWidth * 0.6;
+				_confettis.emitterY = scaleAndRoundToDpi(-100);
+				_confettis.emitterYVariance = scaleAndRoundToDpi(25);
+				TweenMax.delayedCall(0.5, _confettis.start, [_facebookButton ? Number.MAX_VALUE : 5]);
 				
 				_podiumLogo.scaleX = _podiumLogo.scaleY = 0;
-				TweenMax.to(_podiumLogo, 0.75, { delay:0.5, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, ease:Back.easeOut, onComplete:displayPodiumLabel } );
+				TweenMax.to(_podiumLogo, 0.75, { delay:0.5, scaleX:GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? (0.2 * GlobalConfig.dpiScale) : 0), scaleY:GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? (0.2 * GlobalConfig.dpiScale) : 0), ease:Back.easeOut, onComplete:displayPodiumLabel } );
 				
 				if( !_facebookButton )
-					Starling.juggler.delayCall(onContinue, 7);
+					Starling.juggler.delayCall(onContinue, 5);
 			}
 		}
 		
 		private function displayPodiumLabel():void
 		{
-			const startX:int = _podiumLogo.x - _podiumLogo.width * 0.5 + scaleAndRoundToDpi(60);
-			const startY:int = _podiumLogo.y + scaleAndRoundToDpi(80);
-			const itemWidth:int = _podiumLogo.width - scaleAndRoundToDpi(60);
+			const startX:int = (_podiumLogo.x - _podiumLogo.width * 0.5 + (60 * _podiumLogo.scaleX)) << 0;
+			const startY:int = (_podiumLogo.y + (80 * _podiumLogo.scaleX)) << 0;
+			const itemWidth:int = (_podiumLogo.width - (60 * _podiumLogo.scaleX)) << 0;
 			const step:int = itemWidth / (_numLetters + 1);
 			
 			var particles:PDParticleSystem;
@@ -274,7 +325,7 @@ package com.ludofactory.mobile.core.test.engine
 				TweenMax.to(label, 0.5, { delay:delay, alpha:1, scaleX:1, scaleY:1, ease:Bounce.easeOut });
 				
 				delay += 0.3;
-				decY += scaleAndRoundToDpi(6);
+				decY += (6 * _podiumLogo.scaleX) << 0;
 			}
 		}
 		
@@ -365,6 +416,7 @@ package com.ludofactory.mobile.core.test.engine
 			for each(var element:Object in _animArray)
 			TweenMax.to(element.label, 0.3, { alpha:0, scaleX:0, scaleY:0, ease:Back.easeIn } );
 			
+			TweenMax.to(_confettis, 0.25, { alpha:0 } );
 			TweenMax.allTo([_podiumGlow, _podiumMessage], 0.5, { alpha:0 } );
 			TweenMax.to(_podiumGlow, 1, { rotation:deg2rad(360) } );
 			TweenMax.to(_podiumLogo, 0.5, { alpha:0, scaleX:0, scaleY:0, ease:Back.easeIn, onComplete:goToNextScreen } );
@@ -388,6 +440,11 @@ package com.ludofactory.mobile.core.test.engine
 			
 			_podiumMessage.removeFromParent(true);
 			_podiumMessage = null;
+			
+			Starling.juggler.remove( _confettis );
+			_confettis.stop(true);
+			_confettis.removeFromParent(true);
+			_confettis = null;
 			
 			var label:Label;
 			var particles:PDParticleSystem;

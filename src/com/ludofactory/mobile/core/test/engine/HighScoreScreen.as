@@ -29,9 +29,6 @@ package com.ludofactory.mobile.core.test.engine
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
 	
 	import flash.events.Event;
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
@@ -59,7 +56,10 @@ package com.ludofactory.mobile.core.test.engine
 		 * High score label */		
 		private var _highScoreLabel:Label;
 		/**
-		 * Particles */		
+		 * Confettis. */		
+		private var _confettis:PDParticleSystem;
+		/**
+		 * Logo particles. */		
 		private var _particles:PDParticleSystem;
 		
 		/**
@@ -113,16 +113,14 @@ package com.ludofactory.mobile.core.test.engine
 		{
 			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
 			
-			
-			
 			_highScoreGlow = new Image( AbstractEntryPoint.assets.getTexture("HighScoreGlow") );
 			_highScoreGlow.alpha = 0;
-			_highScoreGlow.scaleX = _highScoreGlow.scaleY = GlobalConfig.stageWidth / _highScoreGlow.width;
+			_highScoreGlow.scaleX = _highScoreGlow.scaleY = GlobalConfig.stageWidth / (_highScoreGlow.width * (AbstractGameInfo.LANDSCAPE ? 1.5 : 1));
 			_highScoreGlow.alignPivot();
 			addChild( _highScoreGlow );
 			
 			_highScoreLogo = new Image( AbstractEntryPoint.assets.getTexture("HighScoreLogo") );
-			_highScoreLogo.scaleX = _highScoreLogo.scaleY = GlobalConfig.dpiScale;
+			_highScoreLogo.scaleX = _highScoreLogo.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? (0.1 * GlobalConfig.dpiScale) : 0);
 			_highScoreLogo.alignPivot();
 			addChild( _highScoreLogo );
 			
@@ -133,23 +131,9 @@ package com.ludofactory.mobile.core.test.engine
 			_highScoreLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 76), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_highScoreLabel.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
 			
-			var fileStream:FileStream = new FileStream();
-			//fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_sparkles.pex" ), FileMode.READ );
-			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_confetti.pex" ), FileMode.READ );
-			var onTouchParticlesXml:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
-			fileStream.close();
-			fileStream = null;
-			
-			/*_particles = new PDParticleSystem(onTouchParticlesXml, AbstractEntryPoint.assets.getTexture("ParticleGui"));
+			_particles = new PDParticleSystem(Theme.particleSparklesXml, Theme.particleSparklesTexture);
 			_particles.touchable = false;
 			_particles.maxNumParticles = 500;
-			_particles.scaleX = _particles.scaleY = GlobalConfig.dpiScale;
-			addChild(_particles);
-			Starling.juggler.add(_particles);*/
-			
-			_particles = new PDParticleSystem(onTouchParticlesXml, Theme.particleConfettiTexture);
-			_particles.touchable = false;
-			_particles.maxNumParticles = AbstractGameInfo.LANDSCAPE ? 2000 : 1000;
 			_particles.scaleX = _particles.scaleY = GlobalConfig.dpiScale;
 			addChild(_particles);
 			Starling.juggler.add(_particles);
@@ -184,56 +168,103 @@ package com.ludofactory.mobile.core.test.engine
 				_facebookButton.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 			}
 			
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			_confettis = new PDParticleSystem(Theme.particleConfettiXml, Theme.particleConfettiTexture);
+			_confettis.touchable = false;
+			_confettis.maxNumParticles = AbstractGameInfo.LANDSCAPE ? 750 : 500;
+			_confettis.lifespan *= AbstractGameInfo.LANDSCAPE ? 1 : 2;
+			_confettis.scaleX = _confettis.scaleY = GlobalConfig.dpiScale;
+			addChild(_confettis);
+			Starling.juggler.add(_confettis);
+			
+			// FIXME A décommenter pour gérer l'orientation
+			//this.invalidate(INVALIDATION_FLAG_SIZE);
 		}
 		
 		override protected function draw():void
 		{
-			if( isInvalid(INVALIDATION_FLAG_SIZE) && _highScoreLogo)
+			// FIXME A décommenter pour gérer l'orientation
+			if( isInvalid(INVALIDATION_FLAG_SIZE) /* && _highScoreLogo */)
 			{
-				_highScoreGlow.x = this.actualWidth * 0.5;
-				_highScoreGlow.y = this.actualHeight * (_facebookButton ? 0.3 : 0.4) + _highScoreLogo.height * 0.1;
-				TweenMax.to(_highScoreGlow, 0.75, { delay:0.75, alpha:1 } );
-				TweenMax.to(_highScoreGlow, 10, { delay:0.75, rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 } );
-				
-				_highScoreLogo.x = this.actualWidth * 0.5;
-				_highScoreLogo.y = this.actualHeight * (_facebookButton ? 0.3 : 0.4);
-				
-				if( _facebookButton )
+				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_continueButton.validate();
-					_continueButton.x = (actualWidth - _continueButton.width) * 0.5;
-					_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(20);
+					_highScoreLogo.x = this.actualWidth * 0.5;
+					_highScoreLogo.y = (_highScoreLogo.height * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 80);
 					
-					_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-					_facebookButton.validate();
-					_facebookButton.y = _continueButton.y - _facebookButton.height - scaleAndRoundToDpi(10);
-					_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
+					_highScoreGlow.x = this.actualWidth * 0.5;
+					_highScoreGlow.y = _highScoreLogo.y + _highScoreLogo.height * 0.1;
+					TweenMax.to(_highScoreGlow, 0.75, { delay:0.75, alpha:1 } );
+					TweenMax.to(_highScoreGlow, 10, { delay:0.75, rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 } );
 					
-					TweenMax.to(_facebookButton, 0.75, { delay:2, alpha:1 });
-					TweenMax.to(_continueButton, 0.75, { delay:2.5, alpha:1 });
+					if( _facebookButton )
+					{
+						_continueButton.validate();
+						_continueButton.x = (actualWidth - _continueButton.width) * 0.5;
+						_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(10);
+						
+						_facebookButton.width = actualWidth * 0.5;
+						_facebookButton.validate();
+						_facebookButton.y = _continueButton.y - _facebookButton.height - scaleAndRoundToDpi(10);
+						_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
+						
+						TweenMax.to(_facebookButton, 0.75, { delay:2, alpha:1 });
+						TweenMax.to(_continueButton, 0.75, { delay:2.5, alpha:1 });
+					}
+					
+					_highScoreLabel.width = this.actualWidth;
+					_highScoreLabel.validate();
+					if( _facebookButton )
+						_highScoreLabel.y = (_highScoreLogo.y + _highScoreLogo.height * 0.5) + ( ((_facebookButton.y - (_highScoreLogo.y + _highScoreLogo.height * 0.5)) - _highScoreLabel.height ) * 0.5 )
+					else
+						_highScoreLabel.y = (( (this.actualHeight - (_highScoreLogo.y + _highScoreLogo.height * 0.5)) - _highScoreLabel.height ) * 0.5) + _highScoreLogo.y + _highScoreLogo.height * 0.5;
+					TweenMax.to(_highScoreLabel, 0.75, { delay:1.5, alpha:1 } );
+				}
+				else
+				{
+					_highScoreGlow.x = this.actualWidth * 0.5;
+					_highScoreGlow.y = this.actualHeight * (_facebookButton ? 0.3 : 0.4) + _highScoreLogo.height * 0.1;
+					TweenMax.to(_highScoreGlow, 0.75, { delay:0.75, alpha:1 } );
+					TweenMax.to(_highScoreGlow, 10, { delay:0.75, rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 } );
+					
+					_highScoreLogo.x = this.actualWidth * 0.5;
+					_highScoreLogo.y = this.actualHeight * (_facebookButton ? 0.3 : 0.4);
+					
+					if( _facebookButton )
+					{
+						_continueButton.validate();
+						_continueButton.x = (actualWidth - _continueButton.width) * 0.5;
+						_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(20);
+						
+						_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+						_facebookButton.validate();
+						_facebookButton.y = _continueButton.y - _facebookButton.height - scaleAndRoundToDpi(10);
+						_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
+						
+						TweenMax.to(_facebookButton, 0.75, { delay:2, alpha:1 });
+						TweenMax.to(_continueButton, 0.75, { delay:2.5, alpha:1 });
+					}
+					
+					_highScoreLabel.width = this.actualWidth;
+					_highScoreLabel.validate();
+					if( _facebookButton )
+						_highScoreLabel.y = (_highScoreLogo.y + _highScoreLogo.height * 0.5) + ( ((_facebookButton.y - (_highScoreLogo.y + _highScoreLogo.height * 0.5)) - _highScoreLabel.height ) * 0.5 )
+					else
+						_highScoreLabel.y = (( (this.actualHeight - (_highScoreLogo.y + _highScoreLogo.height * 0.5)) - _highScoreLabel.height ) * 0.5) + _highScoreLogo.y + _highScoreLogo.height * 0.5;
+					TweenMax.to(_highScoreLabel, 0.75, { delay:1.5, alpha:1 } );
 				}
 				
-				_highScoreLabel.width = this.actualWidth;
-				_highScoreLabel.validate();
-				if( _facebookButton )
-					_highScoreLabel.y = (_highScoreLogo.y + _highScoreLogo.height * 0.5) + ( ((_facebookButton.y - (_highScoreLogo.y + _highScoreLogo.height * 0.5)) - _highScoreLabel.height ) * 0.5 )
-				else
-					_highScoreLabel.y = (( (this.actualHeight - (_highScoreLogo.y + _highScoreLogo.height * 0.5)) - _highScoreLabel.height ) * 0.5) + _highScoreLogo.y + _highScoreLogo.height * 0.5;
-				TweenMax.to(_highScoreLabel, 0.75, { delay:1.5, alpha:1 } );
-				
-				/*_particles.x = _highScoreLogo.x;
+				_particles.x = _highScoreLogo.x;
 				_particles.y = _highScoreLogo.y;
 				_particles.emitterXVariance = _highScoreLogo.width * 0.5;
 				_particles.emitterYVariance = _highScoreLogo.height * 0.5;
-				TweenMax.delayedCall(0.5, _particles.start, [0.2]);*/
+				TweenMax.delayedCall(0.5, _particles.start, [0.2]);
 				
-				_particles.emitterX =_particles.emitterXVariance = actualWidth * 0.5;;
-				_particles.emitterY = scaleAndRoundToDpi(-60);
-				TweenMax.delayedCall(0.5, _particles.start, [3]);
+				_confettis.emitterX =_confettis.emitterXVariance = actualWidth * 0.6;
+				_confettis.emitterY = scaleAndRoundToDpi(-100);
+				_confettis.emitterYVariance = scaleAndRoundToDpi(25);
+				TweenMax.delayedCall(0.5, _confettis.start, [_facebookButton ? Number.MAX_VALUE : 5]);
 				
 				_highScoreLogo.scaleX = _highScoreLogo.scaleY = 0;
-				TweenMax.to(_highScoreLogo, 0.75, { delay:0.5, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, ease:Back.easeOut } );
+				TweenMax.to(_highScoreLogo, 0.75, { delay:0.5, scaleX:GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? (0.1 * GlobalConfig.dpiScale) : 0), scaleY:GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? (0.1 * GlobalConfig.dpiScale) : 0), ease:Back.easeOut } );
 				
 				SoundManager.getInstance().playSound("highscore_bis", "sfx");
 				
@@ -326,6 +357,8 @@ package com.ludofactory.mobile.core.test.engine
 		{
 			if( _facebookButton )
 				TweenMax.allTo([_facebookButton, _continueButton], 0.5, { alpha:0 } );
+			
+			TweenMax.to(_confettis, 0.25, { alpha:0 } );
 			TweenMax.allTo([_highScoreGlow, _highScoreLabel], 0.5, { alpha:0 } );
 			TweenMax.to(_highScoreGlow, 1, { rotation:deg2rad(360) } );
 			TweenMax.to(_highScoreLogo, 0.5, { alpha:0, scaleX:0, scaleY:0, ease:Back.easeIn, onComplete:goToNextScreen } );
@@ -352,6 +385,11 @@ package com.ludofactory.mobile.core.test.engine
 			_particles.stop(true);
 			_particles.removeFromParent(true);
 			_particles = null;
+			
+			Starling.juggler.remove( _confettis );
+			_confettis.stop(true);
+			_confettis.removeFromParent(true);
+			_confettis = null;
 			
 			if( _facebookButton )
 			{

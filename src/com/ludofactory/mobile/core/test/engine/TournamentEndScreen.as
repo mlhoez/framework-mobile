@@ -15,6 +15,7 @@ package com.ludofactory.mobile.core.test.engine
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.HeartBeat;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
@@ -31,11 +32,7 @@ package com.ludofactory.mobile.core.test.engine
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import flash.display.StageAspectRatio;
 	import flash.events.Event;
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Point;
 	import flash.text.TextFormat;
@@ -551,21 +548,31 @@ package com.ludofactory.mobile.core.test.engine
 				// FIXME Checker la ligne ua dessus
 			}
 			
-			invalidate();
+			// FIXME A décommenter pour gérer l'orientation
+			//invalidate(); // Flag size ?
 		}
 		
 		override protected function draw():void
 		{
-			if( isInvalid(INVALIDATION_FLAG_SIZE) && _logo )
+			// FIXME A décommenter pour gérer l'orientation
+			if( isInvalid(INVALIDATION_FLAG_SIZE) /* && _logo */ )
 			{
 				// position common elements
 				
 				if( !_animationSkipped )
 				{
-					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.65);
-					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
-					_logo.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
-					_logo.validate();
+					if( AbstractGameInfo.LANDSCAPE )
+					{
+						_logo.visible = false;
+						_logo.x = _logo.y = _logo.width = _logo.height = 0;
+					}
+					else
+					{
+						_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.65);
+						_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
+						_logo.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+						_logo.validate();
+					}
 					
 					_buttonsContainer.width = _continueButton.width = actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.8);
 					_homeButton.width = _playAgainButton.width = (_buttonsContainer.width * 0.5);

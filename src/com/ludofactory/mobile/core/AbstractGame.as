@@ -484,13 +484,13 @@ package com.ludofactory.mobile.core
 							// no highscore but maybe a new level
 							if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 							{
-								_nextScreenId = int(result.podium) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_GAME_END_SCREEN;
+								_nextScreenId = int(advancedOwner.screenData.gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_GAME_END_SCREEN;
 								TrophyManager.getInstance().addEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
 							}
 							else
 							{
 								InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-								advancedOwner.showScreen( int(result.podium) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_GAME_END_SCREEN );
+								advancedOwner.showScreen( int(advancedOwner.screenData.gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_GAME_END_SCREEN );
 							}
 						}
 					}

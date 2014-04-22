@@ -148,7 +148,10 @@ package com.ludofactory.mobile.core.test.news
 				_mainCcontainer.width = this.actualWidth;
 				_mainCcontainer.height = this.actualHeight;
 				
-				_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
+				if( AbstractGameInfo.LANDSCAPE )
+					_logo.height = actualHeight * 0.4;
+				else
+					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
 				
 				_gamesList.width = this.actualWidth;
 				_gamesList.validate();
