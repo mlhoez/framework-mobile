@@ -69,7 +69,7 @@ package com.ludofactory.mobile.core
 		
 		/**
 		 * Whether the screen is validating. This is added for security reason
-		 * in order to avoird multiple validations.
+		 * in order to avoid multiple validations.
 		 */		
 		private var _isValidatingGame:Boolean = false;
 		
