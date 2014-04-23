@@ -18,6 +18,7 @@ package com.ludofactory.mobile.core.test.faq
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -76,7 +77,7 @@ package com.ludofactory.mobile.core.test.faq
 				addChild(_listShadow);
 			}
 			
-			_loader = new MovieClip( AbstractEntryPoint.assets.getTextures("MiniLoader") );
+			_loader = new MovieClip( Theme.blackLoaderTextures );
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
 			Starling.juggler.add( _loader );
 			addChild(_loader);

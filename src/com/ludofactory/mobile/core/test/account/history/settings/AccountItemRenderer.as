@@ -203,7 +203,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 						_saveButton.addEventListener(Event.TRIGGERED, onSave);
 						addChild(_saveButton);
 						
-						_loader = new MovieClip(AbstractEntryPoint.assets.getTextures("MiniLoader"));
+						_loader = new MovieClip(Theme.blackLoaderTextures);
 						_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
 						_loader.alignPivot();
 						_loader.visible = false;

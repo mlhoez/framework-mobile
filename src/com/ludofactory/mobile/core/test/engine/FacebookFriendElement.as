@@ -111,7 +111,7 @@ package com.ludofactory.mobile.core.test.engine
 			_nameLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_LIGHT_GREY);
 			_nameLabel.textRendererProperties.wordWrap = false;
 			
-			_loader = new MovieClip(AbstractEntryPoint.assets.getTextures("MiniLoader"));
+			_loader = new MovieClip(Theme.blackLoaderTextures);
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
 			Starling.juggler.add( _loader );
 			addChild(_loader);

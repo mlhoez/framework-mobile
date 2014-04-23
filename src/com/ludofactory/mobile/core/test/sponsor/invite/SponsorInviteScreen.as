@@ -131,7 +131,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			
 			_headerTitle = Localizer.getInstance().translate("SPONSOR_INVITE.HEADER_TITLE");
 			
-			_loader = new MovieClip(AbstractEntryPoint.assets.getTextures("MiniLoader"));
+			_loader = new MovieClip(Theme.blackLoaderTextures);
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
 			_loader.alignPivot();
 			_loader.touchable = false;

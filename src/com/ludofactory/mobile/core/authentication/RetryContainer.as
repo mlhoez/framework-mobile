@@ -66,7 +66,7 @@ package com.ludofactory.mobile.core.authentication
 			_retryButton.addEventListener(Event.TRIGGERED, onRetry);
 			addChild(_retryButton);
 			
-			_loader = new MovieClip( AbstractEntryPoint.assets.getTextures("MiniLoader") );
+			_loader = new MovieClip( Theme.blackLoaderTextures );
 			_loader.touchable = false;
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
 			_loader.alignPivot();

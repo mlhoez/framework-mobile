@@ -73,7 +73,7 @@ package com.ludofactory.mobile.core.shop.vip
 			addChild(_title);
 			_title.textRendererProperties.textFormat = Theme.boutiqueCategoryIRTitleTextFormat;
 			
-			_imageLoader = new MovieClip( AbstractEntryPoint.assets.getTextures("MiniLoader") );
+			_imageLoader = new MovieClip( Theme.blackLoaderTextures );
 			_imageLoader.scaleX = _imageLoader.scaleY = GlobalConfig.dpiScale;
 			addChild(_imageLoader);
 			Starling.juggler.add(_imageLoader);

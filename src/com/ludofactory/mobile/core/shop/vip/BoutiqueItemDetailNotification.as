@@ -101,7 +101,7 @@ package com.ludofactory.mobile.core.shop.vip
 			_image.source = _boutiqueItemData.imageUrl;
 			_container.addChild(_image);
 			
-			_imageLoader = new MovieClip( AbstractEntryPoint.assets.getTextures("MiniLoader") );
+			_imageLoader = new MovieClip( Theme.blackLoaderTextures );
 			_imageLoader.scaleX = _imageLoader.scaleY = GlobalConfig.dpiScale;
 			_container.addChild(_imageLoader);
 			Starling.juggler.add(_imageLoader);

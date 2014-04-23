@@ -13,6 +13,7 @@ package com.ludofactory.mobile.core.test
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.event.EventData;
+	import com.ludofactory.mobile.core.theme.Theme;
 	import com.sticksports.nativeExtensions.canOpenUrl.CanOpenUrl;
 	
 	import flash.net.URLRequest;
@@ -66,7 +67,7 @@ package com.ludofactory.mobile.core.test
 			layout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? 40:60 );
 			_container.layout = layout;
 			
-			_imageLoader = new MovieClip( AbstractEntryPoint.assets.getTextures("MiniLoader") );
+			_imageLoader = new MovieClip( Theme.blackLoaderTextures );
 			_imageLoader.scaleX = _imageLoader.scaleY = GlobalConfig.dpiScale;
 			_container.addChild(_imageLoader);
 			Starling.juggler.add(_imageLoader);

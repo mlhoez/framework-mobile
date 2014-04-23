@@ -125,7 +125,7 @@ package com.ludofactory.mobile.core.test.news
 			_image.addEventListener(FeathersEventType.ERROR, onImageError);
 			addChild(_image);
 			
-			_imageLoader = new MovieClip( AbstractEntryPoint.assets.getTextures("MiniLoader") );
+			_imageLoader = new MovieClip( Theme.blackLoaderTextures );
 			_imageLoader.scaleX = _imageLoader.scaleY = GlobalConfig.dpiScale;
 			_imageLoader.alignPivot();
 			addChild(_imageLoader);

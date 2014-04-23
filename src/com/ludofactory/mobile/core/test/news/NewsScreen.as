@@ -78,7 +78,7 @@ package com.ludofactory.mobile.core.test.news
 			
 			_headerTitle = Localizer.getInstance().translate("NEWS.HEADER_TITLE");
 			
-			_loader = new MovieClip( AbstractEntryPoint.assets.getTextures("MiniLoader") );
+			_loader = new MovieClip( Theme.blackLoaderTextures );
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
 			_loader.alignPivot();
 			Starling.juggler.add(_loader);

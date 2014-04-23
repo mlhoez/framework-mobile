@@ -448,7 +448,7 @@ package com.ludofactory.mobile.core.test.engine
 				_currentGiftContainer.addChild( _currentGiftLabel );
 				_currentGiftLabel.textRendererProperties.textFormat = giftTextFormat;
 				
-				_currentGiftLoader = new MovieClip( AbstractEntryPoint.assets.getTextures("MiniLoader") );
+				_currentGiftLoader = new MovieClip( Theme.blackLoaderTextures );
 				Starling.juggler.add( _currentGiftLoader );
 				_currentGiftContainer.addChild( _currentGiftLoader );
 				
@@ -477,7 +477,7 @@ package com.ludofactory.mobile.core.test.engine
 				_nextGiftContainer.addChild( _nextGiftLabel );
 				_nextGiftLabel.textRendererProperties.textFormat = giftTextFormat;
 				
-				_nextGiftLoader = new MovieClip( AbstractEntryPoint.assets.getTextures("MiniLoader") );
+				_nextGiftLoader = new MovieClip( Theme.blackLoaderTextures );
 				Starling.juggler.add( _nextGiftLoader );
 				_nextGiftContainer.addChild( _nextGiftLoader );
 				
