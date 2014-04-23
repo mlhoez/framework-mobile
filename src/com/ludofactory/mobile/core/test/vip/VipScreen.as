@@ -11,6 +11,7 @@ package com.ludofactory.mobile.core.test.vip
 	import com.greensock.easing.Linear;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
@@ -226,12 +227,12 @@ package com.ludofactory.mobile.core.test.vip
 				_currentIndex = _targetIndex = 0;
 			}
 			
+			_quadBatch = new QuadBatch();
+			addChild(_quadBatch);
+			
 			_whiteContentBackground = new Quad(5, 5, 0xffffff);
 			_whiteContentBackground.touchable = false;
 			addChild(_whiteContentBackground);
-			
-			_quadBatch = new QuadBatch();
-			addChild(_quadBatch);
 			
 			_touchBackground = new Quad(50, 50, 0x000000);
 			_touchBackground.alpha = 0;
@@ -266,15 +267,30 @@ package com.ludofactory.mobile.core.test.vip
 				addChild(_resendMailButton);
 			}
 			
-			_topShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
-			_topShadow.touchable = false;
-			_topShadow.setVertexColor(0, 0xffffff);
-			_topShadow.setVertexAlpha(0, 0);
-			_topShadow.setVertexColor(1, 0xffffff);
-			_topShadow.setVertexAlpha(1, 0);
-			_topShadow.setVertexAlpha(2, 0.1);
-			_topShadow.setVertexAlpha(3, 0.1);
-			addChild(_topShadow);
+			if( AbstractGameInfo.LANDSCAPE )
+			{
+				_topShadow = new Quad(scaleAndRoundToDpi(12), 50, 0x000000);
+				_topShadow.touchable = false;
+				_topShadow.setVertexColor(0, 0xffffff);
+				_topShadow.setVertexAlpha(0, 0);
+				_topShadow.setVertexColor(2, 0xffffff);
+				_topShadow.setVertexAlpha(2, 0);
+				_topShadow.setVertexAlpha(1, 0.2);
+				_topShadow.setVertexAlpha(3, 0.2);
+				addChild(_topShadow);
+			}
+			else
+			{
+				_topShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
+				_topShadow.touchable = false;
+				_topShadow.setVertexColor(0, 0xffffff);
+				_topShadow.setVertexAlpha(0, 0);
+				_topShadow.setVertexColor(1, 0xffffff);
+				_topShadow.setVertexAlpha(1, 0);
+				_topShadow.setVertexAlpha(2, 0.1);
+				_topShadow.setVertexAlpha(3, 0.1);
+				addChild(_topShadow);
+			}
 			
 			_defaultRankInformationLabel = new Label();
 			_defaultRankInformationLabel.touchable = false;
@@ -345,31 +361,52 @@ package com.ludofactory.mobile.core.test.vip
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) && _isContentInitialized )
 			{
-				_rankTitleLabel.y = scaleAndRoundToDpi(20);
-				_rankTitleLabel.width = actualWidth;
-				_rankTitleLabel.validate();
-				
-				_iconsYPosition = _rankTitleLabel.y + _rankTitleLabel.height + (_iconHeight * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
-				
-				_conditionLabel.y = _iconsYPosition + (_iconHeight * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
-				_conditionLabel.width = actualWidth * 0.95;
-				_conditionLabel.x = (actualWidth - _conditionLabel.width) * 0.5;
-				_conditionLabel.validate();
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_iconsYPosition = actualHeight * 0.4;
+					
+					_rankTitleLabel.y = (((_iconsYPosition - _iconHeight * 0.5) - scaleAndRoundToDpi(50)) * 0.5) << 0;
+					_rankTitleLabel.width = actualWidth * 0.5;
+					_rankTitleLabel.validate();
+					
+					_conditionLabel.y = _iconsYPosition + (_iconHeight * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
+					_conditionLabel.width = actualWidth * 0.5;
+					_conditionLabel.validate();
+					
+					_topShadow.height = actualHeight;
+					_topShadow.x = actualWidth * 0.5 - _topShadow.width;
+				}
+				else
+				{
+					_rankTitleLabel.y = scaleAndRoundToDpi(20);
+					_rankTitleLabel.width = actualWidth;
+					_rankTitleLabel.validate();
+					
+					_iconsYPosition = _rankTitleLabel.y + _rankTitleLabel.height + (_iconHeight * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
+					
+					_conditionLabel.y = _iconsYPosition + (_iconHeight * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
+					_conditionLabel.width = actualWidth * 0.95;
+					_conditionLabel.x = (actualWidth - _conditionLabel.width) * 0.5;
+					_conditionLabel.validate();
+					
+					_topShadow.width = actualWidth;
+				}
 				
 				if( _reloadButton )
 				{
 					_reloadButton.validate();
-					_reloadButton.x = (actualWidth - _reloadButton.width) * 0.5;
+					_reloadButton.x = (actualWidth * (AbstractGameInfo.LANDSCAPE ? 0.5 : 1) - _reloadButton.width) * 0.5;
 				}
 				
 				if( _resendMailButton )
 				{
 					_resendMailButton.validate();
-					_resendMailButton.x = (actualWidth - _resendMailButton.width) * 0.5;
+					_resendMailButton.x = (actualWidth * (AbstractGameInfo.LANDSCAPE ? 0.5 : 1) - _resendMailButton.width) * 0.5;
 				}
 				
-				_topShadow.width = actualWidth;
-				_accordion.width = _whiteContentBackground.width = actualWidth;
+				
+				_accordion.width = _whiteContentBackground.width = actualWidth * (AbstractGameInfo.LANDSCAPE ? 0.5 : 1);
+				_accordion.x = _whiteContentBackground.x = AbstractGameInfo.LANDSCAPE ? (actualWidth * 0.5) : 0;
 				
 				if( _currentPrivilege && !(_currentPrivilege is Label) )
 					_currentPrivilege.width = this.actualWidth;
@@ -377,13 +414,21 @@ package com.ludofactory.mobile.core.test.vip
 				_touchBackground.width = this.actualWidth;
 				_touchBackground.height = this.actualHeight;
 				
-				_itemsGap = this.actualWidth * (GlobalConfig.isPhone ? 0.5:0.5);
-				_centerX = this.actualWidth * 0.5;
+				_itemsGap = this.actualWidth * (AbstractGameInfo.LANDSCAPE ? 0.25 : (GlobalConfig.isPhone ? 0.5:0.5));
+				_centerX = this.actualWidth * (AbstractGameInfo.LANDSCAPE ? 0.25 : 0.5);
 				
-				_defaultRankInformationLabel.width = this.actualWidth * 0.9;
-				_defaultRankInformationLabel.x = (actualWidth - _defaultRankInformationLabel.width) * 0.5;
-				_defaultRankInformationLabel.validate();
-				
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_defaultRankInformationLabel.width = this.actualWidth * 0.45;
+					_defaultRankInformationLabel.x = actualWidth * 0.55;
+					_defaultRankInformationLabel.validate();
+				}
+				else
+				{
+					_defaultRankInformationLabel.width = this.actualWidth * 0.9;
+					_defaultRankInformationLabel.x = (actualWidth - _defaultRankInformationLabel.width) * 0.5;
+					_defaultRankInformationLabel.validate();
+				}
 				
 				validateNow();
 			}
@@ -397,21 +442,37 @@ package com.ludofactory.mobile.core.test.vip
 			{
 				_conditionLabel.validate();
 				
-				_topShadow.y = _conditionLabel.y + _conditionLabel.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40) + ((_reloadButton && _reloadButton.visible) ? _reloadButton.height : 0) + ((_resendMailButton && _resendMailButton.visible) ? _resendMailButton.height : 0);
+				if( !AbstractGameInfo.LANDSCAPE )
+					_topShadow.y = _conditionLabel.y + _conditionLabel.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40) + ((_reloadButton && _reloadButton.visible) ? _reloadButton.height : 0) + ((_resendMailButton && _resendMailButton.visible) ? _resendMailButton.height : 0);
 				
 				if( _resendMailButton )
 					_resendMailButton.y = _conditionLabel.y + _conditionLabel.height;
 				if( _reloadButton )
 					_reloadButton.y = _conditionLabel.y + _conditionLabel.height;
 				
-				_accordion.y = _whiteContentBackground.y = _topShadow.y + _topShadow.height;
-				_accordion.height = _whiteContentBackground.height = actualHeight - _accordion.y;
-				
-				if( _currentPrivilege && !(_currentPrivilege is Label) )
+				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_currentPrivilege.y = _topShadow.y + _topShadow.height;
-					_currentPrivilege.height = actualHeight - _currentPrivilege.y;
+					_accordion.y = _whiteContentBackground.y = 0;
+					_accordion.height = _whiteContentBackground.height = actualHeight;
+					
+					if( _currentPrivilege && !(_currentPrivilege is Label) )
+					{
+						_currentPrivilege.y = 0;
+						_currentPrivilege.height = actualHeight;
+					}
 				}
+				else
+				{
+					_accordion.y = _whiteContentBackground.y = _topShadow.y + _topShadow.height;
+					_accordion.height = _whiteContentBackground.height = actualHeight - _accordion.y;
+					
+					if( _currentPrivilege && !(_currentPrivilege is Label) )
+					{
+						_currentPrivilege.y = _topShadow.y + _topShadow.height;
+						_currentPrivilege.height = actualHeight - _currentPrivilege.y;
+					}
+				}
+				
 				
 				_defaultRankInformationLabel.y = _whiteContentBackground.y + (_whiteContentBackground.height * 0.5) - (_defaultRankInformationLabel.height * 0.5);
 			}
