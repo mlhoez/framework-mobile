@@ -204,27 +204,26 @@ package com.ludofactory.mobile.core.test.engine
 			// GoViral.goViral.showFacebookRequestDialog("Try out this app!","My App Title");
 			
 			_all.push(_firstFriend, _middleFriend, _lastFriend);
-			Flox.logEvent("Publications Facebook", {Total:"Total"});
 		}
 		
 		override protected function draw():void
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_title.y = scaleAndRoundToDpi(40);
+				_title.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
 				_title.width = actualWidth;
 				_title.validate();
 				
 				_continueButton.validate();
 				_continueButton.x = (actualWidth - _continueButton.width) * 0.5;
-				_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(20);
+				_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 				
-				_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+				_facebookButton.width = actualWidth * (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 0.6 : 0.5) : (GlobalConfig.isPhone ? 0.8 : 0.6) );
 				_facebookButton.validate();
-				_facebookButton.y = _continueButton.y - _facebookButton.height - scaleAndRoundToDpi(10);
+				_facebookButton.y = _continueButton.y - _facebookButton.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 10);
 				_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
 				
-				var maxSize:Number = _facebookButton.y - scaleAndRoundToDpi(60) /* => padding * 2 */ - _title.y - _title.height;
+				var maxSize:Number = _facebookButton.y - scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 40 : 60) /* => padding * 2 */ - _title.y - _title.height;
 				var gap:int;
 				
 				if( _isThreePeople )
@@ -236,7 +235,7 @@ package com.ludofactory.mobile.core.test.engine
 					
 					gap = (maxSize - (_firstFriend.height * 3)) / 4;
 					
-					_firstFriend.y = _title.y + _title.height + gap + scaleAndRoundToDpi(30);
+					_firstFriend.y = _title.y + _title.height + gap + scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 20 : 30);
 					_middleFriend.y = _firstFriend.y + _firstFriend.height + gap;
 					_middleFriend.validate();
 					_lastFriend.y = _middleFriend.y + _middleFriend.height + gap;
@@ -250,7 +249,7 @@ package com.ludofactory.mobile.core.test.engine
 					
 					gap = (maxSize - (_firstFriend.height * 2)) / 3;
 					
-					_firstFriend.y = _title.y + _title.height + gap + scaleAndRoundToDpi(30);
+					_firstFriend.y = _title.y + _title.height + gap + scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 20 : 30);
 					_middleFriend.y = _firstFriend.y + _firstFriend.height + gap;
 				}
 				

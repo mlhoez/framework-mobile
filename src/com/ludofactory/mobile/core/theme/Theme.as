@@ -2,6 +2,7 @@ package com.ludofactory.mobile.core.theme
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.test.achievements.TrophyItemRenderer;
 	import com.ludofactory.mobile.core.test.achievements.TrophyMessage;
@@ -2250,7 +2251,7 @@ package com.ludofactory.mobile.core.theme
 		protected function facebookFriendElementInitializer(facebookFriendElement:FacebookFriendElement):void
 		{
 			facebookFriendElement.background = new Scale9Image(facebookFriendBackgroundSkinTextures, this.scaleFactor);
-			facebookFriendElement.height = 160 * this.scaleFactor
+			facebookFriendElement.height = (AbstractGameInfo.LANDSCAPE ? 100 : 160) * this.scaleFactor
 		}
 
 //------------------------------------------------------------------------------------------------------------

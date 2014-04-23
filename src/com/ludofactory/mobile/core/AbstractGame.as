@@ -418,7 +418,7 @@ package com.ludofactory.mobile.core
 					/*else
 					{
 						// FIXME Temporaire !!!
-						advancedOwner.screenData.gameData.facebookFriends = [ { classement:1, id:7525971, id_facebook:1087069645, last_classement:1, last_score:350, nom:"Maxime Lhoez", score:350 },
+						advancedOwner.screenData.gameData.facebookFriends = [ { classement:1, id:7526441, id_facebook:1087069645, last_classement:1, last_score:350, nom:"Maxime Lhoez", score:350 },
 																			  { classement:2, id:7525967, id_facebook:100001491084445, last_classement:3, last_score:220, nom:"Nicolas Alexandre", score:220 },
 																			  { classement:2, id:7525969, id_facebook:100003577159732, last_classement:4, last_score:100, nom:"Maxime Lhz", score:250 } ];
 						advancedOwner.screenData.gameData.facebookMoving = 1;
