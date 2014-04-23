@@ -1008,13 +1008,19 @@ package com.ludofactory.mobile.core.test.engine
 		private function onGoHome(event:starling.events.Event):void
 		{
 			Flox.logEvent("Choix en fin de jeu tournoi", {Choix:"Accueil"});
+			
 			this.advancedOwner.screenData.gameData = new GameData();
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				if( advancedOwner.screenData.gameData.displayPushAlert )
+				{
 					NotificationManager.addNotification( new EventPushNotification(ScreenIds.HOME_SCREEN) );
+				}
 				else
+				{
+					TweenMax.killAll();
 					this.advancedOwner.showScreen( ScreenIds.HOME_SCREEN  );
+				}
 			}
 			else
 			{
@@ -1027,14 +1033,21 @@ package com.ludofactory.mobile.core.test.engine
 		 */		
 		private function onPlayAgain(event:starling.events.Event):void
 		{
+			
 			Flox.logEvent("Choix en fin de jeu tournoi", {Choix:"Rejouer"});
+			
 			this.advancedOwner.screenData.gameData = new GameData();
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				if( advancedOwner.screenData.gameData.displayPushAlert )
+				{
 					NotificationManager.addNotification( new EventPushNotification(ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
+				}
 				else
+				{
+					TweenMax.killAll();
 					this.advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
+				}
 			}
 			else
 			{
@@ -1048,8 +1061,6 @@ package com.ludofactory.mobile.core.test.engine
 		
 		override public function dispose():void
 		{
-			TweenMax.killAll();
-			
 			HeartBeat.unregisterFunction(update);
 			
 			_logo.removeFromParent(true);
