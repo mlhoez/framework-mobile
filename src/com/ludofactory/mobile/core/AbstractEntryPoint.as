@@ -926,22 +926,34 @@ package com.ludofactory.mobile.core
 		 */		
 		private function onHeaderVisibilityChanged(event:starling.events.Event = null):void
 		{
-			if( _header.visible )
+			// FIXME A optimiser non de Zeus !
+			if( _screenNavigator.activeScreen )
 			{
-				if( _screenNavigator.y == 0 )
+				if( AdvancedScreen(_screenNavigator.activeScreen).fullScreen )
 				{
-					// the screen navigator is too big and too high
-					_screenNavigator.y = _header.height;
-					_screenNavigator.height = GlobalConfig.stageHeight - _footer.height - _header.height; // FIXME A optimiser les .height
-				}
-			}
-			else
-			{
-				if( _screenNavigator.y != 0 )
-				{
-					// the screen navigator is too small and too low
 					_screenNavigator.y = 0;
-					_screenNavigator.height = GlobalConfig.stageHeight - _footer.height; // FIXME A optimiser les .height
+					_screenNavigator.height = GlobalConfig.stageHeight; // FIXME A optimiser les .height
+				}
+				else
+				{
+					if( _header.visible )
+					{
+						/*if( _screenNavigator.y == 0 )
+						{*/
+							// the screen navigator is too big and too high
+							_screenNavigator.y = _header.height;
+							_screenNavigator.height = GlobalConfig.stageHeight - _footer.height - _header.height; // FIXME A optimiser les .height
+						//}
+					}
+					else
+					{
+						/*if( _screenNavigator.y != 0 )
+						{*/
+							// the screen navigator is too small and too low
+							_screenNavigator.y = 0;
+							_screenNavigator.height = GlobalConfig.stageHeight - _footer.height; // FIXME A optimiser les .height
+						//}
+					}
 				}
 			}
 		}
