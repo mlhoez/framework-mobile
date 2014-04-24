@@ -10,6 +10,7 @@ package com.ludofactory.mobile.core.authentication
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -123,21 +124,41 @@ package com.ludofactory.mobile.core.authentication
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
-				_logo.validate();
-				_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
-				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
-				
-				_textInputsContainer.validate();
-				_sponsorInput.validate();
-				_validateButton.validate();
-				
-				_textInputsContainer.width = _mailInput.width = _passwordInput.width = _sponsorInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-				_textInputsContainer.x = _sponsorInput.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-				_textInputsContainer.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.x - _logo.height) - (_textInputsContainer.height + _sponsorInput.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 100))) * 0.5) << 0;
-				
-				_sponsorInput.y = _textInputsContainer.y + _textInputsContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
-				_validateButton.y = _sponsorInput.y + _sponsorInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_logo.visible = false;
+					_logo.y = 0;
+					_logo.height = 0;
+					
+					_textInputsContainer.validate();
+					_sponsorInput.validate();
+					_validateButton.validate();
+					
+					_textInputsContainer.width = _mailInput.width = _passwordInput.width = _sponsorInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_textInputsContainer.x = _sponsorInput.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+					_textInputsContainer.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.y - _logo.height) - (_textInputsContainer.height + _sponsorInput.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80))) * 0.5) << 0;
+					
+					_sponsorInput.y = _textInputsContainer.y + _textInputsContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_validateButton.y = _sponsorInput.y + _sponsorInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				}
+				else
+				{
+					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
+					_logo.validate();
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
+					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
+					
+					_textInputsContainer.validate();
+					_sponsorInput.validate();
+					_validateButton.validate();
+					
+					_textInputsContainer.width = _mailInput.width = _passwordInput.width = _sponsorInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_textInputsContainer.x = _sponsorInput.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+					_textInputsContainer.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.y - _logo.height) - (_textInputsContainer.height + _sponsorInput.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 100))) * 0.5) << 0;
+					
+					_sponsorInput.y = _textInputsContainer.y + _textInputsContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_validateButton.y = _sponsorInput.y + _sponsorInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				}
 			}
 		}
 		

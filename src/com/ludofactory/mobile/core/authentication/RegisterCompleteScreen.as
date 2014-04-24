@@ -10,6 +10,7 @@ package com.ludofactory.mobile.core.authentication
 	import com.hasoffers.nativeExtensions.MobileAppTracker;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -107,23 +108,45 @@ package com.ludofactory.mobile.core.authentication
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
-				_logo.validate();
-				_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
-				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
-				
-				//FIXME Faire un validate sur le message après avoir mis le width, car sinonl e height est pas bon !!!! à modifier sur les autres écrans aussi
-				_validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-				_title.width = _message.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.8);
-				_message.validate();
-				_title.validate();
-				_validateButton.validate();
-				_validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-				_message.x = _title.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.8))) * 0.5;
-				_title.y = (_logo.y + _logo.height) + ( ((actualHeight - _logo.x - _logo.height) - (_message.height + _title.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 100))) * 0.5) << 0;
-				
-				_message.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50);
-				_validateButton.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50);
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_logo.visible = false;
+					_logo.y = 0;
+					_logo.height = 0;
+					
+					//FIXME Faire un validate sur le message après avoir mis le width, car sinonl e height est pas bon !!!! à modifier sur les autres écrans aussi
+					_validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_title.width = _message.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.8);
+					_message.validate();
+					_title.validate();
+					_validateButton.validate();
+					_validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+					_message.x = _title.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.8))) * 0.5;
+					_title.y = (_logo.y + _logo.height) + ( ((actualHeight - _logo.x - _logo.height) - (_message.height + _title.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 100))) * 0.5) << 0;
+					
+					_message.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50);
+					_validateButton.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50);
+				}
+				else
+				{
+					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
+					_logo.validate();
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
+					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
+					
+					//FIXME Faire un validate sur le message après avoir mis le width, car sinonl e height est pas bon !!!! à modifier sur les autres écrans aussi
+					_validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_title.width = _message.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.8);
+					_message.validate();
+					_title.validate();
+					_validateButton.validate();
+					_validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+					_message.x = _title.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.8))) * 0.5;
+					_title.y = (_logo.y + _logo.height) + ( ((actualHeight - _logo.x - _logo.height) - (_message.height + _title.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 100))) * 0.5) << 0;
+					
+					_message.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50);
+					_validateButton.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50);
+				}
 			}
 		}
 		

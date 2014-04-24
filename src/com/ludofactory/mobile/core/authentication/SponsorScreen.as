@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core.authentication
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -106,22 +107,47 @@ package com.ludofactory.mobile.core.authentication
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
-				_logo.validate();
-				_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
-				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
-				
-				_message.width = _validateButton.width = _sponsorInput.width = _cancelButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-				_message.validate();
-				_sponsorInput.validate();
-				_validateButton.validate();
-				_cancelButton.validate();
-				_message.x = _validateButton.x = _sponsorInput.x = _cancelButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-				_message.y = (_logo.y + _logo.height) + ( ((actualHeight - _logo.x - _logo.height) - (_message.height + _validateButton.height + _sponsorInput.height + _cancelButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 100))) * 0.5) << 0;
-				
-				_sponsorInput.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
-				_validateButton.y = _sponsorInput.y + _sponsorInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
-				_cancelButton.y = _validateButton.y + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_logo.height = actualHeight * (GlobalConfig.isPhone ? 0.3 : 0.5);
+					_logo.validate();
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 5 : 15 );
+					_logo.x = (((actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.5)) - _logo.width) * 0.5) << 0;
+					
+					_message.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5);
+					_message.validate();
+					_message.x = _logo.x + _logo.width;
+					_message.y = _logo.y + ((_logo.height - _message.height) * 0.5) << 0;
+					
+					_validateButton.width = _sponsorInput.width = _cancelButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_sponsorInput.validate();
+					_validateButton.validate();
+					_cancelButton.validate();
+					_validateButton.x = _sponsorInput.x = _cancelButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+					_sponsorInput.y = (_logo.y + _logo.height) + ( ((actualHeight - _logo.y - _logo.height) - (_validateButton.height + _sponsorInput.height + _cancelButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60))) * 0.5) << 0;
+					
+					_validateButton.y = _sponsorInput.y + _sponsorInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_cancelButton.y = _validateButton.y + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+				}
+				else
+				{
+					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
+					_logo.validate();
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
+					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
+					
+					_message.width = _validateButton.width = _sponsorInput.width = _cancelButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_message.validate();
+					_sponsorInput.validate();
+					_validateButton.validate();
+					_cancelButton.validate();
+					_message.x = _validateButton.x = _sponsorInput.x = _cancelButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+					_message.y = (_logo.y + _logo.height) + ( ((actualHeight - _logo.y - _logo.height) - (_message.height + _validateButton.height + _sponsorInput.height + _cancelButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 100))) * 0.5) << 0;
+					
+					_sponsorInput.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_validateButton.y = _sponsorInput.y + _sponsorInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_cancelButton.y = _validateButton.y + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+				}
 			}
 		}
 		

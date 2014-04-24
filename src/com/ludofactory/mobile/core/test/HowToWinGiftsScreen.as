@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core.test
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -16,9 +17,6 @@ package com.ludofactory.mobile.core.test
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
@@ -26,7 +24,7 @@ package com.ludofactory.mobile.core.test
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
-	import feathers.controls.ScrollContainer;
+	import feathers.controls.LayoutGroup;
 	import feathers.layout.VerticalLayout;
 	
 	import starling.core.Starling;
@@ -51,13 +49,13 @@ package com.ludofactory.mobile.core.test
 		
 		/**
 		 * The left container. */		
-		private var _leftContainer:ScrollContainer;
+		private var _leftContainer:LayoutGroup;
 		private var _leftDescription:Label;
 		private var _leftButton:Button;
 		
 		/**
 		 * The right container. */		
-		private var _rightContainer:ScrollContainer;
+		private var _rightContainer:LayoutGroup;
 		private var _rightDescription:Label;
 		private var _rightButton:Button;
 		
@@ -93,9 +91,9 @@ package com.ludofactory.mobile.core.test
 			addChild(_gifts);
 			
 			_title = new Label();
-			_title.text = Localizer.getInstance().translate("HOW_TO_WIN_GIFTS.TITLE");
+			_title.text = Localizer.getInstance().translate("HOW_TO_WIN_GIFTS.TITLE" + (AbstractGameInfo.LANDSCAPE ? "_LANDSCAPE" : "_PORTRAIT"));
 			addChild(_title);
-			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 72), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
+			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 40 : 62)) : (GlobalConfig.isPhone ? 50 : 72)), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 10, 10) ];
 			
 			_followMyGiftsButton = new Button();
@@ -107,7 +105,7 @@ package com.ludofactory.mobile.core.test
 			containerLayout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_MIDDLE;
 			containerLayout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
 			
-			_leftContainer = new ScrollContainer();
+			_leftContainer = new LayoutGroup();
 			_leftContainer.layout = containerLayout;
 			addChild(_leftContainer);
 			
@@ -122,7 +120,7 @@ package com.ludofactory.mobile.core.test
 			_leftContainer.addChild(_leftButton);
 			_leftButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 46), Theme.COLOR_BROWN, false, false, null, null, null, TextFormatAlign.CENTER);
 			
-			_rightContainer = new ScrollContainer();
+			_rightContainer = new LayoutGroup();
 			_rightContainer.layout = containerLayout;
 			addChild(_rightContainer);
 			
@@ -142,45 +140,91 @@ package com.ludofactory.mobile.core.test
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_gifts.width = actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.8);
-				_gifts.validate();
-				_gifts.alignPivot(HAlign.CENTER, VAlign.BOTTOM);
-				_gifts.y = this.actualHeight * 0.87;
-				_gifts.x = this.actualWidth * 0.5;
-				
-				_followMyGiftsButton.height = scaleAndRoundToDpi(108);
-				_followMyGiftsButton.validate();
-				_followMyGiftsButton.x = (actualWidth - _followMyGiftsButton.width) * 0.5;
-				_followMyGiftsButton.y = _gifts.y + ((actualHeight - _gifts.y) - _followMyGiftsButton.height) * 0.5 - scaleAndRoundToDpi(20);
-				
-				_title.width = actualWidth;
-				_title.validate();
-				_title.x = (actualWidth - _title.width) * 0.5;
-				_title.y = scaleAndRoundToDpi(20);
-				
-				_leftContainer.width = _leftDescription.width = this.actualWidth * 0.5;
-				_leftContainer.y = _title.y + _title.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
-				_leftContainer.height = _gifts.y - _leftContainer.y - _gifts.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
-				
-				_leftDescription.validate();
-				_leftButton.width = _rightButton.width = actualWidth * (GlobalConfig.isPhone ? 0.49 : 0.4);
-				_leftButton.x = ((actualWidth * 0.5) - _leftButton.width) * 0.5;
-				_rightButton.x = (actualWidth * 0.5) + _leftButton.x;
-				_leftButton.height = _rightButton.height = scaleAndRoundToDpi(118);
-				
-				var leftGap:Number = (_leftContainer.height - _leftDescription.height - _leftButton.height) / 2;
-				_leftContainer.layout["gap"] = leftGap;
-				
-				_rightContainer.width = _rightDescription.width = this.actualWidth * 0.5;
-				_rightContainer.x = this.actualWidth * 0.5;
-				_rightContainer.y = _title.y + _title.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
-				_rightContainer.height = _gifts.y - _rightContainer.y - _gifts.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
-				
-				_rightDescription.validate();
-				_rightButton.validate();
-				
-				var rightGap:Number = (_rightContainer.height - _rightDescription.height - _rightButton.height) / 2;
-				_rightContainer.layout["gap"] = rightGap;
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_gifts.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.7);
+					_gifts.validate();
+					_gifts.alignPivot(HAlign.CENTER, VAlign.BOTTOM);
+					_gifts.y = this.actualHeight * 0.95;
+					_gifts.x = this.actualWidth * 0.5;
+					
+					_followMyGiftsButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 88 : 108);
+					_followMyGiftsButton.validate();
+					_followMyGiftsButton.width += scaleAndRoundToDpi(10);
+					_followMyGiftsButton.x = (actualWidth - _followMyGiftsButton.width) * 0.5;
+					_followMyGiftsButton.y = _gifts.y + ((actualHeight - _gifts.y) - _followMyGiftsButton.height) * 0.5 - scaleAndRoundToDpi(50);
+					
+					_title.width = actualWidth;
+					_title.validate();
+					_title.x = (actualWidth - _title.width) * 0.5;
+					_title.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 20);
+					
+					_leftContainer.width = _leftDescription.width = this.actualWidth * 0.5;
+					_leftContainer.y = _title.y + _title.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
+					_leftContainer.height = _gifts.y - _leftContainer.y - _gifts.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
+					
+					_leftDescription.validate();
+					_leftButton.width = _rightButton.width = actualWidth * (GlobalConfig.isPhone ? 0.3 : 0.4);
+					_leftButton.x = ((actualWidth * 0.5) - _leftButton.width) * 0.5;
+					_rightButton.x = (actualWidth * 0.5) + _leftButton.x;
+					_leftButton.height = _rightButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 88 : 118);
+					
+					var leftGap:Number = (_leftContainer.height - _leftDescription.height - _leftButton.height) / 2;
+					_leftContainer.layout["gap"] = leftGap;
+					
+					_rightContainer.width = _rightDescription.width = this.actualWidth * 0.5;
+					_rightContainer.x = this.actualWidth * 0.5;
+					_rightContainer.y = _title.y + _title.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
+					_rightContainer.height = _gifts.y - _rightContainer.y - _gifts.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
+					
+					_rightDescription.validate();
+					_rightButton.validate();
+					
+					var rightGap:Number = (_rightContainer.height - _rightDescription.height - _rightButton.height) / 2;
+					_rightContainer.layout["gap"] = rightGap;
+				}
+				else
+				{
+					_gifts.width = actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.8);
+					_gifts.validate();
+					_gifts.alignPivot(HAlign.CENTER, VAlign.BOTTOM);
+					_gifts.y = this.actualHeight * 0.87;
+					_gifts.x = this.actualWidth * 0.5;
+					
+					_followMyGiftsButton.height = scaleAndRoundToDpi(108);
+					_followMyGiftsButton.validate();
+					_followMyGiftsButton.x = (actualWidth - _followMyGiftsButton.width) * 0.5;
+					_followMyGiftsButton.y = _gifts.y + ((actualHeight - _gifts.y) - _followMyGiftsButton.height) * 0.5 - scaleAndRoundToDpi(20);
+					
+					_title.width = actualWidth;
+					_title.validate();
+					_title.x = (actualWidth - _title.width) * 0.5;
+					_title.y = scaleAndRoundToDpi(20);
+					
+					_leftContainer.width = _leftDescription.width = this.actualWidth * 0.5;
+					_leftContainer.y = _title.y + _title.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
+					_leftContainer.height = _gifts.y - _leftContainer.y - _gifts.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
+					
+					_leftDescription.validate();
+					_leftButton.width = _rightButton.width = actualWidth * (GlobalConfig.isPhone ? 0.49 : 0.4);
+					_leftButton.x = ((actualWidth * 0.5) - _leftButton.width) * 0.5;
+					_rightButton.x = (actualWidth * 0.5) + _leftButton.x;
+					_leftButton.height = _rightButton.height = scaleAndRoundToDpi(118);
+					
+					var leftGap:Number = (_leftContainer.height - _leftDescription.height - _leftButton.height) / 2;
+					_leftContainer.layout["gap"] = leftGap;
+					
+					_rightContainer.width = _rightDescription.width = this.actualWidth * 0.5;
+					_rightContainer.x = this.actualWidth * 0.5;
+					_rightContainer.y = _title.y + _title.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
+					_rightContainer.height = _gifts.y - _rightContainer.y - _gifts.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
+					
+					_rightDescription.validate();
+					_rightButton.validate();
+					
+					var rightGap:Number = (_rightContainer.height - _rightDescription.height - _rightButton.height) / 2;
+					_rightContainer.layout["gap"] = rightGap;
+				}
 				
 				_particles.emitterX = _gifts.x;
 				_particles.emitterY = _gifts.y - (_gifts.height * 0.5);

@@ -10,6 +10,7 @@ package com.ludofactory.mobile.core.authentication
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -142,7 +143,7 @@ package com.ludofactory.mobile.core.authentication
 			{
 				// if _data.defaultPseudo is null, it means that the user has subscribed but not completed
 				// the pseudo, in this case, we need to request a default pseudo to display
-				if( AirNetworkInfo.networkInfo.isConnected() )
+				if( !AirNetworkInfo.networkInfo.isConnected() )
 				{
 					InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
 					Remote.getInstance().getDefaultPseudo(onDefaultPseudoSuccess, onDefaultPseudoFailure, onDefaultPseudoFailure, 2, advancedOwner.activeScreenID);
@@ -160,51 +161,103 @@ package com.ludofactory.mobile.core.authentication
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
-				_logo.validate();
-				_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
-				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
-				
-				if( _defaultChoiceContainer )
+				if( AbstractGameInfo.LANDSCAPE )
 				{
+					_logo.height = actualHeight * (GlobalConfig.isPhone ? 0.3 : 0.5);
+					_logo.validate();
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 5 : 15 );
+					_logo.x = (((actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.5)) - _logo.width) * 0.5) << 0;
+					
+					_message.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5);
 					_message.validate();
-					_customChoiceContainer.validate();
-					_defaultChoiceContainer.validate();
-					_validateButton.validate();
+					_message.x = _logo.x + _logo.width;
+					_message.y = _logo.y + ((_logo.height - _message.height) * 0.5) << 0;
 					
-					_message.width = actualWidth;
-					_defaultChoiceContainer.width = _customChoiceContainer.width = _customChoiceInput.width = _defaultChoiceLabel.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-					_defaultChoiceContainer.x = _customChoiceContainer.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-					_message.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.x - _logo.height) - (_message.height + _defaultChoiceContainer.height + _customChoiceContainer.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 120))) * 0.5) << 0;
-					
-					_defaultChoiceContainer.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
-					_customChoiceContainer.y = _defaultChoiceContainer.y + _defaultChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
-					_validateButton.y = _customChoiceContainer.y + _customChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
-					
-					_customChoiceRadio.validate();
-					_defaultChoiceLabel.validate();
-					_customChoiceRadio.x = _defaultChoiceRadio.x = _customChoiceContainer.width - _customChoiceRadio.width - scaleAndRoundToDpi(20);
-					_customChoiceRadio.y = _defaultChoiceRadio.y = (_customChoiceInput.height - _customChoiceRadio.height) * 0.5;
-					_defaultChoiceLabel.y = (_defaultChoiceContainer.height - _defaultChoiceLabel.height) * 0.5;
-					_defaultChoiceLabel.x = scaleAndRoundToDpi(14);
-					
-					_defaultChoiceRadio.isSelected = true;
-					_customChoiceRadio.isSelected = false;
+					if( _defaultChoiceContainer )
+					{
+						_customChoiceContainer.validate();
+						_defaultChoiceContainer.validate();
+						_validateButton.validate();
+						
+						_defaultChoiceContainer.width = _customChoiceContainer.width = _customChoiceInput.width = _defaultChoiceLabel.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+						_defaultChoiceContainer.x = _customChoiceContainer.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+						_defaultChoiceContainer.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.y - _logo.height) - (_defaultChoiceContainer.height + _customChoiceContainer.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60))) * 0.5) << 0;
+						
+						_customChoiceContainer.y = _defaultChoiceContainer.y + _defaultChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+						_validateButton.y = _customChoiceContainer.y + _customChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+						
+						_customChoiceRadio.validate();
+						_defaultChoiceLabel.validate();
+						_customChoiceRadio.x = _defaultChoiceRadio.x = _customChoiceContainer.width - _customChoiceRadio.width - scaleAndRoundToDpi(20);
+						_customChoiceRadio.y = _defaultChoiceRadio.y = (_customChoiceInput.height - _customChoiceRadio.height) * 0.5;
+						_defaultChoiceLabel.y = (_defaultChoiceContainer.height - _defaultChoiceLabel.height) * 0.5;
+						_defaultChoiceLabel.x = scaleAndRoundToDpi(14);
+						
+						_defaultChoiceRadio.isSelected = true;
+						_customChoiceRadio.isSelected = false;
+					}
+					else
+					{
+						_customChoiceContainer.validate();
+						_validateButton.validate();
+						
+						_customChoiceContainer.width = _customChoiceInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+						_customChoiceContainer.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+						_customChoiceContainer.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.y - _logo.height) - (_customChoiceContainer.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40))) * 0.5) << 0;
+						
+						//_customChoiceContainer.y = _defaultChoiceContainer.y + _defaultChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+						_validateButton.y = _customChoiceContainer.y + _customChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					}
 				}
 				else
 				{
-					_message.validate();
-					_customChoiceContainer.validate();
-					_validateButton.validate();
+					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
+					_logo.validate();
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
+					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
 					
-					_message.width = _customChoiceContainer.width = _customChoiceInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-					_message.x = _customChoiceContainer.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-					_message.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.x - _logo.height) - (_message.height + _customChoiceContainer.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 100))) * 0.5) << 0;
-					
-					_customChoiceContainer.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
-					//_customChoiceContainer.y = _defaultChoiceContainer.y + _defaultChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
-					_validateButton.y = _customChoiceContainer.y + _customChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					if( _defaultChoiceContainer )
+					{
+						_message.validate();
+						_customChoiceContainer.validate();
+						_defaultChoiceContainer.validate();
+						_validateButton.validate();
+						
+						_message.width = actualWidth;
+						_defaultChoiceContainer.width = _customChoiceContainer.width = _customChoiceInput.width = _defaultChoiceLabel.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+						_defaultChoiceContainer.x = _customChoiceContainer.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+						_message.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.y - _logo.height) - (_message.height + _defaultChoiceContainer.height + _customChoiceContainer.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 120))) * 0.5) << 0;
+						
+						_defaultChoiceContainer.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+						_customChoiceContainer.y = _defaultChoiceContainer.y + _defaultChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+						_validateButton.y = _customChoiceContainer.y + _customChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+						
+						_customChoiceRadio.validate();
+						_defaultChoiceLabel.validate();
+						_customChoiceRadio.x = _defaultChoiceRadio.x = _customChoiceContainer.width - _customChoiceRadio.width - scaleAndRoundToDpi(20);
+						_customChoiceRadio.y = _defaultChoiceRadio.y = (_customChoiceInput.height - _customChoiceRadio.height) * 0.5;
+						_defaultChoiceLabel.y = (_defaultChoiceContainer.height - _defaultChoiceLabel.height) * 0.5;
+						_defaultChoiceLabel.x = scaleAndRoundToDpi(14);
+						
+						_defaultChoiceRadio.isSelected = true;
+						_customChoiceRadio.isSelected = false;
+					}
+					else
+					{
+						_message.validate();
+						_customChoiceContainer.validate();
+						_validateButton.validate();
+						
+						_message.width = _customChoiceContainer.width = _customChoiceInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+						_message.x = _customChoiceContainer.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+						_message.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.y - _logo.height) - (_message.height + _customChoiceContainer.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 100))) * 0.5) << 0;
+						
+						_customChoiceContainer.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+						//_customChoiceContainer.y = _defaultChoiceContainer.y + _defaultChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+						_validateButton.y = _customChoiceContainer.y + _customChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					}
 				}
+				
 			}
 		}
 		

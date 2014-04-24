@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core.authentication
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -98,20 +99,43 @@ package com.ludofactory.mobile.core.authentication
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
-				_logo.validate();
-				_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
-				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
-				
-				_message.width = _validateButton.width = _mailInput.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-				_message.validate();
-				_validateButton.validate();
-				_mailInput.validate();
-				_message.x = _validateButton.x = _mailInput.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-				_message.y = (_logo.y + _logo.height) + ( ((actualHeight - _logo.x - _logo.height) - (_message.height + _validateButton.height + _mailInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80))) * 0.5) << 0;
-				
-				_mailInput.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
-				_validateButton.y = _mailInput.y + _mailInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_logo.height = actualHeight * (GlobalConfig.isPhone ? 0.3 : 0.5);
+					_logo.validate();
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 5 : 15 );
+					_logo.x = (((actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.5)) - _logo.width) * 0.5) << 0;
+					
+					_message.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5);
+					_message.validate();
+					_message.x = _logo.x + _logo.width;
+					_message.y = _logo.y + ((_logo.height - _message.height) * 0.5) << 0;
+					
+					_validateButton.width = _mailInput.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_validateButton.validate();
+					_mailInput.validate();
+					_validateButton.x = _mailInput.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+					_mailInput.y = (_logo.y + _logo.height) + ( ((actualHeight - _logo.y - _logo.height) - (_validateButton.height + _mailInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40))) * 0.5) << 0;
+					
+					_validateButton.y = _mailInput.y + _mailInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				}
+				else
+				{
+					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
+					_logo.validate();
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
+					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
+					
+					_message.width = _validateButton.width = _mailInput.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_message.validate();
+					_validateButton.validate();
+					_mailInput.validate();
+					_message.x = _validateButton.x = _mailInput.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+					_message.y = (_logo.y + _logo.height) + ( ((actualHeight - _logo.y - _logo.height) - (_message.height + _validateButton.height + _mailInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80))) * 0.5) << 0;
+					
+					_mailInput.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_validateButton.y = _mailInput.y + _mailInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				}
 			}
 		}
 		

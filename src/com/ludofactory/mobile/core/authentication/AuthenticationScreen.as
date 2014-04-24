@@ -102,7 +102,7 @@ package com.ludofactory.mobile.core.authentication
 			_loginButton = new Button();
 			_loginButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE;
 			_loginButton.defaultIcon = _loginIcon;
-			_loginButton.iconPosition = Button.ICON_POSITION_TOP;
+			_loginButton.iconPosition = AbstractGameInfo.LANDSCAPE ? Button.ICON_POSITION_LEFT : Button.ICON_POSITION_TOP;
 			_loginButton.addEventListener(Event.TRIGGERED, onGoToLoginScreen);
 			_loginButton.label = Localizer.getInstance().translate("COMMON.LOGIN");
 			addChild(_loginButton);
@@ -116,7 +116,7 @@ package com.ludofactory.mobile.core.authentication
 			_registerButton = new Button();
 			_registerButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE;
 			_registerButton.defaultIcon = _registerIcon;
-			_registerButton.iconPosition = Button.ICON_POSITION_TOP;
+			_registerButton.iconPosition = AbstractGameInfo.LANDSCAPE ? Button.ICON_POSITION_LEFT : Button.ICON_POSITION_TOP;
 			_registerButton.addEventListener(Event.TRIGGERED, onGoToRegisterScreen);
 			_registerButton.label = Localizer.getInstance().translate("COMMON.REGISTER");
 			addChild(_registerButton);
@@ -142,30 +142,60 @@ package com.ludofactory.mobile.core.authentication
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
-				_logo.validate();
-				_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
-				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
-				
-				_loginButton.validate();
-				_facebookButton.validate();
-				
-				_title.width = actualWidth * 0.9;
-				_title.validate();
-				_title.x = (actualWidth - _title.width) * 0.5;
-				_title.y = (_logo.y + _logo.height) + /* scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + */ ( ((actualHeight - _logo.x - _logo.height) - (_title.height + _loginButton.height + _facebookButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 100))) * 0.5) << 0;
-				
-				_loginButton.width = _registerButton.width = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.4);
-				_loginButton.x = ((actualWidth * 0.5) - (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.4))) * 0.5;
-				_registerButton.x = (actualWidth * 0.5) + _loginButton.x;
-				_loginButton.y = _registerButton.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
-				_loginButton.validate();
-				_registerButton.validate();
-				_loginButton.height = _registerButton.height = Math.max(_loginButton.height, _registerButton.height);
-				
-				_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-				_facebookButton.y = _loginButton.y + _loginButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
-				_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_logo.height = actualHeight * (GlobalConfig.isPhone ? 0.3 : 0.5);
+					_logo.validate();
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 5 : 15 );
+					_logo.x = (((actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.5)) - _logo.width) * 0.5) << 0;
+					
+					_loginButton.validate();
+					_facebookButton.validate();
+					
+					_title.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5);
+					_title.validate();
+					_title.x = _logo.x + _logo.width;
+					_title.y = _logo.y + ((_logo.height - _title.height) * 0.5) << 0;
+					
+					_loginButton.width = _registerButton.width = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.4);
+					_loginButton.x = ((actualWidth * 0.5) - (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.4))) * 0.5;
+					_registerButton.x = (actualWidth * 0.5) + _loginButton.x;
+					_loginButton.y = _registerButton.y = _logo.y + _logo.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_loginButton.validate();
+					_registerButton.validate();
+					_loginButton.height = _registerButton.height = Math.max(_loginButton.height, _registerButton.height);
+					
+					_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.5 : 0.4);
+					_facebookButton.y = _loginButton.y + _loginButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
+				}
+				else
+				{
+					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
+					_logo.validate();
+					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
+					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
+					
+					_loginButton.validate();
+					_facebookButton.validate();
+					
+					_title.width = actualWidth * 0.9;
+					_title.validate();
+					_title.x = (actualWidth - _title.width) * 0.5;
+					_title.y = (_logo.y + _logo.height) + /* scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + */ ( ((actualHeight - _logo.y - _logo.height) - (_title.height + _loginButton.height + _facebookButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 100))) * 0.5) << 0;
+					
+					_loginButton.width = _registerButton.width = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.4);
+					_loginButton.x = ((actualWidth * 0.5) - (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.4))) * 0.5;
+					_registerButton.x = (actualWidth * 0.5) + _loginButton.x;
+					_loginButton.y = _registerButton.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_loginButton.validate();
+					_registerButton.validate();
+					_loginButton.height = _registerButton.height = Math.max(_loginButton.height, _registerButton.height);
+					
+					_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_facebookButton.y = _loginButton.y + _loginButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
+				}
 			}
 		}
 		
