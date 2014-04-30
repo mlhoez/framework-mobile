@@ -1,0 +1,128 @@
+/*
+Copyright © 2006-2014 Ludo Factory
+Based on the work of Vincent Petithory https://github.com/vincent-petithory/as3-gettext
+Framework mobile
+Author  : Maxime Lhoez
+Created : 7 mai 2014
+*/
+package com.ludofactory.common.gettext
+{
+	import flash.filesystem.File;
+	import flash.utils.Dictionary;
+	
+	/**
+	 * ActionScript implementation of GNU Gettext.
+	 */	
+	public class Gettext
+	{
+		/**
+		 * The default domain from where to pick the translations. */		
+		private static const DEFAULT_DOMAIN:String = "common";
+		/**
+		 * The current locale. */		
+		private var _currentLocale:String;
+		/**
+		 * The loaded locales. */		
+		private var _locales:Dictionary;
+		
+		public function Gettext()
+		{
+			_locales = new Dictionary(false);
+		}
+		
+		/**
+		 * Loads a language
+		 * @param locale
+		 * 
+		 */		
+		public function loadLocale(locale:String, forceUpdate:Boolean = false):void
+		{
+			// si on a pas besoin de forcer l'update et si la locale est == current
+			// alors on fait rien ou que 
+			// FIXME A vérifier (important) !!
+			if( !forceUpdate && _currentLocale == locale || locale in _locales )
+				return;
+			
+			_currentLocale = locale;
+			
+			// FIXME maybe force the loading when the fields were updated ?
+			if( locale in _locales)
+				return; // already loaded
+			
+			// retrieve the list of all PO files in the <locale> folder
+			var filesToLoad:Array = File.applicationStorageDirectory.resolvePath("assets" + File.separator + "locale" + File.separator + locale).getDirectoryListing();
+			var poFile:File;
+			var parsedPOFile:POFile;
+			_locales[_currentLocale] = new Dictionary(false); // = domains
+			for(var i:int = 0; i < filesToLoad.length; i++)
+			{
+				// load each language file
+				poFile = filesToLoad[i] as File;
+				if( !poFile.isHidden ) // just in case for mac files
+				{
+					_locales[_currentLocale]["common"] = parsePOFile(poFile);
+				}
+			}
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	API
+		
+		/**
+		 * GNU gettext implementation.
+		 * 
+		 * @param key
+		 * 
+		 * @return 
+		 */		
+		public function gettext(key:String):String
+		{
+			return dgettext(DEFAULT_DOMAIN, key);
+		}
+		
+		/**
+		 * GNU dgettext implementation.
+		 * 
+		 * @param domain 
+		 * @param key
+		 * 
+		 * @return 
+		 */		
+		public function dgettext(domain:String, key:String):String
+		{
+			// domain contains a POFile
+			return _locales[_currentLocale][domain].translations[key];
+		}
+		
+		/**
+		 * GNU ngettext implementation.
+		 * 
+		 * @param keySingular
+		 * @param keyPlural
+		 * @param n
+		 * 
+		 * @return 
+		 */		
+		public function ngettext(keySingular:String, keyPlural:String, n:int):String
+		{
+			return dngettext(DEFAULT_DOMAIN, keySingular, keyPlural, n);
+		}
+		
+		/**
+		 * GNU dngettext implementation.
+		 * 
+		 * @param domain
+		 * @param keySingular 
+		 * @param keyPlural
+		 * @param n Value to determine the plural translation
+		 * 
+		 * @return 
+		 */		
+		public function dngettext(domain:String, keySingular:String, keyPlural:String, n:int):String
+		{
+			// domain contains a POFile
+			// FIXME Problème quand pluriel et pas de tableau dans le dictionnaire
+			return _locales[_currentLocale][domain].translations[keySingular][ _locales[_currentLocale][domain].getPluralIndex(n) ];
+		}
+	}
+}

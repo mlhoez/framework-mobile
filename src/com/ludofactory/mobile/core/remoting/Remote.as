@@ -13,7 +13,6 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.debug.ErrorDisplayer;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
@@ -22,6 +21,7 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.push.GameSession;
 	import com.ludofactory.mobile.core.test.store.StoreData;
+	import com.ludofactory.mobile.debug.ErrorDisplayer;
 	import com.milkmangames.nativeextensions.GoViral;
 	
 	import flash.system.Capabilities;
@@ -713,6 +713,16 @@ package com.ludofactory.mobile.core.remoting
 		public function getBoutiqueCategories(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Boutique", "listingBoutiqueCategorie", getGenericParams());
+		}
+		
+		/**
+		 * Check for language update
+		 */		
+		public function checkForLanguageUpdate(installedLanguageData:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			// FIXME A terminer
+			var params:Object = mergeWithGenericParams( { test:installedLanguageData } );
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "", "", params);
 		}
 		
 		
