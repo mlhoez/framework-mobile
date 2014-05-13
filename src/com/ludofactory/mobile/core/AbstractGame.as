@@ -8,6 +8,7 @@ package com.ludofactory.mobile.core
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
@@ -246,7 +247,7 @@ package com.ludofactory.mobile.core
 			
 			_playButton = new feathers.controls.Button();
 			_playButton.styleName = Theme.BUTTON_SPECIAL_BIGGER;
-			_playButton.label = Localizer.getInstance().translate("GAME.START_BUTTON_LABEL");
+			_playButton.label = _("Commencer");
 			_playButton.addEventListener(starling.events.Event.TRIGGERED, onPlay);
 			addChild(_playButton);
 			_playButton.height = scaleAndRoundToDpi(118);
@@ -310,7 +311,7 @@ package com.ludofactory.mobile.core
 		{
 			// to override
 			
-			InfoManager.show(Localizer.getInstance().translate("GAME.VALIDATION"));
+			InfoManager.show(_("Validation de votre partie en cours.\nMerci de patienter quelques secondes..."));
 			Flox.logEvent("Parties", { "4. Etat de la partie":(_gaveUp ? "Abandonnee" : "Terminee"), "5. Connectivité en fin de partie":( AirNetworkInfo.networkInfo.isConnected() ? "Connecte" : "Deconnecte") });
 			
 			// update tutorial state

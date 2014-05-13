@@ -7,10 +7,10 @@ Created : 25 août 2013
 package com.ludofactory.mobile.core.test.cs
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -95,14 +95,14 @@ package com.ludofactory.mobile.core.test.cs
 			_container.layout = layout;
 			
 			_notificationTitle = new Label();
-			_notificationTitle.text = Localizer.getInstance().translate("NEW_CUSTOMER_SERVICE_MESSAGE.TITLE");
+			_notificationTitle.text = _("Sélectionnez le thème concerné");
 			_container.addChild(_notificationTitle);
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_ORANGE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_notificationTitle.textRendererProperties.wordWrap = false;
 			
 			_themeSelectionInput = new TextInput();
 			_themeSelectionInput.addEventListener(TouchEvent.TOUCH, onShowThemeList);
-			_themeSelectionInput.prompt = Localizer.getInstance().translate("NEW_CUSTOMER_SERVICE_MESSAGE.THEME_CLASSIC");
+			_themeSelectionInput.prompt = _("Partie Classique");
 			_themeSelectionInput.isEditable = false;
 			_container.addChild(_themeSelectionInput);
 			
@@ -112,7 +112,7 @@ package com.ludofactory.mobile.core.test.cs
 			if( !MemberManager.getInstance().isLoggedIn() )
 			{
 				_mailInput = new TextInput();
-				_mailInput.prompt = Localizer.getInstance().translate("NEW_CUSTOMER_SERVICE_MESSAGE.MAIL_INPUT_PROMPT");
+				_mailInput.prompt = _("Votre email...");
 				_mailInput.addEventListener(FeathersEventType.ENTER, onEnterKeyPressed);
 				_mailInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.NEXT;
 				_mailInput.textEditorProperties.softKeyboardType = SoftKeyboardType.EMAIL;
@@ -120,7 +120,7 @@ package com.ludofactory.mobile.core.test.cs
 			}
 			
 			_messageInput = new TextInput();
-			_messageInput.prompt = Localizer.getInstance().translate("NEW_CUSTOMER_SERVICE_MESSAGE.MESSAGE_INPUT_PROMPT");
+			_messageInput.prompt = _("Saisissez ici votre question...");
 			_container.addChild(_messageInput);
 			_messageInput.textEditorProperties.wordWrap = true;
 			_messageInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
@@ -130,7 +130,7 @@ package com.ludofactory.mobile.core.test.cs
 			
 			_sendButton = new Button();
 			_sendButton.addEventListener(Event.TRIGGERED, onCreateMessage);
-			_sendButton.label = Localizer.getInstance().translate("NEW_CUSTOMER_SERVICE_MESSAGE.SEND_BUTTON_LABEL");
+			_sendButton.label = _("Envoyer");
 			_container.addChild(_sendButton);
 			
 			const centerStage:VerticalCenteredPopUpContentManager = new VerticalCenteredPopUpContentManager();
@@ -182,7 +182,7 @@ package com.ludofactory.mobile.core.test.cs
 		{
 			if( _messageInput.text == "" )
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("NEW_CUSTOMER_SERVICE_MESSAGE.INVALID_MESSAGE"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("Le message ne peut être vide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;
 			}
 			
@@ -190,12 +190,12 @@ package com.ludofactory.mobile.core.test.cs
 			{
 				if( _mailInput.text == "" || !Utilities.isValidMail(_mailInput.text) )
 				{
-					InfoManager.showTimed( Localizer.getInstance().translate("NEW_CUSTOMER_SERVICE_MESSAGE.INVALID_MAIL"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+					InfoManager.showTimed( _("Email invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 					return;
 				}
 			}
 			
-			InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+			InfoManager.show(_("Chargement..."));
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
 				Remote.getInstance().createNewCustomerServiceThread( CSThemeData(_themesList.selectedItem).id, (_mailInput ? _mailInput.text:null), _messageInput.text, onThreadCreateSuccess, onThreadCreateFailure, onThreadCreateFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
@@ -206,11 +206,11 @@ package com.ludofactory.mobile.core.test.cs
 				{
 					// storing push in only available for logged in members
 					AbstractEntryPoint.pushManager.addElementToPush( new PushNewCSThread(PushType.CUSTOMER_SERVICE_NEW_THREAD, CSThemeData(_themesList.selectedItem).id, CSThemeData(_themesList.selectedItem).translationKey, _messageInput.text) );
-					InfoManager.hide(Localizer.getInstance().translate("NEW_CUSTOMER_SERVICE_MESSAGE.NOT_CONNECTED_ERROR_MESSAGE"), InfoContent.ICON_CHECK, 10, onClose);
+					InfoManager.hide(_("Vous n'êtes pas connecté à Internet. Votre message a été stocké et sera envoyé lorsque vous serez connecté."), InfoContent.ICON_CHECK, 10, onClose);
 				}
 				else
 				{
-					InfoManager.hide(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+					InfoManager.hide(_("Aucune connexion Internet."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 				}
 			}
 		}
@@ -253,7 +253,7 @@ package com.ludofactory.mobile.core.test.cs
 		 */		
 		private function onThreadCreateFailure(error:Object = null):void
 		{
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 		/**

@@ -7,9 +7,8 @@ Created : 11 févr. 2014
 package com.ludofactory.mobile.core.test.news
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -121,7 +120,7 @@ package com.ludofactory.mobile.core.test.news
 			_loader.removeFromParent(true);
 			_loader = null;
 			
-			_scrollText.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_TERMS_AND_CONDITIONS)[Localizer.getInstance().lang];
+			_scrollText.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_TERMS_AND_CONDITIONS)[LanguageManager.getInstance().lang];
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -12,6 +12,7 @@ package com.ludofactory.mobile.core
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.hasoffers.nativeExtensions.MobileAppTracker;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.authentication.AuthenticationManager;
@@ -1066,7 +1067,7 @@ package com.ludofactory.mobile.core
 		private static function displayPseudoSelectionError():void
 		{
 			// pseudo choice screen error or for the sponsor for now
-			InfoManager.showTimed(Localizer.getInstance().translate( (_screenNavigator.activeScreenID == ScreenIds.PSEUDO_CHOICE_SCREEN ? "PSEUDO_CHOICE.YOU_NEED_TO_CHOOSE_PSEUDO" : "SPONSOR.NAVIGATION_ERROR") ), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+			InfoManager.showTimed(_screenNavigator.activeScreenID == ScreenIds.PSEUDO_CHOICE_SCREEN ? _("Vous devez choisir un pseudo !") : _("Merci d'entrer un code parrain ou passez cette étape pour continuer."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

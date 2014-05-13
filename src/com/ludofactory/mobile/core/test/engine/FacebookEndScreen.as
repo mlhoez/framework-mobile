@@ -8,10 +8,11 @@ package com.ludofactory.mobile.core.test.engine
 {
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -118,7 +119,7 @@ package com.ludofactory.mobile.core.test.engine
 			_all = [];
 			
 			_title = new Label();
-			_title.text = Localizer.getInstance().translate("FACEBOOK_END.TITLE");
+			_title.text = _("Bravo !\nVous avez dépassé un ami !");
 			addChild(_title);
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 48 : 50), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -133,7 +134,7 @@ package com.ludofactory.mobile.core.test.engine
 			
 			_facebookButton = new Button();
 			_facebookButton.defaultIcon = _facebookIcon;
-			_facebookButton.label = Localizer.getInstance().translate( MemberManager.getInstance().getFacebookId() != 0 ? "COMMON.PUBLISH" : "COMMON.ASSOCIATE")
+			_facebookButton.label = MemberManager.getInstance().getFacebookId() != 0 ? _("Publier") : _("Associer");
 			_facebookButton.addEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
 			addChild(_facebookButton);
 			_facebookButton.iconPosition = Button.ICON_POSITION_LEFT;
@@ -142,7 +143,7 @@ package com.ludofactory.mobile.core.test.engine
 			_continueButton = new Button();
 			_continueButton.addEventListener(Event.TRIGGERED, onContinue);
 			_continueButton.styleName = Theme.BUTTON_EMPTY;
-			_continueButton.label = Localizer.getInstance().translate("COMMON.CONTINUE");
+			_continueButton.label = _("Continuer");
 			addChild(_continueButton);
 			_continueButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, true, true);
 			_continueButton.height = _continueButton.minHeight = scaleAndRoundToDpi(60);
@@ -345,7 +346,7 @@ package com.ludofactory.mobile.core.test.engine
 		
 		private function onAccountAssociated(event:starling.events.Event):void
 		{
-			_facebookButton.label = Localizer.getInstance().translate("COMMON.PUBLISH");
+			_facebookButton.label = _("Publier");
 		}
 		
 		/**
@@ -356,11 +357,11 @@ package com.ludofactory.mobile.core.test.engine
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
-			GoViral.goViral.showFacebookFeedDialog( formatString(Localizer.getInstance().translate("FACEBOOK_FRIEND_PUBLICATION.NAME"), _me.friendName, _friendToSwitch.friendName, AbstractGameInfo.GAME_NAME),
+			GoViral.goViral.showFacebookFeedDialog( formatString(_("{0} a dépassé {1} sur le jeu {2}"), _me.friendName, _friendToSwitch.friendName, AbstractGameInfo.GAME_NAME),
 				"", "",
-				formatString(Localizer.getInstance().translate("FACEBOOK_FRIEND_PUBLICATION.DESCRIPTION"), _me.currentScore),
-				Localizer.getInstance().translate("FACEBOOK_FRIEND_PUBLICATION.LINK"),
-				formatString(Localizer.getInstance().translate("FACEBOOK_FRIEND_PUBLICATION.IMAGE"), Localizer.getInstance().lang));
+				formatString(_("Avec un score de {0}, je pense devenir rapidement le meilleur sur ce jeu."), _me.currentScore),
+				_("http://www.ludokado.com/"),
+				formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
 		}
 		
 		/**

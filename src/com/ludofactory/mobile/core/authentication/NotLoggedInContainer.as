@@ -6,9 +6,9 @@ Created : 28 oct. 2013
 */
 package com.ludofactory.mobile.core.authentication
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -39,7 +39,7 @@ package com.ludofactory.mobile.core.authentication
 			
 			_message = new Label();
 			_message.touchable = false;
-			_message.text = Localizer.getInstance().translate("COMMON.AUTHENTICATION_ERROR");
+			_message.text = _("Vous devez être identifié\npour accéder à cet écran.");
 			addChild(_message);
 			_message.textRendererProperties.textFormat = Theme.notLoggedInMessageTextFormat;
 			
@@ -48,7 +48,7 @@ package com.ludofactory.mobile.core.authentication
 			hlayout.verticalAlign = HorizontalLayout.VERTICAL_ALIGN_MIDDLE;
 			hlayout.gap = scaleAndRoundToDpi(10);
 			
-			_loginGroup = new ArrowGroup(Localizer.getInstance().translate("COMMON.AUTHENTICATE"));
+			_loginGroup = new ArrowGroup(_("S'identifier"));
 			_loginGroup.addEventListener(Event.TRIGGERED, onAuthenticate);
 			addChild(_loginGroup);
 		}

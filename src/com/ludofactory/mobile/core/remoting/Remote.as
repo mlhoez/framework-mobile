@@ -7,10 +7,10 @@ Created : 9 avril 2013
 package com.ludofactory.mobile.core.remoting
 {
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.InvalidSessionNotification;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -41,13 +41,13 @@ package com.ludofactory.mobile.core.remoting
 		private const AMF_PATH:String = "/amfphp2/";
 		
 		// url quand on n'est pas sur le réseau local
-		private const DEV_PORT:int = 9999;
-		private const DEV_URL:String = "http://ludomobile.ludokado.com";
+		//private const DEV_PORT:int = 9999;
+		//private const DEV_URL:String = "http://ludomobile.ludokado.com";
 		
 		// urls et port quand on est sur le réseau local
-		//private const DEV_PORT:int = 80;
+		private const DEV_PORT:int = 80;
 		//private const DEV_URL:String = "http://ludokado.dev";
-		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
+		private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokadom.mlhoez.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.pterrier.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
@@ -106,7 +106,6 @@ package com.ludofactory.mobile.core.remoting
 		public function init(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = getGenericParams();
-			params.langues = Localizer.getInstance().getGlobalLanguagesVersion();
 			params.acces_tournoi = MemberManager.getInstance().getTournamentUnlocked() == true ? 1 : 0;
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "init", params);
 		}
@@ -392,7 +391,7 @@ package com.ludofactory.mobile.core.remoting
 		public function getFaq(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = getGenericParams();
-			params.version = Localizer.getInstance().getFaqVersion();
+			params.version = Storage.getInstance().getProperty(StorageConfig.PROPERTY_FAQ_VERSION);
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getFAQ", params);
 		}
 		
@@ -402,7 +401,7 @@ package com.ludofactory.mobile.core.remoting
 		public function getVip(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = getGenericParams();
-			params.version = Localizer.getInstance().getVipVersion();
+			params.version = Storage.getInstance().getProperty(StorageConfig.PROPERTY_VIP_VERSION);
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getVIP", params);
 		}
 		
@@ -412,7 +411,7 @@ package com.ludofactory.mobile.core.remoting
 		public function getNews(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = getGenericParams();
-			params.version = Localizer.getInstance().getNewsVersion();
+			params.version = Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEWS_VERSION);
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getActualites", params);
 		}
 		
@@ -876,7 +875,7 @@ package com.ludofactory.mobile.core.remoting
 			genericParam.id_membre = MemberManager.getInstance().getId();
 			genericParam.mail = MemberManager.getInstance().getMail();
 			genericParam.mdp = MemberManager.getInstance().getPassword();
-			genericParam.langue = Localizer.getInstance().lang;
+			genericParam.langue = LanguageManager.getInstance().lang;
 			genericParam.id_jeu = AbstractGameInfo.GAME_ID;
 			genericParam.type_appareil = GlobalConfig.isPhone ? "smartphone":"tablette";
 			genericParam.plateforme = GlobalConfig.platformName;

@@ -6,9 +6,8 @@ Created : 28 oct. 2013
 */
 package com.ludofactory.mobile.core.authentication
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -58,11 +57,11 @@ package com.ludofactory.mobile.core.authentication
 			
 			_message = new Label();
 			_message.touchable = false;
-			_message.text = Localizer.getInstance().translate("COMMON.NOT_CONNECTED_ERROR");
+			_message.text = _("Vous ne pouvez pas afficher le contenu de cette page car vous n'êtes pas connecté à Internet.");
 			addChild(_message);
 			_message.textRendererProperties.textFormat = _isMessageDark ? Theme.retryContainerDarkTextFormat : Theme.retryContainerLightTextFormat;
 			
-			_retryButton = new ArrowGroup( Localizer.getInstance().translate("COMMON.RETRY") );
+			_retryButton = new ArrowGroup( _("Réessayer") );
 			_retryButton.addEventListener(Event.TRIGGERED, onRetry);
 			addChild(_retryButton);
 			

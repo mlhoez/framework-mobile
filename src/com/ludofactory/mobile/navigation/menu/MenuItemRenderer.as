@@ -9,7 +9,6 @@ package com.ludofactory.mobile.navigation.menu
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AbstractListItemRenderer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -83,7 +82,7 @@ package com.ludofactory.mobile.navigation.menu
 		
 		override protected function commitData():void
 		{
-			_title.text = Localizer.getInstance().translate(_data.title);
+			_title.text = _data.title;
 			
 			_badgeLabel.text = "" + _data.badgeNumber;
 			_badgeContainer.visible = _data.badgeNumber == 0 ? false : true;

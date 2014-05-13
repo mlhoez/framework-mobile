@@ -11,13 +11,14 @@ package com.ludofactory.mobile.core.test.engine
 	import com.greensock.easing.Bounce;
 	import com.greensock.easing.Expo;
 	import com.greensock.easing.Linear;
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -157,7 +158,7 @@ package com.ludofactory.mobile.core.test.engine
 			if( event )
 			{
 				Starling.current.nativeStage.removeEventListener(flash.events.Event.RESIZE, onResize, false);
-				InfoManager.show( Localizer.getInstance().translate("COMMON.LOADING") );
+				InfoManager.show( _("Chargement...") );
 				TweenMax.delayedCall(GlobalConfig.android ? 6:1, initContent);
 			}
 			else
@@ -195,7 +196,7 @@ package com.ludofactory.mobile.core.test.engine
 			addChild(_scoreContainer);
 			
 			_scoreTitle = new Label();
-			_scoreTitle.text = Localizer.getInstance().translate("FREE_GAME_END.SCORE_LABEL");
+			_scoreTitle.text = _("Score");
 			_scoreContainer.addChild(_scoreTitle);
 			_scoreTitle.textRendererProperties.textFormat = Theme.freeGameEndScreenContainerTitleTextFormat;
 			
@@ -221,7 +222,7 @@ package com.ludofactory.mobile.core.test.engine
 			addChild(_pointsContainer);
 			
 			_pointsTitle = new Label();
-			_pointsTitle.text = Localizer.getInstance().translate("FREE_GAME_END.POINTS_LABEL");
+			_pointsTitle.text = _("Points");
 			_pointsContainer.addChild(_pointsTitle);
 			_pointsTitle.textRendererProperties.textFormat = Theme.freeGameEndScreenContainerTitleTextFormat;
 			
@@ -247,7 +248,7 @@ package com.ludofactory.mobile.core.test.engine
 			addChild(_cumulatedPointsContainer);
 			
 			_cumulatedPointsTitle = new Label();
-			_cumulatedPointsTitle.text = Localizer.getInstance().translate("FREE_GAME_END.CUMULATED_POINTS_TITLE");
+			_cumulatedPointsTitle.text = _("Points");
 			_cumulatedPointsContainer.addChild(_cumulatedPointsTitle);
 			_cumulatedPointsTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 54), Theme.COLOR_WHITE);
 			_cumulatedPointsTitle.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
@@ -284,7 +285,7 @@ package com.ludofactory.mobile.core.test.engine
 				_convertContainer.padding = 0;
 				
 				_lockLabel = new Label();
-				_lockLabel.text = Localizer.getInstance().translate("FREE_GAME_END.TOURNAMENT_UNLOCKED");
+				_lockLabel.text = _("Tournoi débloqué !");
 				_convertContainer.addChild( _lockLabel );
 				_lockLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 72), Theme.COLOR_WHITE);
 				_lockLabel.textRendererProperties.wordWrap = false;
@@ -312,13 +313,13 @@ package com.ludofactory.mobile.core.test.engine
 				{
 					// Logged in content
 					
-					_convertShop = new FreeGameEndElement("convert-shop-icon", "FREE_GAME_END.CONVERT_SHOP_MESSAGE");
+					_convertShop = new FreeGameEndElement("convert-shop-icon", _("Convertir mes Points en\nCadeaux dans la boutique"));
 					_convertShop.alpha = 0;
 					_convertShop.visible = false;
 					_convertShop.addEventListener(TouchEvent.TOUCH, onGoShop);
 					addChild(_convertShop);
 					
-					_convertTournament = new FreeGameEndElement("convert-tournament-icon", "FREE_GAME_END.CONVERT_TOURNAMENT_MESSAGE");
+					_convertTournament = new FreeGameEndElement("convert-tournament-icon", _("Utiliser mes Points sur\nle tournoi pour me classer"));
 					_convertTournament.alpha = 0;
 					_convertTournament.visible = false;
 					_convertTournament.addEventListener(TouchEvent.TOUCH, onGoTournament);
@@ -342,7 +343,7 @@ package com.ludofactory.mobile.core.test.engine
 					_convertContainer.addChild(_convertIcon);
 					
 					_convertLabel = new Label();
-					_convertLabel.text = Localizer.getInstance().translate("FREE_GAME_END.CONVERT_MESSAGE");
+					_convertLabel.text = _("Créez votre compte pour\nconvertir vos Points en Cadeaux !");
 					_convertContainer.addChild(_convertLabel);
 					_convertLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 38), Theme.COLOR_WHITE, true, false, null, null, null, TextFormatAlign.CENTER);
 				}
@@ -360,24 +361,24 @@ package com.ludofactory.mobile.core.test.engine
 			addChild(_buttonsContainer);
 			
 			_continueButton = new Button();
-			_continueButton.label = Localizer.getInstance().translate("COMMON.CONTINUE");
+			_continueButton.label = _("Continuer");
 			_continueButton.addEventListener(starling.events.Event.TRIGGERED, onSkipAnimation);
 			_buttonsContainer.addChild(_continueButton);
 			
 			_homeButton = new Button();
 			_homeButton.styleName = Theme.BUTTON_BLUE;
-			_homeButton.label = Localizer.getInstance().translate("FREE_GAME_END.HOME_BUTTON_LABEL");
+			_homeButton.label = _("Accueil");
 			_homeButton.addEventListener(starling.events.Event.TRIGGERED, onGoHome);
 			_buttonsContainer.addChild(_homeButton);
 			
 			_playAgainButton = new Button();
-			_playAgainButton.label = Localizer.getInstance().translate("FREE_GAME_END.PLAY_AGAIN_BUTTON_LABEL");
+			_playAgainButton.label = _("Rejouer");
 			_playAgainButton.addEventListener(starling.events.Event.TRIGGERED, onPlayAgain);
 			_buttonsContainer.addChild(_playAgainButton);
 			
 			if( advancedOwner.screenData.gamePrice == GameSession.PRICE_CREDIT )
 			{
-				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().getRank() < 5 ? "X5" : "X6") + Localizer.getInstance().lang ) );
+				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().getRank() < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
 				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = GlobalConfig.dpiScale;
 				_winMorePointsImage.alignPivot();
 				_winMorePointsImage.alpha = 0;

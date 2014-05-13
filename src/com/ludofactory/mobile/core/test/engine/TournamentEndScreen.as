@@ -10,6 +10,8 @@ package com.ludofactory.mobile.core.test.engine
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Bounce;
 	import com.greensock.easing.Expo;
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.Utilities;
@@ -17,7 +19,6 @@ package com.ludofactory.mobile.core.test.engine
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.HeartBeat;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -188,7 +189,7 @@ package com.ludofactory.mobile.core.test.engine
 			if( event )
 			{
 				Starling.current.nativeStage.removeEventListener(flash.events.Event.RESIZE, onResize, false);
-				InfoManager.show( Localizer.getInstance().translate("COMMON.LOADING") );
+				InfoManager.show( _("Chargement...") );
 				TweenMax.delayedCall(GlobalConfig.android ? 6:1, initContent);
 			}
 			else
@@ -229,7 +230,7 @@ package com.ludofactory.mobile.core.test.engine
 			addChild(_scoreContainer);
 			
 			_scoreTitleLabel = new Label();
-			_scoreTitleLabel.text = Localizer.getInstance().translate("TOURNAMENT_END.SCORE_TITLE");
+			_scoreTitleLabel.text = _("Score final :");
 			_scoreContainer.addChild(_scoreTitleLabel);
 			_scoreTitleLabel.textRendererProperties.textFormat = titleTextFormat
 			_scoreTitleLabel.textRendererProperties.nativeFilters = [ dropShadowFilter ];
@@ -253,7 +254,7 @@ package com.ludofactory.mobile.core.test.engine
 			addChild( _starsContainer );
 			
 			_starsTitleLabel = new Label();
-			_starsTitleLabel.text = Localizer.getInstance().translate("TOURNAMENT_END.STARS_TITLE");
+			_starsTitleLabel.text = _("Etoiles :");
 			_starsContainer.addChild( _starsTitleLabel );
 			_starsTitleLabel.textRendererProperties.textFormat = titleTextFormat;
 			_starsTitleLabel.textRendererProperties.wordWrap = false;
@@ -306,7 +307,7 @@ package com.ludofactory.mobile.core.test.engine
 			addChild(_cumulatedStarsContainer);
 			
 			_cumulatedStarsTitleLabel = new Label();
-			_cumulatedStarsTitleLabel.text = Localizer.getInstance().translate("TOURNAMENT_END.CUMULATED_STARS_TITLE");
+			_cumulatedStarsTitleLabel.text = _("Etoiles cumulées :");
 			_cumulatedStarsContainer.addChild(_cumulatedStarsTitleLabel);
 			_cumulatedStarsTitleLabel.textRendererProperties.textFormat = titleTextFormat
 			_cumulatedStarsTitleLabel.textRendererProperties.nativeFilters = [ dropShadowFilter ];
@@ -342,7 +343,7 @@ package com.ludofactory.mobile.core.test.engine
 			addChild(_positionContainer);
 			
 			_positionTitleLabel = new Label();
-			_positionTitleLabel.text = Localizer.getInstance().translate("TOURNAMENT_END.POSITION_TITLE");
+			_positionTitleLabel.text = _("Classement :");
 			_positionContainer.addChild(_positionTitleLabel);
 			_positionTitleLabel.textRendererProperties.textFormat = titleTextFormat
 			_positionTitleLabel.textRendererProperties.nativeFilters = [ dropShadowFilter ];
@@ -351,11 +352,11 @@ package com.ludofactory.mobile.core.test.engine
 			_positionValueLabel = new Label();
 			if( advancedOwner.screenData.gameData.gameSessionPushed )
 			{
-				_positionValueLabel.text = formatString( Localizer.getInstance().translate(Utilities.translatePosition(advancedOwner.screenData.gameData.position)), advancedOwner.screenData.gameData.position);
+				_positionValueLabel.text = formatString( Utilities.translatePosition(advancedOwner.screenData.gameData.position), advancedOwner.screenData.gameData.position);
 			}
 			else
 			{
-				_positionValueLabel.text = Localizer.getInstance().translate("TOURNAMENT_END.NOT_CONNECTED");
+				_positionValueLabel.text = _("--");
 			}
 			_positionContainer.addChild(_positionValueLabel);
 			_positionValueLabel.textRendererProperties.textFormat = valueTextFormat;
@@ -398,18 +399,18 @@ package com.ludofactory.mobile.core.test.engine
 			_buttonsContainer.layout = hlayout;
 			
 			_continueButton = new Button();
-			_continueButton.label = Localizer.getInstance().translate("COMMON.CONTINUE");
+			_continueButton.label = _("Continuer");
 			_continueButton.addEventListener(starling.events.Event.TRIGGERED, onSkipAnimation);
 			_buttonsContainer.addChild(_continueButton);
 			
 			_homeButton = new Button();
 			_homeButton.styleName = Theme.BUTTON_BLUE;
-			_homeButton.label = Localizer.getInstance().translate("FREE_GAME_END.HOME_BUTTON_LABEL");
+			_homeButton.label = _("Accueil");
 			_homeButton.addEventListener(starling.events.Event.TRIGGERED, onGoHome);
 			_buttonsContainer.addChild(_homeButton);
 			
 			_playAgainButton = new Button();
-			_playAgainButton.label = Localizer.getInstance().translate("FREE_GAME_END.PLAY_AGAIN_BUTTON_LABEL");
+			_playAgainButton.label = _("Rejouer");
 			_playAgainButton.addEventListener(starling.events.Event.TRIGGERED, onPlayAgain);
 			_buttonsContainer.addChild(_playAgainButton);
 			
@@ -444,7 +445,7 @@ package com.ludofactory.mobile.core.test.engine
 				_currentGiftContainer.layout["gap"] = scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 10);
 				
 				_currentGiftLabel = new Label();
-				_currentGiftLabel.text = Localizer.getInstance().translate("TOURNAMENT_END.CURRENT_GIFT_TITLE");
+				_currentGiftLabel.text = _("Gain actuel");
 				_currentGiftContainer.addChild( _currentGiftLabel );
 				_currentGiftLabel.textRendererProperties.textFormat = giftTextFormat;
 				
@@ -473,7 +474,7 @@ package com.ludofactory.mobile.core.test.engine
 				_nextGiftContainer.layout["gap"] = scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 10);
 				
 				_nextGiftLabel = new Label();
-				_nextGiftLabel.text = Localizer.getInstance().translate("TOURNAMENT_END.NEXT_GIFT_TITLE");
+				_nextGiftLabel.text = _("Gain suivant");
 				_nextGiftContainer.addChild( _nextGiftLabel );
 				_nextGiftLabel.textRendererProperties.textFormat = giftTextFormat;
 				
@@ -520,7 +521,7 @@ package com.ludofactory.mobile.core.test.engine
 			}
 			else
 			{
-				_tournamentTimeLeftLabel.text = Localizer.getInstance().translate("TOURNAMENT_END.TOURNAMENT_INFO_LABEL_NOT_CONNECTED");
+				_tournamentTimeLeftLabel.text = _("Fin du tournoi dans : --");
 				
 				const hlayoutNotConnectedInfo:HorizontalLayout = new HorizontalLayout();
 				hlayoutNotConnectedInfo.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_CENTER;
@@ -541,7 +542,7 @@ package com.ludofactory.mobile.core.test.engine
 				_notConnectedContainer.addChild( _notConnectedIcon );
 				
 				_notConnectedLabel = new Label();
-				_notConnectedLabel.text = Localizer.getInstance().translate( MemberManager.getInstance().isLoggedIn() ? "TOURNAMENT_END.NOT_CONNECTED_INFO_TITLE" : "TOURNAMENT_END.NOT_CONNECTED_INFO_TITLE_NOT_LOGGED_IN") + "\n" + Localizer.getInstance().translate( MemberManager.getInstance().isLoggedIn() ? "TOURNAMENT_END.NOT_CONNECTED_INFO_MESSAGE" : "TOURNAMENT_END.NOT_CONNECTED_INFO_MESSAGE_NOT_LOGGED_IN");
+				_notConnectedLabel.text = MemberManager.getInstance().isLoggedIn() ? _("Pas de connexion Internet") : _("Vous n'êtes pas identifié") + "\n" +  MemberManager.getInstance().isLoggedIn() ? _("Les informations indiquées sont à titre informatives.") : _("Connectez vous à votre compte.");
 				_notConnectedContainer.addChild( _notConnectedLabel );
 				_notConnectedLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 27 : 42), Theme.COLOR_LIGHT_GREY);
 				//_notConnectedLabel.textRendererProperties.insideTextFormat = new InsideTextFormatProperties(new TextFormat(Theme.FONT_SANSITA_ONE, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 42), Theme.COLOR_DARK_GREY), 0, Localizer.getInstance().translate("TOURNAMENT_END.NOT_CONNECTED_INFO_TITLE").length);
@@ -983,17 +984,17 @@ package com.ludofactory.mobile.core.test.engine
 			if( _totalTime <= 0 )
 			{
 				HeartBeat.unregisterFunction(update);
-				_tournamentTimeLeftLabel.text = Localizer.getInstance().translate("TOURNAMENT_END.TOURNAMENT_OVER");
+				_tournamentTimeLeftLabel.text = _("Tournoi terminé");
 			}
 			else
 			{
 				if( _days <= 0 )
 				{
-					_tournamentTimeLeftLabel.text = formatString(Localizer.getInstance().translate("TOURNAMENT_END.TOURNAMENT_INFO_NO_DAYS_LABEL"), (_hours < 10 ? "0":"") + _hours, (_minutes < 10 ? "0":"") + _minutes );
+					_tournamentTimeLeftLabel.text = formatString(_("Fin du tournoi dans : {0}\"{1}'"), (_hours < 10 ? "0":"") + _hours, (_minutes < 10 ? "0":"") + _minutes );
 				}
 				else
 				{
-					_tournamentTimeLeftLabel.text = formatString(Localizer.getInstance().translate(_days > 1 ? "TOURNAMENT_END.TOURNAMENT_INFO_PLURAL_LABEL" : "TOURNAMENT_END.TOURNAMENT_INFO_SINGULAR_LABEL"), _days );
+					_tournamentTimeLeftLabel.text = formatString(_n("Fin du tournoi dans : {0} jour", "Fin du tournoi dans : {0} jours", _days), _days );
 				}
 			}
 		}

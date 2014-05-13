@@ -9,10 +9,11 @@ package com.ludofactory.mobile.core.test.vip
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.controls.Accordion;
@@ -182,7 +183,7 @@ package com.ludofactory.mobile.core.test.vip
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("VIP.HEADER_TITLE");
+			_headerTitle = _("Rangs VIP");
 			
 			_loader = new MovieClip( Theme.blackLoaderTextures );
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
@@ -206,7 +207,7 @@ package com.ludofactory.mobile.core.test.vip
 			_loader.removeFromParent(true);
 			_loader = null;
 			
-			var temp:Array = JSON.parse( Storage.getInstance().getProperty( StorageConfig.PROPERTY_VIP )[Localizer.getInstance().lang] ) as Array;
+			var temp:Array = JSON.parse( Storage.getInstance().getProperty( StorageConfig.PROPERTY_VIP )[LanguageManager.getInstance().lang] ) as Array;
 			_ranksData = [];
 			for(var i:int = 0; i < temp.length; i++)
 				_ranksData.push( new VipData(temp[i]) );
@@ -255,14 +256,14 @@ package com.ludofactory.mobile.core.test.vip
 			{
 				// if the user is coming from the store, we need to add a reload button
 				// so that he can go back to the store screen without using the back button.
-				_reloadButton = new ArrowGroup(Localizer.getInstance().translate("VIP.RELOAD_BUTTON_LABEL"));
+				_reloadButton = new ArrowGroup(_("Recharger"));
 				_reloadButton.addEventListener(Event.TRIGGERED, onReload);
 				addChild(_reloadButton);
 			}
 			
 			if( MemberManager.getInstance().isLoggedIn() && _currentIndex == 0 )
 			{
-				_resendMailButton = new ArrowGroup(Localizer.getInstance().translate("VIP.SEND_MAIL_BUTTON_LABEL"));
+				_resendMailButton = new ArrowGroup(_("Renvoyer un email"));
 				_resendMailButton.addEventListener(Event.TRIGGERED, onResendMail);
 				addChild(_resendMailButton);
 			}
@@ -664,11 +665,11 @@ package com.ludofactory.mobile.core.test.vip
 			{
 				if( MemberManager.getInstance().getRank() - 1 == _targetIndex )
 				{
-					_conditionLabel.text = Localizer.getInstance().translate("VIP.PRIVILEGES_RANK_IS_USER_RANK");
+					_conditionLabel.text = _("Votre rang actuel.");
 				}
 				else if( _targetIndex < MemberManager.getInstance().getRank() - 1 )
 				{
-					_conditionLabel.text = Localizer.getInstance().translate("VIP.PRIVILEGES_RANK_ALREADY_EARNED");
+					_conditionLabel.text = _("Vous avez déjà acquis ce rang.");
 				}
 				else
 				{
@@ -757,7 +758,7 @@ package com.ludofactory.mobile.core.test.vip
 			if( AirNetworkInfo.networkInfo.isConnected() )
 				Remote.getInstance().resendValidationEmail(onValidationEmailSent, onValidationEmailNotSent, onValidationEmailNotSent, 1, advancedOwner.activeScreenID);
 			else
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 		}
 		
 		private function onValidationEmailSent(result:Object):void
@@ -767,7 +768,7 @@ package com.ludofactory.mobile.core.test.vip
 		
 		private function onValidationEmailNotSent(error:Object = null):void
 		{
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

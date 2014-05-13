@@ -6,8 +6,8 @@ Created : 5 nov. 2013
 */
 package com.ludofactory.mobile.core.test.account.history.settings
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -77,8 +77,8 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			_list.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.itemRendererType = AccountItemRenderer;
-			_list.dataProvider = new ListCollection( [ { title:Localizer.getInstance().translate("ACCOUNT.PSEUDO"),         accessory:_pseudoControl },
-													   { title:Localizer.getInstance().translate("ACCOUNT.PSEUDO_COUNTRY"), accessory:_countryPseudoControl },
+			_list.dataProvider = new ListCollection( [ { title:_("Pseudo"),         accessory:_pseudoControl },
+													   { title:_("Pays associé"), accessory:_countryPseudoControl },
 													   { title:"",   isSaveButton:true } ] );
 			addChild(_list);
 		}

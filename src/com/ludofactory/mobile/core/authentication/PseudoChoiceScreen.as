@@ -8,10 +8,10 @@ package com.ludofactory.mobile.core.authentication
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -87,7 +87,7 @@ package com.ludofactory.mobile.core.authentication
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("PSEUDO_CHOICE.HEADER_TITLE");
+			_headerTitle = _("Inscription");
 			AbstractEntryPoint.isSelectingPseudo = true;
 			
 			_logo = new ImageLoader();
@@ -99,7 +99,7 @@ package com.ludofactory.mobile.core.authentication
 			
 			_message = new Label();
 			_message.touchable = false;
-			_message.text = Localizer.getInstance().translate( this.advancedOwner.screenData.defaultPseudo ? "PSEUDO_CHOICE.MESSAGE":"PSEUDO_CHOICE.BACK_MESSAGE");
+			_message.text =  this.advancedOwner.screenData.defaultPseudo ? _("Marre des pseudos avec des chiffres ?\nCréez votre pseudo !") : _("Vous n'avez pas encore de pseudo ?\n\nChoisissez-le dès maintenant pour vous reconnaitre dans le classement des tournois !");
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 38), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -123,7 +123,7 @@ package com.ludofactory.mobile.core.authentication
 			addChild(_customChoiceContainer);
 			
 			_customChoiceInput = new TextInput();
-			_customChoiceInput.prompt = Localizer.getInstance().translate("PSEUDO_CHOICE.PSEUDO_CHOICE_HINT");
+			_customChoiceInput.prompt = _("Votre pseudo...");
 			_customChoiceInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
 			_customChoiceInput.addEventListener(FeathersEventType.ENTER, onValidate);
 			_customChoiceInput.addEventListener(FeathersEventType.FOCUS_IN, onFocusIn);
@@ -135,7 +135,7 @@ package com.ludofactory.mobile.core.authentication
 			_customChoiceContainer.addChild(_customChoiceRadio);
 			
 			_validateButton = new Button();
-			_validateButton.label = Localizer.getInstance().translate("COMMON.VALIDATE");
+			_validateButton.label = _("Confirmer");
 			_validateButton.addEventListener(Event.TRIGGERED, onValidate);
 			addChild( _validateButton );
 			
@@ -145,7 +145,7 @@ package com.ludofactory.mobile.core.authentication
 				// the pseudo, in this case, we need to request a default pseudo to display
 				if( !AirNetworkInfo.networkInfo.isConnected() )
 				{
-					InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+					InfoManager.show(_("Chargement..."));
 					Remote.getInstance().getDefaultPseudo(onDefaultPseudoSuccess, onDefaultPseudoFailure, onDefaultPseudoFailure, 2, advancedOwner.activeScreenID);
 				}
 				else
@@ -263,7 +263,7 @@ package com.ludofactory.mobile.core.authentication
 		
 		override public function onBack():void
 		{
-			InfoManager.showTimed(Localizer.getInstance().translate("PSEUDO_CHOICE.YOU_NEED_TO_CHOOSE_PSEUDO"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+			InfoManager.showTimed(_("Vous devez choisir un pseudo !"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -283,20 +283,20 @@ package com.ludofactory.mobile.core.authentication
 			
 			if( !defaultChoosed && _customChoiceInput.text == "")
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("PSEUDO_CHOICE.INVALID_PSEUDO"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("Le pseudo ne peut être vide !"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;
 			}
 			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
 				this.isEnabled = false;
-				InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+				InfoManager.show(_("Chargement..."));
 				_customChoiceInput.clearFocus();
 				Remote.getInstance().createPseudo(defaultChoosed ? _defaultChoiceLabel.text:_customChoiceInput.text, onPseudoCreateSuccess, onPseudoCreateFailure, onPseudoCreateFailure, 2, advancedOwner.activeScreenID);
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -369,7 +369,7 @@ package com.ludofactory.mobile.core.authentication
 		private function onPseudoCreateFailure(error:Object = null):void
 		{
 			this.isEnabled = true;
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 		

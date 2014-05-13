@@ -7,9 +7,9 @@ Created : 4 oct. 2013
 package com.ludofactory.mobile.core.test.alert
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -75,7 +75,7 @@ package com.ludofactory.mobile.core.test.alert
 			
 			_title = new Label();
 			_title.touchable = false;
-			_title.text = Localizer.getInstance().translate("ALERT.TITLE");
+			_title.text = _("Alertes");
 			addChild(_title);
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_ORANGE, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -93,7 +93,7 @@ package com.ludofactory.mobile.core.test.alert
 			_closeButton = new Button();
 			_closeButton.styleName = Theme.BUTTON_EMPTY;
 			_closeButton.addEventListener(Event.TRIGGERED, onClose);
-			_closeButton.label = Localizer.getInstance().translate("ALERT.CLOSE_BUTTON_LABEL");
+			_closeButton.label = _("Fermer les alertes");
 			addChild(_closeButton);
 			_closeButton.minHeight = _closeButton.minTouchHeight = scaleAndRoundToDpi(90);
 			_closeButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_DARK_GREY, true, true);
@@ -168,8 +168,8 @@ package com.ludofactory.mobile.core.test.alert
 				//AbstractEntryPoint.screenNavigator.clipContent = false;
 				AbstractEntryPoint.pushManager.removeAllPushedElementsAfterBeeingSeen();
 				// Update texts
-				_title.text = Localizer.getInstance().translate("ALERT.TITLE");
-				_closeButton.label = Localizer.getInstance().translate("ALERT.CLOSE_BUTTON_LABEL");
+				_title.text = _("Alertes");
+				_closeButton.label = _("Fermer les alertes");
 			}
 		}
 		

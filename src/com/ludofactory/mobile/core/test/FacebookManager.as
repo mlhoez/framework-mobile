@@ -7,9 +7,10 @@ Created : 30 janv. 2014
 package com.ludofactory.mobile.core.test
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.RegisterType;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -95,12 +96,12 @@ package com.ludofactory.mobile.core.test
 				else
 				{
 					// Facebook is not supported on this device
-					InfoManager.showTimed(Localizer.getInstance().translate("AUTHENTICATION.FACEBOOK_NOT_SUPPORTED_ERROR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+					InfoManager.showTimed(_("Facebook n'est pas supporté sur cet appareil."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 				}
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -122,12 +123,12 @@ package com.ludofactory.mobile.core.test
 				else
 				{
 					// Facebook is not supported on this plateform
-					InfoManager.showTimed(Localizer.getInstance().translate("AUTHENTICATION.FACEBOOK_NOT_SUPPORTED_ERROR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+					InfoManager.showTimed(_("Facebook n'est pas supporté sur cet appareil."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 				}
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -147,12 +148,12 @@ package com.ludofactory.mobile.core.test
 				else
 				{
 					// Facebook is not supported on this plateform
-					InfoManager.showTimed(Localizer.getInstance().translate("AUTHENTICATION.FACEBOOK_NOT_SUPPORTED_ERROR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+					InfoManager.showTimed(_("Facebook n'est pas supporté sur cet appareil."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 				}
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -170,12 +171,12 @@ package com.ludofactory.mobile.core.test
 				else
 				{
 					// Facebook is not supported on this plateform
-					InfoManager.showTimed(Localizer.getInstance().translate("AUTHENTICATION.FACEBOOK_NOT_SUPPORTED_ERROR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+					InfoManager.showTimed(_("Facebook n'est pas supporté sur cet appareil."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 				}
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -187,7 +188,7 @@ package com.ludofactory.mobile.core.test
 		 */		
 		private function authenticate():void
 		{
-			InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+			InfoManager.show(_("Chargement..."));
 			if( GoViral.goViral.isFacebookAuthenticated() )
 			{
 				// the user is already authenticated (so we already have a token stored
@@ -262,7 +263,7 @@ package com.ludofactory.mobile.core.test
 					formattedUserData.date_naissance = me.properties.birthday;
 				formattedUserData.id_parrain = -1;
 				formattedUserData.type_inscription = RegisterType.FACEBOOK;
-				formattedUserData.langue = Localizer.getInstance().lang;
+				formattedUserData.langue = LanguageManager.getInstance().lang;
 				
 				switch(_mode)
 				{
@@ -272,7 +273,7 @@ package com.ludofactory.mobile.core.test
 						if( !formattedUserData.hasOwnProperty("mail") || formattedUserData.mail == null || formattedUserData.mail == "" )
 						{
 							AbstractEntryPoint.screenNavigator.screenData.tempFacebookData = formattedUserData;
-							InfoManager.hide(Localizer.getInstance().translate("AUTHENTICATION.MAIL_NOT_RETURNED_BY_FACEBOOK_ERROR"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.REGISTER_SCREEN ]);
+							InfoManager.hide(_("Nous n'avons pas pu récupéré votre email via Facebook. Merci de compléter l'inscription normalement."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.REGISTER_SCREEN ]);
 							return;
 						}
 						
@@ -296,7 +297,7 @@ package com.ludofactory.mobile.core.test
 						{
 							// no match, we display an error and clear the token
 							GoViral.goViral.logoutFacebook();
-							InfoManager.hide(Localizer.getInstance().translate("COMMON.FACEBOOK_ACCOUNT_NOT_MATCHING"), InfoContent.ICON_CROSS, 5);
+							InfoManager.hide(_("Ce compte Facebook ne correspond pas à celui associé à votre compte Ludokado.\n\nMerci de vous connecter avec le bon compte Facebook pour continuer."), InfoContent.ICON_CROSS, 5);
 						}
 						
 						break;
@@ -312,7 +313,7 @@ package com.ludofactory.mobile.core.test
 						{
 							// no match, we display an error and clear the token
 							GoViral.goViral.logoutFacebook();
-							InfoManager.hide(Localizer.getInstance().translate("COMMON.FACEBOOK_ACCOUNT_NOT_MATCHING"), InfoContent.ICON_CROSS, 5);
+							InfoManager.hide(_("Ce compte Facebook ne correspond pas à celui associé à votre compte Ludokado.\n\nMerci de vous connecter avec le bon compte Facebook pour continuer."), InfoContent.ICON_CROSS, 5);
 						}
 						break;
 					}
@@ -374,7 +375,7 @@ package com.ludofactory.mobile.core.test
 		 */		
 		private function onFacebookAssociationFailure(error:Object = null):void
 		{
-			InfoManager.hide(error ? error.txt : Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, 4);
+			InfoManager.hide(error ? error.txt : _("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, 4);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -439,7 +440,7 @@ package com.ludofactory.mobile.core.test
 		 */		
 		private function onFacebookAuthenticationFailure(error:Object = null):void
 		{
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

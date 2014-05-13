@@ -8,7 +8,6 @@ package com.ludofactory.mobile.core.test.account.history.settings
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -82,7 +81,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			
 			_headerTitle = new Label();
 			_headerTitle.touchable = false;
-			_headerTitle.text = Localizer.getInstance().translate( _titleTranslationKey );
+			_headerTitle.text = _titleTranslationKey;
 			_headerContainer.addChild(_headerTitle);
 			_headerTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(36), Theme.COLOR_DARK_GREY);
 			_headerTitle.textRendererProperties.wordWrap = false;

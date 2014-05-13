@@ -6,10 +6,10 @@ Created : 26 juil. 2013
 */
 package com.ludofactory.mobile.core.scoring
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -168,7 +168,7 @@ package com.ludofactory.mobile.core.scoring
 					}
 					else
 					{
-						_level.text = Utilities.splitThousands( _data.inf ) + " " + Localizer.getInstance().translate("COMMON.TO") + " " + Utilities.splitThousands( _data.sup );
+						_level.text = Utilities.splitThousands( _data.inf ) + " " + _("à") + " " + Utilities.splitThousands( _data.sup );
 					}
 					
 					_pointsWithCredits.text = Utilities.splitThousands( (MemberManager.getInstance().getRank() < 5 ? _data.pointsWithCreditsNormal : _data.pointsWithCreditsVip) );

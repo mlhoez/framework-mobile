@@ -6,9 +6,9 @@ Created : 1 septembre 2013
 */
 package com.ludofactory.mobile.navigation.menu
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -61,17 +61,17 @@ package com.ludofactory.mobile.navigation.menu
 			_container.addChild(_icon);
 			
 			_notificationTitle = new Label();
-			_notificationTitle.text = Localizer.getInstance().translate("DISCONNECT_NOTIFICATION.TITLE");
+			_notificationTitle.text = _("Voulez-vous vous déconnecter ?");
 			_container.addChild(_notificationTitle);
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_yesButton = new Button();
-			_yesButton.label = Localizer.getInstance().translate("DISCONNECT_NOTIFICATION.YES_BUTTON_LABEL");
+			_yesButton.label = _("Oui");
 			_yesButton.addEventListener(Event.TRIGGERED, onConfirm);
 			_container.addChild(_yesButton);
 			
 			_cancelButton = new Button();
-			_cancelButton.label = Localizer.getInstance().translate("DISCONNECT_NOTIFICATION.CANCEL_BUTTON_LABEL");
+			_cancelButton.label = _("Annuler");
 			_cancelButton.styleName = Theme.BUTTON_BLUE;
 			_cancelButton.addEventListener(Event.TRIGGERED, onCancel);
 			_container.addChild(_cancelButton);

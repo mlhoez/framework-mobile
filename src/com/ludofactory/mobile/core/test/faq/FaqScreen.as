@@ -7,10 +7,11 @@ Created : 1 septembre 2013
 package com.ludofactory.mobile.core.test.faq
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.controls.Accordion;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -59,7 +60,7 @@ package com.ludofactory.mobile.core.test.faq
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("FAQ.HEADER_TITLE");
+			_headerTitle = _("Aide générale");
 			
 			if( !AbstractGameInfo.LANDSCAPE )
 			{
@@ -136,7 +137,7 @@ package com.ludofactory.mobile.core.test.faq
 			_loader = null;
 			
 			var panels:Vector.<AbstractAccordionItem> = new Vector.<AbstractAccordionItem>();
-			var faq:Array = JSON.parse( Storage.getInstance().getProperty( StorageConfig.PROPERTY_FAQ )[Localizer.getInstance().lang] ) as Array;
+			var faq:Array = JSON.parse( Storage.getInstance().getProperty( StorageConfig.PROPERTY_FAQ )[LanguageManager.getInstance().lang] ) as Array;
 			
 			for(var i:int = 0; i < faq.length; i++)
 				panels.push( new FaqAccordionItem( new FaqData(faq[i]) ) );

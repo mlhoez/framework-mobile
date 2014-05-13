@@ -6,8 +6,8 @@ Created : 25 août 2013
 */
 package com.ludofactory.mobile.core.test.cs.display
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -166,7 +166,7 @@ package com.ludofactory.mobile.core.test.cs.display
 				{
 					_title.visible = _message.visible = _date.visible = true;
 					
-					_title.text = Localizer.getInstance().translate(_data.themeTranslationKey);
+					_title.text = _(_data.themeTranslationKey);
 					_message.text = _data.message;
 					_date.text = _data.date;
 					

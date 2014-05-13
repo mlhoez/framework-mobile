@@ -27,6 +27,9 @@ package com.ludofactory.common.gettext
 	 */	
 	public class LanguageManager
 	{
+		public static const FRENCH:String   = "fr";
+		public static const ENGLISH:String  = "en";
+		
 		// ---- DEBUG ONLY
 		
 		/**
@@ -55,7 +58,7 @@ package com.ludofactory.common.gettext
 		 * The current locale.
 		 * 
 		 * @see com.ludofactory.common.gettext.ISO_639_1 */		
-		private var _currentLocale:String;
+		private var _currentLocale:String = DEFAULT_LANGUAGE;
 		
 		/**
 		 * Queue of language files to download, parse and store. */		
@@ -473,6 +476,13 @@ package com.ludofactory.common.gettext
 			
 			// now return the list
 			return installedLanguages;
+		}
+		
+		public function get lang():String { return _currentLocale; }
+		public function set lang(val:String):void
+		{
+			_currentLocale = val;
+			ASGettext.loadLocale(_currentLocale);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -7,11 +7,11 @@ Created : 7 Juin 2013
 package com.ludofactory.mobile.core.authentication
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -73,7 +73,7 @@ package com.ludofactory.mobile.core.authentication
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("REGISTER.HEADER_TITLE");
+			_headerTitle = _("Inscription");
 			
 			_logo = new ImageLoader();
 			_logo.source = Theme.ludokadoLogoTexture;
@@ -90,7 +90,7 @@ package com.ludofactory.mobile.core.authentication
 			
 			_mailInput = new TextInput();
 			_mailInput.styleName = Theme.TEXTINPUT_FIRST;
-			_mailInput.prompt = Localizer.getInstance().translate("AUTHENTICATION.EMAIL_INPUT_HINT");
+			_mailInput.prompt = _("Email...");
 			_mailInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.NEXT;
 			_mailInput.textEditorProperties.softKeyboardType = SoftKeyboardType.EMAIL;
 			_mailInput.addEventListener(FeathersEventType.ENTER, onEnterKeyPressed);
@@ -98,14 +98,14 @@ package com.ludofactory.mobile.core.authentication
 			
 			_passwordInput = new TextInput();
 			_passwordInput.styleName = Theme.TEXTINPUT_LAST;
-			_passwordInput.prompt = Localizer.getInstance().translate("AUTHENTICATION.PASSWORD_INPUT_HINT");
+			_passwordInput.prompt = _("Mot de passe...");
 			_passwordInput.textEditorProperties.displayAsPassword = true;
 			_passwordInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.NEXT;
 			_passwordInput.addEventListener(FeathersEventType.ENTER, onEnterKeyPressed);
 			_textInputsContainer.addChild(_passwordInput);
 			
 			_sponsorInput = new TextInput();
-			_sponsorInput.prompt = Localizer.getInstance().translate("REGISTER.SPONSOR_INPUT_HINT");
+			_sponsorInput.prompt = _("Code parrain... (facultatif)");
 			_sponsorInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
 			_sponsorInput.textEditorProperties.restrict = "0-9";
 			_sponsorInput.textEditorProperties.softKeyboardType = SoftKeyboardType.NUMBER;
@@ -113,7 +113,7 @@ package com.ludofactory.mobile.core.authentication
 			addChild(_sponsorInput);
 			
 			_validateButton = new Button();
-			_validateButton.label = Localizer.getInstance().translate("COMMON.VALIDATE");
+			_validateButton.label = _("Confirmer");
 			_validateButton.addEventListener(Event.TRIGGERED, onValidate);
 			addChild( _validateButton );
 		}
@@ -198,13 +198,13 @@ package com.ludofactory.mobile.core.authentication
 		{
 			if( _mailInput.text == "" || !Utilities.isValidMail(_mailInput.text) )
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("REGISTER.INVALID_MAIL"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("Email invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;
 			}
 			
 			if( _passwordInput.text == "" )
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("REGISTER.INVALID_PASSWORD"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("Le mot de passe ne peut être vide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;
 			}
 			
@@ -212,7 +212,7 @@ package com.ludofactory.mobile.core.authentication
 			{
 				this.isEnabled = false;
 				
-				InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+				InfoManager.show(_("Chargement..."));
 				
 				_mailInput.clearFocus();
 				_passwordInput.clearFocus();
@@ -231,7 +231,7 @@ package com.ludofactory.mobile.core.authentication
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -320,7 +320,7 @@ package com.ludofactory.mobile.core.authentication
 		private function onSubscriptionFailure(error:Object = null):void
 		{
 			this.isEnabled = true;
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS);
 		}
 		
 		/**

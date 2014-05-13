@@ -7,11 +7,11 @@ Created : 9 oct. 2013
 package com.ludofactory.mobile.core.controls
 {
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -318,7 +318,7 @@ package com.ludofactory.mobile.core.controls
 					_backInfoContainer.layout["gap"] = 0;
 					
 					_backInfoLabel = new Label();
-					_backInfoLabel.text = Localizer.getInstance().translate("COMMON.BACK_BUTTON_HELP");
+					_backInfoLabel.text = _("Pour revenir à l'écran précédent,\ntouchez le bouton de retour.");
 					_backInfoContainer.addChild(_backInfoLabel);
 					_backInfoLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(30), Theme.COLOR_WHITE);
 					_backInfoLabel.textRendererProperties.wordWrap = false;

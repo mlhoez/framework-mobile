@@ -8,8 +8,8 @@ package com.ludofactory.mobile.core.test.account.history.settings
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.NotLoggedInContainer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
@@ -133,7 +133,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 						// of the screen to indicate that he must do this to validate his
 						// account.
 						
-						_mailAlert = new AccountMailAlert( formatString(Localizer.getInstance().translate("ACCOUNT.MAIL_NOT_VALIDATED"), result.connexion.mail), false);
+						_mailAlert = new AccountMailAlert( formatString(_("Validez votre compte et bénéficier d'avantages VIP en cliquant sur le lien envoyé à l'adresse : {0}"), result.connexion.mail), false);
 						addChild( _mailAlert );
 					}
 					else if( result.alerte.changement_mail != null )
@@ -142,18 +142,18 @@ package com.ludofactory.mobile.core.test.account.history.settings
 						// case we need to tell him that a request is pending on that he
 						// must click on this email to validate this adress.
 						
-						_mailAlert = new AccountMailAlert( formatString(Localizer.getInstance().translate("ACCOUNT.MAIL_CHANGE_PENDING"), result.alerte.changement_mail), false);
+						_mailAlert = new AccountMailAlert( formatString(_("Validez la modification de votre email en cliquant sur le lien envoyé à l'adresse : {0}"), result.alerte.changement_mail), false);
 						addChild( _mailAlert );
 					}
 					invalidate( INVALIDATION_FLAG_DATA );
 					
 					var panels:Vector.<AbstractAccordionItem> = new Vector.<AbstractAccordionItem>();
-					panels.push( new SettingAccordionItem( "ACCOUNT.PERSONAL_INFORMATIONS_TITLE", new PersonalSettingsContainer( result.perso ) ) );
-					panels.push( new SettingAccordionItem( "ACCOUNT.ADDRESS_TITLE", new AddressSettingsContainer( result.adresse ) ) );
-					panels.push( new SettingAccordionItem( "ACCOUNT.PSEUDO_TITLE", new PseudoSettingsContainer( result.pseudo ) ) );
-					panels.push( new SettingAccordionItem( "ACCOUNT.EMAIL_TITLE", new EmailSettingsContainer( result.connexion ) ) );
-					panels.push( new SettingAccordionItem( "ACCOUNT.PASSWORD_TITLE", new PasswordSettingsContainer( result.connexion ) ) );
-					panels.push( new SettingAccordionItem( "ACCOUNT.PUSH_NOTIFICATION_TITLE", new NotificationSettingsContainer( result.notification ) ) );
+					panels.push( new SettingAccordionItem( _("Informations personnelles"), new PersonalSettingsContainer( result.perso ) ) );
+					panels.push( new SettingAccordionItem( _("Adresse"), new AddressSettingsContainer( result.adresse ) ) );
+					panels.push( new SettingAccordionItem( _("Pseudo"), new PseudoSettingsContainer( result.pseudo ) ) );
+					panels.push( new SettingAccordionItem( _("Email"), new EmailSettingsContainer( result.connexion ) ) );
+					panels.push( new SettingAccordionItem( _("Changer le mot de passe"), new PasswordSettingsContainer( result.connexion ) ) );
+					panels.push( new SettingAccordionItem( _("Notifications push"), new NotificationSettingsContainer( result.notification ) ) );
 					
 					_accordion = new Accordion();
 					_accordion.dataProvider = panels;
@@ -179,7 +179,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 		 */		
 		private function onGetAccountInformationsFailure(error:Object = null):void
 		{
-			_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+			_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 			_retryContainer.loadingMode = false;
 		}
 		
@@ -198,7 +198,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		

@@ -7,10 +7,10 @@ Created : 22 août 2013
 package com.ludofactory.mobile.core.shop.vip
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -76,7 +76,7 @@ package com.ludofactory.mobile.core.shop.vip
 			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SHOP_ENABLED) == true )
 			{
 				_message = new Label();
-				_message.text = Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.TITLE");
+				_message.text = _("Echangez vos Points contre\nles cadeaux de vos rêves !");
 				addChild(_message);
 				_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 				
@@ -122,13 +122,13 @@ package com.ludofactory.mobile.core.shop.vip
 					NativeApplication.nativeApplication.addEventListener(flash.events.Event.ACTIVATE, onActivate, false, 0, true);
 					_list.dataProvider = new ListCollection(
 						[
-							new BoutiqueCategoryData( 26, Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.26"), "BoutiqueHouseIcon" ),
-							new BoutiqueCategoryData( 23, Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.23"), "BoutiqueLeisureIcon" ),
-							new BoutiqueCategoryData( 24, Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.24"), "BoutiqueForHerIcon" ),
-							new BoutiqueCategoryData( 8,  Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.8"),  "BoutiqueVideoIcon" ),
-							new BoutiqueCategoryData( 27, Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.27"), "BoutiqueVideoGamesIcon" ),
-							new BoutiqueCategoryData( 25, Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.25"), "BoutiqueImageAndSoundIcon" ),
-							new BoutiqueCategoryData( 28, Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.28"), "BoutiqueLudokadoIcon" )
+							new BoutiqueCategoryData( 26, _("Maison"), "BoutiqueHouseIcon" ),
+							new BoutiqueCategoryData( 23, _("Loisirs"), "BoutiqueLeisureIcon" ),
+							new BoutiqueCategoryData( 24, _("Pour Elle"), "BoutiqueForHerIcon" ),
+							new BoutiqueCategoryData( 8,  _("Vidéo"),  "BoutiqueVideoIcon" ),
+							new BoutiqueCategoryData( 27, _("Jeux Vidéo"), "BoutiqueVideoGamesIcon" ),
+							new BoutiqueCategoryData( 25, _("Image et Son"), "BoutiqueImageAndSoundIcon" ),
+							new BoutiqueCategoryData( 28, _("Ludokado"), "BoutiqueLudokadoIcon" )
 						]);
 				}
 			}
@@ -138,8 +138,8 @@ package com.ludofactory.mobile.core.shop.vip
 				_retryContainer.addEventListener(starling.events.Event.TRIGGERED, onGoOnlineShop);
 				_retryContainer.loadingMode = false;
 				addChild(_retryContainer);
-				_retryContainer.message = Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.DISABLED_MESSAGE");
-				_retryContainer.retryButtonMessage = Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.DISABLED_BUTTON_MESSAGE");
+				_retryContainer.message = _("La boutique est actuellement indisponible.\n\nMerci de vous rendre dans la rubrique « Boutique » du site Ludokado.com pour plus d'informations.");
+				_retryContainer.retryButtonMessage = _("Accéder");
 			}
 			
 		}
@@ -195,7 +195,7 @@ package com.ludofactory.mobile.core.shop.vip
 		
 		private function onGetCategoriesFailure(error:Object = null):void
 		{
-			_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+			_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 			_retryContainer.loadingMode = false;
 		}
 		
@@ -214,7 +214,7 @@ package com.ludofactory.mobile.core.shop.vip
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -242,7 +242,7 @@ package com.ludofactory.mobile.core.shop.vip
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.NOT_CONNECTED_ERROR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Vous devez être connecté à Internet pour afficher les lots."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -252,7 +252,7 @@ package com.ludofactory.mobile.core.shop.vip
 		 */		
 		private function onGoOnlineShop(event:starling.events.Event):void
 		{
-			navigateToURL(new URLRequest(Localizer.getInstance().translate("BOUTIQUE_CATEGORY_LIST_SCREEN.DISABLED_LINK")));
+			navigateToURL(new URLRequest(_("http://www.ludokado.com/")));
 		}
 		
 //------------------------------------------------------------------------------------------------------------

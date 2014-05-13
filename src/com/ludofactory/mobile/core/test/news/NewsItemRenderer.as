@@ -6,9 +6,9 @@ Created : 18 sept. 2013
 */
 package com.ludofactory.mobile.core.test.news
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.sticksports.nativeExtensions.canOpenUrl.CanOpenUrl;
@@ -209,7 +209,7 @@ package com.ludofactory.mobile.core.test.news
 						_button.visible = false;
 					else
 						_button.visible = true;
-					_button.label = CanOpenUrl.canOpen(_data.urlScheme) ? Localizer.getInstance().translate("NEWS.BUTTON_PLAY_LABEL") : Localizer.getInstance().translate("NEWS.BUTTON_DOWNLOAD_LABEL");
+					_button.label = CanOpenUrl.canOpen(_data.urlScheme) ? _("Jouer") : _("Télécharger");
 					
 					_title.visible = _message.visible = true;
 					_title.text = _data.title;

@@ -9,12 +9,8 @@ package com.ludofactory.mobile.core.test.achievements
 	import com.greensock.TweenLite;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.text.TextFormat;
 	
 	import feathers.controls.ImageLoader;
@@ -85,7 +81,7 @@ package com.ludofactory.mobile.core.test.achievements
 			addChild(_image);
 			
 			_message = new Label();
-			_message.text = /*formatText(Localizer.getInstance().translate("TROPHY.WIN_MESSAGE"), */Localizer.getInstance().translate( _trophyData.descriptionTranslationKey )/*)*/;
+			_message.text = /*formatText(Localizer.getInstance().translate("TROPHY.WIN_MESSAGE"), */ _trophyData.description /*)*/;
 			addChild(_message);
 			_message.textRendererProperties.textFormat = _textFormatMessage;
 		}
@@ -121,7 +117,7 @@ package com.ludofactory.mobile.core.test.achievements
 		 */		
 		private function displayReward():void
 		{
-			_message.text = Localizer.getInstance().translate( _trophyData.rewardTranslationKey );
+			_message.text = _trophyData.reward;
 			_message.textRendererProperties.textFormat = _textFormatGain;
 			_message.validate();
 			_message.y = (Math.max(actualHeight, _message.height) - Math.min(actualHeight, _message.height)) * 0.5;

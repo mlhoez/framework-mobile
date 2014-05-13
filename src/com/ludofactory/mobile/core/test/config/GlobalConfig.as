@@ -64,29 +64,58 @@ package com.ludofactory.mobile.core.test.config
 		public static var deviceId:String = "";
 		
 		/**
-		 * The countries */		
-		public static const COUNTRIES:Array = [ new CountryData( { id:0, nameTranslationKey:"INTERNATIONAL", diminutive:"",   textureName:"flag-international" } ),
-												new CountryData( { id:1, nameTranslationKey:"FRANCE",        diminutive:"FR", textureName:"flag-france" } ),
-												new CountryData( { id:2, nameTranslationKey:"BELGIUM",       diminutive:"BE", textureName:"flag-belgique" } ),
-												new CountryData( { id:3, nameTranslationKey:"SWISS",         diminutive:"CH", textureName:"flag-suisse" } ),
-												new CountryData( { id:4, nameTranslationKey:"CANADA",        diminutive:"CA", textureName:"flag-canada" } ),
-												new CountryData( { id:5, nameTranslationKey:"UK",            diminutive:"GB", textureName:"flag-uk" } ),
-												new CountryData( { id:6, nameTranslationKey:"SPAIN",         diminutive:"ES", textureName:"flag-espagne" } ) ];
+		 * The countries
+		 * 
+		 * Hack for Poedit
+		 * _("International");
+		 * _("France");
+		 * _("Belgique");
+		 * _("Suisse");
+		 * _("Canada");
+		 * _("Royaume-Uni");
+		 * _("Espagne");
+		 * 
+		 * */		
+		public static const COUNTRIES:Array = [ new CountryData( { id:0, nameTranslationKey:"International", diminutive:"",   textureName:"flag-international" } ),
+												new CountryData( { id:1, nameTranslationKey:"France",        diminutive:"FR", textureName:"flag-france" } ),
+												new CountryData( { id:2, nameTranslationKey:"Belgique",      diminutive:"BE", textureName:"flag-belgique" } ),
+												new CountryData( { id:3, nameTranslationKey:"Suisse",        diminutive:"CH", textureName:"flag-suisse" } ),
+												new CountryData( { id:4, nameTranslationKey:"Canada",        diminutive:"CA", textureName:"flag-canada" } ),
+												new CountryData( { id:5, nameTranslationKey:"Royaume-Uni",   diminutive:"GB", textureName:"flag-uk" } ),
+												new CountryData( { id:6, nameTranslationKey:"Espagne",       diminutive:"ES", textureName:"flag-espagne" } ) ];
 		
 		// personal settings
 		public static const DAYS:Vector.<int>   = Vector.<int>( [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31] );
-		public static const MONTHS:Vector.<MonthData> = Vector.<MonthData>( [ new MonthData( { id:1,  translationKey:"MONTH.JANUARY"} ),
-																			  new MonthData( { id:2,  translationKey:"MONTH.FEBRUARY"} ),
-																			  new MonthData( { id:3,  translationKey:"MONTH.MARCH"} ),
-																			  new MonthData( { id:4,  translationKey:"MONTH.APRIL"} ),
-																			  new MonthData( { id:5,  translationKey:"MONTH.MAY"} ),
-																			  new MonthData( { id:6,  translationKey:"MONTH.JUNE"} ),
-																			  new MonthData( { id:7,  translationKey:"MONTH.JULY"} ),
-																			  new MonthData( { id:8,  translationKey:"MONTH.AUGUST"} ),
-																			  new MonthData( { id:9,  translationKey:"MONTH.SEPTEMBER"} ),
-																			  new MonthData( { id:10, translationKey:"MONTH.OCTOBER"} ),
-																			  new MonthData( { id:11, translationKey:"MONTH.NOVEMBER"} ),
-																			  new MonthData( { id:12, translationKey:"MONTH.DECEMBER"} ) ] );
+		/**
+		 * The months
+		 * 
+		 * Hack for Poedit
+		 * _("Jan.");
+		 * _("Fév.");
+		 * _("Mar.");
+		 * _("Avr.");
+		 * _("Mai");
+		 * _("Juin");
+		 * _("Juil.");
+		 * _("Aou.");
+		 * _("Sept.");
+		 * _("Oct.");
+		 * _("Nov.");
+		 * _("Déc.");
+		 * 
+		 * */	
+		public static const MONTHS:Vector.<MonthData> = Vector.<MonthData>( [ new MonthData( { id:1,  translationKey:"Jan."} ),
+																			  new MonthData( { id:2,  translationKey:"Fév."} ),
+																			  new MonthData( { id:3,  translationKey:"Mar."} ),
+																			  new MonthData( { id:4,  translationKey:"Avr."} ),
+																			  new MonthData( { id:5,  translationKey:"Mai"} ),
+																			  new MonthData( { id:6,  translationKey:"Juin"} ),
+																			  new MonthData( { id:7,  translationKey:"Juil."} ),
+																			  new MonthData( { id:8,  translationKey:"Aou."} ),
+																			  new MonthData( { id:9,  translationKey:"Sept."} ),
+																			  new MonthData( { id:10, translationKey:"Oct."} ),
+																			  new MonthData( { id:11, translationKey:"Nov."} ),
+																			  new MonthData( { id:12, translationKey:"Déc."} ) ] );
 		
 		/**
 		 * Current stage width (updated in Main when the orientation change). */		

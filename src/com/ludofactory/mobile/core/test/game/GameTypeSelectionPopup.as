@@ -10,10 +10,10 @@ package com.ludofactory.mobile.core.test.game
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Elastic;
 	import com.greensock.easing.Linear;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.manager.TimerManager;
@@ -134,20 +134,20 @@ package com.ludofactory.mobile.core.test.game
 			
 			_classicGamebutton = new Button();
 			//_classicGamebutton.addEventListener(Event.TRIGGERED, onPlayClassic);
-			_classicGamebutton.label = Localizer.getInstance().translate("HOME.CLASSIC_BUTTON_LABEL");
+			_classicGamebutton.label = _("Partie Classique");
 			addChild(_classicGamebutton);
 			
 			_tournamentButtonContainer = new LayoutGroup();
 			addChild(_tournamentButtonContainer);
 			
 			_tournamentButton = new Button();
-			_tournamentButton.label = Localizer.getInstance().translate("HOME.TOURNAMENT_BUTTON_LABEL");
+			_tournamentButton.label = _("Partie en Tournoi");
 			_tournamentButtonContainer.addChild(_tournamentButton);
 			
 			_rulesButton = new Button();
 			//_rulesButton.addEventListener(Event.TRIGGERED, onShowRules);
 			_rulesButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE_DARKER;
-			_rulesButton.label = Localizer.getInstance().translate("HOME.RULES_BUTTON_LABEL");
+			_rulesButton.label = _("Règles du jeu");
 			addChild(_rulesButton);
 			
 			_closeQuad = new Quad(scaleAndRoundToDpi(70), scaleAndRoundToDpi(70));
@@ -378,7 +378,7 @@ package com.ludofactory.mobile.core.test.game
 					if( !_calloutLabel )
 					{
 						_calloutLabel = new Label();
-						_calloutLabel.text = Localizer.getInstance().translate("HOME.TOURNAMENT_LOCKED_HINT");
+						_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de terminer une partie Classique !");
 						_calloutLabel.width = _tournamentButton.width * 0.9;
 						_calloutLabel.validate();
 					}
@@ -410,9 +410,9 @@ package com.ludofactory.mobile.core.test.game
 		
 		public function animateInSkip():void
 		{
-			_classicGamebutton.label = Localizer.getInstance().translate("HOME.CLASSIC_BUTTON_LABEL");
-			_tournamentButton.label = Localizer.getInstance().translate("HOME.TOURNAMENT_BUTTON_LABEL");
-			_rulesButton.label = Localizer.getInstance().translate("HOME.RULES_BUTTON_LABEL");
+			_classicGamebutton.label = _("Partie Classique");
+			_tournamentButton.label = _("Partie en Tournoi");
+			_rulesButton.label = _("Règles du jeu");
 			
 			_leftLock.visible = _lock.visible = _rightLock.visible = MemberManager.getInstance().getTournamentUnlocked() ? false : true;
 			_leftLock.alpha = _lock.alpha = _rightLock.alpha = MemberManager.getInstance().getTournamentUnlocked() ? 0 : 1;
@@ -467,9 +467,9 @@ package com.ludofactory.mobile.core.test.game
 		
 		public function animateIn():void
 		{
-			_classicGamebutton.label = Localizer.getInstance().translate("HOME.CLASSIC_BUTTON_LABEL");
-			_tournamentButton.label = Localizer.getInstance().translate("HOME.TOURNAMENT_BUTTON_LABEL");
-			_rulesButton.label = Localizer.getInstance().translate("HOME.RULES_BUTTON_LABEL");
+			_classicGamebutton.label = _("Partie Classique");
+			_tournamentButton.label = _("Partie en Tournoi");
+			_rulesButton.label = _("Règles du jeu");
 			
 			_leftLock.visible = _lock.visible = _rightLock.visible = (MemberManager.getInstance().getTournamentUnlocked() && !MemberManager.getInstance().getTournamentAnimPending()) ? false : true;
 			_leftLock.alpha = _lock.alpha = _rightLock.alpha = (MemberManager.getInstance().getTournamentUnlocked() && !MemberManager.getInstance().getTournamentAnimPending()) ? 0 : 1;

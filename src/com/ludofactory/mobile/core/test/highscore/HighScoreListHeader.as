@@ -6,8 +6,8 @@ Created : 9 sept. 2013
 */
 package com.ludofactory.mobile.core.test.highscore
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -65,17 +65,17 @@ package com.ludofactory.mobile.core.test.highscore
 			addChild(_header);
 			
 			_rankLabel = new Label();
-			_rankLabel.text = Localizer.getInstance().translate("HIGH_SCORE_LIST.RANK_LIST_HEADER");
+			_rankLabel.text = _("Rang");
 			addChild(_rankLabel);
 			_rankLabel.textRendererProperties.textFormat = Theme.highScoreListHeaderTextFormat;
 			
 			_nameLabel = new Label();
-			_nameLabel.text = Localizer.getInstance().translate("HIGH_SCORE_LIST.NAME_LIST_HEADER");
+			_nameLabel.text = _("Nom");
 			addChild(_nameLabel);
 			_nameLabel.textRendererProperties.textFormat = Theme.highScoreListHeaderTextFormat;
 			
 			_scoreLabel = new Label();
-			_scoreLabel.text = Localizer.getInstance().translate("HIGH_SCORE_LIST.SCORE_LIST_HEADER");
+			_scoreLabel.text = _("Score");
 			addChild(_scoreLabel);
 			_scoreLabel.textRendererProperties.textFormat = Theme.highScoreListHeaderTextFormat;
 		}

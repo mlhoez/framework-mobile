@@ -8,16 +8,16 @@ package com.ludofactory.mobile.core.test.tournament
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.CustomGroupedList;
 	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.test.tournament.listing.RankData;
 	import com.ludofactory.mobile.core.test.tournament.listing.RankHeaderData;
 	import com.ludofactory.mobile.core.test.tournament.listing.RankHeaderItemRenderer;
@@ -76,7 +76,7 @@ package com.ludofactory.mobile.core.test.tournament
 		{
 			super.initialize();
 			
-			_headerTitle = formatString( Localizer.getInstance().translate("PREVIOUS_TOURNAMENT_DETAILS.HEADER_TITLE"), Utilities.splitThousands( advancedOwner.screenData.previousTournementId ) );
+			_headerTitle = formatString( _("Tournoi n°{0}"), Utilities.splitThousands( advancedOwner.screenData.previousTournementId ) );
 			
 			Flox.logInfo("Affichage de l'ancien tournoi n°{0}", advancedOwner.screenData.previousTournementId);
 			
@@ -200,7 +200,7 @@ package com.ludofactory.mobile.core.test.tournament
 						{
 							_retryContainer.loadingMode = false;
 							_retryContainer.singleMessageMode = true;
-							_retryContainer.message = Localizer.getInstance().translate("TOURNAMENT_RANKING.NO_PLAYER");
+							_retryContainer.message = _("Personne n'est encore classé !");
 						}
 						
 						_ranksList.isRefreshableDown = false;
@@ -325,7 +325,7 @@ package com.ludofactory.mobile.core.test.tournament
 			
 			if( !_isInUpdateMode )
 			{
-				_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+				_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 				_retryContainer.loadingMode = false;
 			}
 		}
@@ -346,7 +346,7 @@ package com.ludofactory.mobile.core.test.tournament
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		

@@ -6,8 +6,8 @@ Created : 5 nov. 2013
 */
 package com.ludofactory.mobile.core.test.account.history.settings
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -51,11 +51,11 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			super.initialize();
 			
 			_newPasswordControl = new TextInput();
-			_newPasswordControl.prompt = Localizer.getInstance().translate("ACCOUNT.NEW_PASSWORD_PROMPT");
+			_newPasswordControl.prompt = _("Nouveau mot de passe...");
 			_newPasswordControl.textEditorProperties.displayAsPassword = true;
 			
 			_newPasswordConfirmControl = new TextInput();
-			_newPasswordConfirmControl.prompt = Localizer.getInstance().translate("ACCOUNT.NEW_PASSWORD_CONFIRM_PROMPT");
+			_newPasswordConfirmControl.prompt = _("Confirmer...");
 			_newPasswordConfirmControl.textEditorProperties.displayAsPassword = true;
 			
 			_list = new List();
@@ -63,8 +63,8 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			_list.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.itemRendererType = AccountItemRenderer;
-			_list.dataProvider = new ListCollection( [ { title:Localizer.getInstance().translate("ACCOUNT.NEW_PASSWORD"),         accessory:_newPasswordControl },
-													   { title:Localizer.getInstance().translate("ACCOUNT.NEW_PASSWORD_CONFIRM"), accessory:_newPasswordConfirmControl },
+			_list.dataProvider = new ListCollection( [ { title:_("Nouveau"),         accessory:_newPasswordControl },
+													   { title:_("Confirmation"), accessory:_newPasswordConfirmControl },
 													   { title:"",   isSaveButton:true } ] );
 			addChild(_list);
 		}
@@ -92,14 +92,14 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			
 			if( _newPasswordControl.text == "" && _newPasswordConfirmControl.text == "" )
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("ACCOUNT.NO_CHANGE"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("Aucune donnée à mettre à jour."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				onUpdatePasswordComplete();
 				return;
 			}
 			
 			if( (_newPasswordControl.text == "" || _newPasswordConfirmControl.text == "") || (_newPasswordControl.text != _newPasswordConfirmControl.text) )
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("ACCOUNT.PASSWORD_MISMATCH"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("Les mots de passe ne correspondent pas."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				onUpdatePasswordComplete();
 				return;
 			}

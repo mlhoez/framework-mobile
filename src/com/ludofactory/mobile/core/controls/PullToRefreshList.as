@@ -6,9 +6,9 @@ Created : 15 août 2013
 */
 package com.ludofactory.mobile.core.controls
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -33,21 +33,30 @@ package com.ludofactory.mobile.core.controls
 	public class PullToRefreshList extends List
 	{
 		/**
+		 * Hack for Poedit:
+		 * _("Tirer pour mettre à jour");
+		 * _("Lâcher pour mettre à jour");
+		 * _("Mise à jour...");
+		 * _("Dernière mise à jour à");
+		 * 
+		 */		
+		
+		/**
 		 * Flag to indicate that the refreshable state have changed. */
 		public static const INVALIDATION_FLAG_REFRESHABLE_STATE:String = "refreshable-state";
 		
 		/**
 		 * "Pull to refresh" default Localizer translation key. */		
-		private static const DEFAULT_PULL_TO_REFRESH_KEY:String = "REFRESH.PULL_TO_REFRESH";
+		private static const DEFAULT_PULL_TO_REFRESH_KEY:String = "Tirer pour mettre à jour";
 		/**
 		 * "Release to refresh" default Localizer translation key. */		
-		private static const DEFAULT_RELEASE_TO_REFRESH_KEY:String = "REFRESH.RELEASE_TO_REFRESH";
+		private static const DEFAULT_RELEASE_TO_REFRESH_KEY:String = "Lâcher pour mettre à jour";
 		/**
 		 * "Refreshing..." default Localizer translation key. */		
-		private static const DEFAULT_REFRESHING_KEY:String = "REFRESH.REFRESHING";
+		private static const DEFAULT_REFRESHING_KEY:String = "Mise à jour...";
 		/**
 		 * "Last refresh : --/--/--" default Localizer translation key. */		
-		private static const DEFAULT_LAST_REFRESH_KEY:String = "REFRESH.LAST_REFRESH";
+		private static const DEFAULT_LAST_REFRESH_KEY:String = "Dernière mise à jour à";
 		
 		/**
 		 * "Pull to refresh" translated value. */		
@@ -100,10 +109,10 @@ package com.ludofactory.mobile.core.controls
 		{
 			super();
 			
-			PULL_TO_REFRESH_TEXT = Localizer.getInstance().translate(DEFAULT_PULL_TO_REFRESH_KEY);
-			RELEASE_TO_REFRESH_TEXT = Localizer.getInstance().translate(DEFAULT_RELEASE_TO_REFRESH_KEY);
-			REFRESHING_TEXT = Localizer.getInstance().translate(DEFAULT_REFRESHING_KEY);
-			LAST_REFRESH_TEXT = Localizer.getInstance().translate(DEFAULT_LAST_REFRESH_KEY);
+			PULL_TO_REFRESH_TEXT = _(DEFAULT_PULL_TO_REFRESH_KEY);
+			RELEASE_TO_REFRESH_TEXT = _(DEFAULT_RELEASE_TO_REFRESH_KEY);
+			REFRESHING_TEXT = _(DEFAULT_REFRESHING_KEY);
+			LAST_REFRESH_TEXT = _(DEFAULT_LAST_REFRESH_KEY);
 		}
 		
 		override protected function initialize():void

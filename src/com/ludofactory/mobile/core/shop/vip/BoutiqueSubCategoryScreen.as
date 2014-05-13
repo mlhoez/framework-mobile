@@ -9,9 +9,9 @@ package com.ludofactory.mobile.core.shop.vip
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -174,7 +174,7 @@ package com.ludofactory.mobile.core.shop.vip
 				centerStage.marginLeft = scaleAndRoundToDpi( GlobalConfig.isPhone ? 24:200 );
 			_popUpContentManager = centerStage;
 			
-			InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+			InfoManager.show(_("Chargement..."));
 			TweenMax.delayedCall(0.5, Remote.getInstance().getSubCategories, [advancedOwner.screenData.idCategory, null, onGetSubCategoriesSuccess, onGetSubCategoriesFailure, onGetSubCategoriesFailure, 2, advancedOwner.activeScreenID]);
 		}
 		
@@ -285,7 +285,7 @@ package com.ludofactory.mobile.core.shop.vip
 				}
 				else
 				{
-					InfoManager.hide(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoContent.ICON_CROSS);
+					InfoManager.hide(_("Aucune connexion Internet."), InfoContent.ICON_CROSS);
 				}
 				
 			}
@@ -301,7 +301,7 @@ package com.ludofactory.mobile.core.shop.vip
 		private function onGetSubCategoriesFailure(error:Object = null):void
 		{
 			this.isEnabled = true;
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 		/**
@@ -322,7 +322,7 @@ package com.ludofactory.mobile.core.shop.vip
 		private function onCategorySelected(event:Event):void
 		{
 			_popUpContentManager.close();
-			InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+			InfoManager.show(_("Chargement..."));
 			Flox.logInfo("Affichage de la sous catégorie <strong>{0}</strong>", _subCategoriesList.selectedItem.nom);
 			advancedOwner.screenData.selectedItemData = null;
 			
@@ -333,7 +333,7 @@ package com.ludofactory.mobile.core.shop.vip
 			else
 			{
 				_subCategoriesList.setSelectedLocation(0, _oldSubSactegoryIndexSelected);
-				InfoManager.hide(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoContent.ICON_CROSS);
+				InfoManager.hide(_("Aucune connexion Internet."), InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -400,7 +400,7 @@ package com.ludofactory.mobile.core.shop.vip
 		private function onArticlesLoadFailure(error:Object = null):void
 		{
 			this.isEnabled = true;
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 		/**
@@ -410,7 +410,7 @@ package com.ludofactory.mobile.core.shop.vip
 		{
 			if( !_subCategories || _subCategories.length == 0 )
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("BOUTIQUE_SUB_CATEGORY_LIST_SCREEN.NO_SUB_CATEGORY_ERROR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune sous catégorie à afficher."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 			else
 			{
@@ -423,11 +423,11 @@ package com.ludofactory.mobile.core.shop.vip
 		
 		private function onPreviousSubCat(event:Event):void
 		{
-			InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+			InfoManager.show(_("Chargement..."));
 			
 			if( !_subCategories || _subCategories.length == 0 )
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("BOUTIQUE_SUB_CATEGORY_LIST_SCREEN.NO_SUB_CATEGORY_ERROR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune sous catégorie à afficher."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 			else
 			{
@@ -439,18 +439,18 @@ package com.ludofactory.mobile.core.shop.vip
 				}
 				else
 				{
-					InfoManager.hide(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoContent.ICON_CROSS);
+					InfoManager.hide(_("Aucune connexion Internet."), InfoContent.ICON_CROSS);
 				}
 			}
 		}
 		
 		private function onNextSubCat(event:Event):void
 		{
-			InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+			InfoManager.show(_("Chargement..."));
 			
 			if( !_subCategories || _subCategories.length == 0 )
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("BOUTIQUE_SUB_CATEGORY_LIST_SCREEN.NO_SUB_CATEGORY_ERROR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune sous catégorie à afficher."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 			else
 			{
@@ -462,7 +462,7 @@ package com.ludofactory.mobile.core.shop.vip
 				}
 				else
 				{
-					InfoManager.hide(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoContent.ICON_CROSS);
+					InfoManager.hide(_("Aucune connexion Internet."), InfoContent.ICON_CROSS);
 				}
 			}
 		}

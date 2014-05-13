@@ -7,10 +7,10 @@ Created : 23 août 2013
 package com.ludofactory.mobile.core.shop.bid
 {
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
@@ -75,15 +75,15 @@ package com.ludofactory.mobile.core.shop.bid
 			super.initialize();
 			
 			_message = new Label();
-			_message.text = Localizer.getInstance().translate("BID_HOME.TITLE");
+			_message.text = _("Utilisez vos Points pour enchérir et\nremporter un des lots en jeu.");
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_bidsMenu = new OffsetTabBar();
 			_bidsMenu.addEventListener(Event.CHANGE, onChangeTab);
-			_bidsMenu.dataProvider = new ListCollection( [ Localizer.getInstance().translate("BID_HOME.TAB_PENDING_LABEL"),
-													   Localizer.getInstance().translate("BID_HOME.TAB_FINISHED_LABEL"),
-													   Localizer.getInstance().translate("BID_HOME.TAB_COMING_SOON_LABEL") ] );
+			_bidsMenu.dataProvider = new ListCollection( [ _("En cours"),
+													       _("Terminées"),
+													       _("A venir") ] );
 			addChild(_bidsMenu);
 			
 			_listBackground = new TiledImage(AbstractEntryPoint.assets.getTexture("MenuTile"), GlobalConfig.dpiScale);

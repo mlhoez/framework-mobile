@@ -6,7 +6,7 @@ Created : 29 août 2013
 */
 package com.ludofactory.mobile.core.test.cs
 {
-	import com.ludofactory.mobile.core.Localizer;
+	import com.ludofactory.common.gettext.aliases._;
 	
 	/**
 	 * This class represent a type of data saved in the EncrytedLocalStore and updated
@@ -56,7 +56,7 @@ package com.ludofactory.mobile.core.test.cs
 		
 		public function toString():String
 		{
-			return Localizer.getInstance().translate(_translationKey);
+			return _(_translationKey);
 		}
 	}
 }

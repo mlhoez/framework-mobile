@@ -7,10 +7,10 @@ Created : 3 oct. 2013
 package com.ludofactory.mobile.core.test
 {
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -91,14 +91,14 @@ package com.ludofactory.mobile.core.test
 			addChild(_gifts);
 			
 			_title = new Label();
-			_title.text = Localizer.getInstance().translate("HOW_TO_WIN_GIFTS.TITLE" + (AbstractGameInfo.LANDSCAPE ? "_LANDSCAPE" : "_PORTRAIT"));
+			_title.text = AbstractGameInfo.LANDSCAPE ? _("2 METHODES POUR GAGNER DES CADEAUX !") : _("2 METHODES POUR\nGAGNER DES CADEAUX !");
 			addChild(_title);
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 40 : 62)) : (GlobalConfig.isPhone ? 50 : 72)), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 10, 10) ];
 			
 			_followMyGiftsButton = new Button();
 			_followMyGiftsButton.addEventListener(Event.TRIGGERED, onFollowMyGiftsTouched);
-			_followMyGiftsButton.label = Localizer.getInstance().translate("HOW_TO_WIN_GIFTS.FOLLOW_GIFTS_BUTTON");
+			_followMyGiftsButton.label = _("Suivi de mes gains");
 			addChild(_followMyGiftsButton);
 			
 			var containerLayout:VerticalLayout = new VerticalLayout();
@@ -110,13 +110,13 @@ package com.ludofactory.mobile.core.test
 			addChild(_leftContainer);
 			
 			_leftDescription = new Label();
-			_leftDescription.text = Localizer.getInstance().translate("HOW_TO_WIN_GIFTS.SHOP_DESCRIPTION");
+			_leftDescription.text = _("Echangez vos\nPoints en Cadeaux");
 			_leftContainer.addChild(_leftDescription);
 			_leftDescription.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 36), 0x356700, true, true, null, null, null, TextFormatAlign.CENTER);
 			
 			_leftButton = new Button();
 			_leftButton.addEventListener(Event.TRIGGERED, onShopTouched);
-			_leftButton.label = Localizer.getInstance().translate("HOW_TO_WIN_GIFTS.SHOP_BUTTON");
+			_leftButton.label = _("Boutique");
 			_leftContainer.addChild(_leftButton);
 			_leftButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 46), Theme.COLOR_BROWN, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -125,13 +125,13 @@ package com.ludofactory.mobile.core.test
 			addChild(_rightContainer);
 			
 			_rightDescription = new Label();
-			_rightDescription.text = Localizer.getInstance().translate("HOW_TO_WIN_GIFTS.TOURNAMENT_DESCRIPTION");
+			_rightDescription.text = _("Faites partie\ndu classement");
 			_rightContainer.addChild(_rightDescription);
 			_rightDescription.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 38), 0x006173, true, true, null, null, null, TextFormatAlign.CENTER);
 			
 			_rightButton = new Button();
 			_rightButton.addEventListener(Event.TRIGGERED, onTournamentTouched);
-			_rightButton.label = Localizer.getInstance().translate("HOW_TO_WIN_GIFTS.TOURNAMENT_BUTTON");
+			_rightButton.label = _("Tournois");
 			_rightContainer.addChild(_rightButton);
 			_rightButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 46), Theme.COLOR_BROWN, false, false, null, null, null, TextFormatAlign.CENTER);
 		}
@@ -140,6 +140,8 @@ package com.ludofactory.mobile.core.test
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				var leftGap:Number;
+				var rightGap:Number;
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_gifts.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.7);
@@ -169,7 +171,7 @@ package com.ludofactory.mobile.core.test
 					_rightButton.x = (actualWidth * 0.5) + _leftButton.x;
 					_leftButton.height = _rightButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 88 : 118);
 					
-					var leftGap:Number = (_leftContainer.height - _leftDescription.height - _leftButton.height) / 2;
+					leftGap = (_leftContainer.height - _leftDescription.height - _leftButton.height) / 2;
 					_leftContainer.layout["gap"] = leftGap;
 					
 					_rightContainer.width = _rightDescription.width = this.actualWidth * 0.5;
@@ -180,7 +182,7 @@ package com.ludofactory.mobile.core.test
 					_rightDescription.validate();
 					_rightButton.validate();
 					
-					var rightGap:Number = (_rightContainer.height - _rightDescription.height - _rightButton.height) / 2;
+					rightGap = (_rightContainer.height - _rightDescription.height - _rightButton.height) / 2;
 					_rightContainer.layout["gap"] = rightGap;
 				}
 				else
@@ -211,7 +213,7 @@ package com.ludofactory.mobile.core.test
 					_rightButton.x = (actualWidth * 0.5) + _leftButton.x;
 					_leftButton.height = _rightButton.height = scaleAndRoundToDpi(118);
 					
-					var leftGap:Number = (_leftContainer.height - _leftDescription.height - _leftButton.height) / 2;
+					leftGap = (_leftContainer.height - _leftDescription.height - _leftButton.height) / 2;
 					_leftContainer.layout["gap"] = leftGap;
 					
 					_rightContainer.width = _rightDescription.width = this.actualWidth * 0.5;
@@ -222,7 +224,7 @@ package com.ludofactory.mobile.core.test
 					_rightDescription.validate();
 					_rightButton.validate();
 					
-					var rightGap:Number = (_rightContainer.height - _rightDescription.height - _rightButton.height) / 2;
+					rightGap = (_rightContainer.height - _rightDescription.height - _rightButton.height) / 2;
 					_rightContainer.layout["gap"] = rightGap;
 				}
 				

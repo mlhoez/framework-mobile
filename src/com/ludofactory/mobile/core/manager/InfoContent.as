@@ -7,9 +7,9 @@ Created : 6 janv. 2013
 package com.ludofactory.mobile.core.manager
 {
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -134,7 +134,7 @@ package com.ludofactory.mobile.core.manager
 			
 			_tapToCloseLabel = new Label();
 			_tapToCloseLabel.touchable = false;
-			_tapToCloseLabel.text = Localizer.getInstance().translate("COMMON.TAP_TO_CONTINUE_LABEL");
+			_tapToCloseLabel.text = _("Tapotez n'importe où pour continuer...");
 			addChild(_tapToCloseLabel);
 			_tapToCloseLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 24 : 30), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			

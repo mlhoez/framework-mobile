@@ -8,10 +8,10 @@ package com.ludofactory.mobile.core.shop.vip
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -169,12 +169,12 @@ package com.ludofactory.mobile.core.shop.vip
 				if( AirNetworkInfo.networkInfo.isConnected() )
 				{
 					this.touchable = false;
-					InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+					InfoManager.show(_("Chargement..."));
 					Remote.getInstance().order( this._boutiqueItemData.id, _boutiqueItemData.title, onOrderSuccess, onOrderFailure, onOrderFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 				}
 				else
 				{
-					InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+					InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 				}
 			}
 			
@@ -227,7 +227,7 @@ package com.ludofactory.mobile.core.shop.vip
 		private function onOrderFailure(error:Object = null):void
 		{
 			this.touchable = true;
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 		/**

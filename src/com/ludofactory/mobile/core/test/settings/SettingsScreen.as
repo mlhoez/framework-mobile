@@ -8,11 +8,12 @@ package com.ludofactory.mobile.core.test.settings
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
@@ -78,7 +79,7 @@ package com.ludofactory.mobile.core.test.settings
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("SETTINGS.HEADER_TITLE");
+			_headerTitle = _("Réglages");
 			
 			if( !AbstractGameInfo.LANDSCAPE )
 			{
@@ -99,8 +100,8 @@ package com.ludofactory.mobile.core.test.settings
 			_soundToggleSwitch = new CustomToggleSwitch();
 			_soundToggleSwitch.onText = "";
 			_soundToggleSwitch.offText = "";
-			_soundToggleSwitch.onThumbText = Localizer.getInstance().translate("COMMON.YES");
-			_soundToggleSwitch.offThumbText = Localizer.getInstance().translate("COMMON.NO");
+			_soundToggleSwitch.onThumbText = _("Oui");
+			_soundToggleSwitch.offThumbText = _("Non");
 			_soundToggleSwitch.thumbProperties.isEnabled = false;
 			_soundToggleSwitch.isSelected = Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SOUND_ENABLED));
 			_soundToggleSwitch.addEventListener(Event.CHANGE, onSwitchSound);
@@ -109,8 +110,8 @@ package com.ludofactory.mobile.core.test.settings
 			_musicToggleSwitch = new CustomToggleSwitch();
 			_musicToggleSwitch.onText = "";
 			_musicToggleSwitch.offText = "";
-			_musicToggleSwitch.onThumbText = Localizer.getInstance().translate("COMMON.YES");
-			_musicToggleSwitch.offThumbText = Localizer.getInstance().translate("COMMON.NO");
+			_musicToggleSwitch.onThumbText = _("Oui");
+			_musicToggleSwitch.offThumbText = _("Non");
 			_musicToggleSwitch.isSelected = Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_MUSIC_ENABLED));
 			_musicToggleSwitch.addEventListener(Event.CHANGE, onSwitchMusic);
 			_savedMusicChoice = _musicToggleSwitch.isSelected;
@@ -118,8 +119,8 @@ package com.ludofactory.mobile.core.test.settings
 			_tutoToggleSwitch = new CustomToggleSwitch();
 			_tutoToggleSwitch.onText = "";
 			_tutoToggleSwitch.offText = "";
-			_tutoToggleSwitch.onThumbText = Localizer.getInstance().translate("COMMON.YES");
-			_tutoToggleSwitch.offThumbText = Localizer.getInstance().translate("COMMON.NO");
+			_tutoToggleSwitch.onThumbText = _("Oui");
+			_tutoToggleSwitch.offThumbText = _("Non");
 			_tutoToggleSwitch.isSelected = MemberManager.getInstance().getDisplayTutorial();
 			_tutoToggleSwitch.addEventListener(Event.CHANGE, onSwitchTuto);
 			_savedTutoChoice = _tutoToggleSwitch.isSelected;
@@ -144,10 +145,10 @@ package com.ludofactory.mobile.core.test.settings
 			_list.isSelectable = false;
 			_list.layout = vlayout;
 			_list.itemRendererType = SettingItemRenderer;
-			_list.dataProvider = new ListCollection( [ { title:"SETTINGS.SOUND",    value:"", accessory:_soundToggleSwitch },
-													   { title:"SETTINGS.MUSIC",    value:"", accessory:_musicToggleSwitch },
-													   { title:"SETTINGS.TUTORIAL", value:"", accessory:_tutoToggleSwitch },
-													   { title:"SETTINGS.LANGUAGE", value:"", accessory:_languagePicker }
+			_list.dataProvider = new ListCollection( [ { title:_("Sons"),     value:"", accessory:_soundToggleSwitch },
+													   { title:_("Musique"),  value:"", accessory:_musicToggleSwitch },
+													   { title:_("Tutoriel"), value:"", accessory:_tutoToggleSwitch },
+													   { title:_("Langage"),  value:"", accessory:_languagePicker }
 												      ] );
 			addChild(_list);
 		}
@@ -202,23 +203,23 @@ package com.ludofactory.mobile.core.test.settings
 		
 		private function onLanguageChanged(event:Event):void
 		{
-			Localizer.getInstance().lang = (_languagePicker.selectedItem as LanguageData).key;
+			LanguageManager.getInstance().lang = (_languagePicker.selectedItem as LanguageData).key;
 			if( _list && _list.dataProvider )
 			{
 				for(var i:int = 0; i < _list.dataProvider.length; i++)
 					_list.dataProvider.updateItemAt(i);
 			}
 			
-			advancedOwner.dispatchEventWith(LudoEventType.UPDATE_HEADER_TITLE, false, Localizer.getInstance().translate("SETTINGS.HEADER_TITLE"));
+			advancedOwner.dispatchEventWith(LudoEventType.UPDATE_HEADER_TITLE, false, _("Réglages"));
 			
-			_soundToggleSwitch.onThumbText = Localizer.getInstance().translate("COMMON.YES");
-			_soundToggleSwitch.offThumbText = Localizer.getInstance().translate("COMMON.NO");
+			_soundToggleSwitch.onThumbText = _("Oui");
+			_soundToggleSwitch.offThumbText = _("Non");
 			
-			_musicToggleSwitch.onThumbText = Localizer.getInstance().translate("COMMON.YES");
-			_musicToggleSwitch.offThumbText = Localizer.getInstance().translate("COMMON.NO");
+			_musicToggleSwitch.onThumbText = _("Oui");
+			_musicToggleSwitch.offThumbText = _("Non");
 			
-			_tutoToggleSwitch.onThumbText = Localizer.getInstance().translate("COMMON.YES");
-			_tutoToggleSwitch.offThumbText = Localizer.getInstance().translate("COMMON.NO");
+			_tutoToggleSwitch.onThumbText = _("Oui");
+			_tutoToggleSwitch.offThumbText = _("Non");
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -239,7 +240,7 @@ package com.ludofactory.mobile.core.test.settings
 				{
 					params.id_langue = LanguageData(_languagePicker.selectedItem).id;
 					change = true;
-					Flox.logInfo("\t\t&rarr;Changement du paramètre de langue : {0}", Localizer.getInstance().translate( LanguageData(_languagePicker.selectedItem).translationKey ));
+					Flox.logInfo("\t\t&rarr;Changement du paramètre de langue : {0}", _( LanguageData(_languagePicker.selectedItem).translationKey ));
 				}
 				
 				if( _savedSoundChoice != _soundToggleSwitch.isSelected )

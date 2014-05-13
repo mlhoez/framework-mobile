@@ -6,10 +6,10 @@ Created : 10 oct. 2013
 */
 package com.ludofactory.mobile.core.test
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.event.EventData;
@@ -72,17 +72,17 @@ package com.ludofactory.mobile.core.test
 			_container.addChild(_icon);
 			
 			_notificationTitle = new Label();
-			_notificationTitle.text = Localizer.getInstance().translate("RATE_NOTIFICATION.TITLE");
+			_notificationTitle.text = _("Donnez-nous une note !");
 			_container.addChild(_notificationTitle);
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_message = new Label();
-			_message.text = Localizer.getInstance().translate("RATE_NOTIFICATION.MESSAGE");
+			_message.text = _("Vous aimez notre jeu ?\nAidez-nous à le faire connaître en lui donnant une note !");
 			_container.addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_yesButton = new Button();
-			_yesButton.label = formatString(Localizer.getInstance().translate("RATE_NOTIFICATION.RATE_BUTTON_LABEL"), AbstractGameInfo.GAME_NAME);
+			_yesButton.label = formatString(_("Noter {0}"), AbstractGameInfo.GAME_NAME);
 			_yesButton.addEventListener(Event.TRIGGERED, onConfirm);
 			_container.addChild(_yesButton);
 		}

@@ -6,10 +6,9 @@ Created : 28 août 2013
 */
 package com.ludofactory.mobile.core.shop.bid.comingsoon
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -76,7 +75,7 @@ package com.ludofactory.mobile.core.shop.bid.comingsoon
 			_container.layout = vlayout;
 			
 			_notificationTitle = new Label();
-			_notificationTitle.text = Localizer.getInstance().translate("BID_COMING_SOON_DETAIL.TITLE");
+			_notificationTitle.text = _("Prochainement...");
 			_container.addChild(_notificationTitle);
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			

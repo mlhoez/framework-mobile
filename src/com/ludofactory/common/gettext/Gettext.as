@@ -60,13 +60,16 @@ package com.ludofactory.common.gettext
 				poFile = filesToLoad[i] as File;
 				if( !poFile.isHidden ) // just in case for mac files
 				{
-					_locales[_currentLocale]["common"] = parsePOFile(poFile);
+					_locales[_currentLocale][poFile.name.split(".")[0]] = parsePOFile(poFile);
 				}
 			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	API
+		
+		private var _helperTrad:String;
+		private var _helperTradTab:Array;
 		
 		/**
 		 * GNU gettext implementation.
@@ -91,7 +94,8 @@ package com.ludofactory.common.gettext
 		public function dgettext(domain:String, key:String):String
 		{
 			// domain contains a POFile
-			return _locales[_currentLocale][domain].translations[key];
+			_helperTrad = _locales[_currentLocale][domain].translations[key];
+			return (_helperTrad == null || _helperTrad == "") ? key : _helperTrad;
 		}
 		
 		/**
@@ -121,8 +125,10 @@ package com.ludofactory.common.gettext
 		public function dngettext(domain:String, keySingular:String, keyPlural:String, n:int):String
 		{
 			// domain contains a POFile
-			// FIXME Problème quand pluriel et pas de tableau dans le dictionnaire
-			return _locales[_currentLocale][domain].translations[keySingular][ _locales[_currentLocale][domain].getPluralIndex(n) ];
+			_helperTradTab =  _locales[_currentLocale][domain].translations[keySingular];
+			if ( _helperTradTab.length <= 0 )
+				return _locales[_currentLocale][domain].getPluralIndex(n) <= 1 ? keySingular : keyPlural;
+			return _helperTradTab[ _locales[_currentLocale][domain].getPluralIndex(n) ];
 		}
 	}
 }

@@ -7,19 +7,16 @@ Created : 23 oct. 2013
 package com.ludofactory.mobile.core.test.pause
 {
 	import com.greensock.TweenLite;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.ads.AdManager;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
@@ -72,21 +69,21 @@ package com.ludofactory.mobile.core.test.pause
 			
 			_titleLabel = new Label();
 			_titleLabel.alpha = 0;
-			_titleLabel.text = Localizer.getInstance().translate("COMMON.PAUSE");
+			_titleLabel.text = _("Jeu en pause");
 			addChild(_titleLabel);
 			_titleLabel.textRendererProperties.textFormat = Theme.pauseViewLabelTextFormat;
 			_titleLabel.textRendererProperties.wordWrap = false;
 			
 			_resumeButton = new feathers.controls.Button();
 			_resumeButton.alpha = 0;
-			_resumeButton.label = Localizer.getInstance().translate("COMMON.RESUME");
+			_resumeButton.label = _("Reprendre");
 			_resumeButton.styleName = Theme.BUTTON_SPECIAL;
 			addChild(_resumeButton);
 			
 			_exitButton = new feathers.controls.Button();
 			_exitButton.alpha = 0;
 			_exitButton.styleName = Theme.BUTTON_RED;
-			_exitButton.label = Localizer.getInstance().translate("COMMON.QUIT");
+			_exitButton.label = _("Abandonner");
 			addChild(_exitButton);
 			
 			_fxButton = new starling.display.Button( AbstractEntryPoint.assets.getTexture("fx-button") );

@@ -109,6 +109,9 @@ package com.ludofactory.mobile.core
 			/**
 			 * Pyramid High Scores leaderboard (Game Center). */		
 			public static var LEADERBOARD_HIGHSCORE:String;
+			/**
+			 * Prefix of achievements registered in iTunes Connect. */		
+			public static var ACHIEVEMENTS_PREFIX:String;
 			
 //------------------------------------------------------------------------------------------------------------
 //	AdMob
@@ -138,5 +141,12 @@ package com.ludofactory.mobile.core
 			 * of the screen when the game is paused.</p>
 			 */		
 			public static var ADMOB_IOS_DEFAULT_BANNER_UNIT_ID:String;
+			
+//------------------------------------------------------------------------------------------------------------
+//	Rules and trophies
+			
+			public static var RULES:Array;
+			
+			public static var CUPS:Array;
 	}
 }

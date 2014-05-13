@@ -8,7 +8,6 @@ package com.ludofactory.mobile.core.test.engine
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -39,7 +38,7 @@ package com.ludofactory.mobile.core.test.engine
 		
 		/**
 		 * The message. */		
-		private var _message:Label;
+		private var _messageLabel:Label;
 		
 		/**
 		 *  */		
@@ -47,18 +46,18 @@ package com.ludofactory.mobile.core.test.engine
 		
 		/**
 		 *  */		
-		private var _messageTranslationKey:String;
+		private var _message:String;
 		
 		/**
 		 * The more icon. */		
 		private var _arrow:ImageLoader;
 		
-		public function FreeGameEndElement(imageTextureName:String, messageTranslationKey:String)
+		public function FreeGameEndElement(imageTextureName:String, message:String)
 		{
 			super();
 			
 			_imageTextureName = imageTextureName;
-			_messageTranslationKey = messageTranslationKey;
+			_message = message;
 		}
 		
 		override protected function initialize():void
@@ -73,10 +72,10 @@ package com.ludofactory.mobile.core.test.engine
 			_icon.alignPivot(HAlign.LEFT, VAlign.CENTER);
 			addChild( _icon );
 			
-			_message =  new Label();
-			_message.text = Localizer.getInstance().translate(_messageTranslationKey);
-			addChild(_message);
-			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 36), Theme.COLOR_WHITE, true, false, null, null, null, TextFormatAlign.CENTER);
+			_messageLabel =  new Label();
+			_messageLabel.text = _message;
+			addChild(_messageLabel);
+			_messageLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 36), Theme.COLOR_WHITE, true, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_arrow = new ImageLoader();
 			_arrow.source = AbstractEntryPoint.assets.getTexture("arrow_down");
@@ -94,18 +93,18 @@ package com.ludofactory.mobile.core.test.engine
 			_arrow.rotation = deg2rad(-90);
 			_arrow.x = actualWidth - scaleAndRoundToDpi(10) - (_arrow.width * 0.5);
 			
-			_message.x = _icon.x + _icon.width + scaleAndRoundToDpi(5);
-			_message.width = _arrow.x - _message.x;
-			_message.validate();
+			_messageLabel.x = _icon.x + _icon.width + scaleAndRoundToDpi(5);
+			_messageLabel.width = _arrow.x - _messageLabel.x;
+			_messageLabel.validate();
 			
 			_background.width = this.actualWidth;
-			_background.height = _message.height + scaleAndRoundToDpi(40);
+			_background.height = _messageLabel.height + scaleAndRoundToDpi(40);
 			
 			_icon.x = scaleAndRoundToDpi(10);
 			_icon.y = _background.height * 0.5;
 			
 			//_background.y = (_icon.height * 0.95) - _background.height;
-			_message.y = /*(_icon.height * 0.95) - _message.height -*/ scaleAndRoundToDpi(20);
+			_messageLabel.y = /*(_icon.height * 0.95) - _message.height -*/ scaleAndRoundToDpi(20);
 			_arrow.y = _background.y + (_background.height * 0.5);
 			
 			setSizeInternal(this.actualWidth, Math.max((_icon.y + (_icon.height * 0.5)), _background.height), false);
@@ -123,8 +122,8 @@ package com.ludofactory.mobile.core.test.engine
 			_icon.removeFromParent(true);
 			_icon = null;
 			
-			_message.removeFromParent(true);
-			_message = null;
+			_messageLabel.removeFromParent(true);
+			_messageLabel = null;
 			
 			_arrow.removeFromParent(true);
 			_arrow = null;

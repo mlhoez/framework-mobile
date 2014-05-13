@@ -7,10 +7,10 @@ Created : 7 nov. 2013
 package com.ludofactory.mobile.core.test.highscore
 {
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -78,14 +78,14 @@ package com.ludofactory.mobile.core.test.highscore
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("HIGH_SCORE_HOME.HEADER_TITLE");
+			_headerTitle = _("Meilleurs scores");
 			
 			_icon = new Image(AbstractEntryPoint.assets.getTexture("menu-icon-highscore"));
 			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale;
 			addChild(_icon);
 			
 			_message = new Label();
-			_message.text = Localizer.getInstance().translate("HIGH_SCORE_HOME.MESSAGE");
+			_message.text = _("Serez-vous le meilleur\ndes meilleurs ?");
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 48), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -112,7 +112,7 @@ package com.ludofactory.mobile.core.test.highscore
 			_internationalButton = new Button();
 			_internationalButton.horizontalAlign = Button.HORIZONTAL_ALIGN_LEFT;
 			_internationalButton.addEventListener(Event.TRIGGERED, onShowInternational);
-			_internationalButton.label = Localizer.getInstance().translate("HIGH_SCORE_HOME.INTERNATIONAL_BUTTON_LABEL");
+			_internationalButton.label = _("International");
 			_internationalButton.defaultIcon = _internationalIcon;
 			addChild(_internationalButton);
 			_internationalButton.gap = scaleAndRoundToDpi(40);
@@ -145,7 +145,7 @@ package com.ludofactory.mobile.core.test.highscore
 			_nationalButton = new Button();
 			_nationalButton.horizontalAlign = Button.HORIZONTAL_ALIGN_LEFT;
 			_nationalButton.addEventListener(Event.TRIGGERED, onShowNational);
-			_nationalButton.label = Localizer.getInstance().translate("HIGH_SCORE_HOME.NATIONAL_BUTTON_LABEL");
+			_nationalButton.label = _("National");
 			_nationalButton.defaultIcon = _nationalIcon;
 			addChild(_nationalButton);
 			_nationalButton.gap = scaleAndRoundToDpi(40);
@@ -159,7 +159,7 @@ package com.ludofactory.mobile.core.test.highscore
 			_facebookButton = new Button();
 			_facebookButton.horizontalAlign = Button.HORIZONTAL_ALIGN_LEFT;
 			_facebookButton.addEventListener(Event.TRIGGERED, onShowFacebook);
-			_facebookButton.label = Localizer.getInstance().translate("HIGH_SCORE_HOME.FACEBOOK_BUTTON_LABEL");
+			_facebookButton.label = _("Amis");
 			_facebookButton.defaultIcon = _facebookIcon;
 			addChild(_facebookButton);
 			_facebookButton.gap = scaleAndRoundToDpi(40);

@@ -7,10 +7,10 @@ Created : 24 juil. 2013
 package com.ludofactory.mobile.core.test.tournament
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -117,7 +117,7 @@ package com.ludofactory.mobile.core.test.tournament
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("TOURNAMENT_RANKING.HEADER_TITLE");
+			_headerTitle = _("Tournoi en cours");
 			
 			_listHeader = new TournamentListHeader();
 			addChild(_listHeader);
@@ -137,7 +137,7 @@ package com.ludofactory.mobile.core.test.tournament
 			
 			_playButton = new Button();
 			_playButton.addEventListener(Event.TRIGGERED, onPlay);
-			_playButton.label = Localizer.getInstance().translate("TOURNAMENT_RANKING.PLAY_BUTTON_LABEL");
+			_playButton.label = _("Participer");
 			addChild(_playButton);
 			
 			if( MemberManager.getInstance().getTournamentUnlocked() == false )
@@ -325,7 +325,7 @@ package com.ludofactory.mobile.core.test.tournament
 						{
 							_retryContainer.loadingMode = false;
 							_retryContainer.singleMessageMode = true;
-							_retryContainer.message = Localizer.getInstance().translate("TOURNAMENT_RANKING.NO_PLAYER");
+							_retryContainer.message = _("Personne n'est encore classé !");
 						}
 						
 						_ranksList.isRefreshableDown = false;
@@ -468,7 +468,7 @@ package com.ludofactory.mobile.core.test.tournament
 			
 			if( !_isInUpdateMode )
 			{
-				_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+				_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 				_retryContainer.loadingMode = false;
 			}
 		}
@@ -492,7 +492,7 @@ package com.ludofactory.mobile.core.test.tournament
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -549,7 +549,7 @@ package com.ludofactory.mobile.core.test.tournament
 					if( !_calloutLabel )
 					{
 						_calloutLabel = new Label();
-						_calloutLabel.text = Localizer.getInstance().translate("HOME.TOURNAMENT_LOCKED_HINT");
+						_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de terminer une partie Classique !");
 						_calloutLabel.width = GlobalConfig.stageWidth * 0.9;
 						_calloutLabel.validate();
 					}

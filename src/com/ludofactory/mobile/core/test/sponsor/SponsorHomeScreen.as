@@ -9,10 +9,10 @@ package com.ludofactory.mobile.core.test.sponsor
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -115,7 +115,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			
 			_titleLabel = new Label();
 			_titleLabel.touchable = false;
-			_titleLabel.text = Localizer.getInstance().translate("SPONSOR_HOME.TITLE");
+			_titleLabel.text = _("Parrainez\net gagnez jusqu'à");
 			_mainContainer.addChild(_titleLabel);
 			_titleLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 52 : 82), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_titleLabel.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, scaleAndRoundToDpi(5), scaleAndRoundToDpi(5)) ];
@@ -129,7 +129,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			
 			_byFilleulLabel = new Label();
 			_byFilleulLabel.touchable = false;
-			_byFilleulLabel.text = Localizer.getInstance().translate( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? "SPONSOR_HOME.BY_FILLEUL_POINTS" : "SPONSOR_HOME.BY_FILLEUL_EURO" );
+			_byFilleulLabel.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? _("POINTS PAR FILLEUL") : _("PAR FILLEUL");
 			_mainContainer.addChild(_byFilleulLabel);
 			_byFilleulLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 52 : 82), 0xffe900, false, false, null, null, null, TextFormatAlign.CENTER);
 			_byFilleulLabel.textRendererProperties.nativeFilters = [ new GlowFilter(0x006173, 1, scaleAndRoundToDpi(12), scaleAndRoundToDpi(12), scaleAndRoundToDpi(10)) ];
@@ -137,7 +137,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			_knowMoreButton = new Button();
 			_knowMoreButton.addEventListener(Event.TRIGGERED, onKnowMoreSelected);
 			_knowMoreButton.styleName = Theme.BUTTON_TRANSPARENT_WHITE;
-			_knowMoreButton.label = Localizer.getInstance().translate("SPONSOR_HOME.KNOW_MORE_BUTTON");
+			_knowMoreButton.label = _("Comment ça marche ?");
 			_mainContainer.addChild(_knowMoreButton);
 			_knowMoreButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_WHITE);
 			
@@ -161,7 +161,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			_emailButton.addEventListener(Event.TRIGGERED, onEmailSelected);
 			_emailButton.styleName = AbstractGameInfo.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_RIGHT;
 			_emailButton.defaultIcon = _emailIcon;
-			_emailButton.label = Localizer.getInstance().translate("SPONSOR_HOME.TYPE_EMAIL");
+			_emailButton.label = _("Par Email");
 			AbstractGameInfo.LANDSCAPE ? addChild(_emailButton) : _buttonsContainer.addChild(_emailButton);
 			_emailButton.gap = GlobalConfig.isPhone ? 0 : 20;
 			_emailButton.minHeight = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
@@ -175,7 +175,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			_smsButton.addEventListener(Event.TRIGGERED, onSmsSelected);
 			_smsButton.styleName = AbstractGameInfo.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_LEFT;
 			_smsButton.defaultIcon = _smsIcon;
-			_smsButton.label = Localizer.getInstance().translate("SPONSOR_HOME.TYPE_SMS");
+			_smsButton.label = _("Par Sms");
 			AbstractGameInfo.LANDSCAPE ? addChild(_smsButton) : _buttonsContainer.addChild(_smsButton);
 			_smsButton.gap = GlobalConfig.isPhone ? 0 : 20;
 			_smsButton.minHeight = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
@@ -188,7 +188,7 @@ package com.ludofactory.mobile.core.test.sponsor
 			_myFriendsButton = new Button();
 			_myFriendsButton.addEventListener(Event.TRIGGERED, onMyFriendsSelected);
 			_myFriendsButton.styleName = Theme.BUTTON_GREEN;
-			_myFriendsButton.label = Localizer.getInstance().translate("SPONSOR_HOME.MY_FRIENDS");
+			_myFriendsButton.label = _("Mes filleuls");
 			addChild(_myFriendsButton);
 			_myFriendsButton.minHeight = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
 			
@@ -269,7 +269,7 @@ package com.ludofactory.mobile.core.test.sponsor
 				if( result.hasOwnProperty("parrainage_gain_type") && result.parrainage_gain_type )
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE, result.parrainage_gain_type);
 				
-				_byFilleulLabel.text = Localizer.getInstance().translate( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? "SPONSOR_HOME.BY_FILLEUL_POINTS" : "SPONSOR_HOME.BY_FILLEUL_EURO" );
+				_byFilleulLabel.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? _("POINTS PAR FILLEUL") : _("PAR FILLEUL");
 				_rewardValueLabel.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_VALUE);
 			}
 		}

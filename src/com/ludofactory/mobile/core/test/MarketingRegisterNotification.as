@@ -7,16 +7,16 @@ Created : 24 sept. 2013
 package com.ludofactory.mobile.core.test
 {
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.AuthenticationManager;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
+	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Rectangle;
@@ -95,7 +95,7 @@ package com.ludofactory.mobile.core.test
 			_container.layout = layout;
 			
 			_notificationTitle = new Label();
-			_notificationTitle.text = Localizer.getInstance().translate("CREATE_ACCOUNT_NOTIFICATION.TITLE");
+			_notificationTitle.text = _("Créez votre compte dès\nmaintenant pour :");
 			_container.addChild(_notificationTitle);
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 46 : 66), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_notificationTitle.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
@@ -108,31 +108,31 @@ package com.ludofactory.mobile.core.test
 			_container.addChild(_textGroup);
 			
 			_bonus = new Label();
-			_bonus.text = Localizer.getInstance().translate("CREATE_ACCOUNT_NOTIFICATION.BONUS");
+			_bonus.text = _("• Obtenir 10 parties par jour");
 			_textGroup.addChild(_bonus);
 			_bonus.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
 			_bonus.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
 			
 			_bonusOne = new Label();
-			_bonusOne.text = Localizer.getInstance().translate( "CREATE_ACCOUNT_NOTIFICATION.BONUS_ONE");
+			_bonusOne.text = _( "• Obtenir 10 Nouvelles Parties");
 			_textGroup.addChild(_bonusOne);
 			_bonusOne.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
 			_bonusOne.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
 			
 			_bonusTwo = new Label();
-			_bonusTwo.text = Localizer.getInstance().translate( Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN) == true ? "CREATE_ACCOUNT_NOTIFICATION.BONUS_TWO" : "CREATE_ACCOUNT_NOTIFICATION.BONUS_TWO_DISABLED");
+			_bonusTwo.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN) == true ? _("• Convertir vos Points en Cadeaux") : _("• Convertir vos Points");
 			_textGroup.addChild(_bonusTwo);
 			_bonusTwo.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
 			_bonusTwo.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
 			
 			_bonusThree = new Label();
-			_bonusThree.text = Localizer.getInstance().translate("CREATE_ACCOUNT_NOTIFICATION.BONUS_THREE");
+			_bonusThree.text = _("• Gagner 200 Points en bonus");
 			_textGroup.addChild(_bonusThree);
 			_bonusThree.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
 			_bonusThree.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
 			
 			_bonusFour = new Label();
-			_bonusFour.text = Localizer.getInstance().translate("CREATE_ACCOUNT_NOTIFICATION.BONUS_FOUR");
+			_bonusFour.text = _("• Obtenir 1 Crédit gratuit");
 			_textGroup.addChild(_bonusFour);
 			_bonusFour.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
 			_bonusFour.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
@@ -141,17 +141,17 @@ package com.ludofactory.mobile.core.test
 			_container.addChild(_buttonGroup);
 			
 			_laterButton = new Button();
-			_laterButton.label = Localizer.getInstance().translate("CREATE_ACCOUNT_NOTIFICATION.LATER_BUTTON_LABEL");
+			_laterButton.label = _("Plus tard");
 			_laterButton.styleName = Theme.BUTTON_BLUE;
 			_laterButton.addEventListener(Event.TRIGGERED, onCancel);
 			_buttonGroup.addChild(_laterButton);
 			
 			_createButton = new Button();
-			_createButton.label = Localizer.getInstance().translate("CREATE_ACCOUNT_NOTIFICATION.CREATE_ACCOUNT_BUTTON_LABEL");
+			_createButton.label = _("Créer");
 			_createButton.addEventListener(Event.TRIGGERED, onConfirm);
 			_buttonGroup.addChild(_createButton);
 			
-			_alreadyButton = new ArrowGroup( Localizer.getInstance().translate("CREATE_ACCOUNT_NOTIFICATION.ALREADY_HAVE_ACCOUNT_BUTTON_LABEL") );
+			_alreadyButton = new ArrowGroup( _("J'ai déjà un compte") );
 			_alreadyButton.addEventListener(Event.TRIGGERED, onAlreadyHaveAccount);
 			_buttonGroup.addChild(_alreadyButton);
 			

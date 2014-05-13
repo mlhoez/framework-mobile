@@ -6,10 +6,10 @@ Created : 28 août 2013
 */
 package com.ludofactory.mobile.core.shop.bid.pending
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -107,7 +107,7 @@ package com.ludofactory.mobile.core.shop.bid.pending
 			_container.addEventListener(LudoEventType.REFRESH_TOP, onRefreshPendingBid);
 			
 			_notificationTitle = new Label();
-			_notificationTitle.text = Localizer.getInstance().translate("BID_PENDING_DETAIL.TITLE");
+			_notificationTitle.text = _("Enchère");
 			_container.addChild(_notificationTitle);
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -128,7 +128,7 @@ package com.ludofactory.mobile.core.shop.bid.pending
 			_giftName.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER) ;
 			
 			_infoMessage = new Label();
-			_infoMessage.text = Localizer.getInstance().translate("BID_PENDING_DETAIL.INFO_MESSAGE");
+			_infoMessage.text = _("Information : vos Points seront débités uniquement si vous remportez l'enchère.");
 			_container.addChild(_infoMessage);
 			_infoMessage.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, true, true);
 			
@@ -141,13 +141,13 @@ package com.ludofactory.mobile.core.shop.bid.pending
 			
 			switch(_pendingBidItemData.state)
 			{
-				case PendingBidItemData.STATE_NOT_CONNECTED: { _message.text = Localizer.getInstance().translate("BID_PENDING_DETAIL.STATE_NOT_AUTHENTICATED_MESSAGE"); break; }
-				case PendingBidItemData.STATE_ACTUAL_WINNER: { _message.text = Localizer.getInstance().translate("BID_PENDING_DETAIL.STATE_ACTUAL_WINNER");         break; }
-				case PendingBidItemData.STATE_FINISHED:      { _message.text = Localizer.getInstance().translate("BID_PENDING_DETAIL.STATE_BID_FINISHED");          break; }
+				case PendingBidItemData.STATE_NOT_CONNECTED: { _message.text = _("Vous devez être identifié pour pouvoir enchérir."); break; }
+				case PendingBidItemData.STATE_ACTUAL_WINNER: { _message.text = _("Bravo !\n\nVous êtes provisoirement le gagnant de cette enchère !");         break; }
+				case PendingBidItemData.STATE_FINISHED:      { _message.text = _("Cette enchère est terminée.");          break; }
 			}
 			
 			_bidInput = new TextInput();
-			_bidInput.prompt = formatString( Localizer.getInstance().translate("BID_PENDING_DETAIL.BID_INPUT_HINT"), _pendingBidItemData.minimumBid );
+			_bidInput.prompt = formatString( _("Enchère minimum : {0}."), _pendingBidItemData.minimumBid );
 			_bidInput.textEditorProperties.softKeyboardType = SoftKeyboardType.NUMBER;
 			_bidInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.DONE;
 			_bidInput.textEditorProperties.restrict = "0-9";
@@ -156,7 +156,7 @@ package com.ludofactory.mobile.core.shop.bid.pending
 			
 			_validateButton = new Button();
 			_validateButton.addEventListener(Event.TRIGGERED, onValidate);
-			_validateButton.label = Localizer.getInstance().translate("BID_PENDING_DETAIL.BID_BUTTON_LABEL");
+			_validateButton.label = _("Enchérir");
 			_container.addChild(_validateButton);
 			
 			if( _pendingBidItemData.state == PendingBidItemData.STATE_NOT_CONNECTED ||
@@ -227,19 +227,19 @@ package com.ludofactory.mobile.core.shop.bid.pending
 		{
 			if( !Utilities.isNumberOnly( _bidInput.text ) )
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("BID_PENDING_DETAIL.BID_IS_NOT_A_NUMBER_ERROR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("La valeur de l'enchère ne peut être qu'un chiffre."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;
 			}
 			
 			if( int(_bidInput.text) < _pendingBidItemData.minimumBid )
 			{
-				InfoManager.showTimed( formatString(Localizer.getInstance().translate("BID_PENDING_DETAIL.BID_IS_TOO_LOW_ERROR"), _pendingBidItemData.minimumBid), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( formatString(_("Votre enchère doit être supérieure à l'enchère minimum de {0}."), _pendingBidItemData.minimumBid), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;
 			}
 			
 			// validate
 			this.isEnabled = false;
-			InfoManager.show( Localizer.getInstance().translate("COMMON.LOADING") );
+			InfoManager.show( _("Chargement...") );
 			Remote.getInstance().bid(_pendingBidItemData.id, int(_bidInput.text), _pendingBidItemData.minimumBid, onBidSuccess, onBidFailure, onBidFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 		}
 		
@@ -278,7 +278,7 @@ package com.ludofactory.mobile.core.shop.bid.pending
 		private function onBidFailure(error:Object = null):void
 		{
 			this.isEnabled = true;
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 		/**
@@ -287,7 +287,7 @@ package com.ludofactory.mobile.core.shop.bid.pending
 		private function onRefreshPendingBid(event:Event = null):void
 		{
 			this.isEnabled = false;
-			InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+			InfoManager.show(_("Chargement..."));
 			Remote.getInstance().getSpecificBid(_pendingBidItemData.id, onRefreshBidSuccess, onBidFailure, onBidFailure, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
 		}
 		
@@ -313,9 +313,9 @@ package com.ludofactory.mobile.core.shop.bid.pending
 			{
 				switch(_pendingBidItemData.state)
 				{
-					case PendingBidItemData.STATE_NOT_CONNECTED: { _message.text = Localizer.getInstance().translate("BID_PENDING_DETAIL.STATE_NOT_CONNECTED_MESSAGE"); break; }
-					case PendingBidItemData.STATE_ACTUAL_WINNER: { _message.text = Localizer.getInstance().translate("BID_PENDING_DETAIL.STATE_ACTUAL_WINNER");         break; }
-					case PendingBidItemData.STATE_FINISHED:      { _message.text = Localizer.getInstance().translate("BID_PENDING_DETAIL.STATE_BID_FINISHED");          break; }
+					case PendingBidItemData.STATE_NOT_CONNECTED: { _message.text = _("Aucune connexion Internet."); break; }
+					case PendingBidItemData.STATE_ACTUAL_WINNER: { _message.text = _("Bravo !\n\nVous êtes provisoirement le gagnant de cette enchère !");         break; }
+					case PendingBidItemData.STATE_FINISHED:      { _message.text = _("Cette enchère est terminée.");          break; }
 				}
 				
 				_container.addChild(_message);
@@ -323,7 +323,7 @@ package com.ludofactory.mobile.core.shop.bid.pending
 			}
 			else
 			{
-				_bidInput.prompt = formatString( Localizer.getInstance().translate("BID_PENDING_DETAIL.BID_INPUT_HINT"), _pendingBidItemData.minimumBid );
+				_bidInput.prompt = formatString( _("Enchère minimum : {0}."), _pendingBidItemData.minimumBid );
 				
 				_container.addChild(_bidInput);
 				_container.addChild(_validateButton);
@@ -343,7 +343,7 @@ package com.ludofactory.mobile.core.shop.bid.pending
 		private function onRefreshBidFailure(error:Object = null):void
 		{
 			this.isEnabled = true;
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 			_container.onRefreshComplete();
 		}
 		

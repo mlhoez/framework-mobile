@@ -7,7 +7,6 @@ Created : 8 oct. 2013
 package com.ludofactory.mobile.core.test.settings
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -162,7 +161,7 @@ package com.ludofactory.mobile.core.test.settings
 				{
 					_title.visible = true;
 					
-					_title.text = Localizer.getInstance().translate(_data.title);
+					_title.text = _data.title;
 					
 					_control = _data.accessory;
 					if( _control )

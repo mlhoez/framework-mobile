@@ -6,18 +6,18 @@ Created : 20 janv. 2014
 */
 package com.ludofactory.mobile.debug
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.log;
-	import com.ludofactory.mobile.core.test.achievements.TrophyManager;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.settings.SettingItemRenderer;
-	import com.ludofactory.mobile.core.Localizer;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.test.achievements.TrophyManager;
+	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.test.settings.SettingItemRenderer;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import flash.desktop.NativeApplication;
@@ -102,8 +102,8 @@ package com.ludofactory.mobile.debug
 			_tournamentToggleSwitch = new CustomToggleSwitch();
 			_tournamentToggleSwitch.onText = "";
 			_tournamentToggleSwitch.offText = "";
-			_tournamentToggleSwitch.onThumbText = Localizer.getInstance().translate("COMMON.YES");
-			_tournamentToggleSwitch.offThumbText = Localizer.getInstance().translate("COMMON.NO");
+			_tournamentToggleSwitch.onThumbText = _("Oui");
+			_tournamentToggleSwitch.offThumbText = _("Non");
 			_tournamentToggleSwitch.isSelected = MemberManager.getInstance().getTournamentUnlocked();
 			_tournamentToggleSwitch.addEventListener(Event.CHANGE, onSwitchTournament);
 			

@@ -8,9 +8,9 @@ package com.ludofactory.mobile.core.shop.bid.finished
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.PullToRefreshList;
 	import com.ludofactory.mobile.core.events.LudoEventType;
@@ -97,7 +97,7 @@ package com.ludofactory.mobile.core.shop.bid.finished
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -146,7 +146,7 @@ package com.ludofactory.mobile.core.shop.bid.finished
 			
 			if( !_list.dataProvider || _list.dataProvider.length == 0 )
 			{
-				_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+				_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 				_retryContainer.loadingMode = false;
 			}
 		}

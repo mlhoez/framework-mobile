@@ -6,11 +6,12 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.core.test.game
 {
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.HeartBeat;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -136,7 +137,7 @@ package com.ludofactory.mobile.core.test.game
 			
 			if( _isEnabled )
 			{
-				_label.text = formatString( Localizer.getInstance().translate( Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE) > 1 ? "GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_PLURAL":"GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_SINGULAR"),
+				_label.text = formatString( _n("{0} partie gratuite", "{0} parties gratuites", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
 					Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
 				_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), 0x0d2701);
 			}
@@ -144,7 +145,7 @@ package com.ludofactory.mobile.core.test.game
 			{
 				if( MemberManager.getInstance().getNumFreeGameSessions() != 0 || !MemberManager.getInstance().isLoggedIn() )
 				{
-					_label.text = formatString( Localizer.getInstance().translate( Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE) > 1 ? "GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_PLURAL":"GAME_TYPE_SELECTION.LABEL_ENABLED_FREE_SINGULAR"),
+					_label.text = formatString( _n("{0} partie gratuite", "{0} parties gratuites", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
 						Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
 					_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), 0x2d2d2d);
 				}
@@ -152,13 +153,13 @@ package com.ludofactory.mobile.core.test.game
 				{
 					if( SummaryContainer.IS_TIMER_OVER_AND_REQUEST_FAILED )
 					{
-						_label.text = "???";
+						_label.text = _("???");
 						_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(56), Theme.COLOR_WHITE);
 					}
 					else
 					{
 						// mettre texte normal + timer
-						_label.text = formatString(Localizer.getInstance().translate("GAME_TYPE_SELECTION.LABEL_DISABLED_FREE"), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + "--:--:--";
+						_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + "--:--:--";
 						_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_WHITE);
 						
 						var nowInFrance:Date = Utilities.getLocalFrenchDate();
@@ -185,12 +186,12 @@ package com.ludofactory.mobile.core.test.game
 			{
 				HeartBeat.unregisterFunction(update);
 				if( _label )
-					_label.text = formatString(Localizer.getInstance().translate("GAME_TYPE_SELECTION.LABEL_DISABLED_FREE"), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + (_h < 10 ? "0":"") + _h + ":" + (_m < 10 ? "0":"") + _m + ":" + (_s < 10 ? "0":"") + _s;
+					_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + (_h < 10 ? "0":"") + _h + ":" + (_m < 10 ? "0":"") + _m + ":" + (_s < 10 ? "0":"") + _s;
 			}
 			else
 			{
 				if( _label )
-					_label.text = formatString(Localizer.getInstance().translate("GAME_TYPE_SELECTION.LABEL_DISABLED_FREE"), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + (_h < 10 ? "0":"") + _h + ":" + (_m < 10 ? "0":"") + _m + ":" + (_s < 10 ? "0":"") + _s;
+					_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + (_h < 10 ? "0":"") + _h + ":" + (_m < 10 ? "0":"") + _m + ":" + (_s < 10 ? "0":"") + _s;
 			}
 		}
 		
@@ -215,7 +216,7 @@ package com.ludofactory.mobile.core.test.game
 						if( !_calloutLabel )
 						{
 							_calloutLabel = new Label();
-							_calloutLabel.text = formatString(Localizer.getInstance().translate("SUMMARY.TIMER_OVER_AND_REQUEST_FAILED"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+							_calloutLabel.text = formatString(_("Reconnectez-vous pour récupérer vos {0} parties gratuites."), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 							_calloutLabel.width = actualWidth * 0.9;
 							_calloutLabel.validate();
 						}

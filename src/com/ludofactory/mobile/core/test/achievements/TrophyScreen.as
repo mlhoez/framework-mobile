@@ -7,13 +7,12 @@ Created : 31 août 2013
 package com.ludofactory.mobile.core.test.achievements
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
 	
 	import feathers.controls.List;
 	import feathers.controls.Scroller;
@@ -37,12 +36,12 @@ package com.ludofactory.mobile.core.test.achievements
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("TROPHY.HEADER_TITLE");
+			_headerTitle = _("Coupes");
 			
 			_list = new List();
 			_list.isSelectable = false;
 			_list.itemRendererType = TrophyItemRenderer;
-			_list.dataProvider = new ListCollection( Storage.getInstance().getProperty( StorageConfig.PROPERTY_TROPHIES ) );
+			_list.dataProvider = new ListCollection( AbstractGameInfo.CUPS );
 			_list.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FLOAT;
 			_list.verticalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;

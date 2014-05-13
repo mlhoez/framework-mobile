@@ -86,7 +86,7 @@ package com.ludofactory.common.gettext
 				if( currentBlock.length <= 2 ) // simple translation
 					translations[currentBlock[0]] = currentBlock[1];
 				else // plural included
-					translations[currentBlock[0]] = currentBlock.splice(2);
+					translations[currentBlock[0]] = currentBlock.length >= 4 ? currentBlock.splice(2) : [];
 			}
 			parsedPOFile.translations = translations;
 		} 

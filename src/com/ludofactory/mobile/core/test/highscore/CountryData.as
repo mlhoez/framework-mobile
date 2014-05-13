@@ -6,7 +6,7 @@ Created : 18 sept. 2013
 */
 package com.ludofactory.mobile.core.test.highscore
 {
-	import com.ludofactory.mobile.core.Localizer;
+	import com.ludofactory.common.gettext.aliases._;
 
 	public class CountryData
 	{
@@ -41,7 +41,7 @@ package com.ludofactory.mobile.core.test.highscore
 		
 		public function toString():String
 		{
-			return Localizer.getInstance().translate( _nameTranslationKey );
+			return _( _nameTranslationKey );
 		}
 	}
 }

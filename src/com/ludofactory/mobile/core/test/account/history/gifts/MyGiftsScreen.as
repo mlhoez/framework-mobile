@@ -7,10 +7,10 @@ Created : 17 sept. 2013
 package com.ludofactory.mobile.core.test.account.history.gifts
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.NotLoggedInContainer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
@@ -69,7 +69,7 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("MY_GIFTS.HEADER_TITLE");
+			_headerTitle = _("Mes gains");
 			
 			if( !AbstractGameInfo.LANDSCAPE )
 			{
@@ -196,7 +196,7 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 						{
 							_retryContainer.loadingMode = false;
 							_retryContainer.singleMessageMode = true;
-							_retryContainer.message = Localizer.getInstance().translate("MY_GIFTS.NO_MESSAGES");
+							_retryContainer.message = _("Aucune donnée à afficher.");
 							_list.visible = false;
 						}
 						
@@ -268,7 +268,7 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 						
 						_retryContainer.loadingMode = false;
 						_retryContainer.singleMessageMode = true;
-						_retryContainer.message =  Localizer.getInstance().translate("MY_GIFTS.NO_GIFTS_WON_YET");
+						_retryContainer.message =  _("Vous n'avez pas encore gagné\nde cadeau sur l'application.");
 						_list.visible = false;
 						
 						//if( !Storage.getInstance().getProperty(StorageConfig.PROPERTY_SKIP_HOW_TO_WIN_GIFTS_SCREEN) )
@@ -305,7 +305,7 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 			
 			if( !_isInUpdateMode )
 			{
-				_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+				_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 				_retryContainer.loadingMode = false;
 			}
 		}
@@ -325,7 +325,7 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		

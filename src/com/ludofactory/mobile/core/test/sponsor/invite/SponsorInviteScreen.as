@@ -12,11 +12,11 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Bounce;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.NotLoggedInContainer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
@@ -129,7 +129,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("SPONSOR_INVITE.HEADER_TITLE");
+			_headerTitle = _("Parrainer");
 			
 			_loader = new MovieClip(Theme.blackLoaderTextures);
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
@@ -142,14 +142,14 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			
 			_title = new Label();
 			_title.visible = false;
-			_title.text = Localizer.getInstance().translate( advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "SPONSOR_INVITE.TITLE_WHEN_SMS":"SPONSOR_INVITE.TITLE_WHEN_EMAIL" );
+			_title.text = advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? _("Envoyer un sms de parrainage à tous vos contacts.") : _("Envoyer un email de parrainage à tous vos contacts.");
 			addChild(_title);
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(24), 0x636363, true);
 			
 			_inviteAllButton = new Button();
 			_inviteAllButton.visible = false
 			_inviteAllButton.styleName = Theme.BUTTON_FLAT_GREEN;
-			_inviteAllButton.label = Localizer.getInstance().translate("SPONSOR_INVITE.INVITE_ALL_BUTTON_LABEL");
+			_inviteAllButton.label = _("Inviter\ntous");
 			_inviteAllButton.addEventListener(Event.TRIGGERED, onInviteAll);
 			addChild(_inviteAllButton);
 			
@@ -209,7 +209,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			_singleInviteButton = new Button();
 			_singleInviteButton.styleName = Theme.BUTTON_EMPTY;
 			_singleInviteButton.addEventListener(Event.TRIGGERED, onSingleInvite);
-			_singleInviteButton.label = Localizer.getInstance().translate( advancedOwner.screenData.sponsorType == SponsorTypes.EMAIL ? "SPONSOR_INVITE.FILL_EMAIL" : "SPONSOR_INVITE.FILL_SMS");
+			_singleInviteButton.label = advancedOwner.screenData.sponsorType == SponsorTypes.EMAIL ? _("Entrer un email.") : _("Entrer un numéro de téléphone.");
 			_singleInviteGroup.addChild(_singleInviteButton);
 			_singleInviteButton.minHeight = _singleInviteButton.minTouchHeight = scaleAndRoundToDpi(70);
 			_singleInviteButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_DARK_GREY, true, true);
@@ -245,7 +245,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 					{
 						_retryContainer.loadingMode = false;
 						_retryContainer.singleMessageMode = true;
-						_retryContainer.message = formatString(Localizer.getInstance().translate("SPONSOR_INVITE.PERMISSION_DENIED"), AbstractGameInfo.GAME_NAME);
+						_retryContainer.message = formatString(_("L'application n'est pas autorisée à accéder à vos contacts.\n\nPour cela, allez sur l'application « Réglages » puis dans « Confidentialité », sélectionnez « Contacts » et autorisez {0}."), AbstractGameInfo.GAME_NAME);
 					}
 				}
 				else
@@ -301,7 +301,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 					{
 						_retryContainer.loadingMode = false;
 						_retryContainer.singleMessageMode = true;
-						_retryContainer.message = Localizer.getInstance().translate("SPONSOR_INVITE.NO_CONTACT");
+						_retryContainer.message = _("Aucun contact à afficher.");
 					}
 					else
 					{
@@ -323,7 +323,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			{
 				_retryContainer.loadingMode = false;
 				_retryContainer.singleMessageMode = true;
-				_retryContainer.message = Localizer.getInstance().translate("SPONSOR_INVITE.CANNOT_ACCESS_CONTACTS");
+				_retryContainer.message = _("Impossible d'accéder à vos contacts.");
 			}
 		}
 		
@@ -395,7 +395,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			{
 				_retryContainer.loadingMode = false;
 				_retryContainer.singleMessageMode = true;
-				_retryContainer.message = Localizer.getInstance().translate("SPONSOR_INVITE.NO_CONTACT");
+				_retryContainer.message = _("Aucun contact à afficher.");
 			}
 			else
 			{
@@ -510,12 +510,12 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 				{
 					_inviteAllButton.isEnabled = false;
 					_inviteAllButton.removeEventListener(Event.TRIGGERED, onInviteAll);
-					_inviteAllButton.label = Localizer.getInstance().translate("SPONSOR_INVITE.SENT_ALL_BUTTON_LABEL");
+					_inviteAllButton.label = _("Envoyés");
 				}
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -579,7 +579,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 					{
 						_inviteAllButton.isEnabled = false;
 						_inviteAllButton.removeEventListener(Event.TRIGGERED, onInviteAll);
-						_inviteAllButton.label = Localizer.getInstance().translate("SPONSOR_INVITE.SENT_ALL_BUTTON_LABEL");
+						_inviteAllButton.label = _("Envoyés");
 					}
 					
 					TweenMax.to(_inviteAllButton, 0.75, { delay:0.5, scaleX:1, scaleY:1, autoAlpha:1, ease:Bounce.easeOut });
@@ -623,7 +623,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			addChild(_overlay);
 			
 			_singleInviteNameInput = new TextInput();
-			_singleInviteNameInput.prompt = Localizer.getInstance().translate("SPONSOR_INVITE.FILL_NAME_PROMPT");
+			_singleInviteNameInput.prompt = _("Nom du filleul...");
 			_singleInviteNameInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
 			_singleInviteNameInput.addEventListener(FeathersEventType.SOFT_KEYBOARD_ACTIVATE, onSoftKeyboardActivated);
 			_singleInviteNameInput.addEventListener(FeathersEventType.ENTER, onEnter);
@@ -633,7 +633,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			addChild(_singleInviteNameInput);
 			
 			_singleInviteMailInput = new TextInput();
-			_singleInviteMailInput.prompt = Localizer.getInstance().translate( advancedOwner.screenData.sponsorType == SponsorTypes.EMAIL ? "SPONSOR_INVITE.FILL_EMAIL_PROMPT" : "SPONSOR_INVITE.FILL_SMS_PROMPT");
+			_singleInviteMailInput.prompt = advancedOwner.screenData.sponsorType == SponsorTypes.EMAIL ? _("Saisissez son email...") : _("Saisissez son numéro de téléphone");
 			_singleInviteMailInput.textEditorProperties.softKeyboardType = advancedOwner.screenData.sponsorType == SponsorTypes.EMAIL ? SoftKeyboardType.EMAIL : SoftKeyboardType.CONTACT;
 			_singleInviteMailInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
 			_singleInviteMailInput.addEventListener(FeathersEventType.ENTER, onInvite);
@@ -643,7 +643,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			
 			_validateSingleInviteButton = new Button();
 			_validateSingleInviteButton.addEventListener(Event.TRIGGERED, onInvite);
-			_validateSingleInviteButton.label = Localizer.getInstance().translate("COMMON.VALIDATE");
+			_validateSingleInviteButton.label = _("Confirmer");
 			_validateSingleInviteButton.alpha = 0;
 			addChild(_validateSingleInviteButton);
 		}
@@ -699,7 +699,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 		{
 			if(_singleInviteNameInput.text == "")
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("SPONSOR_INVITE.INVALID_NAME"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("Nom du filleul invalide"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				_singleInviteNameInput.setFocus();
 				return;
 			}
@@ -708,7 +708,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			{
 				if(_singleInviteMailInput.text == "" || !Utilities.isValidMail(_singleInviteMailInput.text))
 				{
-					InfoManager.showTimed( Localizer.getInstance().translate("LOGIN.INVALID_MAIL"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+					InfoManager.showTimed( _("Email invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 					_singleInviteMailInput.setFocus();
 					return;
 				}
@@ -717,7 +717,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			{
 				if(_singleInviteMailInput.text == "" || !Utilities.isFrenchPortableOnly(_singleInviteMailInput.text))
 				{
-					InfoManager.showTimed( Localizer.getInstance().translate("SPONSOR_INVITE.INVALID_NUMBER"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+					InfoManager.showTimed( _("Ce numéro est invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 					_singleInviteMailInput.setFocus();
 					return;
 				}
@@ -725,7 +725,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
-				InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+				InfoManager.show(_("Chargement..."));
 				Flox.logInfo("Envoi d'un {0} de parrainage (via la popup) à <strong>{1}</strong>", (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), _singleInviteMailInput.text);
 				Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Total:"Total" });
 				_singleInviteNameInput.clearFocus();
@@ -734,7 +734,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -808,7 +808,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 		private function onSingleParrainageFailure(error:Object = null):void
 		{
 			Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Echec" });
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

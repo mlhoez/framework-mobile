@@ -7,8 +7,8 @@ Created : 17 sept. 2013
 package com.ludofactory.mobile.core.test.account.history.account
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.NotLoggedInContainer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
@@ -157,7 +157,7 @@ package com.ludofactory.mobile.core.test.account.history.account
 						{
 							_retryContainer.loadingMode = false;
 							_retryContainer.singleMessageMode = true;
-							_retryContainer.message = Localizer.getInstance().translate("MY_ACCOUNT_ACCOUNT_HISTORY.NO_MESSAGES");
+							_retryContainer.message = _("Aucune donnée à afficher.");
 							_list.visible = false;
 						}
 						
@@ -242,7 +242,7 @@ package com.ludofactory.mobile.core.test.account.history.account
 			
 			if( !_isInUpdateMode )
 			{
-				_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+				_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 				_retryContainer.loadingMode = false;
 			}
 		}
@@ -262,7 +262,7 @@ package com.ludofactory.mobile.core.test.account.history.account
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		

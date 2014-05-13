@@ -7,6 +7,7 @@ Created : 17 Août 2013
 package com.ludofactory.mobile.navigation.menu
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.authentication.AuthenticationManager;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
@@ -76,18 +77,18 @@ package com.ludofactory.mobile.navigation.menu
 			_list.addEventListener(LudoEventType.MENU_ICON_TOUCHED, onMenuIconTouched);
 			_list.dataProvider = new ListCollection(
 				[
-					new MenuItemData( "menu-icon-my-account",    "MENU.MY_ACCOUNT",       ScreenIds.MY_ACCOUNT_SCREEN ),
-					new MenuItemData( "menu-icon-parrainage",    "MENU.SPONSORING",       ScreenIds.SPONSOR_HOME_SCREEN, AbstractEntryPoint.alertData.numSponsorAlerts ),
-					new MenuItemData( "menu-icon-help", 		 "MENU.HELP", 			  ScreenIds.HELP_HOME_SCREEN, AbstractEntryPoint.alertData.numCustomerServiceAlerts + AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts ),
-					new MenuItemData( "menu-icon-credit",        "MENU.CREDITS",          ScreenIds.STORE_SCREEN ),
-					new MenuItemData( "menu-icon-store",         "MENU.STORE",            ScreenIds.BOUTIQUE_HOME ),
-					new MenuItemData( "menu-icon-vip",           "MENU.VIP",              ScreenIds.VIP_SCREEN ),
-					new MenuItemData( "menu-icon-my-gifts",      "MENU.MY_GAINS",         ScreenIds.MY_GIFTS_SCREEN, AbstractEntryPoint.alertData.numGainAlerts ),
-					new MenuItemData( "menu-icon-highscore",     "MENU.HIGHSCORE",        ScreenIds.HIGH_SCORE_HOME_SCREEN ),
-					new MenuItemData( "menu-icon-trophy",        "MENU.CUP",              ScreenIds.TROPHY_SCREEN, AbstractEntryPoint.alertData.numTrophiesAlerts ),
-					new MenuItemData( "menu-icon-tournaments",   "MENU.TOURNAMENT",       ScreenIds.PREVIOUS_TOURNAMENTS_SCREEN ),
-					new MenuItemData( "menu-icon-settings",      "MENU.SETTINGS",         ScreenIds.SETTINGS_SCREEN ),
-					new MenuItemData( MemberManager.getInstance().isLoggedIn() ? "menu-icon-log-out" : "menu-icon-log-in",   MemberManager.getInstance().isLoggedIn() ? "MENU.LOG_OUT":"MENU.LOG_IN",          ScreenIds.LOG_IN_OUT )
+					new MenuItemData( "menu-icon-my-account",    _("Mon Compte"),  ScreenIds.MY_ACCOUNT_SCREEN ),
+					new MenuItemData( "menu-icon-parrainage",    _("Parrainage"),  ScreenIds.SPONSOR_HOME_SCREEN, AbstractEntryPoint.alertData.numSponsorAlerts ),
+					new MenuItemData( "menu-icon-help", 		 _("Aide"),        ScreenIds.HELP_HOME_SCREEN, AbstractEntryPoint.alertData.numCustomerServiceAlerts + AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts ),
+					new MenuItemData( "menu-icon-credit",        _("Crédits"),     ScreenIds.STORE_SCREEN ),
+					new MenuItemData( "menu-icon-store",         _("Cadeaux"),     ScreenIds.BOUTIQUE_HOME ),
+					new MenuItemData( "menu-icon-vip",           _("Rangs VIP"),   ScreenIds.VIP_SCREEN ),
+					new MenuItemData( "menu-icon-my-gifts",      _("Mes gains"),   ScreenIds.MY_GIFTS_SCREEN, AbstractEntryPoint.alertData.numGainAlerts ),
+					new MenuItemData( "menu-icon-highscore",     _("High Scores"), ScreenIds.HIGH_SCORE_HOME_SCREEN ),
+					new MenuItemData( "menu-icon-trophy",        _("Coupes"),      ScreenIds.TROPHY_SCREEN, AbstractEntryPoint.alertData.numTrophiesAlerts ),
+					new MenuItemData( "menu-icon-tournaments",   _("Tournois"),    ScreenIds.PREVIOUS_TOURNAMENTS_SCREEN ),
+					new MenuItemData( "menu-icon-settings",      _("Réglages"),    ScreenIds.SETTINGS_SCREEN ),
+					new MenuItemData( MemberManager.getInstance().isLoggedIn() ? "menu-icon-log-out" : "menu-icon-log-in",   MemberManager.getInstance().isLoggedIn() ? _("Déconnexion") : _("Connexion"),          ScreenIds.LOG_IN_OUT )
 				]);
 			addChild(_list);
 		}

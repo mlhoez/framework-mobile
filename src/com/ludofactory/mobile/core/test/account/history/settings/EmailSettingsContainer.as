@@ -6,9 +6,9 @@ Created : 5 nov. 2013
 */
 package com.ludofactory.mobile.core.test.account.history.settings
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -56,7 +56,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			_list.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.itemRendererType = AccountItemRenderer;
-			_list.dataProvider = new ListCollection( [ { title:Localizer.getInstance().translate("ACCOUNT.EMAIL"), accessory:_emailControl },
+			_list.dataProvider = new ListCollection( [ { title:_("Email"), accessory:_emailControl },
 													   { title:"",   isSaveButton:true } ] );
 			addChild(_list);
 		}
@@ -83,7 +83,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			
 			if(_emailControl.text == "" || !Utilities.isValidMail(_emailControl.text))
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("AUTHENTICATION.INVALID_MAIL"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("Email invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				onUpdateMailComplete();
 				return;
 			}
@@ -98,7 +98,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 				Remote.getInstance().accountUpdateMail(paramObject, onUpdateMailComplete, onUpdateMailComplete, onUpdateMailComplete, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("ACCOUNT.NO_CHANGE"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune donnée à mettre à jour."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 				onUpdateMailComplete();
 			}
 		}

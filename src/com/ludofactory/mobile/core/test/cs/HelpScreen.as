@@ -7,10 +7,10 @@ Created : 25 août 2012
 package com.ludofactory.mobile.core.test.cs
 {
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -81,7 +81,7 @@ package com.ludofactory.mobile.core.test.cs
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("CUSTOMER_SERVICE_HOME.HEADER_TITLE");
+			_headerTitle = _("Aide générale");
 			
 			_faqIcon = new ImageLoader();
 			_faqIcon.source = AbstractEntryPoint.assets.getTexture("help-icon");
@@ -93,7 +93,7 @@ package com.ludofactory.mobile.core.test.cs
 			_faqButton.defaultIcon = _faqIcon;
 			_faqButton.iconPosition = AbstractGameInfo.LANDSCAPE ? Button.ICON_POSITION_LEFT : Button.ICON_POSITION_TOP;
 			_faqButton.addEventListener(Event.TRIGGERED, onFaqSelected);
-			_faqButton.label = Localizer.getInstance().translate("CUSTOMER_SERVICE_HOME.FAQ_BUTTON_LABEL");
+			_faqButton.label = _("Aide générale");
 			addChild(_faqButton);
 			
 			_csIcon = new ImageLoader();
@@ -106,18 +106,18 @@ package com.ludofactory.mobile.core.test.cs
 			_contactCustomerServiceButton.defaultIcon = _csIcon;
 			_contactCustomerServiceButton.iconPosition = AbstractGameInfo.LANDSCAPE ? Button.ICON_POSITION_LEFT : Button.ICON_POSITION_TOP;
 			_contactCustomerServiceButton.addEventListener(Event.TRIGGERED, onContactCustomerServiceSelected);
-			_contactCustomerServiceButton.label = Localizer.getInstance().translate("CUSTOMER_SERVICE_HOME.CONTACT_BUTTON_LABEL");
+			_contactCustomerServiceButton.label = _("Service client");
 			addChild(_contactCustomerServiceButton);
 			
 			_appVersionLabel = new Label();
-			_appVersionLabel.text = formatString(Localizer.getInstance().translate("CUSTOMER_SERVICE_HOME.APP_VERSION_LABEL"), AbstractGameInfo.GAME_VERSION);
+			_appVersionLabel.text = formatString(_("Version de l'application : {0}"), AbstractGameInfo.GAME_VERSION);
 			addChild(_appVersionLabel);
 			_appVersionLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
 			
 			_menu = new OffsetTabBar();
 			_menu.addEventListener(Event.CHANGE, onChangeTab);
-			_menu.dataProvider = new ListCollection([ Localizer.getInstance().translate("CUSTOMER_SERVICE_HOME.MENU_PENDING"),
-													  Localizer.getInstance().translate("CUSTOMER_SERVICE_HOME.MENU_SOLVED") ]);
+			_menu.dataProvider = new ListCollection([ _("En cours"),
+													  _("Résolus") ]);
 			addChild(_menu);
 			
 			_messagesBackground = new Quad(50, 50);

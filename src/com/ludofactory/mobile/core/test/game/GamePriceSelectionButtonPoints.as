@@ -6,9 +6,9 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.core.test.game
 {
+	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -80,7 +80,7 @@ package com.ludofactory.mobile.core.test.game
 		{
 			_isEnabled = MemberManager.getInstance().isLoggedIn() ? (MemberManager.getInstance().getPoints() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE) ? true:false) : false;
 			
-			_label.text = formatString( Localizer.getInstance().translate( Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE) > 1 ? "GAME_TYPE_SELECTION.LABEL_ENABLED_POINTS_PLURAL":"GAME_TYPE_SELECTION.LABEL_ENABLED_POINTS_SINGULAR" ),
+			_label.text = formatString( _n("{0} point", "{0} points", Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE)),
 				Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE));
 			
 			_icon.visible = _isEnabled;

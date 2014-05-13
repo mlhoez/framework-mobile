@@ -8,10 +8,10 @@ package com.ludofactory.mobile.core.test.tournament
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.PullToRefreshList;
@@ -59,7 +59,7 @@ package com.ludofactory.mobile.core.test.tournament
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("PREVIOUS_TOURNAMENT.HEADER_TITLE");
+			_headerTitle = _("Liste des anciens tournois");
 			
 			if( !AbstractGameInfo.LANDSCAPE )
 			{
@@ -214,7 +214,7 @@ package com.ludofactory.mobile.core.test.tournament
 		{
 			_list.onRefreshComplete();
 			
-			_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+			_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 			_retryContainer.loadingMode = false;
 		}
 		
@@ -246,7 +246,7 @@ package com.ludofactory.mobile.core.test.tournament
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		

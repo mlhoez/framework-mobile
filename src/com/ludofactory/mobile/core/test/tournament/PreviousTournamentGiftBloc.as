@@ -6,9 +6,9 @@ Created : 25 nov. 2013
 */
 package com.ludofactory.mobile.core.test.tournament
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -110,7 +110,7 @@ package com.ludofactory.mobile.core.test.tournament
 		
 		public function set title(val:String):void
 		{
-			_title.text = formatString(Localizer.getInstance().translate("PREVIOUS_TOURNAMENTS.GIFT_ON_TOURNAMENT_LABEL"), val);
+			_title.text = formatString(_("Votre gain sur ce tournoi :\n{0}"), val);
 			invalidate( INVALIDATION_FLAG_SIZE );
 		}
 	}

@@ -7,8 +7,8 @@ Created : 1 septembre 2013
 package com.ludofactory.mobile.core.test.account
 {
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
 	import com.ludofactory.mobile.core.test.account.history.account.AccountHistoryContainer;
@@ -50,13 +50,13 @@ package com.ludofactory.mobile.core.test.account
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("MY_ACCOUNT.HEADER_TITLE");
+			_headerTitle = _("Mon compte");
 			
 			_menu = new OffsetTabBar();
 			_menu.addEventListener(Event.CHANGE, onMenuChange);
-			_menu.dataProvider = new ListCollection( [ Localizer.getInstance().translate("MY_ACCOUNT.PERSONAL_INFORMATIONS_BUTTON_LABEL"),
-													   Localizer.getInstance().translate("MY_ACCOUNT.PAYMENTS_HISTORY_BUTTON_LABEL"),
-													   Localizer.getInstance().translate("MY_ACCOUNT.ACCOUNT_HISTORY_BUTTON_LABEL") ] );
+			_menu.dataProvider = new ListCollection( [ _("Infos perso"),
+													   _("Paiments"),
+													   _("Historique") ] );
 			addChild(_menu);
 			
 			_personalInformationsContainer = new PersonalInformationsContainer();

@@ -6,15 +6,16 @@ Created : 5 août 2013
 */
 package com.ludofactory.mobile.core.scoring
 {
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
 	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
@@ -108,7 +109,7 @@ package com.ludofactory.mobile.core.scoring
 			_mainContainer.addChild(_titleContainer);
 			
 			_title = new Label();
-			_title.text = Localizer.getInstance().translate("SCORE_TO_POINTS.TITLE");
+			_title.text = _("Les parties Classiques vous permettent de cumuler des points que vous pourrez ensuite convertir en cadeaux ou bien utiliser pour jouer en Tournoi.\n\nUne partie vous rapporte + ou - de Points en fonction de votre score et de votre mise.");
 			_titleContainer.addChild( _title );
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, false, true, null, null, null, TextFormatAlign.CENTER);
 			
@@ -116,7 +117,7 @@ package com.ludofactory.mobile.core.scoring
 			_mainContainer.addChild(_headerContainer);
 			
 			_scoreTitle = new Label();
-			_scoreTitle.text = Localizer.getInstance().translate("SCORE_TO_POINTS.SCORE");
+			_scoreTitle.text = _("Score");
 			_headerContainer.addChild(_scoreTitle);
 			_scoreTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
 			
@@ -129,7 +130,7 @@ package com.ludofactory.mobile.core.scoring
 			_headerContainer.addChild(_pointsWithFreeGroup);
 			
 			_pointsWithFree = new Label();
-			_pointsWithFree.text = Localizer.getInstance().translate("SCORE_TO_POINTS.BET");
+			_pointsWithFree.text = _("Mise : 1");
 			_pointsWithFreeGroup.addChild(_pointsWithFree);
 			_pointsWithFree.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_ORANGE, true, true, null, null, null, TextFormatAlign.CENTER);
 			_pointsWithFree.textRendererProperties.wordWrap = false;
@@ -143,7 +144,7 @@ package com.ludofactory.mobile.core.scoring
 			_headerContainer.addChild(_pointsWithCreditsGroup);
 			
 			_pointsWithCredits = new Label();
-			_pointsWithCredits.text = Localizer.getInstance().translate("SCORE_TO_POINTS.BET");
+			_pointsWithCredits.text = _("Mise : 1");
 			_pointsWithCreditsGroup.addChild(_pointsWithCredits);
 			_pointsWithCredits.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_ORANGE, true, true, null, null, null, TextFormatAlign.CENTER);
 			_pointsWithCredits.textRendererProperties.wordWrap = false;
@@ -152,7 +153,7 @@ package com.ludofactory.mobile.core.scoring
 			_creditsIcon.scaleX = _creditsIcon.scaleY = GlobalConfig.dpiScale;
 			_pointsWithCreditsGroup.addChild( _creditsIcon );
 			
-			_multiplySixIcon = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().getRank() < 5 ? "X5" : "X6") + Localizer.getInstance().lang ) );
+			_multiplySixIcon = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().getRank() < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
 			_multiplySixIcon.scaleX = _multiplySixIcon.scaleY = Utilities.getScaleToFill(_multiplySixIcon.width, _multiplySixIcon.height, _creditsIcon.width, _creditsIcon.height);
 			_pointsWithCreditsGroup.addChild( _multiplySixIcon );
 			
@@ -169,7 +170,7 @@ package com.ludofactory.mobile.core.scoring
 			var scoreToStarsDataSup:ScoreToPointsData = scoreData[ int(scoreData.length / 2) + 1 ];
 			
 			_exampleLabel = new Label();
-			_exampleLabel.text = formatString(Localizer.getInstance().translate("SCORE_TO_POINTS.EXAMPLE"), int(scoreToStarsDataInf.sup + (scoreToStarsDataSup.sup - scoreToStarsDataInf.sup) * 0.5), scoreToStarsDataSup.pointsWithFree, (MemberManager.getInstance().getRank() < 5 ? scoreToStarsDataSup.pointsWithCreditsNormal : scoreToStarsDataSup.pointsWithCreditsVip)) + "\n\n" + (MemberManager.getInstance().getRank() < 5 ? (Localizer.getInstance().translate("SCORE_TO_POINTS.EXPLANATION_BONUS_X6") + "\n\n") : "");
+			_exampleLabel.text = formatString(_("Par exemple : avec un score de {0} vous gagnez {1} Points avec une partie gratuite ou {2} Points avec une partie à crédit."), int(scoreToStarsDataInf.sup + (scoreToStarsDataSup.sup - scoreToStarsDataInf.sup) * 0.5), scoreToStarsDataSup.pointsWithFree, (MemberManager.getInstance().getRank() < 5 ? scoreToStarsDataSup.pointsWithCreditsNormal : scoreToStarsDataSup.pointsWithCreditsVip)) + "\n\n" + (MemberManager.getInstance().getRank() < 5 ? (_("Avantage VIP : en devenant Aventurier II, multipliez vos gains par 6 au lieu de 5 !") + "\n\n") : "");
 			_mainContainer.addChild(_exampleLabel);
 			_exampleLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_LIGHT_GREY, false, true);
 		}

@@ -7,11 +7,12 @@ Created : 12 nov. 2013
 package com.ludofactory.mobile.core.authentication
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -78,7 +79,7 @@ package com.ludofactory.mobile.core.authentication
 		override protected function initialize():void
 		{
 			super.initialize();
-			_headerTitle = Localizer.getInstance().translate("AUTHENTICATION.HEADER_TITLE");
+			_headerTitle = _("S'identifier");
 			
 			_logo = new ImageLoader();
 			_logo.touchable = false;
@@ -89,7 +90,7 @@ package com.ludofactory.mobile.core.authentication
 			
 			_title = new Label();
 			_title.touchable = false;
-			_title.text = Localizer.getInstance().translate("AUTHENTICATION.TITLE");
+			_title.text = _("Connectez-vous ou créez\nun compte LudoKado.com");
 			addChild(_title);
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(38), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -104,7 +105,7 @@ package com.ludofactory.mobile.core.authentication
 			_loginButton.defaultIcon = _loginIcon;
 			_loginButton.iconPosition = AbstractGameInfo.LANDSCAPE ? Button.ICON_POSITION_LEFT : Button.ICON_POSITION_TOP;
 			_loginButton.addEventListener(Event.TRIGGERED, onGoToLoginScreen);
-			_loginButton.label = Localizer.getInstance().translate("COMMON.LOGIN");
+			_loginButton.label = _("J'ai un compte");
 			addChild(_loginButton);
 			
 			_registerIcon = new ImageLoader();
@@ -118,7 +119,7 @@ package com.ludofactory.mobile.core.authentication
 			_registerButton.defaultIcon = _registerIcon;
 			_registerButton.iconPosition = AbstractGameInfo.LANDSCAPE ? Button.ICON_POSITION_LEFT : Button.ICON_POSITION_TOP;
 			_registerButton.addEventListener(Event.TRIGGERED, onGoToRegisterScreen);
-			_registerButton.label = Localizer.getInstance().translate("COMMON.REGISTER");
+			_registerButton.label = _("Créer un compte");
 			addChild(_registerButton);
 			
 			_facebookIcon = new ImageLoader();
@@ -130,7 +131,7 @@ package com.ludofactory.mobile.core.authentication
 			_facebookButton = new Button();
 			_facebookButton.addEventListener(Event.TRIGGERED, onAuthenticateWithFacebook);
 			_facebookButton.defaultIcon = _facebookIcon;
-			_facebookButton.label = Localizer.getInstance().translate("COMMON.FACEBOOK");
+			_facebookButton.label = _("Facebook");
 			addChild(_facebookButton);
 			_facebookButton.iconPosition = Button.ICON_POSITION_LEFT;
 			_facebookButton.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
@@ -227,7 +228,7 @@ package com.ludofactory.mobile.core.authentication
 			{
 				if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
 				{
-					InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+					InfoManager.show(_("Chargement..."));
 					if( !GoViral.goViral.isFacebookAuthenticated() )
 					{
 						log("[LoginScreen] User not authenticated with Facebook");
@@ -244,12 +245,12 @@ package com.ludofactory.mobile.core.authentication
 				}
 				else
 				{
-					InfoManager.showTimed(Localizer.getInstance().translate("AUTHENTICATION.FACEBOOK_NOT_SUPPORTED_ERROR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+					InfoManager.showTimed(_("Facebook n'est pas supporté sur cet appareil."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 				}
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -312,7 +313,7 @@ package com.ludofactory.mobile.core.authentication
 					formattedUserData.date_naissance = me.properties.birthday;
 				formattedUserData.id_parrain = -1;
 				formattedUserData.type_inscription = RegisterType.FACEBOOK;
-				formattedUserData.langue = Localizer.getInstance().lang;
+				formattedUserData.langue = LanguageManager.getInstance().lang;
 				
 				GoViral.goViral.removeEventListener(GVFacebookEvent.FB_REQUEST_RESPONSE, onFacebookResponse);
 				GoViral.goViral.removeEventListener(GVFacebookEvent.FB_REQUEST_FAILED, onRequestFailed);
@@ -320,7 +321,7 @@ package com.ludofactory.mobile.core.authentication
 				if( !formattedUserData.hasOwnProperty("mail") || formattedUserData.mail == null || formattedUserData.mail == "" )
 				{
 					this.advancedOwner.screenData.tempFacebookData = formattedUserData;
-					InfoManager.hide(Localizer.getInstance().translate("AUTHENTICATION.MAIL_NOT_RETURNED_BY_FACEBOOK_ERROR"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ScreenIds.REGISTER_SCREEN ]);
+					InfoManager.hide(_("Nous n'avons pas pu récupéré votre email via Facebook. Merci de compléter l'inscription normalement."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ScreenIds.REGISTER_SCREEN ]);
 					return;
 				}
 				
@@ -404,7 +405,7 @@ package com.ludofactory.mobile.core.authentication
 		private function onFacebookAuthenticationFailure(error:Object = null):void
 		{
 			this.isEnabled = true;
-			InfoManager.hide(error ? error.txt : Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS);
+			InfoManager.hide(error ? error.txt : _("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

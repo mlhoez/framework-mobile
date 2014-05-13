@@ -7,11 +7,9 @@ Created : 23 Juillet 2013
 package com.ludofactory.mobile.core.test.game
 {
 	import com.greensock.TweenMax;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
@@ -68,7 +66,7 @@ package com.ludofactory.mobile.core.test.game
 			
 			_title = new Label();
 			_title.touchable = false;
-			_title.text = Localizer.getInstance().translate("GAME_TYPE_SELECTION.TITLE");
+			_title.text = _("Sélectionnez votre mise...");
 			addChild( _title );
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 70), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 5, 5, 3) ];

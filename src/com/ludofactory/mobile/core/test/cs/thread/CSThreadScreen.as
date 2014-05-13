@@ -8,9 +8,9 @@ package com.ludofactory.mobile.core.test.cs.thread
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ImageLoaderCache;
 	import com.ludofactory.mobile.core.controls.PullToRefreshList;
@@ -84,7 +84,7 @@ package com.ludofactory.mobile.core.test.cs.thread
 		{
 			super.initialize();
 			
-			_headerTitle = formatString(Localizer.getInstance().translate("THREAD.HEADER_TITLE"), Localizer.getInstance().translate(advancedOwner.screenData.thread.themeTranslationKey));
+			_headerTitle = formatString(_("Problème sur {0}"), _(advancedOwner.screenData.thread.themeTranslationKey));
 			
 			const layout:VerticalLayout = new VerticalLayout();
 			layout.hasVariableItemDimensions = true;
@@ -119,7 +119,7 @@ package com.ludofactory.mobile.core.test.cs.thread
 				addChild(_inputBackground);
 				
 				_messageInput = new TextInput();
-				_messageInput.prompt = Localizer.getInstance().translate("THREAD.MESSAGE_INPUT_PROMPT");
+				_messageInput.prompt = _("Votre message...");
 				_messageInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.DONE;
 				_messageInput.addEventListener(FeathersEventType.ENTER, onSendMessage);
 				_messageInput.isEnabled = false;
@@ -140,7 +140,7 @@ package com.ludofactory.mobile.core.test.cs.thread
 				addChild(_loader);
 			}
 			
-			InfoManager.show( Localizer.getInstance().translate("COMMON.LOADING") );
+			InfoManager.show( _("Chargement...") );
 			TweenMax.delayedCall(0.5, Remote.getInstance().getThread, [advancedOwner.screenData.thread.id, onGetThreadSuccess, onGetThreadFailure, onGetThreadFailure, 2, advancedOwner.activeScreenID]);
 		}
 		
@@ -240,7 +240,7 @@ package com.ludofactory.mobile.core.test.cs.thread
 		private function onGetThreadFailure(error:Object = null):void
 		{
 			_list.onRefreshComplete();
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 		/**
@@ -248,7 +248,7 @@ package com.ludofactory.mobile.core.test.cs.thread
 		 */		
 		private function onRefreshThread(event:Event = null):void
 		{
-			InfoManager.show( Localizer.getInstance().translate("COMMON.LOADING") );
+			InfoManager.show( _("Chargement...") );
 			Remote.getInstance().getThread( advancedOwner.screenData.thread.id, onGetThreadSuccess, onGetThreadFailure, onGetThreadFailure, 2, advancedOwner.activeScreenID );
 		}
 		
@@ -263,7 +263,7 @@ package com.ludofactory.mobile.core.test.cs.thread
 		{
 			if( _messageInput.text == "" )
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("THREAD.INVALID_MESSAGE"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("Votre message ne peut être vide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;
 			}
 			
@@ -339,7 +339,7 @@ package com.ludofactory.mobile.core.test.cs.thread
 		
 		private function createAlert(success:Boolean):void
 		{
-			var alert:CSThreadAlert = new CSThreadAlert(Localizer.getInstance().translate( success ? "THREAD.ALEERT_MESSAGE_SENT":"THREAD.MESSAGE_NOT_SENT" ), success);
+			var alert:CSThreadAlert = new CSThreadAlert( success ? _("Votre message a bien été envoyé. Nous vous répondrons sous 7 jours ouvrés.") : _("Aucune connexion Internet. Votre message a été stocké et sera envoyé lorsque vous serez connecté."), success);
 			alert.width = this.actualWidth;
 			addChild(alert);
 			alert.validate();

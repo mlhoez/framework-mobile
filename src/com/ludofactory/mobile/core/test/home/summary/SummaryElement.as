@@ -9,19 +9,16 @@ package com.ludofactory.mobile.core.test.home.summary
 	import com.greensock.TweenLite;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.push.GameSession;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
@@ -101,21 +98,21 @@ package com.ludofactory.mobile.core.test.home.summary
 				{
 					_backgroundTextureName = "summary-green-container";
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-free" : "summary-icon-free-hd";
-					_calloutLabel.text = formatString(Localizer.getInstance().translate("SUMMARY.FREE_TEXT"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+					_calloutLabel.text = formatString(_("Vos parties gratuites ({0} par jour)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 					break;
 				}
 				case GameSession.PRICE_CREDIT:
 				{
 					_backgroundTextureName = "summary-yellow-container";
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-credits" : "summary-icon-credits-hd";
-					_calloutLabel.text = Localizer.getInstance().translate("SUMMARY.CREDITS_TEXT");
+					_calloutLabel.text = _("Vos Crédits de jeu");
 					break;
 				}
 				case GameSession.PRICE_POINT:
 				{
 					_backgroundTextureName = "summary-blue-container";
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-points" : "summary-icon-points-hd";
-					_calloutLabel.text = Localizer.getInstance().translate("SUMMARY.POINTS_TEXT");
+					_calloutLabel.text = _("Vos Points à convertir en Cadeaux");
 					break;
 				}
 			}
@@ -231,7 +228,7 @@ package com.ludofactory.mobile.core.test.home.summary
 					removeInterrogationLabels();
 				_label.text = value;
 				if( MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
-					_calloutLabel.text = formatString(Localizer.getInstance().translate("SUMMARY.FREE_TEXT_TIMER"), MemberManager.getInstance().getNumFreeGameSessionsTotal(), value); 
+					_calloutLabel.text = formatString(_("{0} parties gratuites dans {1}"), MemberManager.getInstance().getNumFreeGameSessionsTotal(), value); 
 			}
 			
 			invalidate(INVALIDATION_FLAG_SIZE);
@@ -279,23 +276,23 @@ package com.ludofactory.mobile.core.test.home.summary
 					{
 						case GameSession.PRICE_FREE:
 						{
-							_calloutLabel.text = formatString(Localizer.getInstance().translate(MemberManager.getInstance().isLoggedIn() ? ( SummaryContainer.IS_TIMER_OVER_AND_REQUEST_FAILED ? "SUMMARY.TIMER_OVER_AND_REQUEST_FAILED" : "SUMMARY.FREE_TEXT") : "SUMMARY.FREE_TEXT_NOT_LOGGED_IN"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+							_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? ( SummaryContainer.IS_TIMER_OVER_AND_REQUEST_FAILED ? _("Reconnectez-vous pour récupérer vos {0} parties gratuites.") : _("Vos parties gratuites ({0} par jour)")) : _("Obtenez 10 parties gratuites par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 							break;
 						}
 						case GameSession.PRICE_CREDIT:
 						{
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
-								_calloutLabel.text = formatString(Localizer.getInstance().translate(MemberManager.getInstance().isLoggedIn() ? "SUMMARY.CREDITS_TEXT" : "SUMMARY.FREE_TEXT_NOT_LOGGED_IN"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+								_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? _("Vos Crédits de jeu") : _("Obtenez 10 parties gratuites par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 							else
-								_calloutLabel.text = Localizer.getInstance().translate("SUMMARY.CREDITS_TEXT");
+								_calloutLabel.text = _("Vos Crédits de jeu");
 							break;
 						}
 						case GameSession.PRICE_POINT:
 						{
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
-								_calloutLabel.text = formatString(Localizer.getInstance().translate(MemberManager.getInstance().isLoggedIn() ? "SUMMARY.POINTS_TEXT" : "SUMMARY.FREE_TEXT_NOT_LOGGED_IN"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+								_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? _("Vos Points à convertir en Cadeaux") : _("Obtenez 10 parties gratuites par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 							else
-								_calloutLabel.text = Localizer.getInstance().translate("SUMMARY.POINTS_TEXT");
+								_calloutLabel.text = _("Vos Points à convertir en Cadeaux");
 							break;
 						}
 					}

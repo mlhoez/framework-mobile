@@ -9,10 +9,10 @@ package com.ludofactory.mobile.core.shop
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Elastic;
 	import com.greensock.easing.Linear;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -108,14 +108,14 @@ package com.ludofactory.mobile.core.shop
 			addChild(_encheresImage);
 			
 			_encheresAccessButton = new Button();
-			_encheresAccessButton.label = Localizer.getInstance().translate("BOUTIQUE_HOME.ACCESS_BUTTON");
+			_encheresAccessButton.label = _("Accès");
 			_encheresAccessButton.addEventListener(Event.TRIGGERED, onAccessEncheres);
 			_encheresAccessButton.alpha = 0;
 			addChild(_encheresAccessButton);
 			
 			_encheresMessage = new Label();
 			_encheresMessage.touchable = false;
-			_encheresMessage.text = Localizer.getInstance().translate("BOUTIQUE_HOME.BID_MESSAGE");
+			_encheresMessage.text = _("Accessible à tous\nles rangs Vip");
 			addChild( _encheresMessage );
 			_encheresMessage.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -130,7 +130,7 @@ package com.ludofactory.mobile.core.shop
 			
 			_boutiqueMessage = new Label();
 			_boutiqueMessage.touchable = false;
-			_boutiqueMessage.text = Localizer.getInstance().translate("BOUTIQUE_HOME.BOUTIQUE_VIP_MESSAGE");
+			_boutiqueMessage.text = _("A partir du\nrang Aventurier I");
 			addChild( _boutiqueMessage );
 			_boutiqueMessage.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -150,21 +150,21 @@ package com.ludofactory.mobile.core.shop
 			addChild(_boutiqueImage);
 			
 			_boutiqueAccessButton = new Button();
-			_boutiqueAccessButton.label = Localizer.getInstance().translate("BOUTIQUE_HOME.ACCESS_BUTTON");
+			_boutiqueAccessButton.label = _("Accès");
 			_boutiqueAccessButton.alpha = 0;
 			_boutiqueAccessButton.addEventListener(Event.TRIGGERED, onAccessBoutiqueVip);
 			addChild(_boutiqueAccessButton);
 			
 			_encheresTitle = new Label();
 			_encheresTitle.touchable = false;
-			_encheresTitle.text = Localizer.getInstance().translate("BOUTIQUE_HOME.BID_TITLE");
+			_encheresTitle.text = _("Enchères");
 			addChild(_encheresTitle);
 			_encheresTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 48 : 64), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_encheresTitle.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 5, 5, 3) ];
 			
 			_boutiqueTitle = new Label();
 			_boutiqueTitle.touchable = false;
-			_boutiqueTitle.text = Localizer.getInstance().translate("BOUTIQUE_HOME.BOUTIQUE_VIP_TITLE");
+			_boutiqueTitle.text = _("Boutique VIP");
 			addChild(_boutiqueTitle);
 			_boutiqueTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 48 : 64), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_boutiqueTitle.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 5, 5, 3) ];
@@ -173,7 +173,7 @@ package com.ludofactory.mobile.core.shop
 			
 			_vipInfo = new Button();
 			_vipInfo.styleName = Theme.BUTTON_TRANSPARENT_WHITE;
-			_vipInfo.label = Localizer.getInstance().translate("BOUTIQUE_HOME.VIP_INFO_BUTTON");
+			_vipInfo.label = _("Qu'est ce que les rangs Vip ?");
 			_vipInfo.addEventListener(Event.TRIGGERED, onShowVipInfo);
 			addChild(_vipInfo);
 		}

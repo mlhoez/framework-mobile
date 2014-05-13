@@ -7,10 +7,10 @@ Created : 24 juil. 2013
 package com.ludofactory.mobile.core.authentication
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -65,7 +65,7 @@ package com.ludofactory.mobile.core.authentication
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("FORGOT_PASSWORD.HEADER_TITLE");
+			_headerTitle = _("Mot de passe oublié");
 			
 			_logo = new ImageLoader();
 			_logo.source = Theme.ludokadoLogoTexture;
@@ -76,19 +76,19 @@ package com.ludofactory.mobile.core.authentication
 			
 			_message = new Label();
 			_message.touchable = false;
-			_message.text = Localizer.getInstance().translate("FORGOT_PASSWORD.MESSAGE");
+			_message.text = _("Entrez l'email de votre compte pour recevoir dans quelques minutes votre mot de passe.");
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(28), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_mailInput = new TextInput();
-			_mailInput.prompt = Localizer.getInstance().translate("FORGOT_PASSWORD.MAIL_INPUT_HINT");
+			_mailInput.prompt = _("Entrez ici votre email...");
 			_mailInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
 			_mailInput.textEditorProperties.softKeyboardType = SoftKeyboardType.EMAIL;
 			_mailInput.addEventListener(FeathersEventType.ENTER, onValidate);
 			addChild(_mailInput);
 			
 			_validateButton = new Button();
-			_validateButton.label = Localizer.getInstance().translate("COMMON.VALIDATE");
+			_validateButton.label = _("Confirmer");
 			_validateButton.addEventListener(Event.TRIGGERED, onValidate);
 			addChild( _validateButton );
 		}
@@ -149,20 +149,20 @@ package com.ludofactory.mobile.core.authentication
 		{
 			if( _mailInput.text == "" || !Utilities.isValidMail(_mailInput.text) )
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("FORGOT_PASSWORD.INVALID_MAIL"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("Email invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;
 			}
 			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
 				this.isEnabled = false;
-				InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+				InfoManager.show(_("Chargement..."));
 				_mailInput.clearFocus();
 				Remote.getInstance().retreivePassword( _mailInput.text, onRetreivePasswordSuccess, onRetreivePasswordFailure, onRetreivePasswordFailure, 2, advancedOwner.activeScreenID);
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -201,7 +201,7 @@ package com.ludofactory.mobile.core.authentication
 		private function onRetreivePasswordFailure(error:Object = null):void
 		{
 			this.isEnabled = true;
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

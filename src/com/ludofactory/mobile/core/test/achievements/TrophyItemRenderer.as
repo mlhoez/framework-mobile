@@ -6,9 +6,9 @@ Created : 31 août 2013
 */
 package com.ludofactory.mobile.core.test.achievements
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -153,7 +153,7 @@ package com.ludofactory.mobile.core.test.achievements
 			addChild(_trophyImage);
 			
 			_ownedLabel = new Label();
-			_ownedLabel.text = Localizer.getInstance().translate("TROPHY.OWNED_LABEL");
+			_ownedLabel.text = _("Obtenue");
 			addChild(_ownedLabel);
 			_ownedLabel.textRendererProperties.textFormat = Theme.trophyIROwnedTF;
 			_ownedLabel.textRendererProperties.wordWrap = false;
@@ -213,9 +213,9 @@ package com.ludofactory.mobile.core.test.achievements
 				{
 					_title.visible = _message.visible = _reward.visible = true;
 					
-					_title.text = Localizer.getInstance().translate(_data.titleTranslationKey);
-					_message.text = Localizer.getInstance().translate(_data.descriptionTranslationKey);
-					_reward.text = Localizer.getInstance().translate(_data.rewardTranslationKey);
+					_title.text = _data.title;
+					_message.text = _data.description;
+					_reward.text = _data.reward;
 					_trophyImage.source = AbstractEntryPoint.assets.getTexture(_data.textureName);
 					
 					if( TrophyManager.getInstance().canWinTrophy( _data.id ) )

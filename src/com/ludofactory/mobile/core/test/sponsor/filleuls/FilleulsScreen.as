@@ -8,8 +8,8 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.NotLoggedInContainer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
@@ -50,7 +50,7 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("FILLEUL.HEADER_TITLE");
+			_headerTitle = _("Suivi de mes filleuls");
 			
 			const vlayout:VerticalLayout = new VerticalLayout();
 			vlayout.useVirtualLayout = false;
@@ -137,7 +137,7 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 						
 						_retryContainer.loadingMode = false;
 						_retryContainer.singleMessageMode = true;
-						_retryContainer.message = Localizer.getInstance().translate("FILLEUL.NO_FILLEUL");
+						_retryContainer.message = _("Vous n'avez encore aucun filleul.");
 						_list.visible = false;
 					}
 					else
@@ -170,7 +170,7 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 		 */		
 		private function onGetFilleulsFailure(error:Object = null):void
 		{
-			_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+			_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 			_retryContainer.loadingMode = false;
 		}
 		
@@ -189,7 +189,7 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		

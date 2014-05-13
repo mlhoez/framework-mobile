@@ -6,11 +6,11 @@ Created : 30 juil. 2013
 */
 package com.ludofactory.mobile.core.authentication
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -66,7 +66,7 @@ package com.ludofactory.mobile.core.authentication
 			
 			AbstractEntryPoint.isSelectingPseudo = true;
 			
-			_headerTitle = Localizer.getInstance().translate("SPONSOR.HEADER_TITLE");
+			_headerTitle = _("Inscription");
 			
 			_logo = new ImageLoader();
 			_logo.source = Theme.ludokadoLogoTexture;
@@ -77,12 +77,12 @@ package com.ludofactory.mobile.core.authentication
 			
 			_message = new Label();
 			_message.touchable = false;
-			_message.text = Localizer.getInstance().translate("SPONSOR.MESSAGE");
+			_message.text = _("Si vous avez un code parrain, entrez-le ici afin de profiter de nombreux avantages.");
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(28), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_sponsorInput = new TextInput();
-			_sponsorInput.prompt = Localizer.getInstance().translate("SPONSOR.SPONSOR_INPUT_HINT");
+			_sponsorInput.prompt = _("Saisissez ici votre code parrain");
 			_sponsorInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
 			_sponsorInput.textEditorProperties.restrict = "0-9";
 			_sponsorInput.textEditorProperties.softKeyboardType = SoftKeyboardType.NUMBER;
@@ -90,12 +90,12 @@ package com.ludofactory.mobile.core.authentication
 			addChild(_sponsorInput);
 			
 			_validateButton = new Button();
-			_validateButton.label = Localizer.getInstance().translate("COMMON.VALIDATE");
+			_validateButton.label = _("Confirmer");
 			_validateButton.addEventListener(Event.TRIGGERED, onValidate);
 			addChild( _validateButton );
 			
 			_cancelButton = new Button();
-			_cancelButton.label = Localizer.getInstance().translate("SPONSOR.CANCEL_BUTTON_LABEL");
+			_cancelButton.label = _("Pas de code parrain");
 			_cancelButton.styleName = Theme.BUTTON_BLUE;
 			_cancelButton.addEventListener(Event.TRIGGERED, onIgnoreStep);
 			addChild( _cancelButton );
@@ -162,12 +162,12 @@ package com.ludofactory.mobile.core.authentication
 		{
 			if( _sponsorInput.text == "" || !Utilities.isNumberOnly(_sponsorInput.text))
 			{
-				InfoManager.showTimed( Localizer.getInstance().translate("SPONSOR.INVALID_SPONSOR"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				InfoManager.showTimed( _("Le code parrain est invalide"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;
 			}
 			
 			this.isEnabled = false;
-			InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+			InfoManager.show(_("Chargement..."));
 			_sponsorInput.clearFocus();
 			Remote.getInstance().setParrainage(_sponsorInput.text, onSetParrainageSuccess, onSetParrainageFailure, onSetParrainageFailure, 2, advancedOwner.activeScreenID);
 		}
@@ -203,7 +203,7 @@ package com.ludofactory.mobile.core.authentication
 		private function onSetParrainageFailure(error:Object = null):void
 		{
 			this.isEnabled = true;
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS);
 		}
 		
 		/**

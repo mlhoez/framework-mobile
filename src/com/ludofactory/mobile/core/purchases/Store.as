@@ -11,10 +11,10 @@ package com.ludofactory.mobile.core.purchases
 	import com.amazon.nativeextensions.android.events.AmazonPurchaseEvent;
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -178,7 +178,7 @@ package com.ludofactory.mobile.core.purchases
 		public function requestPurchase(productData:StoreData):void
 		{
 			log("[Store] Creating request for " + productData.generatedId);
-			InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+			InfoManager.show(_("Chargement..."));
 			
 			// save product data in order to track it through the whole process
 			_currentProductData = productData;
@@ -215,7 +215,7 @@ package com.ludofactory.mobile.core.purchases
 		private function onRequestPurchaseFailure(error:Object = null):void
 		{
 			log("[Store] Could not create request for " + _currentProductData.generatedId);
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, 5);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, 5);
 			_currentProductData = null;
 		}
 		
@@ -362,7 +362,7 @@ package com.ludofactory.mobile.core.purchases
 			log("[Store] Item purchase cancelled : " + itemId);
 			logPurchaseEvent(itemId, PURCHASE_TYPE_CANCELLED);
 			
-			InfoManager.hide(Localizer.getInstance().translate("STORE.PURCHASE_CANCELLED"), InfoContent.ICON_CROSS, 3);
+			InfoManager.hide(_("Achat annulé."), InfoContent.ICON_CROSS, 3);
 			dispatchEventWith(LudoEventType.STORE_PURCHASE_CANCELLED, false, itemId);
 		}
 		
@@ -415,7 +415,7 @@ package com.ludofactory.mobile.core.purchases
 			log("[Store] Failure purchasng item : " + itemId);
 			logPurchaseEvent(itemId, PURCHASE_TYPE_FAILED);
 			
-			InfoManager.hide(Localizer.getInstance().translate("STORE.PURCHASE_FAILURE"), InfoContent.ICON_CROSS, 3);
+			InfoManager.hide(_("L'achat a échoué."), InfoContent.ICON_CROSS, 3);
 			dispatchEventWith(LudoEventType.STORE_PURCHASE_FAILURE, false, itemId);
 		}
 		

@@ -6,10 +6,9 @@ Created : 31 août 2013
 */
 package com.ludofactory.mobile.core.test.achievements
 {
-	import com.ludofactory.mobile.core.test.push.GameSession;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
+	import com.ludofactory.mobile.core.test.push.GameSession;
 	
 	import starling.events.Event;
 	import starling.events.EventDispatcher;
@@ -41,7 +40,7 @@ package com.ludofactory.mobile.core.test.achievements
 		
 		public function TrophyManager(sk:SecurityKey)
 		{
-			_trophiesData = (Storage.getInstance().getProperty( StorageConfig.PROPERTY_TROPHIES ) as Array).concat();
+			_trophiesData = AbstractGameInfo.CUPS.concat();
 			_trophyDisplayer = new TrophyDisplayer();
 			_trophyDisplayer.addEventListener(Event.COMPLETE, onTrophyDisplayComplete);
 		}
@@ -116,7 +115,7 @@ package com.ludofactory.mobile.core.test.achievements
 			if( _currentGameSession )
 				_currentGameSession.trophiesWon.push( trophyId );
 			
-			GameCenterManager.reportAchievement("pyramid." + trophyId, 100);
+			GameCenterManager.reportAchievement(AbstractGameInfo.ACHIEVEMENTS_PREFIX + "." + trophyId, 100);
 			
 			_trophyDisplayer.onTrophyWon( getTrophyDataById(trophyId) );
 		}

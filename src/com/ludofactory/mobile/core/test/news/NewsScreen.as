@@ -8,10 +8,10 @@ package com.ludofactory.mobile.core.test.news
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -76,7 +76,7 @@ package com.ludofactory.mobile.core.test.news
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("NEWS.HEADER_TITLE");
+			_headerTitle = _("Nouveautés");
 			
 			_loader = new MovieClip( Theme.blackLoaderTextures );
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
@@ -111,12 +111,12 @@ package com.ludofactory.mobile.core.test.news
 			_mainCcontainer.addChild(_gamesList);
 			
 			_copyrightLabel = new Label();
-			_copyrightLabel.text = formatString(Localizer.getInstance().translate("NEWS_COPYRIGHT"), new Date().fullYear) + "\n\n" + Localizer.getInstance().translate("NEWS_DISCLAIMER");
+			_copyrightLabel.text = formatString(_("Ludokado site de la société LudoFactory\nCopyright {0} ADThink Media"), new Date().fullYear) + "\n\n" + _("Tous les jeux gratuits sans obligation d'achat présents dans cette application sont organisés par la société LudoFactory. La société Apple Inc. n'est ni partenaire, ni sponsor, ni impliquée dans l'organisation de ces jeux. Pour plus d'informations, voir le règlement complet dans l'application.");
 			_mainCcontainer.addChild(_copyrightLabel);
 			_copyrightLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(24), Theme.COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
 			
 			_cguLabel = new Button();
-			_cguLabel.label = Localizer.getInstance().translate("NEWS_CGU");
+			_cguLabel.label = _("CGU");
 			_cguLabel.styleName = Theme.BUTTON_EMPTY;
 			_cguLabel.addEventListener(Event.TRIGGERED, onTouchCgu);
 			_mainCcontainer.addChild(_cguLabel);
@@ -124,7 +124,7 @@ package com.ludofactory.mobile.core.test.news
 			_cguLabel.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(24), Theme.COLOR_DARK_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
 			
 			_versionLabel = new Label();
-			_versionLabel.text = formatString( Localizer.getInstance().translate("NEWS_VERSION"), AbstractGameInfo.GAME_VERSION);
+			_versionLabel.text = formatString( _("Version {0}"), AbstractGameInfo.GAME_VERSION);
 			_mainCcontainer.addChild(_versionLabel);
 			_versionLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(20), Theme.COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
 			
@@ -165,7 +165,7 @@ package com.ludofactory.mobile.core.test.news
 			_mainCcontainer.visible = true;
 			_loader.visible = false;
 			
-			var news:Array = JSON.parse( Storage.getInstance().getProperty( StorageConfig.PROPERTY_NEWS )[Localizer.getInstance().lang] ) as Array;
+			var news:Array = JSON.parse( Storage.getInstance().getProperty( StorageConfig.PROPERTY_NEWS )[LanguageManager.getInstance().lang] ) as Array;
 			
 			var formattedNews:Array = [];
 			for(var i:int = 0; i < news.length; i++)

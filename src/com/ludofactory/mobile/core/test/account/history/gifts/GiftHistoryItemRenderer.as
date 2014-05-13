@@ -7,11 +7,11 @@ Created : 17 sept. 2013
 package com.ludofactory.mobile.core.test.account.history.gifts
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -201,7 +201,7 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 				{
 					_title.visible = true;
 					
-					_title.text = formatString(Localizer.getInstance().translate("MY_GIFTS.FORMATTED_SENTENCE"), _data.hour, Utilities.replaceCurrency(_data.description), _data.category, _data.status);
+					_title.text = formatString(_("Gagné à : {0}\nGain : {1}\nRubrique : {2}\nStatut : {3}"), _data.hour, Utilities.replaceCurrency(_data.description), _data.category, _data.status);
 					
 					_exchangeWithPointsButton.label = _data.exchangeableWithPoints;
 					_exchangeWithChequeButton.label = Utilities.replaceCurrency(_data.exchangeableWithCheque);
@@ -367,7 +367,7 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 			log("[GiftHistoryItemRender] Exchange gift with cheque");
 			if( NativeAlertDialog.isSupported )
 			{
-				NativeAlertDialog.showAlert(Localizer.getInstance().translate("MY_GIFTS.EXCHANGE_CHEQUE_CONFIRM_ALERT_MESSAGE"), Localizer.getInstance().translate("MY_GIFTS.EXCHANGE_CONFIRM_ALERT_TITLE"), Vector.<String>([Localizer.getInstance().translate("COMMON.CANCEL"), Localizer.getInstance().translate("COMMON.CONFIRM")]), onAlertChequeClosed);
+				NativeAlertDialog.showAlert(_("Voulez-vous vraiment échanger ce lot contre un chèque ?"), _("Confirmer"), Vector.<String>([_("Annuler"), _("Confirmer")]), onAlertChequeClosed);
 			}
 			else
 			{
@@ -379,12 +379,12 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 		{
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
-				InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+				InfoManager.show(_("Chargement..."));
 				Remote.getInstance().exchangeWithCheque( _data.giftId, _data.tableType, onExchangeSuccess, onExchangeFailure, onExchangeFailure, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -399,7 +399,7 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 			log("[GiftHistoryItemRender] Exchange gift with points");
 			if( NativeAlertDialog.isSupported )
 			{
-				NativeAlertDialog.showAlert(Localizer.getInstance().translate("MY_GIFTS.EXCHANGE_POINTS_CONFIRM_ALERT_MESSAGE"), Localizer.getInstance().translate("MY_GIFTS.EXCHANGE_CONFIRM_ALERT_TITLE"), Vector.<String>([Localizer.getInstance().translate("COMMON.CANCEL"), Localizer.getInstance().translate("COMMON.CONFIRM")]), onAlertPointsClosed);
+				NativeAlertDialog.showAlert(_("Voulez-vous vraiment échanger ce lot contre des points ?"), _("Confirmer"), Vector.<String>([_("Annuler"), _("Confirmer")]), onAlertPointsClosed);
 			}
 			else
 			{
@@ -411,12 +411,12 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 		{
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
-				InfoManager.show(Localizer.getInstance().translate("COMMON.LOADING"));
+				InfoManager.show(_("Chargement..."));
 				Remote.getInstance().exchangeWithPoints( _data.giftId, _data.tableType, onExchangeSuccess, onExchangeFailure, onExchangeFailure, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -455,7 +455,7 @@ package com.ludofactory.mobile.core.test.account.history.gifts
 		
 		private function onExchangeFailure(error:Object = null):void
 		{
-			InfoManager.hide(Localizer.getInstance().translate("COMMON.QUERY_FAILURE"), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

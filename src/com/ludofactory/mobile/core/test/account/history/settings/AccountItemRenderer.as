@@ -10,10 +10,9 @@ package com.ludofactory.mobile.core.test.account.history.settings
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Bounce;
 	import com.greensock.easing.Elastic;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -199,7 +198,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 					{
 						_saveButton = new Button();
 						_saveButton.styleName = Theme.BUTTON_FLAT_GREEN;
-						_saveButton.label = Localizer.getInstance().translate("ACCOUNT.SAVE");
+						_saveButton.label = _("Sauvegarder");
 						_saveButton.addEventListener(Event.TRIGGERED, onSave);
 						addChild(_saveButton);
 						
@@ -291,10 +290,10 @@ package com.ludofactory.mobile.core.test.account.history.settings
 				_saveButton.y = _loader.y = this.actualHeight * 0.5;
 			}
 			
-			if( _data.hasOwnProperty("helpTextTranslationKey") )
+			if( _data.hasOwnProperty("helpTextTranslation") )
 			{
 				_helpText.visible = true;
-				_helpText.text = formatString(Localizer.getInstance().translate(_data.helpTextTranslationKey), AbstractGameInfo.GAME_NAME);
+				_helpText.text = formatString(_data.helpTextTranslation, AbstractGameInfo.GAME_NAME);
 				_helpText.x = _backgroundBorder.width + _padding;
 				_helpText.width = this.actualWidth - _backgroundBorder.width - _padding * 2;
 				_helpText.validate();
@@ -393,7 +392,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		

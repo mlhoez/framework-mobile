@@ -6,8 +6,8 @@ Created : 9 sept. 2013
 */
 package com.ludofactory.mobile.core.test.tournament.listing
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Label;
@@ -64,17 +64,17 @@ package com.ludofactory.mobile.core.test.tournament.listing
 			addChild(_header);
 			
 			_rankLabel = new Label();
-			_rankLabel.text = Localizer.getInstance().translate("TOURNAMENT_RANKING.RANK_LIST_HEADER");
+			_rankLabel.text = _("Rang");
 			addChild(_rankLabel);
 			_rankLabel.textRendererProperties.textFormat = Theme.highScoreListHeaderTextFormat;
 			
 			_nameLabel = new Label();
-			_nameLabel.text = Localizer.getInstance().translate("TOURNAMENT_RANKING.NAME_LIST_HEADER");
+			_nameLabel.text = _("Nom");
 			addChild(_nameLabel);
 			_nameLabel.textRendererProperties.textFormat = Theme.highScoreListHeaderTextFormat;
 			
 			_starsLabel = new Label();
-			_starsLabel.text = Localizer.getInstance().translate("TOURNAMENT_RANKING.STARS_LIST_HEADER");
+			_starsLabel.text = _("Etoiles");
 			addChild(_starsLabel);
 			_starsLabel.textRendererProperties.textFormat = Theme.highScoreListHeaderTextFormat;
 		}

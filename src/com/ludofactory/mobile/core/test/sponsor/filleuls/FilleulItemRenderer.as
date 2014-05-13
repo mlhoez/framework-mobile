@@ -6,10 +6,10 @@ Created : 8 sept. 2013
 */
 package com.ludofactory.mobile.core.test.sponsor.filleuls
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -193,7 +193,7 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 						{
 							_stateIcon.source = AbstractEntryPoint.assets.getTexture("FilleulRefusedIcon");
 							_moreIcon.source = AbstractEntryPoint.assets.getTexture("MoreRefusedIcon");
-							_stateLabel.text = Localizer.getInstance().translate("FILLEUL.STATE_REFUSED");
+							_stateLabel.text = _("Refusé");
 							TextFormat(_stateLabel.textRendererProperties.textFormat).color = 0xae1900;
 							
 							break;
@@ -202,7 +202,7 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 						{
 							_stateIcon.source = AbstractEntryPoint.assets.getTexture("FilleulValidIcon");
 							_moreIcon.source = AbstractEntryPoint.assets.getTexture("MoreValidIcon");
-							_stateLabel.text = Localizer.getInstance().translate("FILLEUL.STATE_VALID");
+							_stateLabel.text = _("Validé");
 							TextFormat(_stateLabel.textRendererProperties.textFormat).color = 0x43a01f;
 							
 							break;
@@ -211,7 +211,7 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 						{
 							_stateIcon.source = AbstractEntryPoint.assets.getTexture("FilleulPendingIcon");
 							_moreIcon.source = AbstractEntryPoint.assets.getTexture("MorePendingIcon");
-							_stateLabel.text = Localizer.getInstance().translate("FILLEUL.STATE_PENDING");
+							_stateLabel.text = _("En attente");
 							TextFormat(_stateLabel.textRendererProperties.textFormat).color = 0x00a7d1;
 							
 							break;

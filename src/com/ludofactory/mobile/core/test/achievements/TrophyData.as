@@ -17,15 +17,15 @@ package com.ludofactory.mobile.core.test.achievements
 		
 		/**
 		 * The trophy title translation key. */		
-		private var _titleTranslationKey:String;
+		private var _title:String;
 		
 		/**
 		 * The trophy description. */		
-		private var _descriptionTranslationKey:String;
+		private var _description:String;
 		
 		/**
 		 * The trophy reward description. */		
-		private var _rewardTranslationKey:String;
+		private var _reward:String;
 		
 		/**
 		 * The values used in the code to trigger the trophy. */		
@@ -46,9 +46,9 @@ package com.ludofactory.mobile.core.test.achievements
 			if( !data ) return;
 			
 			_id = data.id;
-			_titleTranslationKey = data.titleKey;
-			_descriptionTranslationKey = data.descriptionKey;
-			_rewardTranslationKey = data.rewardKey;
+			_title = data.titleKey;
+			_description = data.descriptionKey;
+			_reward = data.rewardKey;
 			_values = data.values;
 			_textureName = data.textureName;
 		}
@@ -56,14 +56,14 @@ package com.ludofactory.mobile.core.test.achievements
 		public function get id():int { return _id; }
 		public function set id(val:int):void { _id = val; }
 		
-		public function get titleTranslationKey():String { return _titleTranslationKey; }
-		public function set titleTranslationKey(val:String):void { _titleTranslationKey = val; }
+		public function get title():String { return _title; }
+		public function set title(val:String):void { _title = val; }
 		
-		public function get descriptionTranslationKey():String { return _descriptionTranslationKey; }
-		public function set descriptionTranslationKey(val:String):void { _descriptionTranslationKey = val; }
+		public function get description():String { return _description; }
+		public function set description(val:String):void { _description = val; }
 		
-		public function get rewardTranslationKey():String { return _rewardTranslationKey; }
-		public function set rewardTranslationKey(val:String):void { _rewardTranslationKey = val; }
+		public function get reward():String { return _reward; }
+		public function set reward(val:String):void { _reward = val; }
 		
 		public function get values():Array { return _values; }
 		public function set values(val:Array):void { _values = val; }

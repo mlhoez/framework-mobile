@@ -11,9 +11,10 @@ package com.ludofactory.mobile.core.test.vip
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Bounce;
 	import com.greensock.easing.Linear;
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
@@ -27,9 +28,6 @@ package com.ludofactory.mobile.core.test.vip
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
 	
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
@@ -103,7 +101,7 @@ package com.ludofactory.mobile.core.test.vip
 		{
 			super.initialize();
 			
-			var temp:Array = JSON.parse( Storage.getInstance().getProperty(StorageConfig.PROPERTY_VIP)[Localizer.getInstance().lang] ) as Array;
+			var temp:Array = JSON.parse( Storage.getInstance().getProperty(StorageConfig.PROPERTY_VIP)[LanguageManager.getInstance().lang] ) as Array;
 			for(var i:int = 0; i < temp.length; i++)
 			{
 				if( i == MemberManager.getInstance().getRank() - 1 )
@@ -127,7 +125,7 @@ package com.ludofactory.mobile.core.test.vip
 			_message = new Label();
 			_message.alpha = 0;
 			_message.visible = false;
-			_message.text = Localizer.getInstance().translate("VIP_UP.UP_MESSAGE");
+			_message.text = _("Bravo !\nVous êtes maintenant");
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 54 : 80), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_message.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
@@ -135,11 +133,11 @@ package com.ludofactory.mobile.core.test.vip
 			_moreButton = new Button();
 			_moreButton.alpha = 0;
 			_moreButton.visible = false;
-			_moreButton.label = Localizer.getInstance().translate("VIP_UP.SEE_MY_BONUSES");
+			_moreButton.label = _("Voir mes privilèges !");
 			_moreButton.addEventListener(Event.TRIGGERED, onKnowMore);
 			addChild(_moreButton);
 			
-			_continueButtonTrue = new ArrowGroup( Localizer.getInstance().translate("COMMON.CONTINUE") );
+			_continueButtonTrue = new ArrowGroup( _("Continuer") );
 			_continueButtonTrue.alpha = 0;
 			_continueButtonTrue.visible = false;
 			_continueButtonTrue.addEventListener(Event.TRIGGERED, onContinue);
@@ -169,7 +167,7 @@ package com.ludofactory.mobile.core.test.vip
 				_facebookButton = new Button();
 				_facebookButton.alpha = 0;
 				_facebookButton.defaultIcon = _facebookIcon;
-				_facebookButton.label = Localizer.getInstance().translate( MemberManager.getInstance().getFacebookId() != 0 ? "COMMON.PUBLISH" : "COMMON.ASSOCIATE")
+				_facebookButton.label = MemberManager.getInstance().getFacebookId() != 0 ? _("Publier") : _("Associer")
 				_facebookButton.addEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
 				addChild(_facebookButton);
 				_facebookButton.iconPosition = Button.ICON_POSITION_LEFT;
@@ -325,7 +323,7 @@ package com.ludofactory.mobile.core.test.vip
 		
 		private function onAccountAssociated(event:starling.events.Event):void
 		{
-			_facebookButton.label = Localizer.getInstance().translate("COMMON.PUBLISH");
+			_facebookButton.label = _("Publier");
 		}
 		
 		/**
@@ -337,11 +335,11 @@ package com.ludofactory.mobile.core.test.vip
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
 			
-			GoViral.goViral.showFacebookFeedDialog( formatString(Localizer.getInstance().translate("FACEBOOK_VIP_PUBLICATION.NAME"), (event.data.nom + " " + event.data.prenom), _playerRankData.rankName),
+			GoViral.goViral.showFacebookFeedDialog( formatString(_("{0} est maintenant {1}"), (event.data.nom + " " + event.data.prenom), _playerRankData.rankName),
 				"", "",
-				Localizer.getInstance().translate("FACEBOOK_VIP_PUBLICATION.DESCRIPTION"),
-				Localizer.getInstance().translate("FACEBOOK_VIP_PUBLICATION.LINK"),
-				formatString(Localizer.getInstance().translate("FACEBOOK_VIP_PUBLICATION.IMAGE"), Localizer.getInstance().lang, _playerRankData.id));
+				_("Avec ce nouveau rang, je peux bénéficier de nouveaux avantages pour gagner encore plus de cadeaux."),
+				_("http://www.ludokado.com/"),
+				formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_vip_{1}.jpg"), LanguageManager.getInstance().lang, _playerRankData.id));
 		}
 		
 		/**

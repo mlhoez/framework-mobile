@@ -6,7 +6,7 @@ Created : 10 oct. 2013
 */
 package com.ludofactory.mobile.core.model
 {
-	import com.ludofactory.mobile.core.Localizer;
+	import com.ludofactory.common.gettext.aliases._;
 
 	public class MonthData
 	{
@@ -25,7 +25,7 @@ package com.ludofactory.mobile.core.model
 		
 		public function toString():String
 		{
-			return Localizer.getInstance().translate( _translationKey );
+			return _( _translationKey );
 		}
 	}
 }

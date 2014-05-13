@@ -6,8 +6,8 @@ Created : 5 nov. 2013
 */
 package com.ludofactory.mobile.core.test.account.history.settings
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -100,13 +100,13 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			_list.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.itemRendererType = AccountItemRenderer;
-			_list.dataProvider = new ListCollection( [ { title:Localizer.getInstance().translate("ACCOUNT.ADDRESS"),             accessory:_addressControl },
-													   { title:Localizer.getInstance().translate("ACCOUNT.POSTAL_CODE"),         accessory:_postalCodeControl },
-													   { title:Localizer.getInstance().translate("ACCOUNT.CITY"),                accessory:_cityControl },
-													   { title:Localizer.getInstance().translate("ACCOUNT.COUNTRY"),             accessory:_countryControl },
-													   { title:Localizer.getInstance().translate("ACCOUNT.FIXE_PHONE_NUMBER"),   accessory:_fixePhoneNumber },
-													   { title:Localizer.getInstance().translate("ACCOUNT.MOBILE_PHONE_NUMBER"), accessory:_mobilePhoneNumber },
-													   { title:"",   isSaveButton:true } ] );
+			_list.dataProvider = new ListCollection( [ { title:_("Adresse"),     accessory:_addressControl },
+													   { title:_("Code postal"), accessory:_postalCodeControl },
+													   { title:_("Ville"),       accessory:_cityControl },
+													   { title:_("Pays"),        accessory:_countryControl },
+													   { title:_("Tel. fixe"),   accessory:_fixePhoneNumber },
+													   { title:_("Mobile"),      accessory:_mobilePhoneNumber },
+													   { title:"",               isSaveButton:true } ] );
 			addChild(_list);
 		}
 		
@@ -170,7 +170,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 				Remote.getInstance().accountUpdateAddressInformations(paramObject, onUpdateAddressComplete, onUpdateAddressComplete, onUpdateAddressComplete, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("ACCOUNT.NO_CHANGE"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune donnée à mettre à jour."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 				onUpdateAddressComplete();
 			}
 		}

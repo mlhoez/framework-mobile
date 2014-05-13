@@ -10,12 +10,13 @@ package com.ludofactory.mobile.core.test.engine
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Linear;
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -105,7 +106,7 @@ package com.ludofactory.mobile.core.test.engine
 		{
 			Starling.current.nativeStage.removeEventListener(flash.events.Event.RESIZE, onResize, false);
 			
-			InfoManager.show( Localizer.getInstance().translate("COMMON.LOADING") );
+			InfoManager.show( _("Chargement...") );
 			TweenMax.delayedCall(GlobalConfig.android ? 6:1, initContent);
 		}
 		
@@ -126,7 +127,7 @@ package com.ludofactory.mobile.core.test.engine
 			
 			_highScoreLabel = new Label();
 			_highScoreLabel.alpha = 0;
-			_highScoreLabel.text = formatString(Localizer.getInstance().translate("HIGH_SCORE.TITLE"), Utilities.splitThousands( advancedOwner.screenData.gameData.score ));
+			_highScoreLabel.text = formatString(_("Nouveau High Score !\n{0}"), Utilities.splitThousands( advancedOwner.screenData.gameData.score ));
 			addChild(_highScoreLabel);
 			_highScoreLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 76), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_highScoreLabel.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
@@ -148,7 +149,7 @@ package com.ludofactory.mobile.core.test.engine
 				_continueButton.alpha = 0;
 				_continueButton.addEventListener(starling.events.Event.TRIGGERED, onContinue);
 				_continueButton.styleName = Theme.BUTTON_EMPTY;
-				_continueButton.label = Localizer.getInstance().translate("COMMON.CONTINUE");
+				_continueButton.label = _("Continuer");
 				addChild(_continueButton);
 				_continueButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, true, true, null, null, null, TextFormatAlign.CENTER);
 				_continueButton.height = _continueButton.minHeight = scaleAndRoundToDpi(60);
@@ -161,7 +162,7 @@ package com.ludofactory.mobile.core.test.engine
 				_facebookButton = new Button();
 				_facebookButton.alpha = 0;
 				_facebookButton.defaultIcon = _facebookIcon;
-				_facebookButton.label = Localizer.getInstance().translate( MemberManager.getInstance().getFacebookId() != 0 ? "COMMON.PUBLISH" : "COMMON.ASSOCIATE")
+				_facebookButton.label = MemberManager.getInstance().getFacebookId() != 0 ? _("Publier") : _("Associer");
 				_facebookButton.addEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
 				addChild(_facebookButton);
 				_facebookButton.iconPosition = Button.ICON_POSITION_LEFT;
@@ -304,7 +305,7 @@ package com.ludofactory.mobile.core.test.engine
 		
 		private function onAccountAssociated(event:starling.events.Event):void
 		{
-			_facebookButton.label = Localizer.getInstance().translate("COMMON.PUBLISH");
+			_facebookButton.label = _("Publier");
 		}
 		
 		/**
@@ -316,11 +317,11 @@ package com.ludofactory.mobile.core.test.engine
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
 			
-			GoViral.goViral.showFacebookFeedDialog( formatString(Localizer.getInstance().translate("FACEBOOK_HIGHSCORE_PUBLICATION.NAME"), AbstractGameInfo.GAME_NAME),
+			GoViral.goViral.showFacebookFeedDialog( formatString(_("Qui sera capable de me battre sur {0} ?"), AbstractGameInfo.GAME_NAME),
 				"", "",
-				formatString(Localizer.getInstance().translate("FACEBOOK_HIGHSCORE_PUBLICATION.DESCRIPTION"), advancedOwner.screenData.gameData.score),
-				Localizer.getInstance().translate("FACEBOOK_HIGHSCORE_PUBLICATION.LINK"),
-				formatString(Localizer.getInstance().translate("FACEBOOK_HIGHSCORE_PUBLICATION.IMAGE"), Localizer.getInstance().lang));
+				formatString(_("Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me prouver le contraire ;)"), advancedOwner.screenData.gameData.score),
+				_("http://www.ludokado.com/"),
+				formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
 		}
 		
 		/**

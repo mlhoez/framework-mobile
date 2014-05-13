@@ -6,9 +6,9 @@ Created : 27 sept. 2013
 */
 package com.ludofactory.mobile.core.test.sponsor.info
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -66,7 +66,7 @@ package com.ludofactory.mobile.core.test.sponsor.info
 			_container.layout = layout;
 			
 			_notificationTitle = new Label();
-			_notificationTitle.text = Localizer.getInstance().translate("SPONSOR_POPUP.TITLE");
+			_notificationTitle.text = _("Gagnez ces cadeaux quand vos filleuls changent de rang.");
 			_container.addChild(_notificationTitle);
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(38), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -75,17 +75,17 @@ package com.ludofactory.mobile.core.test.sponsor.info
 			var dataProvider:Array;
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
-				dataProvider = [ new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-11", rank:"VIP_CATEGORY_11", bonus:(MemberManager.getInstance().getRank() >= 4 ? "SPONSOR_POPUP.BONUS_1_RANK_9":"SPONSOR_POPUP.BONUS_1") } ),
-								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-10", rank:"VIP_CATEGORY_10", bonus:"SPONSOR_POPUP.BONUS_2" } ),
-								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-4",  rank:"VIP_CATEGORY_4",  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? "SPONSOR_POPUP.BONUS_3_POINTS":"SPONSOR_POPUP.BONUS_3") } ),
-								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-1",  rank:"VIP_CATEGORY_1",  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? "SPONSOR_POPUP.BONUS_4_POINTS":"SPONSOR_POPUP.BONUS_4") } ) ];
+				dataProvider = [ new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-11", rank:_("Matelot"), bonus:(MemberManager.getInstance().getRank() >= 4 ? _("400 points"):_("200 points")) } ),
+								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-10", rank:_("Boucanier"), bonus:_("2 crédits") } ),
+								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-4",  rank:_("Pirate III"),  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? _("25 000 points"):_("10 €")) } ),
+								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-1",  rank:_("Pirate III"),  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? _("75 000 points"):_("30 €")) } ) ];
 			}
 			else
 			{
-				dataProvider = [ new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-11", rank:"VIP_CATEGORY_11", bonus:"SPONSOR_POPUP.BONUS_1_NOT_LOGGED_IN" } ),
-								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-10", rank:"VIP_CATEGORY_10", bonus:"SPONSOR_POPUP.BONUS_2" } ),
-								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-4",  rank:"VIP_CATEGORY_4",  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? "SPONSOR_POPUP.BONUS_3_POINTS":"SPONSOR_POPUP.BONUS_3") } ),
-								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-1",  rank:"VIP_CATEGORY_1",  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? "SPONSOR_POPUP.BONUS_4_POINTS":"SPONSOR_POPUP.BONUS_4") } ) ];
+				dataProvider = [ new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-11", rank:_("Matelot"), bonus:_("Jusqu'à\n400 points*") } ),
+								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-10", rank:_("Boucanier"), bonus:_("2 crédits") } ),
+								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-4",  rank:_("Pirate III"),  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? _("25 000 points"):_("10 €")) } ),
+								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-1",  rank:_("Capitaine"),  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? _("75 000 points"):_("30 €")) } ) ];
 			}
 			
 			var vlayout:VerticalLayout = new VerticalLayout();
@@ -109,20 +109,20 @@ package com.ludofactory.mobile.core.test.sponsor.info
 			_container.addChild( _bonusContainer );
 			
 			_bonusTitleLabel = new Label();
-			_bonusTitleLabel.text = Localizer.getInstance().translate("SPONSOR_POPUP.BONUS_POINTS_TITLE");
+			_bonusTitleLabel.text = _("BONUS !");
 			_bonusContainer.addChild(_bonusTitleLabel);
 			_bonusTitleLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(44), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			_bonusTitleLabel.textRendererProperties.wordWrap = false;
 			
 			_bonusMessageLabel = new Label();
-			_bonusMessageLabel.text = Localizer.getInstance().translate("SPONSOR_POPUP.BONUS_POINTS_MESSAGE");
+			_bonusMessageLabel.text = _("Gagnez 5% des points\ngagnés par vos filleuls !");
 			_bonusContainer.addChild(_bonusMessageLabel);
 			_bonusMessageLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(28), Theme.COLOR_ORANGE, false, false, null, null, null, TextFormatAlign.RIGHT);
 			
 			if( !MemberManager.getInstance().isLoggedIn() )
 			{
 				_infoMessageLabel = new Label();
-				_infoMessageLabel.text = Localizer.getInstance().translate("SPONSOR_POPUP.INFO");
+				_infoMessageLabel.text = _("*400 Points offerts à chaque parrainage si votre rang est supérieur ou égal à Aventurier I sinon vous gagnez 200 Points.");
 				_container.addChild(_infoMessageLabel);
 				_infoMessageLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), Theme.COLOR_DARK_GREY);
 			}

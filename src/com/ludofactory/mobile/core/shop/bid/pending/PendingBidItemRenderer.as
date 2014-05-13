@@ -6,11 +6,10 @@ Created : 26 août 2013
 */
 package com.ludofactory.mobile.core.shop.bid.pending
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.HeartBeat;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -131,7 +130,7 @@ package com.ludofactory.mobile.core.shop.bid.pending
 					_image.source = _data.imageUrl;
 					
 					if( _data.state == PendingBidItemData.STATE_FINISHED || _data.timeLeft <= 0 )
-						_title.text = Localizer.getInstance().translate("BID_PENDING.FINISHED_STATE");
+						_title.text = _("Terminée");
 					else
 					{
 						_previousTime = getTimer();
@@ -367,7 +366,7 @@ package com.ludofactory.mobile.core.shop.bid.pending
 			if( _totalTime <= 0 )
 			{
 				HeartBeat.unregisterFunction(update);
-				_title.text = Localizer.getInstance().translate("BID_FINISHED.FINISHED_STATE");
+				_title.text = _("Terminée");
 				return;
 			}
 			

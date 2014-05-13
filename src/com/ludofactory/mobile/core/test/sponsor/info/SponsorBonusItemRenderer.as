@@ -8,7 +8,6 @@ package com.ludofactory.mobile.core.test.sponsor.info
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -140,11 +139,11 @@ package com.ludofactory.mobile.core.test.sponsor.info
 				{
 					_title.visible = true;
 					
-					_title.text = Localizer.getInstance().translate(_data.rank);
+					_title.text = _data.rank;
 					
 					_image.source = AbstractEntryPoint.assets.getTexture( _data.iconTextureName );
 					
-					_bonusLabel.text = Localizer.getInstance().translate(_data.bonus);
+					_bonusLabel.text = _data.bonus;
 					
 					if( _index < 2 )
 					{

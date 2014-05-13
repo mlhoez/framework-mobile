@@ -1,9 +1,9 @@
 package com.ludofactory.mobile.core.test.home
 {
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
 	import com.ludofactory.mobile.core.scoring.ScoreToPointsContainer;
@@ -68,23 +68,14 @@ package com.ludofactory.mobile.core.test.home
 			_rulesList.itemRendererType = RuleItemRenderer;
 			_rulesList.layout = vlayout;
 			_rulesList.isSelectable = false;
-			_rulesList.dataProvider = new ListCollection( [
-				new RuleData( { type:RuleProperties.TYPE_RULE_WITHOUT_IMAGE, rule:Localizer.getInstance().translate("RULE_1") } ),
-				new RuleData( { type:RuleProperties.TYPE_TITLE,              rule:Localizer.getInstance().translate("RULE_HOW_TO_PLAY") } ),
-				new RuleData( { type:RuleProperties.TYPE_RULE_WITH_IMAGE,    rule:Localizer.getInstance().translate("RULE_2"), imageSource:"rule-1-" + (GlobalConfig.isPhone ? "sd" : "hd"), imagePosition:RuleProperties.POSITION_BOTTOM } ),
-				new RuleData( { type:RuleProperties.TYPE_RULE_WITH_IMAGE,    rule:Localizer.getInstance().translate("RULE_3"), imageSource:"rule-2-" + (GlobalConfig.isPhone ? "sd" : "hd"), imagePosition:RuleProperties.POSITION_RIGHT } ),
-				new RuleData( { type:RuleProperties.TYPE_RULE_WITH_IMAGE,    rule:Localizer.getInstance().translate("RULE_4"), imageSource:"rule-3-" + (GlobalConfig.isPhone ? "sd" : "hd"), imagePosition:RuleProperties.POSITION_RIGHT } ),
-				new RuleData( { type:RuleProperties.TYPE_TITLE,              rule:Localizer.getInstance().translate("RULE_5") } ),
-				new RuleData( { type:RuleProperties.TYPE_RULE_WITH_IMAGE,    rule:Localizer.getInstance().translate("RULE_6"), imageSource:"rule-4-" + (GlobalConfig.isPhone ? "sd" : "hd"), imagePosition:RuleProperties.POSITION_RIGHT } ),
-				new RuleData( { type:RuleProperties.TYPE_RULE_WITH_IMAGE,    rule:Localizer.getInstance().translate("RULE_7"), imageSource:"rule-5-" + (GlobalConfig.isPhone ? "sd" : "hd"), imagePosition:RuleProperties.POSITION_RIGHT } )
-			] );
+			_rulesList.dataProvider = new ListCollection( AbstractGameInfo.RULES );
 			addChild(_rulesList);
 			
 			_tabMenu = new OffsetTabBar();
 			_tabMenu.addEventListener(Event.CHANGE, onButtonTouched);
-			_tabMenu.dataProvider = new ListCollection( [Localizer.getInstance().translate("RULES_AND_POINTS.RULES_BUTTON_LABEL"),
-														 Localizer.getInstance().translate("RULES_AND_POINTS.CLASSIC_BUTTON_LABEL"),
-														 Localizer.getInstance().translate("RULES_AND_POINTS.TOURNAMENT_BUTTON_LABEL") ] );
+			_tabMenu.dataProvider = new ListCollection( [_("Règles"),
+														 _("Classique"),
+														 _("Tournoi") ] );
 			addChild(_tabMenu);
 		}
 		

@@ -6,7 +6,8 @@ Created : 17 sept. 2012
 */
 package com.ludofactory.common.utils
 {
-	import com.ludofactory.mobile.core.Localizer;
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	
 	import flash.desktop.NativeApplication;
 
@@ -122,24 +123,24 @@ package com.ludofactory.common.utils
 		
 		public static function translatePosition(value:int):String
 		{
-			var suffixTranslationKey:String;
+			var translation:String;
 			
-			if( Localizer.getInstance().lang == Localizer.FRENCH && value > 1 )
+			if( LanguageManager.getInstance().lang == LanguageManager.FRENCH && value > 1 )
 			{
-				suffixTranslationKey = "TOURNAMENT_END.POSITION_SECOND";
+				translation = _("TOURNAMENT_END.POSITION_SECOND");
 			}
 			else
 			{
 				switch( int(String(value).split("").reverse()[0]) )
 				{
-					case 1:  { suffixTranslationKey = "TOURNAMENT_END.POSITION_FIRST";  break; }
-					case 2:  { suffixTranslationKey = "TOURNAMENT_END.POSITION_SECOND"; break; }
-					case 3:  { suffixTranslationKey = "TOURNAMENT_END.POSITION_THIRD";  break; }
-					default: { suffixTranslationKey = "TOURNAMENT_END.POSITION_FOURTH"; break; }
+					case 1:  { translation = _("TOURNAMENT_END.POSITION_FIRST");  break; }
+					case 2:  { translation = _("TOURNAMENT_END.POSITION_SECOND"); break; }
+					case 3:  { translation = _("TOURNAMENT_END.POSITION_THIRD");  break; }
+					default: { translation = _("TOURNAMENT_END.POSITION_FOURTH"); break; }
 				}
 			}
 			
-			return suffixTranslationKey;
+			return translation;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

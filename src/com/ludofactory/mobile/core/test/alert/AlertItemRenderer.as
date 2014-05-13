@@ -6,11 +6,12 @@ Created : 4 oct. 2013
 */
 package com.ludofactory.mobile.core.test.alert
 {
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.test.achievements.TrophyData;
@@ -120,7 +121,7 @@ package com.ludofactory.mobile.core.test.alert
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_DARK_GREY, true);
 			
 			_accessButton = new Label();
-			_accessButton.text = Localizer.getInstance().translate("ALERT.ACCESS_BUTTON_LABEL");
+			_accessButton.text = _("Accéder");
 			addChild(_accessButton);
 			_accessButton.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(24), 0x00a9f4, true);
 			
@@ -207,7 +208,7 @@ package com.ludofactory.mobile.core.test.alert
 								
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-game-session-simple-icon");
 								
-								_message.text = formatString(Localizer.getInstance().translate( GameSession(_data).gameType == GameSession.TYPE_CLASSIC ? ("ALERT.GAME_SESSION_MESSAGE_FREE_" + (GameSession(_data).numStarsOrPointsEarned > 1 ? "PLURAL" : "SINGULAR")) : ("ALERT.GAME_SESSION_MESSAGE_TOURNAMENT_" + (GameSession(_data).numStarsOrPointsEarned > 1 ? "PLURAL" : "SINGULAR"))),
+								_message.text = formatString( GameSession(_data).gameType == GameSession.TYPE_CLASSIC ? _n("{0} Point sera définitivement crédité sur votre compte dès que vous serez connecté à internet.", "{0} Points seront définitivement crédités sur votre compte dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned) : _n("{0} Etoile sera définitivement comptabilisée pour le tournoi en cours dès que vous serez connecté à internet.", "{0} Etoiles seront définitivement comptabilisées pour le tournoi en cours dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned),
 									GameSession(_data).numStarsOrPointsEarned);
 								
 								break;
@@ -220,7 +221,7 @@ package com.ludofactory.mobile.core.test.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-trophy-simple-icon");
 								
 								var trophy:TrophyData = TrophyManager.getInstance().getTrophyDataById( PushTrophy(_data).trophyId);
-								_message.text = formatString(Localizer.getInstance().translate("ALERT.TROPHY_MESSAGE"), Localizer.getInstance().translate(trophy.titleTranslationKey) );
+								_message.text = formatString(_("Votre coupe {0} est en attente d'envoi."), trophy.title );
 								
 								break;
 							}
@@ -230,7 +231,7 @@ package com.ludofactory.mobile.core.test.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-cs-simple-icon");
 								
 								textToDisplay = PushNewCSThread(_data).message.length <= 50 ? PushNewCSThread(_data).message : (PushNewCSThread(_data).message.slice(0, 50) + "...");
-								_message.text = formatString(Localizer.getInstance().translate("ALERT.CUSTOMER_SERVICE_MESSAGE"), textToDisplay );
+								_message.text = formatString(_("Votre message « {0} » adressé au service client sera envoyé dès que vous serez connecté à internet."), textToDisplay );
 								
 								break;
 							}
@@ -240,7 +241,7 @@ package com.ludofactory.mobile.core.test.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-cs-simple-icon");
 								
 								textToDisplay = PushNewCSMessage(_data).message.length <= 50 ? PushNewCSMessage(_data).message : (PushNewCSMessage(_data).message.slice(0, 50) + "...");
-								_message.text = formatString(Localizer.getInstance().translate("ALERT.CUSTOMER_SERVICE_MESSAGE"), textToDisplay );
+								_message.text = formatString(_("Votre message « {0} » adressé au service client sera envoyé dès que vous serez connecté à internet."), textToDisplay );
 								
 								break;
 							}
@@ -249,7 +250,7 @@ package com.ludofactory.mobile.core.test.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-cs-simple-icon");
 								
 								_accessButton.visible = true;
-								_message.text = formatString(Localizer.getInstance().translate( AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts > 1 ? "ALERT.CUSTOMER_SERVICE_NUM_PLURAL" : "ALERT.CUSTOMER_SERVICE_NUM_SINGULAR"), AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts);
+								_message.text = formatString(_n("Vous avez reçu {0} message du service client.", "Vous avez reçu {0} messages du service client.", AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts), AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts);
 								
 								break;
 							}
@@ -258,7 +259,7 @@ package com.ludofactory.mobile.core.test.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-sponsoring-simple-icon");
 								
 								_accessButton.visible = true;
-								_message.text = formatString(Localizer.getInstance().translate( AbstractEntryPoint.alertData.numSponsorAlerts > 1 ? "ALERT.SPONSOR_NUM_PLURAL" : "ALERT.SPONSOR_NUM_SINGULAR"), AbstractEntryPoint.alertData.numSponsorAlerts);
+								_message.text = formatString(_n("Vous avez {0} filleul accepté dans votre espace parrainage.", "Vous avez {0} filleuls acceptés dans votre espace parrainage.", AbstractEntryPoint.alertData.numSponsorAlerts), AbstractEntryPoint.alertData.numSponsorAlerts);
 								
 								break;
 							}
@@ -267,7 +268,7 @@ package com.ludofactory.mobile.core.test.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-gifts-simple-icon");
 								
 								_accessButton.visible = true;
-								_message.text = formatString(Localizer.getInstance().translate( AbstractEntryPoint.alertData.numGainAlerts > 1 ? "ALERT.GIFTS_NUM_PLURAL" : "ALERT.GIFTS_NUM_SINGULAR"), AbstractEntryPoint.alertData.numGainAlerts);
+								_message.text = formatString(_n("Vous avez gagné {0} cadeau.", "Vous avez gagné {0} cadeaux.", AbstractEntryPoint.alertData.numGainAlerts), AbstractEntryPoint.alertData.numGainAlerts);
 								break;
 							}
 							case AlertType.TROPHIES:
@@ -275,25 +276,25 @@ package com.ludofactory.mobile.core.test.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-trophy-simple-icon");
 								
 								_accessButton.visible = true;
-								_message.text = formatString(Localizer.getInstance().translate( AbstractEntryPoint.alertData.numTrophiesAlerts > 1 ? "ALERT.TROPHIES_NUM_PLURAL" : "ALERT.TROPHIES_NUM_SINGULAR"), AbstractEntryPoint.alertData.numTrophiesAlerts);
+								_message.text = formatString(_n("Vous avez gagné {0} coupe.", "Vous avez gagné {0} coupes.", AbstractEntryPoint.alertData.numTrophiesAlerts), AbstractEntryPoint.alertData.numTrophiesAlerts);
 								break;
 							}
 							case AlertType.ANONYMOUS_GAME_SESSION:
 							{
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-game-session-simple-icon");
 								
-								_accessButton.text = Localizer.getInstance().translate("COMMON.AUTHENTICATE");
+								_accessButton.text = _("S'identifier");
 								_accessButton.visible = true;
-								_message.text = formatString(Localizer.getInstance().translate( MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 1 ? "ALERT.ANONYMOUS_GAME_SESSION_NUM_PLURAL" : "ALERT.ANONYMOUS_GAME_SESSION_NUM_SINGULAR"), MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions());
+								_message.text = formatString(_n("{0} Etoile sera comptabilisée pour le tournoi en cours dès que vous serez identifié.", "{0} Etoiles seront comptabilisées pour le tournoi en cours dès que vous serez identifié.", MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions());
 								break;
 							}
 							case AlertType.ANONYMOUS_TROPHIES:
 							{
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-trophy-simple-icon");
 								
-								_accessButton.text = Localizer.getInstance().translate("COMMON.AUTHENTICATE");
+								_accessButton.text = _("S'identifier");
 								_accessButton.visible = true;
-								_message.text = formatString(Localizer.getInstance().translate( MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 1 ? "ALERT.ANONYMOUS_TROPHIES_NUM_PLURAL" : "ALERT.ANONYMOUS_TROPHIES_NUM_SINGULAR"), MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions());
+								_message.text = formatString(_n("{0} Coupe sera définitivement validée dès que vous serez identifié.", "{0} Coupes seront définitivement validées dès que vous serez identifié.", MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions());
 								break;
 							}
 						}

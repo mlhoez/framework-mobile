@@ -6,10 +6,11 @@ Created : 25 oct. 2013
 */
 package com.ludofactory.mobile.core.test.store
 {
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AbstractListItemRenderer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -98,8 +99,8 @@ package com.ludofactory.mobile.core.test.store
 			{
 				if(this._data)
 				{
-					_gainLabel.text = formatString(Localizer.getInstance().translate("STORE.CREDITS_TITLE"), _data.gain);
-					_promoLabel.text = _data.promo > 0 ? formatString(Localizer.getInstance().translate( _data.promo > 1 ? "STORE.PROMO_TITLE_PLURAL" : "STORE.PROMO_TITLE_SINGULAR"), _data.promo) : "";
+					_gainLabel.text = formatString(_("{0} crédits"), _data.gain);
+					_promoLabel.text = _data.promo > 0 ? formatString(_n("+{0} crédit offert", "+{0} crédits offerts", _data.promo), _data.promo) : "";
 					
 					if( !_icon )
 					{
@@ -114,9 +115,9 @@ package com.ludofactory.mobile.core.test.store
 					_playersChoiceImage.visible = _data.isPlayersChoice;
 					
 					if( _data.isTopOffer )
-						_specialOfferLabel.text = Localizer.getInstance().translate("STORE.TOP_OFFER_LABEL");
+						_specialOfferLabel.text = _("Top\nOFFRE");
 					else if( _data.isPlayersChoice )
-						_specialOfferLabel.text = Localizer.getInstance().translate("STORE.PLAYERS_CHOICE_LABEL");
+						_specialOfferLabel.text = _("Choix\nJOUEUR");
 					_specialOfferLabel.visible = _data.isPlayersChoice || _data.isTopOffer;
 				}
 			}

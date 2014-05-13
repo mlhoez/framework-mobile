@@ -8,8 +8,8 @@ package com.ludofactory.mobile.core.test.cs.display
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.NotLoggedInContainer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
@@ -150,7 +150,7 @@ package com.ludofactory.mobile.core.test.cs.display
 						
 						_retryContainer.loadingMode = false;
 						_retryContainer.singleMessageMode = true;
-						_retryContainer.message = Localizer.getInstance().translate("CUSTOMER_SERVICE_PENDING_MESSAGES_CONTAINER.NO_MESSAGES");
+						_retryContainer.message = _("Aucune conversation à afficher.");
 						_list.visible = false;
 					}
 					else
@@ -194,7 +194,7 @@ package com.ludofactory.mobile.core.test.cs.display
 		{
 			_list.onRefreshComplete();
 			
-			_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+			_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 			_retryContainer.loadingMode = false;
 		}
 		
@@ -213,7 +213,7 @@ package com.ludofactory.mobile.core.test.cs.display
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		

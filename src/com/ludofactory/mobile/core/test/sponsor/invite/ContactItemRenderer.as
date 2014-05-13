@@ -11,9 +11,9 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Bounce;
 	import com.greensock.easing.Elastic;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -164,7 +164,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			
 			_inviteButton = new Button();
 			_inviteButton.styleName = Theme.BUTTON_FLAT_GREEN;
-			_inviteButton.label = Localizer.getInstance().translate("SPONSOR_INVITE.INVITE_BUTTON_LABEL");
+			_inviteButton.label = _("Inviter");
 			_inviteButton.addEventListener(Event.TRIGGERED, onInvite);
 			addChild(_inviteButton);
 			
@@ -363,7 +363,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -409,7 +409,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 							touchable = false;
 							
 							_inviteButton.isEnabled = false;
-							_inviteButton.label = Localizer.getInstance().translate("SPONSOR_INVITE.FAIL_BUTTON_LABEL");
+							_inviteButton.label = _("Echec");
 							TweenMax.to(_inviteButton, 0.75, { delay:0.5, scaleX:1, scaleY:1, autoAlpha:1, ease:Bounce.easeOut });
 							TweenMax.to(_loader, 0.75, { scaleX:0, scaleY:0, autoAlpha:0, ease:Bounce.easeOut });
 							
@@ -423,7 +423,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 							touchable = false;
 							
 							_inviteButton.isEnabled = false;
-							_inviteButton.label = Localizer.getInstance().translate("SPONSOR_INVITE.SENT_BUTTON_LABEL");
+							_inviteButton.label = _("Envoyé");
 							TweenMax.to(_inviteButton, 0.75, { delay:0.5, scaleX:1, scaleY:1, autoAlpha:1, ease:Bounce.easeOut });
 							TweenMax.to(_loader, 0.75, { scaleX:0, scaleY:0, autoAlpha:0, ease:Bounce.easeOut });
 							
@@ -452,7 +452,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			_isInviting = false;
 			touchable = true;
 			
-			_inviteButton.label = Localizer.getInstance().translate("SPONSOR_INVITE.RETRY_BUTTON_LABEL");
+			_inviteButton.label = _("Réessayer");
 			TweenMax.to(_inviteButton, 0.75, { delay:0.5, scaleX:1, scaleY:1, autoAlpha:1, ease:Bounce.easeOut });
 			TweenMax.to(_loader, 0.75, { scaleX:0, scaleY:0, autoAlpha:0, ease:Bounce.easeOut });
 		}
@@ -497,7 +497,7 @@ package com.ludofactory.mobile.core.test.sponsor.invite
 			_isInviting = false;
 			touchable = true;
 			
-			_inviteButton.label = Localizer.getInstance().translate("SPONSOR_INVITE.RETRY_BUTTON_LABEL");
+			_inviteButton.label = _("Réessayer");
 			TweenMax.to(_inviteButton, 0.75, { delay:0.5, scaleX:1, scaleY:1, autoAlpha:1, ease:Bounce.easeOut });
 			TweenMax.to(_loader, 0.75, { scaleX:0, scaleY:0, autoAlpha:0, ease:Bounce.easeOut });
 		}

@@ -6,6 +6,7 @@ Created : 24 sept. 2013
 */
 package com.ludofactory.mobile.core
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.authentication.AuthenticationManager;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
@@ -15,7 +16,6 @@ package com.ludofactory.mobile.core
 	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-	
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
@@ -66,22 +66,22 @@ package com.ludofactory.mobile.core
 			_container.addChild(_icon);
 			
 			_notificationTitle = new Label();
-			_notificationTitle.text = Localizer.getInstance().translate("INVALID_SESSION.TITLE");
+			_notificationTitle.text = _("Vous avez été déconnecté.");
 			_container.addChild(_notificationTitle);
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 44 : 60), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_message = new Label();
-			_message.text = Localizer.getInstance().translate("INVALID_SESSION.MESSAGE");
+			_message.text = _("Vous avez été automatiquement déconnecté car vous avez probablement changé vos identifiants de connexion sur un autre appareil.\n\nMerci de vous identifier à nouveau.");
 			_container.addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 38), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_yesButton = new Button();
-			_yesButton.label = Localizer.getInstance().translate("INVALID_SESSION.NOW_BUTTON");
+			_yesButton.label = _("Allons-y !");
 			_yesButton.addEventListener(Event.TRIGGERED, onConfirm);
 			_container.addChild(_yesButton);
 			
 			_cancelButton = new Button();
-			_cancelButton.label = Localizer.getInstance().translate("INVALID_SESSION.LATER_BUTTON");
+			_cancelButton.label = _("Plus tard...");
 			_cancelButton.styleName = Theme.BUTTON_BLUE;
 			_cancelButton.addEventListener(Event.TRIGGERED, onCancel);
 			_container.addChild(_cancelButton);

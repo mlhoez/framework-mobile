@@ -9,9 +9,9 @@ package com.ludofactory.mobile.core.test.account.history.settings
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.freshplanet.nativeExtensions.PushNotificationEvent;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -54,8 +54,8 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			_globalPushControl = new CustomToggleSwitch();
 			_globalPushControl.onText = "";
 			_globalPushControl.offText = "";
-			_globalPushControl.onThumbText = Localizer.getInstance().translate("COMMON.YES");
-			_globalPushControl.offThumbText = Localizer.getInstance().translate("COMMON.NO");
+			_globalPushControl.onThumbText = _("Oui");
+			_globalPushControl.offThumbText = _("Non");
 			_globalPushControl.isSelected = _pushInformations == 0 ? false : true;
 			_globalPushControl.addEventListener(Event.CHANGE, onSwitchPush);
 			
@@ -70,12 +70,12 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			_list.itemRendererType = AccountItemRenderer;
 			if( GlobalConfig.ios )
 			{
-				_list.dataProvider = new ListCollection( [ { title:Localizer.getInstance().translate("ACCOUNT.GLOBAL_PUSH"), accessory:_globalPushControl, helpTextTranslationKey:"ACCOUNT.GLOBAL_PUSH_HELP" }/*,
+				_list.dataProvider = new ListCollection( [ { title:_("Activation"), accessory:_globalPushControl, helpTextTranslation:_("Vous ne recevez pas de notifications malgré l'option activée ?\n\nAssurez-vous que celle-ci est autorisée à les recevoir en allant dans l'application « Réglages » puis « Centre de notifications ».\n\nSélectionnez {0}, activez l'option « Dans Centre de notifications » et choisissez un style d'alerte.") }/*,
 														   { title:"",   isSaveButton:true }*/] );
 			}
 			else
 			{
-				_list.dataProvider = new ListCollection( [ { title:Localizer.getInstance().translate("ACCOUNT.GLOBAL_PUSH"), accessory:_globalPushControl }/*,
+				_list.dataProvider = new ListCollection( [ { title:_("Activation"), accessory:_globalPushControl }/*,
 														   { title:"",   isSaveButton:true }*/] );
 			}
 			addChild(_list);

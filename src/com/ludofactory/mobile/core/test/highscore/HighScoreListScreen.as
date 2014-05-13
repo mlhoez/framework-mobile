@@ -8,9 +8,9 @@ package com.ludofactory.mobile.core.test.highscore
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -117,7 +117,7 @@ package com.ludofactory.mobile.core.test.highscore
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("HIGH_SCORE_LIST.HEADER_TITLE");
+			_headerTitle = _("Meilleurs scores");
 			
 			_listHeader = new HighScoreListHeader();
 			_listHeader.visible = false;
@@ -157,7 +157,7 @@ package com.ludofactory.mobile.core.test.highscore
 			addChild(_countryChoiceContainer);
 			
 			_countryChoiceTitle = new Label();
-			_countryChoiceTitle.text = Localizer.getInstance().translate("HIGH_SCORE_LIST.CHOICE_TITLE");
+			_countryChoiceTitle.text = _("Pays : ");
 			_countryChoiceContainer.addChild( _countryChoiceTitle );
 			_countryChoiceTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.RIGHT);
 			_countryChoiceTitle.textRendererProperties.wordWrap = false;
@@ -196,12 +196,12 @@ package com.ludofactory.mobile.core.test.highscore
 			_retryContainer.addEventListener(Event.TRIGGERED, onRetry);
 			addChild(_retryContainer);
 			
-			_associateButton = new ArrowGroup( Localizer.getInstance().translate("HIGH_SCORE_LIST.ASSOCIATE_WITH_FACEBOOK_BUTTON_LABEL") );
+			_associateButton = new ArrowGroup( _("Associer mon compte à Facebook") );
 			_associateButton.visible = false;
 			addChild(_associateButton);
 			
 			_associateLabel = new Label();
-			_associateLabel.text = Localizer.getInstance().translate("HIGH_SCORE_LIST.ASSOCIATE_WITH_FACEBOOK_MESSAGE");
+			_associateLabel.text = _("Vous devez associer votre compte à Facebook pour voir la progression de vos amis !");
 			_associateLabel.visible = false;
 			addChild(_associateLabel);
 			_associateLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 38), Theme.COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
@@ -325,7 +325,7 @@ package com.ludofactory.mobile.core.test.highscore
 						{
 							_retryContainer.loadingMode = false;
 							_retryContainer.singleMessageMode = true;
-							_retryContainer.message = Localizer.getInstance().translate("HIGH_SCORE_LIST.NO_PLAYER_FOR_COUNTRY");
+							_retryContainer.message = _("Aucun joueur n'est classé\ndans ce pays.");
 						}
 						_list.isRefreshableDown = false;
 						_list.isRefreshableTop = false;
@@ -398,7 +398,7 @@ package com.ludofactory.mobile.core.test.highscore
 			
 			if( !_isInUpdateMode )
 			{
-				_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+				_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 				_retryContainer.loadingMode = false;
 			}
 		}
@@ -423,7 +423,7 @@ package com.ludofactory.mobile.core.test.highscore
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -439,7 +439,7 @@ package com.ludofactory.mobile.core.test.highscore
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		
@@ -490,7 +490,7 @@ package com.ludofactory.mobile.core.test.highscore
 				else
 				{
 					_retryContainer.loadingMode = false;
-					_retryContainer.message = Localizer.getInstance().translate("COMMON.NOT_CONNECTED_ERROR");;
+					_retryContainer.message = _("Vous ne pouvez pas afficher le contenu de cette page car vous n'êtes pas connecté à Internet.");
 					_retryContainer.singleMessageMode = false;
 				}
 			}
@@ -556,7 +556,7 @@ package com.ludofactory.mobile.core.test.highscore
 		 */		
 		private function connectFacebook():void
 		{
-			_retryContainer.message = Localizer.getInstance().translate("COMMON.NOT_CONNECTED_ERROR");;
+			_retryContainer.message = _("Vous ne pouvez pas afficher le contenu de cette page car vous n'êtes pas connecté à Internet.");;
 			_retryContainer.singleMessageMode = false;
 			
 			if( MemberManager.getInstance().isLoggedIn() )
@@ -570,8 +570,8 @@ package com.ludofactory.mobile.core.test.highscore
 					
 					_associateButton.addEventListener(Event.TRIGGERED, getToken);
 					
-					_associateButton.label = Localizer.getInstance().translate("HIGH_SCORE_LIST.CONNECT_WITH_FACEBOOK_BUTTON_LABEL");
-					_associateLabel.text = Localizer.getInstance().translate("HIGH_SCORE_LIST.CONNECT_WITH_FACEBOOK_MESSAGE");
+					_associateButton.label = _("Se connecter avec Facebook");
+					_associateLabel.text = _("Connectez-vous avec Facebook pour voir la progression de vos amis !");
 					
 					invalidate(INVALIDATION_FLAG_SIZE);
 					
@@ -584,8 +584,8 @@ package com.ludofactory.mobile.core.test.highscore
 					_associateButton.visible = true;
 					_associateLabel.visible = true;
 					
-					_associateButton.label = Localizer.getInstance().translate("HIGH_SCORE_LIST.ASSOCIATE_WITH_FACEBOOK_BUTTON_LABEL");
-					_associateLabel.text = Localizer.getInstance().translate("HIGH_SCORE_LIST.ASSOCIATE_WITH_FACEBOOK_MESSAGE");
+					_associateButton.label = _("Associer mon compte à Facebook");
+					_associateLabel.text = _("Vous devez associer votre compte à Facebook pour voir la progression de vos amis !");
 					_associateButton.addEventListener(Event.TRIGGERED, onAssociateAccount);
 					
 					invalidate(INVALIDATION_FLAG_SIZE);
@@ -598,8 +598,8 @@ package com.ludofactory.mobile.core.test.highscore
 				_associateButton.visible = true;
 				_associateLabel.visible = true;
 				
-				_associateButton.label = Localizer.getInstance().translate("HIGH_SCORE_LIST.CONNECT_WITH_FACEBOOK_BUTTON_LABEL");
-				_associateLabel.text = Localizer.getInstance().translate("HIGH_SCORE_LIST.CONNECT_WITH_FACEBOOK_MESSAGE");
+				_associateButton.label = _("Se connecter avec Facebook");
+				_associateLabel.text = _("Connectez-vous avec Facebook pour voir la progression de vos amis !");
 				_associateButton.addEventListener(Event.TRIGGERED, onAuthenticateFacebook);
 				
 				invalidate(INVALIDATION_FLAG_SIZE);

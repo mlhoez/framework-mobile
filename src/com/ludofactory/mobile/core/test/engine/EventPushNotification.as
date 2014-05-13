@@ -9,10 +9,10 @@ package com.ludofactory.mobile.core.test.engine
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.freshplanet.nativeExtensions.PushNotificationEvent;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -76,22 +76,22 @@ package com.ludofactory.mobile.core.test.engine
 			_container.addChild(_icon);
 			
 			_notificationTitle = new Label();
-			_notificationTitle.text = Localizer.getInstance().translate("PUSH_NOTIFICATION.TITLE");
+			_notificationTitle.text = _("Soyez avertis !");
 			_container.addChild(_notificationTitle);
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 44 : 60), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_message = new Label();
-			_message.text = Localizer.getInstance().translate("PUSH_NOTIFICATION.MESSAGE");
+			_message.text = _("Soyez immédiatement informé en cas de dépassement dans un tournoi en activant les notifications de cette application.\n\nVous pourrez changer ce paramètre plus tard dans la partie Mon Compte du menu.");
 			_container.addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 38), Theme.COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_yesButton = new Button();
-			_yesButton.label = Localizer.getInstance().translate("PUSH_NOTIFICATION.MANAGE_BUTTON_LABEL");
+			_yesButton.label = _("Activer");
 			_yesButton.addEventListener(Event.TRIGGERED, onConfirm);
 			_container.addChild(_yesButton);
 			
 			_cancelButton = new Button();
-			_cancelButton.label = Localizer.getInstance().translate("PUSH_NOTIFICATION.LATER_BUTTON_LABEL");
+			_cancelButton.label = _("Plus tard");
 			_cancelButton.styleName = Theme.BUTTON_BLUE;
 			_cancelButton.addEventListener(Event.TRIGGERED, onCancel);
 			_container.addChild(_cancelButton);

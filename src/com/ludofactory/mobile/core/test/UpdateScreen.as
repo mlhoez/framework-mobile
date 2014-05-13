@@ -6,8 +6,8 @@ Created : 9 janv. 2014
 */
 package com.ludofactory.mobile.core.test
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -61,14 +61,14 @@ package com.ludofactory.mobile.core.test
 			addChild( _logo );
 			
 			_message = new Label();
-			_message.text = Localizer.getInstance().translate("COMMON.FORCE_UPDATE_MESSAGE");
+			_message.text = _("Une mise à jour de l'application est disponible !\n\nMerci de la télécharger pour assurer son bon fonctionnement.");
 			_message.touchable = false;
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 60), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_message.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
 			
 			_downloadButton = new Button();
-			_downloadButton.label = Localizer.getInstance().translate("COMMON.DOWNLOAD");
+			_downloadButton.label = _("Télécharger");
 			_downloadButton.addEventListener(Event.TRIGGERED, onDownload);
 			addChild(_downloadButton);
 		}

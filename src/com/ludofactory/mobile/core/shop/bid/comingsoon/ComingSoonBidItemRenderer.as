@@ -6,10 +6,9 @@ Created : 27 août 2013
 */
 package com.ludofactory.mobile.core.shop.bid.comingsoon
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -117,7 +116,7 @@ package com.ludofactory.mobile.core.shop.bid.comingsoon
 					_image.visible = false;
 					_image.source = this._data.imageUrl;
 					
-					_title.text = Localizer.getInstance().translate("BID_COMING_SOON.COMING_SOON_STATE");
+					_title.text = _("A venir");
 				}
 				else
 				{

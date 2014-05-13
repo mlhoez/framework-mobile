@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core
 	import com.freshplanet.ane.AirDeviceId;
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -75,6 +76,7 @@ package com.ludofactory.mobile.core
 			super();
 			
 			Remote.getInstance();
+			LanguageManager.getInstance();
 			
 			if(stage)
 			{

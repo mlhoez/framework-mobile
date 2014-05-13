@@ -8,12 +8,11 @@ package com.ludofactory.mobile.core.test.store
 {
 	import com.amazon.nativeextensions.android.AmazonItemData;
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.hasoffers.nativeExtensions.MobileAppTracker;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.NotLoggedInContainer;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
@@ -105,7 +104,7 @@ package com.ludofactory.mobile.core.test.store
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("STORE.HEADER_TITLE");
+			_headerTitle = _("Acheter des crédits de jeu");
 			
 			const vlayout:VerticalLayout = new VerticalLayout();
 			vlayout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
@@ -234,7 +233,7 @@ package com.ludofactory.mobile.core.test.store
 				_retryContainer.visible = true;
 				_retryContainer.singleMessageMode = true;
 				_retryContainer.loadingMode = false;
-				_retryContainer.message = Localizer.getInstance().translate("STORE.UNAVAILABLE");
+				_retryContainer.message = _("Impossible d'afficher le magasin car vous ne pouvez pas effectuer d'achats (contrôle parental ou autre raison).");
 			}
 			else
 			{
@@ -293,7 +292,7 @@ package com.ludofactory.mobile.core.test.store
 		private function onGetProductIdsFailure(error:Object = null):void
 		{
 			_areProductDetailsLoaded = false;
-			_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+			_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 			_retryContainer.loadingMode = false;
 		}
 		
@@ -376,7 +375,7 @@ package com.ludofactory.mobile.core.test.store
 			{
 				// no product details loaded : something is wrong
 				_retryContainer.visible = true;
-				_retryContainer.message = Localizer.getInstance().translate("COMMON.QUERY_FAILURE");
+				_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 				_retryContainer.loadingMode = false;
 			}
 		}
@@ -435,7 +434,7 @@ package com.ludofactory.mobile.core.test.store
 			}
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("COMMON.NOT_CONNECTED"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
 		}
 		

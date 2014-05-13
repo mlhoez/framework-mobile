@@ -6,8 +6,8 @@ Created : 9 oct. 2013
 */
 package com.ludofactory.mobile.core.test.sponsor.filleuls
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -85,7 +85,7 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 			_container.addChild(_stateContainer);
 			
 			_stateTitle = new Label();
-			_stateTitle.text = Localizer.getInstance().translate("FILLEUL_NOTIFICATION.STATE_TITLE");
+			_stateTitle.text = _("Etat du parrainage :");
 			_stateContainer.addChild( _stateTitle );
 			_stateTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_DARK_GREY, true);
 			
@@ -121,7 +121,7 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 			_container.addChild(_rewardContainer);
 			
 			_rewardTitle = new Label();
-			_rewardTitle.text = Localizer.getInstance().translate("FILLEUL_NOTIFICATION.REWARD_TITLE");
+			_rewardTitle.text = _("Gains remportés grâce à lui :");
 			_rewardContainer.addChild( _rewardTitle );
 			_rewardTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_DARK_GREY, true);
 			
@@ -129,12 +129,12 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 			_rewardContainer.addChild(_headerContainer);
 			
 			_headerRewardTitle = new Label();
-			_headerRewardTitle.text = Localizer.getInstance().translate("FILLEUL_NOTIFICATION.HEADER_REWARD_TITLE");
+			_headerRewardTitle.text = _("Lot");
 			_headerContainer.addChild(_headerRewardTitle);
 			_headerRewardTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_LIGHT_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_headerDateLabel = new Label();
-			_headerDateLabel.text = Localizer.getInstance().translate("FILLEUL_NOTIFICATION.HEADER_DATE_TITLE");
+			_headerDateLabel.text = _("Date du gain");
 			_headerContainer.addChild(_headerDateLabel);
 			_headerDateLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_LIGHT_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
 			

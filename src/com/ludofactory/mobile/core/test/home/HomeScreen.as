@@ -7,10 +7,10 @@ Created : 11 Avril 2013
 package com.ludofactory.mobile.core.test.home
 {
 	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
@@ -77,7 +77,7 @@ package com.ludofactory.mobile.core.test.home
 			
 			_playButton = new Button();
 			_playButton.styleName = (GlobalConfig.ios && GameCenterManager.available) ? Theme.BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER : Theme.BUTTON_SPECIAL_BIGGER;
-			_playButton.label = Localizer.getInstance().translate("HOME.PLAY_BUTTON_LABEL");
+			_playButton.label = _("JOUER");
 			_playButton.addEventListener(Event.TRIGGERED, onPlay);
 			addChild(_playButton);
 			
@@ -97,7 +97,7 @@ package com.ludofactory.mobile.core.test.home
 			
 			_giftsButton = new Button();
 			_giftsButton.styleName = Theme.BUTTON_TRANSPARENT_WHITE;
-			_giftsButton.label = Localizer.getInstance().translate("HOME.WIN_GIFTS_BUTTON_LABEL");
+			_giftsButton.label = _("Gagner des cadeaux");
 			_giftsButton.addEventListener(Event.TRIGGERED, onShowRules);
 			_giftsButton.visible = Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN);
 			addChild(_giftsButton);

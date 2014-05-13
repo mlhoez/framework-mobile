@@ -6,7 +6,7 @@ Created : 8 oct. 2013
 */
 package com.ludofactory.mobile.core.test.settings
 {
-	import com.ludofactory.mobile.core.Localizer;
+	import com.ludofactory.common.gettext.aliases._;
 
 	public class LanguageData
 	{
@@ -48,7 +48,7 @@ package com.ludofactory.mobile.core.test.settings
 		
 		public function toString():String
 		{
-			return Localizer.getInstance().translate( _translationKey );
+			return _( _translationKey );
 		}
 	}
 }

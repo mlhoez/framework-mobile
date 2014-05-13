@@ -6,9 +6,9 @@ Created : 7 août 2013
 */
 package com.ludofactory.mobile.core.storage
 {
+	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.scoring.ScoreToPointsData;
@@ -85,7 +85,6 @@ package com.ludofactory.mobile.core.storage
 				setProperty(StorageConfig.PROPERTY_FIRST_LAUNCH, true);
 			}
 			
-			Localizer.getInstance();
 			Remote.getInstance().init(onLoadConfigSuccess, onLoadConfigFailure, onLoadConfigFailure, 5);
 		}
 		
@@ -112,10 +111,6 @@ package com.ludofactory.mobile.core.storage
 		 */		
 		private function onLoadConfigSuccess(result:Object):void
 		{
-			// parse languages
-			if( result.hasOwnProperty( "langues" ) && result.langues != null )
-				Localizer.getInstance().updateTranslations( result.langues );
-			
 			if( result.hasOwnProperty( "correspondance_score" ) && result.correspondance_score != null )
 			{
 				var arr:Array;
@@ -207,8 +202,8 @@ package com.ludofactory.mobile.core.storage
 		public function updateFaq(data:Object):void
 		{
 			var faq:Object = Storage.getInstance().getProperty(StorageConfig.PROPERTY_FAQ);
-			faq[Localizer.getInstance().lang] = JSON.stringify(data.tabFaq);
-			Localizer.getInstance().setFaqVersion(int(data.version));
+			faq[LanguageManager.getInstance().lang] = JSON.stringify(data.tabFaq);
+			setProperty(StorageConfig.PROPERTY_FAQ_VERSION, int(data.version));
 			Storage.getInstance().setProperty(StorageConfig.PROPERTY_FAQ, faq);
 		}
 		
@@ -218,8 +213,8 @@ package com.ludofactory.mobile.core.storage
 		public function updateVip(data:Object):void
 		{
 			var vip:Object = Storage.getInstance().getProperty(StorageConfig.PROPERTY_VIP);
-			vip[Localizer.getInstance().lang] = JSON.stringify(data.tab_vip as Array);
-			Localizer.getInstance().setVipVersion(int(data.version));
+			vip[LanguageManager.getInstance().lang] = JSON.stringify(data.tab_vip as Array);
+			setProperty(StorageConfig.PROPERTY_VIP_VERSION, int(data.version));
 			Storage.getInstance().setProperty(StorageConfig.PROPERTY_VIP, vip);
 		}
 		
@@ -229,8 +224,8 @@ package com.ludofactory.mobile.core.storage
 		public function updateNews(data:Object):void
 		{
 			var news:Object = getProperty(StorageConfig.PROPERTY_NEWS);
-			news[Localizer.getInstance().lang] = JSON.stringify(data.tab_actualites);
-			Localizer.getInstance().setNewsVersion(int(data.version));
+			news[LanguageManager.getInstance().lang] = JSON.stringify(data.tab_actualites);
+			setProperty(StorageConfig.PROPERTY_NEWS_VERSION, int(data.version));
 			setProperty(StorageConfig.PROPERTY_NEWS, news);
 		}
 		
@@ -240,8 +235,8 @@ package com.ludofactory.mobile.core.storage
 		public function updateTermsAndConditions(data:Object):void
 		{
 			var termsAndConditions:Object = getProperty(StorageConfig.PROPERTY_TERMS_AND_CONDITIONS);
-			termsAndConditions[Localizer.getInstance().lang] = String(data.reglement);
-			//Localizer.getInstance().setNewsVersion(int(data.version));
+			termsAndConditions[LanguageManager.getInstance().lang] = String(data.reglement);
+			//setProperty((int(data.version));
 			setProperty(StorageConfig.PROPERTY_TERMS_AND_CONDITIONS, termsAndConditions);
 		}
 		

@@ -6,9 +6,9 @@ Created : 5 nov. 2013
 */
 package com.ludofactory.mobile.core.test.account.history.settings
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -93,18 +93,18 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			
 			
 			var tab:Array = [];
-			if( tab.indexOf( Localizer.getInstance().translate("Mr.") ) == -1 )
-				tab.push( Localizer.getInstance().translate("Mr.") );
-			if( tab.indexOf( Localizer.getInstance().translate("Mme.") ) == -1 )
-				tab.push( Localizer.getInstance().translate("Mme.") );
-			if( tab.indexOf( Localizer.getInstance().translate("Mlle.") ) == -1 )
-				tab.push( Localizer.getInstance().translate("Mlle.") );
+			if( tab.indexOf( _("Mr.") ) == -1 )
+				tab.push( _("Mr.") );
+			if( tab.indexOf( _("Mme.") ) == -1 )
+				tab.push( _("Mme.") );
+			if( tab.indexOf( _("Mlle.") ) == -1 )
+				tab.push( _("Mlle.") );
 				
 			_titleControl = new PickerList();
 			_titleControl.dataProvider = new ListCollection( tab );
-			_titleControl.typicalItem = Localizer.getInstance().translate("Mme.");
+			_titleControl.typicalItem = _("Mme.");
 			if( _personalInformations.titre != "" )
-				_titleControl.selectedItem = Localizer.getInstance().translate(_personalInformations.titre);
+				_titleControl.selectedItem = _(_personalInformations.titre);
 			
 			_idControl = new Label();
 			_idControl.text = "" + MemberManager.getInstance().getId();
@@ -149,11 +149,11 @@ package com.ludofactory.mobile.core.test.account.history.settings
 			_list.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.itemRendererType = AccountItemRenderer;
-			_list.dataProvider = new ListCollection( [ { title:Localizer.getInstance().translate("ACCOUNT.ID"),         accessory:_idControl },
-													   { title:Localizer.getInstance().translate("ACCOUNT.TITLE"),      accessory:_titleControl },
-													   { title:Localizer.getInstance().translate("ACCOUNT.LAST_NAME"),  accessory:_lastNameControl },
-													   { title:Localizer.getInstance().translate("ACCOUNT.FIRST_NAME"), accessory:_firstNameControl },
-													   { title:Localizer.getInstance().translate("ACCOUNT.BIRTHDAY"),   accessory:_birthdayContainer },
+			_list.dataProvider = new ListCollection( [ { title:_("Code joueur"),         accessory:_idControl },
+													   { title:_("Titre"),      accessory:_titleControl },
+													   { title:_("Nom"),  accessory:_lastNameControl },
+													   { title:_("Prénom"), accessory:_firstNameControl },
+													   { title:_("Anniversaire"),   accessory:_birthdayContainer },
 													   { title:"",   isSaveButton:true } ] );
 			addChild(_list);
 		}
@@ -207,7 +207,7 @@ package com.ludofactory.mobile.core.test.account.history.settings
 				Remote.getInstance().accountUpdatePersonalInformations(paramObject, onUpdatePersonalInformationComplete, onUpdatePersonalInformationComplete, onUpdatePersonalInformationComplete, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 			else
 			{
-				InfoManager.showTimed(Localizer.getInstance().translate("ACCOUNT.NO_CHANGE"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				InfoManager.showTimed(_("Aucune donnée à mettre à jour."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 				onUpdatePersonalInformationComplete();
 			}
 		}

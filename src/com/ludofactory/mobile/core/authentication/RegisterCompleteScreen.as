@@ -8,10 +8,10 @@ package com.ludofactory.mobile.core.authentication
 {
 	import com.gamua.flox.Flox;
 	import com.hasoffers.nativeExtensions.MobileAppTracker;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -58,7 +58,7 @@ package com.ludofactory.mobile.core.authentication
 		{
 			super.initialize();
 			
-			_headerTitle = Localizer.getInstance().translate("REGISTER_COMPLETE.HEADER_TITLE");
+			_headerTitle = _("Inscription terminée");
 			
 			_logo = new ImageLoader();
 			_logo.source = Theme.ludokadoLogoTexture;
@@ -69,18 +69,18 @@ package com.ludofactory.mobile.core.authentication
 			
 			_title = new Label();
 			_title.touchable = false;
-			_title.text = Localizer.getInstance().translate("REGISTER_COMPLETE.TITLE");
+			_title.text = _("Encore plus d'avantages ?");
 			addChild(_title);
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 44), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_message = new Label();
 			_message.touchable = false;
-			_message.text = Localizer.getInstance().translate("REGISTER_COMPLETE.MESSAGE");
+			_message.text = _("Validez votre compte en cliquant sur le lien présent dans le mail de confirmation d'inscription que vous allez recevoir.");
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 38), Theme.COLOR_LIGHT_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_validateButton = new Button();
-			_validateButton.label = Localizer.getInstance().translate("COMMON.CONTINUE");
+			_validateButton.label = _("Continuer");
 			_validateButton.addEventListener(Event.TRIGGERED, onValidate);
 			addChild( _validateButton );
 			
