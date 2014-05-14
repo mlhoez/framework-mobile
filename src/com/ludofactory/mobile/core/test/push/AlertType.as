@@ -29,5 +29,8 @@ package com.ludofactory.mobile.core.test.push
 		/**
 		 * Alert for anonymous game sesssions. */		
 		public static const ANONYMOUS_TROPHIES:String = "anonymous-trophies";
+		/**
+		 * Alert for new languages. */		
+		public static const NEW_LANGAUGES:String = "new-languages";
 	}
 }

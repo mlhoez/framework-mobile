@@ -11,6 +11,8 @@ package com.ludofactory.mobile.core.controls
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -247,6 +249,12 @@ package com.ludofactory.mobile.core.controls
 			{
 				numChanges++;
 				sourceName = "header-trophy-icon";
+			}
+			
+			if( (Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES) as Array).length > 0 )
+			{
+				numChanges++;
+				sourceName = "header-language-icon";
 			}
 			
 			if( numChanges > 1 )

@@ -81,6 +81,9 @@ package com.ludofactory.mobile.core.test.settings
 			
 			_headerTitle = _("Réglages");
 			
+			// reset alerts for new languages
+			Storage.getInstance().setProperty(StorageConfig.PROPERTY_NEW_LANGUAGES, []);
+			
 			if( !AbstractGameInfo.LANDSCAPE )
 			{
 				_logo = new Image( AbstractEntryPoint.assets.getTexture( "menu-icon-settings" ) );

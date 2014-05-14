@@ -13,6 +13,8 @@ package com.ludofactory.mobile.core.test.alert
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.home.AlertData;
 	import com.ludofactory.mobile.core.test.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.test.push.AlertType;
@@ -136,11 +138,16 @@ package com.ludofactory.mobile.core.test.alert
 			
 			if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 0)
 			{
-				_list.dataProvider.unshift( new AbstractElementToPush(AlertType.ANONYMOUS_GAME_SESSION) )
+				_list.dataProvider.unshift( new AbstractElementToPush(AlertType.ANONYMOUS_GAME_SESSION) );
 			}
 			if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions() > 0)
 			{
-				_list.dataProvider.unshift( new AbstractElementToPush(AlertType.ANONYMOUS_TROPHIES) )
+				_list.dataProvider.unshift( new AbstractElementToPush(AlertType.ANONYMOUS_TROPHIES) );
+			}
+			
+			if( (Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES) as Array).length > 0 )
+			{
+				_list.dataProvider.unshift( new AbstractElementToPush(AlertType.NEW_LANGAUGES) );
 			}
 		}
 		

@@ -6,6 +6,7 @@ Created : 4 oct. 2013
 */
 package com.ludofactory.mobile.core.test.alert
 {
+	import com.ludofactory.common.gettext.ISO_639_1;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.common.utils.Utilities;
@@ -14,6 +15,8 @@ package com.ludofactory.mobile.core.test.alert
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
+	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.achievements.TrophyData;
 	import com.ludofactory.mobile.core.test.achievements.TrophyManager;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -295,6 +298,19 @@ package com.ludofactory.mobile.core.test.alert
 								_accessButton.text = _("S'identifier");
 								_accessButton.visible = true;
 								_message.text = formatString(_n("{0} Coupe sera définitivement validée dès que vous serez identifié.", "{0} Coupes seront définitivement validées dès que vous serez identifié.", MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions());
+								break;
+							}
+							case AlertType.NEW_LANGAUGES:
+							{
+								_icon.source = AbstractEntryPoint.assets.getTexture("header-language-simple-icon");
+								
+								var newLanguages:Array = Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES);
+								for(var i:int; i < newLanguages.length; i++)
+									newLanguages[i] = ISO_639_1[String(newLanguages[i]).toUpperCase()]; // replace by correct country name
+								
+								_accessButton.text = _("Accéder");
+								_accessButton.visible = true;
+								_message.text = formatString(_n("Une nouvelle langue est disponible : {0} !", "De nouvelles langues sont disponibles : {0} !", newLanguages.length), newLanguages.join(", "));
 								break;
 							}
 						}
