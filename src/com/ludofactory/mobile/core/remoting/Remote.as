@@ -719,9 +719,8 @@ package com.ludofactory.mobile.core.remoting
 		 */		
 		public function checkForLanguageUpdate(installedLanguageData:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
-			// FIXME A terminer
-			var params:Object = mergeWithGenericParams( { test:installedLanguageData } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "", "", params);
+			var params:Object = mergeWithGenericParams( { info_langue:installedLanguageData } );
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getFichierTraduction", params);
 		}
 		
 		

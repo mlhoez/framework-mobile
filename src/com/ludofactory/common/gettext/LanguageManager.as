@@ -7,7 +7,10 @@ Created : 7 mai 2014
 */
 package com.ludofactory.common.gettext
 {
+	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.log;
+	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	
@@ -21,11 +24,13 @@ package com.ludofactory.common.gettext
 	import flash.net.URLRequest;
 	import flash.system.Capabilities;
 	import flash.utils.ByteArray;
+	
+	import starling.events.EventDispatcher;
 
 	/**
 	 * Language manager.
 	 */	
-	public class LanguageManager
+	public class LanguageManager extends EventDispatcher
 	{
 		public static const FRENCH:String   = "fr";
 		public static const ENGLISH:String  = "en";
@@ -34,7 +39,7 @@ package com.ludofactory.common.gettext
 		
 		/**
 		 * Sample queue for testing purpose. */		
-		public static var SAMPLE_QUEUE:Object = { fr : ["http://ludokadom.mlhoez.ludofactory.dev/_testTrad/fr.po"], en : ["http://ludokadom.mlhoez.ludofactory.dev/_testTrad/messages_en.po"] };
+		public static var SAMPLE_QUEUE:Object = { es : ["http://ludokadom.mlhoez.ludofactory.dev/_testTrad/game.po"] };
 		
 		// ----
 		
@@ -47,7 +52,7 @@ package com.ludofactory.common.gettext
 		 * the application storage directory.
 		 * 
 		 * @see com.ludofactory.common.gettext.ISO_639_1 */		
-		private static const DEFAULT_LANGUAGE:String = ISO_639_1.EN;
+		private static const DEFAULT_LANGUAGE:String = ISO_639_1.codes[ISO_639_1.EN];
 		
 		/**
 		 * The allowed extension file. Used to check the file being
@@ -169,9 +174,6 @@ package com.ludofactory.common.gettext
 			
 			// load current locale
 			ASGettext.loadLocale(_currentLocale);
-			
-			// check for update
-			checkForUpdate();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -195,13 +197,11 @@ package com.ludofactory.common.gettext
 			
 			_isUpdating = true;
 			
-			// FIXME A terminer
 			/*if( AirNetworkInfo.networkInfo.isConnected() )
 				Remote.getInstance().checkForLanguageUpdate(getInstalledLanguageLastModificationDates(checkCurrentLanguageOnly), onUpdateSuccess, onUpdateFailure, onUpdateFailure, 1);
 			else
 				onUpdateFailure();*/
 			
-			// Test only
 			onUpdateSuccess(SAMPLE_QUEUE);
 		}
 		
@@ -213,8 +213,6 @@ package com.ludofactory.common.gettext
 		private function onUpdateSuccess(result:Object):void
 		{
 			log("[LanguageManager] The language files have been sucessfully updated.");
-			
-			// FIXME A remplacer par le vrai résultat une fois codé côté php.
 			enqueue(result);
 		}
 		
@@ -340,13 +338,10 @@ package com.ludofactory.common.gettext
 				if( !File.applicationStorageDirectory.resolvePath(_localePath + fileToLoadInfo.language).exists )
 				{
 					log("[LanguageManager] New language added : " + fileToLoadInfo.language);
-					// new language added
-					// TODO Create a notification here to display in the main menu
-					// and in the SettingsScreen (a message saying something like :
-					// "A new language is available '...", click the above drop down
-					// box to use it.
-					
-					// Storage ...
+					var arr:Array = Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES).concat();
+					arr.push(fileToLoadInfo.language);
+					Storage.getInstance().setProperty(StorageConfig.PROPERTY_NEW_LANGUAGES, arr);
+					dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
 				}
 				
 				// retrieve the file binary content
@@ -433,9 +428,11 @@ package com.ludofactory.common.gettext
 			{
 				// retrieve all the files within the language folder
 				languageFolder = installedLanguageList[i] as File;
+				if( !languageFolder.isDirectory ) // just in case for hidden files crated by mac
+					continue;
 				
 				// if we need the informations for the current language only (for speed reasons)
-				if( checkCurrentLanguageOnly && languageFolder.name != "" ) // FIXME Mettre le langage courant ici
+				if( checkCurrentLanguageOnly && languageFolder.name != _currentLocale )
 					continue;
 				
 				// build the output for this languge

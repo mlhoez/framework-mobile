@@ -304,7 +304,7 @@ package com.ludofactory.mobile.core.test.alert
 							{
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-language-simple-icon");
 								
-								var newLanguages:Array = Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES);
+								var newLanguages:Array = Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES).concat();
 								for(var i:int; i < newLanguages.length; i++)
 									newLanguages[i] = ISO_639_1[String(newLanguages[i]).toUpperCase()]; // replace by correct country name
 								
@@ -523,6 +523,11 @@ package com.ludofactory.mobile.core.test.alert
 							case AlertType.ANONYMOUS_TROPHIES:
 							{
 								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
+								break;
+							}
+							case AlertType.NEW_LANGAUGES:
+							{
+								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.SETTINGS_SCREEN );
 								break;
 							}
 						}

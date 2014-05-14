@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
-"POT-Creation-Date: 2014-05-13 17:20+0100\n"
-"PO-Revision-Date: 2014-05-13 17:20+0100\n"
+"POT-Creation-Date: 2014-05-14 17:11+0100\n"
+"PO-Revision-Date: 2014-05-14 17:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -83,8 +83,8 @@ msgstr "Later..."
 
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/authentication/AuthenticationScreen.as:82
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/authentication/NotLoggedInContainer.as:51
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:286
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:295
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:289
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:298
 msgid "S'identifier"
 msgstr "Log in"
 
@@ -677,7 +677,8 @@ msgstr ""
 "information."
 
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/shop/vip/BoutiqueCategoryScreen.as:142
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:124
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:127
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:311
 msgid "Accéder"
 msgstr "Access"
 
@@ -985,24 +986,24 @@ msgid "Email"
 msgstr "Email"
 
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/account/history/settings/NotificationSettingsContainer.as:57
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:103
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:113
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:122
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:215
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:106
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:116
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:125
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:218
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:221
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:224
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/debug/DebugScreen.as:105
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/navigation/menu/DisconnectNotification.as:69
 msgid "Oui"
 msgstr "Yes"
 
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/account/history/settings/NotificationSettingsContainer.as:58
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:104
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:114
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:123
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:216
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:107
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:117
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:126
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:219
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:222
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:225
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/debug/DebugScreen.as:106
 msgid "Non"
 msgstr "No"
@@ -1137,7 +1138,7 @@ msgstr "Obtained"
 msgid "Coupes"
 msgstr "Cups"
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:211
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:214
 #, python-brace-format
 msgid ""
 "{0} Point sera définitivement crédité sur votre compte dès que vous serez "
@@ -1152,7 +1153,7 @@ msgstr[1] ""
 "{0} Points will be definitively added to your account as soon as you are "
 "connected to the Internet."
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:211
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:214
 #, python-brace-format
 msgid ""
 "{0} Etoile sera définitivement comptabilisée pour le tournoi en cours dès "
@@ -1167,13 +1168,13 @@ msgstr[1] ""
 "{0} Stars will be definitively credited to the tournament in progress as "
 "soon as you are connected to the Internet."
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:224
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:227
 #, python-brace-format
 msgid "Votre coupe {0} est en attente d'envoi."
 msgstr "Your cup {0} is pending."
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:234
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:244
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:237
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:247
 #, python-brace-format
 msgid ""
 "Votre message « {0} » adressé au service client sera envoyé dès que vous "
@@ -1182,35 +1183,35 @@ msgstr ""
 "Your message « {0} » will be sent to the customer service as soon as you are "
 "connected to the Internet."
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:253
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:256
 #, python-brace-format
 msgid "Vous avez reçu {0} message du service client."
 msgid_plural "Vous avez reçu {0} messages du service client."
 msgstr[0] "You received {0} message from the customer service."
 msgstr[1] "You received {0} messages from the customer service."
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:262
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:265
 #, python-brace-format
 msgid "Vous avez {0} filleul accepté dans votre espace parrainage."
 msgid_plural "Vous avez {0} filleuls acceptés dans votre espace parrainage."
 msgstr[0] "You have {0} accepted friend in the referring space."
 msgstr[1] "You have {0} accepted friends in the referring space."
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:271
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:274
 #, python-brace-format
 msgid "Vous avez gagné {0} cadeau."
 msgid_plural "Vous avez gagné {0} cadeaux."
 msgstr[0] "You have won {0} prize."
 msgstr[1] "You have won {0} prizes."
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:279
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:282
 #, python-brace-format
 msgid "Vous avez gagné {0} coupe."
 msgid_plural "Vous avez gagné {0} coupes."
 msgstr[0] "You have won {0} cup."
 msgstr[1] "You have won {0} cups."
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:288
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:291
 #, python-brace-format
 msgid ""
 "{0} Etoile sera comptabilisée pour le tournoi en cours dès que vous serez "
@@ -1225,7 +1226,7 @@ msgstr[1] ""
 "{0} Stars will be credited to the tournament in progress as soon as you are "
 "authenticated."
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:297
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:300
 #, python-brace-format
 msgid "{0} Coupe sera définitivement validée dès que vous serez identifié."
 msgid_plural ""
@@ -1233,13 +1234,20 @@ msgid_plural ""
 msgstr[0] "{0} Cup will be definitely validated as soon as you log in."
 msgstr[1] "{0} Cups will be definitely validated as soon as you log in."
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertManager.as:78
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertManager.as:171
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertItemRenderer.as:313
+#, fuzzy, python-brace-format
+msgid "Une nouvelle langue est disponible : {0} !"
+msgid_plural "De nouvelles langues sont disponibles : {0} !"
+msgstr[0] "A new language is available : {0} !"
+msgstr[1] "New languages available : {0} !"
+
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertManager.as:80
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertManager.as:178
 msgid "Alertes"
 msgstr "Alerts"
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertManager.as:96
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertManager.as:172
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertManager.as:98
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/alert/AlertManager.as:179
 msgid "Fermer les alertes"
 msgstr "Close the alerts"
 
@@ -1871,24 +1879,24 @@ msgid "Abandonner"
 msgstr "Give up"
 
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:82
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:213
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:216
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:90
 msgid "Réglages"
 msgstr "Settings"
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:148
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:151
 msgid "Sons"
 msgstr "Sounds"
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:149
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:152
 msgid "Musique"
 msgstr "Music"
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:150
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:153
 msgid "Tutoriel"
 msgstr "Tutorial"
 
-#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:151
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/settings/SettingsScreen.as:154
 msgid "Langage"
 msgstr "Language"
 

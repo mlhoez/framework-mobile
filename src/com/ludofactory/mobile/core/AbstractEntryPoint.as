@@ -12,6 +12,7 @@ package com.ludofactory.mobile.core
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.hasoffers.nativeExtensions.MobileAppTracker;
+	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
@@ -468,6 +469,9 @@ package com.ludofactory.mobile.core
 			
 			MemberManager.getInstance().addEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateSummary);
 			Remote.getInstance().addEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateSummary);
+			
+			LanguageManager.getInstance().addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onPushUpdate);
+			LanguageManager.getInstance().checkForUpdate(false);
 			
 			if( PushNotification.getInstance().isPushNotificationSupported && (Boolean(Storage.getInstance().getProperty( StorageConfig.PROPERTY_PUSH_INITIALIZED )) || GlobalConfig.android) )
 			{
@@ -1024,9 +1028,9 @@ package com.ludofactory.mobile.core
 		 */		
 		private function onPushUpdate(event:starling.events.Event = null):void
 		{
-			if( _pushManager.numElementsToPush > 0 || _alertContainer.numAlerts > 0 || MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 0 || MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions() > 0)
+			if( _pushManager.numElementsToPush > 0 || _alertContainer.numAlerts > 0 || MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 0 || MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions() > 0 || Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES).length > 0)
 			{
-				_header.showAlertButton( _pushManager.numElementsToPush + _alertContainer.numAlerts + (MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 0 ? 1 : 0) + (MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions() > 0 ? 1 : 0));
+				_header.showAlertButton( _pushManager.numElementsToPush + _alertContainer.numAlerts + (MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 0 ? 1 : 0) + (MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions() > 0 ? 1 : 0) + (Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES).length > 0 ? 1 : 0));
 				_drawer.openGesture = Drawers.OPEN_GESTURE_DRAG_CONTENT_EDGE;
 			}
 			else
