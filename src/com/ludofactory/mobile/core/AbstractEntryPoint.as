@@ -406,8 +406,7 @@ package com.ludofactory.mobile.core
 			initializeBackgrounds();
 			
 			_alertContainer = new AlertManager();
-			_alertContainer.addEventListener(LudoEventType.OPEN_ALERTS_FROM_HEADER, onAlertButtonTouched);
-			_alertContainer.addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onPushUpdate);
+			dispatcher.addEventListener(LudoEventType.OPEN_ALERTS_FROM_HEADER, onAlertButtonTouched);
 			addChild(_alertContainer);
 			
 			// controllrs
@@ -470,7 +469,7 @@ package com.ludofactory.mobile.core
 			MemberManager.getInstance().addEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateSummary);
 			Remote.getInstance().addEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateSummary);
 			
-			LanguageManager.getInstance().addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onPushUpdate);
+			dispatcher.addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onPushUpdate);
 			LanguageManager.getInstance().checkForUpdate(false);
 			
 			if( PushNotification.getInstance().isPushNotificationSupported && (Boolean(Storage.getInstance().getProperty( StorageConfig.PROPERTY_PUSH_INITIALIZED )) || GlobalConfig.android) )

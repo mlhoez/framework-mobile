@@ -10,6 +10,7 @@ package com.ludofactory.mobile.core.test.alert
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.dispatcher;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -185,7 +186,7 @@ package com.ludofactory.mobile.core.test.alert
 		 */		
 		private function onClose(event:Event):void
 		{
-			dispatchEventWith(LudoEventType.OPEN_ALERTS_FROM_HEADER);
+			dispatcher.dispatchEventWith(LudoEventType.OPEN_ALERTS_FROM_HEADER);
 		}
 		
 		public function fetchAlerts():void
@@ -202,12 +203,12 @@ package com.ludofactory.mobile.core.test.alert
 		private function onGetAlertsSuccess(result:Object):void
 		{
 			_alertData.parse( result.alertes );
-			dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
+			dispatcher.dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
 		}
 		
 		private function onAlertUpdated(event:Event):void
 		{
-			dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
+			dispatcher.dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
 		}
 		
 		public function get alertData():AlertData

@@ -14,6 +14,7 @@ package com.ludofactory.mobile.core.test.settings
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.dispatcher;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
@@ -83,6 +84,7 @@ package com.ludofactory.mobile.core.test.settings
 			
 			// reset alerts for new languages
 			Storage.getInstance().setProperty(StorageConfig.PROPERTY_NEW_LANGUAGES, []);
+			dispatcher.dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
 			
 			if( !AbstractGameInfo.LANDSCAPE )
 			{

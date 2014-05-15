@@ -47,10 +47,11 @@ package com.ludofactory.mobile.core.remoting
 		// urls et port quand on est sur le réseau local
 		private const DEV_PORT:int = 80;
 		//private const DEV_URL:String = "http://ludokado.dev";
-		private const DEV_URL:String = "http://ludomobile.ludokado.dev";
+		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokadom.mlhoez.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.pterrier.ludofactory.dev";
-		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
+		private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
+		//private const DEV_URL:String = "http://ludokado3.sravet.ludofactory.dev";
 		//private const DEV_URL:String = "http://semiprod.ludokado.com";
 		
 		/**

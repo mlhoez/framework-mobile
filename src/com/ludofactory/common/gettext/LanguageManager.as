@@ -7,10 +7,9 @@ Created : 7 mai 2014
 */
 package com.ludofactory.common.gettext
 {
-	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.log;
+	import com.ludofactory.mobile.core.dispatcher;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	
@@ -24,13 +23,11 @@ package com.ludofactory.common.gettext
 	import flash.net.URLRequest;
 	import flash.system.Capabilities;
 	import flash.utils.ByteArray;
-	
-	import starling.events.EventDispatcher;
 
 	/**
 	 * Language manager.
 	 */	
-	public class LanguageManager extends EventDispatcher
+	public class LanguageManager
 	{
 		public static const FRENCH:String   = "fr";
 		public static const ENGLISH:String  = "en";
@@ -341,7 +338,7 @@ package com.ludofactory.common.gettext
 					var arr:Array = Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES).concat();
 					arr.push(fileToLoadInfo.language);
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_NEW_LANGUAGES, arr);
-					dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
+					dispatcher.dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
 				}
 				
 				// retrieve the file binary content
