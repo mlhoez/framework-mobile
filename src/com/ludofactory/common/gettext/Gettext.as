@@ -17,7 +17,7 @@ package com.ludofactory.common.gettext
 	{
 		/**
 		 * The default domain from where to pick the translations. */		
-		private static const DEFAULT_DOMAIN:String = "common";
+		private static const DEFAULT_DOMAIN:String = Domains.COMMON;
 		/**
 		 * The current locale. */		
 		private var _currentLocale:String;

@@ -8,7 +8,7 @@ package com.ludofactory.common.gettext
 {
 	public class Domains
 	{
-		public static const COMMON:String = "common";
-		public static const GAME:String = "game";
+		public static const COMMON:String = "commun";
+		public static const GAME:String = "jeu";
 	}
 }
