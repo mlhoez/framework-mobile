@@ -29,7 +29,11 @@ package com.ludofactory.common.gettext
 	 */	
 	public class LanguageManager
 	{
+		/**
+		 * French */		
 		public static const FRENCH:String   = "fr";
+		/**
+		 * English */		
 		public static const ENGLISH:String  = "en";
 		
 		// ---- DEBUG ONLY

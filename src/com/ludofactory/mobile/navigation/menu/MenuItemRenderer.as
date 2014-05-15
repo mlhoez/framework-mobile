@@ -6,6 +6,7 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.navigation.menu
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -82,7 +83,7 @@ package com.ludofactory.mobile.navigation.menu
 		
 		override protected function commitData():void
 		{
-			_title.text = _data.title;
+			_title.text = _(_data.title); // necessary when the language change
 			
 			_badgeLabel.text = "" + _data.badgeNumber;
 			_badgeContainer.visible = _data.badgeNumber == 0 ? false : true;

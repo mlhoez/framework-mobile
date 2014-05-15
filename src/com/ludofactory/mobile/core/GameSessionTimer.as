@@ -9,7 +9,6 @@ package com.ludofactory.mobile.core
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
-	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	
 	import flash.utils.getTimer;

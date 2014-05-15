@@ -171,7 +171,7 @@ package com.ludofactory.mobile.navigation.menu
 			i++;
 			tempMenuItemData = _list.dataProvider.getItemAt(i) as MenuItemData;
 			tempMenuItemData.textureName = MemberManager.getInstance().isLoggedIn() ? "menu-icon-log-out" : "menu-icon-log-in";
-			tempMenuItemData.title = MemberManager.getInstance().isLoggedIn() ? "MENU.LOG_OUT":"MENU.LOG_IN";
+			tempMenuItemData.title = MemberManager.getInstance().isLoggedIn() ? _("Déconnexion") : _("Connexion");
 			_list.dataProvider.setItemAt(tempMenuItemData, i);
 			_list.dataProvider.updateItemAt(i);
 		}
