@@ -36,7 +36,7 @@ package com.ludofactory.common.gettext
 		
 		/**
 		 * Sample queue for testing purpose. */		
-		public static var SAMPLE_QUEUE:Object = { es : ["http://ludokadom.mlhoez.ludofactory.dev/_testTrad/game.po"] };
+		public static var SAMPLE_QUEUE:Object = { es : ["http://ludokadom.mlhoez.ludofactory.dev/_testTrad/game.po"], zh : ["http://ludokadom.mlhoez.ludofactory.dev/_testTrad/game.po"] };
 		
 		// ----
 		
@@ -60,7 +60,7 @@ package com.ludofactory.common.gettext
 		 * The current locale.
 		 * 
 		 * @see com.ludofactory.common.gettext.ISO_639_1 */		
-		private var _currentLocale:String = DEFAULT_LANGUAGE;
+		private var _currentLocale:String = Capabilities.language;
 		
 		/**
 		 * Queue of language files to download, parse and store. */		
