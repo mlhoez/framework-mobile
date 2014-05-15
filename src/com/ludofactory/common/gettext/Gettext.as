@@ -37,17 +37,10 @@ package com.ludofactory.common.gettext
 		 */		
 		public function loadLocale(locale:String, forceUpdate:Boolean = false):void
 		{
-			// si on a pas besoin de forcer l'update et si la locale est == current
-			// alors on fait rien ou que 
-			// FIXME A vérifier (important) !!
-			if( !forceUpdate && _currentLocale == locale || locale in _locales )
-				return;
-			
 			_currentLocale = locale;
 			
-			// FIXME maybe force the loading when the fields were updated ?
-			if( locale in _locales)
-				return; // already loaded
+			if( locale in _locales && !forceUpdate )
+				return; // already loaded and no need to force update
 			
 			// retrieve the list of all PO files in the <locale> folder
 			var filesToLoad:Array = File.applicationStorageDirectory.resolvePath("assets" + File.separator + "locale" + File.separator + locale).getDirectoryListing();
@@ -127,7 +120,7 @@ package com.ludofactory.common.gettext
 			// domain contains a POFile
 			_helperTradTab =  _locales[_currentLocale][domain].translations[keySingular];
 			if ( _helperTradTab.length <= 0 )
-				return _locales[_currentLocale][domain].getPluralIndex(n) <= 1 ? keySingular : keyPlural;
+				return _locales[_currentLocale][domain].getPluralIndex(n) < 1 ? keySingular : keyPlural;
 			return _helperTradTab[ _locales[_currentLocale][domain].getPluralIndex(n) ];
 		}
 	}
