@@ -306,7 +306,7 @@ package com.ludofactory.mobile.core.test.alert
 								
 								var newLanguages:Array = Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES).concat();
 								for(var i:int; i < newLanguages.length; i++)
-									newLanguages[i] = ISO_639_1[String(newLanguages[i]).toUpperCase()]; // replace by correct country name
+									newLanguages[i] = _(ISO_639_1[String(newLanguages[i]).toUpperCase()]); // replace by correct country name
 								
 								_accessButton.text = _("Accéder");
 								_accessButton.visible = true;

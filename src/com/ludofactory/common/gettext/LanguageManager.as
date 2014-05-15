@@ -164,7 +164,7 @@ package com.ludofactory.common.gettext
 			{
 				// if the language returned by the player is not available, we need to fall back to
 				// the default language which is English, then we save this value in the Storage
-				if( getInstalledLanguages().indexOf(Capabilities.language) == -1 )
+				if( getInstalledLanguages().indexOf(_currentLocale) == -1 )
 					_currentLocale = DEFAULT_LANGUAGE;
 				Storage.getInstance().setProperty(StorageConfig.PROPERTY_LANGUAGE, _currentLocale);
 			}
