@@ -7,9 +7,11 @@ Created : 7 mai 2014
 */
 package com.ludofactory.common.gettext
 {
+	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.dispatcher;
 	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	
@@ -198,12 +200,10 @@ package com.ludofactory.common.gettext
 			
 			_isUpdating = true;
 			
-			/*if( AirNetworkInfo.networkInfo.isConnected() )
+			if( AirNetworkInfo.networkInfo.isConnected() )
 				Remote.getInstance().checkForLanguageUpdate(getInstalledLanguageLastModificationDates(checkCurrentLanguageOnly), onUpdateSuccess, onUpdateFailure, onUpdateFailure, 1);
 			else
-				onUpdateFailure();*/
-			
-			onUpdateSuccess(SAMPLE_QUEUE);
+				onUpdateFailure();
 		}
 		
 	// Callbacks
@@ -254,6 +254,9 @@ package com.ludofactory.common.gettext
 			var moFileUrlList:Array;
 			for(var languageIsoName:String in data)
 			{
+				if( data[languageIsoName] is String )
+					continue;
+				
 				moFileUrlList = data[languageIsoName];
 				if( languageIsoName == _currentLocale && moFileUrlList && moFileUrlList.length > 0 ) _isCurrentLanguageDeprecated = true;
 				for(var i:int = 0; i < moFileUrlList.length; i++)
