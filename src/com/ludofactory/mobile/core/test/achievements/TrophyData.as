@@ -46,9 +46,9 @@ package com.ludofactory.mobile.core.test.achievements
 			if( !data ) return;
 			
 			_id = data.id;
-			_title = data.titleKey;
-			_description = data.descriptionKey;
-			_reward = data.rewardKey;
+			_title = data.title;
+			_description = data.description;
+			_reward = data.reward;
 			_values = data.values;
 			_textureName = data.textureName;
 		}
