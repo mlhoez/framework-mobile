@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
-"POT-Creation-Date: 2014-05-15 11:02+0100\n"
-"PO-Revision-Date: 2014-05-15 11:03+0100\n"
+"POT-Creation-Date: 2014-05-16 09:56+0100\n"
+"PO-Revision-Date: 2014-05-16 09:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -990,6 +990,7 @@ msgstr "Email not valid"
 
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/authentication/LoginScreen.as:78
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:91
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:174
 msgid "Connexion"
 msgstr "Connection"
 
@@ -2462,6 +2463,10 @@ msgstr "Friends"
 msgid "Rang"
 msgstr "Level"
 
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/highscore/HighScoreListScreen.as:140
+msgid "Amis Facebook"
+msgstr "Facebook friends"
+
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/highscore/HighScoreListScreen.as:160
 msgid "Pays : "
 msgstr "Country : "
@@ -3017,6 +3022,7 @@ msgid "High Scores"
 msgstr "High Scores"
 
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:91
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:174
 msgid "Déconnexion"
 msgstr "Log out"
 

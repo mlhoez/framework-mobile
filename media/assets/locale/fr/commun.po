@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Français)\n"
-"POT-Creation-Date: 2014-05-15 11:03+0100\n"
-"PO-Revision-Date: 2014-05-15 11:03+0100\n"
+"POT-Creation-Date: 2014-05-16 09:56+0100\n"
+"PO-Revision-Date: 2014-05-16 09:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -980,6 +980,7 @@ msgstr ""
 
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/authentication/LoginScreen.as:78
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:91
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:174
 msgid "Connexion"
 msgstr ""
 
@@ -2325,6 +2326,10 @@ msgstr ""
 msgid "Rang"
 msgstr ""
 
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/highscore/HighScoreListScreen.as:140
+msgid "Amis Facebook"
+msgstr ""
+
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/core/test/highscore/HighScoreListScreen.as:160
 msgid "Pays : "
 msgstr ""
@@ -2845,5 +2850,6 @@ msgid "High Scores"
 msgstr ""
 
 #: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:91
+#: /Users/Maxime/1_Dev_Mobile/framework-mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:174
 msgid "Déconnexion"
 msgstr ""

@@ -137,7 +137,7 @@ package com.ludofactory.mobile.core.test.highscore
 			_countriesList.styleName = Theme.SUB_CATEGORY_GROUPED_LIST;
 			_countriesList.isSelectable = true;
 			var arr:Array = GlobalConfig.COUNTRIES.concat();
-			arr.push(new CountryData( { id:-1, nameTranslationKey:"HIGH_SCORE_LIST.FACEBOOK_FRIENDS", diminutive:"", textureName:"" } ));
+			arr.push(new CountryData( { id:-1, nameTranslationKey:_("Amis Facebook"), diminutive:"", textureName:"" } ));
 			_countriesList.dataProvider = new HierarchicalCollection([ { header: "", children:arr } ]);
 			_countriesList.setSelectedLocation(0,advancedOwner.screenData.highscoreRankingType == -1 ? (arr.length-1) : advancedOwner.screenData.highscoreRankingType);
 			_countriesList.addEventListener(Event.CHANGE, onCountrySelected);
