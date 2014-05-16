@@ -6,6 +6,7 @@ Created : 26 juil. 2013
 */
 package com.ludofactory.mobile.core.test.tournament.listing
 {
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 
 	/**
@@ -16,6 +17,9 @@ package com.ludofactory.mobile.core.test.tournament.listing
 		/**
 		 * The player rank. */		
 		private var _rank:int;
+		/**
+		 * The player rank. */		
+		private var _rankFormatted:String;
 		
 		/**
 		 * The player pseudo. */		
@@ -32,6 +36,9 @@ package com.ludofactory.mobile.core.test.tournament.listing
 		/**
 		 * The player number of stars. */		
 		private var _stars:int;
+		/**
+		 * The player number of stars. */		
+		private var _starsFormatted:String;
 		
 		/**
 		 * Whether the current RankData is owned
@@ -52,9 +59,11 @@ package com.ludofactory.mobile.core.test.tournament.listing
 		public function RankData(data:Object)
 		{
 			_rank = data.classement;
+			_rankFormatted = Utilities.splitThousands(_rank);
 			_pseudo = data.pseudo;
 			_country = data.pays;
 			_stars = data.score;
+			_starsFormatted = Utilities.splitThousands(_stars);
 			_isMe = data.isMembre;
 			_lastDateScore = data.lastDateScore;
 			_truncatedPseudo = _pseudo.length > (GlobalConfig.isPhone ? 15 : 40) ? (_pseudo.substring(0, (GlobalConfig.isPhone ? 15 : 40)) + "...") : _pseudo;
@@ -62,10 +71,12 @@ package com.ludofactory.mobile.core.test.tournament.listing
 		}
 		
 		public function get rank():int { return _rank; }
+		public function get rankFormatted():String { return _rankFormatted; }
 		public function get pseudo():String { return _pseudo; }
 		public function get truncatedPseudo():String { return _truncatedPseudo; }
 		public function get country():String { return _country; }
 		public function get stars():int { return _stars; }
+		public function get starsFormatted():String { return _starsFormatted; }
 		public function get isMe():Boolean { return _isMe; }
 		public function get lastDateScore():String { return _lastDateScore; }
 		public function get isTruncated():Boolean { return _isTruncated; }
