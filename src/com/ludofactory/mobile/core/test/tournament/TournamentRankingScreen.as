@@ -11,6 +11,7 @@ package com.ludofactory.mobile.core.test.tournament
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -42,7 +43,6 @@ package com.ludofactory.mobile.core.test.tournament
 	import feathers.controls.Callout;
 	import feathers.controls.Label;
 	import feathers.data.HierarchicalCollection;
-	import feathers.layout.VerticalLayout;
 	
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -122,6 +122,11 @@ package com.ludofactory.mobile.core.test.tournament
 			_listHeader = new TournamentListHeader();
 			addChild(_listHeader);
 			
+			if( AbstractGameInfo.LANDSCAPE )
+				RankItemRenderer.ITEM_WIDTH = RankHeaderItemRenderer.ITEM_WIDTH = GlobalConfig.stageWidth - scaleAndRoundToDpi(350); // size of the ad container in landscape mode
+			else
+				RankItemRenderer.ITEM_WIDTH = RankHeaderItemRenderer.ITEM_WIDTH = GlobalConfig.stageWidth;
+			
 			_ranksList = new CustomGroupedList();
 			_ranksList.isSelectable = false;
 			_ranksList.headerRendererType = RankHeaderItemRenderer;
@@ -129,11 +134,6 @@ package com.ludofactory.mobile.core.test.tournament
 			_ranksList.addEventListener(LudoEventType.LIST_BOTTOM_UPDATE, onBottomUpdate);
 			_ranksList.addEventListener(LudoEventType.LIST_TOP_UPDATE, onTopUpdate);
 			addChild(_ranksList);
-			
-			const vlayout:VerticalLayout = new VerticalLayout();
-			vlayout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
-			vlayout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_MIDDLE;
-			vlayout.gap = scaleAndRoundToDpi(20);
 			
 			_playButton = new Button();
 			_playButton.addEventListener(Event.TRIGGERED, onPlay);
@@ -161,23 +161,51 @@ package com.ludofactory.mobile.core.test.tournament
 				_timer.restart();
 			}
 			
-			_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
-			_listShadow.setVertexAlpha(0, 0.1);
-			_listShadow.setVertexAlpha(1, 0.1);
-			_listShadow.setVertexAlpha(2, 0);
-			_listShadow.setVertexColor(2, 0xffffff);
-			_listShadow.setVertexAlpha(3, 0);
-			_listShadow.setVertexColor(3, 0xffffff);
-			addChild(_listShadow);
+			if( !AbstractGameInfo.LANDSCAPE )
+			{
+				_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
+				_listShadow.setVertexAlpha(0, 0.1);
+				_listShadow.setVertexAlpha(1, 0.1);
+				_listShadow.setVertexAlpha(2, 0);
+				_listShadow.setVertexColor(2, 0xffffff);
+				_listShadow.setVertexAlpha(3, 0);
+				_listShadow.setVertexColor(3, 0xffffff);
+				addChild(_listShadow);
+			}
 			
-			_listBottomShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
+			if( AbstractGameInfo.LANDSCAPE )
+			{
+				_listBottomShadow = new Quad(scaleAndRoundToDpi(12), 50, 0x000000);
+				_listBottomShadow.touchable = false;
+				_listBottomShadow.setVertexColor(0, 0xffffff);
+				_listBottomShadow.setVertexAlpha(0, 0);
+				_listBottomShadow.setVertexColor(2, 0xffffff);
+				_listBottomShadow.setVertexAlpha(2, 0);
+				_listBottomShadow.setVertexAlpha(1, 0.2);
+				_listBottomShadow.setVertexAlpha(3, 0.2);
+				addChild(_listBottomShadow);
+			}
+			else
+			{
+				_listBottomShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
+				_listBottomShadow.touchable = false;
+				_listBottomShadow.setVertexColor(0, 0xffffff);
+				_listBottomShadow.setVertexAlpha(0, 0);
+				_listBottomShadow.setVertexColor(1, 0xffffff);
+				_listBottomShadow.setVertexAlpha(1, 0);
+				_listBottomShadow.setVertexAlpha(2, 0.1);
+				_listBottomShadow.setVertexAlpha(3, 0.1);
+				addChild(_listBottomShadow);
+			}
+			
+			/*_listBottomShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
 			_listBottomShadow.setVertexAlpha(0, 0.1);
 			_listBottomShadow.setVertexAlpha(1, 0.1);
 			_listBottomShadow.setVertexColor(2, 0xffffff);
 			_listBottomShadow.setVertexAlpha(2, 0);
 			_listBottomShadow.setVertexColor(3, 0xffffff);
 			_listBottomShadow.setVertexAlpha(3, 0);
-			addChild(_listBottomShadow);
+			addChild(_listBottomShadow);*/
 			
 			_retryContainer = new RetryContainer(true);
 			_retryContainer.addEventListener(Event.TRIGGERED, onRetry);
@@ -228,42 +256,85 @@ package com.ludofactory.mobile.core.test.tournament
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				if( _adContainer )
-					_adContainer.width = this.actualWidth;
-				
-				_listShadow.width = this.actualWidth;
-				_listShadow.y = _adContainer ? _adContainer.height : 0;
-				
-				_playButton.width = this.actualWidth * 0.8;
-				_playButton.validate();
-				_playButton.y = this.actualHeight - _playButton.height - scaleAndRoundToDpi(20);
-				_playButton.x = (this.actualWidth - _playButton.width) * 0.5;
-				
-				_listHeader.width = this.actualWidth;
-				_listHeader.y = _adContainer ? _adContainer.height : 0;
-				_listHeader.validate();
-				
-				_ranksList.width = this.actualWidth;
-				_ranksList.height = _playButton.y - _listHeader.y - _listHeader.height - _listBottomShadow.height - scaleAndRoundToDpi(10);
-				_ranksList.y = _listHeader.y + _listHeader.height;
-				
-				_listBottomShadow.width = this.actualWidth;
-				_listBottomShadow.y = _ranksList.y + _ranksList.height;
-				
-				_retryContainer.width = actualWidth;
-				_retryContainer.y = _ranksList.y;
-				_retryContainer.height = _playButton.y - _ranksList.y;
-				
-				if( MemberManager.getInstance().getTournamentUnlocked() == false )
+				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_leftLock.alignPivot();
-					_leftLock.y = int(_playButton.y + (_playButton.height * 0.5) + scaleAndRoundToDpi(3));
-					_leftLock.x = int(_playButton.x + (_leftLock.width * 0.5) + scaleAndRoundToDpi(40));
+					if( _adContainer )
+					{
+						_adContainer.height = actualHeight;
+						_adContainer.width = scaleAndRoundToDpi(350);
+						_adContainer.x = actualWidth - _adContainer.width;
+					}
 					
-					_rightLock.alignPivot();
-					_lock.alignPivot();
-					_rightLock.y = _lock.y = int(_playButton.y + (_playButton.height * 0.5) + scaleAndRoundToDpi(12));
-					_rightLock.x = _lock.x = int(_playButton.x + _playButton.width - (_rightLock.width * 0.5));
+					_playButton.width = scaleAndRoundToDpi(300);
+					_playButton.validate();
+					_playButton.y = actualHeight - _playButton.height - scaleAndRoundToDpi(10);
+					_playButton.x = (_adContainer ? _adContainer.x : 0) + scaleAndRoundToDpi(25);
+					
+					_listHeader.width = actualWidth - scaleAndRoundToDpi(350);
+					_listHeader.validate();
+					
+					_ranksList.width = _listHeader.width;
+					_ranksList.height = actualHeight - _listHeader.height;;
+					_ranksList.y = _listHeader.y + _listHeader.height;
+					
+					_listBottomShadow.height = actualHeight;
+					_listBottomShadow.x = (_adContainer ? _adContainer.x : 0) - _listBottomShadow.width;
+					
+					_retryContainer.width = actualWidth;
+					_retryContainer.y = _ranksList.y;
+					_retryContainer.height = _playButton.y - _ranksList.y;
+					
+					if( MemberManager.getInstance().getTournamentUnlocked() == false )
+					{
+						_leftLock.alignPivot();
+						_leftLock.y = int(_playButton.y + (_playButton.height * 0.5) + scaleAndRoundToDpi(3));
+						_leftLock.x = int(_playButton.x + (_leftLock.width * 0.5) + scaleAndRoundToDpi(40));
+						
+						_rightLock.alignPivot();
+						_lock.alignPivot();
+						_rightLock.y = _lock.y = int(_playButton.y + (_playButton.height * 0.5) + scaleAndRoundToDpi(12));
+						_rightLock.x = _lock.x = int(_playButton.x + _playButton.width - (_rightLock.width * 0.5));
+					}
+				}
+				else
+				{
+					if( _adContainer )
+						_adContainer.width = this.actualWidth;
+					
+					_listShadow.width = this.actualWidth;
+					_listShadow.y = _adContainer ? _adContainer.height : 0;
+					
+					_playButton.width = this.actualWidth * 0.8;
+					_playButton.validate();
+					_playButton.y = this.actualHeight - _playButton.height - scaleAndRoundToDpi(20);
+					_playButton.x = (this.actualWidth - _playButton.width) * 0.5;
+					
+					_listHeader.width = this.actualWidth;
+					_listHeader.y = _adContainer ? _adContainer.height : 0;
+					_listHeader.validate();
+					
+					_ranksList.width = this.actualWidth;
+					_ranksList.height = _playButton.y - _listHeader.y - _listHeader.height - _listBottomShadow.height - scaleAndRoundToDpi(10);
+					_ranksList.y = _listHeader.y + _listHeader.height;
+					
+					_listBottomShadow.width = this.actualWidth;
+					_listBottomShadow.y = _ranksList.y + _ranksList.height;
+					
+					_retryContainer.width = actualWidth;
+					_retryContainer.y = _ranksList.y;
+					_retryContainer.height = _playButton.y - _ranksList.y;
+					
+					if( MemberManager.getInstance().getTournamentUnlocked() == false )
+					{
+						_leftLock.alignPivot();
+						_leftLock.y = int(_playButton.y + (_playButton.height * 0.5) + scaleAndRoundToDpi(3));
+						_leftLock.x = int(_playButton.x + (_leftLock.width * 0.5) + scaleAndRoundToDpi(40));
+						
+						_rightLock.alignPivot();
+						_lock.alignPivot();
+						_rightLock.y = _lock.y = int(_playButton.y + (_playButton.height * 0.5) + scaleAndRoundToDpi(12));
+						_rightLock.x = _lock.x = int(_playButton.x + _playButton.width - (_rightLock.width * 0.5));
+					}
 				}
 			}
 		}
@@ -312,7 +383,7 @@ package com.ludofactory.mobile.core.test.tournament
 						_adContainer = new AdTournamentContainer();
 						_adContainer.dataProvider = result.podium as Array;
 						_adContainer.width = actualWidth;
-						addChild( _adContainer );
+						addChildAt(_adContainer, getChildIndex(_playButton) - 1);
 						
 						invalidate( INVALIDATION_FLAG_SIZE );
 					}
@@ -732,8 +803,11 @@ package com.ludofactory.mobile.core.test.tournament
 			_playButton.removeFromParent(true);
 			_playButton = null;
 			
-			_listShadow.removeFromParent(true);
-			_listShadow = null;
+			if( _listShadow )
+			{
+				_listShadow.removeFromParent(true);
+				_listShadow = null;
+			}
 			
 			_listBottomShadow.removeFromParent(true);
 			_listBottomShadow = null;

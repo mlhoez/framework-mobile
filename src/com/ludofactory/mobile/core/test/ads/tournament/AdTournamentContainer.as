@@ -73,9 +73,12 @@ package com.ludofactory.mobile.core.test.ads.tournament
 		{
 			super.draw();
 			
-			_list.width = this.actualWidth;
-			_list.height = this.actualHeight;
-			_list.validate();
+			if( isInvalid(INVALIDATION_FLAG_SIZE) )
+			{
+				_list.width = actualWidth;
+				_list.height = actualHeight;
+				_list.validate();
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------

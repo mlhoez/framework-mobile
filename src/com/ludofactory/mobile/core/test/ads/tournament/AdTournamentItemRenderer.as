@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core.test.ads.tournament
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -22,22 +23,14 @@ package com.ludofactory.mobile.core.test.ads.tournament
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
 	
-	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.events.Event;
+	import starling.utils.deg2rad;
 	
 	public class AdTournamentItemRenderer extends FeathersControl implements IListItemRenderer
 	{
-		private const BASE_HEIGHT:int = 200;
 		private const BASE_STROKE_THICKNESS:int = 3;
-		
-		protected var _paddingTop:int;
-		protected var _paddingRight:int;
-		protected var _paddingBottom:int;
-		protected var _paddingLeft:int;
-		
 		private var _strokeThickness:Number;
-		private var _itemHeight:Number;
 		
 		/**
 		 * Background stroke */		
@@ -47,7 +40,7 @@ package com.ludofactory.mobile.core.test.ads.tournament
 		private var _gradient:Quad;
 		/**
 		 * Highlight ad */		
-		protected var _highlightAd:Image;
+		protected var _highlightAd:ImageLoader;
 		
 		/**
 		 * The title */		
@@ -73,27 +66,25 @@ package com.ludofactory.mobile.core.test.ads.tournament
 		override protected function initialize():void
 		{
 			_strokeThickness = scaleAndRoundToDpi(BASE_STROKE_THICKNESS);
-			_itemHeight = scaleAndRoundToDpi(BASE_HEIGHT);
 			
-			_paddingBottom = _paddingTop = _paddingLeft = _paddingRight = scaleAndRoundToDpi(20);
-			
-			_stroke = new Quad(5, _itemHeight, 0xffffff);
+			_stroke = new Quad(5, 5, 0xffffff);
 			addChild(_stroke);
 			
-			_gradient = new Quad(5, _itemHeight - (_strokeThickness * 2), 0x0000ff);
+			_gradient = new Quad(5, 5, 0x0000ff);
 			_gradient.setVertexColor(0, 0x43dfff);
 			_gradient.setVertexColor(1, 0x43dfff);
 			_gradient.setVertexColor(2, 0x02bbff);
 			_gradient.setVertexColor(3, 0x02bbff);
 			addChild(_gradient);
 			
-			_highlightAd = new Image(AbstractEntryPoint.assets.getTexture("highlight-ad"));
-			_highlightAd.scaleX = _highlightAd.scaleY = GlobalConfig.dpiScale;
+			_highlightAd = new ImageLoader();
+			_highlightAd.source = AbstractEntryPoint.assets.getTexture("highlight-ad");
+			_highlightAd.maintainAspectRatio = false;
 			_highlightAd.alpha = 0.5;
 			addChild(_highlightAd);
 			
 			_adButton = new Button();
-			_adButton.styleName = Theme.BUTTON_AD;
+			_adButton.styleName = AbstractGameInfo.LANDSCAPE ? Theme.BUTTON_AD_LANDSCAPE : Theme.BUTTON_AD;
 			addChild(_adButton);
 			
 			_giftImage = new ImageLoader();
@@ -109,12 +100,12 @@ package com.ludofactory.mobile.core.test.ads.tournament
 			_title = new Label();
 			_title.text = _("Classez-vous et gagnez :");
 			addChild(_title);
-			_title.textRendererProperties.wordWrap = false;
+			_title.textRendererProperties.wordWrap = AbstractGameInfo.LANDSCAPE ? true : false;
 			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0xffffff, 1, 8, 8, 5) ];
 			
 			_giftName = new Label();
 			addChild(_giftName);
-			_giftName.textRendererProperties.wordWrap = false;
+			_giftName.textRendererProperties.wordWrap = AbstractGameInfo.LANDSCAPE ? true : false;
 			_giftName.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0xffffff, 1, 8, 8, 5) ];
 		}
 		
@@ -152,7 +143,6 @@ package com.ludofactory.mobile.core.test.ads.tournament
 			if(needsWidth)
 			{
 				newWidth = this._title.width;
-				newWidth += this._paddingLeft + this._paddingRight;
 			}
 			var newHeight:Number = this.explicitHeight;
 			if(needsHeight)
@@ -226,32 +216,68 @@ package com.ludofactory.mobile.core.test.ads.tournament
 			this.height = owner.height;
 			
 			_stroke.width = actualWidth;
+			_stroke.height = actualHeight;
+			
 			_gradient.width = actualWidth - (_strokeThickness * 2);
+			_gradient.height = actualHeight - (_strokeThickness * 2);
 			_gradient.y = _strokeThickness;
 			_gradient.x = _strokeThickness;
 			
-			_highlightAd.width = actualWidth;
-			_highlightAd.x = _strokeThickness;
-			_highlightAd.y = _strokeThickness;
+			if( AbstractGameInfo.LANDSCAPE )
+			{
+				_highlightAd.width = actualHeight;
+				_highlightAd.height = actualWidth;
+				_highlightAd.x = actualWidth;
+				_highlightAd.rotation = deg2rad(90);
+			}
+			else
+			{
+				_highlightAd.height = actualHeight;
+				_highlightAd.width = actualWidth;
+				_highlightAd.x = _strokeThickness;
+				_highlightAd.y = _strokeThickness;
+			}
 			
-			_adButton.validate();
-			_adButton.x = actualWidth - _adButton.width;
-			_adButton.y = actualHeight - _adButton.height - scaleAndRoundToDpi(20);
-			
-			_giftName.validate();
-			_giftName.x = actualWidth - _giftName.width - scaleAndRoundToDpi(10);
-			_giftName.y = _adButton.y * 0.5;
-			
-			_title.validate();
-			_title.x = actualWidth - _title.width - scaleAndRoundToDpi(10);
-			_title.y = (_adButton.y * 0.5) - _title.height;
-			
-			_giftImage.height = actualHeight * 0.95;
-			_giftImage.validate();
-			_giftImage.y = (actualHeight - _giftImage.height) * 0.5;
-			_giftImage.x = scaleAndRoundToDpi( GlobalConfig.isPhone ? 50 : 100 );
+			if( AbstractGameInfo.LANDSCAPE )
+			{
+				_adButton.width = actualWidth;
+				_adButton.y = actualHeight - (GlobalConfig.isPhone ? 98 : 108) - _adButton.height - scaleAndRoundToDpi(20); // 10 de padding du play bouton + 10 au dessus du bouton
+				
+				_title.width = _giftName.width = actualWidth * 0.9;
+				_title.validate();
+				_giftName.validate();
+				_medal.validate();
+				_title.x = _giftName.x = (actualWidth - _title.width) * 0.5;
+				_title.y = _medal.height + ((_adButton.y - _medal.height) - (_title.height + _giftName.height)) * 0.5;
+				_giftName.y = _title.y + _title.height;
+				
+				_giftImage.width = actualWidth * 0.8;
+				_giftImage.validate();
+				_giftImage.y =scaleAndRoundToDpi(20);
+				_giftImage.x = 0;
+			}
+			else
+			{
+				_adButton.validate();
+				_adButton.x = actualWidth - _adButton.width;
+				_adButton.y = actualHeight - _adButton.height - scaleAndRoundToDpi(20);
+				
+				_title.validate();
+				_title.x = actualWidth - _title.width - scaleAndRoundToDpi(10);
+				_title.y = (_adButton.y * 0.5) - _title.height;
+				
+				_giftName.validate();
+				_giftName.x = actualWidth - _giftName.width - scaleAndRoundToDpi(10);
+				_giftName.y = _adButton.y * 0.5;
+				
+				_giftImage.height = actualHeight * 0.95;
+				_giftImage.validate();
+				_giftImage.y = (actualHeight - _giftImage.height) * 0.5;
+				_giftImage.x = scaleAndRoundToDpi( GlobalConfig.isPhone ? 50 : 100 );
+			}
 			
 			_medal.x = scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 70 );
+			_medal.y = _strokeThickness;
 		}
 		
 		protected var _data:AdTournamentData;
