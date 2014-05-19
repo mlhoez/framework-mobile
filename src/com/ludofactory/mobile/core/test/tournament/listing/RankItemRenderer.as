@@ -31,6 +31,10 @@ package com.ludofactory.mobile.core.test.tournament.listing
 	
 	public class RankItemRenderer extends FeathersControl implements IGroupedListItemRenderer
 	{
+		/**
+		 * Replaced later */		
+		public static var ITEM_WIDTH:int = 5;
+		
 		private static const HELPER_POINT:Point = new Point();
 		private static const HELPER_TOUCHES_VECTOR:Vector.<Touch> = new <Touch>[];
 		protected var _touchPointID:int = -1;
@@ -100,10 +104,10 @@ package com.ludofactory.mobile.core.test.tournament.listing
 			
 			_itemHeight = scaleAndRoundToDpi(BASE_HEIGHT);
 			_strokeThickness = scaleAndRoundToDpi(BASE_STROKE_THICKNESS);
-			_sideWidth = GlobalConfig.stageWidth * 0.25;
-			_middleWidth = GlobalConfig.stageWidth * 0.5;
+			_sideWidth = ITEM_WIDTH * 0.25;
+			_middleWidth = ITEM_WIDTH * 0.5;
 			
-			this.width = GlobalConfig.stageWidth;
+			this.width = ITEM_WIDTH;
 			this.height = _itemHeight;
 			
 			if( !_selectedTextFormat )
@@ -243,7 +247,7 @@ package com.ludofactory.mobile.core.test.tournament.listing
 		{
 			if( !_elementsPositioned )
 			{
-				_starIcon.x = this.width - _starIcon.width - scaleAndRoundToDpi(20);
+				_starIcon.x = this.actualWidth - _starIcon.width - scaleAndRoundToDpi(20);
 				_starIcon.y = (_itemHeight - _starIcon.height) * 0.5;
 				
 				_rankLabel.width = _sideWidth;

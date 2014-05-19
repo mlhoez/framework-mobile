@@ -6,9 +6,9 @@ Created : 25 nov. 2013
 */
 package com.ludofactory.mobile.core.test.ads.tournament
 {
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -107,7 +107,7 @@ package com.ludofactory.mobile.core.test.ads.tournament
 			addChild(_medal);
 			
 			_title = new Label();
-			_title.text = Localizer.getInstance().translate("TOURNAMENT_RANKING.PRICES_TITLE");
+			_title.text = _("Classez-vous et gagnez :");
 			addChild(_title);
 			_title.textRendererProperties.wordWrap = false;
 			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0xffffff, 1, 8, 8, 5) ];

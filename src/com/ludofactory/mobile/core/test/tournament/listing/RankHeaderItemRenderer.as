@@ -9,7 +9,6 @@ package com.ludofactory.mobile.core.test.tournament.listing
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.GroupedList;
@@ -27,6 +26,10 @@ package com.ludofactory.mobile.core.test.tournament.listing
 	 */	
 	public class RankHeaderItemRenderer extends FeathersControl implements IGroupedListHeaderOrFooterRenderer
 	{
+		/**
+		 * Replaced later */		
+		public static var ITEM_WIDTH:int = 5;
+		
 		/**
 		 * The base height of a line in the list. */		
 		private static const BASE_HEIGHT:int = 60;
@@ -73,7 +76,7 @@ package com.ludofactory.mobile.core.test.tournament.listing
 			_itemHeight = scaleAndRoundToDpi(BASE_HEIGHT);
 			_strokeThickness = scaleAndRoundToDpi(BASE_STROKE_THICKNESS);
 			
-			this.width = GlobalConfig.stageWidth;
+			this.width = ITEM_WIDTH;
 			this.height = _itemHeight;
 			
 			var background:Quad;

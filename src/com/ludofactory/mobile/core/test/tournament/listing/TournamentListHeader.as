@@ -83,29 +83,33 @@ package com.ludofactory.mobile.core.test.tournament.listing
 		{
 			super.draw();
 			
-			var quad:Quad = new Quad(this.actualWidth, _itemHeight, 0xfbfbfb);
-			_header.addQuad( quad );
-			
-			quad.x = this.actualWidth * 0.25;
-			quad.width = this.actualWidth * 0.5;
-			quad.color = 0xeeeeee;
-			_header.addQuad( quad );
-			
-			quad.x = 0;
-			quad.y = _itemHeight - _strokeThickness;
-			quad.width  = this.actualWidth;
-			quad.height = _strokeThickness;
-			quad.color  = 0xbfbfbf;
-			_header.addQuad( quad );
-			
-			_rankLabel.width = _starsLabel.width = this.actualWidth * 0.25;
-			_nameLabel.width = this.actualWidth * 0.5;
-			_rankLabel.validate();
-			_rankLabel.y = _nameLabel.y = _starsLabel.y = (this.actualHeight - _rankLabel.height) * 0.5;
-			_nameLabel.x = this.actualWidth * 0.25;
-			_starsLabel.x = this.actualWidth * 0.75;
-			
-			setSizeInternal(actualWidth, _itemHeight, true);
+			if( isInvalid(INVALIDATION_FLAG_SIZE) )
+			{
+				_header.reset(); // FIXME améliorer ça
+				var quad:Quad = new Quad(this.actualWidth, _itemHeight, 0xfbfbfb);
+				_header.addQuad( quad );
+				
+				quad.x = this.actualWidth * 0.25;
+				quad.width = this.actualWidth * 0.5;
+				quad.color = 0xeeeeee;
+				_header.addQuad( quad );
+				
+				quad.x = 0;
+				quad.y = _itemHeight - _strokeThickness;
+				quad.width  = this.actualWidth;
+				quad.height = _strokeThickness;
+				quad.color  = 0xbfbfbf;
+				_header.addQuad( quad );
+				
+				_rankLabel.width = _starsLabel.width = this.actualWidth * 0.25;
+				_nameLabel.width = this.actualWidth * 0.5;
+				_rankLabel.validate();
+				_rankLabel.y = _nameLabel.y = _starsLabel.y = (this.actualHeight - _rankLabel.height) * 0.5;
+				_nameLabel.x = this.actualWidth * 0.25;
+				_starsLabel.x = this.actualWidth * 0.75;
+				
+				setSizeInternal(actualWidth, _itemHeight, true);
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------

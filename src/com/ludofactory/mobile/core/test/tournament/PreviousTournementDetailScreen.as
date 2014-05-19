@@ -11,6 +11,7 @@ package com.ludofactory.mobile.core.test.tournament
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.CustomGroupedList;
@@ -18,6 +19,7 @@ package com.ludofactory.mobile.core.test.tournament
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.tournament.listing.RankData;
 	import com.ludofactory.mobile.core.test.tournament.listing.RankHeaderData;
 	import com.ludofactory.mobile.core.test.tournament.listing.RankHeaderItemRenderer;
@@ -25,7 +27,6 @@ package com.ludofactory.mobile.core.test.tournament
 	import com.ludofactory.mobile.core.test.tournament.listing.TournamentListHeader;
 	
 	import feathers.data.HierarchicalCollection;
-	import feathers.layout.VerticalLayout;
 	
 	import starling.display.Quad;
 	import starling.events.Event;
@@ -80,8 +81,10 @@ package com.ludofactory.mobile.core.test.tournament
 			
 			Flox.logInfo("Affichage de l'ancien tournoi n°{0}", advancedOwner.screenData.previousTournementId);
 			
-			_adContainer = new PreviousTournamentGiftBloc();
-			addChild( _adContainer );
+			/*if( AbstractGameInfo.LANDSCAPE )
+				RankItemRenderer.ITEM_WIDTH = RankHeaderItemRenderer.ITEM_WIDTH = GlobalConfig.stageWidth - scaleAndRoundToDpi(350); // size of the ad container in landscape mode
+			else*/
+				RankItemRenderer.ITEM_WIDTH = RankHeaderItemRenderer.ITEM_WIDTH = GlobalConfig.stageWidth;
 			
 			_listHeader = new TournamentListHeader();
 			_listHeader.visible = false;
@@ -95,19 +98,33 @@ package com.ludofactory.mobile.core.test.tournament
 			_ranksList.addEventListener(LudoEventType.LIST_TOP_UPDATE, onTopUpdate);
 			addChild(_ranksList);
 			
-			const vlayout:VerticalLayout = new VerticalLayout();
-			vlayout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
-			vlayout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_MIDDLE;
-			vlayout.gap = scaleAndRoundToDpi(20);
+			_adContainer = new PreviousTournamentGiftBloc();
+			addChild( _adContainer );
 			
-			_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
-			_listShadow.setVertexAlpha(0, 0.1);
-			_listShadow.setVertexAlpha(1, 0.1);
-			_listShadow.setVertexAlpha(2, 0);
-			_listShadow.setVertexColor(2, 0xffffff);
-			_listShadow.setVertexAlpha(3, 0);
-			_listShadow.setVertexColor(3, 0xffffff);
-			addChild(_listShadow);
+			if( AbstractGameInfo.LANDSCAPE )
+			{
+				_listShadow = new Quad(scaleAndRoundToDpi(12), 50, 0x000000);
+				_listShadow.touchable = false;
+				_listShadow.setVertexColor(0, 0xffffff);
+				_listShadow.setVertexAlpha(0, 0);
+				_listShadow.setVertexColor(2, 0xffffff);
+				_listShadow.setVertexAlpha(2, 0);
+				_listShadow.setVertexAlpha(1, 0.2);
+				_listShadow.setVertexAlpha(3, 0.2);
+				addChild(_listShadow);
+			}
+			else
+			{
+				_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
+				_listShadow.touchable = false;
+				_listShadow.setVertexColor(0, 0xffffff);
+				_listShadow.setVertexAlpha(0, 0);
+				_listShadow.setVertexColor(1, 0xffffff);
+				_listShadow.setVertexAlpha(1, 0);
+				_listShadow.setVertexAlpha(2, 0.1);
+				_listShadow.setVertexAlpha(3, 0.1);
+				addChild(_listShadow);
+			}
 			
 			_retryContainer = new RetryContainer();
 			_retryContainer.addEventListener(Event.TRIGGERED, onRetry);
@@ -127,20 +144,40 @@ package com.ludofactory.mobile.core.test.tournament
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_adContainer.visible = _hasGiftToDisplay;
-				_adContainer.width = this.actualWidth;
-				
-				_listShadow.visible = _hasGiftToDisplay;
-				_listShadow.width = this.actualWidth;
-				_listShadow.y = _adContainer.height;
-				
-				_listHeader.width = this.actualWidth;
-				_listHeader.y = _hasGiftToDisplay ? _adContainer.height : 0;
-				_listHeader.validate();
-				
-				_ranksList.width = this.actualWidth;
-				_ranksList.height = this.actualHeight - _listHeader.y - _listHeader.height;
-				_ranksList.y = _listHeader.y + _listHeader.height;
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_adContainer.visible = _hasGiftToDisplay;
+					_adContainer.height = actualHeight;
+					_adContainer.x = actualWidth - _adContainer.width;
+					
+					_listShadow.visible = _hasGiftToDisplay;
+					_listShadow.height = this.actualHeight;
+					_listShadow.x = _adContainer.x - _listShadow.width;
+					
+					_listHeader.width = _hasGiftToDisplay ? _adContainer.x : actualWidth;
+					_listHeader.validate();
+					
+					_ranksList.width = _listHeader.width;
+					_ranksList.height = this.actualHeight;
+					_ranksList.y = _listHeader.y + _listHeader.height;
+				}
+				else
+				{
+					_adContainer.visible = _hasGiftToDisplay;
+					_adContainer.width = this.actualWidth;
+					
+					_listShadow.visible = _hasGiftToDisplay;
+					_listShadow.width = this.actualWidth;
+					_listShadow.y = _adContainer.height;
+					
+					_listHeader.width = this.actualWidth;
+					_listHeader.y = _hasGiftToDisplay ? _adContainer.height : 0;
+					_listHeader.validate();
+					
+					_ranksList.width = this.actualWidth;
+					_ranksList.height = this.actualHeight - _listHeader.y - _listHeader.height;
+					_ranksList.y = _listHeader.y + _listHeader.height;
+				}
 				
 				_retryContainer.width = actualWidth;
 				_retryContainer.height = actualHeight - _listHeader.y;
@@ -148,11 +185,8 @@ package com.ludofactory.mobile.core.test.tournament
 			}
 		}
 		
-		// FIXME A voir pour overrider le onBack et rajouter ça ? advancedOwner.screenData.previousTournementId = -1;
-		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * The pevious tournament details could be retreived but few cases here :
@@ -188,6 +222,9 @@ package com.ludofactory.mobile.core.test.tournament
 					if( result.hasOwnProperty("lot") && result.lot )
 					{
 						_hasGiftToDisplay = true;
+						
+						if( AbstractGameInfo.LANDSCAPE )
+							RankItemRenderer.ITEM_WIDTH = RankHeaderItemRenderer.ITEM_WIDTH = GlobalConfig.stageWidth - scaleAndRoundToDpi(350); // size of the ad container in landscape mode
 						
 						_adContainer.title = Utilities.replaceCurrency(result.lot);
 					}

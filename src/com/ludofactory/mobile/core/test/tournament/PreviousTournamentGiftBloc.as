@@ -9,17 +9,20 @@ package com.ludofactory.mobile.core.test.tournament
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
+	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.core.FeathersControl;
 	
 	import starling.display.Image;
 	import starling.display.Quad;
+	import starling.utils.deg2rad;
 	import starling.utils.formatString;
 	
 	public class PreviousTournamentGiftBloc extends FeathersControl
@@ -27,9 +30,6 @@ package com.ludofactory.mobile.core.test.tournament
 		/**
 		 * Stroke thickness. */		
 		private var _strokeThickness:Number;
-		/**
-		 * Item height. */		
-		private var _itemHeight:Number;
 		
 		/**
 		 * Background stroke */		
@@ -40,7 +40,7 @@ package com.ludofactory.mobile.core.test.tournament
 		
 		/**
 		 * Highlight ad */		
-		protected var _highlightAd:Image;
+		protected var _highlightAd:ImageLoader;
 		
 		/**
 		 * Icon. */		
@@ -60,20 +60,26 @@ package com.ludofactory.mobile.core.test.tournament
 			super.initialize();
 			
 			_strokeThickness = scaleAndRoundToDpi(3);
-			this.height = _itemHeight = scaleAndRoundToDpi(200)
+			if( AbstractGameInfo.LANDSCAPE )
+				width = scaleAndRoundToDpi(350);
+			else
+				height = scaleAndRoundToDpi(200);
 			
-			_stroke = new Quad(5, _itemHeight, 0xffffff);
+			_stroke = new Quad(5, 5, 0xffffff);
 			addChild(_stroke);
 			
-			_gradient = new Quad(5, _itemHeight - (_strokeThickness * 2), 0x0000ff);
+			_gradient = new Quad(5, 5, 0x0000ff);
 			_gradient.setVertexColor(0, 0x43dfff);
 			_gradient.setVertexColor(1, 0x43dfff);
 			_gradient.setVertexColor(2, 0x02bbff);
 			_gradient.setVertexColor(3, 0x02bbff);
 			addChild(_gradient);
 			
-			_highlightAd = new Image(AbstractEntryPoint.assets.getTexture("highlight-ad"));
-			_highlightAd.scaleX = _highlightAd.scaleY = GlobalConfig.dpiScale;
+			_highlightAd = new ImageLoader();
+			_highlightAd.source = AbstractEntryPoint.assets.getTexture("highlight-ad");
+			_highlightAd.maintainAspectRatio = false;
+			//_highlightAd.scaleX = _highlightAd.scaleY = GlobalConfig.dpiScale;
+			//_highlightAd.textureScale = GlobalConfig.dpiScale;
 			addChild(_highlightAd);
 			
 			_icon = new Image( AbstractEntryPoint.assets.getTexture("previous-tournament-win-icon") );
@@ -90,22 +96,49 @@ package com.ludofactory.mobile.core.test.tournament
 		{
 			super.draw();
 			
-			_stroke.width = this.actualWidth;
-			_gradient.width = this.actualWidth - (_strokeThickness * 2);
-			_gradient.y = _strokeThickness;
-			_gradient.x = _strokeThickness;
+			if( isInvalid(INVALIDATION_FLAG_SIZE ) )
+			{
+				_stroke.width = actualWidth;
+				_stroke.height = actualHeight;
+				
+				_gradient.width = actualWidth - (_strokeThickness * 2);
+				_gradient.height = actualHeight - (_strokeThickness * 2);
+				_gradient.y = _strokeThickness;
+				_gradient.x = _strokeThickness;
+				
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_highlightAd.width = actualHeight;
+					_highlightAd.height = actualWidth;
+					_highlightAd.x = actualWidth;
+					_highlightAd.rotation = deg2rad(90);
+					
+					_icon.x = (actualWidth - _icon.width) * 0.5;
+					_icon.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80);
+					
+					_title.width = actualWidth;
+					_title.validate();
+					_title.y = _icon.y + _icon.height + ((actualHeight - _icon.height - _icon.y) - _title.height) * 0.5;
+				}
+				else
+				{
+					_icon.x = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 80);
+					_icon.y = (actualHeight - _icon.height) * 0.5;
+					
+					_title.width = actualWidth - _icon.x - _icon.width - scaleAndRoundToDpi(20);
+					_title.validate();
+					_title.x = _icon.x + _icon.width + scaleAndRoundToDpi(10);
+					_title.y = (actualHeight - _title.height) * 0.5;
+					
+					_highlightAd.width = actualWidth;
+					_highlightAd.height = actualHeight;
+					_highlightAd.x = _strokeThickness;
+					_highlightAd.y = _strokeThickness;
+				}
+				
+				
+			}
 			
-			_highlightAd.width = this.actualWidth;
-			_highlightAd.x = _strokeThickness;
-			_highlightAd.y = _strokeThickness;
-			
-			_icon.x = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 80);
-			_icon.y = (actualHeight - _icon.height) * 0.5;
-			
-			_title.width = actualWidth - _icon.x - _icon.width - scaleAndRoundToDpi(20);
-			_title.validate();
-			_title.x = _icon.x + _icon.width + scaleAndRoundToDpi(10);
-			_title.y = (actualHeight - _title.height) * 0.5;
 		}
 		
 		public function set title(val:String):void
