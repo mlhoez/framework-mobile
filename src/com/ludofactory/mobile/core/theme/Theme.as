@@ -262,9 +262,9 @@ package com.ludofactory.mobile.core.theme
 			trophyGainTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(38), COLOR_WHITE);
 			
 			// AdTournamentItemRenderer
-			adTournamentFirstRankTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(36), COLOR_DARK_GREY); // 0x470000
-			adTournamentSecondRankTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(36), COLOR_DARK_GREY); // 0x470000
-			adTournamentThirdRankTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(36), COLOR_DARK_GREY); // 0x3b1e01
+			adTournamentFirstRankTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 28 : 36), COLOR_DARK_GREY, null, null, null, null, null, AbstractGameInfo.LANDSCAPE ? TextFormatAlign.CENTER : TextFormatAlign.LEFT); // 0x470000
+			adTournamentSecondRankTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 28 : 36), COLOR_DARK_GREY, null, null, null, null, null, AbstractGameInfo.LANDSCAPE ? TextFormatAlign.CENTER : TextFormatAlign.LEFT); // 0x470000
+			adTournamentThirdRankTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 28 : 36), COLOR_DARK_GREY, null, null, null, null, null, AbstractGameInfo.LANDSCAPE ? TextFormatAlign.CENTER : TextFormatAlign.LEFT); // 0x3b1e01
 			
 			// Rules
 			ruleTitleTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(36), COLOR_DARK_GREY);
@@ -591,6 +591,7 @@ package com.ludofactory.mobile.core.theme
 			setInitializerForClass(Button, buttonNewsInitializer, BUTTON_NEWS);
 			setInitializerForClass(Button, buttonFlatGreenInitializer, BUTTON_FLAT_GREEN);
 			setInitializerForClass(Button, buttonAdInitializer, BUTTON_AD);
+			setInitializerForClass(Button, buttonAdLandscapeInitializer, BUTTON_AD_LANDSCAPE);
 			setInitializerForClass(Button, buttonTransparentWhiteInitializer, BUTTON_TRANSPARENT_WHITE);
 			setInitializerForClass(Button, buttonTransparentBlueInitializer, BUTTON_TRANSPARENT_BLUE);
 			setInitializerForClass(Button, buttonTransparentBlueDarkerInitializer, BUTTON_TRANSPARENT_BLUE_DARKER);
@@ -1390,6 +1391,27 @@ package com.ludofactory.mobile.core.theme
 				};
 			button.stateToSkinFunction = skinSelector.updateValue;
 			
+			button.defaultLabelProperties.textFormat = this.buttonAdTextFormat;
+			
+			button.paddingTop = button.paddingBottom = 10 * this.scaleFactor;
+			button.paddingLeft  = 39 * this.scaleFactor;
+			button.paddingRight = 10 * this.scaleFactor;
+			button.gap = 12 * this.scaleFactor;
+			button.minWidth = 49 * this.scaleFactor;
+			button.minHeight = 56 * this.scaleFactor;
+			button.minTouchWidth = 49 * this.scaleFactor;
+			button.minTouchHeight = 56 * this.scaleFactor;
+		}
+		
+		public static const BUTTON_AD_LANDSCAPE:String = "button-ad-landscape";
+		
+		/**
+		 * Common button.
+		 *  - Finalized
+		 */		
+		protected function buttonAdLandscapeInitializer(button:Button):void
+		{
+			button.defaultSkin = new Quad(5, 5, 0xffffff);
 			button.defaultLabelProperties.textFormat = this.buttonAdTextFormat;
 			
 			button.paddingTop = button.paddingBottom = 10 * this.scaleFactor;
