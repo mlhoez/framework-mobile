@@ -12,6 +12,7 @@ package com.ludofactory.mobile.core.controls
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.GameSessionTimer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -144,6 +145,9 @@ package com.ludofactory.mobile.core.controls
 			
 			_creditsContainer = new SummaryElement( GameSession.PRICE_CREDIT );
 			addChild(_creditsContainer);
+			
+			GameSessionTimer.registerFunction(_freeContainer.setLabelText);
+			GameSessionTimer.updateState();
 		}
 		
 		override protected function draw():void
@@ -187,13 +191,11 @@ package com.ludofactory.mobile.core.controls
 		/**
 		 * Updates the labels in the summary elements.
 		 * 
-		 * <p>This is called when whether the number of free game sessions,
+		 * <p>This is called whenever the number of free game sessions,
 		 * points or credits have changed.</p>
 		 */		
 		public function updateSummary():void
 		{
-			// Gérer ici le cas = 0 etc.
-			
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				_pointsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getPoints() ) );
