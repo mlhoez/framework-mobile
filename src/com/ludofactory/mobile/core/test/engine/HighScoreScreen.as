@@ -267,7 +267,7 @@ package com.ludofactory.mobile.core.test.engine
 				_highScoreLogo.scaleX = _highScoreLogo.scaleY = 0;
 				TweenMax.to(_highScoreLogo, 0.75, { delay:0.5, scaleX:GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? (0.1 * GlobalConfig.dpiScale) : 0), scaleY:GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? (0.1 * GlobalConfig.dpiScale) : 0), ease:Back.easeOut } );
 				
-				SoundManager.getInstance().playSound("highscore_bis", "sfx");
+				SoundManager.getInstance().playSound("highscore", "sfx");
 				
 				if( !_facebookButton )
 					Starling.juggler.delayCall(onContinue, 5);
