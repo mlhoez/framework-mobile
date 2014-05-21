@@ -148,6 +148,8 @@ package com.ludofactory.mobile.core.controls
 			
 			GameSessionTimer.registerFunction(_freeContainer.setLabelText);
 			GameSessionTimer.updateState();
+			
+			updateSummary();
 		}
 		
 		override protected function draw():void
@@ -204,7 +206,7 @@ package com.ludofactory.mobile.core.controls
 			else
 			{
 				_pointsContainer.setLabelText( "" + MemberManager.getInstance().getPoints() );
-				_creditsContainer.setLabelText( "-"  );
+				_creditsContainer.setLabelText( MemberManager.getInstance().getNumFreeGameSessions() == 0 ? "???" : "-" );
 			}
 			GameSessionTimer.updateState();
 		}

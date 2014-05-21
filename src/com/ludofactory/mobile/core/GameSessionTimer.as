@@ -33,7 +33,7 @@ package com.ludofactory.mobile.core
 		
 		/**
 		 * Whether the HeartBeat is paused. */		
-		private static var _isRunning:Boolean = true;
+		private static var _isRunning:Boolean = false;
 		
 		/**
 		 * Helper function. */		
@@ -97,6 +97,7 @@ package com.ludofactory.mobile.core
 			else
 			{
 				// if not logged in, display "???" if no more game session, otherwise display the number
+				stop();
 				valueToDisplay = "" + (MemberManager.getInstance().getNumFreeGameSessions() == 0 ? "???" : MemberManager.getInstance().getNumFreeGameSessions());
 			}
 		}
