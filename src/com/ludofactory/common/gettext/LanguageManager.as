@@ -137,6 +137,7 @@ package com.ludofactory.common.gettext
 				// synchronous way
 				var copySync:File = File.applicationDirectory.resolvePath(_localePath);
 				copySync.copyTo(File.applicationStorageDirectory.resolvePath(_localePath), true);
+				File.applicationStorageDirectory.resolvePath("assets" + File.separator).preventBackup = true; // necessary for iOS
 			}
 			
 			onInitializeComplete();
