@@ -21,6 +21,10 @@ package com.ludofactory.mobile.core
 	 */	
 	public class GameSessionTimer
 	{
+		/**
+		 * Number of seconds in a day. */		
+		private static const NUM_SECONDS_IN_A_DAY:int = 86400;
+		
 		public static var IS_TIMER_OVER_AND_REQUEST_FAILED:Boolean = false;
 		
 		/**
@@ -29,7 +33,7 @@ package com.ludofactory.mobile.core
 		
 		/**
 		 * Whether the HeartBeat is paused. */		
-		private static var _isPaused:Boolean = true;
+		private static var _isRunning:Boolean = true;
 		
 		/**
 		 * Helper function. */		
@@ -65,11 +69,15 @@ package com.ludofactory.mobile.core
 		}
 		
 //------------------------------------------------------------------------------------------------------------
-//	Update function
+//	Update state function
 		
 		/**
-		 * Called from MemberManager in the function <code>setNumFreeGameSessions</code> 
-		 * whenever the value of the game sessions change.
+		 * This function should be called whenever the number of free game sessions
+		 * change and when a user log in / out.
+		 * 
+		 * <p>It will update the state of the GameSessionTimer in order to display
+		 * the correct number of free game sessions or the timer if there are no more
+		 * and the user is logged in, or "???" if the user is not logged in.
 		 */		
 		public static function updateState():void
 		{
@@ -82,10 +90,8 @@ package com.ludofactory.mobile.core
 				}
 				else
 				{
-					// no free game session, show the timer if necessary
-					// no need to start the timer if no function registered...
-					//if( _listenersList.length > 0 )
-						start();
+					// no more free game session then start the timer
+					start();
 				}
 			}
 			else
@@ -103,17 +109,16 @@ package com.ludofactory.mobile.core
 		 */		
 		public static function start():void
 		{
-			if(_isPaused /*&& _listenersList.length != 0*/)
+			if(!_isRunning)
 			{
-				_isPaused = false;
+				_isRunning = true;
 				
-				// calculate the number of milliseconds until the end of the day
+				// calculate the number of seconds until the end of the day
 				var nowInFrance:Date = Utilities.getLocalFrenchDate();
-				_totalTime = (86400 - (nowInFrance.hours * 60 * 60) - (nowInFrance.minutes * 60) - nowInFrance.seconds) * 1000;
+				_totalTime = (NUM_SECONDS_IN_A_DAY - (nowInFrance.hours * 60 * 60) - (nowInFrance.minutes * 60) - nowInFrance.seconds) * 1000;
 				_previousTime = getTimer();
 				Starling.current.stage.addEventListener(Event.ENTER_FRAME, update);
 			}
-			
 		}
 		
 		/**
@@ -121,28 +126,12 @@ package com.ludofactory.mobile.core
 		 */		
 		public static function stop():void
 		{
-			if(!_isPaused)
+			if(_isRunning)
 			{
-				_isPaused = true;
+				_isRunning = false;
 				
 				Starling.current.stage.removeEventListener(Event.ENTER_FRAME, update);
 			}
-		}
-		
-		/**
-		 * Pauses the timer (mainly used when the user starts playing).
-		 */		
-		public static function pause():void
-		{
-			
-		}
-		
-		/**
-		 * Resumes the timer (mainly used when the user stops playing).
-		 */		
-		public static function resume():void
-		{
-			
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -150,13 +139,10 @@ package com.ludofactory.mobile.core
 		
 		/**
 		 * Main update function.
-		 * 
-		 * <p>When we get here, it is when a second has elapsed, so no need
-		 * to calculate the time, we only need to decrement the counter by
-		 * 1000 milliseconds.</p>
 		 */		
 		private static function update(event:Event):void
 		{
+			// calculate the elapsed time
 			_elapsedTime = getTimer() - _previousTime;
 			_previousTime = getTimer();
 			_totalTime -= _elapsedTime;
@@ -175,8 +161,7 @@ package com.ludofactory.mobile.core
 				}
 				else
 				{
-					// timer is over, stop everything
-					// request stakes, and then update the summary
+					// timer is over, stop everything, request stakes, and then update the fields
 					stop();
 					
 					if( AirNetworkInfo.networkInfo.isConnected() )
@@ -193,9 +178,7 @@ package com.ludofactory.mobile.core
 		/**
 		 * Registers a function to the core update.
 		 * 
-		 * <p>The functions must have this signature :<br /> myFunction(elapsedTime:int):void { }</p>
-		 * 
-		 * <p>NOTE : The time given in parameters is in milliseconds.</p>
+		 * <p>The functions must have this signature :<br /> myFunction(valueToDisplay:String):void { }</p>
 		 * 
 		 * @param listener The function the register.
 		 */		
@@ -216,6 +199,9 @@ package com.ludofactory.mobile.core
 				_listenersList.splice(_listenersList.indexOf(listener), 1);
 		}
 		
+//------------------------------------------------------------------------------------------------------------
+//	Getters / Setters
+		
 		public static function set valueToDisplay(val:String):void
 		{
 			_valueToDisplay = val;
@@ -231,13 +217,16 @@ package com.ludofactory.mobile.core
 		 */		
 		private static function onStakesUpdated(result:Object = null):void
 		{
-			// TODO Gérer ce cas...
 			if( MemberManager.getInstance().getNumFreeGameSessions() == 0 )
+			{
 				IS_TIMER_OVER_AND_REQUEST_FAILED = true;
+				valueToDisplay = "???";
+			}
 			else
+			{
 				IS_TIMER_OVER_AND_REQUEST_FAILED = false;
-			
-			valueToDisplay = "" + MemberManager.getInstance().getNumFreeGameSessions();
+				valueToDisplay = "" + MemberManager.getInstance().getNumFreeGameSessions();
+			}
 		}
 		
 	}

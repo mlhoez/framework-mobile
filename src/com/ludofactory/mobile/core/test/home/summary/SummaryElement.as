@@ -13,6 +13,7 @@ package com.ludofactory.mobile.core.test.home.summary
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.GameSessionTimer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -276,7 +277,7 @@ package com.ludofactory.mobile.core.test.home.summary
 					{
 						case GameSession.PRICE_FREE:
 						{
-							_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? ( SummaryContainer.IS_TIMER_OVER_AND_REQUEST_FAILED ? _("Reconnectez-vous pour récupérer vos {0} parties gratuites.") : _("Vos parties gratuites ({0} par jour)")) : _("Obtenez 10 parties gratuites par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+							_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? ( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED ? _("Reconnectez-vous pour récupérer vos {0} parties gratuites.") : _("Vos parties gratuites ({0} par jour)")) : _("Obtenez 10 parties gratuites par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 							break;
 						}
 						case GameSession.PRICE_CREDIT:

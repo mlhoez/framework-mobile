@@ -206,6 +206,7 @@ package com.ludofactory.mobile.core.controls
 				_pointsContainer.setLabelText( "" + MemberManager.getInstance().getPoints() );
 				_creditsContainer.setLabelText( "-"  );
 			}
+			GameSessionTimer.updateState();
 		}
 		
 		/**

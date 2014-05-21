@@ -8,22 +8,19 @@ package com.ludofactory.mobile.core.test.game
 {
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.gettext.aliases._n;
-	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.HeartBeat;
+	import com.ludofactory.mobile.core.GameSessionTimer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.home.summary.SummaryContainer;
 	import com.ludofactory.mobile.core.test.push.GameSession;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-	import flash.utils.getTimer;
 	
 	import feathers.controls.Callout;
 	import feathers.controls.Label;
@@ -48,19 +45,11 @@ package com.ludofactory.mobile.core.test.game
 		/**
 		 * The clock icon. */		
 		private var _iconClock:Image;
-		
 		/**
-		 * The timer variables. */		
-		private var _previousTime:Number;
-		private var _elapsedTime:Number;
-		private var _totalTime:Number;
-		
-		private var _h:int;
-		private var _m:int;
-		private var _s:int;
-		
+		 * Whether the callout is dislaying. */		
 		private var _isCalloutDisplaying:Boolean = false;
-		
+		/**
+		 * Callout label. */		
 		private var _calloutLabel:Label;
 		
 		/**
@@ -127,8 +116,6 @@ package com.ludofactory.mobile.core.test.game
 		{
 			_isEnabled = MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty( AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) ? true:false;
 			
-			HeartBeat.unregisterFunction(update);
-			
 			_iconClock.visible = false;
 			_icon.visible = _isEnabled;
 			_iconDisabled.visible = !_icon.visible;
@@ -151,7 +138,7 @@ package com.ludofactory.mobile.core.test.game
 				}
 				else
 				{
-					if( SummaryContainer.IS_TIMER_OVER_AND_REQUEST_FAILED )
+					if( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED )
 					{
 						_label.text = _("???");
 						_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(56), Theme.COLOR_WHITE);
@@ -162,37 +149,16 @@ package com.ludofactory.mobile.core.test.game
 						_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + "--:--:--";
 						_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_WHITE);
 						
-						var nowInFrance:Date = Utilities.getLocalFrenchDate();
-						_totalTime = (86400 - (nowInFrance.hours * 60 * 60) - (nowInFrance.minutes * 60) - nowInFrance.seconds) * 1000;
-						_previousTime = getTimer();
-						HeartBeat.registerFunction(update);
+						GameSessionTimer.registerFunction(setText);
 					}
 					_iconClock.visible = true;
 				}
 			}
 		}
 		
-		private function update(elapsedTime:Number):void
+		private function setText(val:String):void
 		{
-			_elapsedTime = getTimer() - _previousTime;
-			_previousTime = getTimer();
-			_totalTime -= _elapsedTime;
-			
-			_h = Math.round(_totalTime / 1000) / 3600;
-			_m = (Math.round(_totalTime / 1000) / 60) % 60;
-			_s = Math.round(_totalTime / 1000) % 60;
-			
-			if( _h <= 0 && _m <= 0 && _s <= 0 )
-			{
-				HeartBeat.unregisterFunction(update);
-				if( _label )
-					_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + (_h < 10 ? "0":"") + _h + ":" + (_m < 10 ? "0":"") + _m + ":" + (_s < 10 ? "0":"") + _s;
-			}
-			else
-			{
-				if( _label )
-					_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + (_h < 10 ? "0":"") + _h + ":" + (_m < 10 ? "0":"") + _m + ":" + (_s < 10 ? "0":"") + _s;
-			}
+			_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + val;
 		}
 		
 		private function onCalloutRemoved(event:Event):void
@@ -209,7 +175,7 @@ package com.ludofactory.mobile.core.test.game
 			}
 			else
 			{
-				if( SummaryContainer.IS_TIMER_OVER_AND_REQUEST_FAILED )
+				if( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED )
 				{
 					if( !_isCalloutDisplaying )
 					{
@@ -233,12 +199,11 @@ package com.ludofactory.mobile.core.test.game
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{
 			MemberManager.getInstance().removeEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateData);
-			HeartBeat.unregisterFunction(update);
+			GameSessionTimer.unregisterFunction(setText);
 			
 			_label.removeFromParent(true);
 			_label = null;
