@@ -119,7 +119,7 @@ package com.ludofactory.common.gettext
 		{
 			// domain contains a POFile
 			_helperTradTab =  _locales[_currentLocale][domain].translations[keySingular];
-			if ( _helperTradTab.length <= 0 )
+			if ( !_helperTradTab || _helperTradTab.length <= 0 )
 				return _locales[_currentLocale][domain].getPluralIndex(n) < 1 ? keySingular : keyPlural;
 			return _helperTradTab[ _locales[_currentLocale][domain].getPluralIndex(n) ];
 		}
