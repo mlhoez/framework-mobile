@@ -17,6 +17,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>[source path] db</name>
+			<type>2</type>
+			<locationURI>db</locationURI>
+		</link>
+		<link>
 			<name>[source path] feathers</name>
 			<type>2</type>
 			<locationURI>feathers</locationURI>

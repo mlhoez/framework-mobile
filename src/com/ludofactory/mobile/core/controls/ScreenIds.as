@@ -165,7 +165,13 @@ package com.ludofactory.mobile.core.controls
 		public static const UPDATE_SCREEN:String = "Mise à jour nécessaire";
 		
 //------------------------------------------------------------------------------------------------------------
-//	Update screen
+//	Avatar screen
+		
+		/** The debug screen. */		
+		public static const AVATAR_SCREEN:String = "Avatar";
+		
+//------------------------------------------------------------------------------------------------------------
+//	Debug screen
 		
 		/** The debug screen. */		
 		public static const DEBUG_SCREEN:String = "Debug";
