@@ -6,6 +6,7 @@ Created : 31 août 2013
 */
 package com.ludofactory.mobile.core.test.achievements
 {
+	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.test.push.GameSession;
@@ -114,6 +115,8 @@ package com.ludofactory.mobile.core.test.achievements
 			
 			if( _currentGameSession )
 				_currentGameSession.trophiesWon.push( trophyId );
+			
+			SoundManager.getInstance().playSound("ruzzle_test", "sfx");
 			
 			GameCenterManager.reportAchievement(AbstractGameInfo.ACHIEVEMENTS_PREFIX + "." + trophyId, 100);
 			
