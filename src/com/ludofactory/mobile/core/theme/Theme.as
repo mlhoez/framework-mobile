@@ -44,6 +44,7 @@ package com.ludofactory.mobile.core.theme
 	import feathers.controls.Scroller;
 	import feathers.controls.SimpleScrollBar;
 	import feathers.controls.TextInput;
+	import feathers.controls.ToggleButton;
 	import feathers.controls.ToggleSwitch;
 	import feathers.controls.popups.CalloutPopUpContentManager;
 	import feathers.controls.popups.VerticalCenteredPopUpContentManager;
@@ -565,9 +566,9 @@ package com.ludofactory.mobile.core.theme
 			setInitializerForClassAndSubclasses(Screen, screenInitializer);
 			
 			// OffsetTabBar
-			setInitializerForClass(Button, buttonRulesAndScoresLeftInitializer, BUTTON_OFFSET_TAB_BAR_LEFT);
-			setInitializerForClass(Button, buttonRulesAndScoresRightInitializer, BUTTON_OFFSET_TAB_BAR_RIGHT);
-			setInitializerForClass(Button, buttonRulesAndScoresMiddleInitializer, BUTTON_OFFSET_TAB_BAR_MIDDLE);
+			setInitializerForClass(ToggleButton, buttonRulesAndScoresLeftInitializer, BUTTON_OFFSET_TAB_BAR_LEFT);
+			setInitializerForClass(ToggleButton, buttonRulesAndScoresRightInitializer, BUTTON_OFFSET_TAB_BAR_RIGHT);
+			setInitializerForClass(ToggleButton, buttonRulesAndScoresMiddleInitializer, BUTTON_OFFSET_TAB_BAR_MIDDLE);
 			
 			// TextInput
 			setInitializerForClass(TextInput, textInputInitializer);
@@ -599,7 +600,8 @@ package com.ludofactory.mobile.core.theme
 			
 			// ToggleSwitch
 			setInitializerForClassAndSubclasses(ToggleSwitch, toggleSwitchInitializer);
-			setInitializerForClass(Button, buttonToggleSwitchInitializer, BUTTON_TOGGLE_SWITCH_THUMB);
+			//setInitializerForClass(Button, buttonToggleSwitchInitializer, BUTTON_TOGGLE_SWITCH_THUMB); // avant quand le Button avait la propriété isSelected (qui maintenant a migré dans le ToggleButton)
+			setInitializerForClass(ToggleButton, buttonToggleSwitchInitializer, BUTTON_TOGGLE_SWITCH_THUMB);
 			setInitializerForClass(Button, toggleSwitchTrackInitializer, ToggleSwitch.DEFAULT_CHILD_NAME_ON_TRACK);
 			
 			// PageIndicator
@@ -1538,6 +1540,12 @@ package com.ludofactory.mobile.core.theme
 		{
 			toggle.trackLayoutMode = ToggleSwitch.TRACK_LAYOUT_MODE_SINGLE;
 			toggle.customThumbName = BUTTON_TOGGLE_SWITCH_THUMB;
+			toggle.thumbFactory = thumbFactory;
+		}
+		
+		protected function thumbFactory():Button
+		{
+			return new ToggleButton();
 		}
 		
 		/**
@@ -1553,7 +1561,19 @@ package com.ludofactory.mobile.core.theme
 		/**
 		 * Button used as a thumb in a ToggleSwitch component.
 		 */		
-		protected function buttonToggleSwitchInitializer(button:Button):void
+		/*protected function buttonToggleSwitchInitializer(button:Button):void
+		{
+			button.downSkin = new Scale9Image(toggleSwitchThumbBackgroundSkinTextures, scaleFactor);
+			button.downLabelProperties.textFormat = onThumbTextFormat;
+			
+			button.defaultSkin = new Scale9Image(toggleSwitchThumbDisabledBackgroundSkinTextures, scaleFactor);
+			button.defaultLabelProperties.textFormat = offThumbTextFormat;
+			
+			button.minHeight = button.height = button.minTouchHeight = 44 * scaleFactor;
+			button.minWidth = button.width = button.minTouchWidth = 120 * scaleFactor;
+		}*/
+		
+		protected function buttonToggleSwitchInitializer(button:ToggleButton):void
 		{
 			button.defaultSelectedSkin = new Scale9Image(toggleSwitchThumbBackgroundSkinTextures, scaleFactor);
 			button.defaultSelectedLabelProperties.textFormat = onThumbTextFormat;
