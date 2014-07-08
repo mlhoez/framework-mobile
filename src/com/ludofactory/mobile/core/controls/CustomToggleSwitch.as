@@ -6,6 +6,7 @@ Created : 9 janv. 2014
 */
 package com.ludofactory.mobile.core.controls
 {
+	import feathers.controls.ToggleButton;
 	import feathers.controls.ToggleSwitch;
 	
 	public class CustomToggleSwitch extends ToggleSwitch
@@ -31,12 +32,12 @@ package com.ludofactory.mobile.core.controls
 			if( this.thumb.x > (this._paddingLeft + trackScrollableWidth / 2) )
 			{
 				this.thumb.label = _onThumbText;
-				this.thumb.isSelected = true;
+				(this.thumb as ToggleButton).isSelected = true;
 			}
 			else
 			{
 				this.thumb.label = _offThumbText;
-				this.thumb.isSelected = false;
+				(this.thumb as ToggleButton).isSelected = false;
 			}
 		}
 		
