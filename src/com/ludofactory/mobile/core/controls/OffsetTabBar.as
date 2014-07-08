@@ -10,8 +10,8 @@ package com.ludofactory.mobile.core.controls
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import feathers.controls.Button;
 	import feathers.controls.TabBar;
+	import feathers.controls.ToggleButton;
 	
 	import starling.events.Event;
 	
@@ -51,7 +51,7 @@ package com.ludofactory.mobile.core.controls
 			var position:Number = 0;
 			for(var i:int = 0; i < tabCount; i++)
 			{
-				var tab:Button = this.activeTabs[i];
+				var tab:ToggleButton = this.activeTabs[i];
 				if(this._direction == DIRECTION_VERTICAL)
 				{
 					tab.width = this.actualWidth;
@@ -82,7 +82,7 @@ package com.ludofactory.mobile.core.controls
 			{
 				return;
 			}
-			setChildIndex( Button(toggleGroup.selectedItem), int.MAX_VALUE);
+			setChildIndex( ToggleButton(toggleGroup.selectedItem), int.MAX_VALUE);
 			this.dispatchEventWith(Event.CHANGE);
 		}
 	}
