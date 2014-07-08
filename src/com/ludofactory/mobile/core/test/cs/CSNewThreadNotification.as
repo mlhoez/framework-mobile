@@ -122,7 +122,7 @@ package com.ludofactory.mobile.core.test.cs
 			_messageInput = new TextInput();
 			_messageInput.prompt = _("Saisissez ici votre question...");
 			_container.addChild(_messageInput);
-			_messageInput.textEditorProperties.wordWrap = true;
+			//_messageInput.textEditorProperties.wordWrap = true; // FIXME A voir si c'est ok
 			_messageInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
 			_messageInput.textEditorProperties.autoCorrect = true;
 			_messageInput.addEventListener(FeathersEventType.ENTER, onEnterKeyPressed);

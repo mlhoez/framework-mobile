@@ -7,10 +7,13 @@ Created : 25 août 2013
 package com.ludofactory.mobile.core.test.cs.thread
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.controls.ImageLoaderCache;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.controls.ImageLoaderCache;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Label;
 	import feathers.controls.List;
@@ -226,11 +229,11 @@ package com.ludofactory.mobile.core.test.cs.thread
 				_messageBackground.scaleX = -1;
 				_messageBackground.x = this.actualWidth - scaleAndRoundToDpi(86);
 				
-				_date.textRendererProperties.textAlign = TextBlockTextRenderer.TEXT_ALIGN_RIGHT;
+				(_date.textRendererProperties.textFormat as TextFormat).align = TextFormatAlign.RIGHT;
 				_date.validate();
 				_date.x = _messageBackground.x - _paddingMessageLeft - _date.width;
 				
-				_message.textRendererProperties.textAlign = TextBlockTextRenderer.TEXT_ALIGN_RIGHT;
+				(_message.textRendererProperties.textFormat as TextFormat).align = TextFormatAlign.RIGHT;
 				_message.validate();
 				_message.x = _messageBackground.x - _paddingMessageLeft - _message.width;
 				
@@ -247,11 +250,11 @@ package com.ludofactory.mobile.core.test.cs.thread
 				_messageBackground.scaleX = 1;
 				_messageBackground.x = scaleAndRoundToDpi(86);
 				
-				_date.textRendererProperties.textAlign = TextBlockTextRenderer.TEXT_ALIGN_LEFT;
+				(_date.textRendererProperties.textFormat as TextFormat).align = TextFormatAlign.LEFT;
 				_date.validate();
 				_date.x = _messageBackground.x + _paddingMessageLeft;
 				
-				_message.textRendererProperties.textAlign = TextBlockTextRenderer.TEXT_ALIGN_LEFT;
+				(_message.textRendererProperties.textFormat as TextFormat).align = TextFormatAlign.LEFT;
 				_message.validate();
 				_message.x = _messageBackground.x + _paddingMessageLeft;
 				
