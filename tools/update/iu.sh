@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# !!! ARCHIVE CAR INUTILISE MAINTENANT !!!
+
 # -------------------------------------------
 # Copyright © 2006-2014 Ludo Factory
 # Framework mobile

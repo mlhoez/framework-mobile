@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Frameworks updates">
+
+	<property file="./update/build.config" />
+	
+	<target name="All" depends="Starling,Feathers,Graphics,Particles,Flox,GreenSock,Pixel Mask,Android Device Info,Dragon Bones" description="Update all frameworks" />
+	
+    <!-- Starling Framework -->
+    <target name="Starling" description="Updates Starling Framework">
+    	<exec dir="update" executable="/bin/sh">
+    		<arg value="u.sh"/>
+    		<arg value="${lib_starling_repo}"/>
+    		<arg value="${lib_starling_name}"/>
+    		<arg value="${lib_starling_us}"/>
+    	</exec>
+    </target>
+    
+    <!-- Feathers Framework -->
+    <target name="Feathers" description="Updates Feathers Framework">
+    	<exec dir="update" executable="/bin/sh">
+    		<arg value="u.sh"/>
+    		<arg value="${lib_feathers_repo}"/>
+    		<arg value="${lib_feathers_name}"/>
+    		<arg value="${lib_feathers_us}"/>
+    	</exec>
+    </target>
+    
+    <!-- Graphics Framework -->
+    <target name="Graphics" description="Updates Graphics Framework">
+    	<exec dir="update" executable="/bin/sh">
+    		<arg value="u.sh"/>
+    		<arg value="${lib_graphics_repo}"/>
+    		<arg value="${lib_graphics_name}"/>
+    	</exec>
+    </target>
+    
+    <!-- Particles Framework -->
+    <target name="Particles" description="Updates Particles Framework">
+    	<exec dir="update" executable="/bin/sh">
+    		<arg value="u.sh"/>
+    		<arg value="${lib_particles_repo}"/>
+    		<arg value="${lib_particles_name}"/>
+    	</exec>
+    </target>
+    
+    <!-- Flox Framework -->
+    <target name="Flox" description="Updates Flox Framework">
+    	<exec dir="update" executable="/bin/sh">
+    		<arg value="u.sh"/>
+    		<arg value="${lib_flox_repo}"/>
+    		<arg value="${lib_flox_name}"/>
+    	</exec>
+    </target>
+    
+    <!-- GreenSock Frameork -->
+    <target name="GreenSock" description="Updates GreenSock Framework">
+    	<exec dir="update" executable="/bin/sh">
+    		<arg value="u.sh"/>
+    		<arg value="${lib_gs_repo}"/>
+    		<arg value="${lib_gs_name}"/>
+    	</exec>
+    </target>
+    
+    <!-- Pixel Mask Framework -->
+    <target name="Pixel Mask" description="Updates Pixel Mask Framework">
+    	<exec dir="update" executable="/bin/sh">
+    		<arg value="u.sh"/>
+    		<arg value="${lib_pixel_mask_repo}"/>
+    		<arg value="${lib_pixel_mask_name}"/>
+    	</exec>
+    </target>
+    
+    <!-- Android Device Info Framework -->
+    <target name="Android Device Info" description="Updates Android Device Info Framework">
+    	<exec dir="update" executable="/bin/sh">
+    		<arg value="u.sh"/>
+    		<arg value="${lib_android_device_info_repo}"/>
+    		<arg value="${lib_android_device_info_name}"/>
+    	</exec>
+    </target>
+    
+    <!-- Dragon Bones Framework -->
+    <target name="Dragon Bones" description="Updates Dragon Bones Framework">
+    	<exec dir="update" executable="/bin/sh">
+    		<arg value="u.sh"/>
+    		<arg value="${lib_dragon_bones_repo}"/>
+    		<arg value="${lib_dragon_bones_name}"/>
+    	</exec>
+    </target>
+    
+</project>
