@@ -144,6 +144,7 @@ package com.ludofactory.mobile.core.test.home
 						_playButton.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5);
 						_playButton.height = scaleAndRoundToDpi(118);
 						_playButton.x = (actualWidth - _playButton.width) * 0.5;
+						_playButton.y = actualHeight * 0.5 + scaleAndRoundToDpi(40);
 					}
 					
 					
@@ -154,7 +155,6 @@ package com.ludofactory.mobile.core.test.home
 					_logo.validate();
 					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
 					
-					_playButton.y = _logo.y + _logo.height + scaleAndRoundToDpi(20);
 					_giftsButton.y = _playButton.y + _playButton.height + scaleAndRoundToDpi(20);
 						
 					if( GlobalConfig.DEBUG )
