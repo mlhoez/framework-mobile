@@ -75,23 +75,26 @@ package com.ludofactory.mobile.core.test
 		
 		override protected function draw():void
 		{
-			super.draw();
-			
-			_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.65);
-			_logo.validate();
-			_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 80 : 120 );
-			_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
-			
-			_message.width = actualWidth * 0.8;
-			_downloadButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-			_message.validate();
-			_downloadButton.validate();
-			
-			_message.x = (actualWidth - (actualWidth * 0.8)) * 0.5;
-			_downloadButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-			_message.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.x - _logo.height) - (_message.height + _downloadButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 70 : 140))) * 0.5) << 0;
-			
-			_downloadButton.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 120);
+			if( isInvalid(INVALIDATION_FLAG_SIZE) )
+			{
+				super.draw();
+				
+				_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.65);
+				_logo.validate();
+				_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 80 : 120 );
+				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
+				
+				_message.width = actualWidth * 0.8;
+				_downloadButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+				_message.validate();
+				_downloadButton.validate();
+				
+				_message.x = (actualWidth - (actualWidth * 0.8)) * 0.5;
+				_downloadButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
+				_message.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.x - _logo.height) - (_message.height + _downloadButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 70 : 140))) * 0.5) << 0;
+				
+				_downloadButton.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 120);
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------

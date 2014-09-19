@@ -45,7 +45,7 @@ package com.hurlant.crypto.cert {
 				b = p;
 			}
 			if (b!=null) {
-				_obj = DER.parse(b, Type.TLS_CERT);
+				_obj = DER.parse(b, com.hurlant.util.der.Type.TLS_CERT);
 				_loaded = true;
 			} else {
 				throw new Error("Invalid x509 Certificate parameter: "+p);
@@ -115,7 +115,7 @@ package com.hurlant.crypto.cert {
 			key.verify(_obj.encrypted, buf, _obj.encrypted.length);
 			buf.position=0;
 			data = hash.hash(data);
-			var obj:Object = DER.parse(buf, Type.RSA_SIGNATURE);
+			var obj:Object = DER.parse(buf, com.hurlant.util.der.Type.RSA_SIGNATURE);
 			if (obj.algorithm.algorithmId.toString() != oid) {
 				return false; // wrong algorithm
 			}

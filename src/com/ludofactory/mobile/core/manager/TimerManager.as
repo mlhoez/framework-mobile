@@ -173,6 +173,7 @@ package com.ludofactory.mobile.core.manager
 		{
 			timeInSeconds = timeInSeconds * 1000;
 			_currentTime += timeInSeconds;
+			_currentTime = _currentTime < 0 ? 0 : _currentTime;
 			computeAndUpdate();
 		}
 		

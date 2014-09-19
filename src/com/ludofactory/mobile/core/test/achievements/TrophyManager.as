@@ -116,7 +116,7 @@ package com.ludofactory.mobile.core.test.achievements
 			if( _currentGameSession )
 				_currentGameSession.trophiesWon.push( trophyId );
 			
-			SoundManager.getInstance().playSound("ruzzle_test", "sfx");
+			//SoundManager.getInstance().playSound("ruzzle_test", "sfx");
 			
 			GameCenterManager.reportAchievement(AbstractGameInfo.ACHIEVEMENTS_PREFIX + "." + trophyId, 100);
 			
