@@ -162,12 +162,15 @@ package com.ludofactory.mobile.navigation.menu
 			_list.dataProvider.updateItemAt(i);
 			
 			// My Gifts
-			i++;
-			tempMenuItemData = _list.dataProvider.getItemAt(i) as MenuItemData;
-			tempMenuItemData.badgeNumber = AbstractEntryPoint.alertData.numGainAlerts;
-			_list.dataProvider.setItemAt(tempMenuItemData, i);
-			_list.dataProvider.updateItemAt(i);
-			
+            if( MemberManager.getInstance().getGiftsEnabled() )
+            {
+                i++;
+                tempMenuItemData = _list.dataProvider.getItemAt(i) as MenuItemData;
+                tempMenuItemData.badgeNumber = AbstractEntryPoint.alertData.numGainAlerts;
+                _list.dataProvider.setItemAt(tempMenuItemData, i);
+                _list.dataProvider.updateItemAt(i);
+            }
+
 			// High Scores
 			i++;
 			_list.dataProvider.updateItemAt(i);
