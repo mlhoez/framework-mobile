@@ -6,28 +6,26 @@ Created : 11 Avril 2013
 */
 package com.ludofactory.mobile.core.test.home
 {
-	import com.gamua.flox.Flox;
-	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.controls.ArrowGroup;
-	import com.ludofactory.mobile.core.controls.ScreenIds;
-	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.test.achievements.GameCenterManager;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import feathers.controls.Button;
-	import feathers.controls.ImageLoader;
-	
-	import starling.events.Event;
-	
-	/**
+import com.gamua.flox.Flox;
+import com.ludofactory.common.gettext.aliases._;
+import com.ludofactory.common.utils.scaleAndRoundToDpi;
+import com.ludofactory.mobile.core.AbstractEntryPoint;
+import com.ludofactory.mobile.core.AbstractGameInfo;
+import com.ludofactory.mobile.core.authentication.MemberManager;
+import com.ludofactory.mobile.core.controls.AdvancedScreen;
+import com.ludofactory.mobile.core.controls.ArrowGroup;
+import com.ludofactory.mobile.core.controls.ScreenIds;
+import com.ludofactory.mobile.core.events.LudoEventType;
+import com.ludofactory.mobile.core.test.achievements.GameCenterManager;
+import com.ludofactory.mobile.core.test.config.GlobalConfig;
+import com.ludofactory.mobile.core.theme.Theme;
+
+import feathers.controls.Button;
+import feathers.controls.ImageLoader;
+
+import starling.events.Event;
+
+/**
 	 * The application's home screen.
 	 */	
 	public class HomeScreen extends AdvancedScreen
@@ -97,9 +95,8 @@ package com.ludofactory.mobile.core.test.home
 			
 			_giftsButton = new Button();
 			_giftsButton.styleName = Theme.BUTTON_TRANSPARENT_WHITE;
-			_giftsButton.label = _("Gagner des cadeaux");
+			_giftsButton.label = MemberManager.getInstance().getGiftsEnabled() ? _("Gagner des cadeaux") : _("Gagner des crédits");
 			_giftsButton.addEventListener(Event.TRIGGERED, onShowRules);
-			_giftsButton.visible = Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN);
 			addChild(_giftsButton);
 			
 			if( advancedOwner.screenData.displayPopupOnHome || (MemberManager.getInstance().getTournamentUnlocked() && MemberManager.getInstance().getTournamentAnimPending()) )
@@ -133,9 +130,9 @@ package com.ludofactory.mobile.core.test.home
 					{
 						_gameCenterButton.height = _playButton.height = scaleAndRoundToDpi(118);
 						_gameCenterButton.validate();
-						_gameCenterButton.y = _playButton.y = actualHeight * 0.5 + scaleAndRoundToDpi(40);
+						_gameCenterButton.y = _playButton.y = actualHeight * 0.45 + scaleAndRoundToDpi(30);
 						
-						_playButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6) - _gameCenterButton.width;
+						_playButton.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5) - _gameCenterButton.width;
 						_playButton.x = (actualWidth - (_playButton.width + _gameCenterButton.width)) * 0.5;
 						_gameCenterButton.x = _playButton.x + _playButton.width;
 					}
@@ -144,16 +141,18 @@ package com.ludofactory.mobile.core.test.home
 						_playButton.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5);
 						_playButton.height = scaleAndRoundToDpi(118);
 						_playButton.x = (actualWidth - _playButton.width) * 0.5;
-						_playButton.y = actualHeight * 0.5 + scaleAndRoundToDpi(40);
+						_playButton.y = actualHeight * 0.45 + scaleAndRoundToDpi(30);
 					}
 					
 					
 					_giftsButton.width = actualWidth * (GlobalConfig.isPhone ? ( GameCenterManager.available ? 0.6 : 0.5) : 0.4);
 					_giftsButton.x = (actualWidth - _giftsButton.width) * 0.5;
 					
-					_logo.height = actualHeight - _playButton.height - _giftsButton.height - scaleAndRoundToDpi(60);
+					//_logo.height = actualHeight - _playButton.height - _giftsButton.height - scaleAndRoundToDpi(60);
+					_logo.height = actualHeight * 0.45;
 					_logo.validate();
 					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
+					_logo.y = (_playButton.y - _logo.height) * 0.5;
 					
 					_giftsButton.y = _playButton.y + _playButton.height + scaleAndRoundToDpi(20);
 						
@@ -222,7 +221,7 @@ package com.ludofactory.mobile.core.test.home
 		 */		
 		private function onShowRules(event:Event):void
 		{
-			this.advancedOwner.showScreen( Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN) ? ScreenIds.HOW_TO_WIN_GIFTS_SCREEN : ScreenIds.MY_GIFTS_SCREEN );
+			this.advancedOwner.showScreen( MemberManager.getInstance().getGiftsEnabled() ? ScreenIds.HOW_TO_WIN_GIFTS_SCREEN : ScreenIds.BOUTIQUE_HOME );
 		}
 		
 		/**
@@ -232,7 +231,8 @@ package com.ludofactory.mobile.core.test.home
 		 */		
 		public function updateInterface():void
 		{
-			_giftsButton.visible = Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN);
+            // not need anymore
+			//_giftsButton.visible = Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN);
 		}
 		
 		private function onShowDebugScreen(event:Event):void
