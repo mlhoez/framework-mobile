@@ -423,7 +423,7 @@ package com.ludofactory.mobile.core.storage
 		
 		/**
 		 * Whether the shop is enabled. */		
-		public static const PROPERTY_SHOP_ENABLED:String = "DEFAULT_SHOP_ENABLED";
+		//public static const PROPERTY_SHOP_ENABLED:String = "DEFAULT_SHOP_ENABLED";
 		
 		public static const PROPERTY_NEW_LANGUAGES:String = "DEFAULT_NEW_LANGUAGES";
 	}
