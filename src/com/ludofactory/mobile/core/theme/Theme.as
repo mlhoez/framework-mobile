@@ -769,7 +769,7 @@ package com.ludofactory.mobile.core.theme
 		
 		protected function screenInitializer(screen:Screen):void
 		{
-			screen.originalDPI = this._originalDPI;
+			//screen.originalDPI = this._originalDPI;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
