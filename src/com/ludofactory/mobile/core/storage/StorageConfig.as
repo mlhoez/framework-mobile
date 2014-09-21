@@ -189,8 +189,10 @@ package com.ludofactory.mobile.core.storage
 		/**
 		 * <strong>This is the default value for the game
 		 * news.</strong><br /> */	
-		public static const DEFAULT_NEWS:Object = { fr : '[{"id":-1, "titre":"Lancement de Pyramid", "description":"Lancement de la première application de Ludokado pour tablettes et mobiles.", "url_image":"default-news"}]',
-													en : '[{"id":-1, "titre":"Launch of Pyramid", "description":"Launch of the first LudoKado\'s application available for tablets and smartphones.", "url_image":"default-news"}]' };
+		public static const DEFAULT_NEWS:Object = { fr : '[{"id":1, "titre":"Découvrez Ludokado", "description":"Touchez ici pour découvrir Ludokado.com et... description à trouver.", "url_image":"default-news", "lien":"http://www.ludokado.com"},' +
+                                                          '{"id":-1, "titre":"Lancement de Pyramid", "description":"Lancement de la première application de Ludokado pour tablettes et mobiles.", "url_image":"default-news"}]',
+													en : '[{"id":1, "titre":"Discover Ludokado", "description":"Tap here to discover Ludokado and... find a description", "url_image":"default-news", "lien":"http://www.ludokado.com"},' +
+                                                          '{"id":-1, "titre":"Launch of Pyramid", "description":"Launch of the first LudoKado\'s application available for tablets and smartphones.", "url_image":"default-news"}]' };
 		
 		/**
 		 * <strong>This is the default value for the terms
