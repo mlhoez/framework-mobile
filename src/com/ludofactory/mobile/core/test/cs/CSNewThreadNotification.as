@@ -6,46 +6,46 @@ Created : 25 août 2013
 */
 package com.ludofactory.mobile.core.test.cs
 {
-	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
-	import com.ludofactory.mobile.core.manager.InfoContent;
-	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
-	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.push.PushNewCSThread;
-	import com.ludofactory.mobile.core.test.push.PushType;
-	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.ReturnKeyLabel;
-	import flash.text.SoftKeyboardType;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
-	import feathers.controls.Button;
-	import feathers.controls.GroupedList;
-	import feathers.controls.Label;
-	import feathers.controls.Scroller;
-	import feathers.controls.TextInput;
-	import feathers.controls.popups.IPopUpContentManager;
-	import feathers.controls.popups.VerticalCenteredPopUpContentManager;
-	import feathers.data.HierarchicalCollection;
-	import feathers.events.FeathersEventType;
-	import feathers.layout.VerticalLayout;
-	
-	import starling.display.Image;
-	import starling.events.Event;
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
+import com.freshplanet.nativeExtensions.AirNetworkInfo;
+import com.ludofactory.common.gettext.aliases._;
+import com.ludofactory.common.utils.Utilities;
+import com.ludofactory.common.utils.scaleAndRoundToDpi;
+import com.ludofactory.mobile.core.AbstractEntryPoint;
+import com.ludofactory.mobile.core.authentication.MemberManager;
+import com.ludofactory.mobile.core.manager.InfoContent;
+import com.ludofactory.mobile.core.manager.InfoManager;
+import com.ludofactory.mobile.core.notification.content.AbstractNotification;
+import com.ludofactory.mobile.core.remoting.Remote;
+import com.ludofactory.mobile.core.storage.Storage;
+import com.ludofactory.mobile.core.storage.StorageConfig;
+import com.ludofactory.mobile.core.test.config.GlobalConfig;
+import com.ludofactory.mobile.core.test.push.PushNewCSThread;
+import com.ludofactory.mobile.core.test.push.PushType;
+import com.ludofactory.mobile.core.theme.Theme;
 
-	public class CSNewThreadNotification extends AbstractNotification
+import feathers.controls.Button;
+import feathers.controls.GroupedList;
+import feathers.controls.Label;
+import feathers.controls.Scroller;
+import feathers.controls.TextInput;
+import feathers.controls.popups.IPopUpContentManager;
+import feathers.controls.popups.VerticalCenteredPopUpContentManager;
+import feathers.data.HierarchicalCollection;
+import feathers.events.FeathersEventType;
+import feathers.layout.VerticalLayout;
+
+import flash.text.ReturnKeyLabel;
+import flash.text.SoftKeyboardType;
+import flash.text.TextFormat;
+import flash.text.TextFormatAlign;
+
+import starling.display.Image;
+import starling.events.Event;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
+
+public class CSNewThreadNotification extends AbstractNotification
 	{
 		/**
 		 * The title. */		
@@ -142,7 +142,7 @@ package com.ludofactory.mobile.core.test.cs
 			_themesList.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_themesList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_themesList.styleName = Theme.SUB_CATEGORY_GROUPED_LIST;
-			_themesList.dataProvider = new HierarchicalCollection([ { header:"", children:Storage.getInstance().getProperty(StorageConfig.PROPERTY_CUSTOMER_SERVICE_THEMES) } ]);
+			_themesList.dataProvider = new HierarchicalCollection([ { header:"", children:Storage.getInstance().getProperty( (MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_CUSTOMER_SERVICE_THEMES : StorageConfig.PROPERTY_CUSTOMER_SERVICE_THEMES_WITHOUT_GIFTS) ) } ]);
 			_themesList.typicalItem = "Theme name";
 			_themesList.isSelectable = true;
 			_themesList.setSelectedLocation(0,0);

@@ -127,7 +127,7 @@ package com.ludofactory.mobile.core.authentication
         /**
          * Whether it is a player with the gifts enabled.
          * Default is false so that we don't have problems with Apple. */
-        private var _giftsEnabled:Boolean = false;
+        private var _giftsEnabled:Boolean = true;
 		
 		public function Member() { }
 		

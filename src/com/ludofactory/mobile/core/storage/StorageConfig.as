@@ -153,7 +153,16 @@ package com.ludofactory.mobile.core.storage
 																	  new CSThemeData( { id:5, key:"Cadeaux",            index:5 } ),
 																	  new CSThemeData( { id:6, key:"Informations",       index:6 } ),
 																	  new CSThemeData( { id:7, key:"Autre",              index:7 } ) ];
-		
+
+        /**
+         * Different version for the non-gift players
+         */
+        public static const DEFAULT_CUSTOMER_SERVICE_THEMES_WITHOUT_GIFTS:Array = [ new CSThemeData( { id:1, key:"Partie Classique",   index:1 } ),
+                                                                                    new CSThemeData( { id:2, key:"Tournois",           index:2 } ),
+                                                                                    new CSThemeData( { id:3, key:"Problème technique", index:3 } ),
+                                                                                    new CSThemeData( { id:6, key:"Informations",       index:6 } ),
+                                                                                    new CSThemeData( { id:7, key:"Autre",              index:7 } ) ];
+
 		
 		/**
 		 * <strong>This is the default value for the game
@@ -342,6 +351,9 @@ package com.ludofactory.mobile.core.storage
 		/**
 		 * Access the customer service themes. */		
 		public static const PROPERTY_CUSTOMER_SERVICE_THEMES:String = "DEFAULT_CUSTOMER_SERVICE_THEMES";
+        /**
+		 * Access the customer service themes. */
+		public static const PROPERTY_CUSTOMER_SERVICE_THEMES_WITHOUT_GIFTS:String = "DEFAULT_CUSTOMER_SERVICE_THEMES_WITHOUT_GIFTS";
 		
 		/**
 		 * Access the faq. */		
