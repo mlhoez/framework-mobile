@@ -11,7 +11,8 @@ package com.ludofactory.mobile.core.test
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.authentication.AuthenticationManager;
-	import com.ludofactory.mobile.core.controls.ArrowGroup;
+import com.ludofactory.mobile.core.authentication.MemberManager;
+import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -120,7 +121,7 @@ package com.ludofactory.mobile.core.test
 			_bonusOne.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
 			
 			_bonusTwo = new Label();
-			_bonusTwo.text = Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN) == true ? _("• Convertir vos Points en Cadeaux") : _("• Convertir vos Points");
+			_bonusTwo.text = MemberManager.getInstance().getGiftsEnabled() ? _("• Convertir vos Points en Cadeaux") : _("• Convertir vos Points");
 			_textGroup.addChild(_bonusTwo);
 			_bonusTwo.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
 			_bonusTwo.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
