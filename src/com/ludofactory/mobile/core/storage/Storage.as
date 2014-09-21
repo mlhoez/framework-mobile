@@ -215,10 +215,10 @@ package com.ludofactory.mobile.core.storage
 		 */		
 		public function updateVip(data:Object):void
 		{
-			var vip:Object = Storage.getInstance().getProperty(StorageConfig.PROPERTY_VIP);
+			var vip:Object = Storage.getInstance().getProperty( (MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS) );
 			vip[LanguageManager.getInstance().lang] = JSON.stringify(data.tab_vip as Array);
 			setProperty(StorageConfig.PROPERTY_VIP_VERSION, int(data.version));
-			Storage.getInstance().setProperty(StorageConfig.PROPERTY_VIP, vip);
+			Storage.getInstance().setProperty((MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS), vip);
 		}
 		
 		/**

@@ -14,7 +14,8 @@ package com.ludofactory.mobile.core.test.vip
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
+import com.ludofactory.mobile.core.authentication.MemberManager;
+import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.controls.Accordion;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -207,7 +208,7 @@ package com.ludofactory.mobile.core.test.vip
 			_loader.removeFromParent(true);
 			_loader = null;
 			
-			var temp:Array = JSON.parse( Storage.getInstance().getProperty( StorageConfig.PROPERTY_VIP )[LanguageManager.getInstance().lang] ) as Array;
+			var temp:Array = JSON.parse( Storage.getInstance().getProperty( (MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS) )[LanguageManager.getInstance().lang] ) as Array;
 			_ranksData = [];
 			for(var i:int = 0; i < temp.length; i++)
 				_ranksData.push( new VipData(temp[i]) );
