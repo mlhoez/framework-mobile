@@ -402,7 +402,7 @@ package com.ludofactory.mobile.core.storage
 		
 		/**
 		 * Access the push initialized value. */		
-		public static const PROPERTY_DISPLAY_VIP_CHEQUE:String = "DEFAULT_DISPLAY_VIP_CHEQUE";
+		//public static const PROPERTY_DISPLAY_VIP_CHEQUE:String = "DEFAULT_DISPLAY_VIP_CHEQUE";
 		
 		/**
 		 * Access the sponsor reward value. */		
