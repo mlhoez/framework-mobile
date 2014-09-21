@@ -57,7 +57,7 @@ package com.ludofactory.mobile.navigation.menu
 		{
 			super.initialize();
 			
-			// FIXME Checker la tailel de la tile, et essayer de l'agrandir pour les perfs ? (voir utiliser autre chose)
+			// FIXME Checker la taille de la tile, et essayer de l'agrandir pour les perfs ? (voir utiliser autre chose)
 			
 			_tiledBackground = new TiledImage(AbstractEntryPoint.assets.getTexture("MenuTile"), GlobalConfig.dpiScale);
 			_tiledBackground.touchable = false;
@@ -75,21 +75,41 @@ package com.ludofactory.mobile.navigation.menu
 			_list.isSelectable = false;
 			_list.itemRendererType = MenuItemRenderer;
 			_list.addEventListener(LudoEventType.MENU_ICON_TOUCHED, onMenuIconTouched);
-			_list.dataProvider = new ListCollection(
-				[
-					new MenuItemData( "menu-icon-my-account",    _("Mon Compte"),  ScreenIds.MY_ACCOUNT_SCREEN ),
-					new MenuItemData( "menu-icon-parrainage",    _("Parrainage"),  ScreenIds.SPONSOR_HOME_SCREEN, AbstractEntryPoint.alertData.numSponsorAlerts ),
-					new MenuItemData( "menu-icon-help", 		 _("Aide"),        ScreenIds.HELP_HOME_SCREEN, AbstractEntryPoint.alertData.numCustomerServiceAlerts + AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts ),
-					new MenuItemData( "menu-icon-credit",        _("Crédits"),     ScreenIds.STORE_SCREEN ),
-					new MenuItemData( "menu-icon-store",         _("Cadeaux"),     ScreenIds.BOUTIQUE_HOME ),
-					new MenuItemData( "menu-icon-vip",           _("Rangs VIP"),   ScreenIds.VIP_SCREEN ),
-					new MenuItemData( "menu-icon-my-gifts",      _("Mes gains"),   ScreenIds.MY_GIFTS_SCREEN, AbstractEntryPoint.alertData.numGainAlerts ),
-					new MenuItemData( "menu-icon-highscore",     _("High Scores"), ScreenIds.HIGH_SCORE_HOME_SCREEN ),
-					new MenuItemData( "menu-icon-trophy",        _("Coupes"),      ScreenIds.TROPHY_SCREEN, AbstractEntryPoint.alertData.numTrophiesAlerts ),
-					new MenuItemData( "menu-icon-tournaments",   _("Tournois"),    ScreenIds.PREVIOUS_TOURNAMENTS_SCREEN ),
-					new MenuItemData( "menu-icon-settings",      _("Réglages"),    ScreenIds.SETTINGS_SCREEN ),
-					new MenuItemData( MemberManager.getInstance().isLoggedIn() ? "menu-icon-log-out" : "menu-icon-log-in",   MemberManager.getInstance().isLoggedIn() ? _("Déconnexion") : _("Connexion"),          ScreenIds.LOG_IN_OUT )
-				]);
+            if( MemberManager.getInstance().getGiftsEnabled() )
+            {
+                _list.dataProvider = new ListCollection(
+                    [
+                        new MenuItemData( "menu-icon-my-account",    _("Mon Compte"),  ScreenIds.MY_ACCOUNT_SCREEN ),
+                        new MenuItemData( "menu-icon-parrainage",    _("Parrainage"),  ScreenIds.SPONSOR_HOME_SCREEN, AbstractEntryPoint.alertData.numSponsorAlerts ),
+                        new MenuItemData( "menu-icon-help", 		 _("Aide"),        ScreenIds.HELP_HOME_SCREEN, AbstractEntryPoint.alertData.numCustomerServiceAlerts + AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts ),
+                        new MenuItemData( "menu-icon-credit",        _("Crédits"),     ScreenIds.STORE_SCREEN ),
+                        new MenuItemData( "menu-icon-store",         _("Cadeaux"),     ScreenIds.BOUTIQUE_HOME ),
+                        new MenuItemData( "menu-icon-vip",           _("Rangs VIP"),   ScreenIds.VIP_SCREEN ),
+                        new MenuItemData( "menu-icon-my-gifts",      _("Mes gains"),   ScreenIds.MY_GIFTS_SCREEN, AbstractEntryPoint.alertData.numGainAlerts ),
+                        new MenuItemData( "menu-icon-highscore",     _("High Scores"), ScreenIds.HIGH_SCORE_HOME_SCREEN ),
+                        new MenuItemData( "menu-icon-trophy",        _("Coupes"),      ScreenIds.TROPHY_SCREEN, AbstractEntryPoint.alertData.numTrophiesAlerts ),
+                        new MenuItemData( "menu-icon-tournaments",   _("Tournois"),    ScreenIds.PREVIOUS_TOURNAMENTS_SCREEN ),
+                        new MenuItemData( "menu-icon-settings",      _("Réglages"),    ScreenIds.SETTINGS_SCREEN ),
+                        new MenuItemData( MemberManager.getInstance().isLoggedIn() ? "menu-icon-log-out" : "menu-icon-log-in",   MemberManager.getInstance().isLoggedIn() ? _("Déconnexion") : _("Connexion"),          ScreenIds.LOG_IN_OUT )
+                    ]);
+            }
+            else
+            {
+                _list.dataProvider = new ListCollection(
+                        [
+                            new MenuItemData( "menu-icon-my-account",    _("Mon Compte"),  ScreenIds.MY_ACCOUNT_SCREEN ),
+                            new MenuItemData( "menu-icon-parrainage",    _("Parrainage"),  ScreenIds.SPONSOR_HOME_SCREEN, AbstractEntryPoint.alertData.numSponsorAlerts ),
+                            new MenuItemData( "menu-icon-help", 		 _("Aide"),        ScreenIds.HELP_HOME_SCREEN, AbstractEntryPoint.alertData.numCustomerServiceAlerts + AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts ),
+                            new MenuItemData( "menu-icon-credit",        _("Crédits"),     ScreenIds.STORE_SCREEN ),
+                            new MenuItemData( "menu-icon-store",         _("Cadeaux"),     ScreenIds.BOUTIQUE_HOME ),
+                            new MenuItemData( "menu-icon-vip",           _("Rangs VIP"),   ScreenIds.VIP_SCREEN ),
+                            new MenuItemData( "menu-icon-highscore",     _("High Scores"), ScreenIds.HIGH_SCORE_HOME_SCREEN ),
+                            new MenuItemData( "menu-icon-trophy",        _("Coupes"),      ScreenIds.TROPHY_SCREEN, AbstractEntryPoint.alertData.numTrophiesAlerts ),
+                            new MenuItemData( "menu-icon-tournaments",   _("Tournois"),    ScreenIds.PREVIOUS_TOURNAMENTS_SCREEN ),
+                            new MenuItemData( "menu-icon-settings",      _("Réglages"),    ScreenIds.SETTINGS_SCREEN ),
+                            new MenuItemData( MemberManager.getInstance().isLoggedIn() ? "menu-icon-log-out" : "menu-icon-log-in",   MemberManager.getInstance().isLoggedIn() ? _("Déconnexion") : _("Connexion"),          ScreenIds.LOG_IN_OUT )
+                        ]);
+            }
 			addChild(_list);
 		}
 		
