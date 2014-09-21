@@ -101,7 +101,7 @@ package com.ludofactory.mobile.core.shop
 			
 			_encheresImage = new Image( AbstractEntryPoint.assets.getTexture("EncheresImage") );
 			_encheresImage.touchable = false;
-			_encheresImage.scaleX = _encheresImage.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.2 : 0) * GlobalConfig.dpiScale) : 0);
+			_encheresImage.scaleX = _encheresImage.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.5 : 0) * GlobalConfig.dpiScale) : 0);
 			_encheresImage.alignPivot();
 			_encheresImage.alpha = 0;
 			_encheresImage.rotation = deg2rad(90);
@@ -143,7 +143,7 @@ package com.ludofactory.mobile.core.shop
 			
 			_boutiqueImage = new Image( AbstractEntryPoint.assets.getTexture("BoutiqueImage") );
 			_boutiqueImage.touchable = false;
-			_boutiqueImage.scaleX = _boutiqueImage.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.2 : 0) * GlobalConfig.dpiScale) : 0);
+			_boutiqueImage.scaleX = _boutiqueImage.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.5 : 0) * GlobalConfig.dpiScale) : 0);
 			_boutiqueImage.alignPivot();
 			_boutiqueImage.alpha = 0;
 			_boutiqueImage.rotation = deg2rad(-90);
@@ -185,7 +185,7 @@ package com.ludofactory.mobile.core.shop
 				createBackground();
 				
 				TweenMax.killAll();
-				_encheresImage.scaleX = _encheresImage.scaleY = _boutiqueImage.scaleX = _boutiqueImage.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.2 : 0) * GlobalConfig.dpiScale) : 0);
+				_encheresImage.scaleX = _encheresImage.scaleY = _boutiqueImage.scaleX = _boutiqueImage.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.5 : 0) * GlobalConfig.dpiScale) : 0);
 				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
@@ -194,7 +194,7 @@ package com.ludofactory.mobile.core.shop
 					_boutiqueTitle.x = actualWidth * 0.5;
 					
 					_encheresImage.x = actualWidth * 0.25;
-					_encheresImage.y = _boutiqueImage.y = _glow.y = _buildings.y = this.actualHeight * 0.4;
+					_encheresImage.y = _boutiqueImage.y = _glow.y = _buildings.y = this.actualHeight * 0.38;
 					_boutiqueImage.x = _glow.x = _buildings.x = actualWidth * 0.75;
 					
 					_encheresAccessButton.width = _boutiqueAccessButton.width = actualWidth * 0.35;
@@ -213,7 +213,7 @@ package com.ludofactory.mobile.core.shop
 					
 					_vipInfo.validate();
 					_boutiqueMessage.validate();
-					_vipInfo.y = actualHeight - _vipInfo.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 20);
+					_vipInfo.y = actualHeight - _vipInfo.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 15 : 20);
 					_vipInfo.x = (this.actualWidth - _vipInfo.width) * 0.5;
 				}
 				else
