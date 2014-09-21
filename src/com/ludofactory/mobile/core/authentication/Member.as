@@ -123,6 +123,11 @@ package com.ludofactory.mobile.core.authentication
 		/**
 		 * The country id associated to the pseudo. */		
 		private var _countryId:int = 0;
+
+        /**
+         * Whether it is a player with the gifts enabled.
+         * Default is false so that we don't have problems with Apple. */
+        private var _giftsEnabled:Boolean = false;
 		
 		public function Member() { }
 		
@@ -147,6 +152,7 @@ package com.ludofactory.mobile.core.authentication
 			if( "date_parties_gratuites" in memberData && memberData.date_parties_gratuites != null ) _updateDate = String(memberData.date_parties_gratuites);
 			if( "id_pays_pseudo" in memberData && memberData.id_pays_pseudo != null )                 _countryId = int(memberData.id_pays_pseudo);
 			if( "parties_quotidiennes" in memberData && memberData.parties_quotidiennes != null )     _numFreeGameSessionsTotal = int(memberData.parties_quotidiennes);
+			if( "cadeaux_active" in memberData && memberData.cadeaux_active != null )                 _giftsEnabled = Boolean(memberData.cadeaux_active);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
 		
@@ -223,5 +229,8 @@ package com.ludofactory.mobile.core.authentication
 		
 		public function get tournamentUnlocked():Boolean { return _tournamentUnlocked; }
 		public function set tournamentUnlocked(val:Boolean):void { _tournamentUnlocked = val; }
+
+        public function get giftsEnabled():Boolean { return _giftsEnabled; }
+        public function set giftsEnabled(val:Boolean):void { _giftsEnabled = val; }
 	}
 }
