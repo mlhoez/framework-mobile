@@ -101,7 +101,7 @@ package com.ludofactory.mobile.navigation.menu
                             new MenuItemData( "menu-icon-parrainage",    _("Parrainage"),  ScreenIds.SPONSOR_HOME_SCREEN, AbstractEntryPoint.alertData.numSponsorAlerts ),
                             new MenuItemData( "menu-icon-help", 		 _("Aide"),        ScreenIds.HELP_HOME_SCREEN, AbstractEntryPoint.alertData.numCustomerServiceAlerts + AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts ),
                             new MenuItemData( "menu-icon-credit",        _("Crédits"),     ScreenIds.STORE_SCREEN ),
-                            new MenuItemData( "menu-icon-store",         _("Cadeaux"),     ScreenIds.BOUTIQUE_HOME ),
+                            new MenuItemData( "menu-icon-store",         _("Boutique"),     ScreenIds.BOUTIQUE_HOME ),
                             new MenuItemData( "menu-icon-vip",           _("Rangs VIP"),   ScreenIds.VIP_SCREEN ),
                             new MenuItemData( "menu-icon-highscore",     _("High Scores"), ScreenIds.HIGH_SCORE_HOME_SCREEN ),
                             new MenuItemData( "menu-icon-trophy",        _("Coupes"),      ScreenIds.TROPHY_SCREEN, AbstractEntryPoint.alertData.numTrophiesAlerts ),
