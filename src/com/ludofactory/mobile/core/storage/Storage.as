@@ -166,17 +166,20 @@ package com.ludofactory.mobile.core.storage
 			// parse skip how to win gifts screen value
 			if( result.hasOwnProperty("param_affichage") )
 			{
-				if( result.param_affichage.hasOwnProperty( "afficher_gagner_cadeaux" ) && result.param_affichage.afficher_gagner_cadeaux != null )
-					setProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN, int(result.param_affichage.afficher_gagner_cadeaux) == 1 ? true : false);
+                // FIXME [Cadeaux] à retirer maintenant qu'on gère les joueurs à cadeau ?
+				//if( result.param_affichage.hasOwnProperty( "afficher_gagner_cadeaux" ) && result.param_affichage.afficher_gagner_cadeaux != null )
+				//	setProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN, int(result.param_affichage.afficher_gagner_cadeaux) == 1 ? true : false);
 				
 				if( result.param_affichage.hasOwnProperty( "afficher_publicite" ) && result.param_affichage.afficher_publicite != null )
 					setProperty(StorageConfig.PROPERTY_DISPLAY_ADS, int(result.param_affichage.afficher_publicite) == 1 ? true : false);
-				
-				if( result.param_affichage.hasOwnProperty( "afficher_vip_cheque" ) && result.param_affichage.afficher_vip_cheque != null )
-					setProperty(StorageConfig.PROPERTY_DISPLAY_VIP_CHEQUE, int(result.param_affichage.afficher_vip_cheque) == 1 ? true : false);
-				
-				if( result.param_affichage.hasOwnProperty("afficher_boutique") && result.param_affichage.afficher_boutique != null )
-					setProperty(StorageConfig.PROPERTY_SHOP_ENABLED, int(result.param_affichage.afficher_boutique) == 1 ? true : false);
+
+                // FIXME [Cadeaux] à retirer maintenant qu'on gère les joueurs à cadeau ?
+				//if( result.param_affichage.hasOwnProperty( "afficher_vip_cheque" ) && result.param_affichage.afficher_vip_cheque != null )
+				//	setProperty(StorageConfig.PROPERTY_DISPLAY_VIP_CHEQUE, int(result.param_affichage.afficher_vip_cheque) == 1 ? true : false);
+
+                // FIXME [Cadeaux] à retirer maintenant qu'on gère les joueurs à cadeau ?
+				//if( result.param_affichage.hasOwnProperty("afficher_boutique") && result.param_affichage.afficher_boutique != null )
+				//	setProperty(StorageConfig.PROPERTY_SHOP_ENABLED, int(result.param_affichage.afficher_boutique) == 1 ? true : false);
 			}
 			
 			log("[Storage] Server configuration have been successfully loaded.");
