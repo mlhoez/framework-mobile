@@ -11,7 +11,8 @@ package com.ludofactory.mobile.core.shop.vip
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.authentication.RetryContainer;
+import com.ludofactory.mobile.core.authentication.MemberManager;
+import com.ludofactory.mobile.core.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
@@ -73,8 +74,8 @@ package com.ludofactory.mobile.core.shop.vip
 		{
 			super.initialize();
 			
-			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SHOP_ENABLED) == true )
-			{
+			/*if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SHOP_ENABLED) == true )
+			{*/
 				_message = new Label();
 				_message.text = _("Echangez vos Points contre\nles cadeaux de vos rêves !");
 				addChild(_message);
@@ -112,26 +113,46 @@ package com.ludofactory.mobile.core.shop.vip
 				
 				if( AirNetworkInfo.networkInfo.isConnected() )
 				{
-					_retryContainer.visible = true;
-					Remote.getInstance().getBoutiqueCategories(onGetCategoriesSuccess, onGetCategoriesFailure, onGetCategoriesFailure, 2, advancedOwner.activeScreenID);
+                    if( MemberManager.getInstance().getGiftsEnabled() )
+                    {
+                        _retryContainer.visible = true;
+                        Remote.getInstance().getBoutiqueCategories(onGetCategoriesSuccess, onGetCategoriesFailure, onGetCategoriesFailure, 2, advancedOwner.activeScreenID);
+                    }
+                    else
+                    {
+                        this.advancedOwner.screenData.idCategory = 28;
+                        this.advancedOwner.screenData.categoryName = _("Ludokado");
+                        this.advancedOwner.showScreen( ScreenIds.BOUTIQUE_SUB_CATEGORY_LISTING );
+                    }
 				}
 				else
 				{
 					// default category
 					_retryContainer.visible = false;
 					NativeApplication.nativeApplication.addEventListener(flash.events.Event.ACTIVATE, onActivate, false, 0, true);
-					_list.dataProvider = new ListCollection(
-						[
-							new BoutiqueCategoryData( 26, _("Maison"), "BoutiqueHouseIcon" ),
-							new BoutiqueCategoryData( 23, _("Loisirs"), "BoutiqueLeisureIcon" ),
-							new BoutiqueCategoryData( 24, _("Pour Elle"), "BoutiqueForHerIcon" ),
-							new BoutiqueCategoryData( 8,  _("Vidéo"),  "BoutiqueVideoIcon" ),
-							new BoutiqueCategoryData( 27, _("Jeux Vidéo"), "BoutiqueVideoGamesIcon" ),
-							new BoutiqueCategoryData( 25, _("Image et Son"), "BoutiqueImageAndSoundIcon" ),
-							new BoutiqueCategoryData( 28, _("Ludokado"), "BoutiqueLudokadoIcon" )
-						]);
+                    if( MemberManager.getInstance().getGiftsEnabled() )
+                    {
+                        _list.dataProvider = new ListCollection(
+                                [
+                                    new BoutiqueCategoryData( 26, _("Maison"), "BoutiqueHouseIcon" ),
+                                    new BoutiqueCategoryData( 23, _("Loisirs"), "BoutiqueLeisureIcon" ),
+                                    new BoutiqueCategoryData( 24, _("Pour Elle"), "BoutiqueForHerIcon" ),
+                                    new BoutiqueCategoryData( 8,  _("Vidéo"),  "BoutiqueVideoIcon" ),
+                                    new BoutiqueCategoryData( 27, _("Jeux Vidéo"), "BoutiqueVideoGamesIcon" ),
+                                    new BoutiqueCategoryData( 25, _("Image et Son"), "BoutiqueImageAndSoundIcon" ),
+                                    new BoutiqueCategoryData( 28, _("Ludokado"), "BoutiqueLudokadoIcon" )
+                                ]);
+                    }
+                    else
+                    {
+                        _list.dataProvider = new ListCollection(
+                                [
+                                    new BoutiqueCategoryData( 28, _("Ludokado"), "BoutiqueLudokadoIcon" )
+                                ]);
+                    }
+
 				}
-			}
+			/*}
 			else
 			{
 				_retryContainer = new RetryContainer();
@@ -140,7 +161,7 @@ package com.ludofactory.mobile.core.shop.vip
 				addChild(_retryContainer);
 				_retryContainer.message = _("La boutique est actuellement indisponible.\n\nMerci de vous rendre dans la rubrique « Boutique » du site Ludokado.com pour plus d'informations.");
 				_retryContainer.retryButtonMessage = _("Accéder");
-			}
+			}*/
 			
 		}
 		
@@ -148,8 +169,8 @@ package com.ludofactory.mobile.core.shop.vip
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SHOP_ENABLED) == true )
-				{
+				/*if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SHOP_ENABLED) == true )
+				{*/
 					_message.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 5 : 10) : (AbstractGameInfo.LANDSCAPE ? 15 : 30));
 					_message.width = actualWidth * 0.9;
 					_message.x = (actualWidth - _message.width) * 0.5;
@@ -161,7 +182,7 @@ package com.ludofactory.mobile.core.shop.vip
 					_list.y = _retryContainer.y = _listShadow.y + _listShadow.height;
 					_list.width = actualWidth;
 					_list.height = actualHeight - _listShadow.y - _listShadow.height;
-				}
+				//}
 				
 				_retryContainer.width = actualWidth;
 				_retryContainer.height = actualHeight - (_list ? _list.y:0);
