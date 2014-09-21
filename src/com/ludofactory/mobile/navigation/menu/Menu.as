@@ -262,7 +262,7 @@ package com.ludofactory.mobile.navigation.menu
 		
 		private function onGetGifts(result:Object = null):void
 		{
-			if( result && result.code == 3 && Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN) )
+			if( result && result.code == 3 /*&& Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN)*/ /* Not needed anymore */ )
 			{
 				// no gifts won yet
 				_screenNavigator.showScreen( ScreenIds.HOW_TO_WIN_GIFTS_SCREEN );
