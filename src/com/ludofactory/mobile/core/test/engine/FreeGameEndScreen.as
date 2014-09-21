@@ -248,7 +248,7 @@ package com.ludofactory.mobile.core.test.engine
 			addChild(_cumulatedPointsContainer);
 			
 			_cumulatedPointsTitle = new Label();
-			_cumulatedPointsTitle.text = _("Points");
+			_cumulatedPointsTitle.text = _("Points cumulés : ");
 			_cumulatedPointsContainer.addChild(_cumulatedPointsTitle);
 			_cumulatedPointsTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 54), Theme.COLOR_WHITE);
 			_cumulatedPointsTitle.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
