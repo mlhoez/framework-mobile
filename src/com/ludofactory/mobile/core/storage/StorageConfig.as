@@ -230,7 +230,7 @@ package com.ludofactory.mobile.core.storage
 		 * gifts screen.</strong><br />
 		 * Whether we need to skip the "how to win gifts" screen.
 		 */		
-		public static const DEFAULT_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN:Boolean = false;
+		//public static const DEFAULT_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN:Boolean = false; // Not needed anymore
 		
 		/**
 		 * 
@@ -394,7 +394,7 @@ package com.ludofactory.mobile.core.storage
 		
 		/**
 		 * Access the push initialized value. */		
-		public static const PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN:String = "DEFAULT_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN";
+		//public static const PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN:String = "DEFAULT_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN"; Not needed anymore
 		
 		/**
 		 * Access the push initialized value. */		
