@@ -144,7 +144,7 @@ package com.ludofactory.mobile.core.test
 				var rightGap:Number;
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_gifts.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.7);
+					_gifts.width = actualWidth * (GlobalConfig.isPhone ? 0.5 : 0.7);
 					_gifts.validate();
 					_gifts.alignPivot(HAlign.CENTER, VAlign.BOTTOM);
 					_gifts.y = this.actualHeight * 0.95;
