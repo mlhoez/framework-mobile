@@ -372,7 +372,8 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 					_rankTitleLabel.validate();
 					
 					_conditionLabel.y = _iconsYPosition + (_iconHeight * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
-					_conditionLabel.width = actualWidth * 0.5;
+					_conditionLabel.x = actualWidth * 0.05;
+					_conditionLabel.width = actualWidth * 0.4;
 					_conditionLabel.validate();
 					
 					_topShadow.height = actualHeight;
