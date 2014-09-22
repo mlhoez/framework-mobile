@@ -14,8 +14,7 @@ package com.ludofactory.mobile.core.test.vip
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-import com.ludofactory.mobile.core.authentication.MemberManager;
-import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.controls.Accordion;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -28,14 +27,15 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
+
+	import feathers.controls.Label;
+
 	import flash.geom.Point;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-	
-	import feathers.controls.Label;
-	
+
 	import starling.core.Starling;
+	import starling.display.Button;
 	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.MovieClip;
@@ -48,7 +48,7 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 	import starling.textures.Texture;
 	import starling.utils.deg2rad;
 	import starling.utils.formatString;
-	
+
 	public class VipScreen extends AdvancedScreen
 	{
 		/**
@@ -107,7 +107,7 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 		
 		/**
 		 * The current index. */		
-		private var _currentIndex:Number = 0;
+		public var _currentIndex:Number = 0;
 		
 		private var _isDragging:Boolean = false;
 		
@@ -169,8 +169,10 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 		 * All the privileges.
 		 * This is an array containing vectors of VipAccordionItems. */		
 		private var _privileges:Array;
-		
-		
+
+		private var _leftArrowButton:Button;
+		private var _rightArrowButton:Button;
+
 		
 		public function VipScreen()
 		{
@@ -348,6 +350,16 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 			_numRanks = _rankImages.length;
 			
 			_isContentInitialized = true;
+
+			_leftArrowButton = new Button(AbstractEntryPoint.assets.getTexture("vip-back-icon"));
+			_leftArrowButton.scaleX = _leftArrowButton.scaleY = GlobalConfig.dpiScale;
+			_leftArrowButton.addEventListener(Event.TRIGGERED, onTouchBack);
+			addChild(_leftArrowButton);
+
+			_rightArrowButton = new Button(AbstractEntryPoint.assets.getTexture("vip-forward-icon"));
+			_rightArrowButton.scaleX = _rightArrowButton.scaleY = GlobalConfig.dpiScale;
+			_rightArrowButton.addEventListener(Event.TRIGGERED, onTouchForward);
+			addChild(_rightArrowButton);
 			
 			invalidate( INVALIDATION_FLAG_SIZE );
 			invalidate( INVALIDATION_FLAG_RANK );
@@ -378,6 +390,12 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 					
 					_topShadow.height = actualHeight;
 					_topShadow.x = actualWidth * 0.5 - _topShadow.width;
+
+					_leftArrowButton.x = scaleAndRoundToDpi(5);
+					_leftArrowButton.y = actualHeight - _leftArrowButton.height - scaleAndRoundToDpi(5);
+
+					_rightArrowButton.x = actualWidth * 0.5 - _rightArrowButton.width - scaleAndRoundToDpi(5);
+					_rightArrowButton.y = actualHeight - _rightArrowButton.height - scaleAndRoundToDpi(5);
 				}
 				else
 				{
@@ -393,6 +411,12 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 					_conditionLabel.validate();
 					
 					_topShadow.width = actualWidth;
+
+					_leftArrowButton.x = scaleAndRoundToDpi(5);
+					_leftArrowButton.y = actualHeight - _leftArrowButton.height - scaleAndRoundToDpi(5);
+
+					_rightArrowButton.x = actualWidth - _rightArrowButton.width - scaleAndRoundToDpi(5);
+					_rightArrowButton.y = actualHeight - _rightArrowButton.height - scaleAndRoundToDpi(5);
 				}
 				
 				if( _reloadButton )
@@ -422,7 +446,7 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_defaultRankInformationLabel.width = this.actualWidth * 0.45;
+					_defaultRankInformationLabel.width = this.actualWidth * 0.4;
 					_defaultRankInformationLabel.x = actualWidth * 0.55;
 					_defaultRankInformationLabel.validate();
 				}
@@ -592,14 +616,14 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 					if(_isDragging)
 					{
 						validateNow();
-						finishTouchByMotion(point.x);
+						finishTouchByMotion(/*point.x*/);
 						_isDragging = false;
 					}
 				}
 			}
 		}
 		
-		private function finishTouchByMotion(endX:Number):void
+		private function finishTouchByMotion(/*endX:Number*/):void
 		{
 			_targetIndex = Math.round(_currentIndex);
 			
@@ -772,6 +796,38 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 		{
 			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
+
+		
+		private var _isMovingBack:Boolean = false;
+		private var _isMovingForward:Boolean = false;
+		
+		private function onTouchBack(event:Event):void
+		{
+			//if(_currentIndex < -0.5)
+			//	_currentIndex = -0.5;
+			
+			if( !_isMovingBack )
+			{
+				_isMovingBack = true;
+				
+				_targetIndex = ( (_currentIndex - 1) < -0.5 ? 0 : int((_currentIndex - 1)) );
+				TweenMax.to(this, 0.15, { _currentIndex:( (_currentIndex - 1) < -0.5 ? 0 : int((_currentIndex - 1)) ), onComplete:function():void{ _isMovingBack = false; displayRank(); } })
+			}
+		}
+
+		private function onTouchForward(event:Event):void
+		{
+			//if(_currentIndex > ((_numRanks - 1) + 0.5))
+			//	_currentIndex = (_numRanks - 1) + 0.5;
+
+			if( !_isMovingForward )
+			{
+				_isMovingForward = true;
+				
+				_targetIndex = ( (_currentIndex + 1) > ((_numRanks - 1) + 0.5) ? (_numRanks - 1) : int((_currentIndex + 1)) );
+				TweenMax.to(this, 0.15, { _currentIndex:( (_currentIndex + 1) > ((_numRanks - 1) + 0.5) ? (_numRanks - 1) : int((_currentIndex + 1)) ), onComplete:function():void{ _isMovingForward = false; displayRank(); } })
+			}
+		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
@@ -852,6 +908,14 @@ import com.ludofactory.mobile.core.authentication.MemberManager;
 					_resendMailButton.removeFromParent(true);
 					_resendMailButton = null;
 				}
+
+				_leftArrowButton.scaleX = _leftArrowButton.scaleY = GlobalConfig.dpiScale;
+				_leftArrowButton.removeFromParent(true);
+				_leftArrowButton = null;
+
+				_rightArrowButton.addEventListener(Event.TRIGGERED, onTouchForward);
+				_rightArrowButton.removeFromParent(true);
+				_rightArrowButton = null;
 			}
 			
 			super.dispose();

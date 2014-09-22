@@ -94,7 +94,7 @@ package com.ludofactory.mobile.core.controls
 					}
 				}
 			}
-            
+
             // go back to the top of the list
             scrollToPosition(0, 0, 0.5);
 		}
