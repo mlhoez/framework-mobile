@@ -8,6 +8,7 @@ package com.ludofactory.mobile.core.scoring
 {
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -84,7 +85,10 @@ package com.ludofactory.mobile.core.scoring
 			_mainContainer.addChild(_titleContainer);
 			
 			_title = new Label();
-			_title.text = _("Les parties en Tournoi vous permettent d’affronter d’autres joueurs pendant une durée déterminée. Cumulez des étoiles et gagnez le cadeau de vos rêves en fonction de votre classement final.\n\nUne partie en tournoi vous rapporte + ou - d'Etoiles en fonction de votre score.");
+			if( MemberManager.getInstance().getGiftsEnabled() )
+				_title.text = _("Les parties en Tournoi vous permettent d’affronter d’autres joueurs pendant une durée déterminée. Cumulez des étoiles et gagnez le cadeau de vos rêves en fonction de votre classement final.\n\nUne partie en tournoi vous rapporte + ou - d'Etoiles en fonction de votre score.");
+			else
+				_title.text = _("Les parties en Tournoi vous permettent d’affronter d’autres joueurs pendant une durée déterminée. Cumulez des étoiles et gagnez le lot de vos rêves en fonction de votre classement final.\n\nUne partie en tournoi vous rapporte + ou - d'Etoiles en fonction de votre score.");
 			_titleContainer.addChild( _title );
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, false, true, null, null, null, TextFormatAlign.CENTER);
 			

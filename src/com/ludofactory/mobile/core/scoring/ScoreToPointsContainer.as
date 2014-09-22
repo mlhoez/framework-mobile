@@ -16,10 +16,7 @@ package com.ludofactory.mobile.core.scoring
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
+
 	import feathers.controls.Label;
 	import feathers.controls.LayoutGroup;
 	import feathers.controls.List;
@@ -27,11 +24,14 @@ package com.ludofactory.mobile.core.scoring
 	import feathers.controls.Scroller;
 	import feathers.data.ListCollection;
 	import feathers.layout.HorizontalLayout;
-	
+
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
+
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.utils.formatString;
-	
+
 	public class ScoreToPointsContainer extends ScrollContainer
 	{
 		/**
@@ -109,10 +109,13 @@ package com.ludofactory.mobile.core.scoring
 			_mainContainer.addChild(_titleContainer);
 			
 			_title = new Label();
-			_title.text = _("Les parties Classiques vous permettent de cumuler des points que vous pourrez ensuite convertir en cadeaux ou bien utiliser pour jouer en Tournoi.\n\nUne partie vous rapporte + ou - de Points en fonction de votre score et de votre mise.");
+			if( MemberManager.getInstance().getGiftsEnabled() )
+				_title.text = _("Les parties Classiques vous permettent de cumuler des points que vous pourrez ensuite convertir en cadeaux ou bien utiliser pour jouer en Tournoi.\n\nUne partie vous rapporte + ou - de Points en fonction de votre score et de votre mise.");
+			else
+				_title.text = _("Les parties Classiques vous permettent de cumuler des points que vous pourrez ensuite convertir en crédits ou bien utiliser pour jouer en Tournoi.\n\nUne partie vous rapporte + ou - de Points en fonction de votre score et de votre mise.");
 			_titleContainer.addChild( _title );
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, false, true, null, null, null, TextFormatAlign.CENTER);
-			
+
 			_headerContainer = new LayoutGroup();
 			_mainContainer.addChild(_headerContainer);
 			
