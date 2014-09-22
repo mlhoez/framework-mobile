@@ -18,6 +18,7 @@ package com.ludofactory.mobile.core.test.news
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import flash.text.TextFormat;
@@ -111,7 +112,9 @@ package com.ludofactory.mobile.core.test.news
 			_mainCcontainer.addChild(_gamesList);
 			
 			_copyrightLabel = new Label();
-			_copyrightLabel.text = formatString(_("Ludokado site de la société LudoFactory\nCopyright {0} ADThink Media"), new Date().fullYear) + "\n\n" + _("Tous les jeux gratuits sans obligation d'achat présents dans cette application sont organisés par la société LudoFactory. La société Apple Inc. n'est ni partenaire, ni sponsor, ni impliquée dans l'organisation de ces jeux. Pour plus d'informations, voir le règlement complet dans l'application.");
+			_copyrightLabel.text = formatString(_("Ludokado site de la société LudoFactory\nCopyright {0} ADThink Media"), new Date().fullYear) + "\n\n"
+					+ (GlobalConfig.ios ? _("Tous les jeux gratuits sans obligation d'achat présents dans cette application sont organisés par la société LudoFactory. La société Apple Inc. n'est ni partenaire, ni sponsor, ni impliquée dans l'organisation de ces jeux. Pour plus d'informations, voir le règlement complet dans l'application.")
+					: _("Tous les jeux gratuits sans obligation d'achat présents dans cette application sont organisés par la société LudoFactory. Pour plus d'informations, voir le règlement complet dans l'application.") );
 			_mainCcontainer.addChild(_copyrightLabel);
 			_copyrightLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(24), Theme.COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
 			
