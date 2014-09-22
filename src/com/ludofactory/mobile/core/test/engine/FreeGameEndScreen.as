@@ -20,6 +20,8 @@ package com.ludofactory.mobile.core.test.engine
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -313,7 +315,7 @@ package com.ludofactory.mobile.core.test.engine
 				{
 					// Logged in content
 					
-					_convertShop = new FreeGameEndElement("convert-shop-icon", _("Convertir mes Points en\nCadeaux dans la boutique"));
+					_convertShop = new FreeGameEndElement("convert-shop-icon", (MemberManager.getInstance().getGiftsEnabled() ? _("Convertir mes Points en\nCadeaux dans la boutique") : _("Convertir mes Points en\nCrédits dans la boutique")) ) ;
 					_convertShop.alpha = 0;
 					_convertShop.visible = false;
 					_convertShop.addEventListener(TouchEvent.TOUCH, onGoShop);
@@ -343,7 +345,7 @@ package com.ludofactory.mobile.core.test.engine
 					_convertContainer.addChild(_convertIcon);
 					
 					_convertLabel = new Label();
-					_convertLabel.text = _("Créez votre compte pour\nconvertir vos Points en Cadeaux !");
+					_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte pour\nconvertir vos Points en Cadeaux !") : _("Créez votre compte pour\nconvertir vos Points !");
 					_convertContainer.addChild(_convertLabel);
 					_convertLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 38), Theme.COLOR_WHITE, true, false, null, null, null, TextFormatAlign.CENTER);
 				}
