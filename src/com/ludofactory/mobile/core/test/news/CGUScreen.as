@@ -15,14 +15,14 @@ package com.ludofactory.mobile.core.test.news
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	
+
 	import feathers.controls.ScrollText;
-	
+
+	import flash.text.TextFormat;
+
 	import starling.core.Starling;
 	import starling.display.MovieClip;
-	
+
 	public class CGUScreen extends AdvancedScreen
 	{
 		private var _scrollText:ScrollText;

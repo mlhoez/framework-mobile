@@ -15,6 +15,7 @@ package com.ludofactory.mobile.core.test.home.summary
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.GameSessionTimer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.push.GameSession;
@@ -99,21 +100,21 @@ package com.ludofactory.mobile.core.test.home.summary
 				{
 					_backgroundTextureName = "summary-green-container";
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-free" : "summary-icon-free-hd";
-					_calloutLabel.text = formatString(_("Vos parties gratuites ({0} par jour)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+					//_calloutLabel.text = formatString(_("Vos parties gratuites ({0} par jour)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 					break;
 				}
 				case GameSession.PRICE_CREDIT:
 				{
 					_backgroundTextureName = "summary-yellow-container";
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-credits" : "summary-icon-credits-hd";
-					_calloutLabel.text = _("Vos Crédits de jeu");
+					//_calloutLabel.text = _("Vos Crédits de jeu");
 					break;
 				}
 				case GameSession.PRICE_POINT:
 				{
 					_backgroundTextureName = "summary-blue-container";
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-points" : "summary-icon-points-hd";
-					_calloutLabel.text = _("Vos Points à convertir en Cadeaux");
+					//_calloutLabel.text = _("Vos Points à convertir en Cadeaux");
 					break;
 				}
 			}
@@ -291,9 +292,9 @@ package com.ludofactory.mobile.core.test.home.summary
 						case GameSession.PRICE_POINT:
 						{
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
-								_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? _("Vos Points à convertir en Cadeaux") : _("Obtenez 10 parties gratuites par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+								_calloutLabel.text = formatString(_("Obtenez 10 parties gratuites par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 							else
-								_calloutLabel.text = _("Vos Points à convertir en Cadeaux");
+								_calloutLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Vos Points à convertir en Cadeaux") : _("Vos Points à convertir en Crédits");
 							break;
 						}
 					}
