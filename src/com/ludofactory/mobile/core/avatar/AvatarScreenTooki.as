@@ -6,21 +6,21 @@ Created : 23 mai 2014
 */
 package com.ludofactory.mobile.core.avatar
 {
+	import com.jirbo.airadc.AirAdColony;
 	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.HeartBeat;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	
 	import flash.events.Event;
+	import flash.events.StatusEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.utils.ByteArray;
 	
 	import dragonBones.Armature;
-	import dragonBones.Bone;
 	import dragonBones.animation.WorldClock;
 	import dragonBones.factorys.StarlingFactory;
 	
@@ -34,24 +34,35 @@ package com.ludofactory.mobile.core.avatar
 	
 	/**
 	 * Avatar Screen
+	 * 
+	 * Référnce :
+	 * 
+	 * To add another DisplayObject to an existing Bone :
+	 * 
+	 * var horseHead:Bone = _armature.getBone("horseHead");
+	 * var exhaust:PDParticleSystem = new PDParticleSystem(new XML(new ParticleCFG()), Texture.fromBitmap(new ParticleImage()));
+	 * var particle:Slot = new Slot(new StarlingDisplayBridge());
+	 * particle.fixedRotation = true;
+	 * particle.display = exhaust;
+	 * particle.origin.x = horseEye.global.x;
+	 * particle.origin.y = horseEye.global.y;
+	 * particle.zOrder = 100;
+	 * horseHead.addChild(particle);
+	 * 
+	 * childArmature.animation.gotoAndPlay...
+	 * childArmature.animation.getBone...
 	 */	
-	public class AvatarScreen extends AdvancedScreen
+	public class AvatarScreenTooki extends AdvancedScreen
 	{
-		private var _animList:Array = ["anim_idle", "anim_walk", "anim_smash", "anim_throw", "anim_death"];
-		private var _animList2:Array = ["anim_idle", "anim_walk", "anim_eat", "anim_pop", "anim_death"];
-		private var _animListImp:Array = ["anim_land", "anim_walk", "anim_eat", "anim_thrown", "anim_death"];
-		private var _animListDolph:Array = ["anim_idle", "anim_walkdolphin", "anim_walk", "anim_jumpinpool", "anim_ride", "anim_dolphinjump", "anim_eat", "anim_swim", "anim_death"];
-		private var _animListPole:Array = ["anim_walk", "anim_death", "anim_eat", "anim_idle", "anim_run", "anim_jump"];
+		private var _animList:Array = ["base", "anime1", "anime2"];
 		private var _currentIndex:int = 0;
-		private var _currentIndexDolph:int = 0;
-		private var _currentIndexPole:int = 0;
 		private var _switchButton:Button;
 		private var _switchWeaponButton:Button;
 		
-		private var _weapons:Array = ["Zombie_gargantuar_folder/Zombie_gargantuar_telephonepole", "Zombie_gargantuar_folder/weapon1", "Zombie_gargantuar_folder/weapon2", "Zombie_gargantuar_folder/weapon3"];
+		private var _weapons:Array = ["clips/accessoire0", "clips/accessoire1"];
 		private var _weaponIndex:int= 0;
 		
-		public function AvatarScreen()
+		public function AvatarScreenTooki()
 		{
 			super();
 			
@@ -76,7 +87,35 @@ package com.ludofactory.mobile.core.avatar
 			_switchWeaponButton.label = _("Changer arme");
 			_switchWeaponButton.addEventListener(starling.events.Event.TRIGGERED, onSwitchWeapon);
 			addChild(_switchWeaponButton);
+			
+			
+			/*_adColony = new AirAdColony();
+			if (_adColony.isSupported())
+			{
+				_adColony.adcContext.addEventListener(StatusEvent.STATUS, handleAdColonyEvent);
+				if (_adColony.is_iOS)
+				{
+					cur_app_id = ios_app_id;
+					cur_video_zone = ios_video_zone;
+					cur_v4vc_zone = ios_v4vc_zone;
+				}
+				else
+				{
+					cur_app_id = android_app_id;
+					cur_video_zone = android_video_zone;
+					cur_v4vc_zone = android_v4vc_zone;
+				}
+				AdColony.configure("1.0",cur_app_id,cur_video_zone,cur_v4vc_zone);
+			}*/
 		}
+		
+		private function handleAdColonyEvent(event:StatusEvent):void
+		{
+			
+		}
+		
+		
+		private var _adColony:AirAdColony;
 		
 		override protected function draw():void
 		{
@@ -100,10 +139,6 @@ package com.ludofactory.mobile.core.avatar
 		
 		private var _factory:StarlingFactory;
 		private var _armature:Armature;
-		private var _armature2:Armature;
-		private var _armatureImp:Armature;
-		private var _armatureDolph:Armature;
-		private var _armaturePole:Armature;
 		
 		private function createAvatar():void
 		{
@@ -120,77 +155,43 @@ package com.ludofactory.mobile.core.avatar
 			//onComplete();
 			
 			// v2
-			_factory.scaleForTexture = GlobalConfig.dpiScale;  // = uniquement avec un swf mergé
+			_factory.scaleForTexture = GlobalConfig.isPhone ? GlobalConfig.dpiScale * 2 : GlobalConfig.dpiScale * 4;  // = uniquement avec un swf mergé
 			var myFileStream:FileStream = new FileStream();
-			myFileStream.open(File.applicationDirectory.resolvePath("assets/test/Zombie.dbswf"), FileMode.READ);
+			myFileStream.open(File.applicationDirectory.resolvePath("assets/test/Tooki.dbswf"), FileMode.READ);
 			var file_byte:ByteArray = new ByteArray();
 			myFileStream.readBytes(file_byte, 0, myFileStream.bytesAvailable);
-			_factory.parseData(file_byte);
+			_factory.parseData(file_byte, "Tooki");
 			_factory.addEventListener(flash.events.Event.COMPLETE, onComplete);
 		}
 		
 		private function onComplete(event:flash.events.Event = null):void
 		{
-			_armature = _factory.buildArmature("Zombie_gargantuar", null, null, "Zombie");
-			_armature2 = _factory.buildArmature("Zombie_jackbox", null, null, "Zombie");
-			_armatureImp = _factory.buildArmature("Zombie_imp", null, null, "Zombie");
-			_armatureDolph = _factory.buildArmature("Zombie_dolphinrider", null, null, "Zombie");
-			_armaturePole = _factory.buildArmature("Zombie_polevaulter", null, null, "Zombie");
+			_armature = _factory.buildArmature("tooki", null, null, "Tooki");
 			// 1 = name of the armature = movieclip containing animations in Flash Pro
 			
-			_armature.display.scaleX = _armature.display.scaleY = GlobalConfig.dpiScale;
-			_armature2.display.scaleX = _armature2.display.scaleY = GlobalConfig.dpiScale;
-			_armatureImp.display.scaleX = _armatureImp.display.scaleY = GlobalConfig.dpiScale;
-			_armaturePole.display.scaleX = _armaturePole.display.scaleY = GlobalConfig.dpiScale;
-			_armatureDolph.display.scaleX = _armatureDolph.display.scaleY = GlobalConfig.dpiScale;
+			
+			_armature.display.scaleX = _armature.display.scaleY = GlobalConfig.isPhone ? GlobalConfig.dpiScale * 2 : GlobalConfig.dpiScale * 4;
 			
 			addChild(_armature.display as Sprite);
-			addChild(_armature2.display as Sprite);
-			addChild(_armatureImp.display as Sprite);
-			addChild(_armatureDolph.display as Sprite);
-			addChild(_armaturePole.display as Sprite);
 			
-			_armature.display.x = GlobalConfig.stageWidth * 0.85;
-			_armature.display.y = (actualHeight) * 0.15;
-			
-			_armature2.display.x = GlobalConfig.stageWidth * 0.85;
-			_armature2.display.y = (actualHeight) * 0.3;
-			
-			_armatureImp.display.x = GlobalConfig.stageWidth * 0.85;
-			_armatureImp.display.y = (actualHeight) * 0.45;
-			
-			_armatureDolph.display.x = GlobalConfig.stageWidth * 0.85;
-			_armatureDolph.display.y = (actualHeight) * 0.60;
-			
-			_armaturePole.display.x = GlobalConfig.stageWidth * 0.85;
-			_armaturePole.display.y = (actualHeight) * 0.75;
+			_armature.display.x = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.5 : 0.35);
+			_armature.display.y = (actualHeight) * (GlobalConfig.isPhone ? 0.6 : 0.7);
 			
 			WorldClock.clock.add(_armature);
-			WorldClock.clock.add(_armature2);
-			WorldClock.clock.add(_armatureImp);
-			WorldClock.clock.add(_armatureDolph);
-			WorldClock.clock.add(_armaturePole);
 			_armature.animation.gotoAndPlay(_animList[_currentIndex]);
-			_armature2.animation.gotoAndPlay(_animList2[_currentIndex]);
-			_armatureImp.animation.gotoAndPlay(_animListImp[_currentIndex]);
-			_armatureDolph.animation.gotoAndPlay(_animListDolph[_currentIndexDolph]);
-			_armaturePole.animation.gotoAndPlay(_animListPole[_currentIndexPole]);
-			_armature.animation.timeScale = 0.85;
-			_armature2.animation.timeScale = 0.75;
-			_armatureImp.animation.timeScale = 0.75;
-			_armatureDolph.animation.timeScale = 0.75;
-			_armaturePole.animation.timeScale = 0.75;
+			_armature.animation.timeScale = 0.65;
 			
 			(_armature.display as Sprite).addChild( new Quad(5, 5, 0xff0000) );
-			(_armature2.display as Sprite).addChild( new Quad(5, 5, 0xff0000) );
-			(_armatureImp.display as Sprite).addChild( new Quad(5, 5, 0xff0000) );
-			(_armatureDolph.display as Sprite).addChild( new Quad(5, 5, 0xff0000) );
 			
 			HeartBeat.registerFunction(updateAvatar);
 			
+			
+			
+			
+			
 			//var bone:Vector.<Bone> = (_armature.getBone("telephonepole") as Bone).armature.getBones();
-			var bone:Bone = _armature.getBone("telephonepole");
-			log("lol");
+			//var bone:Bone = _armature.getBone("telephonepole");
+			//log("lol");
 			
 			//_armature.getBone("telephonepole").display = (new Quad(10,10,0x00ff00));
 			
@@ -234,9 +235,9 @@ package com.ludofactory.mobile.core.avatar
 			if( _weaponIndex >= _weapons.length )
 				_weaponIndex = 0;
 			
-			if( _armature.getBone("telephonepole").display )
-				_armature.getBone("telephonepole").display.dispose();
-			_armature.getBone("telephonepole").display = _factory.getTextureDisplay(_weapons[_weaponIndex], "Zombie");
+			if( _armature.getBone("accessoire").display )
+				_armature.getBone("accessoire").display.dispose();
+			_armature.getBone("accessoire").display = _factory.getTextureDisplay(_weapons[_weaponIndex], "Tooki");
 		}
 		
 		/**
@@ -245,19 +246,9 @@ package com.ludofactory.mobile.core.avatar
 		private function onSwitch(event:starling.events.Event):void
 		{
 			_currentIndex++;
-			_currentIndexDolph++;
-			_currentIndexPole++;
 			if( _currentIndex > _animList.length - 1 )
 				_currentIndex = 0;
-			if( _currentIndexDolph > _animListDolph.length - 1 )
-				_currentIndexDolph = 0;
-			if( _currentIndexPole > _animListPole.length - 1 )
-				_currentIndexPole = 0;
 			_armature.animation.gotoAndPlay(_animList[_currentIndex]);
-			_armature2.animation.gotoAndPlay(_animList2[_currentIndex]);
-			_armatureImp.animation.gotoAndPlay(_animListImp[_currentIndex]);
-			_armatureDolph.animation.gotoAndPlay(_animListDolph[_currentIndexDolph]);
-			_armaturePole.animation.gotoAndPlay(_animListPole[_currentIndexPole]);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
