@@ -6,6 +6,7 @@ Created : 31 août 2013
 */
 package com.ludofactory.mobile.core
 {
+
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
@@ -31,17 +32,17 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.test.push.PushType;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.milkmangames.nativeextensions.ios.IAdBannerAlignment;
-	
+
+	import feathers.controls.Button;
+
 	import flash.events.Event;
 	import flash.filesystem.File;
-	
-	import feathers.controls.Button;
-	
+
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.events.Event;
-	
+
 	/**
 	 * AbstractGame
 	 */	
@@ -214,7 +215,8 @@ package com.ludofactory.mobile.core
 			addChild(_loader);
 			
 			var basePath:String = File.applicationDirectory.resolvePath( GlobalConfig.isPhone ? "assets/game/sd/" : "assets/game/hd/").url;
-			AbstractEntryPoint.assets.enqueue( basePath + "/game.atf" );
+			log("[AbstractGame] WARNING !!! THE GAME USES PNG ATLASES INSTEAD OF ATF !");
+			AbstractEntryPoint.assets.enqueue( basePath + "/game.atf" ); // FIXME Remettre .atf après
 			AbstractEntryPoint.assets.enqueue( basePath + "/game.xml" );
 			AbstractEntryPoint.assets.loadQueue( function onLoading(ratio:Number):void{ if(ratio == 1) initializeContent(); });
 		}
@@ -245,7 +247,7 @@ package com.ludofactory.mobile.core
 			_playOverlay.height = GlobalConfig.stageHeight;
 			addChild(_playOverlay);
 			
-			_playButton = new feathers.controls.Button();
+			_playButton = new Button();
 			_playButton.styleName = Theme.BUTTON_SPECIAL_BIGGER;
 			_playButton.label = _("Commencer");
 			_playButton.addEventListener(starling.events.Event.TRIGGERED, onPlay);
@@ -357,7 +359,7 @@ package com.ludofactory.mobile.core
 				GameCenterManager.reportLeaderboardScore(AbstractGameInfo.LEADERBOARD_HIGHSCORE, _gameSession.score);
 				
 				// Try to directly push this game session
-				if( MemberManager.getInstance().isLoggedIn() &&  AirNetworkInfo.networkInfo.isConnected() )
+				if( MemberManager.getInstance().isLoggedIn() && AirNetworkInfo.networkInfo.isConnected() )
 				{
 					_gameSession.connected = true;
 					Remote.getInstance().pushGame(_gameSession, onGamePushSuccess, onGamePushFailure, onGamePushFailure, 1);
