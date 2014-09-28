@@ -171,7 +171,7 @@ package com.ludofactory.mobile.core.storage
 				//	setProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN, int(result.param_affichage.afficher_gagner_cadeaux) == 1 ? true : false);
 				
 				if( result.param_affichage.hasOwnProperty( "afficher_publicite" ) && result.param_affichage.afficher_publicite != null )
-					setProperty(StorageConfig.PROPERTY_DISPLAY_ADS, int(result.param_affichage.afficher_publicite) == 1 ? true : false);
+					setProperty(StorageConfig.PROPERTY_DISPLAY_ADS, int(result.param_affichage.afficher_publicite) == 1);
 
                 // FIXME [Cadeaux] à retirer maintenant qu'on gère les joueurs à cadeau ?
 				//if( result.param_affichage.hasOwnProperty( "afficher_vip_cheque" ) && result.param_affichage.afficher_vip_cheque != null )
