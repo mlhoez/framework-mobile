@@ -121,6 +121,7 @@ package com.ludofactory.mobile.core.test.home.summary
 			
 			const textures:Scale9Textures = new Scale9Textures( AbstractEntryPoint.assets.getTexture( _backgroundTextureName ), new Rectangle(18, 18, 14, 14) );
 			_background = new Scale9Image( textures, GlobalConfig.dpiScale);
+			_background.useSeparateBatch = false;
 			addChild( _background );
 			textures.texture.dispose();
 			

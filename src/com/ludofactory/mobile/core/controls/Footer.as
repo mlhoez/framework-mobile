@@ -108,6 +108,7 @@ package com.ludofactory.mobile.core.controls
 			_backgroundImage = new Scale9Image( new Scale9Textures(AbstractEntryPoint.assets.getTexture("footer-skin"), new Rectangle(140, 54, 10, 10)), GlobalConfig.dpiScale );
 			_backgroundImage.touchable = false;
 			_backgroundImage.blendMode = BlendMode.NONE;
+			_backgroundImage.useSeparateBatch = false;
 			addChild(_backgroundImage);
 			
 			_backIcon = new Image( AbstractEntryPoint.assets.getTexture("footer-back-icon") );
@@ -274,7 +275,7 @@ package com.ludofactory.mobile.core.controls
 		
 		public function displayNewsIcon(val:Boolean, isMainMenu:Boolean = false):void
 		{
-			_newsButton.visible = val ? true:false;
+			_newsButton.visible = val;
 			_backButton.visible = !_newsButton.visible;
 			TweenMax.killTweensOf(_newsIcon);
 			if( _isBackInfoHelpDisplaying )

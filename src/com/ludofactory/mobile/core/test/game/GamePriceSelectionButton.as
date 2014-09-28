@@ -51,7 +51,7 @@ package com.ludofactory.mobile.core.test.game
 			_container = new LayoutGroup();
 			addChild(_container);
 			
-			_container.addChild(_backgroundSkin)
+			_container.addChild(_backgroundSkin);
 			_container.addChild(_backgroundDisabledSkin);
 			
 			addEventListener(TouchEvent.TOUCH, button_touchHandler);

@@ -61,6 +61,7 @@ package com.ludofactory.mobile.navigation.menu
 			
 			_tiledBackground = new TiledImage(AbstractEntryPoint.assets.getTexture("MenuTile"), GlobalConfig.dpiScale);
 			_tiledBackground.touchable = false;
+			_tiledBackground.useSeparateBatch = false;
 			addChild(_tiledBackground);
 			
 			const listLayout:TiledRowsLayout = new  TiledRowsLayout();
