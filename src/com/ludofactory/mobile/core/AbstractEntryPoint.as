@@ -34,6 +34,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.shop.BoutiqueHomeScreen;
 	import com.ludofactory.mobile.core.shop.bid.BidHomeScreen;
@@ -83,7 +84,10 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.menu.Menu;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceInfo;
-	
+	import com.vidcoin.vidcoincontroller.VidCoinController;
+
+	import flash.desktop.NativeApplication;
+
 	import flash.filesystem.File;
 	import flash.geom.Rectangle;
 	
@@ -98,7 +102,10 @@ package com.ludofactory.mobile.core
 	import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 	import feathers.system.DeviceCapabilities;
 	import feathers.textures.Scale9Textures;
-	
+
+	import flash.system.ApplicationDomain;
+	import flash.utils.Dictionary;
+
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -136,6 +143,9 @@ package com.ludofactory.mobile.core
 		/**
 		 * Google Analytics Tracker */		
 		private static var _tracker:ITracker;
+		/**
+		 * VidCoin. */
+		public static var vidCoin:VidCoinController;
 		
 //------------------------------------------------------------------------------------------------------------
 //	Backgrounds
@@ -301,6 +311,7 @@ package com.ludofactory.mobile.core
 				_loadingBackground = new Image( launchImageTexture );
 				if( (AbstractGameInfo.LANDSCAPE && GlobalConfig.android) || (GlobalConfig.ios && AbstractGameInfo.LANDSCAPE && GlobalConfig.isPhone) )
 				{
+                    // FIXME ?
 					_loadingBackground.width = GlobalConfig.stageHeight;
 					_loadingBackground.height = GlobalConfig.stageWidth;
 					_loadingBackground.rotation = deg2rad(-90);
@@ -312,7 +323,7 @@ package com.ludofactory.mobile.core
 			
 			_assets = new AssetManager();
 			_assets.verbose = GlobalConfig.DEBUG;
-			_assets.enqueue( File.applicationDirectory.resolvePath("assets/splash/") );
+			_assets.enqueue( File.applicationDirectory.resolvePath("./assets/splash/") );
 			_assets.loadQueue(onLoadingSplash);
 		}
 		
@@ -370,6 +381,24 @@ package com.ludofactory.mobile.core
 			GameCenterManager.initialize();
 			// initialize Ads
 			AdManager.initialize();
+			// initialize Popups
+			NotificationPopupManager.initializeNotification();
+			// initialize VidCoin
+			try
+			{
+				vidCoin = new VidCoinController();
+				vidCoin.startWithGameId(AbstractGameInfo.VID_COIN_GAME_ID);
+				vidCoin.setLoggingEnabled(GlobalConfig.DEBUG);
+				if( MemberManager.getInstance().isLoggedIn() )
+				{
+					var dict:Dictionary = new Dictionary();
+					dict[VidCoinController.kVCUserGameID] = MemberManager.getInstance().getId();
+					//dict[VidCoinController.kVCUserBirthYear] = MemberManager.getInstance().; // FIXME rajouter quand j'aurai la date
+					//dict[VidCoinController.kVCUserGenderKey]= VidCoinController.kVCUserGenderMale; // FIXME rajouter quand j'aurai le sexe
+					vidCoin.updateUserDictionary(dict);
+				}
+			}
+			catch(error:Error) { Flox.logError("Erreur lors de l'intialisation de VidCoin.") }
 			
 			try
 			{
@@ -493,6 +522,9 @@ package com.ludofactory.mobile.core
 					// the actual game version is higher than the old one stored when the update was requested
 					// them we can disable the force update because it means that the user updated the game
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE, false);
+					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_LINK, ""); // reset it
+					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_TEXT, ""); // reset it
+					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_BUTTON_NAME, ""); // reset it
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_GAME_VERSION, AbstractGameInfo.GAME_VERSION);
 					_screenNavigator.showScreen(ScreenIds.HOME_SCREEN);
 				}
@@ -688,7 +720,12 @@ package com.ludofactory.mobile.core
 			_assets.removeTextureAtlas("splash");
 			
 			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_ADS) == true )
-				AdManager.showInterstitial();
+			{
+				if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_CAN_LAUNCH_INTERSTITIAL) )
+					AdManager.showInterstitial();
+				else
+					Storage.getInstance().setProperty(StorageConfig.PROPERTY_CAN_LAUNCH_INTERSTITIAL, true);
+			}
 			
 			if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() && MemberManager.getInstance().getFacebookId() != 0 && !GoViral.goViral.isFacebookAuthenticated() )
 				GoViral.goViral.authenticateWithFacebook( AbstractGameInfo.FACEBOOK_PERMISSIONS );

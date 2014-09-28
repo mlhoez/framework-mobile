@@ -292,6 +292,10 @@ package com.ludofactory.mobile.core.storage
 		 * the force update value if it was enabled. */		
 		public static const DEFAULT_GAME_VERSION:String = "1.0";
 		
+		
+		
+		public static const DEFAULT_CAN_LAUNCH_INTERSTITIAL:Boolean = false;
+		
 		/**
 		 * Whether the shop is enabled. */		
 		public static const DEFAULT_SHOP_ENABLED:Boolean = true;
@@ -443,6 +447,8 @@ package com.ludofactory.mobile.core.storage
 		public static const PROPERTY_FORCE_UPDATE_TEXT:String = "DEFAULT_FORCE_UPDATE_TEXT";
 		public static const PROPERTY_FORCE_UPDATE_BUTTON_NAME:String = "DEFAULT_FORCE_UPDATE_BUTTON_NAME";
 		public static const PROPERTY_GAME_VERSION:String = "DEFAULT_GAME_VERSION";
+		
+		public static const PROPERTY_CAN_LAUNCH_INTERSTITIAL:String = "DEFAULT_CAN_LAUNCH_INTERSTITIAL";
 		
 		/**
 		 * Whether the shop is enabled. */		
