@@ -6,6 +6,7 @@ Created : 7 mars 2014
 */
 package com.ludofactory.mobile.core
 {
+
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.freshplanet.nativeExtensions.PushNotificationEvent;
@@ -86,14 +87,9 @@ package com.ludofactory.mobile.core
 	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceInfo;
 	import com.vidcoin.vidcoincontroller.VidCoinController;
 
-	import flash.desktop.NativeApplication;
-
-	import flash.filesystem.File;
-	import flash.geom.Rectangle;
-	
 	import eu.alebianco.air.extensions.analytics.Analytics;
 	import eu.alebianco.air.extensions.analytics.api.ITracker;
-	
+
 	import feathers.controls.Drawers;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.ProgressBar;
@@ -103,7 +99,8 @@ package com.ludofactory.mobile.core
 	import feathers.system.DeviceCapabilities;
 	import feathers.textures.Scale9Textures;
 
-	import flash.system.ApplicationDomain;
+	import flash.filesystem.File;
+	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 
 	import starling.core.Starling;
@@ -114,7 +111,7 @@ package com.ludofactory.mobile.core
 	import starling.textures.Texture;
 	import starling.utils.AssetManager;
 	import starling.utils.deg2rad;
-	
+
 	/**
 	 * The Root class is the topmost display object in the game. It loads all the assets.
 	 * Keep this class rather lightweight : it controls the high level behaviour of the game.
@@ -394,7 +391,7 @@ package com.ludofactory.mobile.core
 					var dict:Dictionary = new Dictionary();
 					dict[VidCoinController.kVCUserGameID] = MemberManager.getInstance().getId();
 					//dict[VidCoinController.kVCUserBirthYear] = MemberManager.getInstance().; // FIXME rajouter quand j'aurai la date
-					//dict[VidCoinController.kVCUserGenderKey]= VidCoinController.kVCUserGenderMale; // FIXME rajouter quand j'aurai le sexe
+					//dict[VidCoinController.kVCUserGenderKey]= VidCoinController.kVCUserGenderMale; // FIXME rajouter quand j'aurai le sexe 
 					vidCoin.updateUserDictionary(dict);
 				}
 			}
@@ -739,7 +736,7 @@ package com.ludofactory.mobile.core
 		/**
 		 * When the screen transition starts.
 		 */		
-		private function onScreenTransitionStarted(event:starling.events.Event):void
+		private function onScreenTransitionStarted(event:Event):void
 		{
 			hideMenu();
 			onResize();
@@ -780,7 +777,7 @@ package com.ludofactory.mobile.core
 		 * alert button or by draggind the right side of the screen), we update
 		 * the content of the AlertContainer.
 		 */		
-		private function onStartInteractWithDrawer(event:starling.events.Event):void
+		private function onStartInteractWithDrawer(event:Event):void
 		{
 			if( !_drawer.isRightDrawerOpen )
 			{
@@ -916,7 +913,7 @@ package com.ludofactory.mobile.core
 		 * performance, and if we are currently on the "Termes of Service" screen, we need
 		 * to hide the scrollText so that it doesn't appear above the menu.
 		 */		
-		private static function onMenuHidden(event:starling.events.Event = null):void
+		private static function onMenuHidden(event:Event = null):void
 		{
 			_mainMenu.visible = false;
 			_showHomeScreenPending = _isMainMenuDisplaying = false;
@@ -935,7 +932,7 @@ package com.ludofactory.mobile.core
 		 * When the back button is touched, we check if a callback function have been
 		 * defined and if so, we execute it.
 		 */		
-		private function onBackButtonTouched(event:starling.events.Event):void
+		private function onBackButtonTouched(event:Event):void
 		{
 			// FIXME mettre ça directement dans le listener ?
 			AdvancedScreen(_screenNavigator.activeScreen).onBack();
@@ -944,7 +941,7 @@ package com.ludofactory.mobile.core
 		/**
 		 * The news button was touched.
 		 */		
-		private function onNewsButtonTouched(event:starling.events.Event):void
+		private function onNewsButtonTouched(event:Event):void
 		{
 			_screenNavigator.showScreen( ScreenIds.NEWS_SCREEN );
 		}
@@ -955,7 +952,7 @@ package com.ludofactory.mobile.core
 		 * <p>At this time if the AlertContainer is not currently opened,
 		 * we will update its content</p>
 		 */		
-		private function onAlertButtonTouched(event:starling.events.Event = null):void
+		private function onAlertButtonTouched(event:Event = null):void
 		{
 			onStartInteractWithDrawer(event);
 			_container.dispatchEventWith( LudoEventType.OPEN_ALERTS_FROM_HEADER );
@@ -965,7 +962,7 @@ package com.ludofactory.mobile.core
 		/**
 		 * The header's visibiliy have changed.
 		 */		
-		private function onHeaderVisibilityChanged(event:starling.events.Event = null):void
+		private function onHeaderVisibilityChanged(event:Event = null):void
 		{
 			// FIXME A optimiser non de Zeus !
 			if( _screenNavigator.activeScreen )
@@ -1006,7 +1003,7 @@ package com.ludofactory.mobile.core
 		 * it with a fade tween. Otherwise, the menu fades out and then is
 		 * destroyed to save memory space.</p>
 		 */		
-		private function onMenuButtonTouched(event:starling.events.Event):void
+		private function onMenuButtonTouched(event:Event):void
 		{
 			if( _isSelectingPseudo )
 			{
@@ -1022,7 +1019,7 @@ package com.ludofactory.mobile.core
 		 * received from Remote when an object obj_membre_mobile
 		 * is received.
 		 */		
-		private function onUpdateSummary(event:starling.events.Event):void
+		private function onUpdateSummary(event:Event):void
 		{
 			_footer.updateSummary();
 			
@@ -1035,7 +1032,7 @@ package com.ludofactory.mobile.core
 			}
 		}
 		
-		private function onAnimateSummary(event:starling.events.Event):void
+		private function onAnimateSummary(event:Event):void
 		{
 			_footer.animateSummary( event.data );
 		}
@@ -1044,7 +1041,7 @@ package com.ludofactory.mobile.core
 		 * Callback called when the header's title is updated from the settings screen
 		 * after the language have been changed.
 		 */		
-		private function onUpdateHeaderTitle( event:starling.events.Event ):void
+		private function onUpdateHeaderTitle( event:Event ):void
 		{
 			_header.showTitle( String(event.data) );
 		}
@@ -1062,7 +1059,7 @@ package com.ludofactory.mobile.core
 		 * <p>The content of the AlertContainer is not updated here so that
 		 * it will be done only when the user wants to open the Drawer.<p>
 		 */		
-		private function onPushUpdate(event:starling.events.Event = null):void
+		private function onPushUpdate(event:Event = null):void
 		{
 			if( _pushManager.numElementsToPush > 0 || _alertContainer.numAlerts > 0 || MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions() > 0 || MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions() > 0 || Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES).length > 0)
 			{

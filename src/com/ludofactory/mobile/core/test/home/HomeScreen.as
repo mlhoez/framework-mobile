@@ -6,26 +6,27 @@ Created : 11 Avril 2013
 */
 package com.ludofactory.mobile.core.test.home
 {
-import com.gamua.flox.Flox;
-import com.ludofactory.common.gettext.aliases._;
-import com.ludofactory.common.utils.scaleAndRoundToDpi;
-import com.ludofactory.mobile.core.AbstractEntryPoint;
-import com.ludofactory.mobile.core.AbstractGameInfo;
-import com.ludofactory.mobile.core.authentication.MemberManager;
-import com.ludofactory.mobile.core.controls.AdvancedScreen;
-import com.ludofactory.mobile.core.controls.ArrowGroup;
-import com.ludofactory.mobile.core.controls.ScreenIds;
-import com.ludofactory.mobile.core.events.LudoEventType;
-import com.ludofactory.mobile.core.test.achievements.GameCenterManager;
-import com.ludofactory.mobile.core.test.config.GlobalConfig;
-import com.ludofactory.mobile.core.theme.Theme;
 
-import feathers.controls.Button;
-import feathers.controls.ImageLoader;
+	import com.gamua.flox.Flox;
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
+	import com.ludofactory.mobile.core.controls.ArrowGroup;
+	import com.ludofactory.mobile.core.controls.ScreenIds;
+	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.test.achievements.GameCenterManager;
+	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.theme.Theme;
 
-import starling.events.Event;
+	import feathers.controls.Button;
+	import feathers.controls.ImageLoader;
 
-/**
+	import starling.events.Event;
+
+	/**
 	 * The application's home screen.
 	 */	
 	public class HomeScreen extends AdvancedScreen
@@ -231,7 +232,7 @@ import starling.events.Event;
 		 */		
 		public function updateInterface():void
 		{
-            // not need anymore
+            // not needed anymore
 			//_giftsButton.visible = Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN);
 		}
 		
