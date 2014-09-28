@@ -243,6 +243,11 @@ package com.ludofactory.mobile.core.storage
 		/**
 		 * 
 		 */		
+		public static const DEFAULT_USE_SECURED_CALLS:Boolean = false;
+		
+		/**
+		 * 
+		 */		
 		public static const DEFAULT_DISPLAY_VIP_CHEQUE:Boolean = false;
 		
 		/**
@@ -405,6 +410,10 @@ package com.ludofactory.mobile.core.storage
 		/**
 		 * Access the push initialized value. */		
 		public static const PROPERTY_DISPLAY_ADS:String = "DEFAULT_DISPLAY_ADS";
+		
+		/**
+		 * Access the push initialized value. */		
+		public static const PROPERTY_USE_SECURED_CALLS:String = "DEFAULT_USE_SECURED_CALLS";
 		
 		/**
 		 * Access the push initialized value. */		

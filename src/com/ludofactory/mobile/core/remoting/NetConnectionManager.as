@@ -766,5 +766,22 @@ package com.ludofactory.mobile.core.remoting
 			}
 		}
 		
+		private var _isSecuredHttpConnection:Boolean = false;
+		
+		public function get useSecureConnection():Boolean { return _isSecuredHttpConnection }
+		public function set useSecureConnection(value:Boolean):void
+		{
+			if( value )
+			{
+				baseGatewayUrl.replace("http", "https");
+				_isSecuredHttpConnection = true;
+			}
+			else
+			{
+				baseGatewayUrl.replace("https", "http");
+				_isSecuredHttpConnection = false;
+			}
+		}
+		
 	}
 }
