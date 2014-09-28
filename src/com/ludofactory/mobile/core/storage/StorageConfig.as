@@ -282,6 +282,12 @@ package com.ludofactory.mobile.core.storage
 		 * The link of the application on the store. */		
 		public static const DEFAULT_FORCE_UPDATE_LINK:String = "";
 		/**
+		 * The text to display. */		
+		public static const DEFAULT_FORCE_UPDATE_TEXT:String = "";
+		/**
+		 * The text to display on the button. */
+		public static const DEFAULT_FORCE_UPDATE_BUTTON_NAME:String = "";
+		/**
 		 * The old game version used to check if we can disable
 		 * the force update value if it was enabled. */		
 		public static const DEFAULT_GAME_VERSION:String = "1.0";
@@ -434,6 +440,8 @@ package com.ludofactory.mobile.core.storage
 		
 		public static const PROPERTY_FORCE_UPDATE:String = "DEFAULT_FORCE_UPDATE";
 		public static const PROPERTY_FORCE_UPDATE_LINK:String = "DEFAULT_FORCE_UPDATE_LINK";
+		public static const PROPERTY_FORCE_UPDATE_TEXT:String = "DEFAULT_FORCE_UPDATE_TEXT";
+		public static const PROPERTY_FORCE_UPDATE_BUTTON_NAME:String = "DEFAULT_FORCE_UPDATE_BUTTON_NAME";
 		public static const PROPERTY_GAME_VERSION:String = "DEFAULT_GAME_VERSION";
 		
 		/**

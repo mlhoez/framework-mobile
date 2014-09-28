@@ -17,6 +17,7 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.push.GameSession;
@@ -41,13 +42,14 @@ package com.ludofactory.mobile.core.remoting
 		private const AMF_PATH:String = "/amfphp2/";
 		
 		// url quand on n'est pas sur le réseau local
-		private const DEV_PORT:int = 9999;
-		private const DEV_URL:String = "http://ludomobile.ludokado.com";
+		//private const DEV_PORT:int = 9999;
+		//private const DEV_URL:String = "http://ludomobile.ludokado.com";
 		
 		// urls et port quand on est sur le réseau local
-		//private const DEV_PORT:int = 80;
+		private const DEV_PORT:int = 80;
+		//private const DEV_URL:String = "http://www.ludokado.com";
 		//private const DEV_URL:String = "http://ludokado.dev";
-		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
+		private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokadom.mlhoez.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.pterrier.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
@@ -77,6 +79,7 @@ package com.ludofactory.mobile.core.remoting
 			_netConnectionManager.appName = "LudoMobile";
 			_netConnectionManager.bridgeName = "LudoMobileEncryption.callAction";
 			_netConnectionManager.encrypt = true;
+			_netConnectionManager.useSecureConnection = Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_USE_SECURED_CALLS));
 			_netConnectionManager.genericSuccessCallback = onQueryComplete;
 			_netConnectionManager.genericFailureCallback = onQueryFail;
 			_netConnectionManager.connect();
@@ -791,20 +794,30 @@ package com.ludofactory.mobile.core.remoting
 				
 				if( MemberManager.getInstance().isLoggedIn() && "acces_tournoi" in result &&  queryName != "LudoMobile.useClass.ServeurJeux.pushPartie" )
 				{
-					MemberManager.getInstance().setTournamentUnlocked( int(result.acces_tournoi) == 1 ? true : false );
+					MemberManager.getInstance().setTournamentUnlocked( int(result.acces_tournoi) );
 					//MemberManager.getInstance().setTournamentAnimPending( false ); // sinon pas d'anim quand partie classique => popup marketing => inscription => acccueil
-					MemberManager.getInstance().setDisplayTutorial( int(result.acces_tournoi) == 1 ? false : true );
+					MemberManager.getInstance().setDisplayTutorial( int(result.acces_tournoi) != 1 );
 				}
 				
 				if( callbackSuccess )
 					callbackSuccess(result);
 			}
-			
-			if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE)) == false )
+
+			// secured calls (https)
+			if( "appels_https" in result && result.appels_https != null )
 			{
-				// go here only if we didn't already request an update
-				if( "forceDownload" in result && result.forceDownload != null && int(result.forceDownload) == 1 )
+				Storage.getInstance().setProperty(StorageConfig.PROPERTY_USE_SECURED_CALLS, int(result.appels_https) == 1);
+				// now check if the value is different in order to know if we need to reconnect or not
+				if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_USE_SECURED_CALLS)) != _netConnectionManager.useSecureConnection )
+					_netConnectionManager.connect(); // reconnect if invalid
+			}
+			
+			// a force download have been requested for this version
+			if( "forceDownload" in result && result.forceDownload != null && int(result.forceDownload) == 1 )
+			{
+				if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE)) == false )
 				{
+					// if the property in Storage have not been already updated, we do it now
 					// we need the user to update the game, in this case we change the property FORCE_UPDATE to true,
 					// then we need to update the stored game version so that we can later check if the update was
 					// made or not (i.e. if the actual game version is higher than the stored one at the moment we
@@ -812,7 +825,17 @@ package com.ludofactory.mobile.core.remoting
 					log("[Remote] onQueryComplete : The user must update the app (forceDownload = 1).");
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE, true);
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_LINK, result.lien_application);
+					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_TEXT, result.text_force_download);
+					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_BUTTON_NAME, result.btn_force_download);
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_GAME_VERSION, AbstractGameInfo.GAME_VERSION);
+				}
+				else
+				{
+					// if we are here, it's because an update have been requested but we already had the value in
+					// Storage, so we simply update the text, link and button here
+					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_LINK, result.lien_application);
+					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_TEXT, result.text_force_download);
+					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_BUTTON_NAME, result.btn_force_download);
 				}
 			}
 			
