@@ -15,6 +15,8 @@ package com.ludofactory.mobile.core.test.cs
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.CSNewThreadNotificationContent;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.cs.display.CSMessageData;
 	import com.ludofactory.mobile.core.test.cs.display.CSMessagesContainer;
@@ -192,7 +194,8 @@ package com.ludofactory.mobile.core.test.cs
 		private function onContactCustomerServiceSelected(event:Event):void
 		{
 			Flox.logInfo("Ouverture de la popup de nouveau message au service client.");
-			NotificationManager.addNotification( new CSNewThreadNotification(), onCloseNewMessageNotification );
+			//NotificationManager.addNotification( new CSNewThreadNotification(), onCloseNewMessageNotification );
+			NotificationPopupManager.addNotification( new CSNewThreadNotificationContent(), onCloseNewMessageNotification );
 		}
 		
 		/**
@@ -202,9 +205,9 @@ package com.ludofactory.mobile.core.test.cs
 		 * we need to refresh the list because a new thread have been
 		 * added.</p>
 		 */		
-		private function onCloseNewMessageNotification(event:Event):void
+		private function onCloseNewMessageNotification(data:Object):void
 		{
-			if( event.data )
+			if( data )
 			{
 				Flox.logInfo("Nouveau message envoyé au service client.");
 				_pendingMessagesContent.refreshList();
