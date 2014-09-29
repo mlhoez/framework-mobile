@@ -10,6 +10,8 @@ package com.ludofactory.mobile.core.test.faq
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.FaqNotificationContent;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -158,7 +160,10 @@ package com.ludofactory.mobile.core.test.faq
 		private function onOpenHelp(event:Event):void
 		{
 			if( _touchPointID != -1 )
-				NotificationManager.addNotification( new FaqNotification(FaqQuestionAnswerData(event.data)) );
+			{
+				//NotificationManager.addNotification( new FaqNotification(FaqQuestionAnswerData(event.data)) );
+				NotificationPopupManager.addNotification( new FaqNotificationContent(FaqQuestionAnswerData(event.data)) );
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -6,19 +6,20 @@ Created : 11 oct. 2013
 */
 package com.ludofactory.mobile.core.test.event
 {
+
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.EventPushNotificationContent;
+	import com.ludofactory.mobile.core.notification.content.RateNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.test.EventNotification;
-	import com.ludofactory.mobile.core.test.RateNotification;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.engine.EventPushNotification;
-	
-	
+
 	import starling.core.Starling;
 	import starling.events.Event;
 
@@ -88,12 +89,14 @@ package com.ludofactory.mobile.core.test.event
 						}
 						case 2: // rate
 						{
-							NotificationManager.addNotification( new RateNotification( new EventData(result) ) );
+							//NotificationManager.addNotification( new RateNotification( new EventData(result) ) );
+							NotificationPopupManager.addNotification( new RateNotificationContent( new EventData(result) ) );
 							break;
 						}
 						case 3: // push
 						{
-							NotificationManager.addNotification( new EventPushNotification(AbstractEntryPoint.screenNavigator.activeScreenID) );
+							//NotificationManager.addNotification( new EventPushNotification(AbstractEntryPoint.screenNavigator.activeScreenID) );
+							NotificationPopupManager.addNotification( new EventPushNotificationContent(AbstractEntryPoint.screenNavigator.activeScreenID) );
 							break;
 						}
 						case 4: // evenementiel Facebook (association de compte) - en full screen

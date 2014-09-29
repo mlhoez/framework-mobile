@@ -4,9 +4,9 @@
 package com.ludofactory.mobile.core.notification
 {
 
-	import feathers.controls.ScrollContainer;
+	import com.ludofactory.mobile.core.controls.PullToRefreshScrollContainer;
 
-	public class AbstractNotificationPopupContent extends ScrollContainer
+	public class AbstractNotificationPopupContent extends PullToRefreshScrollContainer
 	{
 		/**
 		 * Can be anything. Is mainly used as a parameter for the callback

@@ -6,6 +6,7 @@ Created : 23 août 2013
 */
 package com.ludofactory.mobile.core.shop.bid
 {
+
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
@@ -14,27 +15,28 @@ package com.ludofactory.mobile.core.shop.bid
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.ComingSoonBidDetailNotificationContent;
+	import com.ludofactory.mobile.core.notification.content.FinishedBidDetailNotificationContent;
+	import com.ludofactory.mobile.core.notification.content.PendingBidDetailNotificationContent;
 	import com.ludofactory.mobile.core.shop.bid.comingsoon.ComingSoonBidContainer;
-	import com.ludofactory.mobile.core.shop.bid.comingsoon.ComingSoonBidDetailNotification;
 	import com.ludofactory.mobile.core.shop.bid.comingsoon.ComingSoonBidItemData;
 	import com.ludofactory.mobile.core.shop.bid.finished.FinishedBidContainer;
-	import com.ludofactory.mobile.core.shop.bid.finished.FinishedBidDetailNotification;
 	import com.ludofactory.mobile.core.shop.bid.finished.FinishedBidItemData;
 	import com.ludofactory.mobile.core.shop.bid.pending.PendingBidContainer;
-	import com.ludofactory.mobile.core.shop.bid.pending.PendingBidDetailNotification;
 	import com.ludofactory.mobile.core.shop.bid.pending.PendingBidItemData;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
+
 	import feathers.controls.Label;
 	import feathers.data.ListCollection;
 	import feathers.display.TiledImage;
-	
+
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
+
 	import starling.events.Event;
-	
+
 	public class BidHomeScreen extends AdvancedScreen
 	{
 		/**
@@ -206,7 +208,8 @@ package com.ludofactory.mobile.core.shop.bid
 		private function onPendingBidSelected(event:Event):void
 		{
 			Flox.logInfo("Affichage de l'enchère en cours <strong>{0} - {1}</strong>", PendingBidItemData(event.data).id, PendingBidItemData(event.data).name);
-			NotificationManager.addNotification( new PendingBidDetailNotification( PendingBidItemData(event.data) ), onClosePendingBidDetailNotification, false );
+			//NotificationManager.addNotification( new PendingBidDetailNotification( PendingBidItemData(event.data) ), onClosePendingBidDetailNotification, false );
+			NotificationPopupManager.addNotification( new PendingBidDetailNotificationContent(PendingBidItemData(event.data)), onClosePendingBidDetailNotification);
 		}
 		
 		/**
@@ -226,7 +229,8 @@ package com.ludofactory.mobile.core.shop.bid
 		private function onFinishedBidSelected(event:Event):void
 		{
 			Flox.logInfo("Affichage de l'enchère terminée <strong>{0} - {1}</strong>", FinishedBidItemData(event.data).name, FinishedBidItemData(event.data).winnerName);
-			NotificationManager.addNotification( new FinishedBidDetailNotification( FinishedBidItemData(event.data) ) );
+			//NotificationManager.addNotification( new FinishedBidDetailNotification( FinishedBidItemData(event.data) ) );
+			NotificationPopupManager.addNotification( new FinishedBidDetailNotificationContent( FinishedBidItemData(event.data) ) );
 		}
 		
 		/**
@@ -235,7 +239,8 @@ package com.ludofactory.mobile.core.shop.bid
 		private function onComingSoonBidSelected(event:Event):void
 		{
 			Flox.logInfo("Affichage de l'enchère à venir <strong>{0}</strong>", ComingSoonBidItemData(event.data).description);
-			NotificationManager.addNotification( new ComingSoonBidDetailNotification( ComingSoonBidItemData(event.data) ) );
+			//NotificationManager.addNotification( new ComingSoonBidDetailNotification( ComingSoonBidItemData(event.data) ) );
+			NotificationPopupManager.addNotification( new ComingSoonBidDetailNotificationContent( ComingSoonBidItemData(event.data) ) );
 		}
 		
 //------------------------------------------------------------------------------------------------------------

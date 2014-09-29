@@ -27,6 +27,9 @@ package com.ludofactory.mobile.core.test.engine
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.GameData;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.EventPushNotificationContent;
+	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.MarketingRegisterNotification;
@@ -1015,7 +1018,8 @@ package com.ludofactory.mobile.core.test.engine
 			{
 				if( advancedOwner.screenData.gameData.displayPushAlert )
 				{
-					NotificationManager.addNotification( new EventPushNotification(ScreenIds.HOME_SCREEN) );
+					//NotificationManager.addNotification( new EventPushNotification(ScreenIds.HOME_SCREEN) );
+					NotificationPopupManager.addNotification( new EventPushNotificationContent(ScreenIds.HOME_SCREEN) );
 				}
 				else
 				{
@@ -1025,7 +1029,8 @@ package com.ludofactory.mobile.core.test.engine
 			}
 			else
 			{
-				NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.HOME_SCREEN) );
+				//NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.HOME_SCREEN) );
+				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
 			}
 		}
 		
@@ -1042,7 +1047,8 @@ package com.ludofactory.mobile.core.test.engine
 			{
 				if( advancedOwner.screenData.gameData.displayPushAlert )
 				{
-					NotificationManager.addNotification( new EventPushNotification(ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
+					//NotificationManager.addNotification( new EventPushNotification(ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
+					NotificationPopupManager.addNotification( new EventPushNotificationContent(ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
 				}
 				else
 				{
@@ -1052,7 +1058,8 @@ package com.ludofactory.mobile.core.test.engine
 			}
 			else
 			{
-				NotificationManager.addNotification( new MarketingRegisterNotification(MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
+				//NotificationManager.addNotification( new MarketingRegisterNotification(MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
+				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
 			}
 		}
 		

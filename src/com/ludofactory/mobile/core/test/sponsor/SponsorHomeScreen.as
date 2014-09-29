@@ -6,6 +6,7 @@ Created : 8 septembre 2013
 */
 package com.ludofactory.mobile.core.test.sponsor
 {
+
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
@@ -17,6 +18,8 @@ package com.ludofactory.mobile.core.test.sponsor
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.SponsorNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -24,23 +27,23 @@ package com.ludofactory.mobile.core.test.sponsor
 	import com.ludofactory.mobile.core.test.sponsor.info.SponsorNotification;
 	import com.ludofactory.mobile.core.test.sponsor.invite.SponsorTypes;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.filters.DropShadowFilter;
-	import flash.filters.GlowFilter;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
+
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.controls.LayoutGroup;
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
-	
+
+	import flash.filters.DropShadowFilter;
+	import flash.filters.GlowFilter;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
+
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.utils.deg2rad;
-	
+
 	public class SponsorHomeScreen extends AdvancedScreen
 	{
 		/**
@@ -314,7 +317,8 @@ package com.ludofactory.mobile.core.test.sponsor
 		
 		private function onKnowMoreSelected(event:Event):void
 		{
-			NotificationManager.addNotification( new SponsorNotification() );
+			//NotificationManager.addNotification( new SponsorNotification() );
+			NotificationPopupManager.addNotification( new SponsorNotificationContent() );
 		}
 		
 //------------------------------------------------------------------------------------------------------------

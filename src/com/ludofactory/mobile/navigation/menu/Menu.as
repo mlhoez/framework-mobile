@@ -16,6 +16,8 @@ package com.ludofactory.mobile.navigation.menu
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.DisconnectNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -215,7 +217,8 @@ package com.ludofactory.mobile.navigation.menu
 				if( MemberManager.getInstance().isLoggedIn() )
 				{
 					// log out
-					NotificationManager.addNotification( new DisconnectNotification(), onCloseDisconnectNotification );
+					//NotificationManager.addNotification( new DisconnectNotification(), onCloseDisconnectNotification );
+					NotificationPopupManager.addNotification( new DisconnectNotificationContent(), onCloseDisconnectNotification );
 				}
 				else
 				{

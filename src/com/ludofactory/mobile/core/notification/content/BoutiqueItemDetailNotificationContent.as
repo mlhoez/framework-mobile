@@ -4,8 +4,9 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 28 août 2013
 */
-package com.ludofactory.mobile.core.shop.vip
+package com.ludofactory.mobile.core.notification.content
 {
+
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
@@ -15,29 +16,28 @@ package com.ludofactory.mobile.core.shop.vip
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
-	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
-	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.test.MarketingRegisterNotification;
+	import com.ludofactory.mobile.core.shop.vip.*;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
+
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalLayout;
-	
+
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
+
 	import starling.core.Starling;
 	import starling.display.MovieClip;
 	import starling.events.Event;
-	
-	public class BoutiqueItemDetailNotification extends AbstractNotification
+
+	public class BoutiqueItemDetailNotificationContent extends AbstractNotificationPopupContent
 	{
 		/**
 		 * The gift image. */		
@@ -75,7 +75,7 @@ package com.ludofactory.mobile.core.shop.vip
 		 * Loader used while the image is loading. */		
 		private var _imageLoader:MovieClip;
 		
-		public function BoutiqueItemDetailNotification(boutiqueItemData:BoutiqueItemData)
+		public function BoutiqueItemDetailNotificationContent(boutiqueItemData:BoutiqueItemData)
 		{
 			super();
 			
@@ -90,52 +90,50 @@ package com.ludofactory.mobile.core.shop.vip
 			vlayout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
 			vlayout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_TOP;
 			vlayout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? 20:40 );
-			_container.layout = vlayout;
+			this.layout = vlayout;
 			
 			_giftName = new Label();
 			_giftName.text = Utilities.replaceCurrency(_boutiqueItemData.title);
-			_container.addChild(_giftName);
+			addChild(_giftName);
 			_giftName.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_image = new ImageLoader();
 			_image.addEventListener(Event.COMPLETE, onImageLoaded);
 			_image.addEventListener(FeathersEventType.ERROR, onImageError);
 			_image.source = _boutiqueItemData.imageUrl;
-			_container.addChild(_image);
+			addChild(_image);
 			
 			_imageLoader = new MovieClip( Theme.blackLoaderTextures );
 			_imageLoader.scaleX = _imageLoader.scaleY = GlobalConfig.dpiScale;
-			_container.addChild(_imageLoader);
+			addChild(_imageLoader);
 			Starling.juggler.add(_imageLoader);
 			
 			_giftPoints = new Label();
 			_giftPoints.text = _boutiqueItemData.points;
-			_container.addChild(_giftPoints);
+			addChild(_giftPoints);
 			_giftPoints.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_orderButton = new Button();
 			_orderButton.label = "Commander";
 			_orderButton.addEventListener(Event.TRIGGERED, onOrder);
-			_container.addChild(_orderButton);
+			addChild(_orderButton);
 			
 			_giftDescription = new Label();
 			_giftDescription.text = Utilities.replaceCurrency(_boutiqueItemData.description);
-			_container.addChild(_giftDescription);
+			addChild(_giftDescription);
 			_giftDescription.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, true, true);
 			
 		}
 		
 		override protected function draw():void
 		{
-			_container.width = _giftDescription.width = _giftName.width =
-				_giftPoints.width = this.actualWidth - padSide * 2 - scaleAndRoundToDpi( GlobalConfig.isPhone ? 40:60 );
-			_container.x = (this.actualWidth - _container.width) * 0.5;
+			_giftDescription.width = _giftName.width = _giftPoints.width = this.actualWidth - scaleAndRoundToDpi( GlobalConfig.isPhone ? 40:60 );
 			
 			if( _orderButton )
-				_orderButton.width = _container.width * 0.8;
+				_orderButton.width = this.width * 0.8;
 			
 			if( _resultMessage )
-				_resultMessage.width = _container.width;
+				_resultMessage.width = this.width;
 			
 			if( _image.isLoaded )
 			{
@@ -143,8 +141,8 @@ package com.ludofactory.mobile.core.shop.vip
 				if( _image.height > GlobalConfig.stageHeight * 0.4 )
 					_image.height = GlobalConfig.stageHeight * 0.4;
 					
-				if( _image.width > _container.width )
-					_image.width = _container.width;
+				if( _image.width > this.width )
+					_image.width = this.width;
 			}
 			
 			super.draw();
@@ -207,14 +205,14 @@ package com.ludofactory.mobile.core.shop.vip
 					
 					_resultMessage = new Label();
 					_resultMessage.text = result.txt;
-					_container.addChild(_resultMessage);
+					addChild(_resultMessage);
 					_resultMessage.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_ORANGE, false, false, null, null, null, TextFormatAlign.CENTER);
 					
-					_container.addChild(_giftDescription);
+					addChild(_giftDescription);
 					
 					_needResize = true;
-					
-					_container.invalidate(INVALIDATION_FLAG_SIZE);
+
+					this.invalidate(INVALIDATION_FLAG_SIZE);
 					invalidate(INVALIDATION_FLAG_SIZE); // necessary to layout the _resultMessage
 					break;
 				}
@@ -245,7 +243,7 @@ package com.ludofactory.mobile.core.shop.vip
 			_image.alpha = 0;
 			TweenMax.to(_image, 0.75, {alpha:1});
 			_needResize = true;
-			_container.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(INVALIDATION_FLAG_SIZE);
 			this.invalidate(INVALIDATION_FLAG_SIZE);
 		}
 		

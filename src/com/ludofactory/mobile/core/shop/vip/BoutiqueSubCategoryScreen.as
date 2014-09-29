@@ -6,6 +6,7 @@ Created : 22 août 2013
 */
 package com.ludofactory.mobile.core.shop.vip
 {
+
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
@@ -17,13 +18,12 @@ package com.ludofactory.mobile.core.shop.vip
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.BoutiqueItemDetailNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
+
 	import feathers.controls.Button;
 	import feathers.controls.GroupedList;
 	import feathers.controls.ImageLoader;
@@ -36,10 +36,13 @@ package com.ludofactory.mobile.core.shop.vip
 	import feathers.data.ListCollection;
 	import feathers.display.TiledImage;
 	import feathers.layout.TiledRowsLayout;
-	
+
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
+
 	import starling.display.Quad;
 	import starling.events.Event;
-	
+
 	public class BoutiqueSubCategoryScreen extends AdvancedScreen
 	{
 		/**
@@ -312,7 +315,8 @@ package com.ludofactory.mobile.core.shop.vip
 		{
 			Flox.logInfo("Affichage du lot <strong>{0} - {1}</strong>", BoutiqueItemData(event.data).id, BoutiqueItemData(event.data).title);
 			advancedOwner.screenData.selectedItemData = BoutiqueItemData(event.data);
-			NotificationManager.addNotification( new BoutiqueItemDetailNotification( BoutiqueItemData(event.data) ), null, false );
+			//NotificationManager.addNotification( new BoutiqueItemDetailNotification( BoutiqueItemData(event.data) ), null, false );
+			NotificationPopupManager.addNotification( new BoutiqueItemDetailNotificationContent( BoutiqueItemData(event.data) ) );
 		}
 		
 		/**
@@ -387,7 +391,8 @@ package com.ludofactory.mobile.core.shop.vip
 					
 					if( advancedOwner.screenData.selectedItemData != null )
 					{
-						NotificationManager.addNotification( new BoutiqueItemDetailNotification( advancedOwner.screenData.selectedItemData ), null, false );
+						//NotificationManager.addNotification( new BoutiqueItemDetailNotification( advancedOwner.screenData.selectedItemData ), null, false );
+						NotificationPopupManager.addNotification( new BoutiqueItemDetailNotificationContent( advancedOwner.screenData.selectedItemData ) );
 						advancedOwner.screenData.selectedItemData = null;
 					}
 				});

@@ -6,29 +6,31 @@ Created : 8 sept. 2013
 */
 package com.ludofactory.mobile.core.test.sponsor.filleuls
 {
+
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.FilleulDetailNotificationContent;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.geom.Point;
-	import flash.text.TextFormat;
-	
+
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
-	
+
+	import flash.geom.Point;
+	import flash.text.TextFormat;
+
 	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	
+
 	/**
 	 * Item renderer used to display a contact with the ability to
 	 * invite him / her individually.
@@ -301,7 +303,8 @@ package com.ludofactory.mobile.core.test.sponsor.filleuls
 					touch.getLocation(this, HELPER_POINT);
 					if(this.hitTest(HELPER_POINT, true) != null && !this._isSelected)
 					{
-						NotificationManager.addNotification( new FilleulDetailNotification(_data) );
+						//NotificationManager.addNotification( new FilleulDetailNotification(_data) );
+						NotificationPopupManager.addNotification( new FilleulDetailNotificationContent(_data) );
 					}
 				}
 			}

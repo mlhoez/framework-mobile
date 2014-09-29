@@ -6,7 +6,7 @@ Created : 23 mai 2014
 */
 package com.ludofactory.mobile.core.avatar
 {
-	import com.jirbo.airadc.AirAdColony;
+	//import com.jirbo.airadc.AirAdColony;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.HeartBeat;
@@ -115,7 +115,7 @@ package com.ludofactory.mobile.core.avatar
 		}
 		
 		
-		private var _adColony:AirAdColony;
+		//private var _adColony:AirAdColony;
 		
 		override protected function draw():void
 		{

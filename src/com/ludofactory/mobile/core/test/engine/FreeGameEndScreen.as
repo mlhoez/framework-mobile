@@ -29,6 +29,8 @@ package com.ludofactory.mobile.core.test.engine
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.GameData;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.MarketingRegisterNotification;
@@ -744,7 +746,8 @@ package com.ludofactory.mobile.core.test.engine
 			}
 			else
 			{
-				NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.HOME_SCREEN) );
+				//NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.HOME_SCREEN) );
+				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
 			}
 		}
 		
@@ -765,7 +768,8 @@ package com.ludofactory.mobile.core.test.engine
 			}
 			else
 			{
-				NotificationManager.addNotification( new MarketingRegisterNotification( MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN ) );
+				//NotificationManager.addNotification( new MarketingRegisterNotification( MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN ) );
+				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
 			}
 		}
 		

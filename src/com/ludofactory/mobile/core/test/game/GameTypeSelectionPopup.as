@@ -18,6 +18,8 @@ package com.ludofactory.mobile.core.test.game
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.manager.TimerManager;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.test.MarketingRegisterNotification;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.push.GameSession;
@@ -328,7 +330,8 @@ package com.ludofactory.mobile.core.test.game
 				{
 					AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
 					//AbstractEntryPoint.screenNavigator.showScreen( AdvancedScreen.AUTHENTICATION_SCREEN );
-					NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.HOME_SCREEN) );
+					//NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.HOME_SCREEN) );
+					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
 				}
 				else
 				{
