@@ -217,9 +217,9 @@ package com.ludofactory.mobile.core.shop.bid
 		 * to refresh the list or not (if he made a bid, the data is obsolet
 		 * so we need to refresh the data).
 		 */		
-		private function onClosePendingBidDetailNotification(event:Event):void
+		private function onClosePendingBidDetailNotification(data:Object):void
 		{
-			if( event.data )
+			if( data )
 				_pendingBidsContainer.refreshList();
 		}
 		

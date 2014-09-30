@@ -15,7 +15,6 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.shop.bid.pending.*;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -91,6 +90,7 @@ package com.ludofactory.mobile.core.notification.content
 			super();
 			
 			_pendingBidItemData = pendingBidItemData;
+			isRefreshable = true;
 		}
 		
 		override protected function initialize():void
@@ -103,7 +103,7 @@ package com.ludofactory.mobile.core.notification.content
 			vlayout.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20:40);
 			
 			this.layout = vlayout;
-			this.isRefreshable = true;
+			//this.isRefreshable = true;
 			this.verticalScrollPolicy = Scroller.SCROLL_POLICY_ON;
 			this.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			this.addEventListener(LudoEventType.REFRESH_TOP, onRefreshPendingBid);
@@ -189,25 +189,25 @@ package com.ludofactory.mobile.core.notification.content
 				if( _image.height > GlobalConfig.stageHeight * 0.4 )
 					_image.height = GlobalConfig.stageHeight * 0.4;
 				
-				if( _image.width > this.width )
-					_image.width = this.width;
+				if( _image.width > this.actualWidth )
+					_image.width = this.actualWidth;
 			}
 			
-			_notificationTitle.width = this.width;
+			_notificationTitle.width = this.actualWidth;
 			
 			if( _infoMessage )
-				_infoMessage.width = this.width;
+				_infoMessage.width = this.actualWidth;
 			
 			if( _message )
-				_message.width = this.width;
+				_message.width = this.actualWidth;
 			
 			if( _bidInput )
-				_bidInput.width = this.width;
+				_bidInput.width = this.actualWidth;
 			
 			if( _validateButton)
-				_validateButton.width = this.width * 0.8;
+				_validateButton.width = this.actualWidth * 0.8;
 			
-			_giftDescription.width = _giftName.width = this.width;
+			_giftDescription.width = _giftName.width = this.actualWidth;
 			
 			super.draw();
 			

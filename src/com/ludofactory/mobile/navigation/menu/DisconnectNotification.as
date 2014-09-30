@@ -9,6 +9,7 @@ package com.ludofactory.mobile.navigation.menu
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -53,7 +54,7 @@ package com.ludofactory.mobile.navigation.menu
 			const layout:VerticalLayout = new VerticalLayout();
 			layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
 			layout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_MIDDLE;
-			layout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? 40:60 );
+			layout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 10:40):(AbstractGameInfo.LANDSCAPE ? 40:60) );
 			_container.layout = layout;
 			
 			_icon = new Image( AbstractEntryPoint.assets.getTexture("icon-log-in-out") );
@@ -83,7 +84,10 @@ package com.ludofactory.mobile.navigation.menu
 			_container.x = padSide;
 			
 			_notificationTitle.width = _container.width * (GlobalConfig.isPhone ? 0.8 : 0.6);
-			_yesButton.width = _cancelButton.width = _container.width * (GlobalConfig.isPhone ? 0.8 : 0.6);
+			if( AbstractGameInfo.LANDSCAPE )
+				_yesButton.width = _cancelButton.width = _container.width * (GlobalConfig.isPhone ? 0.6 : 0.4);
+			else
+				_yesButton.width = _cancelButton.width = _container.width * (GlobalConfig.isPhone ? 0.8 : 0.6);
 			
 			super.draw();
 		}

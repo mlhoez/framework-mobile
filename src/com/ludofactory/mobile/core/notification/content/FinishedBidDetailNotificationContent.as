@@ -131,8 +131,8 @@ package com.ludofactory.mobile.core.notification.content
 				if( _image.height > GlobalConfig.stageHeight * 0.4 )
 					_image.height = GlobalConfig.stageHeight * 0.4;
 				
-				if( _image.width > this.width )
-					_image.width = this.width;
+				if( _image.width > this.actualWidth )
+					_image.width = this.actualWidth;
 			}
 			
 			super.draw();
@@ -140,7 +140,7 @@ package com.ludofactory.mobile.core.notification.content
 			if( _needResize )
 			{
 				_needResize = false;
-				NotificationManager.replaceNotification();
+				//NotificationManager.replaceNotification();
 			}
 		}
 		

@@ -154,7 +154,7 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = _stateContainer.width = _stateTitle.width = _stateMessage.width = _list.width = _rewardContainer.width = _headerContainer.width = this.width * 0.9;
+			_notificationTitle.width = _stateContainer.width = _stateTitle.width = _stateMessage.width = _list.width = _rewardContainer.width = _headerContainer.width = this.actualWidth * 0.9;
 			_headerRewardTitle.width = _notificationTitle.width * 0.4;
 			_headerDateLabel.x = _notificationTitle.width * 0.5;
 			_headerDateLabel.width = _notificationTitle.width * 0.5;

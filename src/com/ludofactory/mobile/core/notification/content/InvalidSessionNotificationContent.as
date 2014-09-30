@@ -12,7 +12,6 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.*;
 	import com.ludofactory.mobile.core.authentication.AuthenticationManager;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
-	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -92,9 +91,9 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = this.width;
-			_message.width = this.width * 0.9;
-			_yesButton.width = _cancelButton.width = this.width * (GlobalConfig.isPhone ? 0.8 : 0.6);
+			_notificationTitle.width = this.actualWidth;
+			_message.width = this.actualWidth * 0.9;
+			_yesButton.width = _cancelButton.width = this.actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
 			
 			super.draw();
 		}
@@ -106,21 +105,13 @@ package com.ludofactory.mobile.core.notification.content
 		private function onConfirm(event:Event):void
 		{
 			AuthenticationManager.startAuthenticationProcess(AbstractEntryPoint.screenNavigator, AbstractEntryPoint.screenNavigator.activeScreenID);
-			onClose();
+			close();
 		}
 		
 		private function onCancel(event:Event):void
 		{
 			AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.HOME_SCREEN );
-			onClose();
-		}
-
-		/**
-		 * Close the notification.
-		 */
-		public function onClose():void
-		{
-			dispatchEventWith(LudoEventType.CLOSE_NOTIFICATION, false, data);
+			close();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

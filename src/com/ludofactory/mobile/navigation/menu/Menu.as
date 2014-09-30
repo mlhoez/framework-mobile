@@ -280,9 +280,9 @@ package com.ludofactory.mobile.navigation.menu
 			}
 		}
 		
-		private function onCloseDisconnectNotification(event:Event):void
+		private function onCloseDisconnectNotification(data:Object):void
 		{
-			if( event.data )
+			if( data )
 			{
 				Remote.getInstance().clearAllRespondersOfScreen("Menu");
 				MemberManager.getInstance().disconnect();

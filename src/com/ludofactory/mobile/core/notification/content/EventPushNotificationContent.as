@@ -14,7 +14,6 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -101,8 +100,8 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = _message.width = this.width * 0.9;
-			_yesButton.width = _cancelButton.width = this.width * 0.8;
+			_notificationTitle.width = _message.width = this.actualWidth * 0.9;
+			_yesButton.width = _cancelButton.width = this.actualWidth * 0.8;
 			
 			super.draw();
 		}
@@ -139,7 +138,7 @@ package com.ludofactory.mobile.core.notification.content
 				Remote.getInstance().updatePushToken(event.token, null, null, null, 2);
 			}
 			AbstractEntryPoint.screenNavigator.showScreen(_completeScreenId);
-			onClose();
+			close();
 		}
 		
 		private function onPermissionRefused(event:PushNotificationEvent):void
@@ -147,21 +146,13 @@ package com.ludofactory.mobile.core.notification.content
 			PushNotification.getInstance().removeEventListener(PushNotificationEvent.PERMISSION_GIVEN_WITH_TOKEN_EVENT, onPermissionGiven);
 			PushNotification.getInstance().removeEventListener(PushNotificationEvent.PERMISSION_REFUSED_EVENT, onPermissionRefused);
 			AbstractEntryPoint.screenNavigator.showScreen(_completeScreenId);
-			onClose();
+			close();
 		}
 		
 		private function onCancel(event:Event):void
 		{
 			AbstractEntryPoint.screenNavigator.showScreen(_completeScreenId);
-			onClose();
-		}
-
-		/**
-		 * Close the notification.
-		 */
-		public function onClose():void
-		{
-			dispatchEventWith(LudoEventType.CLOSE_NOTIFICATION, false, data);
+			close();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

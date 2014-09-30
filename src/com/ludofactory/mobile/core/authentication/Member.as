@@ -127,7 +127,13 @@ package com.ludofactory.mobile.core.authentication
         /**
          * Whether it is a player with the gifts enabled.
          * Default is false so that we don't have problems with Apple. */
-        private var _giftsEnabled:Boolean = true;
+        private var _giftsEnabled:Boolean = false;
+
+		/**
+		 * Whether the player can watch a VidCoin video in order to get 1 (or more)
+		 * free game session.
+		 */
+		private var _canWatchVideo:Boolean = false;
 		
 		public function Member() { }
 		
@@ -153,6 +159,7 @@ package com.ludofactory.mobile.core.authentication
 			if( "id_pays_pseudo" in memberData && memberData.id_pays_pseudo != null )                 _countryId = int(memberData.id_pays_pseudo);
 			if( "parties_quotidiennes" in memberData && memberData.parties_quotidiennes != null )     _numFreeGameSessionsTotal = int(memberData.parties_quotidiennes);
 			if( "cadeaux_active" in memberData && memberData.cadeaux_active != null )                 _giftsEnabled = Boolean(memberData.cadeaux_active);
+			if( "video_disponible" in memberData && memberData.video_disponible != null )             _canWatchVideo = Boolean(memberData.video_disponible);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
 		
@@ -232,5 +239,8 @@ package com.ludofactory.mobile.core.authentication
 
         public function get giftsEnabled():Boolean { return _giftsEnabled; }
         public function set giftsEnabled(val:Boolean):void { _giftsEnabled = val; }
+
+		public function get canWatchVideo():Boolean { return _canWatchVideo; }
+		public function set canWatchVideo(val:Boolean):void { _canWatchVideo = val; }
 	}
 }

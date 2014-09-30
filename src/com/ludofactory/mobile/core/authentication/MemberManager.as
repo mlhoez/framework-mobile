@@ -459,7 +459,9 @@ package com.ludofactory.mobile.core.authentication
 		public function getTournamentUnlocked():Boolean { return _member.tournamentUnlocked; }
         /** Returns */
         public function getGiftsEnabled():Boolean { return _member.giftsEnabled; }
-
+		/** Returns */
+		public function getCanWatchVideo():Boolean { return _member.canWatchVideo; }
+		
 		public function getNumStarsEarnedInAnonymousGameSessions():int
 		{
 			var count:int = 0;

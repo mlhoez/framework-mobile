@@ -207,7 +207,7 @@ package com.ludofactory.mobile.core.storage
 			var faq:Object = Storage.getInstance().getProperty(StorageConfig.PROPERTY_FAQ);
 			faq[LanguageManager.getInstance().lang] = JSON.stringify(data.tabFaq);
 			setProperty(StorageConfig.PROPERTY_FAQ_VERSION, int(data.version));
-			Storage.getInstance().setProperty(StorageConfig.PROPERTY_FAQ, faq);
+			setProperty(StorageConfig.PROPERTY_FAQ, faq);
 		}
 		
 		/**
@@ -218,7 +218,7 @@ package com.ludofactory.mobile.core.storage
 			var vip:Object = Storage.getInstance().getProperty( (MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS) );
 			vip[LanguageManager.getInstance().lang] = JSON.stringify(data.tab_vip as Array);
 			setProperty(StorageConfig.PROPERTY_VIP_VERSION, int(data.version));
-			Storage.getInstance().setProperty((MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS), vip);
+			setProperty((MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS), vip);
 		}
 		
 		/**

@@ -5,6 +5,7 @@ package com.ludofactory.mobile.core.notification
 {
 
 	import com.ludofactory.mobile.core.controls.PullToRefreshScrollContainer;
+	import com.ludofactory.mobile.core.events.LudoEventType;
 
 	public class AbstractNotificationPopupContent extends PullToRefreshScrollContainer
 	{
@@ -16,6 +17,8 @@ package com.ludofactory.mobile.core.notification
 		public function AbstractNotificationPopupContent()
 		{
 			super();
+			
+			isRefreshable = false;
 		}
 
 
@@ -27,6 +30,12 @@ package com.ludofactory.mobile.core.notification
 		public function set data(value:Object):void
 		{
 			_data = value;
+		}
+		
+		protected function close():void
+		{
+			NotificationPopupManager.closeNotification();
+			//dispatchEventWith(LudoEventType.CLOSE_NOTIFICATION, false, data);
 		}
 	}
 }

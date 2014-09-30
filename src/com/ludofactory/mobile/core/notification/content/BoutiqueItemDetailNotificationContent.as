@@ -130,10 +130,10 @@ package com.ludofactory.mobile.core.notification.content
 			_giftDescription.width = _giftName.width = _giftPoints.width = this.actualWidth - scaleAndRoundToDpi( GlobalConfig.isPhone ? 40:60 );
 			
 			if( _orderButton )
-				_orderButton.width = this.width * 0.8;
+				_orderButton.width = this.actualWidth * 0.8;
 			
 			if( _resultMessage )
-				_resultMessage.width = this.width;
+				_resultMessage.width = this.actualWidth;
 			
 			if( _image.isLoaded )
 			{
@@ -141,8 +141,8 @@ package com.ludofactory.mobile.core.notification.content
 				if( _image.height > GlobalConfig.stageHeight * 0.4 )
 					_image.height = GlobalConfig.stageHeight * 0.4;
 					
-				if( _image.width > this.width )
-					_image.width = this.width;
+				if( _image.width > this.actualWidth )
+					_image.width = this.actualWidth;
 			}
 			
 			super.draw();
@@ -150,7 +150,7 @@ package com.ludofactory.mobile.core.notification.content
 			if( _needResize )
 			{
 				_needResize = false;
-				NotificationManager.replaceNotification();
+				//NotificationManager.replaceNotification();
 			}
 		}
 		

@@ -11,7 +11,6 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.event.EventData;
@@ -91,8 +90,8 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = _message.width = this.width * 0.9;
-			_yesButton.width = this.width * 0.8;
+			_notificationTitle.width = _message.width = this.actualWidth * 0.9;
+			_yesButton.width = this.actualWidth * 0.8;
 			
 			super.draw();
 		}
@@ -105,20 +104,12 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			if( _eventData.link != "" )
 				navigateToURL( new URLRequest( _eventData.link ) );
-			onClose();
+			close();
 		}
 		
 		private function onCancel(event:Event):void
 		{
-			onClose();
-		}
-
-		/**
-		 * Close the notification.
-		 */
-		public function onClose():void
-		{
-			dispatchEventWith(LudoEventType.CLOSE_NOTIFICATION, false, data);
+			close();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

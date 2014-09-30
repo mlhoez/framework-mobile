@@ -13,6 +13,7 @@ package com.ludofactory.mobile.core.shop.vip
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -223,7 +224,16 @@ package com.ludofactory.mobile.core.shop.vip
 			
 			// FIXME A checker s'il faut le remettre
 			//this.advancedOwner.screenData.idCategory = -1;
-			super.onBack();
+			if( !MemberManager.getInstance().getGiftsEnabled() )
+			{
+				// otherwise bug becasue back = BoutiqueHomeScreen and because it's not
+				// a gift athorized account => BoutiqueHomeScreen redirects to here again
+				advancedOwner.showScreen(ScreenIds.BOUTIQUE_HOME);
+			}
+			else
+			{
+				super.onBack();
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------

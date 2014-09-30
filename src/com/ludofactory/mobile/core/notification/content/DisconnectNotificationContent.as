@@ -82,11 +82,11 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = this.width * (GlobalConfig.isPhone ? 0.8 : 0.6);
+			_notificationTitle.width = this.actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
 			if( AbstractGameInfo.LANDSCAPE )
-				_yesButton.width = _cancelButton.width = this.width * (GlobalConfig.isPhone ? 0.6 : 0.4);
+				_yesButton.width = _cancelButton.width = this.actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.4);
 			else
-				_yesButton.width = _cancelButton.width = this.width * (GlobalConfig.isPhone ? 0.8 : 0.6);
+				_yesButton.width = _cancelButton.width = this.actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
 			
 			super.draw();
 		}
@@ -98,20 +98,12 @@ package com.ludofactory.mobile.core.notification.content
 		private function onConfirm(event:Event):void
 		{
 			data = true;
-			onClose();
+			close();
 		}
 		
 		private function onCancel(event:Event):void
 		{
-			onClose();
-		}
-
-		/**
-		 * Close the notification.
-		 */
-		public function onClose():void
-		{
-			dispatchEventWith(LudoEventType.CLOSE_NOTIFICATION, false, data);
+			close();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

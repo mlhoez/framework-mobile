@@ -62,7 +62,7 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = _message.width =  this.width;
+			_notificationTitle.width = _message.width =  this.actualWidth;
 			
 			super.draw();
 		}

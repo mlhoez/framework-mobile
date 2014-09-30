@@ -132,7 +132,7 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = _bonusList.width = _bonusContainer.width = this.width * 0.9;
+			_notificationTitle.width = _bonusList.width = _bonusContainer.width = this.actualWidth * 0.9;
 			_bonusList.validate();
 			
 			_bonusTitleLabel.validate();
@@ -140,7 +140,7 @@ package com.ludofactory.mobile.core.notification.content
 			_bonusMessageLabel.width = _bonusContainer.width - _bonusTitleLabel.width - (_bonusContainer.padding * 6);
 			
 			if( _infoMessageLabel )
-				_infoMessageLabel.width = this.width * 0.9;
+				_infoMessageLabel.width = this.actualWidth * 0.9;
 			
 			super.draw();
 		}

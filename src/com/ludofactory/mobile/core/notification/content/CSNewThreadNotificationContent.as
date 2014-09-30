@@ -164,9 +164,9 @@ package com.ludofactory.mobile.core.notification.content
 			//_container.x = (this.actualWidth - _container.width) * 0.5;
 			
 			if( _mailInput )
-				_mailInput.width = this.width;
+				_mailInput.width = this.actualWidth;
 			
-			_themeSelectionInput.width = _messageInput.width = this.width;
+			_themeSelectionInput.width = _messageInput.width = this.actualWidth;
 			_messageInput.height = scaleAndRoundToDpi(350);
 			
 			_themeSelectionInput.validate();
@@ -175,7 +175,7 @@ package com.ludofactory.mobile.core.notification.content
 			
 			_themesList.width = this.actualWidth * 0.8;
 			
-			_sendButton.width = this.width * 0.8;
+			_sendButton.width = this.actualWidth * 0.8;
 			
 			super.draw();
 		}
