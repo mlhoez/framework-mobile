@@ -21,6 +21,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.cs.*;
 	import com.ludofactory.mobile.core.test.push.PushNewCSThread;
 	import com.ludofactory.mobile.core.test.push.PushType;
@@ -167,7 +168,7 @@ package com.ludofactory.mobile.core.notification.content
 				_mailInput.width = this.actualWidth;
 			
 			_themeSelectionInput.width = _messageInput.width = this.actualWidth;
-			_messageInput.height = scaleAndRoundToDpi(350);
+			_messageInput.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 100 /* 2 lines */ : 250);
 			
 			_themeSelectionInput.validate();
 			_arrowDown.x = _themeSelectionInput.width - _arrowDown.width - scaleAndRoundToDpi(20);
