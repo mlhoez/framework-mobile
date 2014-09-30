@@ -71,8 +71,6 @@ package com.ludofactory.mobile.core.notification
 				return;
 			}
 			
-			_isNotificationDisplaying = true;
-			
 			Starling.current.stage.addChild(_overlay);
 			TweenMax.to(_overlay, 0.5, { autoAlpha:0.75 });
 
@@ -80,6 +78,8 @@ package com.ludofactory.mobile.core.notification
 			_currentNotification.addEventListener(LudoEventType.CLOSE_NOTIFICATION, onNotificationClosed);
 			_currentNotification.setContentAndCallBack(content, callback);
 			_currentNotification.animateIn();
+			
+			_isNotificationDisplaying = true;
 		}
 
 		/**
