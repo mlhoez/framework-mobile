@@ -145,7 +145,7 @@ package com.ludofactory.mobile.core.authentication
 			{
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_logo.height = actualHeight * (GlobalConfig.isPhone ? 0.3 : 0.5);
+					_logo.height = actualHeight * (GlobalConfig.isPhone ? 0.3 : 0.4);
 					_logo.validate();
 					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 5 : 15 );
 					_logo.x = (((actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.5)) - _logo.width) * 0.5) << 0;
