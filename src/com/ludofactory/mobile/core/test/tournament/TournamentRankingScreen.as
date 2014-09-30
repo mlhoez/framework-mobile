@@ -6,6 +6,8 @@ Created : 24 juil. 2013
 */
 package com.ludofactory.mobile.core.test.tournament
 {
+
+	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Shaker;
@@ -22,11 +24,14 @@ package com.ludofactory.mobile.core.test.tournament
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.TimerManager;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.MarketingRegisterNotification;
 	import com.ludofactory.mobile.core.test.ads.tournament.AdTournamentContainer;
+	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.push.GameSession;
 	import com.ludofactory.mobile.core.test.tournament.listing.RankData;
@@ -123,7 +128,7 @@ package com.ludofactory.mobile.core.test.tournament
 			addChild(_listHeader);
 			
 			if( AbstractGameInfo.LANDSCAPE )
-				RankItemRenderer.ITEM_WIDTH = RankHeaderItemRenderer.ITEM_WIDTH = GlobalConfig.stageWidth - scaleAndRoundToDpi(350); // size of the ad container in landscape mode
+				RankItemRenderer.ITEM_WIDTH = RankHeaderItemRenderer.ITEM_WIDTH = AirNetworkInfo.networkInfo.isConnected() ? GlobalConfig.stageWidth : (GlobalConfig.stageWidth - scaleAndRoundToDpi(350)); // size of the ad container in landscape mode
 			else
 				RankItemRenderer.ITEM_WIDTH = RankHeaderItemRenderer.ITEM_WIDTH = GlobalConfig.stageWidth;
 			
@@ -237,7 +242,7 @@ package com.ludofactory.mobile.core.test.tournament
 				_ranksList.isRefreshableDown = false;
 				_ranksList.isRefreshableTop = false;
 				_ranksList.touchable = false;
-				_ranksList.alpha = 0.2
+				_ranksList.alpha = 0.2;
 				
 				_retryContainer.loadingMode = false;
 				
@@ -268,13 +273,13 @@ package com.ludofactory.mobile.core.test.tournament
 					_playButton.width = scaleAndRoundToDpi(300);
 					_playButton.validate();
 					_playButton.y = actualHeight - _playButton.height - scaleAndRoundToDpi(10);
-					_playButton.x = (_adContainer ? _adContainer.x : 0) + scaleAndRoundToDpi(25);
+					_playButton.x = _adContainer ? (_adContainer.x + (((actualWidth - _adContainer.x) - _playButton.width) * 0.5)) : ((actualWidth - _playButton.width) * 0.5);//(_adContainer ? _adContainer.x : actualWidth) + scaleAndRoundToDpi(25);
 					
-					_listHeader.width = actualWidth - scaleAndRoundToDpi(350);
+					_listHeader.width = _adContainer ? (actualWidth - _adContainer.width) : actualWidth;
 					_listHeader.validate();
 					
 					_ranksList.width = _listHeader.width;
-					_ranksList.height = actualHeight - _listHeader.height;;
+					_ranksList.height = actualHeight - _listHeader.height;
 					_ranksList.y = _listHeader.y + _listHeader.height;
 					
 					_listBottomShadow.height = actualHeight;
@@ -407,6 +412,7 @@ package com.ludofactory.mobile.core.test.tournament
 						_retryContainer.visible = false;
 						_ranksList.visible = true;
 						_listHeader.visible = true;
+						_playButton.visible = true;
 						_ranksList.touchable = true;
 						_ranksList.alpha = 1;
 						
@@ -598,7 +604,8 @@ package com.ludofactory.mobile.core.test.tournament
 					if( MemberManager.getInstance().getNumFreeGameSessions() < int(Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)) )
 					{
 						//AbstractEntryPoint.screenNavigator.showScreen( AdvancedScreen.AUTHENTICATION_SCREEN );
-						NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.TOURNAMENT_RANKING_SCREEN) );
+						//NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.TOURNAMENT_RANKING_SCREEN) );
+						NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.TOURNAMENT_RANKING_SCREEN) );
 					}
 					else
 					{
