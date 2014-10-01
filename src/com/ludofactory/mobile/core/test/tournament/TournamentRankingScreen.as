@@ -128,7 +128,7 @@ package com.ludofactory.mobile.core.test.tournament
 			addChild(_listHeader);
 			
 			if( AbstractGameInfo.LANDSCAPE )
-				RankItemRenderer.ITEM_WIDTH = RankHeaderItemRenderer.ITEM_WIDTH = AirNetworkInfo.networkInfo.isConnected() ? GlobalConfig.stageWidth : (GlobalConfig.stageWidth - scaleAndRoundToDpi(350)); // size of the ad container in landscape mode
+				RankItemRenderer.ITEM_WIDTH = RankHeaderItemRenderer.ITEM_WIDTH = !AirNetworkInfo.networkInfo.isConnected() ? GlobalConfig.stageWidth : (GlobalConfig.stageWidth - scaleAndRoundToDpi(350)); // size of the ad container in landscape mode
 			else
 				RankItemRenderer.ITEM_WIDTH = RankHeaderItemRenderer.ITEM_WIDTH = GlobalConfig.stageWidth;
 			
