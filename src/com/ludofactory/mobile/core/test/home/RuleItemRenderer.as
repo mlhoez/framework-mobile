@@ -8,6 +8,8 @@ package com.ludofactory.mobile.core.test.home
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGame;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	
 	import flash.text.TextFormat;
@@ -56,7 +58,7 @@ package com.ludofactory.mobile.core.test.home
 		{
 			super.initialize();
 			
-			width = scaleAndRoundToDpi(GlobalConfig.isPhone ? 560 : 760);
+			width = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.8) : 560 ) : (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.7) : 760) );
 			height = _minItemHeight = scaleAndRoundToDpi(150);
 			_padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 20);
 			
@@ -182,6 +184,7 @@ package com.ludofactory.mobile.core.test.home
 							
 							_picture.x = _picture.y = 0;
 							
+							_picture.width = _background.width;
 							_background.height = _message.y + _message.height + _padding;
 							
 							break;
@@ -196,6 +199,7 @@ package com.ludofactory.mobile.core.test.home
 							_picture.x = 0;
 							_picture.y = _message.height + (_padding * 2);
 							
+							_picture.width = _background.width;
 							_background.height = _picture.y + _picture.height;
 							
 							break;

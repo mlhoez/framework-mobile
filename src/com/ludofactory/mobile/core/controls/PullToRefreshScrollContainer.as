@@ -6,25 +6,29 @@ Created : 27 août 2013
 */
 package com.ludofactory.mobile.core.controls
 {
+
+	import com.greensock.TweenMax;
+	import com.greensock.easing.Power1;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	
+
 	import feathers.controls.Label;
 	import feathers.controls.ScrollContainer;
 	import feathers.layout.VerticalLayout;
-	
+
+	import flash.text.TextFormat;
+
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
 	import starling.utils.deg2rad;
-	
+
 	public class PullToRefreshScrollContainer extends ScrollContainer
 	{
 		/**
@@ -145,7 +149,44 @@ package com.ludofactory.mobile.core.controls
 					Starling.juggler.tween(_arrow, 0.25, { rotation:deg2rad(0) });
 				}
 			}
+			
+			if( isInvalid(INVALIDATION_FLAG_SIZE) && !_downArrow )
+			{
+				if( this.actualHeight < this.viewPort.height )
+				{
+					log("[PullToRefreshScrollContainer] ScrollContainer should display arrows !");
+					_zone = new Image(Theme.downArrowShadow);
+					_zone.y = this.actualHeight - _zone.height;
+					_zone.width = actualWidth;
+					addRawChild(_zone);
+					
+					_downArrow = new Image(Theme.downArrowLists);
+					_downArrow.scaleX = _downArrow.scaleY = GlobalConfig.dpiScale;
+					_downArrow.x = actualWidth - _downArrow.width - scaleAndRoundToDpi(10);
+					_downArrow.y = this.actualHeight - _downArrow.height - scaleAndRoundToDpi(10);
+					TweenMax.to(_downArrow, 0.5, { y:(_downArrow.y - scaleAndRoundToDpi(16)), yoyo:true, repeat:-1, ease:Power1.easeInOut });
+					addRawChild(_downArrow);
+				}
+			}
 		}
+		
+		override protected function startScroll():void
+		{
+			super.startScroll();
+			
+			if( _downArrow )
+			{
+				TweenMax.killTweensOf(_downArrow);
+				removeRawChild(_downArrow, true);
+				_downArrow = null;
+
+				removeRawChild(_zone, true);
+				_zone = null;
+			}
+		}
+		
+		private var _zone:Image;
+		private var _downArrow:Image;
 		
 		override protected function finishScrollingVertically():void
 		{
@@ -338,6 +379,16 @@ package com.ludofactory.mobile.core.controls
 		override public function dispose():void
 		{
 			clearTopLoader();
+
+			if( _downArrow )
+			{
+				TweenMax.killTweensOf(_downArrow);
+				_downArrow.removeFromParent(true);
+				_downArrow = null;
+
+				_zone.removeFromParent(true);
+				_zone = null;
+			}
 			
 			super.dispose();
 		}
