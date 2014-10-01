@@ -391,10 +391,10 @@ package com.ludofactory.mobile.core.test.vip
 					_topShadow.height = actualHeight;
 					_topShadow.x = actualWidth * 0.5 - _topShadow.width;
 
-					_leftArrowButton.x = scaleAndRoundToDpi(5);
+					_leftArrowButton.x = scaleAndRoundToDpi(12);
 					_leftArrowButton.y = actualHeight - _leftArrowButton.height - scaleAndRoundToDpi(5);
 
-					_rightArrowButton.x = actualWidth * 0.5 - _rightArrowButton.width - scaleAndRoundToDpi(5);
+					_rightArrowButton.x = actualWidth * 0.5 - _rightArrowButton.width - scaleAndRoundToDpi(12);
 					_rightArrowButton.y = actualHeight - _rightArrowButton.height - scaleAndRoundToDpi(5);
 				}
 				else
@@ -412,10 +412,10 @@ package com.ludofactory.mobile.core.test.vip
 					
 					_topShadow.width = actualWidth;
 
-					_leftArrowButton.x = scaleAndRoundToDpi(5);
+					_leftArrowButton.x = scaleAndRoundToDpi(12);
 					_leftArrowButton.y = actualHeight - _leftArrowButton.height - scaleAndRoundToDpi(5);
 
-					_rightArrowButton.x = actualWidth - _rightArrowButton.width - scaleAndRoundToDpi(5);
+					_rightArrowButton.x = actualWidth - _rightArrowButton.width - scaleAndRoundToDpi(12);
 					_rightArrowButton.y = actualHeight - _rightArrowButton.height - scaleAndRoundToDpi(5);
 				}
 				
