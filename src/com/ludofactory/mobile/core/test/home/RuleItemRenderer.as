@@ -19,7 +19,9 @@ package com.ludofactory.mobile.core.test.home
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
-	
+
+	import starling.display.Image;
+
 	import starling.display.Quad;
 	
 	/**
@@ -38,7 +40,7 @@ package com.ludofactory.mobile.core.test.home
 		private var _background:Quad;
 		/**
 		 * The user picture. */		
-		private var _picture:ImageLoader;
+		private var _picture:Image;
 		/**
 		 * The message label */		
 		private var _message:Label;
@@ -58,17 +60,18 @@ package com.ludofactory.mobile.core.test.home
 		{
 			super.initialize();
 			
-			width = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.8) : 560 ) : (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.7) : 760) );
+			// TODO Ajuster la position ici pour le format portrait (GlobalConfig.stageWidth * xxx) comme ça a été fait pour le format paysage
+			// TODO et rescaler les images TOP et BOTTOM de façon proportionnelle
+			width = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.8) : 560 ) : (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.9) : 760) );
 			height = _minItemHeight = scaleAndRoundToDpi(150);
 			_padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 20);
 			
 			_background = new Quad(this.width, this.height, 0xE8E8E8);
 			addChild(_background);
 			
-			_picture = new ImageLoader();
+			/*_picture = new image();
 			_picture.textureScale = GlobalConfig.dpiScale;
-			_picture.snapToPixels = true;
-			addChild(_picture);
+			addChild(_picture);*/
 			
 			_message = new Label();
 			addChild(_message);
@@ -122,7 +125,19 @@ package com.ludofactory.mobile.core.test.home
 					_message.visible = true;
 					_message.text = _data.ruleText;
 					if( _data.imageSource != null && _data.imageSource != "" )
-						_picture.source = AbstractEntryPoint.assets.getTexture(_data.imageSource);
+					{
+						if( !_picture )
+						{
+							_picture = new Image(AbstractEntryPoint.assets.getTexture(_data.imageSource));
+							_picture.scaleX = _picture.scaleY = GlobalConfig.dpiScale;
+							addChild(_picture);
+						}
+						else
+						{
+							_picture.texture = AbstractEntryPoint.assets.getTexture(_data.imageSource);
+							_picture.readjustSize();
+						}
+					}
 				}
 				else
 				{
@@ -141,7 +156,8 @@ package com.ludofactory.mobile.core.test.home
 			{
 				case RuleProperties.TYPE_TITLE:
 				{
-					_picture.visible = false;
+					if( _picture )
+						_picture.visible = false;
 					_background.visible = false;
 					
 					_message.textRendererProperties.textFormat = _titleTextFormat;
@@ -157,10 +173,11 @@ package com.ludofactory.mobile.core.test.home
 				}
 				case RuleProperties.TYPE_RULE_WITH_IMAGE:
 				{
-					_picture.visible = true;
+					if( _picture )
+						_picture.visible = true;
 					_background.visible = true;
 					
-					_picture.validate();
+					//_picture.validate();
 					
 					_message.textRendererProperties.textFormat = _ruleTextFormat;
 					
@@ -174,6 +191,8 @@ package com.ludofactory.mobile.core.test.home
 							_message.validate();
 							
 							_background.height = _message.y + _message.height + _padding;
+							
+							break;
 						}
 						case RuleProperties.POSITION_TOP:
 						{
@@ -258,7 +277,8 @@ package com.ludofactory.mobile.core.test.home
 				}
 				case RuleProperties.TYPE_RULE_WITHOUT_IMAGE:
 				{
-					_picture.visible = false;
+					if( _picture )
+						_picture.visible = false;
 					_background.visible = true;
 					
 					_message.textRendererProperties.textFormat = _ruleTextFormat;
@@ -365,8 +385,11 @@ package com.ludofactory.mobile.core.test.home
 		
 		override public function dispose():void
 		{
-			_picture.removeFromParent(true);
-			_picture = null;
+			if( _picture )
+			{
+				_picture.removeFromParent(true);
+				_picture = null;
+			}
 			
 			_message.removeFromParent(true);
 			_message = null;
