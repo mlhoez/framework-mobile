@@ -233,7 +233,15 @@ package com.ludofactory.common.utils
 			// le mois + 1 car Flash commence Janvier à 00 et non 01
 			return (date.date < 10 ? ("0" + date.date) : date.date) + "/" + ((date.month + 1) < 10 ? ("0" + (date.month + 1)) : (date.month + 1))  + "/" + date.fullYear + " " + (date.hours < 10 ? ("0" + date.hours) : date.hours) + ":"+ (date.minutes < 10 ? ("0" + date.minutes) : date.minutes);
 		}
-		
+
+		/**
+		 * 
+		 * @param refWidth The item we want to scale
+		 * @param refHeight
+		 * @param contentToFillWidth The frame we want the item to fill
+		 * @param contentToFillHeight
+		 * @return
+		 */
 		public static function getScaleToFill(refWidth:Number, refHeight:Number, contentToFillWidth:Number, contentToFillHeight:Number):Number
 		{
 			var ratio:Number;
@@ -242,6 +250,15 @@ package com.ludofactory.common.utils
 			else
 				ratio = contentToFillHeight / refHeight;
 			return ratio;
+		}
+		public static function getScaleToFillWidth(refWidth:Number, contentToFillWidth:Number):Number
+		{
+			return contentToFillWidth / refWidth;
+		}
+
+		public static function getScaleToFillHeight(refHeight:Number, contentToFillHeight:Number):Number
+		{
+			return contentToFillHeight / refHeight;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
