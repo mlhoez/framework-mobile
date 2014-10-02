@@ -250,12 +250,12 @@ package com.ludofactory.common.gettext
 		 * 
 		 * @param data
 		 */		
-		public function enqueue(data:Object):void
+		private function enqueue(data:Object):void
 		{
 			var moFileUrlList:Array;
 			for(var languageIsoName:String in data)
 			{
-				if( data[languageIsoName] is String )
+				if( !(data[languageIsoName] is Array) )
 					continue;
 				
 				moFileUrlList = data[languageIsoName];
