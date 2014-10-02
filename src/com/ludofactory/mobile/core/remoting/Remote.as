@@ -788,7 +788,10 @@ package com.ludofactory.mobile.core.remoting
 				}
 				
 				if( "afficher_cadeau" in result && result.afficher_cadeau != null )
+				{
+					delete result.afficher_cadeau; // can cause some problems with some screens so just in case, we remove it
 					MemberManager.getInstance().setGetGiftsEnabled(Boolean(result.afficher_cadeau));
+				}
 				
 				if( MemberManager.getInstance().isLoggedIn() && "highscore" in result )
 					MemberManager.getInstance().setHighscore( int(result.highscore) );
