@@ -6,17 +6,17 @@ Created : 9 avril 2013
 */
 package com.ludofactory.mobile.core.remoting
 {
+
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.InvalidSessionNotification;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
-	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.InvalidSessionNotificationContent;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
@@ -24,12 +24,12 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.core.test.store.StoreData;
 	import com.ludofactory.mobile.debug.ErrorDisplayer;
 	import com.milkmangames.nativeextensions.GoViral;
-	
+
 	import flash.system.Capabilities;
-	
+
 	import starling.events.EventDispatcher;
 	import starling.utils.formatString;
-	
+
 	/**
 	 * Simplifies the amfphp connection and the remote calls.
 	 */	
@@ -49,10 +49,10 @@ package com.ludofactory.mobile.core.remoting
 		private const DEV_PORT:int = 80;
 		//private const DEV_URL:String = "http://www.ludokado.com";
 		//private const DEV_URL:String = "http://ludokado.dev";
-		private const DEV_URL:String = "http://ludomobile.ludokado.dev";
+		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokadom.mlhoez.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.pterrier.ludofactory.dev";
-		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
+		private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado3.sravet.ludofactory.dev";
 		//private const DEV_URL:String = "http://semiprod.ludokado.com";
 		
@@ -395,7 +395,7 @@ package com.ludofactory.mobile.core.remoting
 		public function getFaq(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = getGenericParams();
-			params.version = Storage.getInstance().getProperty(StorageConfig.PROPERTY_FAQ_VERSION);
+			//params.version = Storage.getInstance().getProperty(StorageConfig.PROPERTY_FAQ_VERSION);
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getFAQ", params);
 		}
 		
@@ -405,7 +405,7 @@ package com.ludofactory.mobile.core.remoting
 		public function getVip(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = getGenericParams();
-			params.version = Storage.getInstance().getProperty(StorageConfig.PROPERTY_VIP_VERSION);
+			//params.version = Storage.getInstance().getProperty(StorageConfig.PROPERTY_VIP_VERSION);
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getVIP", params);
 		}
 		
@@ -415,7 +415,7 @@ package com.ludofactory.mobile.core.remoting
 		public function getNews(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = getGenericParams();
-			params.version = Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEWS_VERSION);
+			//params.version = Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEWS_VERSION);
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getActualites", params);
 		}
 		
@@ -760,7 +760,8 @@ package com.ludofactory.mobile.core.remoting
 			{
 				log("[Remote] onQueryComplete : The user could not be reconnected on the server side (error 999).");
 				MemberManager.getInstance().disconnect();
-				NotificationManager.addNotification(new InvalidSessionNotification());
+				//NotificationManager.addNotification(new InvalidSessionNotification());
+				NotificationPopupManager.addNotification(new InvalidSessionNotificationContent());
 				InfoManager.hide("", InfoContent.ICON_NOTHING, 0); // just in case
 			}
 			else
@@ -785,6 +786,9 @@ package com.ludofactory.mobile.core.remoting
 					MemberManager.getInstance().parseData(result.obj_membre_mobile);
 					dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
 				}
+				
+				if( "afficher_cadeau" in result && result.afficher_cadeau != null )
+					MemberManager.getInstance().setGetGiftsEnabled(Boolean(result.afficher_cadeau));
 				
 				if( MemberManager.getInstance().isLoggedIn() && "highscore" in result )
 					MemberManager.getInstance().setHighscore( int(result.highscore) );

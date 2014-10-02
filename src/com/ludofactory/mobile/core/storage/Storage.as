@@ -206,7 +206,7 @@ package com.ludofactory.mobile.core.storage
 		{
 			var faq:Object = Storage.getInstance().getProperty(StorageConfig.PROPERTY_FAQ);
 			faq[LanguageManager.getInstance().lang] = JSON.stringify(data.tabFaq);
-			setProperty(StorageConfig.PROPERTY_FAQ_VERSION, int(data.version));
+			//setProperty(StorageConfig.PROPERTY_FAQ_VERSION, int(data.version));
 			setProperty(StorageConfig.PROPERTY_FAQ, faq);
 		}
 		
@@ -217,7 +217,7 @@ package com.ludofactory.mobile.core.storage
 		{
 			var vip:Object = Storage.getInstance().getProperty( (MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS) );
 			vip[LanguageManager.getInstance().lang] = JSON.stringify(data.tab_vip as Array);
-			setProperty(StorageConfig.PROPERTY_VIP_VERSION, int(data.version));
+			//setProperty(StorageConfig.PROPERTY_VIP_VERSION, int(data.version));
 			setProperty((MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS), vip);
 		}
 		
@@ -228,7 +228,7 @@ package com.ludofactory.mobile.core.storage
 		{
 			var news:Object = getProperty(StorageConfig.PROPERTY_NEWS);
 			news[LanguageManager.getInstance().lang] = JSON.stringify(data.tab_actualites);
-			setProperty(StorageConfig.PROPERTY_NEWS_VERSION, int(data.version));
+			//setProperty(StorageConfig.PROPERTY_NEWS_VERSION, int(data.version));
 			setProperty(StorageConfig.PROPERTY_NEWS, news);
 		}
 		
