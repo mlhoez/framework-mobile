@@ -216,9 +216,10 @@ package com.ludofactory.mobile.core.shop.vip
 			advancedOwner.screenData.idSubCategory = -1;
 			advancedOwner.screenData.selectedItemData = null;
 			
-			if( NotificationManager.isNotificationDisplaying )
+			if( NotificationManager.isNotificationDisplaying || NotificationPopupManager.isNotificationDisplaying )
 			{
 				NotificationManager.closeNotification();
+				NotificationPopupManager.closeNotification();
 				return;
 			}
 			

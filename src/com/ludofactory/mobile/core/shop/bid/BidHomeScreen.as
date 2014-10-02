@@ -129,17 +129,6 @@ package com.ludofactory.mobile.core.shop.bid
 			_comingSoonBidsContainer.y = _pendingBidsContainer.y;
 		}
 		
-		override public function onBack():void
-		{
-			if( NotificationManager.isNotificationDisplaying )
-			{
-				NotificationManager.closeNotification();
-				return;
-			}
-			
-			super.onBack();
-		}
-		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
 //------------------------------------------------------------------------------------------------------------

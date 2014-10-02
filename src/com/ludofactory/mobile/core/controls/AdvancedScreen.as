@@ -8,6 +8,10 @@ package com.ludofactory.mobile.core.controls
 {
 	import com.gamua.flox.Flox;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.manager.InfoContent;
+	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	
 	import eu.alebianco.air.extensions.analytics.Analytics;
@@ -63,6 +67,15 @@ package com.ludofactory.mobile.core.controls
 		 */		
 		public function onBack():void
 		{
+			if( NotificationManager.isNotificationDisplaying || NotificationPopupManager.isNotificationDisplaying )
+			{
+				NotificationManager.closeNotification();
+				NotificationPopupManager.closeNotification();
+				return;
+			}
+
+			InfoManager.hide("", InfoContent.ICON_NOTHING, 0); // just in case
+			
 			if( _canBack )
 				advancedOwner.showBackScreen();
 		}

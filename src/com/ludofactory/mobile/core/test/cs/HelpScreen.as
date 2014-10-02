@@ -165,17 +165,6 @@ package com.ludofactory.mobile.core.test.cs
 			_solvedMessagesContent.height = this.actualHeight - _solvedMessagesContent.y;
 		}
 		
-		override public function onBack():void
-		{
-			if( NotificationManager.isNotificationDisplaying )
-			{
-				NotificationManager.closeNotification();
-				return;
-			}
-			
-			super.onBack();
-		}
-		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
 //------------------------------------------------------------------------------------------------------------

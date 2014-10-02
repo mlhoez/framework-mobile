@@ -12,6 +12,7 @@ package com.ludofactory.mobile.core.controls
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	
@@ -56,8 +57,6 @@ package com.ludofactory.mobile.core.controls
 		
 		public function showBackScreen():void
 		{
-			NotificationManager.closeNotification(); // just in case
-			InfoManager.hide("", InfoContent.ICON_NOTHING, 0); // just in case
 			_backScreenId = NavigationManager.getBackScreenId( _activeScreenID );
 			
 			// a new version have been released and must be forced
