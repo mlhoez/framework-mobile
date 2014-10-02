@@ -911,6 +911,7 @@ package com.ludofactory.mobile.core.remoting
 			genericParam.plateforme = GlobalConfig.platformName;
 			genericParam.id_appareil = GlobalConfig.deviceId;
 			genericParam.version_jeu = AbstractGameInfo.GAME_VERSION;
+			genericParam.screen_orientation = AbstractGameInfo.LANDSCAPE ? "paysage" : "portrait";
 			genericParam.store = GlobalConfig.ios ? "applestore" : (GlobalConfig.amazon ? "amazon" : "googleplay");
 			try
 			{
