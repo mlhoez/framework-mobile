@@ -155,6 +155,8 @@ package com.ludofactory.mobile.core.authentication
 				log("<strong>Connexion du joueur " + memberId + "</strong>");
 			}
 			
+			// TODO 
+			
 			// update the values of the footer
 			dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
 		}
@@ -409,6 +411,11 @@ package com.ludofactory.mobile.core.authentication
 				_member.tournamentUnlocked = val;
 				setEncryptedMember();
 			}
+		}
+		
+		public function setGetGiftsEnabled(value:Boolean):void
+		{
+			_member.giftsEnabled = value;
 		}
 		
 		/** Returns the member's id. */		

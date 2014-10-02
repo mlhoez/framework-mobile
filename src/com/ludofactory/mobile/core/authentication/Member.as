@@ -158,7 +158,6 @@ package com.ludofactory.mobile.core.authentication
 			if( "date_parties_gratuites" in memberData && memberData.date_parties_gratuites != null ) _updateDate = String(memberData.date_parties_gratuites);
 			if( "id_pays_pseudo" in memberData && memberData.id_pays_pseudo != null )                 _countryId = int(memberData.id_pays_pseudo);
 			if( "parties_quotidiennes" in memberData && memberData.parties_quotidiennes != null )     _numFreeGameSessionsTotal = int(memberData.parties_quotidiennes);
-			if( "cadeaux_active" in memberData && memberData.cadeaux_active != null )                 _giftsEnabled = Boolean(memberData.cadeaux_active);
 			if( "video_disponible" in memberData && memberData.video_disponible != null )             _canWatchVideo = Boolean(memberData.video_disponible);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
