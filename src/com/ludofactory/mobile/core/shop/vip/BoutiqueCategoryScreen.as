@@ -74,115 +74,99 @@ import com.ludofactory.mobile.core.authentication.RetryContainer;
 		{
 			super.initialize();
 			
-			/*if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SHOP_ENABLED) == true )
-			{*/
-				_message = new Label();
-				_message.text = _("Echangez vos Points contre\nles cadeaux de vos rêves !"); // pas besoin de remplacer la notion de cadeaux car cet écran est passé si on est un joueur non-cadeau
-				addChild(_message);
-				_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
-				
-				_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
-				_listShadow.setVertexColor(0, 0xffffff);
-				_listShadow.setVertexAlpha(0, 0);
-				_listShadow.setVertexColor(1, 0xffffff);
-				_listShadow.setVertexAlpha(1, 0);
-				_listShadow.setVertexAlpha(2, 0.1);
-				_listShadow.setVertexAlpha(3, 0.1);
-				addChild(_listShadow);
-				
-				const listLayout:TiledRowsLayout = new  TiledRowsLayout();
-				listLayout.paging = TiledRowsLayout.PAGING_HORIZONTAL;
-				listLayout.tileHorizontalAlign = TiledRowsLayout.TILE_HORIZONTAL_ALIGN_CENTER;
-				listLayout.horizontalAlign = TiledRowsLayout.HORIZONTAL_ALIGN_CENTER;
-				listLayout.useSquareTiles = false;
-				listLayout.manageVisibility = true;
-				
-				_list = new List();
-				_list.backgroundSkin = new TiledImage(AbstractEntryPoint.assets.getTexture("MenuTile"), GlobalConfig.dpiScale);
-				_list.isSelectable = false;
-				_list.layout = listLayout;
-				_list.snapToPages = false;
-				_list.itemRendererType = BoutiqueCategoryItemRenderer;
-				_list.addEventListener(LudoEventType.BOUTIQUE_CATEGORY_TOUCHED, onCategorySelected);
-				addChild(_list);
-				
-				_retryContainer = new RetryContainer();
-				_retryContainer.addEventListener(starling.events.Event.TRIGGERED, onRetry);
-				_retryContainer.visible = false;
-				addChild(_retryContainer);
-				
-				if( AirNetworkInfo.networkInfo.isConnected() )
-				{
-                    if( MemberManager.getInstance().getGiftsEnabled() )
-                    {
-                        _retryContainer.visible = true;
-                        Remote.getInstance().getBoutiqueCategories(onGetCategoriesSuccess, onGetCategoriesFailure, onGetCategoriesFailure, 2, advancedOwner.activeScreenID);
-                    }
-                    else
-                    {
-                        this.advancedOwner.screenData.idCategory = 28;
-                        this.advancedOwner.screenData.categoryName = _("Ludokado");
-                        this.advancedOwner.showScreen( ScreenIds.BOUTIQUE_SUB_CATEGORY_LISTING );
-                    }
-				}
-				else
-				{
-					// default category
-					_retryContainer.visible = false;
-					NativeApplication.nativeApplication.addEventListener(flash.events.Event.ACTIVATE, onActivate, false, 0, true);
-                    if( MemberManager.getInstance().getGiftsEnabled() )
-                    {
-                        _list.dataProvider = new ListCollection(
-                                [
-                                    new BoutiqueCategoryData( 26, _("Maison"), "BoutiqueHouseIcon" ),
-                                    new BoutiqueCategoryData( 23, _("Loisirs"), "BoutiqueLeisureIcon" ),
-                                    new BoutiqueCategoryData( 24, _("Pour Elle"), "BoutiqueForHerIcon" ),
-                                    new BoutiqueCategoryData( 8,  _("Vidéo"),  "BoutiqueVideoIcon" ),
-                                    new BoutiqueCategoryData( 27, _("Jeux Vidéo"), "BoutiqueVideoGamesIcon" ),
-                                    new BoutiqueCategoryData( 25, _("Image et Son"), "BoutiqueImageAndSoundIcon" ),
-                                    new BoutiqueCategoryData( 28, _("Ludokado"), "BoutiqueLudokadoIcon" )
-                                ]);
-                    }
-                    else
-                    {
-                        _list.dataProvider = new ListCollection(
-                                [
-                                    new BoutiqueCategoryData( 28, _("Ludokado"), "BoutiqueLudokadoIcon" )
-                                ]);
-                    }
-
-				}
-			/*}
+			_message = new Label();
+			_message.text = _("Echangez vos Points contre\nles cadeaux de vos rêves !"); // pas besoin de remplacer la notion de cadeaux car cet écran est passé si on est un joueur non-cadeau
+			addChild(_message);
+			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
+			
+			_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
+			_listShadow.setVertexColor(0, 0xffffff);
+			_listShadow.setVertexAlpha(0, 0);
+			_listShadow.setVertexColor(1, 0xffffff);
+			_listShadow.setVertexAlpha(1, 0);
+			_listShadow.setVertexAlpha(2, 0.1);
+			_listShadow.setVertexAlpha(3, 0.1);
+			addChild(_listShadow);
+			
+			const listLayout:TiledRowsLayout = new  TiledRowsLayout();
+			listLayout.paging = TiledRowsLayout.PAGING_HORIZONTAL;
+			listLayout.tileHorizontalAlign = TiledRowsLayout.TILE_HORIZONTAL_ALIGN_CENTER;
+			listLayout.horizontalAlign = TiledRowsLayout.HORIZONTAL_ALIGN_CENTER;
+			listLayout.useSquareTiles = false;
+			listLayout.manageVisibility = true;
+			
+			_list = new List();
+			_list.backgroundSkin = new TiledImage(AbstractEntryPoint.assets.getTexture("MenuTile"), GlobalConfig.dpiScale);
+			_list.isSelectable = false;
+			_list.layout = listLayout;
+			_list.snapToPages = false;
+			_list.itemRendererType = BoutiqueCategoryItemRenderer;
+			_list.addEventListener(LudoEventType.BOUTIQUE_CATEGORY_TOUCHED, onCategorySelected);
+			addChild(_list);
+			
+			_retryContainer = new RetryContainer();
+			_retryContainer.addEventListener(starling.events.Event.TRIGGERED, onRetry);
+			_retryContainer.visible = false;
+			addChild(_retryContainer);
+			
+			if( AirNetworkInfo.networkInfo.isConnected() )
+			{
+                if( MemberManager.getInstance().getGiftsEnabled() )
+                {
+                    _retryContainer.visible = true;
+                    Remote.getInstance().getBoutiqueCategories(onGetCategoriesSuccess, onGetCategoriesFailure, onGetCategoriesFailure, 2, advancedOwner.activeScreenID);
+                }
+                else
+                {
+                    this.advancedOwner.screenData.idCategory = 28;
+                    this.advancedOwner.screenData.categoryName = _("Ludokado");
+                    this.advancedOwner.showScreen( ScreenIds.BOUTIQUE_SUB_CATEGORY_LISTING );
+                }
+			}
 			else
 			{
-				_retryContainer = new RetryContainer();
-				_retryContainer.addEventListener(starling.events.Event.TRIGGERED, onGoOnlineShop);
-				_retryContainer.loadingMode = false;
-				addChild(_retryContainer);
-				_retryContainer.message = _("La boutique est actuellement indisponible.\n\nMerci de vous rendre dans la rubrique « Boutique » du site Ludokado.com pour plus d'informations.");
-				_retryContainer.retryButtonMessage = _("Accéder");
-			}*/
-			
+				// default category
+				_retryContainer.visible = false;
+				NativeApplication.nativeApplication.addEventListener(flash.events.Event.ACTIVATE, onActivate, false, 0, true);
+                if( MemberManager.getInstance().getGiftsEnabled() )
+                {
+                    _list.dataProvider = new ListCollection(
+                            [
+                                new BoutiqueCategoryData( 26, _("Maison"), "BoutiqueHouseIcon" ),
+                                new BoutiqueCategoryData( 23, _("Loisirs"), "BoutiqueLeisureIcon" ),
+                                new BoutiqueCategoryData( 24, _("Pour Elle"), "BoutiqueForHerIcon" ),
+                                new BoutiqueCategoryData( 8,  _("Vidéo"),  "BoutiqueVideoIcon" ),
+                                new BoutiqueCategoryData( 27, _("Jeux Vidéo"), "BoutiqueVideoGamesIcon" ),
+                                new BoutiqueCategoryData( 25, _("Image et Son"), "BoutiqueImageAndSoundIcon" ),
+                                new BoutiqueCategoryData( 28, _("Ludokado"), "BoutiqueLudokadoIcon" )
+                            ]);
+                }
+                else
+                {
+                    _list.dataProvider = new ListCollection(
+                            [
+                                new BoutiqueCategoryData( 28, _("Ludokado"), "BoutiqueLudokadoIcon" )
+                            ]);
+                }
+
+			}
 		}
 		
 		override protected function draw():void
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				/*if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_SHOP_ENABLED) == true )
-				{*/
-					_message.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 5 : 10) : (AbstractGameInfo.LANDSCAPE ? 15 : 30));
-					_message.width = actualWidth * 0.9;
-					_message.x = (actualWidth - _message.width) * 0.5;
-					_message.validate();
-					
-					_listShadow.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 10 : 20) : (AbstractGameInfo.LANDSCAPE ? 20 : 40));
-					_listShadow.width = actualWidth;
-					
-					_list.y = _retryContainer.y = _listShadow.y + _listShadow.height;
-					_list.width = actualWidth;
-					_list.height = actualHeight - _listShadow.y - _listShadow.height;
-				//}
+				_message.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 5 : 10) : (AbstractGameInfo.LANDSCAPE ? 15 : 30));
+				_message.width = actualWidth * 0.9;
+				_message.x = (actualWidth - _message.width) * 0.5;
+				_message.validate();
+				
+				_listShadow.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 10 : 20) : (AbstractGameInfo.LANDSCAPE ? 20 : 40));
+				_listShadow.width = actualWidth;
+				
+				_list.y = _retryContainer.y = _listShadow.y + _listShadow.height;
+				_list.width = actualWidth;
+				_list.height = actualHeight - _listShadow.y - _listShadow.height;
 				
 				_retryContainer.width = actualWidth;
 				_retryContainer.height = actualHeight - (_list ? _list.y:0);

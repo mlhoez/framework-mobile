@@ -229,13 +229,6 @@ package com.ludofactory.mobile.core.storage
 		public static const DEFAULT_PUSH_INITIALIZED:Boolean = false;
 		
 		/**
-		 * <strong>This is the default value for the how to win
-		 * gifts screen.</strong><br />
-		 * Whether we need to skip the "how to win gifts" screen.
-		 */		
-		//public static const DEFAULT_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN:Boolean = false; // Not needed anymore
-		
-		/**
 		 * 
 		 */		
 		public static const DEFAULT_DISPLAY_ADS:Boolean = false;
@@ -244,11 +237,6 @@ package com.ludofactory.mobile.core.storage
 		 * 
 		 */		
 		public static const DEFAULT_USE_SECURED_CALLS:Boolean = false;
-		
-		/**
-		 * 
-		 */		
-		public static const DEFAULT_DISPLAY_VIP_CHEQUE:Boolean = false;
 		
 		/**
 		 * <strong>This is the default value for the sponsor
@@ -295,10 +283,6 @@ package com.ludofactory.mobile.core.storage
 		
 		
 		public static const DEFAULT_CAN_LAUNCH_INTERSTITIAL:Boolean = false;
-		
-		/**
-		 * Whether the shop is enabled. */		
-		public static const DEFAULT_SHOP_ENABLED:Boolean = true;
 		
 		public static const DEFAULT_NEW_LANGUAGES:Array = [];
 		
@@ -415,19 +399,11 @@ package com.ludofactory.mobile.core.storage
 		
 		/**
 		 * Access the push initialized value. */		
-		//public static const PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN:String = "DEFAULT_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN"; Not needed anymore
-		
-		/**
-		 * Access the push initialized value. */		
 		public static const PROPERTY_DISPLAY_ADS:String = "DEFAULT_DISPLAY_ADS";
 		
 		/**
 		 * Access the push initialized value. */		
 		public static const PROPERTY_USE_SECURED_CALLS:String = "DEFAULT_USE_SECURED_CALLS";
-		
-		/**
-		 * Access the push initialized value. */		
-		//public static const PROPERTY_DISPLAY_VIP_CHEQUE:String = "DEFAULT_DISPLAY_VIP_CHEQUE";
 		
 		/**
 		 * Access the sponsor reward value. */		
@@ -449,10 +425,6 @@ package com.ludofactory.mobile.core.storage
 		public static const PROPERTY_GAME_VERSION:String = "DEFAULT_GAME_VERSION";
 		
 		public static const PROPERTY_CAN_LAUNCH_INTERSTITIAL:String = "DEFAULT_CAN_LAUNCH_INTERSTITIAL";
-		
-		/**
-		 * Whether the shop is enabled. */		
-		//public static const PROPERTY_SHOP_ENABLED:String = "DEFAULT_SHOP_ENABLED";
 		
 		public static const PROPERTY_NEW_LANGUAGES:String = "DEFAULT_NEW_LANGUAGES";
 	}
