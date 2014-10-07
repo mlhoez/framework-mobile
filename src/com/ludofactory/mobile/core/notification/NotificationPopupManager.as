@@ -30,7 +30,7 @@ package com.ludofactory.mobile.core.notification
 		/**
 		 * Determines if a notification is currently displaying.
 		 */
-		private static var _isNotificationDisplaying:Boolean = false;
+		public static var isNotificationDisplaying:Boolean = false;
 
 		/**
 		 * Initializes the popup.
@@ -64,7 +64,7 @@ package com.ludofactory.mobile.core.notification
 		 */
 		public static function addNotification(content:AbstractNotificationPopupContent, callback:Function = null):void
 		{
-			if( _isNotificationDisplaying )
+			if( isNotificationDisplaying )
 			{
 				closeNotification();
 				TweenMax.delayedCall(0.75, addNotification, [content]);
@@ -79,7 +79,7 @@ package com.ludofactory.mobile.core.notification
 			_currentNotification.setContentAndCallBack(content, callback);
 			_currentNotification.animateIn();
 			
-			_isNotificationDisplaying = true;
+			isNotificationDisplaying = true;
 		}
 
 		/**
@@ -87,7 +87,7 @@ package com.ludofactory.mobile.core.notification
 		 */
 		public static function closeNotification():void
 		{
-			if( _isNotificationDisplaying )
+			if( isNotificationDisplaying )
 				_currentNotification.close();
 		}
 
@@ -100,7 +100,7 @@ package com.ludofactory.mobile.core.notification
 		 */
 		private static function onNotificationClosed(event:Event):void
 		{
-			_isNotificationDisplaying = false;
+			isNotificationDisplaying = false;
 			_currentNotification.removeEventListener(LudoEventType.CLOSE_NOTIFICATION, onNotificationClosed);
 			TweenMax.to(_overlay, 0.5, { autoAlpha:0 });
 			_currentNotification.animateOut();

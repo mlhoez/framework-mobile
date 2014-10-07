@@ -3,6 +3,7 @@ package com.ludofactory.mobile.core.theme
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.notification.NotificationPopup;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.test.achievements.TrophyItemRenderer;
 	import com.ludofactory.mobile.core.test.achievements.TrophyMessage;
@@ -81,19 +82,19 @@ package com.ludofactory.mobile.core.theme
 //------------------------------------------------------------------------------------------------------------
 //	Fonts
 		
-		[Embed(source="/fonts/Arial.ttf", fontFamily="Arial", fontWeight="normal", fontStyle="normal", mimeType="application/x-font-truetype", embedAsCFF="false")]
+		[Embed(source="./fonts/Arial.ttf", fontFamily="Arial", fontWeight="normal", fontStyle="normal", mimeType="application/x-font-truetype", embedAsCFF="false")]
 		protected static const ARIAL:Class;
 		
-		[Embed(source="/fonts/Arial Italic.ttf", fontFamily="Arial", fontWeight="normal", fontStyle="italic", mimeType="application/x-font-truetype", embedAsCFF="false")]
+		[Embed(source="./fonts/Arial Italic.ttf", fontFamily="Arial", fontWeight="normal", fontStyle="italic", mimeType="application/x-font-truetype", embedAsCFF="false")]
 		protected static const ARIAL_ITALIC:Class;
 		
-		[Embed(source="/fonts/Arial Bold.ttf", fontFamily="Arial", fontWeight="bold", fontStyle="normal", mimeType="application/x-font-truetype", embedAsCFF="false")]
+		[Embed(source="./fonts/Arial Bold.ttf", fontFamily="Arial", fontWeight="bold", fontStyle="normal", mimeType="application/x-font-truetype", embedAsCFF="false")]
 		protected static const ARIAL_BOLD:Class;
 		
-		[Embed(source="/fonts/Arial Bold Italic.ttf", fontFamily="Arial", fontWeight="bold", fontStyle="italic", mimeType="application/x-font-truetype", embedAsCFF="false")]
+		[Embed(source="./fonts/Arial Bold Italic.ttf", fontFamily="Arial", fontWeight="bold", fontStyle="italic", mimeType="application/x-font-truetype", embedAsCFF="false")]
 		protected static const ARIAL_BOLD_ITALIC:Class;
 		
-		[Embed(source="/fonts/SansitaOne.ttf", fontFamily="Sansita", fontWeight="normal", fontStyle="normal", mimeType="application/x-font-truetype", embedAsCFF="false")]
+		[Embed(source="./fonts/SansitaOne.ttf", fontFamily="Sansita", fontWeight="normal", fontStyle="normal", mimeType="application/x-font-truetype", embedAsCFF="false")]
 		protected static const SANSITAONE:Class;
 		
 		public static const FONT_ARIAL:String = "Arial";
@@ -128,6 +129,10 @@ package com.ludofactory.mobile.core.theme
 		// Game Top Podium
 		public static var labelMessageHighscorePodiumTextFormat:TextFormat;
 		public static var labelPodiumTopTextFormat:TextFormat;
+		
+		// Arrows and shadow for the lists
+		public static var downArrowLists:Texture;
+		public static var downArrowShadow:Texture;
 		
 		// In Game
 		public static var inGameScoreTextFormat:TextFormat;
@@ -376,7 +381,7 @@ package com.ludofactory.mobile.core.theme
 			highScoreListHeaderTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(30), COLOR_LIGHT_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			// MarketingRegisterNotification
-			marketingRegisterNotificationBonusTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 34), Theme.COLOR_WHITE);
+			marketingRegisterNotificationBonusTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 22 : 36), Theme.COLOR_LIGHT_GREY);
 			
 			// SummaryElement
 			summaryElementTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 46), COLOR_WHITE);
@@ -397,6 +402,10 @@ package com.ludofactory.mobile.core.theme
 			ludokadoLogoTexture     = AbstractEntryPoint.assets.getTexture("logo-ludokado");
 			gameCenterTexture       = AbstractEntryPoint.assets.getTexture("game-center");
 			blackLoaderTextures     = AbstractEntryPoint.assets.getTextures("MiniLoader");
+			
+			// 
+			downArrowLists = AbstractEntryPoint.assets.getTexture("arrow-down-dark");
+			downArrowShadow = AbstractEntryPoint.assets.getTexture("list-shadow");
 			
 			// Particles
 			particleConfettiTexture = AbstractEntryPoint.assets.getTexture("particle-confetti");
@@ -634,6 +643,7 @@ package com.ludofactory.mobile.core.theme
 			
 			// GameTypeSelection
 			setInitializerForClass(GameTypeSelectionPopup, gameTypeSelectionPopupInitializer);
+			setInitializerForClass(NotificationPopup, notificationPopupInitializer);
 			
 			// GamePriceSelection buttons
 			setInitializerForClassAndSubclasses(GamePriceSelectionButtonPoints,  gamePriceSelectionButtonPointsInitializer);
@@ -979,7 +989,7 @@ package com.ludofactory.mobile.core.theme
 		{
 			button.defaultLabelProperties.textFormat = this.buttonTextFormat;
 			
-			button.scaleWhenDown = true;
+			//button.scaleWhenDown = true;
 			button.paddingTop = button.paddingBottom = 10 * scaleFactor;
 			button.paddingLeft = button.paddingRight = 32 * scaleFactor;
 			button.gap = 12 * scaleFactor;
@@ -1087,7 +1097,7 @@ package com.ludofactory.mobile.core.theme
 		{
 			button.defaultLabelProperties.textFormat = bigger ? this.buttonSpecialBiggerTextFormat : this.buttonSpecialTextFormat;
 			
-			button.scaleWhenDown = true;
+			//button.scaleWhenDown = true;
 			button.paddingTop = button.paddingBottom = 10 * this.scaleFactor;
 			button.paddingLeft = button.paddingRight = 32 * this.scaleFactor;
 			button.gap = 12 * this.scaleFactor;
@@ -1204,7 +1214,7 @@ package com.ludofactory.mobile.core.theme
 		{
 			button.defaultLabelProperties.textFormat = this.buttonBlueTextFormat;
 			
-			button.scaleWhenDown = true;
+			//button.scaleWhenDown = true;
 			button.paddingTop = button.paddingBottom = 10 * this.scaleFactor;
 			button.paddingLeft = button.paddingRight = 32 * this.scaleFactor;
 			button.gap = 12 * this.scaleFactor;
@@ -1455,8 +1465,8 @@ package com.ludofactory.mobile.core.theme
 		 */		
 		protected function buttonEmptyInitializer(button:Button):void
 		{
-			button.scaleWhenDown = true;
-			button.scaleWhenDownValue = 0.9;
+			//button.scaleWhenDown = true;
+			//button.scaleWhenDownValue = 0.9;
 			//button.minWidth = 112 * this.scale;
 			button.minHeight = 120 * this.scaleFactor;
 			button.minTouchWidth = 130 * this.scaleFactor;
@@ -1473,7 +1483,7 @@ package com.ludofactory.mobile.core.theme
 			
 			button.defaultLabelProperties.textFormat = this.buttonTransparentWhiteTextFormat;
 			
-			button.scaleWhenDown = true;
+			//button.scaleWhenDown = true;
 			button.paddingTop = button.paddingBottom = 10 * this.scaleFactor;
 			button.paddingLeft = button.paddingRight = 32 * this.scaleFactor;
 			button.gap = 12 * this.scaleFactor;
@@ -1491,7 +1501,7 @@ package com.ludofactory.mobile.core.theme
 			button.defaultLabelProperties.textFormat = buttonTransparentBlueTextFormat;
 			button.defaultLabelProperties.wordWrap = true;
 			
-			button.scaleWhenDown = true;
+			//button.scaleWhenDown = true;
 			button.paddingTop = button.paddingBottom = (GlobalConfig.isPhone ? 20 : 40) * this.scaleFactor;
 			button.paddingLeft = button.paddingRight = 32 * this.scaleFactor;
 			button.gap = (GlobalConfig.isPhone ? 12 : 22) * this.scaleFactor;
@@ -1508,7 +1518,7 @@ package com.ludofactory.mobile.core.theme
 			
 			button.defaultLabelProperties.textFormat = buttonTransparentBlueDarkerTextFormat;
 			
-			button.scaleWhenDown = true;
+			//button.scaleWhenDown = true;
 			button.paddingTop = button.paddingBottom = 20 * this.scaleFactor;
 			button.paddingLeft = button.paddingRight = 32 * this.scaleFactor;
 			button.gap = 12 * this.scaleFactor;
@@ -1989,16 +1999,16 @@ package com.ludofactory.mobile.core.theme
 		
 		/**
 		 * Top left leaves. */		
-		protected var topLeftLeavesTexture:Texture;
+		public static var topLeftLeavesTexture:Texture;
 		/**
-		 * Bottom left leaves. */		
-		protected var bottomLeftLeavesTexture:Texture;
+		 * Bottom left leaves. */
+		public static var bottomLeftLeavesTexture:Texture;
 		/**
-		 * Bottom middle leaves. */		
-		protected var bottomMiddleLeavesTexture:Texture;
+		 * Bottom middle leaves. */
+		public static var bottomMiddleLeavesTexture:Texture;
 		/**
-		 * Bottom right leaves. */		
-		protected var bottomRightLeavesTexture:Texture;
+		 * Bottom right leaves. */
+		public static var bottomRightLeavesTexture:Texture;
 		
 		/**
 		 * Left chain. */		
@@ -2016,14 +2026,14 @@ package com.ludofactory.mobile.core.theme
 		 * Lock glow. */		
 		protected var lockGlow:Texture;
 		/**
-		 * Tile. */		
-		protected var gameTypeSelectionTileTexture:Texture;
+		 * Tile. */
+		public static var gameTypeSelectionTileTexture:Texture;
 		
 		protected static const GAME_TYPE_SELECTION_POPUP_FRONT_GRID:Rectangle = new Rectangle(38, 72, 19, 13);
-		protected var gameTypeSelectionFrontTextures:Scale9Textures;
+		public static var gameTypeSelectionFrontTextures:Scale9Textures;
 		
 		protected static const GAME_TYPE_SELECTION_POPUP_BACKGROUND_GRID:Rectangle = new Rectangle(30, 30, 20, 20);
-		protected var gameTypeSelectionBackgroundTextures:Scale9Textures;
+		public static var gameTypeSelectionBackgroundTextures:Scale9Textures;
 		
 		/**
 		 * GameTypeSelectionPopup displayed in the home screen.
@@ -2060,6 +2070,34 @@ package com.ludofactory.mobile.core.theme
 			popup.glow.alignPivot();
 			popup.glow.scaleX = popup.glow.scaleY = 0;
 			popup.unlockTexture = lockOpened;
+			popup.tiledBackground = new TiledImage(gameTypeSelectionTileTexture, scaleFactor);
+		}
+		
+		/**
+		 * GameTypeSelectionPopup displayed in the home screen.
+		 */		
+		protected function notificationPopupInitializer(popup:NotificationPopup):void
+		{
+			popup.frontSkin = new Scale9Image(gameTypeSelectionFrontTextures, scaleFactor);
+			popup.backgroundSkin = new Scale9Image(gameTypeSelectionBackgroundTextures, scaleFactor);
+			popup.topLeftDecoration = new Image(topLeftLeavesTexture);
+			popup.topLeftDecoration.pivotX = popup.topLeftDecoration.width * 0.35;
+			popup.topLeftDecoration.pivotY = popup.topLeftDecoration.height * 0.35;
+			popup.topLeftDecoration.scaleX = popup.topLeftDecoration.scaleY = scaleFactor;
+			popup.bottomLeftDecoration = new Image(bottomLeftLeavesTexture);
+			popup.bottomLeftDecoration.pivotX = popup.bottomLeftDecoration.width * 0.35;
+			popup.bottomLeftDecoration.pivotY = popup.bottomLeftDecoration.height * 0.6;
+			popup.bottomLeftDecoration.scaleX = popup.bottomLeftDecoration.scaleY = scaleFactor;
+			popup.bottomMiddleDecoration = new Image(bottomMiddleLeavesTexture);
+			popup.bottomMiddleDecoration.pivotX = popup.bottomMiddleDecoration.width * 0.5;
+			popup.bottomMiddleDecoration.pivotY = popup.bottomMiddleDecoration.height * 0.6;
+			popup.bottomMiddleDecoration.scaleX = popup.bottomMiddleDecoration.scaleY = scaleFactor;
+			popup.bottomRightDecoration = new Image(bottomRightLeavesTexture);
+			popup.bottomRightDecoration.pivotX = popup.bottomRightDecoration.width * 0.6;
+			popup.bottomRightDecoration.pivotY = popup.bottomRightDecoration.height * 0.6;
+			popup.bottomRightDecoration.scaleX = popup.bottomRightDecoration.scaleY = scaleFactor;
+			popup.shadowThickness = 10 * scaleFactor;
+			popup.buttonAdjustment = 23 * scaleFactor;
 			popup.tiledBackground = new TiledImage(gameTypeSelectionTileTexture, scaleFactor);
 		}
 		

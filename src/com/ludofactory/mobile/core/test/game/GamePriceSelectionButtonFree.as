@@ -6,19 +6,27 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.core.test.game
 {
+
+	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.gettext.aliases._n;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameSessionTimer;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.push.GameSession;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
+	import com.vidcoin.vidcoincontroller.VidCoinController;
+	import com.vidcoin.vidcoincontroller.events.VidCoinEvent;
+
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
@@ -145,13 +153,89 @@ package com.ludofactory.mobile.core.test.game
 					}
 					else
 					{
-						// mettre texte normal + timer
-						_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + "--:--:--";
-						_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_WHITE);
-						
-						GameSessionTimer.registerFunction(setText);
+						if( MemberManager.getInstance().getCanWatchVideo() && AbstractEntryPoint.vidCoin.videoIsAvailableForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID) )
+						{
+							AbstractEntryPoint.vidCoin.addEventListener(VidCoinEvent.VIDCOIN, handleVidCoinEvent);
+							AbstractEntryPoint.vidCoin.playAdForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID);
+							Flox.logEvent("Affichages d'une vidéo VidCoin", {Total:"Total"});
+							
+							_label.text = formatString(_("Regarder une vidéo pour jouer gratuitement."));
+							_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_WHITE);
+						}
+						else
+						{
+							// mettre texte normal + timer
+							_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + "--:--:--";
+							_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_WHITE);
+
+							GameSessionTimer.registerFunction(setText);
+						}
 					}
 					_iconClock.visible = true;
+				}
+			}
+		}
+
+		public function handleVidCoinEvent(event:VidCoinEvent):void
+		{
+			AbstractEntryPoint.vidCoin.removeEventListener(VidCoinEvent.VIDCOIN, handleVidCoinEvent);
+			
+			// TODO Gérer les erreurs :
+			
+			// TODO : si status = true (donc vidéo validée), je fais appel à Remote.getInstance().updateMises()
+			// puis je met à jour le texte du bouton en fonction
+			
+			// URL de call back = paiement/valide_vidcoin.php (voir si on utilise le même compte que Ludokado mais
+			// avec des emplacements différents).
+			
+			
+			
+			
+			if(event.code == "vidcoinViewWillAppear")
+			{
+				// the video appears, here we need to insert a line in the database, stop sounds, etc.
+				Remote.getInstance().logVidCoin(null, null, null, 2);
+			}
+			else if(event.code == "vidcoinViewDidDisappearWithInformation")
+			{
+				// the video left the screen, here we can resume audio and refresh the stakes
+				// depending on the state 
+				if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeSuccess)
+				{
+					
+					log(event.viewInfo["status"]); // success
+					// log(event.viewInfo["reward"]); not used
+				}
+				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeError)
+				{
+					
+					log(event.viewInfo["status"]); // error
+				}
+				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeCancel)
+				{
+					
+					log(event.viewInfo["status"]); // cancel
+				}
+			}
+			else if(event.code == "vidcoinDidValidateView")
+			{
+				// always called after the delegate method "vidcoinViewDidDisappearWithInformation"
+				if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeSuccess)
+				{
+					// TODO upfate mise ici : Remote.getInstance()....
+					Flox.logEvent("Affichages popup marketing inscription", {Visionnage:"Validé"});
+					log(event.viewInfo["status"]); // success
+					log(event.viewInfo["reward"]);
+				}
+				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeError)
+				{
+					Flox.logEvent("Affichages popup marketing inscription", {Visionnage:"Erreur"});
+					log(event.viewInfo["status"]); // error
+				}
+				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeCancel)
+				{
+					Flox.logEvent("Affichages popup marketing inscription", {Visionnage:"Annulée"});
+					log(event.viewInfo["status"]); // cancel
 				}
 			}
 		}

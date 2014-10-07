@@ -162,9 +162,9 @@ package com.ludofactory.mobile.core.controls
 					
 					_downArrow = new Image(Theme.downArrowLists);
 					_downArrow.scaleX = _downArrow.scaleY = GlobalConfig.dpiScale;
-					_downArrow.x = actualWidth - _downArrow.width - scaleAndRoundToDpi(10);
+					_downArrow.x = (actualWidth - _downArrow.width) * 0.5;
 					_downArrow.y = this.actualHeight - _downArrow.height - scaleAndRoundToDpi(10);
-					TweenMax.to(_downArrow, 0.5, { y:(_downArrow.y - scaleAndRoundToDpi(16)), yoyo:true, repeat:-1, ease:Power1.easeInOut });
+					TweenMax.to(_downArrow, 0.4, { y:(_downArrow.y - scaleAndRoundToDpi(16)), yoyo:true, repeat:-1, ease:Power1.easeInOut });
 					addRawChild(_downArrow);
 				}
 			}
@@ -177,11 +177,14 @@ package com.ludofactory.mobile.core.controls
 			if( _downArrow )
 			{
 				TweenMax.killTweensOf(_downArrow);
-				removeRawChild(_downArrow, true);
-				_downArrow = null;
+				TweenMax.allTo([_downArrow, _zone], 0.25, { alpha:0, onComplete:function():void
+				{
+					removeRawChild(_downArrow, true);
+					_downArrow = null;
 
-				removeRawChild(_zone, true);
-				_zone = null;
+					removeRawChild(_zone, true);
+					_zone = null;
+				}});
 			}
 		}
 		

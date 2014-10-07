@@ -42,17 +42,17 @@ package com.ludofactory.mobile.core.remoting
 		private const AMF_PATH:String = "/amfphp2/";
 		
 		// url quand on n'est pas sur le réseau local
-		//private const DEV_PORT:int = 9999;
-		//private const DEV_URL:String = "http://ludomobile.ludokado.com";
+		private const DEV_PORT:int = 9999;
+		private const DEV_URL:String = "http://ludomobile.ludokado.com";
 		
 		// urls et port quand on est sur le réseau local
-		private const DEV_PORT:int = 80;
+		//private const DEV_PORT:int = 80;
 		//private const DEV_URL:String = "http://www.ludokado.com";
 		//private const DEV_URL:String = "http://ludokado.dev";
 		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokadom.mlhoez.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.pterrier.ludofactory.dev";
-		private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
+		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado3.sravet.ludofactory.dev";
 		//private const DEV_URL:String = "http://semiprod.ludokado.com";
 		
@@ -726,8 +726,14 @@ package com.ludofactory.mobile.core.remoting
 			var params:Object = mergeWithGenericParams( { info_langue:installedLanguageData } );
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getFichierTraduction", params);
 		}
-		
-		
+
+		/**
+		 * Insert a line in the database whenever a video starts to display (VidCoin).
+		 */
+		public function logVidCoin(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServeurJeux", "logDemandeVidcoin", getGenericParams());
+		}
 		
 		/**
 		 * Generic test function (must return a string, not an object because of the addslash)
@@ -813,6 +819,7 @@ package com.ludofactory.mobile.core.remoting
 			// secured calls (https)
 			if( "appels_https" in result && result.appels_https != null )
 			{
+				delete result.appels_https;
 				Storage.getInstance().setProperty(StorageConfig.PROPERTY_USE_SECURED_CALLS, int(result.appels_https) == 1);
 				// now check if the value is different in order to know if we need to reconnect or not
 				if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_USE_SECURED_CALLS)) != _netConnectionManager.useSecureConnection )

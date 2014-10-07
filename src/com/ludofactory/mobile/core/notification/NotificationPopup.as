@@ -20,7 +20,6 @@ package com.ludofactory.mobile.core.notification
 
 	import starling.display.Image;
 	import starling.display.Quad;
-	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 
@@ -107,7 +106,7 @@ package com.ludofactory.mobile.core.notification
 			addChild(_frontSkin);
 			addChild(_tiledBackground);
 			
-			_closeQuad = new Quad(scaleAndRoundToDpi(70), scaleAndRoundToDpi(70));
+			_closeQuad = new Quad(scaleAndRoundToDpi(100), scaleAndRoundToDpi(100));
 			_closeQuad.alpha = 0;
 			_closeQuad.addEventListener(TouchEvent.TOUCH, onTouchCloseButton);
 			addChild(_closeQuad);
@@ -126,6 +125,14 @@ package com.ludofactory.mobile.core.notification
 			
 			if(sizeInvalid)
 			{
+				// TODO quand on passe ici ppur la première fois, c'est que la popup vient de s'initialiser
+				// alors on peut calculer la hauteur maximal que le contenu de la popup peut avoir, et ainsi
+				// adapter la popup en fonction
+				
+				// tiledBackground = frontSkin.height * 0.8 donc le front skin et 0.2 fois plus grand que le
+				// tiledBackground (qui a la même taille que le contenu), donc on peut facilement calculer la
+				// taille de la popup si le contenu est trop petit en hauteur
+				
 				var halfWidth:Number;
 				var halfHeight:Number;
 
@@ -141,8 +148,8 @@ package com.ludofactory.mobile.core.notification
 				_frontSkin.x = actualWidth * 0.5 + _shadowThickness;
 				_frontSkin.y = actualHeight * 0.5 - _shadowThickness;
 
-				_tiledBackground.width = _frontSkin.width * 0.8;
-				_tiledBackground.height = _frontSkin.height * 0.8;
+				_tiledBackground.width = _frontSkin.width * 0.9;
+				_tiledBackground.height = _frontSkin.height * 0.9;
 				_tiledBackground.alignPivot();
 				_tiledBackground.x = actualWidth  * 0.5;
 				_tiledBackground.y = actualHeight * 0.5;
@@ -182,6 +189,10 @@ package com.ludofactory.mobile.core.notification
 		 */
 		public function animateIn():void
 		{
+			this.touchable = true;
+			this.visible = true;
+			this.alpha = 1;
+			
 			// just in case, kill the previous tweens
 			TweenMax.killTweensOf([_backgroundSkin, _frontSkin, _tiledBackground, _topLeftDecoration, _bottomLeftDecoration, _bottomMiddleDecoration, _bottomRightDecoration]);
 			
@@ -207,6 +218,8 @@ package com.ludofactory.mobile.core.notification
 		 */
 		public function animateOut():void
 		{
+			this.touchable = false;
+			
 			TweenMax.killTweensOf([_backgroundSkin, _frontSkin, _tiledBackground, _topLeftDecoration, _bottomLeftDecoration, _bottomMiddleDecoration, _bottomRightDecoration]);
 			
 			_offset *= -1;
@@ -221,33 +234,18 @@ package com.ludofactory.mobile.core.notification
 			TweenMax.to(_bottomRightDecoration,   0.25, { alpha:0, x:(_bottomRightLeavesSaveX - _offset), y:(_bottomRightLeavesSaveY - _offset), ease:Back.easeIn });
 		}
 
+//------------------------------------------------------------------------------------------------------------
+//	Handlers
+
 		/**
-		 * When the quad is touched, we close the popup.
+		 * When the quad displayed above the cross is touched, we close the popup.
 		 */
 		private function onTouchCloseButton(event:TouchEvent):void
 		{
-			var touch:Touch = event.getTouch(_closeQuad);
-			if( touch && touch.phase == TouchPhase.ENDED )
-			{
+			if( event.getTouch(_closeQuad, TouchPhase.ENDED) )
 				close();
-			}
-			touch = null;
 		}
-
-		/**
-		 * Removes and disposes the content of the popup. Called whenever the popup have been closed.
-		 */
-		private function removeAndDisposeContent():void
-		{
-			if( _content )
-			{
-				_content.removeFromParent(true);
-				_content = null;
-				
-				_callback = null;
-			}
-		}
-
+		
 		/**
 		 * Called externally.
 		 */
@@ -257,6 +255,23 @@ package com.ludofactory.mobile.core.notification
 				_callback(_content.data); // TODO rajouter la data
 			
 			dispatchEventWith(LudoEventType.CLOSE_NOTIFICATION, false);
+		}
+
+		/**
+		 * Removes and disposes the content of the popup. Called whenever the popup have been closed.
+		 */
+		private function removeAndDisposeContent():void
+		{
+			this.visible = false;
+			this.alpha = 0;
+			
+			if( _content )
+			{
+				_content.removeFromParent(true);
+				_content = null;
+
+				_callback = null;
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -276,14 +291,14 @@ package com.ludofactory.mobile.core.notification
 			if( _content )
 			{
 				addChild(_content);
-				_content.width = _tiledBackground.width;
-				_content.height = _tiledBackground.height;
+				_content.width = _frontSkin.width * 0.9;
+				_content.height = _frontSkin.height * 0.85;
 				_content.alignPivot();
 				_content.validate();
 				
 				// TODO trouver une façon d'afficher des flèches dans le conteneur
-				if( _content.height < _content.viewPort.height )
-					log("[NotificationPopup] ScrollContainer should display arrows !")
+				//if( _content.height < _content.viewPort.height )
+				//	log("[NotificationPopup] ScrollContainer should display arrows !")
 			}
 		}
 		

@@ -9,8 +9,11 @@ package com.ludofactory.mobile.core.test.home
 
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGame;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -18,6 +21,7 @@ package com.ludofactory.mobile.core.test.home
 	import com.ludofactory.mobile.core.controls.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.test.achievements.GameCenterManager;
+	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 
@@ -125,44 +129,82 @@ package com.ludofactory.mobile.core.test.home
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				// EN PAYSAGE
+				// 1 actualHeight - taille cumulée des boutons + gap + padding top et bottom
+				// 2 getScaleToFillHeight pour adapter le logo
+				// sur tablette on limite la taille (au début en faisant actualHeight * X)
+				
+				// EN PORTRAIT
+				// 1 actualHeight * un scale à définir - taille cumulée des boutons + gap + padding top et bottom
+				// 2 getScaleToFillHeight pour adapter le logo
+				// sur tablette on limite la taille (au début en faisant actualHeight * X)
+				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
+					var gap:int = scaleAndRoundToDpi(10);
+					var padding:int = scaleAndRoundToDpi(10);
+					
+					_giftsButton.validate();
+					var logoMaxHeight:int = actualHeight - (scaleAndRoundToDpi(118) + _giftsButton.height + (padding * 2) + (gap * 2));
+					log(actualHeight);
+					log(scaleAndRoundToDpi(118));
+					log(_giftsButton.height);
+					log((padding * 2));
+					log((gap * 2));
+					
+					_logo.height = logoMaxHeight;
+					_logo.validate();
+					_logo.y = (logoMaxHeight - _logo.height) * 0.5;
+					log("LOLILOL  = " + _logo.y);
+					
+					_playButton.width = _logo.width * 0.9;
+					_playButton.y = _logo.y + _logo.height + scaleAndRoundToDpi(10);
+					_playButton.validate();
+					
+					_giftsButton.width = _playButton.width * 0.9;
+					_giftsButton.y = _playButton.y + _playButton.height + scaleAndRoundToDpi(10);
+					
+					_logo.x = roundUp((actualWidth - _logo.width) * 0.5);
+					_playButton.x = roundUp((actualWidth - _playButton.width) * 0.5);
+					_giftsButton.x = roundUp((actualWidth - _giftsButton.width) * 0.5);
+					
+				}
+				else
+				{
+					
+				}
+				
+				/*if( AbstractGameInfo.LANDSCAPE )
+				{
+					_logo.height = actualHeight * 0.5;
+					_logo.validate();
+					
 					if( GlobalConfig.ios && GameCenterManager.available )
 					{
-						_gameCenterButton.height = _playButton.height = scaleAndRoundToDpi(118);
+						_gameCenterButton.height = _playButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 108 : 118);
 						_gameCenterButton.validate();
 						_gameCenterButton.y = _playButton.y = actualHeight * 0.45 + scaleAndRoundToDpi(30);
 						
-						_playButton.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5) - _gameCenterButton.width;
+						_playButton.width = _logo.width * (GlobalConfig.isPhone ? 0.8 : 0.7) - _gameCenterButton.width;
 						_playButton.x = (actualWidth - (_playButton.width + _gameCenterButton.width)) * 0.5;
 						_gameCenterButton.x = _playButton.x + _playButton.width;
 					}
 					else
 					{
-						_playButton.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5);
-						_playButton.height = scaleAndRoundToDpi(118);
+						_playButton.width = _logo.width * (GlobalConfig.isPhone ? 0.8 : 0.7);
+						_playButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 108 : 118);
 						_playButton.x = (actualWidth - _playButton.width) * 0.5;
 						_playButton.y = actualHeight * 0.45 + scaleAndRoundToDpi(30);
 					}
 					
-					
-					_giftsButton.width = actualWidth * (GlobalConfig.isPhone ? ( GameCenterManager.available ? 0.6 : 0.5) : 0.4);
+					_giftsButton.width = _logo.width * (GlobalConfig.isPhone ? 0.7 : 0.6);
 					_giftsButton.x = (actualWidth - _giftsButton.width) * 0.5;
 					
 					//_logo.height = actualHeight - _playButton.height - _giftsButton.height - scaleAndRoundToDpi(60);
-					_logo.height = actualHeight * 0.45;
-					_logo.validate();
 					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
 					_logo.y = (_playButton.y - _logo.height) * 0.5;
 					
 					_giftsButton.y = _playButton.y + _playButton.height + scaleAndRoundToDpi(20);
-						
-					if( GlobalConfig.DEBUG )
-					{
-						_debugButton.validate();
-						_debugButton.x = actualWidth - _debugButton.width - scaleAndRoundToDpi(5);
-						_debugButton.y = actualHeight - _debugButton.height;
-					}
 				}
 				else
 				{
@@ -193,13 +235,13 @@ package com.ludofactory.mobile.core.test.home
 					_giftsButton.y = _playButton.y + _playButton.height + scaleAndRoundToDpi(40);
 					_giftsButton.width = actualWidth * (GlobalConfig.isPhone ? ( GameCenterManager.available ? 0.7 : 0.6) : 0.5);
 					_giftsButton.x = (actualWidth - _giftsButton.width) * 0.5;
-					
-					if( GlobalConfig.DEBUG )
-					{
-						_debugButton.validate();
-						_debugButton.x = (actualWidth - _debugButton.width) * 0.5;
-						_debugButton.y = actualHeight - _debugButton.height - scaleAndRoundToDpi(10);
-					}
+				}*/
+
+				if( GlobalConfig.DEBUG )
+				{
+					_debugButton.validate();
+					_debugButton.x = actualWidth - _debugButton.width - scaleAndRoundToDpi(5);
+					_debugButton.y = actualHeight - _debugButton.height;
 				}
 			}
 		}
@@ -223,17 +265,6 @@ package com.ludofactory.mobile.core.test.home
 		private function onShowRules(event:Event):void
 		{
 			this.advancedOwner.showScreen( MemberManager.getInstance().getGiftsEnabled() ? ScreenIds.HOW_TO_WIN_GIFTS_SCREEN : ScreenIds.BOUTIQUE_HOME );
-		}
-		
-		/**
-		 * When the storage has finished initializing, this function is called in
-		 * order to update the screen (if we need to add / remove the button "Win
-		 * gifts" for example).
-		 */		
-		public function updateInterface():void
-		{
-            // not needed anymore
-			//_giftsButton.visible = Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_HOW_TO_WIN_GIFTS_SCREEN);
 		}
 		
 		private function onShowDebugScreen(event:Event):void

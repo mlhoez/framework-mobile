@@ -80,6 +80,16 @@ package com.ludofactory.mobile.core.authentication
 		/**
 		 * The member's pseudo */		
 		private var _pseudo:String = "";
+
+		/**
+		 * The member's birth date.
+		 * Default is "0000-00-00" */
+		private var _birthDate:String = "0000-00-00";
+
+		/**
+		 * The member's title (Mr., Mme. or Mlle.
+		 * default is "Mr." */
+		private var _title:String = "Mr.";
 		
 		/**
 		 * The member's number of credits */		
@@ -148,6 +158,8 @@ package com.ludofactory.mobile.core.authentication
 			if( "mail" in memberData && memberData.mail != null )                                     _mail = String(memberData.mail);
 			if( "mdp" in memberData && memberData.mdp != null )                                       _password = String(memberData.mdp);
 			if( "pseudo" in memberData && memberData.pseudo != null )                                 _pseudo = String(memberData.pseudo);
+			if( "date_naissance" in memberData && memberData.date_naissance != null )                 _birthDate = String(memberData.date_naissance);
+			if( "sexe" in memberData && memberData.sexe != null )                                     _title = String(memberData.sexe);
 			if( "credits" in memberData && memberData.credits != null )                               _credits = int(memberData.credits);
 			if( "parties_gratuites" in memberData && memberData.parties_gratuites != null )           _numFreeGameSessions = int(memberData.parties_gratuites);
 			if( "score_cumule" in memberData && memberData.score_cumule != null )                     _cumulatedStars = int(memberData.score_cumule);
@@ -169,6 +181,12 @@ package com.ludofactory.mobile.core.authentication
 		
 		public function get pseudo():String { return _pseudo; }
 		public function set pseudo(val:String):void { _pseudo = val; }
+
+		public function get birthDate():String { return _birthDate; }
+		public function set birthDate(val:String):void { _birthDate = val; }
+
+		public function get title():String { return _title; }
+		public function set title(val:String):void { _title = val; }
 		
 		public function get numFreeGameSessions():int { return _numFreeGameSessions; }
 		public function set numFreeGameSessions(val:int):void { _numFreeGameSessions = val; }

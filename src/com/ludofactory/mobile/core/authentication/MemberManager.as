@@ -19,13 +19,16 @@ package com.ludofactory.mobile.core.authentication
 	import com.ludofactory.mobile.core.test.push.PushNewCSThread;
 	import com.ludofactory.mobile.core.test.push.PushTrophy;
 	import com.milkmangames.nativeextensions.GoViral;
-	
+	import com.vidcoin.vidcoincontroller.VidCoinController;
+
 	import flash.data.EncryptedLocalStore;
 	import flash.net.registerClassAlias;
 	import flash.utils.ByteArray;
 	
 	import eu.alebianco.air.extensions.analytics.Analytics;
-	
+
+	import flash.utils.Dictionary;
+
 	import starling.events.EventDispatcher;
 	
 	/**
@@ -153,9 +156,16 @@ package com.ludofactory.mobile.core.authentication
 				if( Analytics.isSupported() && AbstractEntryPoint.tracker )
 					AbstractEntryPoint.tracker.buildEvent("Connexions", "-").withLabel("Compte (" + memberId + ")").track();
 				log("<strong>Connexion du joueur " + memberId + "</strong>");
+				
+				if( AbstractEntryPoint.vidCoin )
+				{
+					var dict:Dictionary = new Dictionary();
+					dict[VidCoinController.kVCUserGameID] = getId();
+					dict[VidCoinController.kVCUserBirthYear] = getBirthDate().split("-")[0];
+					dict[VidCoinController.kVCUserGenderKey]= getTitle() == "Mr." ? VidCoinController.kVCUserGenderMale : VidCoinController.kVCUserGenderFemale;
+					AbstractEntryPoint.vidCoin.updateUserDictionary(dict);
+				}
 			}
-			
-			// TODO 
 			
 			// update the values of the footer
 			dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
@@ -440,6 +450,10 @@ package com.ludofactory.mobile.core.authentication
 		public function getNumFreeGameSessionsTotal():int { return _member.numFreeGameSessionsTotal; }
 		/**  Returns the member's pseudo. */		
 		public function getPseudo():String { return _member.pseudo; }
+		/**  Returns the member's birth date. */
+		public function getBirthDate():String { return _member.birthDate; }
+		/**  Returns the member's title. */
+		public function getTitle():String { return _member.title; }
 		/** Returns the member's won trophies. */		
 		public function getTrophiesWon():Array { return _member.trophiesWon; }
 		/** Returns the member's rank. */		

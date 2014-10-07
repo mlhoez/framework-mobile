@@ -22,6 +22,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.authentication.ForgotPasswordScreen;
 	import com.ludofactory.mobile.core.authentication.LoginScreen;
 	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.authentication.MemberManager;
 	import com.ludofactory.mobile.core.authentication.PseudoChoiceScreen;
 	import com.ludofactory.mobile.core.authentication.RegisterCompleteScreen;
 	import com.ludofactory.mobile.core.authentication.RegisterScreen;
@@ -86,10 +87,14 @@ package com.ludofactory.mobile.core
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceInfo;
 	import com.vidcoin.vidcoincontroller.VidCoinController;
-
+	
+	import flash.filesystem.File;
+	import flash.geom.Rectangle;
+	import flash.utils.Dictionary;
+	
 	import eu.alebianco.air.extensions.analytics.Analytics;
 	import eu.alebianco.air.extensions.analytics.api.ITracker;
-
+	
 	import feathers.controls.Drawers;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.ProgressBar;
@@ -98,11 +103,7 @@ package com.ludofactory.mobile.core
 	import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 	import feathers.system.DeviceCapabilities;
 	import feathers.textures.Scale9Textures;
-
-	import flash.filesystem.File;
-	import flash.geom.Rectangle;
-	import flash.utils.Dictionary;
-
+	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -390,8 +391,8 @@ package com.ludofactory.mobile.core
 				{
 					var dict:Dictionary = new Dictionary();
 					dict[VidCoinController.kVCUserGameID] = MemberManager.getInstance().getId();
-					//dict[VidCoinController.kVCUserBirthYear] = MemberManager.getInstance().; // FIXME rajouter quand j'aurai la date
-					//dict[VidCoinController.kVCUserGenderKey]= VidCoinController.kVCUserGenderMale; // FIXME rajouter quand j'aurai le sexe 
+					dict[VidCoinController.kVCUserBirthYear] = MemberManager.getInstance().getBirthDate().split("-")[0];
+					dict[VidCoinController.kVCUserGenderKey]= MemberManager.getInstance().getTitle() == "Mr." ? VidCoinController.kVCUserGenderMale : VidCoinController.kVCUserGenderFemale;
 					vidCoin.updateUserDictionary(dict);
 				}
 			}
@@ -652,7 +653,7 @@ package com.ludofactory.mobile.core
 			_loadingLogo.snapToPixels = true;
 			_loadingLogo.alpha = 0;
 			addChild( _loadingLogo );
-			_loadingLogo.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.85 : 0.75);
+			_loadingLogo.width = GlobalConfig.stageWidth * (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.6 : 0.5)) : (GlobalConfig.isPhone ? 0.85 : 0.75));
 			_loadingLogo.validate();
 			_loadingLogo.x = ((GlobalConfig.stageWidth - _loadingLogo.width) * 0.5) << 0;
 			_loadingLogo.y = ((GlobalConfig.stageHeight - _loadingLogo.height) * 0.5) << 0;
