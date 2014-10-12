@@ -4,18 +4,18 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 19 juin 2013
 */
-package com.ludofactory.mobile.core.test.engine
+package com.ludofactory.mobile.navigation.engine
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.Localizer;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.controls.ScreenIds;
+	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.home.RuleData;
-	import com.ludofactory.mobile.core.test.home.RuleItemRenderer;
-	import com.ludofactory.mobile.core.test.home.RuleProperties;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.navigation.home.RuleData;
+	import com.ludofactory.mobile.navigation.home.RuleItemRenderer;
+	import com.ludofactory.mobile.navigation.home.RuleProperties;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Button;

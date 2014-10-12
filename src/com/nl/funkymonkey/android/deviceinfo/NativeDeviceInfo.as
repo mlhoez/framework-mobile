@@ -8,7 +8,7 @@ package com.nl.funkymonkey.android.deviceinfo
 {
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.utils.log;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;

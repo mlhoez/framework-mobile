@@ -11,7 +11,7 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -19,9 +19,9 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.core.notification.content.InvalidSessionNotificationContent;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.push.GameSession;
-	import com.ludofactory.mobile.core.test.store.StoreData;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.push.GameSession;
+	import com.ludofactory.mobile.navigation.store.StoreData;
 	import com.ludofactory.mobile.debug.ErrorDisplayer;
 	import com.milkmangames.nativeextensions.GoViral;
 
@@ -866,6 +866,8 @@ package com.ludofactory.mobile.core.remoting
 			
 			if( callback )
 				callback( error );
+			
+			return;
 			
 			try
 			{

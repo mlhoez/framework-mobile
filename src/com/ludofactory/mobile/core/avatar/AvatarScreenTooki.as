@@ -11,7 +11,7 @@ package com.ludofactory.mobile.core.avatar
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.HeartBeat;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import flash.events.Event;
 	import flash.events.StatusEvent;

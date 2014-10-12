@@ -8,8 +8,8 @@ package com.ludofactory.mobile.core.storage
 {
 	import com.ludofactory.mobile.core.scoring.ScoreToPointsData;
 	import com.ludofactory.mobile.core.scoring.ScoreToStarsData;
-	import com.ludofactory.mobile.core.test.cs.CSThemeData;
-	import com.ludofactory.mobile.core.test.settings.LanguageData;
+	import com.ludofactory.mobile.navigation.cs.CSThemeData;
+	import com.ludofactory.mobile.navigation.settings.LanguageData;
 	
 	/**
 	 * Each property...

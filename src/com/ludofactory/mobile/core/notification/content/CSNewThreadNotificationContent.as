@@ -12,7 +12,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -20,11 +20,11 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.cs.*;
-	import com.ludofactory.mobile.core.test.push.PushNewCSThread;
-	import com.ludofactory.mobile.core.test.push.PushType;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.navigation.cs.*;
+	import com.ludofactory.mobile.core.push.PushNewCSThread;
+	import com.ludofactory.mobile.core.push.PushType;
 	import com.ludofactory.mobile.core.theme.Theme;
 
 	import feathers.controls.Button;

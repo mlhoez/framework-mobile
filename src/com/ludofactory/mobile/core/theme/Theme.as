@@ -5,21 +5,21 @@ package com.ludofactory.mobile.core.theme
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.notification.NotificationPopup;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
-	import com.ludofactory.mobile.core.test.achievements.TrophyItemRenderer;
-	import com.ludofactory.mobile.core.test.achievements.TrophyMessage;
-	import com.ludofactory.mobile.core.test.ads.tournament.AdTournamentItemRenderer;
-	import com.ludofactory.mobile.core.test.alert.AlertItemRenderer;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.cs.thread.CSThreadItemRenderer;
-	import com.ludofactory.mobile.core.test.engine.FacebookFriendElement;
-	import com.ludofactory.mobile.core.test.game.StakeButton;
-	import com.ludofactory.mobile.core.test.game.StakeButtonCredit;
-	import com.ludofactory.mobile.core.test.game.StakeButtonFree;
-	import com.ludofactory.mobile.core.test.game.StakeButtonPoint;
-	import com.ludofactory.mobile.core.test.game.GameModeSelectionPopup;
-	import com.ludofactory.mobile.core.test.home.RuleItemRenderer;
-	import com.ludofactory.mobile.core.test.sponsor.info.SponsorBonusItemRenderer;
-	import com.ludofactory.mobile.core.test.store.StoreItemRenderer;
+	import com.ludofactory.mobile.navigation.achievements.TrophyItemRenderer;
+	import com.ludofactory.mobile.navigation.achievements.TrophyMessage;
+	import com.ludofactory.mobile.navigation.ads.tournament.AdTournamentItemRenderer;
+	import com.ludofactory.mobile.navigation.alert.AlertItemRenderer;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.navigation.cs.thread.CSThreadItemRenderer;
+	import com.ludofactory.mobile.navigation.engine.FacebookFriendElement;
+	import com.ludofactory.mobile.navigation.game.StakeButton;
+	import com.ludofactory.mobile.navigation.game.StakeButtonCredit;
+	import com.ludofactory.mobile.navigation.game.StakeButtonFree;
+	import com.ludofactory.mobile.navigation.game.StakeButtonPoint;
+	import com.ludofactory.mobile.navigation.game.GameModeSelectionPopup;
+	import com.ludofactory.mobile.navigation.home.RuleItemRenderer;
+	import com.ludofactory.mobile.navigation.sponsor.info.SponsorBonusItemRenderer;
+	import com.ludofactory.mobile.navigation.store.StoreItemRenderer;
 	import com.ludofactory.mobile.navigation.menu.MenuItemRenderer;
 	
 	import flash.filesystem.File;
@@ -645,11 +645,6 @@ package com.ludofactory.mobile.core.theme
 			setInitializerForClass(GameModeSelectionPopup, gameTypeSelectionPopupInitializer);
 			setInitializerForClass(NotificationPopup, notificationPopupInitializer);
 			
-			// GamePriceSelection buttons
-			setInitializerForClassAndSubclasses(StakeButtonPoint,  gamePriceSelectionButtonPointsInitializer);
-			setInitializerForClassAndSubclasses(StakeButtonFree,    gamePriceSelectionButtonFreeInitializer);
-			setInitializerForClassAndSubclasses(StakeButtonCredit, gamePriceSelectionButtonCreditsInitializer);
-			
 			// AbstractNotification
 			setInitializerForClassAndSubclasses(AbstractNotification, abstractNotificationInitializer);
 			
@@ -1000,11 +995,11 @@ package com.ludofactory.mobile.core.theme
 		
 		/**
 		 * Disabled / Grey button */		
-		protected var buttonDisabledSkinTextures:Scale9Textures;
+		public static var buttonDisabledSkinTextures:Scale9Textures;
 		
 		/**
 		 * Yellow button */	
-		protected var buttonYellowSkinTextures:Scale9Textures;
+		public static var buttonYellowSkinTextures:Scale9Textures;
 		
 		/**
 		 * Yellow button squared on the left */		
@@ -1022,7 +1017,7 @@ package com.ludofactory.mobile.core.theme
 		protected function buttonInitializer(button:Button):void
 		{
 			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonYellowSkinTextures;
+			skinSelector.defaultValue = buttonYellowSkinTextures;
 			skinSelector.displayObjectProperties =
 				{
 					width: 114 * this.scaleFactor,
@@ -1200,7 +1195,7 @@ package com.ludofactory.mobile.core.theme
 		/**
 		 * Blue button */		
 		public static const BUTTON_BLUE:String = "button-blue";
-		protected var buttonBlueSkinTextures:Scale9Textures;
+		public static var buttonBlueSkinTextures:Scale9Textures;
 		
 		/**
 		 * Blue button squared on the right */		
@@ -1229,7 +1224,7 @@ package com.ludofactory.mobile.core.theme
 		protected function buttonBlueInitializer(button:Button):void
 		{
 			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonBlueSkinTextures;
+			skinSelector.defaultValue = buttonBlueSkinTextures;
 			skinSelector.displayObjectProperties =
 				{
 					width: 114 * this.scaleFactor,
@@ -1288,7 +1283,7 @@ package com.ludofactory.mobile.core.theme
 		/**
 		 * Green button */		
 		public static const BUTTON_GREEN:String = "button-green";
-		protected var buttonGreenSkinTextures:Scale9Textures;
+		public static var buttonGreenSkinTextures:Scale9Textures;
 		
 		/**
 		 * Green button.
@@ -1296,7 +1291,7 @@ package com.ludofactory.mobile.core.theme
 		protected function buttonGreenInitializer(button:Button):void
 		{
 			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonGreenSkinTextures;
+			skinSelector.defaultValue = buttonGreenSkinTextures;
 			skinSelector.displayObjectProperties =
 				{
 					width: 114 * this.scaleFactor,
@@ -2099,53 +2094,6 @@ package com.ludofactory.mobile.core.theme
 			popup.shadowThickness = 10 * scaleFactor;
 			popup.buttonAdjustment = 23 * scaleFactor;
 			popup.tiledBackground = new TiledImage(gameTypeSelectionTileTexture, scaleFactor);
-		}
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//
-//
-//								G A M E  P R I C E  S E L E C T I O N  B U T T O N S
-//
-//
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		protected function baseGamePriceSelectionButtonInitializer(container:StakeButton):void
-		{
-			container.shadowThickness = 17 * this.scaleFactor;
-			container.minWidth = 60 * this.scaleFactor;
-			container.minHeight = 140 * this.scaleFactor;
-		}
-		
-		/**
-		 * 
-		 */		
-		protected function gamePriceSelectionButtonPointsInitializer(container:StakeButtonPoint):void
-		{
-			container.backgroundSkin = new Scale9Image(this.buttonBlueSkinTextures, this.scaleFactor);
-			container.backgroundDisabledSkin = new Scale9Image(this.buttonDisabledSkinTextures, this.scaleFactor);
-			baseGamePriceSelectionButtonInitializer(container);
-		}
-		
-		/**
-		 * 
-		 */		
-		protected function gamePriceSelectionButtonFreeInitializer(container:StakeButtonFree):void
-		{
-			container.backgroundSkin = new Scale9Image(this.buttonGreenSkinTextures, this.scaleFactor);
-			container.backgroundDisabledSkin = new Scale9Image(this.buttonDisabledSkinTextures, this.scaleFactor);
-			baseGamePriceSelectionButtonInitializer(container);
-		}
-		
-		/**
-		 * 
-		 */		
-		protected function gamePriceSelectionButtonCreditsInitializer(container:StakeButtonCredit):void
-		{
-			container.backgroundSkin = new Scale9Image(this.buttonYellowSkinTextures, this.scaleFactor);
-			container.backgroundDisabledSkin = new Scale9Image(this.buttonDisabledSkinTextures, this.scaleFactor);
-			baseGamePriceSelectionButtonInitializer(container);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

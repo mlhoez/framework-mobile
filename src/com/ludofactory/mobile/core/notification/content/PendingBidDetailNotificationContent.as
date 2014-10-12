@@ -16,8 +16,8 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.shop.bid.pending.*;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.navigation.shop.bid.pending.*;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 
 	import feathers.controls.Button;

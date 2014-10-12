@@ -7,8 +7,9 @@ Created : 2 sept. 2013
 package com.ludofactory.mobile.core.controls
 {
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.core.test.vip.VipAccordionItem;
+	import com.ludofactory.mobile.navigation.vip.VipAccordionItem;
 	
 	import feathers.controls.ScrollContainer;
 	import feathers.layout.VerticalLayout;

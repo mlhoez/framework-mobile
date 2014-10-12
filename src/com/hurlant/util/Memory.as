@@ -14,7 +14,7 @@
  */
 package com.hurlant.util
 {
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import flash.net.LocalConnection;
 	import flash.system.System;

@@ -6,7 +6,7 @@ package com.ludofactory.mobile.core.notification
 
 	import com.greensock.TweenMax;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 
 	import feathers.controls.ScrollContainer;
 

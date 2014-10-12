@@ -4,16 +4,16 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 8 août 2013
 */
-package com.ludofactory.mobile.core.test.home.summary
+package com.ludofactory.mobile.navigation.home.summary
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.HeartBeat;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.test.push.GameSession;
+	import com.ludofactory.mobile.core.push.GameSession;
 	
 	import flash.utils.getTimer;
 	

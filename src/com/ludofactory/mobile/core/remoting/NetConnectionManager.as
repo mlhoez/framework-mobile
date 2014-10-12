@@ -11,7 +11,7 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.common.encryption.Encryption;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.HeartBeat;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import flash.display.MovieClip;
 	import flash.events.NetStatusEvent;

@@ -7,7 +7,7 @@ Created : 24 août 2013
 package com.ludofactory.mobile.core.controls
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.TabBar;

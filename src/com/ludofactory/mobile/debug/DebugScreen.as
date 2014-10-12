@@ -8,16 +8,16 @@ package com.ludofactory.mobile.debug
 {
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.log;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.test.achievements.TrophyManager;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.settings.SettingItemRenderer;
+	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.navigation.settings.SettingItemRenderer;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import flash.desktop.NativeApplication;

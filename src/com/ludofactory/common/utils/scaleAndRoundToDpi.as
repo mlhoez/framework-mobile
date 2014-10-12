@@ -6,7 +6,7 @@ Created : 8 sept. 2013
 */
 package com.ludofactory.common.utils
 {
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	/**
 	 * Scales to the current dpi value and round the result to avoid

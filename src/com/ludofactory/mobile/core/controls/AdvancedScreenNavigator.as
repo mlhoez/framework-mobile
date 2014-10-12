@@ -6,6 +6,8 @@ Created : 13 Juin 2013
 */
 package com.ludofactory.mobile.core.controls
 {
+
+	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;

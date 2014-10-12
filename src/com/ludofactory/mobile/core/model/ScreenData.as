@@ -6,8 +6,8 @@ Created : 18 Août 2013
 */
 package com.ludofactory.mobile.core.model
 {
-	import com.ludofactory.mobile.core.shop.vip.BoutiqueItemData;
-	import com.ludofactory.mobile.core.test.cs.display.CSMessageData;
+	import com.ludofactory.mobile.navigation.shop.vip.BoutiqueItemData;
+	import com.ludofactory.mobile.navigation.cs.display.CSMessageData;
 
 	public class ScreenData
 	{

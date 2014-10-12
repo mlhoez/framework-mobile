@@ -15,8 +15,8 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.pause.PauseManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.pause.PauseManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.debug.TouchMarkerManager;
 	

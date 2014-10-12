@@ -20,7 +20,7 @@ package com.ludofactory.mobile.core.controls
 	 * 
 	 * <p>Simply allows a refresh of data while scrolling.</p>
 	 * 
-	 * @see com.ludofactory.mobile.core.test.highscore.HighScoreListScreen
+	 * @see com.ludofactory.mobile.navigation.highscore.HighScoreListScreen
 	 */	
 	public class AutoRefreshableList extends List
 	{

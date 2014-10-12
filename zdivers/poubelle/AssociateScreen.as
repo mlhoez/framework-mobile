@@ -4,7 +4,7 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 30 juil. 2013
 */
-package com.ludofactory.mobile.core.authentication
+package com.ludofactory.mobile.navigation.authentication
 {
 	import com.ludofactory.common.utils.scaleToDpi;
 	import com.ludofactory.mobile.application.config.GlobalConfig;

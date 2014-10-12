@@ -13,9 +13,9 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.authentication.MemberManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.controls.ScreenIds;
+	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -23,13 +23,13 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.scoring.ScoreConverter;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.test.achievements.GameCenterManager;
-	import com.ludofactory.mobile.core.test.achievements.TrophyManager;
-	import com.ludofactory.mobile.core.test.ads.AdManager;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
-	import com.ludofactory.mobile.core.test.pause.PauseManager;
-	import com.ludofactory.mobile.core.test.push.GameSession;
-	import com.ludofactory.mobile.core.test.push.PushType;
+	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
+	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
+	import com.ludofactory.mobile.navigation.ads.AdManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.pause.PauseManager;
+	import com.ludofactory.mobile.core.push.GameSession;
+	import com.ludofactory.mobile.core.push.PushType;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.milkmangames.nativeextensions.ios.IAdBannerAlignment;
 

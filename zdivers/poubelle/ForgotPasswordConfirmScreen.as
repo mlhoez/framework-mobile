@@ -4,12 +4,13 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 24 juil. 2013
 */
-package com.ludofactory.mobile.core.authentication
+package com.ludofactory.mobile.navigation.authentication
 {
 	import com.ludofactory.common.utils.scaleToDpi;
 	import com.ludofactory.mobile.application.config.GlobalConfig;
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
+	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import app.AppEntryPoint;

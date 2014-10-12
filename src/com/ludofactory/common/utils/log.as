@@ -7,7 +7,7 @@ Created : 11 déc. 2012
 package com.ludofactory.common.utils
 {
 	import com.gamua.flox.Flox;
-	import com.ludofactory.mobile.core.test.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import flash.utils.getQualifiedClassName;
 

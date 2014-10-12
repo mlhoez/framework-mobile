@@ -11,7 +11,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.common.utils.scaleToDpi;
 	import com.ludofactory.mobile.application.config.GlobalConfig;
 	import com.ludofactory.mobile.core.Localizer;
-	import com.ludofactory.mobile.core.authentication.AuthenticationManager;
+	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.theme.Theme;
