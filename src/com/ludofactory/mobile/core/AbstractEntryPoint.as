@@ -62,8 +62,8 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.test.engine.TournamentEndScreen;
 	import com.ludofactory.mobile.core.test.event.EventManager;
 	import com.ludofactory.mobile.core.test.faq.FaqScreen;
-	import com.ludofactory.mobile.core.test.game.GamePriceSelectionScreen;
-	import com.ludofactory.mobile.core.test.game.GameTypeSelectionManager;
+	import com.ludofactory.mobile.core.test.game.StakeSelectionScreen;
+	import com.ludofactory.mobile.core.test.game.GameModeSelectionManager;
 	import com.ludofactory.mobile.core.test.highscore.HighScoreHomeScreen;
 	import com.ludofactory.mobile.core.test.highscore.HighScoreListScreen;
 	import com.ludofactory.mobile.core.test.home.AlertData;
@@ -178,7 +178,7 @@ package com.ludofactory.mobile.core
 												{ id:ScreenIds.FORGOT_PASSWORD_SCREEN, clazz:ForgotPasswordScreen },
 												{ id:ScreenIds.NEW_HIGH_SCORE_SCREEN, clazz:HighScoreScreen },
 												{ id:ScreenIds.FREE_GAME_END_SCREEN, clazz:FreeGameEndScreen },
-												{ id:ScreenIds.GAME_TYPE_SELECTION_SCREEN, clazz:GamePriceSelectionScreen },
+												{ id:ScreenIds.GAME_TYPE_SELECTION_SCREEN, clazz:StakeSelectionScreen },
 												{ id:ScreenIds.TOURNAMENT_RANKING_SCREEN, clazz:TournamentRankingScreen },
 												{ id:ScreenIds.SPONSOR_REGISTER_SCREEN, clazz:SponsorScreen },
 												{ id:ScreenIds.RULES_AND_SCORES_SCREEN, clazz:RulesAndScoresScreen },
@@ -255,7 +255,7 @@ package com.ludofactory.mobile.core
 		
 		/**
 		 *  */		
-		private static var _gameTypeSelectionManager:GameTypeSelectionManager;
+		private static var _gameTypeSelectionManager:GameModeSelectionManager;
 		
 //------------------------------------------------------------------------------------------------------------
 //	Managers
@@ -509,7 +509,7 @@ package com.ludofactory.mobile.core
 			}
 			
 			_eventManager = new EventManager();
-			_gameTypeSelectionManager = new GameTypeSelectionManager(this);
+			_gameTypeSelectionManager = new GameModeSelectionManager(this);
 			
 			// check if the user has completed all the steps
 			if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE)) == true )
@@ -1116,7 +1116,7 @@ package com.ludofactory.mobile.core
 		public static function get assets():AssetManager { return _assets; }
 		public static function get pushManager():PushManager { return _pushManager; }
 		public static function get screenNavigator():AdvancedScreenNavigator { return _screenNavigator; }
-		public static function get gameTypeSelectionManager():GameTypeSelectionManager { return _gameTypeSelectionManager; }
+		public static function get gameTypeSelectionManager():GameModeSelectionManager { return _gameTypeSelectionManager; }
 		public static function get tracker():ITracker { return _tracker; }
 		
 		public static function get isSelectingPseudo():Boolean { return _isSelectingPseudo; }

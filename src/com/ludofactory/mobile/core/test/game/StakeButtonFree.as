@@ -37,7 +37,7 @@ package com.ludofactory.mobile.core.test.game
 	import starling.events.Event;
 	import starling.utils.formatString;
 	
-	public class GamePriceSelectionButtonFree extends GamePriceSelectionButton
+	public class StakeButtonFree extends StakeButton
 	{
 		public static var IS_TIMER_OVER_AND_REQUEST_FAILED:Boolean = false;
 		
@@ -64,7 +64,7 @@ package com.ludofactory.mobile.core.test.game
 		 *  The game type. */		
 		private var _gameType:String;
 		
-		public function GamePriceSelectionButtonFree(gameType:String)
+		public function StakeButtonFree(gameType:String)
 		{
 			super();
 			

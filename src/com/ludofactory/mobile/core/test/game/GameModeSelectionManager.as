@@ -19,7 +19,7 @@ package com.ludofactory.mobile.core.test.game
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 
-	public class GameTypeSelectionManager
+	public class GameModeSelectionManager
 	{
 		/**
 		 * The black overlay. */		
@@ -27,13 +27,13 @@ package com.ludofactory.mobile.core.test.game
 		
 		/**
 		 * The game type selection popup. */		
-		private var _popup:GameTypeSelectionPopup;
+		private var _popup:GameModeSelectionPopup;
 		
 		/**
 		 * The saved root used to display the popup. */		
 		private var _savedRoot:DisplayObject;
 		
-		public function GameTypeSelectionManager(root:DisplayObject)
+		public function GameModeSelectionManager(root:DisplayObject)
 		{
 			_savedRoot = root;
 			
@@ -42,7 +42,7 @@ package com.ludofactory.mobile.core.test.game
 			_blackOverlay.visible = false;
 			(_savedRoot as AbstractEntryPoint).addChild(_blackOverlay);
 			
-			_popup = new GameTypeSelectionPopup();
+			_popup = new GameModeSelectionPopup();
 			_popup.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 0.7: 0.9) : (AbstractGameInfo.LANDSCAPE ? 0.5 : 0.7));
 			_popup.x = (GlobalConfig.stageWidth - _popup.width) * 0.5;
 			(_savedRoot as AbstractEntryPoint).addChild(_popup);

@@ -12,11 +12,11 @@ package com.ludofactory.mobile.core.theme
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.cs.thread.CSThreadItemRenderer;
 	import com.ludofactory.mobile.core.test.engine.FacebookFriendElement;
-	import com.ludofactory.mobile.core.test.game.GamePriceSelectionButton;
-	import com.ludofactory.mobile.core.test.game.GamePriceSelectionButtonCredits;
-	import com.ludofactory.mobile.core.test.game.GamePriceSelectionButtonFree;
-	import com.ludofactory.mobile.core.test.game.GamePriceSelectionButtonPoints;
-	import com.ludofactory.mobile.core.test.game.GameTypeSelectionPopup;
+	import com.ludofactory.mobile.core.test.game.StakeButton;
+	import com.ludofactory.mobile.core.test.game.StakeButtonCredit;
+	import com.ludofactory.mobile.core.test.game.StakeButtonFree;
+	import com.ludofactory.mobile.core.test.game.StakeButtonPoint;
+	import com.ludofactory.mobile.core.test.game.GameModeSelectionPopup;
 	import com.ludofactory.mobile.core.test.home.RuleItemRenderer;
 	import com.ludofactory.mobile.core.test.sponsor.info.SponsorBonusItemRenderer;
 	import com.ludofactory.mobile.core.test.store.StoreItemRenderer;
@@ -642,13 +642,13 @@ package com.ludofactory.mobile.core.theme
 			setInitializerForClass(SponsorBonusItemRenderer, sponsorBonusItemRendererInitializer);
 			
 			// GameTypeSelection
-			setInitializerForClass(GameTypeSelectionPopup, gameTypeSelectionPopupInitializer);
+			setInitializerForClass(GameModeSelectionPopup, gameTypeSelectionPopupInitializer);
 			setInitializerForClass(NotificationPopup, notificationPopupInitializer);
 			
 			// GamePriceSelection buttons
-			setInitializerForClassAndSubclasses(GamePriceSelectionButtonPoints,  gamePriceSelectionButtonPointsInitializer);
-			setInitializerForClassAndSubclasses(GamePriceSelectionButtonFree,    gamePriceSelectionButtonFreeInitializer);
-			setInitializerForClassAndSubclasses(GamePriceSelectionButtonCredits, gamePriceSelectionButtonCreditsInitializer);
+			setInitializerForClassAndSubclasses(StakeButtonPoint,  gamePriceSelectionButtonPointsInitializer);
+			setInitializerForClassAndSubclasses(StakeButtonFree,    gamePriceSelectionButtonFreeInitializer);
+			setInitializerForClassAndSubclasses(StakeButtonCredit, gamePriceSelectionButtonCreditsInitializer);
 			
 			// AbstractNotification
 			setInitializerForClassAndSubclasses(AbstractNotification, abstractNotificationInitializer);
@@ -2038,7 +2038,7 @@ package com.ludofactory.mobile.core.theme
 		/**
 		 * GameTypeSelectionPopup displayed in the home screen.
 		 */		
-		protected function gameTypeSelectionPopupInitializer(popup:GameTypeSelectionPopup):void
+		protected function gameTypeSelectionPopupInitializer(popup:GameModeSelectionPopup):void
 		{
 			popup.frontSkin = new Scale9Image(gameTypeSelectionFrontTextures, scaleFactor);
 			popup.backgroundSkin = new Scale9Image(gameTypeSelectionBackgroundTextures, scaleFactor);
@@ -2111,7 +2111,7 @@ package com.ludofactory.mobile.core.theme
 //
 //------------------------------------------------------------------------------------------------------------
 		
-		protected function baseGamePriceSelectionButtonInitializer(container:GamePriceSelectionButton):void
+		protected function baseGamePriceSelectionButtonInitializer(container:StakeButton):void
 		{
 			container.shadowThickness = 17 * this.scaleFactor;
 			container.minWidth = 60 * this.scaleFactor;
@@ -2121,7 +2121,7 @@ package com.ludofactory.mobile.core.theme
 		/**
 		 * 
 		 */		
-		protected function gamePriceSelectionButtonPointsInitializer(container:GamePriceSelectionButtonPoints):void
+		protected function gamePriceSelectionButtonPointsInitializer(container:StakeButtonPoint):void
 		{
 			container.backgroundSkin = new Scale9Image(this.buttonBlueSkinTextures, this.scaleFactor);
 			container.backgroundDisabledSkin = new Scale9Image(this.buttonDisabledSkinTextures, this.scaleFactor);
@@ -2131,7 +2131,7 @@ package com.ludofactory.mobile.core.theme
 		/**
 		 * 
 		 */		
-		protected function gamePriceSelectionButtonFreeInitializer(container:GamePriceSelectionButtonFree):void
+		protected function gamePriceSelectionButtonFreeInitializer(container:StakeButtonFree):void
 		{
 			container.backgroundSkin = new Scale9Image(this.buttonGreenSkinTextures, this.scaleFactor);
 			container.backgroundDisabledSkin = new Scale9Image(this.buttonDisabledSkinTextures, this.scaleFactor);
@@ -2141,7 +2141,7 @@ package com.ludofactory.mobile.core.theme
 		/**
 		 * 
 		 */		
-		protected function gamePriceSelectionButtonCreditsInitializer(container:GamePriceSelectionButtonCredits):void
+		protected function gamePriceSelectionButtonCreditsInitializer(container:StakeButtonCredit):void
 		{
 			container.backgroundSkin = new Scale9Image(this.buttonYellowSkinTextures, this.scaleFactor);
 			container.backgroundDisabledSkin = new Scale9Image(this.buttonDisabledSkinTextures, this.scaleFactor);

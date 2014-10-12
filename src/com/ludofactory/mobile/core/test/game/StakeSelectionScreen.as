@@ -6,6 +6,7 @@ Created : 23 Juillet 2013
 */
 package com.ludofactory.mobile.core.test.game
 {
+
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
@@ -18,22 +19,22 @@ package com.ludofactory.mobile.core.test.game
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.push.GameSession;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
+
+	import feathers.controls.Label;
+
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-	
-	import feathers.controls.Label;
-	
+
 	import starling.events.Event;
-	
+
 	/**
 	 * The screen used to select a price for the next game session.
 	 * 
 	 * <p>Whether free, with credits and in tournament mode, with
 	 * points.</p>
 	 */	
-	public class GamePriceSelectionScreen extends AdvancedScreen
+	public class StakeSelectionScreen extends AdvancedScreen
 	{
 		/**
 		 * Title */		
@@ -41,17 +42,17 @@ package com.ludofactory.mobile.core.test.game
 		
 		/**
 		 * Play with free credits */		
-		private var _withFree:GamePriceSelectionButtonFree;
+		private var _withFree:StakeButtonFree;
 		
 		/**
 		 * Play with points (only in tournament mode) */		
-		private var _withPoints:GamePriceSelectionButtonPoints;
+		private var _withPoints:StakeButtonPoint;
 		
 		/**
 		 * Play with credits */		
-		private var _withCredits:GamePriceSelectionButtonCredits;
+		private var _withCredits:StakeButtonCredit;
 		
-		public function GamePriceSelectionScreen()
+		public function StakeSelectionScreen()
 		{
 			super();
 			
@@ -71,17 +72,17 @@ package com.ludofactory.mobile.core.test.game
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 70), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 5, 5, 3) ];
 			
-			_withFree = new GamePriceSelectionButtonFree( this.advancedOwner.screenData.gameType );
+			_withFree = new StakeButtonFree( this.advancedOwner.screenData.gameType );
 			_withFree.addEventListener(Event.TRIGGERED, onPlayWithFree);
 			addChild(_withFree);
 			
-			_withCredits = new GamePriceSelectionButtonCredits(this.advancedOwner.screenData.gameType);
+			_withCredits = new StakeButtonCredit(this.advancedOwner.screenData.gameType);
 			_withCredits.addEventListener(Event.TRIGGERED, onPlayWithCredits);
 			addChild(_withCredits);
 			
 			if( advancedOwner.screenData.gameType == GameSession.TYPE_TOURNAMENT )
 			{
-				_withPoints = new GamePriceSelectionButtonPoints();
+				_withPoints = new StakeButtonPoint();
 				_withPoints.addEventListener(Event.TRIGGERED, onPlayWithPoints);
 				addChild(_withPoints);
 			}

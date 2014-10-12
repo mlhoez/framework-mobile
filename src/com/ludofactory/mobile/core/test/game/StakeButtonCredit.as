@@ -26,7 +26,7 @@ package com.ludofactory.mobile.core.test.game
 	import starling.events.Event;
 	import starling.utils.formatString;
 	
-	public class GamePriceSelectionButtonCredits extends GamePriceSelectionButton
+	public class StakeButtonCredit extends StakeButton
 	{
 		/**
 		 * The credit icon. */		
@@ -47,7 +47,7 @@ package com.ludofactory.mobile.core.test.game
 		 * The game type. */		
 		private var _gameType:String;
 		
-		public function GamePriceSelectionButtonCredits(gameType:String)
+		public function StakeButtonCredit(gameType:String)
 		{
 			super();
 			

@@ -24,7 +24,7 @@ package com.ludofactory.mobile.core.test.game
 	import starling.events.Event;
 	import starling.utils.formatString;
 	
-	public class GamePriceSelectionButtonPoints extends GamePriceSelectionButton
+	public class StakeButtonPoint extends StakeButton
 	{
 		/**
 		 * The points icon. */		
@@ -36,7 +36,7 @@ package com.ludofactory.mobile.core.test.game
 		 * The main label */		
 		private var _label:Label;
 		
-		public function GamePriceSelectionButtonPoints()
+		public function StakeButtonPoint()
 		{
 			super();
 		}

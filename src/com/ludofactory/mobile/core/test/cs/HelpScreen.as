@@ -6,6 +6,7 @@ Created : 25 août 2012
 */
 package com.ludofactory.mobile.core.test.cs
 {
+
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
@@ -14,26 +15,25 @@ package com.ludofactory.mobile.core.test.cs
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
 	import com.ludofactory.mobile.core.controls.ScreenIds;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.CSNewThreadNotificationContent;
 	import com.ludofactory.mobile.core.test.config.GlobalConfig;
 	import com.ludofactory.mobile.core.test.cs.display.CSMessageData;
 	import com.ludofactory.mobile.core.test.cs.display.CSMessagesContainer;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
+
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.data.ListCollection;
-	
+
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
+
 	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.utils.formatString;
-	
+
 	public class HelpScreen extends AdvancedScreen
 	{
 		/**

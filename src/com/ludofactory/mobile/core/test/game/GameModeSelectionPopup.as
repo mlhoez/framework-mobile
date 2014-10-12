@@ -48,7 +48,7 @@ package com.ludofactory.mobile.core.test.game
 	/**
 	 * The pop up used to select a game type.
 	 */	
-	public class GameTypeSelectionPopup extends FeathersControl
+	public class GameModeSelectionPopup extends FeathersControl
 	{
 		/**
 		 * The shadow thickness used to adjust the layout. */		
@@ -117,7 +117,7 @@ package com.ludofactory.mobile.core.test.game
 		
 		private var _isShaking:Boolean = false;
 		
-		public function GameTypeSelectionPopup()
+		public function GameModeSelectionPopup()
 		{
 			super();
 		}

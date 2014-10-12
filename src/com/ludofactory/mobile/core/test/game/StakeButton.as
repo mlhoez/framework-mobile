@@ -16,7 +16,7 @@ package com.ludofactory.mobile.core.test.game
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	
-	public class GamePriceSelectionButton extends FeathersControl
+	public class StakeButton extends FeathersControl
 	{
 		/**
 		 * @private
@@ -39,7 +39,7 @@ package com.ludofactory.mobile.core.test.game
 		
 		protected var _scaleWhenDownValue:Number = 0.95;
 		
-		public function GamePriceSelectionButton()
+		public function StakeButton()
 		{
 			super();
 		}
