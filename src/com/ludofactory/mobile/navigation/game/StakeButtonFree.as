@@ -124,6 +124,7 @@ package com.ludofactory.mobile.navigation.game
 					{
 						if( MemberManager.getInstance().getCanWatchVideo() && AbstractEntryPoint.vidCoin.videoIsAvailableForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID) )
 						{
+							// FIXME que ne mode classic ???
 							AbstractEntryPoint.vidCoin.addEventListener(VidCoinEvent.VIDCOIN, handleVidCoinEvent);
 							AbstractEntryPoint.vidCoin.playAdForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID);
 							Flox.logEvent("Affichages d'une vidéo VidCoin", {Total:"Total"});

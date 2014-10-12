@@ -334,7 +334,7 @@ package com.ludofactory.mobile.core.manager
 		public function setTrophiesWon(val:Array):void
 		{
 			var len:int = val.length;
-			for(var i:int; i < len; i++)
+			for(var i:int = 0; i < len; i++)
 			{
 				if( _member.trophiesWon.indexOf( val[i] ) == -1 )
 				{

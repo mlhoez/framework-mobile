@@ -86,7 +86,6 @@ package com.ludofactory.mobile.navigation.game
 			_container.addChild(_icon);
 
 			_label = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(42), 0x002432);
-			_label.border = true;
 			_label.autoScale = true;
 			_container.addChild(_label);
 			
