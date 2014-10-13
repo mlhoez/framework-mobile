@@ -160,10 +160,10 @@ package com.ludofactory.mobile.core.controls
 					_zone.width = actualWidth;
 					addRawChild(_zone);
 					
-					_downArrow = new Image(Theme.downArrowLists);
+					_downArrow = new Image(Theme.popupScrollArrow);
 					_downArrow.scaleX = _downArrow.scaleY = GlobalConfig.dpiScale;
 					_downArrow.x = (actualWidth - _downArrow.width) * 0.5;
-					_downArrow.y = this.actualHeight - _downArrow.height - scaleAndRoundToDpi(10);
+					_downArrow.y = this.actualHeight - _downArrow.height + scaleAndRoundToDpi(20);
 					TweenMax.to(_downArrow, 0.4, { y:(_downArrow.y - scaleAndRoundToDpi(16)), yoyo:true, repeat:-1, ease:Power1.easeInOut });
 					addRawChild(_downArrow);
 				}
