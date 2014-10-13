@@ -31,6 +31,10 @@ package com.ludofactory.mobile.core.controls
 		private static const HELPER_POINT:Point = new Point();
 		private static const HELPER_TOUCHES_VECTOR:Vector.<Touch> = new <Touch>[];
 		private var _touchPointID:int = -1;
+
+		/**
+		 * Header height used to calculate the scroll position. */
+		private var _headerHeight:int;
 		
 		/**
 		 * The expand / collapse animation duration. */		
@@ -245,6 +249,15 @@ package com.ludofactory.mobile.core.controls
 			
 			super.dispose();
 		}
-		
+
+		public function get headerHeight():int
+		{
+			return _headerHeight;
+		}
+
+		public function set headerHeight(value:int):void
+		{
+			_headerHeight = value;
+		}
 	}
 }

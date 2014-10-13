@@ -6,16 +6,15 @@ Created : 2 sept. 2013
 */
 package com.ludofactory.mobile.core.controls
 {
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.ScreenIds;
+
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.navigation.vip.VipAccordionItem;
-	
+
 	import feathers.controls.ScrollContainer;
 	import feathers.layout.VerticalLayout;
-	
+
 	import starling.events.Event;
-	
+
 	public class Accordion extends ScrollContainer
 	{
 		private var _dataProvider:Vector.<AbstractAccordionItem>;
@@ -122,11 +121,11 @@ package com.ludofactory.mobile.core.controls
 		
 		private function onExpandComplete(event:Event):void
 		{
-			if( AbstractAccordionItem(event.target).isLast )
-				scrollToPosition(NaN, maxVerticalScrollPosition, 0.5);
+			//if( AbstractAccordionItem(event.target).isLast )
+			//	scrollToPosition(NaN, maxVerticalScrollPosition, 0.5);
 			
-			if( AbstractEntryPoint.screenNavigator.activeScreenID == ScreenIds.MY_ACCOUNT_SCREEN )
-				scrollToPosition(NaN, 0, 0.5);
+			//if( AbstractEntryPoint.screenNavigator.activeScreenID == ScreenIds.MY_ACCOUNT_SCREEN )
+				scrollToPosition(NaN, (AbstractAccordionItem(event.target).headerHeight * AbstractAccordionItem(event.target).index) , 0.5);
 		}
 		
 		public function set dataProvider(val:Vector.<AbstractAccordionItem>):void

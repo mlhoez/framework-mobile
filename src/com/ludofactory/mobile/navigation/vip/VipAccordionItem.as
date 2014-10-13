@@ -88,6 +88,8 @@ package com.ludofactory.mobile.navigation.vip
 			_headerBackground.addQuad( quad );
 			quad.y = scaleAndRoundToDpi(84);
 			_headerBackground.addQuad( quad );
+
+			headerHeight = scaleAndRoundToDpi(84);
 			
 			_newIcon = new Image( AbstractEntryPoint.assets.getTexture("vip-new-icon") );
 			_newIcon.scaleX = _newIcon.scaleY = GlobalConfig.dpiScale;

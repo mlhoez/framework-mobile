@@ -78,6 +78,8 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			quad.color = 0xbfbfbf;
 			quad.y = scaleAndRoundToDpi(84);
 			_headerBackground.addQuad( quad );
+
+			headerHeight = scaleAndRoundToDpi(84);
 			
 			_headerTitle = new Label();
 			_headerTitle.touchable = false;
