@@ -154,6 +154,7 @@ package com.ludofactory.mobile.core.theme
 		/**
 		 * Black loader textures. */		
 		public static var blackLoaderTextures:Vector.<Texture>;
+		public static var popupScrollArrow:Texture;
 		
 		// Particles textures and XMLs
 		/**
@@ -402,6 +403,7 @@ package com.ludofactory.mobile.core.theme
 			ludokadoLogoTexture     = AbstractEntryPoint.assets.getTexture("logo-ludokado");
 			gameCenterTexture       = AbstractEntryPoint.assets.getTexture("game-center");
 			blackLoaderTextures     = AbstractEntryPoint.assets.getTextures("MiniLoader");
+			popupScrollArrow        = AbstractEntryPoint.assets.getTexture("popup-scroll-arrow");
 			
 			// 
 			downArrowLists = AbstractEntryPoint.assets.getTexture("arrow-down-dark");
