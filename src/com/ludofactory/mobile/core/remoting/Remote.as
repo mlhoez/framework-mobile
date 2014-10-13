@@ -867,8 +867,6 @@ package com.ludofactory.mobile.core.remoting
 			if( callback )
 				callback( error );
 			
-			return;
-			
 			try
 			{
 				if( error.queryName == "useClass" )

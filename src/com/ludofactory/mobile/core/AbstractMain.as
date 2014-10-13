@@ -6,20 +6,24 @@ Created : 29 Mars 2013
 */
 package com.ludofactory.mobile.core
 {
+
 	import com.freshplanet.ane.AirDeviceId;
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.log;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.pause.PauseManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.pause.PauseManager;
-	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.debug.TouchMarkerManager;
-	
+
+	import eu.alebianco.air.extensions.analytics.Analytics;
+
+	import feathers.system.DeviceCapabilities;
+
 	import flash.desktop.NativeApplication;
 	import flash.display.Bitmap;
 	import flash.display.Loader;
@@ -37,17 +41,13 @@ package com.ludofactory.mobile.core
 	import flash.media.SoundMixer;
 	import flash.system.Capabilities;
 	import flash.utils.ByteArray;
-	
-	import eu.alebianco.air.extensions.analytics.Analytics;
-	
-	import feathers.system.DeviceCapabilities;
-	
+
 	import starling.core.Starling;
 	import starling.events.Event;
 	import starling.textures.Texture;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
-	
+
 	// don't forget to add this in the subclasses :
 	// [SWF(frameRate="60", backgroundColor="#000000")]
 	
@@ -67,9 +67,6 @@ package com.ludofactory.mobile.core
 		/**
 		 *  */		
 		private var _launchImage:Loader;
-		/**
-		 *  */		
-		private var _savedAutoOrients:Boolean;
 		
 		public function AbstractMain()
 		{
@@ -86,6 +83,7 @@ package com.ludofactory.mobile.core
 			
 			SoundMixer.audioPlaybackMode = AudioPlaybackMode.AMBIENT;
 			mouseEnabled = mouseChildren = false;
+			setGameInfo();
 			showLaunchImage();
 			loaderInfo.addEventListener(flash.events.Event.COMPLETE, onAppLoaded);
 		}
@@ -149,11 +147,6 @@ package com.ludofactory.mobile.core
 				}
 			}
 			
-			const scaledDPI:int = DeviceCapabilities.dpi / Starling.contentScaleFactor;
-			var _originalDPI:int = scaledDPI;
-			_originalDPI = DeviceCapabilities.isTablet(stage) ? Theme.ORIGINAL_DPI_IPAD_RETINA : Theme.ORIGINAL_DPI_IPHONE_RETINA;
-			var scale:Number = GlobalConfig.dpiScale = scaledDPI / _originalDPI;
-			
 			if(filePath)
 			{
 				var file:File = File.applicationDirectory.resolvePath(filePath);
@@ -164,24 +157,27 @@ package com.ludofactory.mobile.core
 					stream.open(file, FileMode.READ);
 					stream.readBytes(bytes, 0, stream.bytesAvailable);
 					stream.close();
+					
 					_launchImage = new Loader();
 					_launchImage.loadBytes(bytes);
 					addChild(_launchImage);
-					if( Capabilities.manufacturer.indexOf("iOS") >= 0 )
+
+					if( Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0 )
 					{
-						_savedAutoOrients = stage.autoOrients;
-						stage.autoOrients = false;
-					}
-					else
-					{
-						_launchImage.scaleX = _launchImage.scaleY = scale;
 						_launchImage.width = stage.stageWidth;
 						_launchImage.height = stage.stageHeight;
 					}
+					
 					if(isPortraitOnly)
 					{
-						//this.stage.setOrientation(StageOrientation.DEFAULT); //TODO Problème avec l'iphone
+						if( AbstractGameInfo.LANDSCAPE )
+						{
+							_launchImage.rotation = -90;
+							_launchImage.y = stage.fullScreenHeight;
+						}
 					}
+					
+					
 				}
 			}
 		}
@@ -193,13 +189,11 @@ package com.ludofactory.mobile.core
 		{
 			loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onUncaughtError);
 			
-			setGameInfo();
-			
 			Flox.init(AbstractGameInfo.FLOX_ID, AbstractGameInfo.FLOX_KEY, AbstractGameInfo.GAME_VERSION);
 			Flox.traceLogs = false;
 			
-			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0 ? true : false;
-			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0 ? true : false;
+			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0;
+			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
 			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
 			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : "android";
 			GlobalConfig.deviceId = AirDeviceId.getInstance().getID("ludofactory");
@@ -240,8 +234,6 @@ package com.ludofactory.mobile.core
 				removeChild(_launchImage);
 				_launchImage.unloadAndStop(true);
 				_launchImage = null;
-				if( GlobalConfig.ios )
-					stage.autoOrients = _savedAutoOrients;
 			}
 			
 			appl.loadTheme(bgTexture);
