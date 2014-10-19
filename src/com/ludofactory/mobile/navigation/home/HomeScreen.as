@@ -9,25 +9,29 @@ package com.ludofactory.mobile.navigation.home
 
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGame;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
-	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 
+	import starling.display.Image;
 	import starling.events.Event;
 
 	/**
@@ -37,7 +41,7 @@ package com.ludofactory.mobile.navigation.home
 	{
 		/**
 		 * Game logo */		
-		private var _logo:ImageLoader;
+		private var _logo:Image;
 		
 		/**
 		 * Play button */		
@@ -72,20 +76,18 @@ package com.ludofactory.mobile.navigation.home
 			
 			advancedOwner.screenData.purgeData();
 			
-			_logo = new ImageLoader();
-			_logo.source = Theme.gameLogoTexture;
-			_logo.textureScale = GlobalConfig.dpiScale;
-			_logo.snapToPixels = true;
+			_logo = new Image(Theme.gameLogoTexture);
+			_logo.scaleX = _logo.scaleY = GlobalConfig.dpiScale;
 			addChild(_logo);
 			
 			_playButton = new Button();
-			_playButton.styleName = (GlobalConfig.ios && GameCenterManager.available) ? Theme.BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER : Theme.BUTTON_SPECIAL_BIGGER;
+			_playButton.styleName = /*(GlobalConfig.ios && GameCenterManager.available) ? */Theme.BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER/* : Theme.BUTTON_SPECIAL_BIGGER;*/
 			_playButton.label = _("JOUER");
 			_playButton.addEventListener(Event.TRIGGERED, onPlay);
 			addChild(_playButton);
 			
-			if( GlobalConfig.ios && GameCenterManager.available )
-			{
+			/*if( GlobalConfig.ios && GameCenterManager.available )
+			{*/
 				_gameCenterIcon = new ImageLoader();
 				_gameCenterIcon.source = Theme.gameCenterTexture;
 				_gameCenterIcon.snapToPixels = true;
@@ -96,7 +98,7 @@ package com.ludofactory.mobile.navigation.home
 				_gameCenterButton.styleName = Theme.BUTTON_SPECIAL_SQUARED_LEFT;
 				_gameCenterButton.addEventListener(Event.TRIGGERED, onShowGameCenterAchievements);
 				addChild(_gameCenterButton);
-			}
+			//}
 			
 			_giftsButton = new Button();
 			_giftsButton.styleName = Theme.BUTTON_TRANSPARENT_WHITE;
@@ -139,40 +141,51 @@ package com.ludofactory.mobile.navigation.home
 				// 2 getScaleToFillHeight pour adapter le logo
 				// sur tablette on limite la taille (au début en faisant actualHeight * X)
 				
-				if( AbstractGameInfo.LANDSCAPE )
-				{
-					var gap:int = scaleAndRoundToDpi(10);
-					var padding:int = scaleAndRoundToDpi(10);
+				/*if( AbstractGameInfo.LANDSCAPE )
+				{*/
+				
+				var maxScaleWidth:Number = AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 0.6 : 0.6) : (GlobalConfig.isPhone ? 0.8 : 0.6);
+				
+					var gap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
+					var padding:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
+				
+				var buttonHeight:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 128) : 128);
 					
 					_giftsButton.validate();
-					var logoMaxHeight:int = actualHeight - (scaleAndRoundToDpi(118) + _giftsButton.height + (padding * 2) + (gap * 2));
-					log(actualHeight);
-					log(scaleAndRoundToDpi(118));
-					log(_giftsButton.height);
-					log((padding * 2));
-					log((gap * 2));
+					var logoMaxHeight:int = actualHeight - (buttonHeight + _giftsButton.height + (padding * 2) + (gap * 2));
 					
-					_logo.height = logoMaxHeight;
-					_logo.validate();
-					_logo.y = (logoMaxHeight - _logo.height) * 0.5;
-					log("LOLILOL  = " + _logo.y);
-					
-					_playButton.width = _logo.width * 0.9;
-					_playButton.y = _logo.y + _logo.height + scaleAndRoundToDpi(10);
-					_playButton.validate();
-					
-					_giftsButton.width = _playButton.width * 0.9;
-					_giftsButton.y = _playButton.y + _playButton.height + scaleAndRoundToDpi(10);
+					_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillHeight(_logo.height, logoMaxHeight);
+					if( _logo.width > (actualWidth * maxScaleWidth) )
+					{
+						_logo.scaleX = _logo.scaleY = 1;
+						_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillWidth(_logo.width, (actualWidth * maxScaleWidth));
+					}
 					
 					_logo.x = roundUp((actualWidth - _logo.width) * 0.5);
-					_playButton.x = roundUp((actualWidth - _playButton.width) * 0.5);
-					_giftsButton.x = roundUp((actualWidth - _giftsButton.width) * 0.5);
+					_logo.y = roundUp(padding + (actualHeight - (_logo.height + scaleAndRoundToDpi(118) + _giftsButton.height + (padding * 2) +(gap * 2))) * 0.5);
 					
+					_playButton.width = _logo.width * 0.9 - ((/*GlobalConfig.ios && GameCenterManager.available*/true) ? _gameCenterButton.width : 0 );
+					_playButton.x = roundUp((actualWidth - _playButton.width - ((/*GlobalConfig.ios && GameCenterManager.available*/true) ? _gameCenterButton.width : 0 )) * 0.5);
+					_playButton.y = _logo.y + _logo.height + gap;
+					_playButton.height = buttonHeight;
+					//_playButton.validate();
+				
+				if( true/*GlobalConfig.ios && GameCenterManager.available*/ )
+				{
+					//_playButton.x -= _gameCenterButton.width;
+					_gameCenterButton.height = buttonHeight;
+					_gameCenterButton.x = _playButton.x + _playButton.width;
+					_gameCenterButton.y = _playButton.y;
 				}
+				
+					_giftsButton.width = _logo.width * 0.8;
+					_giftsButton.x = roundUp((actualWidth - _giftsButton.width) * 0.5);
+					_giftsButton.y = _playButton.y + _playButton.height + gap;
+				/*}
 				else
 				{
 					
-				}
+				}*/
 				
 				/*if( AbstractGameInfo.LANDSCAPE )
 				{
