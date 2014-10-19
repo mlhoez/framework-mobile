@@ -53,6 +53,10 @@ package com.ludofactory.mobile.navigation.game
 		/**
 		 *  The game type. */		
 		private var _gameType:String;
+
+		/**
+		 * Whether VidCoin is enabled. */
+		private var _vidCoinEnabled:Boolean = false;
 		
 		public function StakeButtonFree(gameType:String)
 		{
@@ -122,21 +126,21 @@ package com.ludofactory.mobile.navigation.game
 					}
 					else
 					{
-						if( MemberManager.getInstance().getCanWatchVideo() && AbstractEntryPoint.vidCoin.videoIsAvailableForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID) )
+						if( MemberManager.getInstance().getCanWatchVideo() && AbstractEntryPoint.vidCoin.videoIsAvailableForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID) && 
+								AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_CLASSIC )
 						{
-							// FIXME que ne mode classic ???
-							AbstractEntryPoint.vidCoin.addEventListener(VidCoinEvent.VIDCOIN, handleVidCoinEvent);
-							AbstractEntryPoint.vidCoin.playAdForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID);
-							Flox.logEvent("Affichages d'une vidéo VidCoin", {Total:"Total"});
-							
 							_label.text = formatString(_("Regarder une vidéo pour jouer gratuitement."));
 							_label.color = 0xffffff;
+
+							_vidCoinEnabled = true;
 						}
 						else
 						{
 							// mettre texte normal + timer
 							_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getNumFreeGameSessionsTotal()) + "--:--:--";
 							_label.color = 0xffffff;
+							
+							_vidCoinEnabled = false;
 
 							GameSessionTimer.registerFunction(setText);
 						}
@@ -150,63 +154,34 @@ package com.ludofactory.mobile.navigation.game
 		{
 			AbstractEntryPoint.vidCoin.removeEventListener(VidCoinEvent.VIDCOIN, handleVidCoinEvent);
 			
-			// TODO Gérer les erreurs :
-			
-			// TODO : si status = true (donc vidéo validée), je fais appel à Remote.getInstance().updateMises()
-			// puis je met à jour le texte du bouton en fonction
-			
-			// URL de call back = paiement/valide_vidcoin.php (voir si on utilise le même compte que Ludokado mais
-			// avec des emplacements différents).
-			
-			
-			
+			// URL de call back = paiement/valide_vidcoin.php
 			
 			if(event.code == "vidcoinViewWillAppear")
 			{
 				// the video appears, here we need to insert a line in the database, stop sounds, etc.
 				Remote.getInstance().logVidCoin(null, null, null, 2);
 			}
-			else if(event.code == "vidcoinViewDidDisappearWithInformation")
-			{
-				// the video left the screen, here we can resume audio and refresh the stakes
-				// depending on the state 
-				if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeSuccess)
-				{
-					
-					log(event.viewInfo["status"]); // success
-					// log(event.viewInfo["reward"]); not used
-				}
-				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeError)
-				{
-					
-					log(event.viewInfo["status"]); // error
-				}
-				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeCancel)
-				{
-					
-					log(event.viewInfo["status"]); // cancel
-				}
-			}
 			else if(event.code == "vidcoinDidValidateView")
 			{
 				// always called after the delegate method "vidcoinViewDidDisappearWithInformation"
 				if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeSuccess)
 				{
-					// TODO upfate mise ici : Remote.getInstance()....
-					Flox.logEvent("Affichages popup marketing inscription", {Visionnage:"Validé"});
-					log(event.viewInfo["status"]); // success
-					log(event.viewInfo["reward"]);
+					Remote.getInstance().updateMises(null, null, null, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+					Flox.logEvent("Affichages d'une vidéo VidCoin", {Visionnage:"Validé"});
 				}
 				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeError)
 				{
-					Flox.logEvent("Affichages popup marketing inscription", {Visionnage:"Erreur"});
-					log(event.viewInfo["status"]); // error
+					Flox.logEvent("Affichages d'une vidéo VidCoin", {Visionnage:"Erreur"});
 				}
 				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeCancel)
 				{
-					Flox.logEvent("Affichages popup marketing inscription", {Visionnage:"Annulée"});
-					log(event.viewInfo["status"]); // cancel
+					Flox.logEvent("Affichages d'une vidéo VidCoin", {Visionnage:"Annulée"});
 				}
+			}
+			else if(event.code == "vidcoinCampaignsUpdate")
+			{
+				// maybe a new video available
+				onUpdateData();
 			}
 		}
 		
@@ -248,6 +223,12 @@ package com.ludofactory.mobile.navigation.game
 						_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 					}
 				}
+				else if( _vidCoinEnabled )
+				{
+					Flox.logEvent("Affichages d'une vidéo VidCoin", {Total:"Total"});
+					AbstractEntryPoint.vidCoin.addEventListener(VidCoinEvent.VIDCOIN, handleVidCoinEvent);
+					AbstractEntryPoint.vidCoin.playAdForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID);
+				}
 			}
 		}
 		
@@ -258,6 +239,8 @@ package com.ludofactory.mobile.navigation.game
 		{
 			MemberManager.getInstance().removeEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateData);
 			GameSessionTimer.unregisterFunction(setText);
+
+			AbstractEntryPoint.vidCoin.removeEventListener(VidCoinEvent.VIDCOIN, handleVidCoinEvent);
 			
 			if( _iconClock )
 			{
