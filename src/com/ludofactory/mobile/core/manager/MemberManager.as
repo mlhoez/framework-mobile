@@ -6,31 +6,30 @@ Created : 12 Août 2013
 */
 package com.ludofactory.mobile.core.manager
 {
+
+	import com.gamua.flox.Flox;
 	import com.ludofactory.common.encryption.Encryption;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.core.manager.InfoContent;
-	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.push.PushNewCSMessage;
 	import com.ludofactory.mobile.core.push.PushNewCSThread;
 	import com.ludofactory.mobile.core.push.PushTrophy;
+	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.vidcoin.vidcoincontroller.VidCoinController;
+
+	import eu.alebianco.air.extensions.analytics.Analytics;
 
 	import flash.data.EncryptedLocalStore;
 	import flash.net.registerClassAlias;
 	import flash.utils.ByteArray;
-	
-	import eu.alebianco.air.extensions.analytics.Analytics;
-
 	import flash.utils.Dictionary;
 
 	import starling.events.EventDispatcher;
-	
+
 	/**
 	 * Member manager.
 	 * 
@@ -144,7 +143,17 @@ package com.ludofactory.mobile.core.manager
 			// the user log in with this id so we need to create a new Member
 			// instance to affect this id. Otherwise, we simply decrypt the
 			// instance that we got from the ELS
-			_member = HELPER_BYTE_ARRAY == null ? new Member() : _encryption.decryptToByteArray( HELPER_BYTE_ARRAY.readUTFBytes(HELPER_BYTE_ARRAY.bytesAvailable) ).readObject();
+			try
+			{
+				_member = HELPER_BYTE_ARRAY == null ? new Member() : _encryption.decryptToByteArray( HELPER_BYTE_ARRAY.readUTFBytes(HELPER_BYTE_ARRAY.bytesAvailable) ).readObject();
+			}
+			catch(error:Error)
+			{
+				Flox.logError("Erreur de décryptage de l'objet membre : " + error.message);
+				EncryptedLocalStore.reset();
+				loadEncryptedMember(DEFAULT_MEMBER_ID);
+				return;
+			}
 			if( HELPER_BYTE_ARRAY == null ) HELPER_BYTE_ARRAY = new ByteArray();
 			
 			if( memberId != DEFAULT_MEMBER_ID )
