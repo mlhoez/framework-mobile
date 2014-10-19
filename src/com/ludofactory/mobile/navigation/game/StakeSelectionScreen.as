@@ -94,7 +94,7 @@ package com.ludofactory.mobile.navigation.game
 					_title.width = actualWidth;
 					_title.validate();
 					
-					_withFree.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.35);
+					_withFree.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.4);
 					if( _withPoints ) _withPoints.width = _withFree.width;
 					
 					_withFree.x = _withCredits.x = ((actualWidth - _withFree.width) * 0.5) << 0;
