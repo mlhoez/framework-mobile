@@ -335,8 +335,8 @@ package com.ludofactory.mobile.navigation.vip
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
 			
-			GoViral.goViral.showFacebookFeedDialog( formatString(_("{0} est maintenant {1}"), (event.data.nom + " " + event.data.prenom), _playerRankData.rankName),
-				"", "",
+			GoViral.goViral.showFacebookShareDialog( formatString(_("{0} est maintenant {1}"), (event.data.nom + " " + event.data.prenom), _playerRankData.rankName),
+				"",
 				_("Avec ce nouveau rang, je peux bénéficier de nouveaux avantages pour gagner encore plus de cadeaux."),
 				_("http://www.ludokado.com/"),
 				formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_vip_{1}.jpg"), LanguageManager.getInstance().lang, _playerRankData.id));

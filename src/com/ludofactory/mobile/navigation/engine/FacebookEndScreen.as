@@ -357,8 +357,8 @@ package com.ludofactory.mobile.navigation.engine
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
-			GoViral.goViral.showFacebookFeedDialog( formatString(_("{0} a dépassé {1} sur le jeu {2}"), _me.friendName, _friendToSwitch.friendName, AbstractGameInfo.GAME_NAME),
-				"", "",
+			GoViral.goViral.showFacebookShareDialog( formatString(_("{0} a dépassé {1} sur le jeu {2}"), _me.friendName, _friendToSwitch.friendName, AbstractGameInfo.GAME_NAME),
+				"",
 				formatString(_("Avec un score de {0}, je pense devenir rapidement le meilleur sur ce jeu."), _me.currentScore),
 				_("http://www.ludokado.com/"),
 				formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));

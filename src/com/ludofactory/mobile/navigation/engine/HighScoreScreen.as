@@ -177,6 +177,9 @@ package com.ludofactory.mobile.navigation.engine
 			addChild(_confettis);
 			Starling.juggler.add(_confettis);
 			
+			if( MemberManager.getInstance().isLoggedIn() && GoViral.isSupported() && GoViral.goViral.isFacebookSupported() && MemberManager.getInstance().getFacebookId() != 0 )
+				GoViral.goViral.postFacebookHighScore(advancedOwner.screenData.gameData.score);
+			
 			// FIXME A décommenter pour gérer l'orientation
 			//this.invalidate(INVALIDATION_FLAG_SIZE);
 		}
@@ -316,9 +319,11 @@ package com.ludofactory.mobile.navigation.engine
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
+
+			GoViral.goViral.postFacebookHighScore(advancedOwner.screenData.gameData.score);
 			
-			GoViral.goViral.showFacebookFeedDialog( formatString(_("Qui sera capable de me battre sur {0} ?"), AbstractGameInfo.GAME_NAME),
-				"", "",
+			GoViral.goViral.showFacebookShareDialog( formatString(_("Qui sera capable de me battre sur {0} ?"), AbstractGameInfo.GAME_NAME),
+				"",
 				formatString(_("Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me prouver le contraire ;)"), advancedOwner.screenData.gameData.score),
 				_("http://www.ludokado.com/"),
 				formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));

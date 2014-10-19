@@ -372,8 +372,8 @@ package com.ludofactory.mobile.navigation.engine
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
 			
-			GoViral.goViral.showFacebookFeedDialog( formatString(_("Je suis dans le TOP {0} sur le tournoi {1}"), advancedOwner.screenData.gameData.top, AbstractGameInfo.GAME_NAME),
-				"", "",
+			GoViral.goViral.showFacebookShareDialog( formatString(_("Je suis dans le TOP {0} sur le tournoi {1}"), advancedOwner.screenData.gameData.top, AbstractGameInfo.GAME_NAME),
+				"",
 				formatString(_("La fin du tournoi approche ! Rejoins-moi vite et remporte toi aussi ce cadeau : {0}"), advancedOwner.screenData.gameData.topDotationName),
 				_("http://www.ludokado.com/"),
 				formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_top_{1}.jpg"), LanguageManager.getInstance().lang, advancedOwner.screenData.gameData.top));
