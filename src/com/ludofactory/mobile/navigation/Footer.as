@@ -151,7 +151,7 @@ package com.ludofactory.mobile.navigation
 			addChild(_creditsContainer);
 			
 			GameSessionTimer.registerFunction(_freeContainer.setLabelText);
-			GameSessionTimer.updateState();
+			
 			
 			updateSummary();
 		}
@@ -202,8 +202,10 @@ package com.ludofactory.mobile.navigation
 		 */		
 		public function updateSummary():void
 		{
+			GameSessionTimer.updateState();
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
+				_freeContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getNumFreeGameSessions() ) );
 				_pointsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getPoints() ) );
 				_creditsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getCredits() ) );
 			}
@@ -212,7 +214,6 @@ package com.ludofactory.mobile.navigation
 				_pointsContainer.setLabelText( "" + MemberManager.getInstance().getPoints() );
 				_creditsContainer.setLabelText( MemberManager.getInstance().getNumFreeGameSessions() == 0 ? "???" : "-" );
 			}
-			GameSessionTimer.updateState();
 		}
 		
 		/**
