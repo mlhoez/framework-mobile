@@ -17,33 +17,23 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.manager.AuthenticationManager;
-	import com.ludofactory.mobile.navigation.authentication.AuthenticationScreen;
-	import com.ludofactory.mobile.navigation.authentication.ForgotPasswordScreen;
-	import com.ludofactory.mobile.navigation.authentication.LoginScreen;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.navigation.authentication.PseudoChoiceScreen;
-	import com.ludofactory.mobile.navigation.authentication.RegisterCompleteScreen;
-	import com.ludofactory.mobile.navigation.authentication.RegisterScreen;
-	import com.ludofactory.mobile.navigation.authentication.SponsorScreen;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
-	import com.ludofactory.mobile.navigation.Footer;
-	import com.ludofactory.mobile.navigation.Header;
-	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.display.TiledBackground;
 	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.push.PushManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.navigation.shop.BoutiqueHomeScreen;
-	import com.ludofactory.mobile.navigation.shop.bid.BidHomeScreen;
-	import com.ludofactory.mobile.navigation.shop.vip.BoutiqueCategoryScreen;
-	import com.ludofactory.mobile.navigation.shop.vip.BoutiqueSubCategoryScreen;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
+	import com.ludofactory.mobile.debug.DebugScreen;
+	import com.ludofactory.mobile.navigation.Footer;
+	import com.ludofactory.mobile.navigation.Header;
 	import com.ludofactory.mobile.navigation.HowToWinGiftsScreen;
 	import com.ludofactory.mobile.navigation.UpdateScreen;
 	import com.ludofactory.mobile.navigation.account.MyAccountScreen;
@@ -52,7 +42,13 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.achievements.TrophyScreen;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
 	import com.ludofactory.mobile.navigation.alert.AlertManager;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.navigation.authentication.AuthenticationScreen;
+	import com.ludofactory.mobile.navigation.authentication.ForgotPasswordScreen;
+	import com.ludofactory.mobile.navigation.authentication.LoginScreen;
+	import com.ludofactory.mobile.navigation.authentication.PseudoChoiceScreen;
+	import com.ludofactory.mobile.navigation.authentication.RegisterCompleteScreen;
+	import com.ludofactory.mobile.navigation.authentication.RegisterScreen;
+	import com.ludofactory.mobile.navigation.authentication.SponsorScreen;
 	import com.ludofactory.mobile.navigation.cs.HelpScreen;
 	import com.ludofactory.mobile.navigation.cs.thread.CSThreadScreen;
 	import com.ludofactory.mobile.navigation.engine.FacebookEndScreen;
@@ -62,17 +58,21 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.engine.TournamentEndScreen;
 	import com.ludofactory.mobile.navigation.event.EventManager;
 	import com.ludofactory.mobile.navigation.faq.FaqScreen;
-	import com.ludofactory.mobile.navigation.game.StakeSelectionScreen;
 	import com.ludofactory.mobile.navigation.game.GameModeSelectionManager;
+	import com.ludofactory.mobile.navigation.game.StakeSelectionScreen;
 	import com.ludofactory.mobile.navigation.highscore.HighScoreHomeScreen;
 	import com.ludofactory.mobile.navigation.highscore.HighScoreListScreen;
 	import com.ludofactory.mobile.navigation.home.AlertData;
 	import com.ludofactory.mobile.navigation.home.HomeScreen;
 	import com.ludofactory.mobile.navigation.home.RulesAndScoresScreen;
+	import com.ludofactory.mobile.navigation.menu.Menu;
 	import com.ludofactory.mobile.navigation.news.CGUScreen;
 	import com.ludofactory.mobile.navigation.news.NewsScreen;
-	import com.ludofactory.mobile.core.push.PushManager;
 	import com.ludofactory.mobile.navigation.settings.SettingsScreen;
+	import com.ludofactory.mobile.navigation.shop.BoutiqueHomeScreen;
+	import com.ludofactory.mobile.navigation.shop.bid.BidHomeScreen;
+	import com.ludofactory.mobile.navigation.shop.vip.BoutiqueCategoryScreen;
+	import com.ludofactory.mobile.navigation.shop.vip.BoutiqueSubCategoryScreen;
 	import com.ludofactory.mobile.navigation.sponsor.SponsorHomeScreen;
 	import com.ludofactory.mobile.navigation.sponsor.filleuls.FilleulsScreen;
 	import com.ludofactory.mobile.navigation.sponsor.invite.SponsorInviteScreen;
@@ -82,19 +82,13 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.tournament.TournamentRankingScreen;
 	import com.ludofactory.mobile.navigation.vip.VipScreen;
 	import com.ludofactory.mobile.navigation.vip.VipUpScreen;
-	import com.ludofactory.mobile.debug.DebugScreen;
-	import com.ludofactory.mobile.navigation.menu.Menu;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceInfo;
 	import com.vidcoin.vidcoincontroller.VidCoinController;
-	
-	import flash.filesystem.File;
-	import flash.geom.Rectangle;
-	import flash.utils.Dictionary;
-	
+
 	import eu.alebianco.air.extensions.analytics.Analytics;
 	import eu.alebianco.air.extensions.analytics.api.ITracker;
-	
+
 	import feathers.controls.Drawers;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.ProgressBar;
@@ -103,7 +97,11 @@ package com.ludofactory.mobile.core
 	import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 	import feathers.system.DeviceCapabilities;
 	import feathers.textures.Scale9Textures;
-	
+
+	import flash.filesystem.File;
+	import flash.geom.Rectangle;
+	import flash.utils.Dictionary;
+
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -337,8 +335,8 @@ package com.ludofactory.mobile.core
 				_progressBar = new ProgressBar();
 				_progressBar.backgroundSkin = new Scale9Image( new Scale9Textures(_assets.getTexture("progress-bar-background"), new Rectangle(9, 8, 12, 1)) );
 				_progressBar.fillSkin = new Scale9Image( new Scale9Textures(_assets.getTexture("progress-bar-fill"), new Rectangle(9, 8, 12, 1)) );
-				_progressBar.width = GlobalConfig.stageWidth * 0.7;
-				_progressBar.x = GlobalConfig.stageWidth * 0.15;
+				_progressBar.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.7 : 0.4);
+				_progressBar.x = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.15 : 0.3);
 				_progressBar.y = GlobalConfig.stageHeight * 0.9;
 				addChild(_progressBar);
 				
