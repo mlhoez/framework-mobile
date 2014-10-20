@@ -5,15 +5,16 @@ package com.ludofactory.mobile.core.notification
 {
 
 	import com.greensock.TweenMax;
-	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-
-	import feathers.controls.ScrollContainer;
+	import com.ludofactory.mobile.core.events.LudoEventType;
 
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.display.Quad;
 	import starling.events.Event;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 
 	public class NotificationPopupManager
 	{
@@ -43,10 +44,10 @@ package com.ludofactory.mobile.core.notification
 			if( !_currentNotification )
 			{
 				_currentNotification = new NotificationPopup();
-				_currentNotification.x = GlobalConfig.stageWidth * 0.025;
-				_currentNotification.y = GlobalConfig.stageWidth * 0.02;
-				_currentNotification.width = GlobalConfig.stageWidth * 0.95;
-				_currentNotification.height = GlobalConfig.stageHeight * 0.95;
+				_currentNotification.x = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.025 : 0.1);
+				_currentNotification.y = GlobalConfig.stageHeight * (GlobalConfig.isPhone ? 0.025 : 0.1);
+				_currentNotification.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.95 : 0.8);
+				_currentNotification.height = GlobalConfig.stageHeight * (GlobalConfig.isPhone ? 0.95 : 0.8);
 				Starling.current.stage.addChild(_currentNotification);
 				Starling.current.stage.removeChild(_currentNotification);
 
@@ -70,7 +71,8 @@ package com.ludofactory.mobile.core.notification
 				TweenMax.delayedCall(0.75, addNotification, [content]);
 				return;
 			}
-			
+
+			_overlay.addEventListener(TouchEvent.TOUCH, onClose);
 			Starling.current.stage.addChild(_overlay);
 			TweenMax.to(_overlay, 0.5, { autoAlpha:0.75 });
 
@@ -90,6 +92,14 @@ package com.ludofactory.mobile.core.notification
 			if( isNotificationDisplaying )
 				_currentNotification.close();
 		}
+		
+		private static function onClose(event:TouchEvent):void
+		{
+			var touch:Touch = event.getTouch(_overlay, TouchPhase.ENDED);
+			if( touch )
+				closeNotification();
+			touch = null;
+		}
 
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
@@ -104,6 +114,7 @@ package com.ludofactory.mobile.core.notification
 			_currentNotification.removeEventListener(LudoEventType.CLOSE_NOTIFICATION, onNotificationClosed);
 			TweenMax.to(_overlay, 0.5, { autoAlpha:0 });
 			_currentNotification.animateOut();
+			_overlay.removeEventListener(TouchEvent.TOUCH, onClose);
 		}
 		
 	}
