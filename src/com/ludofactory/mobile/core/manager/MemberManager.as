@@ -166,18 +166,23 @@ package com.ludofactory.mobile.core.manager
 					AbstractEntryPoint.tracker.buildEvent("Connexions", "-").withLabel("Compte (" + memberId + ")").track();
 				log("<strong>Connexion du joueur " + memberId + "</strong>");
 				
-				if( AbstractEntryPoint.vidCoin )
-				{
-					var dict:Dictionary = new Dictionary();
-					dict[VidCoinController.kVCUserGameID] = getId();
-					dict[VidCoinController.kVCUserBirthYear] = getBirthDate().split("-")[0];
-					dict[VidCoinController.kVCUserGenderKey]= getTitle() == "Mr." ? VidCoinController.kVCUserGenderMale : VidCoinController.kVCUserGenderFemale;
-					AbstractEntryPoint.vidCoin.updateUserDictionary(dict);
-				}
+				updateVidCoinData();
 			}
 			
 			// update the values of the footer
 			dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
+		}
+		
+		public function updateVidCoinData():void
+		{
+			if( AbstractEntryPoint.vidCoin )
+			{
+				var dict:Dictionary = new Dictionary();
+				dict[VidCoinController.kVCUserGameID] = getId();
+				dict[VidCoinController.kVCUserBirthYear] = getBirthDate().split("-")[0];
+				dict[VidCoinController.kVCUserGenderKey]= getTitle() == "Mr." ? VidCoinController.kVCUserGenderMale : VidCoinController.kVCUserGenderFemale;
+				AbstractEntryPoint.vidCoin.updateUserDictionary(dict);
+			}
 		}
 		
 		/**
