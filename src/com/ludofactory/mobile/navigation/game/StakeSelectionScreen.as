@@ -14,6 +14,7 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -77,6 +78,9 @@ package com.ludofactory.mobile.navigation.game
 			_withCredits.addEventListener(Event.TRIGGERED, onPlayWithCredits);
 			addChild(_withCredits);
 			
+			if( MemberManager.getInstance().isLoggedIn() )
+				MemberManager.getInstance().updateVidCoinData();
+			
 			if( advancedOwner.screenData.gameType == GameSession.TYPE_TOURNAMENT )
 			{
 				_withPoints = new StakeButtonPoint();
@@ -94,7 +98,7 @@ package com.ludofactory.mobile.navigation.game
 					_title.width = actualWidth;
 					_title.validate();
 					
-					_withFree.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.4);
+					_withFree.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.45);
 					if( _withPoints ) _withPoints.width = _withFree.width;
 					
 					_withFree.x = _withCredits.x = ((actualWidth - _withFree.width) * 0.5) << 0;
