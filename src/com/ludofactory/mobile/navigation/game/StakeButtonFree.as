@@ -10,7 +10,6 @@ package com.ludofactory.mobile.navigation.game
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.gettext.aliases._n;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -76,6 +75,7 @@ package com.ludofactory.mobile.navigation.game
 			
 			onUpdateData();
 			MemberManager.getInstance().addEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateData);
+			Remote.getInstance().addEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateData);
 		}
 		
 		override protected function draw():void
@@ -102,6 +102,8 @@ package com.ludofactory.mobile.navigation.game
 
 			_icon.texture = AbstractEntryPoint.assets.getTexture( _isEnabled ? "GameTypeSelectionFreeIcon" : "GameTypeSelectionFreeIconDisabled" );
 			_backgroundSkin.textures = _isEnabled ? Theme.buttonGreenSkinTextures : Theme.buttonDisabledSkinTextures;
+
+			GameSessionTimer.unregisterFunction(setText);
 			
 			if( _isEnabled )
 			{
@@ -130,9 +132,12 @@ package com.ludofactory.mobile.navigation.game
 								AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_CLASSIC )
 						{
 							_label.text = formatString(_("Regarder une vidéo pour jouer gratuitement."));
-							_label.color = 0xffffff;
+							//_label.color = 0xffffff;
 
 							_vidCoinEnabled = true;
+
+							_icon.texture = AbstractEntryPoint.assets.getTexture("GameTypeSelectionFreeIcon");
+							_backgroundSkin.textures = Theme.buttonGreenSkinTextures;
 						}
 						else
 						{
@@ -152,21 +157,34 @@ package com.ludofactory.mobile.navigation.game
 
 		public function handleVidCoinEvent(event:VidCoinEvent):void
 		{
-			AbstractEntryPoint.vidCoin.removeEventListener(VidCoinEvent.VIDCOIN, handleVidCoinEvent);
-			
-			// URL de call back = paiement/valide_vidcoin.php
-			
 			if(event.code == "vidcoinViewWillAppear")
 			{
 				// the video appears, here we need to insert a line in the database, stop sounds, etc.
 				Remote.getInstance().logVidCoin(null, null, null, 2);
+			}
+			else if(event.code == "vidcoinViewDidDisappearWithInformation")
+			{
+				// the video left the screen, here we can resume audio and refresh the stakes
+				// depending on the state 
+				if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeSuccess)
+				{
+					Remote.getInstance().updateMises(null, null, null, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+				}
+				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeError)
+				{
+					
+				}
+				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeCancel)
+				{
+					
+				}
 			}
 			else if(event.code == "vidcoinDidValidateView")
 			{
 				// always called after the delegate method "vidcoinViewDidDisappearWithInformation"
 				if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeSuccess)
 				{
-					Remote.getInstance().updateMises(null, null, null, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+					
 					Flox.logEvent("Affichages d'une vidéo VidCoin", {Visionnage:"Validé"});
 				}
 				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeError)
@@ -241,6 +259,7 @@ package com.ludofactory.mobile.navigation.game
 			GameSessionTimer.unregisterFunction(setText);
 
 			AbstractEntryPoint.vidCoin.removeEventListener(VidCoinEvent.VIDCOIN, handleVidCoinEvent);
+			Remote.getInstance().removeEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateData);
 			
 			if( _iconClock )
 			{
