@@ -86,6 +86,7 @@ package com.ludofactory.mobile.core
 				if( MemberManager.getInstance().getNumFreeGameSessions() > 0 )
 				{
 					// display the number of game sessions
+					stop();
 					valueToDisplay = "" + MemberManager.getInstance().getNumFreeGameSessions();
 				}
 				else
