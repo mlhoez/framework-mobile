@@ -9,9 +9,11 @@ package com.ludofactory.mobile.core.notification.content
 
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGame;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -39,39 +41,34 @@ package com.ludofactory.mobile.core.notification.content
 	import flash.text.TextFormatAlign;
 
 	import starling.display.BlendMode;
+	import starling.display.Quad;
 	import starling.events.Event;
+	import starling.text.TextField;
+	import starling.utils.HAlign;
+	import starling.utils.HAlign;
 
 	public class MarketingRegisterNotificationContent extends AbstractNotificationPopupContent
 	{
 		/**
 		 * The title. */		
-		private var _notificationTitle:Label;
+		private var _title:TextField;
 		
 		/**
-		 * The message. */		
-		private var _bonus:Label;
-		private var _bonusOne:Label;
-		private var _bonusTwo:Label;
-		private var _bonusThree:Label;
-		private var _bonusFour:Label;
+		 * The reasons. */		
+		private var _reason1:TextField;
+		private var _reason2:TextField;
+		private var _reason3:TextField;
+		private var _reason4:TextField;
+		private var _reason5:TextField;
 		
 		/**
 		 * The yes button. */		
 		private var _createButton:Button;
-		
 		/**
 		 * The canel button. */		
 		private var _laterButton:Button;
-		
-		private var _tile:TiledImage;
-		
-		private var _textGroup:LayoutGroup;
-		private var _textGroupLine1:LayoutGroup;
-		private var _textGroupLine2:LayoutGroup;
-		
-		private var _buttonGroup:LayoutGroup;
-		
-		private var _test:Scale9Image;
+		/**
+		 * T. */
 		private var _alreadyButton:ArrowGroup;
 		
 		/**
@@ -89,129 +86,95 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			super.initialize();
 			
-			_test = new Scale9Image(new Scale9Textures(AbstractEntryPoint.assets.getTexture("notification-background-skin-adjust"), new Rectangle(30, 50, 4, 2)), GlobalConfig.dpiScale);
-			//addChild(_test);
+			_title = new TextField(10, scaleAndRoundToDpi(80), AbstractGameInfo.LANDSCAPE ? _("Créez votre compte dès maintenant pour :") : _("Créez votre compte dès\nmaintenant pour :"), Theme.FONT_SANSITA,
+					scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 34 : 46) : (AbstractGameInfo.LANDSCAPE ? 54 : 66)), Theme.COLOR_DARK_GREY);
+			_title.autoScale = true;
+			addChild(_title);
 			
-			_tile = new TiledImage(AbstractEntryPoint.assets.getTexture("notification-tile"), GlobalConfig.dpiScale);
-			_tile.blendMode = BlendMode.MULTIPLY;
-			_tile.alpha = 0.7;
-			//addChild(_tile);
+			_reason1 = new TextField(50, scaleAndRoundToDpi(40), _("• Obtenir 10 parties par jour"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason1.autoScale = true;
+			_reason1.hAlign = HAlign.LEFT;
+			addChild(_reason1);
 			
-			const layout:VerticalLayout = new VerticalLayout();
-			layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
-			layout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_MIDDLE;
-			layout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? 40:60 );
-			this.layout = layout;
+			_reason2 = new TextField(50, scaleAndRoundToDpi(40), _( "• Obtenir 10 Nouvelles Parties"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason2.autoScale = true;
+			_reason2.hAlign = HAlign.LEFT;
+			addChild(_reason2);
 			
-			_notificationTitle = new Label();
-			_notificationTitle.text = AbstractGameInfo.LANDSCAPE ? _("Créez votre compte dès maintenant pour :") : _("Créez votre compte dès\nmaintenant pour :");
-			addChild(_notificationTitle);
-			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 34 : 46) : (AbstractGameInfo.LANDSCAPE ? 54 : 66)), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
-			//_notificationTitle.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
-
-			var textLayout:HorizontalLayout = new HorizontalLayout();
-			textLayout.gap = scaleAndRoundToDpi(20);
-			textLayout.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_CENTER;
+			_reason3 = new TextField(50, scaleAndRoundToDpi(40), MemberManager.getInstance().getGiftsEnabled() ? _("• Convertir vos Points en Cadeaux") : _("• Convertir vos Points"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason3.autoScale = true;
+			_reason3.hAlign = HAlign.LEFT;
+			addChild(_reason3);
 			
-			_textGroup = new LayoutGroup();
-			_textGroup.layout = textLayout;
-			addChild(_textGroup);
+			_reason4 = new TextField(50, scaleAndRoundToDpi(40), _("• Gagner 200 Points en bonus"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason4.autoScale = true;
+			_reason4.hAlign = HAlign.LEFT;
+			addChild(_reason4);
 			
-			var textLayoutLine1:VerticalLayout = new VerticalLayout();
-			textLayoutLine1.gap = scaleAndRoundToDpi(10);
-			
-			_textGroupLine1 = new LayoutGroup();
-			_textGroupLine1.layout = textLayoutLine1;
-			_textGroup.addChild(_textGroupLine1);
-
-			var textLayoutLine2:VerticalLayout = new VerticalLayout();
-			textLayoutLine2.gap = scaleAndRoundToDpi(10);
-			
-			_textGroupLine2 = new LayoutGroup();
-			_textGroupLine2.layout = textLayoutLine2;
-			_textGroup.addChild(_textGroupLine2);
-			
-			_bonus = new Label();
-			_bonus.text = _("• Obtenir 10 parties par jour");
-			_textGroupLine1.addChild(_bonus);
-			_bonus.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
-			//_bonus.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
-			
-			_bonusOne = new Label();
-			_bonusOne.text = _( "• Obtenir 10 Nouvelles Parties");
-			_textGroupLine1.addChild(_bonusOne);
-			_bonusOne.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
-			//_bonusOne.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
-			
-			_bonusTwo = new Label();
-			_bonusTwo.text = MemberManager.getInstance().getGiftsEnabled() ? _("• Convertir vos Points en Cadeaux") : _("• Convertir vos Points");
-			_textGroupLine1.addChild(_bonusTwo);
-			_bonusTwo.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
-			//_bonusTwo.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
-			
-			_bonusThree = new Label();
-			_bonusThree.text = _("• Gagner 200 Points en bonus");
-			_textGroupLine2.addChild(_bonusThree);
-			_bonusThree.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
-			//_bonusThree.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
-			
-			_bonusFour = new Label();
-			_bonusFour.text = _("• Obtenir 1 Crédit gratuit");
-			_textGroupLine2.addChild(_bonusFour);
-			_bonusFour.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
-			//_bonusFour.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
-			
-			_buttonGroup = new LayoutGroup();
-			addChild(_buttonGroup);
+			_reason5 = new TextField(50, scaleAndRoundToDpi(40), _("• Obtenir 1 Crédit gratuit"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason5.autoScale = true;
+			_reason5.hAlign = AbstractGameInfo.LANDSCAPE ? HAlign.CENTER : HAlign.LEFT;
+			addChild(_reason5);
 			
 			_laterButton = new Button();
 			_laterButton.label = _("Plus tard");
 			_laterButton.styleName = Theme.BUTTON_BLUE;
 			_laterButton.addEventListener(Event.TRIGGERED, onCancel);
-			_buttonGroup.addChild(_laterButton);
+			addChild(_laterButton);
 			
 			_createButton = new Button();
 			_createButton.label = _("Créer");
 			_createButton.addEventListener(Event.TRIGGERED, onConfirm);
-			_buttonGroup.addChild(_createButton);
+			addChild(_createButton);
 			
 			_alreadyButton = new ArrowGroup( _("J'ai déjà un compte") );
 			_alreadyButton.addEventListener(Event.TRIGGERED, onAlreadyHaveAccount);
-			_buttonGroup.addChild(_alreadyButton);
+			addChild(_alreadyButton);
 			
 			Flox.logEvent("Affichages popup marketing inscription", {Total:"Total"});
 		}
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = this.actualWidth;
-			_textGroup.width = this.actualWidth;
-			_buttonGroup.width = actualWidth * 0.85;
-			_laterButton.width = _createButton.width = _buttonGroup.width * 0.5 - scaleAndRoundToDpi(5);
-			_createButton.x = _laterButton.width + scaleAndRoundToDpi(10);
-			_createButton.validate();
-			_alreadyButton.y = _createButton.height;
+			_title.width = this.actualWidth;
+			
 			_alreadyButton.validate();
-			_alreadyButton.x = (_buttonGroup.width - _alreadyButton.width) * 0.5;
+			_alreadyButton.x = (actualWidth - _alreadyButton.width) * 0.5;
+			_alreadyButton.y = actualHeight - _alreadyButton.height;
+
+			_laterButton.width = _createButton.width = actualWidth * 0.4;
+			_laterButton.x = (actualWidth * 0.5) - _laterButton.width - scaleAndRoundToDpi(5);
+			_createButton.x = actualWidth * 0.5 + scaleAndRoundToDpi(5);
+			_createButton.validate();
+			_laterButton.y = _createButton.y = _alreadyButton.y - _createButton.height + scaleAndRoundToDpi(10);
+
+			if( AbstractGameInfo.LANDSCAPE )
+			{
+				_reason1.width = _reason2.width = _reason3.width = _reason4.width = actualWidth * 0.5;
+				_reason5.width = actualWidth * 0.9;
+				var maxReasonsHeight:int = (_createButton.y - _title.y - _title.height) / 3;
+				_reason1.height = _reason2.height = _reason3.height = _reason4.height = _reason5.height = maxReasonsHeight;
+				_reason1.x = _reason3.x = 0;
+				_reason2.x = _reason4.x = actualWidth * 0.5;
+				_reason5.x = (actualWidth - _reason5.width) * 0.5;
+				_reason1.y = _reason2.y = _title.y + _title.height;
+				_reason3.y = _reason4.y = _reason1.y + _reason1.height;
+				_reason5.y = _reason3.y + _reason3.height;
+			}
+			else
+			{
+				_reason1.width = _reason2.width = _reason3.width = _reason4.width = _reason5.width = actualWidth * 0.9;
+				var maxReasonsHeight:int = (_createButton.y - _title.y - _title.height) / 5;
+				_reason1.height = _reason2.height = _reason3.height = _reason4.height = _reason5.height = maxReasonsHeight;
+				_reason1.x = _reason2.x = _reason3.x = _reason4.x = _reason5.x = actualWidth * 0.05;
+				_reason1.y = _title.y + _title.height;
+				_reason2.y = _reason1.y + _reason1.height;
+				_reason3.y = _reason2.y + _reason2.height;
+				_reason4.y = _reason3.y + _reason3.height;
+				_reason5.y = _reason4.y + _reason4.height;
+			}
 			
 			super.draw();
-			
-			
-			// TODO A remettre
-			/*_tile.y = padTopBackgroundSkinou;
-			_tile.width = _backgroundSkinou.width;
-			_tile.height = _backgroundSkinou.height;
-			
-			_test.x = _backgroundGradient.x;
-			_test.width = _backgroundGradient.width;
-			_test.y = _backgroundSkinou.y + scaleAndRoundToDpi(13);
-			_test.height = _backgroundSkinou.height - scaleAndRoundToDpi(13);
-			_test.color = 0x01c6f5;
-			
-			_backgroundGradient.setVertexColor(0, 0x01c6f5);
-			_backgroundGradient.setVertexColor(1, 0x01c6f5);
-			_backgroundGradient.setVertexColor(2, 0x02649b);
-			_backgroundGradient.setVertexColor(3, 0x02649b);*/
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -254,26 +217,23 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override public function dispose():void
 		{
-			_notificationTitle.removeFromParent(true);
-			_notificationTitle = null;
+			_title.removeFromParent(true);
+			_title = null;
 			
-			_bonus.removeFromParent(true);
-			_bonus = null;
+			_reason1.removeFromParent(true);
+			_reason1 = null;
 			
-			_bonusOne.removeFromParent(true);
-			_bonusOne = null;
+			_reason2.removeFromParent(true);
+			_reason2 = null;
 			
-			_bonusTwo.removeFromParent(true);
-			_bonusTwo = null;
+			_reason3.removeFromParent(true);
+			_reason3 = null;
 			
-			_bonusThree.removeFromParent(true);
-			_bonusThree = null;
+			_reason4.removeFromParent(true);
+			_reason4 = null;
 			
-			_bonusFour.removeFromParent(true);
-			_bonusFour = null;
-			
-			_textGroupLine1.removeFromParent(true);
-			_textGroupLine1 = null;
+			_reason5.removeFromParent(true);
+			_reason5 = null;
 			
 			_createButton.removeEventListener(Event.TRIGGERED, onConfirm);
 			_createButton.removeFromParent(true);
@@ -286,15 +246,6 @@ package com.ludofactory.mobile.core.notification.content
 			_alreadyButton.removeEventListener(Event.TRIGGERED, onAlreadyHaveAccount);
 			_alreadyButton.removeFromParent(true);
 			_alreadyButton = null;
-			
-			_buttonGroup.removeFromParent(true);
-			_buttonGroup = null;
-			
-			_test.removeFromParent(true);
-			_test = null;
-			
-			_tile.removeFromParent(true);
-			_tile = null;
 			
 			super.dispose();
 		}

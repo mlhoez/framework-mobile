@@ -282,7 +282,7 @@ package com.ludofactory.mobile.navigation.menu
 		
 		private function onCloseDisconnectNotification(data:Object):void
 		{
-			if( data )
+			if( Boolean(data) )
 			{
 				Remote.getInstance().clearAllRespondersOfScreen("Menu");
 				MemberManager.getInstance().disconnect();

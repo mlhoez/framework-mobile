@@ -8,6 +8,7 @@ package com.ludofactory.mobile.core.notification.content
 {
 
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -25,6 +26,7 @@ package com.ludofactory.mobile.core.notification.content
 
 	import starling.display.Image;
 	import starling.events.Event;
+	import starling.text.TextField;
 
 	public class DisconnectNotificationContent extends AbstractNotificationPopupContent
 	{
@@ -34,7 +36,7 @@ package com.ludofactory.mobile.core.notification.content
 		
 		/**
 		 * The title. */		
-		private var _notificationTitle:Label;
+		private var _notificationTitle:TextField;
 		
 		/**
 		 * The yes button. */		
@@ -53,20 +55,15 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			super.initialize();
 			
-			const layout:VerticalLayout = new VerticalLayout();
-			layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
-			layout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_MIDDLE;
-			layout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 10:40):(AbstractGameInfo.LANDSCAPE ? 40:60) );
-			this.layout = layout;
+			data = false;
 			
 			_icon = new Image( AbstractEntryPoint.assets.getTexture("icon-log-in-out") );
 			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale;
 			addChild(_icon);
 			
-			_notificationTitle = new Label();
-			_notificationTitle.text = _("Voulez-vous vous déconnecter ?");
+			_notificationTitle = new TextField(10, 100, _("Voulez-vous vous déconnecter ?"), Theme.FONT_SANSITA, scaleAndRoundToDpi(50), Theme.COLOR_DARK_GREY);
+			_notificationTitle.autoScale = true;
 			addChild(_notificationTitle);
-			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_yesButton = new Button();
 			_yesButton.label = _("Oui");
@@ -82,11 +79,26 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = this.actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+			_notificationTitle.width = this.actualWidth;
 			if( AbstractGameInfo.LANDSCAPE )
-				_yesButton.width = _cancelButton.width = this.actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.4);
+			{
+				_icon.x = roundUp((actualWidth - _icon.width) * 0.5);
+				_icon.y = scaleAndRoundToDpi(20);
+				
+				_yesButton.width = _cancelButton.width = this.actualWidth * 0.4;
+				_yesButton.validate();
+				_yesButton.y = _cancelButton.y = actualHeight - _yesButton.height - scaleAndRoundToDpi(30);
+				_yesButton.x = actualWidth * 0.5 + scaleAndRoundToDpi(5);
+				_cancelButton.x = actualWidth * 0.5 - _cancelButton.width - scaleAndRoundToDpi(5);
+				
+				_notificationTitle.height = _yesButton.y - _icon.height;
+				_notificationTitle.y = _icon.height + _icon.y;
+			}
 			else
+			{
 				_yesButton.width = _cancelButton.width = this.actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+				// TODO faire le format portrait
+			}
 			
 			super.draw();
 		}
@@ -103,6 +115,7 @@ package com.ludofactory.mobile.core.notification.content
 		
 		private function onCancel(event:Event):void
 		{
+			data = false;
 			close();
 		}
 		

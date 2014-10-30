@@ -382,7 +382,7 @@ package com.ludofactory.mobile.core.theme
 			highScoreListHeaderTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(30), COLOR_LIGHT_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			// MarketingRegisterNotification
-			marketingRegisterNotificationBonusTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 22 : 36), Theme.COLOR_LIGHT_GREY);
+			//marketingRegisterNotificationBonusTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 22 : 36), Theme.COLOR_LIGHT_GREY);
 			
 			// SummaryElement
 			summaryElementTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 46), COLOR_WHITE);
@@ -2939,7 +2939,7 @@ package com.ludofactory.mobile.core.theme
 //
 //------------------------------------------------------------------------------------------------------------
 		
-		public static var marketingRegisterNotificationBonusTextFormat:TextFormat;
+		//public static var marketingRegisterNotificationBonusTextFormat:TextFormat;
 		
 //------------------------------------------------------------------------------------------------------------
 //
