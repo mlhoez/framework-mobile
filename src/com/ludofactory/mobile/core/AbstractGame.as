@@ -464,9 +464,9 @@ package com.ludofactory.mobile.core
 						advancedOwner.screenData.gameData.nextGiftImageUrl = result.lot_suivant.image;
 						advancedOwner.screenData.gameData.nextGiftName = Utilities.replaceCurrency(result.lot_suivant.nom);
 						advancedOwner.screenData.gameData.numStarsForNextGift = int(result.lot_suivant.nb_etoiles);
-						advancedOwner.screenData.gameData.hasReachNewTop = int(result.podium) == 1 ? true:false;
+						advancedOwner.screenData.gameData.hasReachNewTop = int(result.podium) == 1;
 						advancedOwner.screenData.gameData.timeUntilTournamentEnd = int(result.temps_fin_tournoi);
-						advancedOwner.screenData.gameData.displayPushAlert = int(result.afficher_alerte_push) == 1 ? true : false;
+						advancedOwner.screenData.gameData.displayPushAlert = int(result.afficher_alerte_push) == 1;
 						advancedOwner.screenData.gameData.topDotationName = result.top_dotation;
 						
 						if( result.isHighscore == 1 )
@@ -526,6 +526,12 @@ package com.ludofactory.mobile.core
 		private function onGamePushFailure(error:Object = null):void
 		{
 			advancedOwner.screenData.gameData.gameSessionPushed = false;
+
+			/*this.advancedOwner.screenData.gameData.top = 15;
+			this.advancedOwner.screenData.gameData.hasReachNewTop = true;
+			advancedOwner.showScreen( ScreenIds.PODIUM_SCREEN );
+			
+			return;*/
 			
 			// update earned values in any cases
 			if( _gameSession.gameType == GameSession.TYPE_CLASSIC ) MemberManager.getInstance().setPoints( MemberManager.getInstance().getPoints() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
