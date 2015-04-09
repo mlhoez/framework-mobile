@@ -74,8 +74,8 @@ package com.ludofactory.mobile.debug
 			_repoPicker = new PickerList();
 			_repoPicker.dataProvider = new ListCollection( ["http://ludomobile.ludokado.com",
 															"http://ludomobile.ludokado.dev",
-															"http://ludokadom.mlhoez.ludofactory.dev",
-															"http://ludokado.pterrier.ludofactory.dev",
+															"http://ludokado.mlhoez.ludofactory.dev",
+															"http://ludokado2.pterrier.ludofactory.dev",
 															"http://ludokado.aguerreiro.ludofactory.dev"] );
 			_repoPicker.selectedItem = Remote.getInstance().baseGatewayUrl;
 			
