@@ -43,17 +43,17 @@ package com.ludofactory.mobile.core.controls
 			_screenData = new ScreenData();
 		}
 		
-		override public function showScreen(id:String):DisplayObject
+		override public function showScreen(id:String, transition:Function = null):DisplayObject
 		{
 			// a new version have been released and must be forced
 			if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE)) == true )
 			{
-				return super.showScreen(ScreenIds.UPDATE_SCREEN);
+				return super.showScreen(ScreenIds.UPDATE_SCREEN, transition);
 			}
 			else
 			{
 				NavigationManager.addScreenId( id );
-				return super.showScreen(id);
+				return super.showScreen(id, transition);
 			}
 		}
 		

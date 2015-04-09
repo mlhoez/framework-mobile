@@ -78,7 +78,7 @@ package com.ludofactory.mobile.core.controls
 		
 		override protected function toggleGroup_changeHandler(event:Event):void
 		{
-			if(this._ignoreSelectionChanges || this._pendingSelectedIndex != NOT_PENDING_INDEX)
+			if(this._ignoreSelectionChanges)
 			{
 				return;
 			}
