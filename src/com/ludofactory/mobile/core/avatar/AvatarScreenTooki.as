@@ -12,7 +12,9 @@ package com.ludofactory.mobile.core.avatar
 	import com.ludofactory.mobile.core.HeartBeat;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	
+
+	import dragonBones.factorys.BaseFactory;
+
 	import flash.events.Event;
 	import flash.events.StatusEvent;
 	import flash.filesystem.File;
@@ -31,7 +33,8 @@ package com.ludofactory.mobile.core.avatar
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.extensions.PDParticleSystem;
-	
+	import starling.textures.Texture;
+
 	/**
 	 * Avatar Screen
 	 * 
@@ -186,7 +189,7 @@ package com.ludofactory.mobile.core.avatar
 			HeartBeat.registerFunction(updateAvatar);
 			
 			
-			
+			//addChild(BaseFactory.TT);
 			
 			
 			//var bone:Vector.<Bone> = (_armature.getBone("telephonepole") as Bone).armature.getBones();
