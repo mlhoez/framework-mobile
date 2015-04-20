@@ -6,6 +6,7 @@ Created : 13 Aoü 2013
 */
 package com.ludofactory.mobile.navigation.engine
 {
+
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
@@ -17,33 +18,33 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.navigation.FacebookManager;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
-	
+
+	import feathers.controls.Button;
+	import feathers.controls.ImageLoader;
+	import feathers.controls.Label;
+
 	import flash.events.Event;
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-	
-	import feathers.controls.Button;
-	import feathers.controls.ImageLoader;
-	import feathers.controls.Label;
-	
+
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.extensions.PDParticleSystem;
 	import starling.utils.deg2rad;
 	import starling.utils.formatString;
-	
+
 	public class PodiumScreen extends AdvancedScreen
 	{
 		/**

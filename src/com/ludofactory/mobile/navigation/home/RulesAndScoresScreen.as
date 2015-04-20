@@ -72,10 +72,10 @@ package com.ludofactory.mobile.navigation.home
 			addChild(_rulesList);
 			
 			_tabMenu = new OffsetTabBar();
-			_tabMenu.addEventListener(Event.CHANGE, onButtonTouched);
 			_tabMenu.dataProvider = new ListCollection( [_("Règles"),
 														 _("Classique"),
 														 _("Tournoi") ] );
+			_tabMenu.addEventListener(Event.CHANGE, onButtonTouched);
 			addChild(_tabMenu);
 		}
 		

@@ -78,12 +78,9 @@ package com.ludofactory.mobile.core.controls
 		
 		override protected function toggleGroup_changeHandler(event:Event):void
 		{
-			if(this._ignoreSelectionChanges)
-			{
-				return;
-			}
+			super.toggleGroup_changeHandler(event);
 			setChildIndex( ToggleButton(toggleGroup.selectedItem), int.MAX_VALUE);
-			this.dispatchEventWith(Event.CHANGE);
+			//this.dispatchEventWith(Event.CHANGE); // plus besoin car fait automatiquement ailleurs
 		}
 	}
 }

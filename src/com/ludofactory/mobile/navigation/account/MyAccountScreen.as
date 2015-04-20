@@ -53,10 +53,10 @@ package com.ludofactory.mobile.navigation.account
 			_headerTitle = _("Mon compte");
 			
 			_menu = new OffsetTabBar();
-			_menu.addEventListener(Event.CHANGE, onMenuChange);
 			_menu.dataProvider = new ListCollection( [ _("Infos perso"),
 													   _("Paiments"),
 													   _("Historique") ] );
+			_menu.addEventListener(Event.CHANGE, onMenuChange);
 			addChild(_menu);
 			
 			_personalInformationsContainer = new PersonalInformationsContainer();

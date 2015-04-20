@@ -117,9 +117,9 @@ package com.ludofactory.mobile.navigation.cs
 			_appVersionLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
 			
 			_menu = new OffsetTabBar();
-			_menu.addEventListener(Event.CHANGE, onChangeTab);
 			_menu.dataProvider = new ListCollection([ _("En cours"),
 													  _("Résolus") ]);
+			_menu.addEventListener(Event.CHANGE, onChangeTab);
 			addChild(_menu);
 			
 			_messagesBackground = new Quad(50, 50);

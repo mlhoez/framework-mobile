@@ -82,10 +82,10 @@ package com.ludofactory.mobile.navigation.shop.bid
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_bidsMenu = new OffsetTabBar();
-			_bidsMenu.addEventListener(Event.CHANGE, onChangeTab);
 			_bidsMenu.dataProvider = new ListCollection( [ _("En cours"),
 													       _("Terminées"),
 													       _("A venir") ] );
+			_bidsMenu.addEventListener(Event.CHANGE, onChangeTab);
 			addChild(_bidsMenu);
 			
 			_listBackground = new TiledImage(AbstractEntryPoint.assets.getTexture("MenuTile"), GlobalConfig.dpiScale);
