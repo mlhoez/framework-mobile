@@ -915,6 +915,7 @@ package com.ludofactory.mobile.core.remoting
 			genericParam.mdp = MemberManager.getInstance().getPassword();
 			genericParam.langue = LanguageManager.getInstance().lang;
 			genericParam.id_jeu = AbstractGameInfo.GAME_ID;
+			genericParam.nom_jeu = AbstractGameInfo.GAME_NAME;
 			genericParam.type_appareil = GlobalConfig.isPhone ? "smartphone":"tablette";
 			genericParam.plateforme = GlobalConfig.platformName;
 			genericParam.id_appareil = GlobalConfig.deviceId;
