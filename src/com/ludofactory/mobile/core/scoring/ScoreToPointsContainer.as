@@ -173,7 +173,7 @@ package com.ludofactory.mobile.core.scoring
 			var scoreToStarsDataSup:ScoreToPointsData = scoreData[ int(scoreData.length / 2) + 1 ];
 			
 			_exampleLabel = new Label();
-			_exampleLabel.text = formatString(_("Par exemple : avec un score de {0} vous gagnez {1} Points avec une partie gratuite ou {2} Points avec une partie à crédit."), int(scoreToStarsDataInf.sup + (scoreToStarsDataSup.sup - scoreToStarsDataInf.sup) * 0.5), scoreToStarsDataSup.pointsWithFree, (MemberManager.getInstance().getRank() < 5 ? scoreToStarsDataSup.pointsWithCreditsNormal : scoreToStarsDataSup.pointsWithCreditsVip)) + "\n\n" + (MemberManager.getInstance().getRank() < 5 ? (_("Avantage VIP : en devenant Aventurier II, multipliez vos gains par 6 au lieu de 5 !") + "\n\n") : "");
+			_exampleLabel.text = formatString(_("Par exemple : avec un score de {0} vous gagnez {1} Points avec un Jeton ou {2} Points avec une partie à crédit."), int(scoreToStarsDataInf.sup + (scoreToStarsDataSup.sup - scoreToStarsDataInf.sup) * 0.5), scoreToStarsDataSup.pointsWithFree, (MemberManager.getInstance().getRank() < 5 ? scoreToStarsDataSup.pointsWithCreditsNormal : scoreToStarsDataSup.pointsWithCreditsVip)) + "\n\n" + (MemberManager.getInstance().getRank() < 5 ? (_("Avantage VIP : en devenant Aventurier II, multipliez vos gains par 6 au lieu de 5 !") + "\n\n") : "");
 			_mainContainer.addChild(_exampleLabel);
 			_exampleLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_LIGHT_GREY, false, true);
 		}

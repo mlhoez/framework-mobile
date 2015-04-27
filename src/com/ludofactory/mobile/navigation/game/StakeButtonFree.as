@@ -107,7 +107,7 @@ package com.ludofactory.mobile.navigation.game
 			
 			if( _isEnabled )
 			{
-				_label.text = formatString( _n("{0} partie gratuite", "{0} parties gratuites", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
+				_label.text = formatString( _n("{0} Jeton", "{0} Jetons", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
 					Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
 				_label.color = 0x0d2701;
 			}
@@ -115,7 +115,7 @@ package com.ludofactory.mobile.navigation.game
 			{
 				if( MemberManager.getInstance().getNumFreeGameSessions() != 0 || !MemberManager.getInstance().isLoggedIn() )
 				{
-					_label.text = formatString( _n("{0} partie gratuite", "{0} parties gratuites", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
+					_label.text = formatString( _n("{0} Jeton", "{0} Jetons", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
 						Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
 					_label.color = 0x2d2d2d;
 				}
@@ -229,7 +229,7 @@ package com.ludofactory.mobile.navigation.game
 						if( !_calloutLabel )
 						{
 							_calloutLabel = new Label();
-							_calloutLabel.text = formatString(_("Reconnectez-vous pour récupérer vos {0} parties gratuites."), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+							_calloutLabel.text = formatString(_("Reconnectez-vous pour récupérer vos {0} Jetons."), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 							_calloutLabel.width = actualWidth * 0.9;
 							_calloutLabel.validate();
 						}

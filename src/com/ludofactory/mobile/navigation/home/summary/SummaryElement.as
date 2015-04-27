@@ -231,7 +231,7 @@ package com.ludofactory.mobile.navigation.home.summary
 					removeInterrogationLabels();
 				_label.text = value;
 				if( MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
-					_calloutLabel.text = formatString(_("{0} parties gratuites dans {1}"), MemberManager.getInstance().getNumFreeGameSessionsTotal(), value); 
+					_calloutLabel.text = formatString(_("{0} Jetons dans {1}"), MemberManager.getInstance().getNumFreeGameSessionsTotal(), value); 
 			}
 			
 			invalidate(INVALIDATION_FLAG_SIZE);
@@ -279,13 +279,13 @@ package com.ludofactory.mobile.navigation.home.summary
 					{
 						case GameSession.PRICE_FREE:
 						{
-							_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? ( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED ? _("Reconnectez-vous pour récupérer vos {0} parties gratuites.") : _("Vos parties gratuites ({0} par jour)")) : _("Obtenez 10 parties gratuites par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+							_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? ( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED ? _("Reconnectez-vous pour récupérer vos {0} Jetons.") : _("Vos Jetons ({0} par jour)")) : _("Obtenez 10 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 							break;
 						}
 						case GameSession.PRICE_CREDIT:
 						{
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
-								_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? _("Vos Crédits de jeu") : _("Obtenez 10 parties gratuites par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+								_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? _("Vos Crédits de jeu") : _("Obtenez 10 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 							else
 								_calloutLabel.text = _("Vos Crédits de jeu");
 							break;
@@ -293,7 +293,7 @@ package com.ludofactory.mobile.navigation.home.summary
 						case GameSession.PRICE_POINT:
 						{
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
-								_calloutLabel.text = formatString(_("Obtenez 10 parties gratuites par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+								_calloutLabel.text = formatString(_("Obtenez 10 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 							else
 								_calloutLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Vos Points à convertir en Cadeaux") : _("Vos Points à convertir en Crédits");
 							break;
