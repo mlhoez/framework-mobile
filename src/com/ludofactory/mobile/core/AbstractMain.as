@@ -200,7 +200,7 @@ package com.ludofactory.mobile.core
 			
 			// launch Starling
 			Starling.multitouchEnabled = false;  // useful on mobile devices
-			Starling.handleLostContext = true//!GlobalConfig.ios;  // not necessary on iOS. Saves a lot of memory!
+			Starling.handleLostContext = !GlobalConfig.ios;  // not necessary on iOS. Saves a lot of memory!
 			_starling = new Starling(_rootClass, stage, null, null, "auto", "auto");
 			_starling.enableErrorChecking = GlobalConfig.DEBUG;
 			_starling.simulateMultitouch  = false;
