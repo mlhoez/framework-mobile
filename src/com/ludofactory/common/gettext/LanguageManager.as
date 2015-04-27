@@ -357,9 +357,9 @@ package com.ludofactory.common.gettext
 				// replace all the comments => /^#.*$/gm ----- or /^#.*$(\r|\n)|(\n|\r){3,}/gm
 				fileContent = fileContent.replace(/^#.*$/gm, "");
 				// then reconstruct the strings that are on 2 a more lines = /"(\r|\n)"/g
-				fileContent = fileContent.replace(/"(\r|\n)"/g, "");
+				fileContent = fileContent.replace(/"[\r\n]"/g, "");
 				// then replace the line breaks greater than 2 => /(\r|\n){2,}/g
-				fileContent = fileContent.replace(/(\r|\n){2,}/g, "\n\n");
+				fileContent = fileContent.replace(/[\r\n]{2,}/g, "\n\n");
 				// clear the byteArray (the new one will be shorter so this is necessary or it
 				// will generate weird files when we rewrite it)
 				bytes.clear();
