@@ -1,17 +1,18 @@
 /*
-Copyright © 2006-2014 Ludo Factory
+Copyright © 2006-2015 Ludo Factory
 Framework mobile
 Author  : Maxime Lhoez
 Created : 31 août 2013
 */
 package com.ludofactory.mobile.navigation.achievements
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	
 	import feathers.controls.List;
@@ -23,7 +24,10 @@ package com.ludofactory.mobile.navigation.achievements
 	 */	
 	public class TrophyScreen extends AdvancedScreen
 	{
-		private var _list:List;
+		/**
+		 * List containing all trophies for this game.
+		 */
+		private var _trophiesList:List;
 		
 		public function TrophyScreen()
 		{
@@ -38,14 +42,14 @@ package com.ludofactory.mobile.navigation.achievements
 			
 			_headerTitle = _("Coupes");
 			
-			_list = new List();
-			_list.isSelectable = false;
-			_list.itemRendererType = TrophyItemRenderer;
-			_list.dataProvider = new ListCollection( AbstractGameInfo.CUPS );
-			_list.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FLOAT;
-			_list.verticalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
-			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			addChild(_list);
+			_trophiesList = new List();
+			_trophiesList.isSelectable = false;
+			_trophiesList.itemRendererType = TrophyItemRenderer;
+			_trophiesList.dataProvider = new ListCollection( AbstractGameInfo.CUPS );
+			_trophiesList.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FLOAT;
+			_trophiesList.verticalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
+			_trophiesList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
+			addChild(_trophiesList);
 			
 			AbstractEntryPoint.alertData.numTrophiesAlerts = 0;
 			if( MemberManager.getInstance().isLoggedIn() && AirNetworkInfo.networkInfo.isConnected() )
@@ -56,20 +60,23 @@ package com.ludofactory.mobile.navigation.achievements
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_list.width = this.actualWidth;
-				_list.height = this.actualHeight;
+				_trophiesList.width = this.actualWidth;
+				_trophiesList.height = this.actualHeight;
 				
 				scrollToLastWonTrophy();
 			}
 		}
 		
+		/**
+		 * Automatically scrolls to the last trophy won by the player.
+		 */
 		private function scrollToLastWonTrophy():void
 		{
-			for(var i:int = 0; i < _list.dataProvider.length; i++)
+			for(var i:int = 0; i < _trophiesList.dataProvider.length; i++)
 			{
-				if( TrophyData(_list.dataProvider.getItemAt(i)).id == MemberManager.getInstance().getLastTrophyWonId() )
+				if( TrophyData(_trophiesList.dataProvider.getItemAt(i)).id == MemberManager.getInstance().getLastTrophyWonId() )
 				{
-					_list.scrollToDisplayIndex(i);
+					_trophiesList.scrollToDisplayIndex(i);
 					break;
 				}
 			}
@@ -78,12 +85,11 @@ package com.ludofactory.mobile.navigation.achievements
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{
-			_list.removeFromParent(true);
-			_list = null;
+			_trophiesList.removeFromParent(true);
+			_trophiesList = null;
 			
 			super.dispose();
 		}

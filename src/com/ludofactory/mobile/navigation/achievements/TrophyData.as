@@ -53,6 +53,9 @@ package com.ludofactory.mobile.navigation.achievements
 			_textureName = data.textureName;
 		}
 		
+//------------------------------------------------------------------------------------------------------------
+//	Get - Set
+		
 		public function get id():int { return _id; }
 		public function set id(val:int):void { _id = val; }
 		

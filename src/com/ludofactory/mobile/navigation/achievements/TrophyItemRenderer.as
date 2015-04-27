@@ -91,8 +91,6 @@ package com.ludofactory.mobile.navigation.achievements
 		 * The global padding of the item renderer. */		
 		private var _padding:int = 10;
 		
-		private var _highlightImage:Image
-		
 		public function TrophyItemRenderer()
 		{
 			super();
