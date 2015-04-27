@@ -43,9 +43,9 @@ package com.ludofactory.common.gettext
 		// replace all the comments => /^#.*$/gm ----- or /^#.*$(\r|\n)|(\n|\r){3,}/gm
 		rawContent = rawContent.replace(/^#.*$/gm, "");
 		// then reconstruct the strings that are on 2 a more lines = /"(\r|\n)"/g
-		rawContent = rawContent.replace(/"[\r\n]"/g, ""); // pas d'ajout d'espace ici car casse les chaines sinon
+		rawContent = rawContent.replace(/("\r\n"){1,}/g, ""); // pas d'ajout d'espace ici car casse les chaines sinon
 		// then replace the line breaks greater than 2 => /(\r|\n){2,}/g
-		rawContent = rawContent.replace(/[\r\n]{2,}/g, "\n\n");
+		rawContent = rawContent.replace(/(\r\n){2,}/g, "\n\n");
 		
 		// split the content into an array : /\n{2,}/g splits the double (or more) line
 		// breaks which defines a translation block
@@ -58,6 +58,8 @@ package com.ludofactory.common.gettext
 		{
 			// the header is in the first line
 			var header:String = contentList.shift();
+			if( !header || header == "" || header == "msgid \"\"")
+				var header:String = contentList.shift();
 			// Project-Id-Version
 			parsedPOFile.projectIdVersion = header.match(PROJECT_ID_VERSION_PATTERN)[0];
 			// POT-Creaation-Date - YYYY-MM-DD HH::MM(+|-HHMM)
