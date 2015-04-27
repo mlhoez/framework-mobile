@@ -211,7 +211,7 @@ package com.ludofactory.mobile.navigation.alert
 								
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-game-session-simple-icon");
 								
-								_message.text = formatString( GameSession(_data).gameType == GameSession.TYPE_CLASSIC ? _n("{0} Point sera définitivement crédité sur votre compte dès que vous serez connecté à internet.", "{0} Points seront définitivement crédités sur votre compte dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned) : _n("{0} Etoile sera définitivement comptabilisée pour le tournoi en cours dès que vous serez connecté à internet.", "{0} Etoiles seront définitivement comptabilisées pour le tournoi en cours dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned),
+								_message.text = formatString( GameSession(_data).gameType == GameSession.TYPE_CLASSIC ? _n("{0} Point sera définitivement crédité sur votre compte dès que vous serez connecté à internet.", "{0} Points seront définitivement crédités sur votre compte dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned) : _n("{0} Rubis sera définitivement comptabilisée pour le tournoi en cours dès que vous serez connecté à internet.", "{0} Rubis seront définitivement comptabilisées pour le tournoi en cours dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned),
 									GameSession(_data).numStarsOrPointsEarned);
 								
 								break;
@@ -288,7 +288,7 @@ package com.ludofactory.mobile.navigation.alert
 								
 								_accessButton.text = _("S'identifier");
 								_accessButton.visible = true;
-								_message.text = formatString(_n("{0} Etoile sera comptabilisée pour le tournoi en cours dès que vous serez identifié.", "{0} Etoiles seront comptabilisées pour le tournoi en cours dès que vous serez identifié.", MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions());
+								_message.text = formatString(_n("{0} Rubis sera comptabilisée pour le tournoi en cours dès que vous serez identifié.", "{0} Rubis seront comptabilisées pour le tournoi en cours dès que vous serez identifié.", MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions());
 								break;
 							}
 							case AlertType.ANONYMOUS_TROPHIES:

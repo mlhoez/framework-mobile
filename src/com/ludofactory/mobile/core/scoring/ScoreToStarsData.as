@@ -32,7 +32,7 @@ package com.ludofactory.mobile.core.scoring
 			
 			_inf = data.inf;
 			_sup = data.sup;
-			_stars = data.etoiles;
+			_stars = data.items;
 		}
 		
 		public function get inf():int { return _inf; }

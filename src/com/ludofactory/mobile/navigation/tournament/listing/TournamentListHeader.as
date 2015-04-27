@@ -74,7 +74,7 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			_nameLabel.textRendererProperties.textFormat = Theme.highScoreListHeaderTextFormat;
 			
 			_starsLabel = new Label();
-			_starsLabel.text = _("Etoiles");
+			_starsLabel.text = _("Rubis");
 			addChild(_starsLabel);
 			_starsLabel.textRendererProperties.textFormat = Theme.highScoreListHeaderTextFormat;
 		}

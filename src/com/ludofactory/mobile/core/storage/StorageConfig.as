@@ -58,7 +58,7 @@ package com.ludofactory.mobile.core.storage
 		 * an inferior and a superior limit) the corresponding value in terms
 		 * of stars (there is no difference for now whether you play with points,
 		 * free or paid game session.<br />
-		 * <i>Ex for one row : { etoiles:1, inf:0, sup:250 }</i></p>
+		 * <i>Ex for one row : { items:1, inf:0, sup:250 }</i></p>
 		 * 
 		 * @see #PROPERTY_FIRST_LAUNCH
 		 * 
@@ -86,18 +86,18 @@ package com.ludofactory.mobile.core.storage
 		 * This is an array containing for each level of score (defined by
 		 * an inferior and a superior limit) the corresponding value in terms
 		 * of points (for both free and paid game sessions).<br />
-		 * <i>Ex for one row : { etoiles:1, inf:0, sup:250 }</i></p>
+		 * <i>Ex for one row : { items:1, inf:0, sup:250 }</i></p>
 		 */	
-		public static const DEFAULT_STARS_TABLE:Array = [ new ScoreToStarsData( { etoiles:1,  inf:0,      sup:5000 } ),
-														  new ScoreToStarsData( { etoiles:2,  inf:5001,   sup:10000 } ),
-														  new ScoreToStarsData( { etoiles:3,  inf:10001,  sup:15000 } ),
-														  new ScoreToStarsData( { etoiles:4,  inf:15001,  sup:23000 } ),
-														  new ScoreToStarsData( { etoiles:5,  inf:23001,  sup:31000 } ),
-														  new ScoreToStarsData( { etoiles:6,  inf:31001,  sup:39000 } ),
-														  new ScoreToStarsData( { etoiles:7,  inf:39001,  sup:47000 } ),
-														  new ScoreToStarsData( { etoiles:8,  inf:47001,  sup:55000 } ),
-														  new ScoreToStarsData( { etoiles:9,  inf:55001,  sup:63000 } ),
-														  new ScoreToStarsData( { etoiles:10, inf:63001,  sup:8388607 } ) ];
+		public static const DEFAULT_STARS_TABLE:Array = [ new ScoreToStarsData( { items:1,  inf:0,      sup:5000 } ),
+														  new ScoreToStarsData( { items:2,  inf:5001,   sup:10000 } ),
+														  new ScoreToStarsData( { items:3,  inf:10001,  sup:15000 } ),
+														  new ScoreToStarsData( { items:4,  inf:15001,  sup:23000 } ),
+														  new ScoreToStarsData( { items:5,  inf:23001,  sup:31000 } ),
+														  new ScoreToStarsData( { items:6,  inf:31001,  sup:39000 } ),
+														  new ScoreToStarsData( { items:7,  inf:39001,  sup:47000 } ),
+														  new ScoreToStarsData( { items:8,  inf:47001,  sup:55000 } ),
+														  new ScoreToStarsData( { items:9,  inf:55001,  sup:63000 } ),
+														  new ScoreToStarsData( { items:10, inf:63001,  sup:8388607 } ) ];
 		
 		/**
 		 * <strong>This is the default value for the preferred language</strong><br />

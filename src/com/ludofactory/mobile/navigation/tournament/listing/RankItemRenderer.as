@@ -143,7 +143,7 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			_selectedBackground.addQuad( background );
 			addChild( _selectedBackground );
 			
-			_starIcon = new Image( AbstractEntryPoint.assets.getTexture("star") );
+			_starIcon = new Image( AbstractEntryPoint.assets.getTexture("ruby") );
 			_starIcon.touchable = false;
 			_starIcon.scaleX = _starIcon.scaleY = GlobalConfig.dpiScale;
 			addChild(_starIcon);

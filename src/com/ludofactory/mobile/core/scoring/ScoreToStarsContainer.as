@@ -86,9 +86,9 @@ package com.ludofactory.mobile.core.scoring
 			
 			_title = new Label();
 			if( MemberManager.getInstance().getGiftsEnabled() )
-				_title.text = _("Les parties en Tournoi vous permettent d’affronter d’autres joueurs pendant une durée déterminée. Cumulez des étoiles et gagnez le cadeau de vos rêves en fonction de votre classement final.\n\nUne partie en tournoi vous rapporte + ou - d'Etoiles en fonction de votre score.");
+				_title.text = _("Les parties en Tournoi vous permettent d’affronter d’autres joueurs pendant une durée déterminée. Cumulez des Rubis et gagnez le cadeau de vos rêves en fonction de votre classement final.\n\nUne partie en tournoi vous rapporte + ou - de Rubis en fonction de votre score.");
 			else
-				_title.text = _("Les parties en Tournoi vous permettent d’affronter d’autres joueurs pendant une durée déterminée. Cumulez des étoiles et gagnez le lot de vos rêves en fonction de votre classement final.\n\nUne partie en tournoi vous rapporte + ou - d'Etoiles en fonction de votre score.");
+				_title.text = _("Les parties en Tournoi vous permettent d’affronter d’autres joueurs pendant une durée déterminée. Cumulez des Rubis et gagnez le lot de vos rêves en fonction de votre classement final.\n\nUne partie en tournoi vous rapporte + ou - de Rubis en fonction de votre score.");
 			_titleContainer.addChild( _title );
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, false, true, null, null, null, TextFormatAlign.CENTER);
 			
@@ -101,7 +101,7 @@ package com.ludofactory.mobile.core.scoring
 			_scoreTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
 			
 			_pointsWithCredits = new Label();
-			_pointsWithCredits.text = _("Etoiles");
+			_pointsWithCredits.text = _("Rubis");
 			_headerContainer.addChild(_pointsWithCredits);
 			_pointsWithCredits.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_ORANGE, true, true, null, null, null, TextFormatAlign.CENTER);
 			
@@ -118,7 +118,7 @@ package com.ludofactory.mobile.core.scoring
 			var scoreToStarsDataSup:ScoreToStarsData = scoreData[ int(scoreData.length / 2) + 1 ];
 				
 			_exampleLabel = new Label();
-			_exampleLabel.text = formatString(_("Par exemple : avec un score de {0}, vous gagnez {1} Etoiles."), int(scoreToStarsDataInf.sup + (scoreToStarsDataSup.sup - scoreToStarsDataInf.sup) * 0.5), scoreToStarsDataSup.stars) + "\n\n";
+			_exampleLabel.text = formatString(_("Par exemple : avec un score de {0}, vous gagnez {1} Rubis."), int(scoreToStarsDataInf.sup + (scoreToStarsDataSup.sup - scoreToStarsDataInf.sup) * 0.5), scoreToStarsDataSup.stars) + "\n\n";
 			_mainContainer.addChild(_exampleLabel);
 			_exampleLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_LIGHT_GREY, false, true);
 		}

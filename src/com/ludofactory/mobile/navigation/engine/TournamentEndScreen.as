@@ -206,8 +206,8 @@ package com.ludofactory.mobile.navigation.engine
 			NavigationManager.resetNavigation(false);
 			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
 			
-			var starTexture:Texture = AbstractEntryPoint.assets.getTexture("TournamentEndStarShadow");
-			_starTexture = AbstractEntryPoint.assets.getTexture("TournamentEndStar");
+			var starTexture:Texture = AbstractEntryPoint.assets.getTexture("ruby-shadow");
+			_starTexture = AbstractEntryPoint.assets.getTexture("ruby-front");
 			var dropShadowFilter:DropShadowFilter = new DropShadowFilter(0, 75, 0x000000, 1, 7, 7);
 			var titleTextFormat:TextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 46 : 72), 0xffffff);
 			var valueTextFormat:TextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 68), 0xffdf00);
@@ -257,7 +257,7 @@ package com.ludofactory.mobile.navigation.engine
 			addChild( _starsContainer );
 			
 			_starsTitleLabel = new Label();
-			_starsTitleLabel.text = _("Etoiles :");
+			_starsTitleLabel.text = _("Rubis :");
 			_starsContainer.addChild( _starsTitleLabel );
 			_starsTitleLabel.textRendererProperties.textFormat = titleTextFormat;
 			_starsTitleLabel.textRendererProperties.wordWrap = false;
@@ -310,7 +310,7 @@ package com.ludofactory.mobile.navigation.engine
 			addChild(_cumulatedStarsContainer);
 			
 			_cumulatedStarsTitleLabel = new Label();
-			_cumulatedStarsTitleLabel.text = _("Etoiles cumulées :");
+			_cumulatedStarsTitleLabel.text = _("Rubis cumulées :");
 			_cumulatedStarsContainer.addChild(_cumulatedStarsTitleLabel);
 			_cumulatedStarsTitleLabel.textRendererProperties.textFormat = titleTextFormat
 			_cumulatedStarsTitleLabel.textRendererProperties.nativeFilters = [ dropShadowFilter ];

@@ -128,11 +128,11 @@ package com.ludofactory.mobile.core.storage
 					setProperty(StorageConfig.PROPERTY_COEF, result.correspondance_score.coef as Array);
 				}
 				
-				if( result.correspondance_score.hasOwnProperty( "etoiles" ) && result.correspondance_score.etoiles != null )
+				if( result.correspondance_score.hasOwnProperty( "items" ) && result.correspondance_score.items != null )
 				{
 					// parse stars table
 					arr = [];
-					for each(row in result.correspondance_score.etoiles)
+					for each(row in result.correspondance_score.items)
 						arr.push( new ScoreToStarsData( row ) );
 					setProperty(StorageConfig.PROPERTY_STARS_TABLE, arr);
 				}
