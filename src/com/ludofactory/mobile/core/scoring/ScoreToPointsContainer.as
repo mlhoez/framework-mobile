@@ -138,7 +138,7 @@ package com.ludofactory.mobile.core.scoring
 			_pointsWithFree.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_ORANGE, true, true, null, null, null, TextFormatAlign.CENTER);
 			_pointsWithFree.textRendererProperties.wordWrap = false;
 			
-			_freeIcon = new Image( AbstractEntryPoint.assets.getTexture("summary-icon-free") );
+			_freeIcon = new Image( AbstractEntryPoint.assets.getTexture("summary-icon-token") );
 			_freeIcon.scaleX = _freeIcon.scaleY = GlobalConfig.dpiScale;
 			_pointsWithFreeGroup.addChild( _freeIcon );
 			
