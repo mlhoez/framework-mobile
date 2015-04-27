@@ -35,7 +35,7 @@ package com.ludofactory.mobile.navigation.game
 	import starling.events.Event;
 	import starling.utils.formatString;
 
-	public class StakeButtonFree extends StakeButton
+	public class StakeButtonToken extends StakeButton
 	{
 		public static var IS_TIMER_OVER_AND_REQUEST_FAILED:Boolean = false;
 		
@@ -57,7 +57,7 @@ package com.ludofactory.mobile.navigation.game
 		 * Whether VidCoin is enabled. */
 		private var _vidCoinEnabled:Boolean = false;
 		
-		public function StakeButtonFree(gameType:String)
+		public function StakeButtonToken(gameType:String)
 		{
 			super();
 			

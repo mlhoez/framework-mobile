@@ -42,7 +42,7 @@ package com.ludofactory.mobile.navigation.game
 		
 		/**
 		 * Play with free credits */		
-		private var _withFree:StakeButtonFree;
+		private var _withTokens:StakeButtonToken;
 		
 		/**
 		 * Play with points (only in tournament mode) */		
@@ -70,9 +70,9 @@ package com.ludofactory.mobile.navigation.game
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 70), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 5, 5, 3) ];
 			
-			_withFree = new StakeButtonFree( this.advancedOwner.screenData.gameType );
-			_withFree.addEventListener(Event.TRIGGERED, onPlayWithFree);
-			addChild(_withFree);
+			_withTokens = new StakeButtonToken( this.advancedOwner.screenData.gameType );
+			_withTokens.addEventListener(Event.TRIGGERED, onPlayWithFree);
+			addChild(_withTokens);
 			
 			_withCredits = new StakeButtonCredit(this.advancedOwner.screenData.gameType);
 			_withCredits.addEventListener(Event.TRIGGERED, onPlayWithCredits);
@@ -98,21 +98,21 @@ package com.ludofactory.mobile.navigation.game
 					_title.width = actualWidth;
 					_title.validate();
 					
-					_withFree.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.45);
-					if( _withPoints ) _withPoints.width = _withFree.width;
+					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.45);
+					if( _withPoints ) _withPoints.width = _withTokens.width;
 					
-					_withFree.x = _withCredits.x = ((actualWidth - _withFree.width) * 0.5) << 0;
-					if( _withPoints ) _withPoints.x = _withFree.x;
+					_withTokens.x = _withCredits.x = ((actualWidth - _withTokens.width) * 0.5) << 0;
+					if( _withPoints ) _withPoints.x = _withTokens.x;
 					
-					_withFree.validate();
+					_withTokens.validate();
 					
-					_title.y = (actualHeight - (_title.height + scaleAndRoundToDpi(_withFree ? 40 : 140 ) + _withFree.height * (_withPoints ? 3 : 2))) * 0.5;
+					_title.y = (actualHeight - (_title.height + scaleAndRoundToDpi(_withTokens ? 40 : 140 ) + _withTokens.height * (_withPoints ? 3 : 2))) * 0.5;
 					
-					_withFree.y = _title.y + _title.height + buttonGap + scaleAndRoundToDpi(_withFree ? 20 : 60);
-					_withCredits.y = _withFree.y + _withFree.height + buttonGap + scaleAndRoundToDpi(_withFree ? 10 : 40);
+					_withTokens.y = _title.y + _title.height + buttonGap + scaleAndRoundToDpi(_withTokens ? 20 : 60);
+					_withCredits.y = _withTokens.y + _withTokens.height + buttonGap + scaleAndRoundToDpi(_withTokens ? 10 : 40);
 					
 					if( _withPoints )
-						_withPoints.y = _withCredits.y + _withFree.height + buttonGap + scaleAndRoundToDpi(_withFree ? 10 : 40);
+						_withPoints.y = _withCredits.y + _withTokens.height + buttonGap + scaleAndRoundToDpi(_withTokens ? 10 : 40);
 				}
 				else
 				{
@@ -121,20 +121,20 @@ package com.ludofactory.mobile.navigation.game
 					
 					// define width
 					_title.width = actualWidth;
-					_withFree.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.55);
-					if( _withPoints ) _withPoints.width = _withFree.width;
+					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.55);
+					if( _withPoints ) _withPoints.width = _withTokens.width;
 					
 					// then validate each element to calculate the title y position
-					_withFree.validate();
+					_withTokens.validate();
 					_title.validate();
-					_title.y = ((actualHeight - (_title.height + (_withFree.height * (_withPoints ? 3 : 2)) + titleGap + (buttonGap * (_withPoints ? 1 : 2)))) * 0.5) << 0;
+					_title.y = ((actualHeight - (_title.height + (_withTokens.height * (_withPoints ? 3 : 2)) + titleGap + (buttonGap * (_withPoints ? 1 : 2)))) * 0.5) << 0;
 					
-					_withFree.x = _withCredits.x = ((actualWidth - _withFree.width) * 0.5) << 0;
-					if( _withPoints ) _withPoints.x = _withFree.x;
-					_withFree.y = _title.y + _title.height + titleGap;
-					_withFree.validate();
+					_withTokens.x = _withCredits.x = ((actualWidth - _withTokens.width) * 0.5) << 0;
+					if( _withPoints ) _withPoints.x = _withTokens.x;
+					_withTokens.y = _title.y + _title.height + titleGap;
+					_withTokens.validate();
 					
-					_withCredits.y = _withFree.y + _withFree.height + buttonGap;
+					_withCredits.y = _withTokens.y + _withTokens.height + buttonGap;
 					
 					if( _withPoints )
 					{
@@ -200,7 +200,7 @@ package com.ludofactory.mobile.navigation.game
 			_withCredits.touchable = false;
 			if( _withPoints )
 				_withPoints.touchable = false;
-			_withFree.touchable = false;
+			_withTokens.touchable = false;
 			_canBack = false;
 			
 			TweenMax.delayedCall(2, changeScreen);
@@ -228,9 +228,9 @@ package com.ludofactory.mobile.navigation.game
 				_withPoints = null;
 			}
 			
-			_withFree.removeEventListener(Event.TRIGGERED, onPlayWithFree);
-			_withFree.removeFromParent(true);
-			_withFree = null;
+			_withTokens.removeEventListener(Event.TRIGGERED, onPlayWithFree);
+			_withTokens.removeFromParent(true);
+			_withTokens = null;
 			
 			_withCredits.removeEventListener(Event.TRIGGERED, onPlayWithCredits);
 			_withCredits.removeFromParent(true);

@@ -14,7 +14,7 @@ package com.ludofactory.mobile.core.theme
 	import com.ludofactory.mobile.navigation.engine.FacebookFriendElement;
 	import com.ludofactory.mobile.navigation.game.StakeButton;
 	import com.ludofactory.mobile.navigation.game.StakeButtonCredit;
-	import com.ludofactory.mobile.navigation.game.StakeButtonFree;
+	import com.ludofactory.mobile.navigation.game.StakeButtonToken;
 	import com.ludofactory.mobile.navigation.game.StakeButtonPoint;
 	import com.ludofactory.mobile.navigation.game.GameModeSelectionPopup;
 	import com.ludofactory.mobile.navigation.home.RuleItemRenderer;
