@@ -99,7 +99,7 @@ package com.ludofactory.mobile.navigation.home.summary
 				case GameSession.PRICE_FREE:
 				{
 					_backgroundTextureName = "summary-green-container";
-					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-free" : "summary-icon-free-hd";
+					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-token" : "summary-icon-token-hd";
 					//_calloutLabel.text = formatString(_("Vos parties gratuites ({0} par jour)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 					break;
 				}

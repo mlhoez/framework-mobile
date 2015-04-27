@@ -90,7 +90,7 @@ package com.ludofactory.mobile.core.scoring
 			_idleContainer.addChild(_pointsWithCredits);
 			_pointsWithCredits.textRendererProperties.textFormat = Theme.scoreToPointsIRTextFormat;
 			
-			_starIcon = new Image( AbstractEntryPoint.assets.getTexture("star") );
+			_starIcon = new Image( AbstractEntryPoint.assets.getTexture("ruby") );
 			_starIcon.scaleX = _starIcon.scaleY = (GlobalConfig.dpiScale - 0.4) < 0.3 ? 0.3 : (GlobalConfig.dpiScale - 0.4);
 			addChild(_starIcon);
 		}
