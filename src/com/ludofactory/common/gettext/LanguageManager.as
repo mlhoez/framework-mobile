@@ -350,6 +350,7 @@ package com.ludofactory.common.gettext
 					dispatcher.dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
 				}
 				
+				// Important : use : (?>\r\n|[\r\n]) to match the \r or \n on all OS
 				// retrieve the file binary content
 				var bytes:ByteArray = urlLoader.data as ByteArray;
 				// read the file content (uncleaned)
@@ -357,9 +358,9 @@ package com.ludofactory.common.gettext
 				// replace all the comments => /^#.*$/gm ----- or /^#.*$(\r|\n)|(\n|\r){3,}/gm
 				fileContent = fileContent.replace(/^#.*$/gm, "");
 				// then reconstruct the strings that are on 2 a more lines = /"(\r|\n)"/g
-				fileContent = fileContent.replace(/"[\r\n]"/g, "");
+				fileContent = fileContent.replace(/"(?>\r\n|[\r\n])"/gm, "");
 				// then replace the line breaks greater than 2 => /(\r|\n){2,}/g
-				fileContent = fileContent.replace(/[\r\n]{2,}/g, "\n\n");
+				fileContent = fileContent.replace(/(?>\r\n|[\r\n]){2,}/gm, "\n\n");
 				// clear the byteArray (the new one will be shorter so this is necessary or it
 				// will generate weird files when we rewrite it)
 				bytes.clear();
