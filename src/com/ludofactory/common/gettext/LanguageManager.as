@@ -123,7 +123,6 @@ package com.ludofactory.common.gettext
 		 */		
 		public function initialize():void
 		{
-			log("ahhhhh " + File.applicationStorageDirectory.resolvePath(_localePath).nativePath);
 			if( !File.applicationStorageDirectory.resolvePath(_localePath).exists )
 			{
 				// the language files have not been moved into the application storage
