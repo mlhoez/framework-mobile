@@ -29,14 +29,14 @@ package com.ludofactory.mobile.navigation.account.history.settings
 	{
 		/**
 		 * The countries without the international element. */		
-		private var _countriesWithoutInternational:Array;
+		//private var _countriesWithoutInternational:Array;
 		
 		/**
 		 * The pseudo control. */		
 		private var _pseudoControl:TextInput;
 		/**
 		 * The pseudo country control. */		
-		private var _countryPseudoControl:PickerList;
+		//private var _countryPseudoControl:PickerList;
 		
 		/**
 		 * Save of pseudo informations. */		
@@ -57,20 +57,20 @@ package com.ludofactory.mobile.navigation.account.history.settings
 		{
 			super.initialize();
 			
-			_countriesWithoutInternational = GlobalConfig.COUNTRIES.concat();
-			_countriesWithoutInternational.shift();
+			//_countriesWithoutInternational = GlobalConfig.COUNTRIES.concat();
+			//_countriesWithoutInternational.shift();
 			
 			_pseudoControl = new TextInput();
 			_pseudoControl.text = _pseudoInformations.pseudo;
 			_pseudoControl.textEditorProperties.maxChars = 25;
 			
-			_countryPseudoControl = new PickerList();
-			_countryPseudoControl.dataProvider = new ListCollection( _countriesWithoutInternational );
-			for each(var countryData:CountryData in _countryPseudoControl.dataProvider.data)
-			{
-				if( countryData.id == _pseudoInformations.pays )
-					_countryPseudoControl.selectedItem = countryData;
-			}
+			//_countryPseudoControl = new PickerList();
+			//_countryPseudoControl.dataProvider = new ListCollection( _countriesWithoutInternational );
+			//for each(var countryData:CountryData in _countryPseudoControl.dataProvider.data)
+			//{
+			//	if( countryData.id == _pseudoInformations.pays )
+			//		_countryPseudoControl.selectedItem = countryData;
+			//}
 			
 			_list = new List();
 			_list.addEventListener(LudoEventType.SAVE_ACCOUNT_INFORMATION, onUpdateAccountSection);
@@ -78,7 +78,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.itemRendererType = AccountItemRenderer;
 			_list.dataProvider = new ListCollection( [ { title:_("Pseudo"),         accessory:_pseudoControl },
-													   { title:_("Pays associé"), accessory:_countryPseudoControl },
+													   //{ title:_("Pays associé"), accessory:_countryPseudoControl },
 													   { title:"",   isSaveButton:true } ] );
 			addChild(_list);
 		}
@@ -102,10 +102,10 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			var change:Boolean = false;
 			
 			_pseudoControl.touchable = false;
-			_countryPseudoControl.touchable = false;
+			//_countryPseudoControl.touchable = false;
 			
 			paramObject.pseudo = _pseudoControl.text;
-			paramObject.id_pays = _countryPseudoControl.selectedItem.id;
+			//paramObject.id_pays = _countryPseudoControl.selectedItem.id;
 			
 			Remote.getInstance().accountUpdatePseudo(paramObject, onUpdatePseudoComplete, onUpdatePseudoComplete, onUpdatePseudoComplete, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 		}
@@ -116,7 +116,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 		private function onUpdatePseudoComplete(result:Object = null):void
 		{
 			_pseudoControl.touchable = true;
-			_countryPseudoControl.touchable = true;
+			//_countryPseudoControl.touchable = true;
 			
 			((_list.viewPort as ListDataViewPort).getChildAt( (_list.viewPort as ListDataViewPort).numChildren - 1 ) as AccountItemRenderer).onUpdateComplete();
 			
@@ -147,21 +147,21 @@ package com.ludofactory.mobile.navigation.account.history.settings
 				_pseudoControl = null;
 			}
 			
-			if( _countryPseudoControl )
-			{
-				_countryPseudoControl.removeFromParent(true);
-				_countryPseudoControl = null;
-			}
+			//if( _countryPseudoControl )
+			//{
+			//	_countryPseudoControl.removeFromParent(true);
+			//	_countryPseudoControl = null;
+			//}
 			
 			_list.removeEventListener(LudoEventType.SAVE_ACCOUNT_INFORMATION, onUpdateAccountSection);
 			_list.removeFromParent(true);
 			_list = null;
 			
-			if( _countriesWithoutInternational )
-			{
-				_countriesWithoutInternational.length = 0;
-				_countriesWithoutInternational = null;
-			}
+			//if( _countriesWithoutInternational )
+			//{
+			//	_countriesWithoutInternational.length = 0;
+			//	_countriesWithoutInternational = null;
+			//}
 			
 			_pseudoInformations = null;
 			
