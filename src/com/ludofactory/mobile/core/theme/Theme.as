@@ -1,34 +1,22 @@
 package com.ludofactory.mobile.core.theme
 {
+	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.notification.NotificationPopup;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
-	import com.ludofactory.mobile.navigation.achievements.TrophyItemRenderer;
 	import com.ludofactory.mobile.navigation.achievements.TrophyMessage;
 	import com.ludofactory.mobile.navigation.ads.tournament.AdTournamentItemRenderer;
 	import com.ludofactory.mobile.navigation.alert.AlertItemRenderer;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.navigation.cs.thread.CSThreadItemRenderer;
 	import com.ludofactory.mobile.navigation.engine.FacebookFriendElement;
-	import com.ludofactory.mobile.navigation.game.StakeButton;
-	import com.ludofactory.mobile.navigation.game.StakeButtonCredit;
-	import com.ludofactory.mobile.navigation.game.StakeButtonToken;
-	import com.ludofactory.mobile.navigation.game.StakeButtonPoint;
 	import com.ludofactory.mobile.navigation.game.GameModeSelectionPopup;
 	import com.ludofactory.mobile.navigation.home.RuleItemRenderer;
+	import com.ludofactory.mobile.navigation.menu.MenuItemRenderer;
 	import com.ludofactory.mobile.navigation.sponsor.info.SponsorBonusItemRenderer;
 	import com.ludofactory.mobile.navigation.store.StoreItemRenderer;
-	import com.ludofactory.mobile.navigation.menu.MenuItemRenderer;
-	
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
-	import flash.geom.Rectangle;
-	import flash.text.AutoCapitalize;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Callout;
@@ -69,13 +57,21 @@ package com.ludofactory.mobile.core.theme
 	import feathers.textures.Scale3Textures;
 	import feathers.textures.Scale9Textures;
 	
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
+	import flash.geom.Rectangle;
+	import flash.text.AutoCapitalize;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
+	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.textures.Texture;
-
+	
 	public class Theme extends DisplayListWatcher
 	{
 		
@@ -190,7 +186,7 @@ package com.ludofactory.mobile.core.theme
 			{
 				container = Starling.current.stage;
 			}
-			super(container)
+			super(container);
 			this._scaleToDPI = scaleToDPI;
 			this.initialize();
 		}
@@ -200,6 +196,8 @@ package com.ludofactory.mobile.core.theme
 			initializeScale();
 			initializeFonts();
 			initializeTextures();
+			initializeTexturesNew();
+			
 			initializeParticles();
 			initializeGlobals();
 			setInitializers();
@@ -262,7 +260,7 @@ package com.ludofactory.mobile.core.theme
 			// PickerList
 			pickerListButtonTextFormat               = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_LIGHT_GREY, false, true);
 			pickerListItemRendererTextFormat         = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(36), COLOR_LIGHT_GREY, true, true);
-			pickerListItemRendererSelectedTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(36), COLOR_ORANGE), true, true;
+			pickerListItemRendererSelectedTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(36), COLOR_ORANGE, true, true);
 			
 			// Trophies (display and list)
 			trophyMessageTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(24), COLOR_WHITE);
@@ -279,13 +277,6 @@ package com.ludofactory.mobile.core.theme
 			
 			// AccountHistoryItemRenderer
 			accoutHistoryIRTitleTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_DARK_GREY, true);
-			
-			// TrophyItemRenderer
-			trophyIRTitleTF = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(28), COLOR_WHITE, true);
-			trophyIRMessageTF = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_LIGHT_GREY, false, true);
-			trophyIRRewardTF = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_LIGHT_GREY, true, true);
-			trophyIRRewardOwnedTF = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_ORANGE, true, true);
-			trophyIROwnedTF = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(28), COLOR_WHITE, true, false, null, null, null, TextFormatAlign.RIGHT);
 			
 			// AccountItemRenderer
 			accountIRTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(24), COLOR_DARK_GREY, true);
@@ -389,6 +380,19 @@ package com.ludofactory.mobile.core.theme
 			
 			// PauseView
 			pauseViewLabelTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(34), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER)
+		}
+		
+		// TrophyItemRenderer
+		/** Highlights behind the trophy image. */
+		public static var trophyHighlightTexture:Texture;
+		/** Owned background texture (top right corner). */
+		public static var trophyOwnedTexture:Texture;
+		
+		protected function initializeTexturesNew():void
+		{
+			// TrophyItemRenderer
+			trophyHighlightTexture = AbstractEntryPoint.assets.getTexture("trophy-highlight");
+			trophyOwnedTexture = AbstractEntryPoint.assets.getTexture("trophy-owned-corner-label");
 		}
 		
 		protected function initializeTextures():void
@@ -533,9 +537,7 @@ package com.ludofactory.mobile.core.theme
 			scrollContainerResultLightCornerBottomLeftBackgroundSkinTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("scroll-container-result-light-corner-bottom-left"), SCROLL_CONTAINER_RESULT_GRID);
 			scrollContainerResultDarkCornerTopLeftBackgroundSkinTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("scroll-container-result-dark-corner-top-left"), SCROLL_CONTAINER_RESULT_GRID);
 			
-			// TrophyItemRenderer
-			trophyHighlightTexture = AbstractEntryPoint.assets.getTexture("trophy-highlight");
-			trophyOwnedTexture = AbstractEntryPoint.assets.getTexture("trophy-owned-corner-label");
+			
 		}
 		
 		protected function initializeParticles():void
@@ -690,9 +692,6 @@ package com.ludofactory.mobile.core.theme
 			setInitializerForClass(Label, baseLabelInitializer);
 			setInitializerForClass(Label, labelAlignRightInitializer, LABEL_ALIGN_RIGHT);
 			setInitializerForClass(Label, labelAlignCenterInitializer, LABEL_ALIGN_CENTER);
-			
-			// TrophyItemRenderer
-			setInitializerForClass(TrophyItemRenderer, trophyItemRendererInitializer);
 		}
 		
 		protected var _originalDPI:int;
@@ -2549,36 +2548,6 @@ package com.ludofactory.mobile.core.theme
 			scrollBar.thumbProperties.defaultSkin = defaultSkin;
 			scrollBar.paddingTop = scrollBar.paddingRight = scrollBar.paddingBottom = 4 * this.scaleFactor;
 			return scrollBar;
-		}
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//
-//
-//									T R O P H Y  I T E M  R E N D E R E R
-//
-//
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var trophyIRTitleTF:TextFormat;
-		public static var trophyIRMessageTF:TextFormat;
-		public static var trophyIRRewardTF:TextFormat;
-		public static var trophyIRRewardOwnedTF:TextFormat;
-		public static var trophyIROwnedTF:TextFormat;
-		
-		protected var trophyHighlightTexture:Texture;
-		protected var trophyOwnedTexture:Texture;
-		
-		protected function trophyItemRendererInitializer(renderer:TrophyItemRenderer):void
-		{
-			const highlight:Image = new Image( trophyHighlightTexture );
-			highlight.scaleX = highlight.scaleY = scaleFactor;
-			renderer.highlights = highlight;
-			
-			const owned:Image = new Image( trophyOwnedTexture );
-			owned.scaleX = owned.scaleY = scaleFactor;
-			renderer.ownedLabelImage = owned;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
