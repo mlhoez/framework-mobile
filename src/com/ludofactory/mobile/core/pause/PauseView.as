@@ -1,25 +1,26 @@
 /*
-Copyright © 2006-2014 Ludo Factory
+Copyright © 2006-2015 Ludo Factory
 Framework mobile
 Author  : Maxime Lhoez
 Created : 23 oct. 2013
 */
 package com.ludofactory.mobile.core.pause
 {
+	
 	import com.greensock.TweenLite;
+	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.navigation.ads.AdManager;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.ads.AdManager;
 	
 	import feathers.controls.Button;
-	import feathers.controls.Label;
 	import feathers.core.FeathersControl;
 	
 	import starling.display.Button;
@@ -28,30 +29,28 @@ package com.ludofactory.mobile.core.pause
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
 	
 	public class PauseView extends FeathersControl
 	{
 		/**
 		 * Dark background */		
-		private var _darkness:Quad;
-		
+		private var _overlay:Quad;
 		/**
 		 * Title */		
-		private var _titleLabel:Label;
-		
+		private var _title:TextField;
 		/**
 		 * Resume button */		
 		private var _resumeButton:feathers.controls.Button;
-		
 		/**
 		 * Exit button */		
 		private var _exitButton:feathers.controls.Button;
-		
 		/**
-		 *  */		
+		 * Sound effects button. */		
 		private var _fxButton:starling.display.Button;
 		/**
-		 *  */		
+		 * Music button. */		
 		private var _musicButton:starling.display.Button;
 		
 		public function PauseView()
@@ -63,25 +62,28 @@ package com.ludofactory.mobile.core.pause
 		{
 			super.initialize();
 			
-			_darkness = new Quad(GlobalConfig.stageWidth, GlobalConfig.stageHeight, 0x000000);
-			_darkness.alpha = 0;
-			addChild(_darkness);
+			_overlay = new Quad(GlobalConfig.stageWidth, GlobalConfig.stageHeight, 0x000000);
+			_overlay.alpha = 0;
+			_overlay.visible = false;
+			addChild(_overlay);
 			
-			_titleLabel = new Label();
-			_titleLabel.alpha = 0;
-			_titleLabel.text = _("Jeu en pause");
-			addChild(_titleLabel);
-			_titleLabel.textRendererProperties.textFormat = Theme.pauseViewLabelTextFormat;
-			_titleLabel.textRendererProperties.wordWrap = false;
+			_title = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(34), Theme.COLOR_WHITE);
+			_title.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
+			_title.alpha = 0;
+			_title.visible = false;
+			_title.text = _("Jeu en pause");
+			addChild(_title);
 			
 			_resumeButton = new feathers.controls.Button();
 			_resumeButton.alpha = 0;
+			_resumeButton.visible = false;
 			_resumeButton.label = _("Reprendre");
 			_resumeButton.styleName = Theme.BUTTON_SPECIAL;
 			addChild(_resumeButton);
 			
 			_exitButton = new feathers.controls.Button();
 			_exitButton.alpha = 0;
+			_exitButton.visible = false;
 			_exitButton.styleName = Theme.BUTTON_RED;
 			_exitButton.label = _("Abandonner");
 			addChild(_exitButton);
@@ -111,9 +113,8 @@ package com.ludofactory.mobile.core.pause
 				_resumeButton.y = (GlobalConfig.stageHeight * 0.5) - _resumeButton.height - scaleAndRoundToDpi(10);
 				_exitButton.y = (GlobalConfig.stageHeight * 0.5) + scaleAndRoundToDpi(10);
 				
-				_titleLabel.validate();
-				_titleLabel.x = (GlobalConfig.stageWidth - _titleLabel.width) * 0.5;
-				_titleLabel.y = _resumeButton.y - _titleLabel.height - scaleAndRoundToDpi(20);
+				_title.x = (GlobalConfig.stageWidth - _title.width) * 0.5;
+				_title.y = _resumeButton.y - _title.height - scaleAndRoundToDpi(20);
 				
 				_fxButton.x = (GlobalConfig.stageWidth * 0.5) - _fxButton.width;
 				_musicButton.x = (GlobalConfig.stageWidth * 0.5);
@@ -123,20 +124,17 @@ package com.ludofactory.mobile.core.pause
 		
 //------------------------------------------------------------------------------------------------------------
 //	Animate in - out
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
-		 * Play the animation in.
+		 * Plays the animation in.
 		 */		
 		public function animateIn(manualCall:Boolean):void
 		{
 			enableUi();
-			TweenLite.to(_darkness,  manualCall ? .5:0, { alpha:.8, onComplete:onAnimationInComplete});
-			TweenLite.to(_titleLabel, manualCall ? .5:0, { alpha:1 });
-			TweenLite.to(_resumeButton, manualCall ? .5:0, { alpha:1 });
-			TweenLite.to(_exitButton, manualCall ? .5:0, { alpha:1 });
-			TweenLite.to(_fxButton, manualCall ? .5:0, { alpha:Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SOUND_ENABLED)) ? 1 : 0.5 });
-			TweenLite.to(_musicButton, manualCall ? .5:0, { alpha:Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_MUSIC_ENABLED)) ? 1 : 0.5 });
+			TweenLite.to(_overlay,  manualCall ? .5:0, { autoAlpha:.8, onComplete:onAnimationInComplete });
+			TweenMax.allTo([_title, _resumeButton, _exitButton], manualCall ? .5:0, { autoAlpha:1 });
+			TweenLite.to(_fxButton, manualCall ? .5:0, { autoAlpha:Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SOUND_ENABLED)) ? 1 : 0.5 });
+			TweenLite.to(_musicButton, manualCall ? .5:0, { autoAlpha:Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_MUSIC_ENABLED)) ? 1 : 0.5 });
 		}
 		
 		/**
@@ -155,12 +153,7 @@ package com.ludofactory.mobile.core.pause
 		public function animateOut():void
 		{
 			disableUi();
-			TweenLite.to(_darkness,  .5, { alpha:0, onComplete:onAnimationOutComplete});
-			TweenLite.to(_titleLabel, .5, { alpha:0 });
-			TweenLite.to(_resumeButton, .5, { alpha:0 });
-			TweenLite.to(_exitButton, .5, { alpha:0 });
-			TweenLite.to(_fxButton, .5, { alpha:0 });
-			TweenLite.to(_musicButton, .5, { alpha:0 });
+			TweenMax.allTo([_overlay, _title, _resumeButton, _exitButton, _fxButton, _musicButton], 0.5, { autoAlpha:0, onComplete:onAnimationOutComplete });
 		}
 		
 		/**
@@ -199,7 +192,6 @@ package com.ludofactory.mobile.core.pause
 		
 //------------------------------------------------------------------------------------------------------------
 //	Utils
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Enables the user interface.
@@ -211,7 +203,7 @@ package com.ludofactory.mobile.core.pause
 			_exitButton.addEventListener(Event.TRIGGERED, onExit);
 			_fxButton.addEventListener(Event.TRIGGERED, onSwitchFx);
 			_musicButton.addEventListener(Event.TRIGGERED, onSwitchMusic);
-			_darkness.addEventListener(TouchEvent.TOUCH, onTouchOverlay);
+			_overlay.addEventListener(TouchEvent.TOUCH, onTouchOverlay);
 		}
 		
 		/**
@@ -224,12 +216,11 @@ package com.ludofactory.mobile.core.pause
 			_exitButton.removeEventListener(Event.TRIGGERED, onExit);
 			_fxButton.removeEventListener(Event.TRIGGERED, onSwitchFx);
 			_musicButton.removeEventListener(Event.TRIGGERED, onSwitchMusic);
-			_darkness.removeEventListener(TouchEvent.TOUCH, onTouchOverlay);
+			_overlay.removeEventListener(TouchEvent.TOUCH, onTouchOverlay);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
-//------------------------------------------------------------------------------------------------------------
 		
 		private function onResume(event:Event = null):void
 		{
@@ -245,7 +236,7 @@ package com.ludofactory.mobile.core.pause
 		
 		private function onTouchOverlay(event:TouchEvent):void
 		{
-			var touch:Touch = event.getTouch(_darkness);
+			var touch:Touch = event.getTouch(_overlay);
 			if( touch && touch.phase == TouchPhase.ENDED )
 				onResume();
 			touch = null;
