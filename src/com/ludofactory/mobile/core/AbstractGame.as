@@ -461,9 +461,12 @@ package com.ludofactory.mobile.core
 						advancedOwner.screenData.gameData.top = int(result.top);
 						advancedOwner.screenData.gameData.actualGiftImageUrl = result.lot_actuel.image;
 						advancedOwner.screenData.gameData.actualGiftName = Utilities.replaceCurrency(result.lot_actuel.nom);
-						advancedOwner.screenData.gameData.nextGiftImageUrl = result.lot_suivant.image;
-						advancedOwner.screenData.gameData.nextGiftName = Utilities.replaceCurrency(result.lot_suivant.nom);
-						advancedOwner.screenData.gameData.numStarsForNextGift = int(result.lot_suivant.nb_items);
+						if( "lot_suivant" in result )
+						{
+							advancedOwner.screenData.gameData.nextGiftImageUrl = result.lot_suivant.image;
+							advancedOwner.screenData.gameData.nextGiftName = Utilities.replaceCurrency(result.lot_suivant.nom);
+							advancedOwner.screenData.gameData.numStarsForNextGift = int(result.lot_suivant.nb_items);
+						}
 						advancedOwner.screenData.gameData.hasReachNewTop = int(result.podium) == 1;
 						advancedOwner.screenData.gameData.timeUntilTournamentEnd = int(result.temps_fin_tournoi);
 						advancedOwner.screenData.gameData.displayPushAlert = int(result.afficher_alerte_push) == 1;
