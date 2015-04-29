@@ -184,7 +184,7 @@ package com.ludofactory.mobile.navigation.authentication
 		 */		
 		private function onValidate(event:Event = null):void
 		{
-			if(_mailInput.text == "" || !Utilities.isValidMail(_mailInput.text))
+			if(_mailInput.text == "" || (!Utilities.isValidMail(_mailInput.text) && !GlobalConfig.DEBUG))
 			{
 				InfoManager.showTimed( _("Email invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
 				return;
