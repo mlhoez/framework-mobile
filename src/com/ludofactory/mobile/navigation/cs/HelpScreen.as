@@ -1,39 +1,39 @@
 /*
-Copyright © 2006-2014 Ludo Factory
+Copyright © 2006-2015 Ludo Factory
 Framework mobile
 Author  : Maxime Lhoez
 Created : 25 août 2012
 */
 package com.ludofactory.mobile.navigation.cs
 {
-
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
-	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.CSNewThreadNotificationContent;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.cs.display.CSMessageData;
 	import com.ludofactory.mobile.navigation.cs.display.CSMessagesContainer;
-	import com.ludofactory.mobile.core.theme.Theme;
-
+	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.data.ListCollection;
-
+	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.utils.formatString;
-
+	
 	public class HelpScreen extends AdvancedScreen
 	{
 		/**

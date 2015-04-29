@@ -1,6 +1,7 @@
 package com.ludofactory.mobile.core.theme
 {
 	
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -104,7 +105,7 @@ package com.ludofactory.mobile.core.theme
 		public static const ORIGINAL_DPI_IPHONE_RETINA:int = 326; // original = 326 - modifié = 260
 		/**
 		 * Dpi de référence pour iPad retina. */		
-		public static const ORIGINAL_DPI_IPAD_RETINA:int = 170; // original = 264 - modifié = 180
+		public static const ORIGINAL_DPI_IPAD_RETINA:int = 264; // original = 264 - modifié = 170
 		/**
 		 * The scale factor. */		
 		protected var scaleFactor:Number = 1;
@@ -211,11 +212,17 @@ package com.ludofactory.mobile.core.theme
 		
 		protected function initializeScale():void
 		{
-			var scaledDPI:int = DeviceCapabilities.dpi / Starling.contentScaleFactor;
+			var starling:Starling = Starling.current;
+			var nativeScaleFactor:Number = 1;
+			if(starling.supportHighResolutions)
+			{
+				nativeScaleFactor = starling.nativeStage.contentsScaleFactor;
+			}
+			var scaledDPI:int = DeviceCapabilities.dpi / (starling.contentScaleFactor / nativeScaleFactor);
 			this._originalDPI = scaledDPI;
 			if(this._scaleToDPI)
 			{
-				if(DeviceCapabilities.isTablet(Starling.current.nativeStage))
+				if(DeviceCapabilities.isTablet(starling.nativeStage))
 				{
 					this._originalDPI = ORIGINAL_DPI_IPAD_RETINA;
 				}
@@ -224,7 +231,10 @@ package com.ludofactory.mobile.core.theme
 					this._originalDPI = ORIGINAL_DPI_IPHONE_RETINA;
 				}
 			}
-			scaleFactor = GlobalConfig.dpiScale = scaledDPI / _originalDPI;
+			this.scaleFactor = GlobalConfig.dpiScale = scaledDPI / this._originalDPI;
+			//this.stageTextScale = this.scaleFactor / nativeScaleFactor; // TODO A remettre ?
+			
+			log("Scale = " + GlobalConfig.dpiScale);
 		}
 		
 		public static var baseLabelTextFormat:TextFormat;
@@ -371,12 +381,6 @@ package com.ludofactory.mobile.core.theme
 			
 			// ScoreToPointsItemRenderer
 			highScoreListHeaderTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(30), COLOR_LIGHT_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
-			
-			// MarketingRegisterNotification
-			//marketingRegisterNotificationBonusTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 22 : 36), Theme.COLOR_LIGHT_GREY);
-			
-			// SummaryElement
-			summaryElementTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 46), COLOR_WHITE);
 		}
 		
 		// TrophyItemRenderer
@@ -2894,30 +2898,6 @@ package com.ludofactory.mobile.core.theme
 //------------------------------------------------------------------------------------------------------------
 		
 		public static var highScoreListHeaderTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//
-//
-//					M A R K E T I N G  R E G I S T E R  N O T I F I C A T I O N  B O N U S
-//
-//
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		//public static var marketingRegisterNotificationBonusTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//
-//
-//								S U M M A R Y  E L E M E N T
-//
-//
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var summaryElementTextFormat:TextFormat;
 		
 	}
 }

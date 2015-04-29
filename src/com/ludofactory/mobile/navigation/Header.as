@@ -1,32 +1,29 @@
 /*
-Copyright © 2006-2014 Ludo Factory
+Copyright © 2006-2015 Ludo Factory
 Framework mobile
 Author  : Maxime Lhoez
 Created : 7 oct. 2013
 */
 package com.ludofactory.mobile.navigation
 {
-
-	import com.ludofactory.mobile.core.controls.*;
+	
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.*;
 	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import flash.filters.DropShadowFilter;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
-	import feathers.controls.Label;
 	
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.text.TextField;
 	
 	/**
 	 * Application's header.
@@ -42,7 +39,7 @@ package com.ludofactory.mobile.navigation
 		private var _background:Image;
 		/**
 		 * The title. */		
-		private var _title:Label;
+		private var _title:TextField;
 		
 		/**
 		 * Alert button. */		
@@ -81,8 +78,10 @@ package com.ludofactory.mobile.navigation
 			_background.alpha = 0;
 			addChild(_background);
 			
-			_title = new Label();
+			_title = new TextField(GlobalConfig.stageWidth, _background.height, "_", Theme.FONT_SANSITA, scaleAndRoundToDpi(30), Theme.COLOR_WHITE);
+			_title.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 10, 10) ];
 			_title.touchable = false;
+			_title.autoScale = true;
 			_title.text = "_";
 			addChild(_title);
 			
@@ -103,9 +102,6 @@ package com.ludofactory.mobile.navigation
 		{
 			_background.width = _title.width = GlobalConfig.stageWidth;
 			
-			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
-			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 10, 10) ];
-			_title.validate();
 			_title.y = ((_background.height - _title.height) * 0.5) << 0;
 			_title.text = "";
 			
