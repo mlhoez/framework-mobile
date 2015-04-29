@@ -202,7 +202,7 @@ package com.ludofactory.mobile.navigation.authentication
 				InfoManager.show(_("Chargement..."));
 				_mailInput.clearFocus();
 				_passwordInput.clearFocus();
-				Remote.getInstance().logIn( Utilities.isValidMail(_mailInput.text), _passwordInput.text, onLoginSuccess, onLoginFailure, onLoginFailure, 2, advancedOwner.activeScreenID);
+				Remote.getInstance().logIn(_mailInput.text, _passwordInput.text, onLoginSuccess, onLoginFailure, onLoginFailure, 2, advancedOwner.activeScreenID);
 			}
 			else
 			{
