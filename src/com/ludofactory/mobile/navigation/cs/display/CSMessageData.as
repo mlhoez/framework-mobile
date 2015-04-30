@@ -26,9 +26,8 @@ package com.ludofactory.mobile.navigation.cs.display
 		private var _read:Boolean;
 		
 		/**
-		 * The theme translation key used by the Localizer
-		 * to display the localized name of the name. */		
-		private var _themeTranslationKey:String;
+		 * The preview of the last message sent (only 75 chars). */
+		private var _title:String;
 		
 		/**
 		 * The preview of the last message sent (only 75 chars). */		
@@ -44,7 +43,7 @@ package com.ludofactory.mobile.navigation.cs.display
 			_id = data.id;
 			_date = data.date;
 			_read = data.lu == 0 ? false:true;
-			_themeTranslationKey = data.theme;
+			_title = data.titre;
 			_message = data.msg;
 			_state = state;
 		}
@@ -52,7 +51,7 @@ package com.ludofactory.mobile.navigation.cs.display
 		public function get id():int { return _id; }
 		public function get date():String { return _date; }
 		public function get read():Boolean { return _read; }
-		public function get themeTranslationKey():String { return _themeTranslationKey; }
+		public function get title():String { return _title; }
 		public function get message():String { return _message; }
 		public function get state():int { return _state; }
 	}

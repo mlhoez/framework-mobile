@@ -166,7 +166,7 @@ package com.ludofactory.mobile.navigation.cs.display
 				{
 					_title.visible = _message.visible = _date.visible = true;
 					
-					_title.text = _(_data.themeTranslationKey);
+					_title.text = _(_data.title);
 					_message.text = _data.message;
 					_date.text = _data.date;
 					

@@ -84,7 +84,7 @@ package com.ludofactory.mobile.navigation.cs.thread
 		{
 			super.initialize();
 			
-			_headerTitle = formatString(_("Problème sur {0}"), _(advancedOwner.screenData.thread.themeTranslationKey));
+			_headerTitle = formatString(_("Problème sur {0}"), _(advancedOwner.screenData.thread.title));
 			
 			const layout:VerticalLayout = new VerticalLayout();
 			layout.hasVariableItemDimensions = true;
