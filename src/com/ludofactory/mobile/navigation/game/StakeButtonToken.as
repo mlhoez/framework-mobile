@@ -97,7 +97,7 @@ package com.ludofactory.mobile.navigation.game
 		 */		
 		private function onUpdateData(event:Event = null):void
 		{
-			_isEnabled = MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE : StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE);
+			_isEnabled = MemberManager.getInstance().getNumTokens() >= Storage.getInstance().getProperty(AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE : StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE);
 			
 			_iconClock.visible = false;
 
@@ -114,7 +114,7 @@ package com.ludofactory.mobile.navigation.game
 			}
 			else
 			{
-				if( MemberManager.getInstance().getNumFreeGameSessions() != 0 || !MemberManager.getInstance().isLoggedIn() )
+				if( MemberManager.getInstance().getNumTokens() != 0 || !MemberManager.getInstance().isLoggedIn() )
 				{
 					_label.text = formatString( _n("{0} Jeton", "{0} Jetons", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
 						Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));

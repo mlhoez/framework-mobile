@@ -139,7 +139,7 @@ package com.ludofactory.mobile.navigation.home.summary
 		
 		private function onMisesUpdated(result:Object = null):void
 		{
-			if( MemberManager.getInstance().getNumFreeGameSessions() == 0 )
+			if( MemberManager.getInstance().getNumTokens() == 0 )
 				IS_TIMER_OVER_AND_REQUEST_FAILED = true;
 			else
 				IS_TIMER_OVER_AND_REQUEST_FAILED = false;

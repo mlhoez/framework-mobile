@@ -460,7 +460,7 @@ package com.ludofactory.mobile.core.manager
 		/** Returns the member's number of cumulated stars for the current tournament. */		
 		public function getCumulatedStars():int { return _member.cumulatedStars; }
 		/** Returns the member's number of free game sessions. */		
-		public function getNumFreeGameSessions():int { return _member.numTokens; }
+		public function getNumTokens():int { return _member.numTokens; }
 		/**  Returns the member's total of free game sessions. */		
 		public function getTotalTokensADay():int { return _member.totalTokensADay; }
 		/**  Returns the member's pseudo. */		

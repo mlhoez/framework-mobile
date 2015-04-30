@@ -206,14 +206,14 @@ package com.ludofactory.mobile.navigation
 			GameSessionTimer.updateState();
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
-				_freeContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getNumFreeGameSessions() ) );
+				_freeContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getNumTokens() ) );
 				_pointsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getPoints() ) );
 				_creditsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getCredits() ) );
 			}
 			else
 			{
 				_pointsContainer.setLabelText( "" + MemberManager.getInstance().getPoints() );
-				_creditsContainer.setLabelText( MemberManager.getInstance().getNumFreeGameSessions() == 0 ? "???" : "-" );
+				_creditsContainer.setLabelText( MemberManager.getInstance().getNumTokens() == 0 ? "???" : "-" );
 			}
 		}
 		

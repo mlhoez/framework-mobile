@@ -327,7 +327,7 @@ package com.ludofactory.mobile.navigation.game
 			}
 			else
 			{
-				if( MemberManager.getInstance().getNumFreeGameSessions() == 0 )
+				if( MemberManager.getInstance().getNumTokens() == 0 )
 				{
 					AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
 					//AbstractEntryPoint.screenNavigator.showScreen( AdvancedScreen.AUTHENTICATION_SCREEN );

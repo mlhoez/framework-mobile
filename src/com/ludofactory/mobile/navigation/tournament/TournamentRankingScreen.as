@@ -602,7 +602,7 @@ package com.ludofactory.mobile.navigation.tournament
 						AbstractEntryPoint.screenNavigator.showScreen( AdvancedScreen.AUTHENTICATION_SCREEN );
 					}*/
 					
-					if( MemberManager.getInstance().getNumFreeGameSessions() < int(Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)) )
+					if( MemberManager.getInstance().getNumTokens() < int(Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)) )
 					{
 						//AbstractEntryPoint.screenNavigator.showScreen( AdvancedScreen.AUTHENTICATION_SCREEN );
 						//NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.TOURNAMENT_RANKING_SCREEN) );

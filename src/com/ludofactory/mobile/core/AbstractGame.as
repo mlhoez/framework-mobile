@@ -99,7 +99,7 @@ package com.ludofactory.mobile.core
 			{
 				case StakeType.TOKEN:
 				{
-					if( MemberManager.getInstance().getNumFreeGameSessions() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) )
+					if( MemberManager.getInstance().getNumTokens() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) )
 					{
 						advancedOwner.screenData.purgeData();
 						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
@@ -108,7 +108,7 @@ package com.ludofactory.mobile.core
 					else
 					{
 						// he can play with free game sessions
-						MemberManager.getInstance().setNumFreeGameSessions( MemberManager.getInstance().getNumFreeGameSessions() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) );
+						MemberManager.getInstance().setNumFreeGameSessions( MemberManager.getInstance().getNumTokens() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) );
 					}
 					break;
 				}

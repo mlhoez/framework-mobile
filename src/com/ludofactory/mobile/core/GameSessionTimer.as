@@ -83,11 +83,11 @@ package com.ludofactory.mobile.core
 		{
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
-				if( MemberManager.getInstance().getNumFreeGameSessions() > 0 )
+				if( MemberManager.getInstance().getNumTokens() > 0 )
 				{
 					// display the number of game sessions
 					stop();
-					valueToDisplay = "" + MemberManager.getInstance().getNumFreeGameSessions();
+					valueToDisplay = "" + MemberManager.getInstance().getNumTokens();
 				}
 				else
 				{
@@ -99,7 +99,7 @@ package com.ludofactory.mobile.core
 			{
 				// if not logged in, display "???" if no more game session, otherwise display the number
 				stop();
-				valueToDisplay = "" + (MemberManager.getInstance().getNumFreeGameSessions() == 0 ? "???" : MemberManager.getInstance().getNumFreeGameSessions());
+				valueToDisplay = "" + (MemberManager.getInstance().getNumTokens() == 0 ? "???" : MemberManager.getInstance().getNumTokens());
 			}
 		}
 		
@@ -219,7 +219,7 @@ package com.ludofactory.mobile.core
 		 */		
 		private static function onStakesUpdated(result:Object = null):void
 		{
-			if( MemberManager.getInstance().getNumFreeGameSessions() == 0 )
+			if( MemberManager.getInstance().getNumTokens() == 0 )
 			{
 				IS_TIMER_OVER_AND_REQUEST_FAILED = true;
 				valueToDisplay = "???";
@@ -227,7 +227,7 @@ package com.ludofactory.mobile.core
 			else
 			{
 				IS_TIMER_OVER_AND_REQUEST_FAILED = false;
-				valueToDisplay = "" + MemberManager.getInstance().getNumFreeGameSessions();
+				valueToDisplay = "" + MemberManager.getInstance().getNumTokens();
 			}
 		}
 		

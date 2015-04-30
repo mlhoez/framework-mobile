@@ -770,7 +770,7 @@ package com.ludofactory.mobile.navigation.engine
 			else
 			{
 				//NotificationManager.addNotification( new MarketingRegisterNotification( MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN ) );
-				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
+				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(MemberManager.getInstance().getNumTokens() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
 			}
 		}
 		

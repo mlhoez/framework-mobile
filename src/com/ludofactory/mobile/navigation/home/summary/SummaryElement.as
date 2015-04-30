@@ -218,7 +218,7 @@ package com.ludofactory.mobile.navigation.home.summary
 		 */		
 		public function setLabelText(value:String):void
 		{
-			if( value == "???" || (value == "-" && MemberManager.getInstance().getNumFreeGameSessions() == 0) )
+			if( value == "???" || (value == "-" && MemberManager.getInstance().getNumTokens() == 0) )
 			{
 				if( !_isInterrogationDisplaying )
 				{
@@ -231,7 +231,7 @@ package com.ludofactory.mobile.navigation.home.summary
 				if( _isInterrogationDisplaying )
 					removeInterrogationLabels();
 				_label.text = value;
-				if( MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
+				if( MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumTokens() == 0 )
 					_calloutLabel.text = formatString(_("{0} Jetons dans {1}"), MemberManager.getInstance().getTotalTokensADay(), value); 
 			}
 			
@@ -285,7 +285,7 @@ package com.ludofactory.mobile.navigation.home.summary
 						}
 						case StakeType.CREDIT:
 						{
-							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
+							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumTokens() == 0 )
 								_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? _("Vos Crédits de jeu") : _("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getTotalTokensADay());
 							else
 								_calloutLabel.text = _("Vos Crédits de jeu");
@@ -293,7 +293,7 @@ package com.ludofactory.mobile.navigation.home.summary
 						}
 						case StakeType.POINT:
 						{
-							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
+							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumTokens() == 0 )
 								_calloutLabel.text = formatString(_("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getTotalTokensADay());
 							else
 								_calloutLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Vos Points à convertir en Cadeaux") : _("Vos Points à convertir en Crédits");
@@ -307,7 +307,7 @@ package com.ludofactory.mobile.navigation.home.summary
 					callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
 					_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 					
-					if( !MemberManager.getInstance().isLoggedIn() && (_stakeType == StakeType.TOKEN || MemberManager.getInstance().getNumFreeGameSessions() == 0))
+					if( !MemberManager.getInstance().isLoggedIn() && (_stakeType == StakeType.TOKEN || MemberManager.getInstance().getNumTokens() == 0))
 					{
 						callout.touchable = true;
 						callout.addEventListener(TouchEvent.TOUCH, onRegister);
