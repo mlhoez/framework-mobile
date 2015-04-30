@@ -99,7 +99,7 @@ package com.ludofactory.mobile.core
 			{
 				case GameSession.PRICE_FREE:
 				{
-					if( MemberManager.getInstance().getNumFreeGameSessions() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) )
+					if( MemberManager.getInstance().getNumFreeGameSessions() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) )
 					{
 						advancedOwner.screenData.purgeData();
 						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
@@ -108,13 +108,13 @@ package com.ludofactory.mobile.core
 					else
 					{
 						// he can play with free game sessions
-						MemberManager.getInstance().setNumFreeGameSessions( MemberManager.getInstance().getNumFreeGameSessions() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) );
+						MemberManager.getInstance().setNumFreeGameSessions( MemberManager.getInstance().getNumFreeGameSessions() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) );
 					}
 					break;
 				}
 				case GameSession.PRICE_CREDIT:
 				{
-					if( MemberManager.getInstance().getCredits() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) )
+					if( MemberManager.getInstance().getCredits() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) )
 					{
 						advancedOwner.screenData.purgeData();
 						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
@@ -123,7 +123,7 @@ package com.ludofactory.mobile.core
 					else
 					{
 						// he can play with credits
-						MemberManager.getInstance().setCredits( MemberManager.getInstance().getCredits() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
+						MemberManager.getInstance().setCredits( MemberManager.getInstance().getCredits() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
 					}
 					break;
 				}
@@ -147,7 +147,7 @@ package com.ludofactory.mobile.core
 			// if the user can really play, we now initialize a game session which will be saved until the
 			// end of the game and we decrement the associated stake (whether free game sessions, points or credits).
 			log("Démarrage d'une partie en mode <strong>" + advancedOwner.screenData.gameType + ", mise : " + advancedOwner.screenData.gamePrice + "</strong>");
-			Flox.logEvent("Parties", { "1. Nombre total de parties":"Total", "2. Mode":(advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? "Classique":"Tournoi"), "3. Mise":advancedOwner.screenData.gamePrice });
+			Flox.logEvent("Parties", { "1. Nombre total de parties":"Total", "2. Mode":(advancedOwner.screenData.gameType == GameSession.TYPE_SOLO ? "Solo":"Tournoi"), "3. Mise":advancedOwner.screenData.gamePrice });
 			
 			// create banners in order to display them faster when the game is paused
 			AdManager.createiAdBanner(IAdBannerAlignment.BOTTOM);
@@ -438,19 +438,19 @@ package com.ludofactory.mobile.core
 						}
 					}
 					
-					if( _gameSession.gameType == GameSession.TYPE_CLASSIC )
+					if( _gameSession.gameType == GameSession.TYPE_SOLO )
 					{
 						// classic game
 						this.advancedOwner.screenData.gameData.numStarsOrPointsEarned = int(result.gains);
 						if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 						{
-							_nextScreenId = int(result.isHighscore) == 1 ? ScreenIds.NEW_HIGH_SCORE_SCREEN : ScreenIds.FREE_GAME_END_SCREEN;
+							_nextScreenId = int(result.isHighscore) == 1 ? ScreenIds.NEW_HIGH_SCORE_SCREEN : ScreenIds.SOLO_END_SCREEN;
 							TrophyManager.getInstance().addEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
 						}
 						else
 						{
 							InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-							advancedOwner.showScreen( int(result.isHighscore) == 1 ? ScreenIds.NEW_HIGH_SCORE_SCREEN : ScreenIds.FREE_GAME_END_SCREEN );
+							advancedOwner.showScreen( int(result.isHighscore) == 1 ? ScreenIds.NEW_HIGH_SCORE_SCREEN : ScreenIds.SOLO_END_SCREEN );
 						}
 					}
 					else
@@ -490,13 +490,13 @@ package com.ludofactory.mobile.core
 							// no highscore but maybe a new level
 							if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 							{
-								_nextScreenId = int(advancedOwner.screenData.gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_GAME_END_SCREEN;
+								_nextScreenId = int(advancedOwner.screenData.gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
 								TrophyManager.getInstance().addEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
 							}
 							else
 							{
 								InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-								advancedOwner.showScreen( int(advancedOwner.screenData.gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_GAME_END_SCREEN );
+								advancedOwner.showScreen( int(advancedOwner.screenData.gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN );
 							}
 						}
 					}
@@ -537,10 +537,10 @@ package com.ludofactory.mobile.core
 			return;*/
 			
 			// update earned values in any cases
-			if( _gameSession.gameType == GameSession.TYPE_CLASSIC ) MemberManager.getInstance().setPoints( MemberManager.getInstance().getPoints() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+			if( _gameSession.gameType == GameSession.TYPE_SOLO ) MemberManager.getInstance().setPoints( MemberManager.getInstance().getPoints() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			else MemberManager.getInstance().setCumulatedStars( MemberManager.getInstance().getCumulatedStars() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			
-			_nextScreenId = _gameSession.gameType == GameSession.TYPE_CLASSIC ? ScreenIds.FREE_GAME_END_SCREEN : ScreenIds.TOURNAMENT_GAME_END_SCREEN;
+			_nextScreenId = _gameSession.gameType == GameSession.TYPE_SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
 			if( MemberManager.getInstance().getHighscore() != 0 && _gameSession.score > MemberManager.getInstance().getHighscore() )
 			{
 				// the user got a new high score

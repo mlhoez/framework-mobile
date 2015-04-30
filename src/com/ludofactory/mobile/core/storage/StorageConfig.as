@@ -137,7 +137,7 @@ package com.ludofactory.mobile.core.storage
 		 * une clef ici.
 		 * 
 		 * // Hack for POEdit
-		 * _("Partie Classique");
+		 * _("Partie Solo");
 		 * _("Tournois");
 		 * _("Problème technique");
 		 * _("Cadeaux");
@@ -146,7 +146,7 @@ package com.ludofactory.mobile.core.storage
 		 * _("Autre");
 		 * 
 		 * */	
-		public static const DEFAULT_CUSTOMER_SERVICE_THEMES:Array = [ new CSThemeData( { id:1, key:"Partie Classique",   index:1 } ),
+		public static const DEFAULT_CUSTOMER_SERVICE_THEMES:Array = [ new CSThemeData( { id:1, key:"Partie Solo",   index:1 } ),
 																	  new CSThemeData( { id:2, key:"Tournois",           index:2 } ),
 																	  new CSThemeData( { id:3, key:"Problème technique", index:3 } ),
 																	  new CSThemeData( { id:4, key:"Cadeaux",            index:4 } ),
@@ -157,7 +157,7 @@ package com.ludofactory.mobile.core.storage
         /**
          * Different version for the non-gift players
          */
-        public static const DEFAULT_CUSTOMER_SERVICE_THEMES_WITHOUT_GIFTS:Array = [ new CSThemeData( { id:1, key:"Partie Classique",   index:1 } ),
+        public static const DEFAULT_CUSTOMER_SERVICE_THEMES_WITHOUT_GIFTS:Array = [ new CSThemeData( { id:1, key:"Partie Solo",   index:1 } ),
                                                                                     new CSThemeData( { id:2, key:"Tournois",           index:2 } ),
                                                                                     new CSThemeData( { id:3, key:"Problème technique", index:3 } ),
                                                                                     new CSThemeData( { id:6, key:"Informations",       index:6 } ),

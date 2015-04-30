@@ -102,7 +102,7 @@ public class CSNewThreadNotification extends AbstractNotification
 			
 			_themeSelectionInput = new TextInput();
 			_themeSelectionInput.addEventListener(TouchEvent.TOUCH, onShowThemeList);
-			_themeSelectionInput.prompt = _("Partie Classique");
+			_themeSelectionInput.prompt = _("Partie Solo");
 			_themeSelectionInput.isEditable = false;
 			_container.addChild(_themeSelectionInput);
 			

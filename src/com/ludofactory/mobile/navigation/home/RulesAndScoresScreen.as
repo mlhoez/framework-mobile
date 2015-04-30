@@ -73,7 +73,7 @@ package com.ludofactory.mobile.navigation.home
 			
 			_tabMenu = new OffsetTabBar();
 			_tabMenu.dataProvider = new ListCollection( [_("Règles"),
-														 _("Classique"),
+														 _("Solo"),
 														 _("Tournoi") ] );
 			_tabMenu.addEventListener(Event.CHANGE, onButtonTouched);
 			addChild(_tabMenu);
@@ -145,7 +145,7 @@ package com.ludofactory.mobile.navigation.home
 					
 				case 1:
 				{
-					Flox.logInfo("\t\tAffichage de l'onglet [Règles du mode Classique]");
+					Flox.logInfo("\t\tAffichage de l'onglet [Règles du mode Solo]");
 					
 					if( !_scoreToPointsContainer )
 					{

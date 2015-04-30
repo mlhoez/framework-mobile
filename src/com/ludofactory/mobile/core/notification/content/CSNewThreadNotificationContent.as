@@ -112,7 +112,7 @@ package com.ludofactory.mobile.core.notification.content
 			
 			_themeSelectionInput = new TextInput();
 			_themeSelectionInput.addEventListener(TouchEvent.TOUCH, onShowThemeList);
-			_themeSelectionInput.prompt = _("Partie Classique");
+			_themeSelectionInput.prompt = _("Partie Solo");
 			_themeSelectionInput.isEditable = false;
 			addChild(_themeSelectionInput);
 			

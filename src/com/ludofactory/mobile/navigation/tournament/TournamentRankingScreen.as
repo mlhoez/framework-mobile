@@ -627,7 +627,7 @@ package com.ludofactory.mobile.navigation.tournament
 					if( !_calloutLabel )
 					{
 						_calloutLabel = new Label();
-						_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de terminer une partie Classique !");
+						_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de terminer une partie Solo !");
 						_calloutLabel.width = GlobalConfig.stageWidth * 0.9;
 						_calloutLabel.validate();
 					}

@@ -74,8 +74,8 @@ package com.ludofactory.mobile.navigation.game
 		
 		private var _closeQuad:Quad;
 		/**
-		 * Classique game button. */		
-		private var _classicGamebutton:Button;
+		 * Solo game button. */		
+		private var _soloButton:Button;
 		/**
 		 * Tournament button. */		
 		private var _tournamentButton:Button;
@@ -134,10 +134,10 @@ package com.ludofactory.mobile.navigation.game
 			addChild(_frontSkin);
 			addChild(_tiledBackground);
 			
-			_classicGamebutton = new Button();
+			_soloButton = new Button();
 			//_classicGamebutton.addEventListener(Event.TRIGGERED, onPlayClassic);
-			_classicGamebutton.label = _("Partie Classique");
-			addChild(_classicGamebutton);
+			_soloButton.label = _("Partie Solo");
+			addChild(_soloButton);
 			
 			_tournamentButtonContainer = new LayoutGroup();
 			addChild(_tournamentButtonContainer);
@@ -205,7 +205,7 @@ package com.ludofactory.mobile.navigation.game
 			{
 				return false;
 			}
-			_classicGamebutton.validate();
+			_soloButton.validate();
 			_tournamentButton.validate();
 			_rulesButton.validate();
 			var newWidth:Number = this.explicitWidth;
@@ -216,7 +216,7 @@ package com.ludofactory.mobile.navigation.game
 			var newHeight:Number = this.explicitHeight;
 			if(needsHeight)
 			{
-				newHeight = _classicGamebutton.height + _tournamentButton.height + _rulesButton.height + scaleAndRoundToDpi(120) + scaleAndRoundToDpi(50);
+				newHeight = _soloButton.height + _tournamentButton.height + _rulesButton.height + scaleAndRoundToDpi(120) + scaleAndRoundToDpi(50);
 			}
 			return this.setSizeInternal(newWidth, newHeight, false);
 		}
@@ -259,16 +259,16 @@ package com.ludofactory.mobile.navigation.game
 			_bottomRightLeavesSaveX = _bottomRightLeaves.x = int(_frontSkin.x - _shadowThickness - _buttonAdjustment + halfWidth - _offset);
 			_bottomRightLeavesSaveY = _bottomRightLeaves.y = int(_frontSkin.y - _shadowThickness + halfHeight - _offset);
 			
-			_classicGamebutton.width = _frontSkin.width * 0.8;
-			_classicGamebutton.validate();
-			_classicGamebutton.alignPivot();
-			_classicGamebutton.y = _frontSkin.y + _shadowThickness + _buttonAdjustment + scaleAndRoundToDpi(40) - halfHeight + (_classicGamebutton.height * 0.5);
-			_classicGamebutton.x = actualWidth * 0.5;
+			_soloButton.width = _frontSkin.width * 0.8;
+			_soloButton.validate();
+			_soloButton.alignPivot();
+			_soloButton.y = _frontSkin.y + _shadowThickness + _buttonAdjustment + scaleAndRoundToDpi(40) - halfHeight + (_soloButton.height * 0.5);
+			_soloButton.x = actualWidth * 0.5;
 			
 			_tournamentButton.width = _frontSkin.width * 0.8;
 			_tournamentButtonContainer.validate();
 			_tournamentButtonContainer.alignPivot();
-			_tournamentButtonContainer.y = _classicGamebutton.y +  (_classicGamebutton.height * 0.5) + scaleAndRoundToDpi(20) + (_tournamentButtonContainer.height * 0.5) ;
+			_tournamentButtonContainer.y = _soloButton.y +  (_soloButton.height * 0.5) + scaleAndRoundToDpi(20) + (_tournamentButtonContainer.height * 0.5) ;
 			_tournamentButtonContainer.x = actualWidth * 0.5;
 			
 			_rulesButton.width = _frontSkin.width * 0.65;
@@ -301,8 +301,8 @@ package com.ludofactory.mobile.navigation.game
 			_bottomLeftLeaves.alpha = 0;
 			_bottomMiddleLeaves.alpha = 0;
 			_bottomRightLeaves.alpha = 0;
-			_classicGamebutton.scaleX = _classicGamebutton.scaleY = 0.7;
-			_classicGamebutton.alpha = 0;
+			_soloButton.scaleX = _soloButton.scaleY = 0.7;
+			_soloButton.alpha = 0;
 			_tournamentButtonContainer.scaleX = _tournamentButtonContainer.scaleY = 0.7;
 			_tournamentButtonContainer.alpha = 0;
 			_rulesButton.scaleX = _rulesButton.scaleY = 0.7;
@@ -321,7 +321,7 @@ package com.ludofactory.mobile.navigation.game
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
-				AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_CLASSIC;
+				AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_SOLO;
 				AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 			}
 			else
@@ -336,7 +336,7 @@ package com.ludofactory.mobile.navigation.game
 				else
 				{
 					AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
-					AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_CLASSIC;
+					AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_SOLO;
 					AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 				}
 				
@@ -381,7 +381,7 @@ package com.ludofactory.mobile.navigation.game
 					if( !_calloutLabel )
 					{
 						_calloutLabel = new Label();
-						_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de terminer une partie Classique !");
+						_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de terminer une partie Solo !");
 						_calloutLabel.width = _tournamentButton.width * 0.9;
 						_calloutLabel.validate();
 					}
@@ -413,7 +413,7 @@ package com.ludofactory.mobile.navigation.game
 		
 		public function animateInSkip():void
 		{
-			_classicGamebutton.label = _("Partie Classique");
+			_soloButton.label = _("Partie Solo");
 			_tournamentButton.label = _("Partie en Tournoi");
 			_rulesButton.label = _("Règles du jeu");
 			
@@ -422,7 +422,7 @@ package com.ludofactory.mobile.navigation.game
 			
 			_canBeClosed = true;
 			
-			TweenMax.killTweensOf([_backgroundSkin, _frontSkin, _tiledBackground, _topLeftLeaves, _bottomLeftLeaves, _bottomMiddleLeaves, _bottomRightLeaves, _classicGamebutton, _tournamentButtonContainer, _rulesButton]);
+			TweenMax.killTweensOf([_backgroundSkin, _frontSkin, _tiledBackground, _topLeftLeaves, _bottomLeftLeaves, _bottomMiddleLeaves, _bottomRightLeaves, _soloButton, _tournamentButtonContainer, _rulesButton]);
 			
 			_offset *= -1;
 			
@@ -443,9 +443,9 @@ package com.ludofactory.mobile.navigation.game
 			_bottomRightLeaves.x = _bottomRightLeavesSaveX - _offset;
 			_bottomRightLeaves.y = _bottomRightLeavesSaveY - _offset;
 			
-			_classicGamebutton.scaleX = _classicGamebutton.scaleY = _classicGamebutton.alpha = _tournamentButtonContainer.scaleX = _tournamentButtonContainer.scaleY = _tournamentButtonContainer.alpha =
+			_soloButton.scaleX = _soloButton.scaleY = _soloButton.alpha = _tournamentButtonContainer.scaleX = _tournamentButtonContainer.scaleY = _tournamentButtonContainer.alpha =
 			_rulesButton.scaleX = _rulesButton.scaleY = _rulesButton.alpha = 1;
-			_classicGamebutton.visible = _tournamentButtonContainer.visible = _rulesButton.visible = true;
+			_soloButton.visible = _tournamentButtonContainer.visible = _rulesButton.visible = true;
 			
 			if( MemberManager.getInstance().getTournamentUnlocked() && MemberManager.getInstance().getTournamentAnimPending() )
 			{
@@ -470,7 +470,7 @@ package com.ludofactory.mobile.navigation.game
 		
 		public function animateIn():void
 		{
-			_classicGamebutton.label = _("Partie Classique");
+			_soloButton.label = _("Partie Solo");
 			_tournamentButton.label = _("Partie en Tournoi");
 			_rulesButton.label = _("Règles du jeu");
 			
@@ -482,7 +482,7 @@ package com.ludofactory.mobile.navigation.game
 				_isOpening = true;*/
 				_canBeClosed = true;
 				
-				TweenMax.killTweensOf([_backgroundSkin, _frontSkin, _tiledBackground, _topLeftLeaves, _bottomLeftLeaves, _bottomMiddleLeaves, _bottomRightLeaves, _classicGamebutton, _tournamentButtonContainer, _rulesButton]);
+				TweenMax.killTweensOf([_backgroundSkin, _frontSkin, _tiledBackground, _topLeftLeaves, _bottomLeftLeaves, _bottomMiddleLeaves, _bottomRightLeaves, _soloButton, _tournamentButtonContainer, _rulesButton]);
 				
 				_offset *= -1;
 				
@@ -493,7 +493,7 @@ package com.ludofactory.mobile.navigation.game
 				TweenMax.to(_bottomMiddleLeaves,  1.25, { delay:0.4,  alpha:1, y:(_bottomMiddleLeavesSaveY - _offset), ease:Elastic.easeOut });
 				TweenMax.to(_bottomRightLeaves,   1.25, { delay:0.4,  alpha:1, x:(_bottomRightLeavesSaveX - _offset), y:(_bottomRightLeavesSaveY - _offset), ease:Elastic.easeOut });
 				
-				TweenMax.allTo([_classicGamebutton, _tournamentButtonContainer, _rulesButton], 0.75, { delay:0.6, autoAlpha:1, scaleX:1, scaleY:1, ease:Back.easeOut });
+				TweenMax.allTo([_soloButton, _tournamentButtonContainer, _rulesButton], 0.75, { delay:0.6, autoAlpha:1, scaleX:1, scaleY:1, ease:Back.easeOut });
 			//}
 			
 			if( MemberManager.getInstance().getTournamentUnlocked() && MemberManager.getInstance().getTournamentAnimPending() )
@@ -547,7 +547,7 @@ package com.ludofactory.mobile.navigation.game
 		{
 			_tournamentButton.addEventListener(Event.TRIGGERED, onPlayTournament);
 			_rulesButton.addEventListener(Event.TRIGGERED, onShowRules);
-			_classicGamebutton.addEventListener(Event.TRIGGERED, onPlayClassic);
+			_soloButton.addEventListener(Event.TRIGGERED, onPlayClassic);
 		}
 		
 		private function disableListeners():void
@@ -555,12 +555,12 @@ package com.ludofactory.mobile.navigation.game
 			_timer.stop();
 			_tournamentButton.removeEventListener(Event.TRIGGERED, onPlayTournament);
 			_rulesButton.removeEventListener(Event.TRIGGERED, onShowRules);
-			_classicGamebutton.removeEventListener(Event.TRIGGERED, onPlayClassic);
+			_soloButton.removeEventListener(Event.TRIGGERED, onPlayClassic);
 		}
 		
 		public function animateOut():void
 		{
-			TweenMax.killTweensOf([_backgroundSkin, _frontSkin, _tiledBackground, _topLeftLeaves, _bottomLeftLeaves, _bottomMiddleLeaves, _bottomRightLeaves, _classicGamebutton, _tournamentButtonContainer, _rulesButton]);
+			TweenMax.killTweensOf([_backgroundSkin, _frontSkin, _tiledBackground, _topLeftLeaves, _bottomLeftLeaves, _bottomMiddleLeaves, _bottomRightLeaves, _soloButton, _tournamentButtonContainer, _rulesButton]);
 			
 			_offset *= -1;
 			
@@ -573,7 +573,7 @@ package com.ludofactory.mobile.navigation.game
 			TweenMax.to(_bottomMiddleLeaves,  0.25, { alpha:0, y:(_bottomMiddleLeavesSaveY - _offset), ease:Back.easeIn });
 			TweenMax.to(_bottomRightLeaves,   0.25, { alpha:0, x:(_bottomRightLeavesSaveX - _offset), y:(_bottomRightLeavesSaveY - _offset), ease:Back.easeIn });
 			
-			TweenMax.allTo([_classicGamebutton, _tournamentButtonContainer, _rulesButton], 0.25, { autoAlpha:0, scaleX:0.7, scaleY:0.7, ease:Back.easeIn });
+			TweenMax.allTo([_soloButton, _tournamentButtonContainer, _rulesButton], 0.25, { autoAlpha:0, scaleX:0.7, scaleY:0.7, ease:Back.easeIn });
 		}
 		
 		/**
@@ -668,8 +668,8 @@ package com.ludofactory.mobile.navigation.game
 			_bottomRightLeaves.removeFromParent(true);
 			_bottomRightLeaves = null;
 			
-			_classicGamebutton.removeFromParent(true);
-			_classicGamebutton = null;
+			_soloButton.removeFromParent(true);
+			_soloButton = null;
 			
 			_tournamentButton.removeFromParent(true);
 			_tournamentButton = null;

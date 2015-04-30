@@ -4,7 +4,7 @@ package com.ludofactory.mobile.core.push
 
 	public class GameSession extends AbstractElementToPush
 	{
-		public static const TYPE_CLASSIC:String = "entrainement";
+		public static const TYPE_SOLO:String = "solo";
 		public static const TYPE_TOURNAMENT:String = "tournoi";
 		
 		public static const PRICE_FREE:String = "gratuit";

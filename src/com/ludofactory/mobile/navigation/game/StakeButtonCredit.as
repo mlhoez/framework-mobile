@@ -54,7 +54,7 @@ package com.ludofactory.mobile.navigation.game
 			_addIcon.alignPivot();
 			_container.addChild(_addIcon);
 			
-			if( _gameType == GameSession.TYPE_CLASSIC )
+			if( _gameType == GameSession.TYPE_SOLO )
 			{
 				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().getRank() < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
 				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = GlobalConfig.dpiScale;
@@ -84,10 +84,10 @@ package com.ludofactory.mobile.navigation.game
 		
 		private function onUpdateData(event:Event = null):void
 		{
-			_isEnabled = MemberManager.getInstance().getCredits() >= Storage.getInstance().getProperty(  AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) ? true:false;
+			_isEnabled = MemberManager.getInstance().getCredits() >= Storage.getInstance().getProperty(  AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) ? true:false;
 			
-			_label.text = formatString( _n("{0} crédit", "{0} crédits", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE )),
-				Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
+			_label.text = formatString( _n("{0} crédit", "{0} crédits", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE )),
+				Storage.getInstance().getProperty( _gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
 			
 			_icon.texture = MemberManager.getInstance().isLoggedIn() ? AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIcon") : AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIconDisabled");
 			_addIcon.visible = MemberManager.getInstance().isLoggedIn() ? !_isEnabled : false;

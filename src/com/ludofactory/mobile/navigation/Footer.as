@@ -295,8 +295,8 @@ package com.ludofactory.mobile.navigation
 			{
 				if( val == false && !isMainMenu && Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEED_HELP_ARROW) == true &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.GAME_TYPE_SELECTION_SCREEN &&
-					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.FREE_GAME_END_SCREEN &&
-					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.TOURNAMENT_GAME_END_SCREEN &&
+					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.SOLO_END_SCREEN &&
+					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.TOURNAMENT_END_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.FACEBOOK_END_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.PODIUM_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.NEW_HIGH_SCORE_SCREEN &&

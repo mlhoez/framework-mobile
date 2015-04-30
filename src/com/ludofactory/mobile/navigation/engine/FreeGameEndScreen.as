@@ -734,7 +734,7 @@ package com.ludofactory.mobile.navigation.engine
 		 */		
 		private function onGoHome(event:starling.events.Event):void
 		{
-			Flox.logEvent("Choix en fin de jeu classique", { Choix:"Accueil"} );
+			Flox.logEvent("Choix en fin de jeu solo", { Choix:"Accueil"} );
 			
 			advancedOwner.screenData.gameData = new GameData();
 			if( MemberManager.getInstance().isLoggedIn() )
@@ -756,7 +756,7 @@ package com.ludofactory.mobile.navigation.engine
 		 */		
 		private function onPlayAgain(event:starling.events.Event):void
 		{
-			Flox.logEvent("Choix en fin de jeu classique", { Choix:"Rejouer"} );
+			Flox.logEvent("Choix en fin de jeu solo", { Choix:"Rejouer"} );
 			
 			advancedOwner.screenData.gameData = new GameData();
 			if( MemberManager.getInstance().isLoggedIn() )

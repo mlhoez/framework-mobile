@@ -176,7 +176,7 @@ package com.ludofactory.mobile.navigation.game
 		private function onPlayWithFree(event:Event):void
 		{
 			this.advancedOwner.screenData.gamePrice = GameSession.PRICE_FREE;
-			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:GameSession.PRICE_FREE, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) })
+			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:GameSession.PRICE_FREE, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) })
 			handleNextScreen();
 		}
 		
@@ -191,7 +191,7 @@ package com.ludofactory.mobile.navigation.game
 			if( _withCredits.isEnabled )
 			{
 				this.advancedOwner.screenData.gamePrice = GameSession.PRICE_CREDIT;
-				advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:GameSession.PRICE_CREDIT, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) })
+				advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:GameSession.PRICE_CREDIT, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) })
 				handleNextScreen();
 			}
 			else

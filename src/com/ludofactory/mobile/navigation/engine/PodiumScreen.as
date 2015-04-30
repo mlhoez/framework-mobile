@@ -348,7 +348,7 @@ package com.ludofactory.mobile.navigation.engine
 		private function goToNextScreen():void
 		{
 			TweenMax.killAll();
-			advancedOwner.showScreen( ScreenIds.TOURNAMENT_GAME_END_SCREEN );
+			advancedOwner.showScreen( ScreenIds.TOURNAMENT_END_SCREEN );
 		}
 		
 //------------------------------------------------------------------------------------------------------------

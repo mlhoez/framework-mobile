@@ -116,9 +116,9 @@ package com.ludofactory.mobile.core
 		/** Ecran lors d'un changement de palier en tournoi. */		
 		public static const PODIUM_SCREEN:String = "Jeu - Changement de palier en tournoi";
 		/** Ecran de fin de jeu libre. */		
-		public static const FREE_GAME_END_SCREEN:String = "Jeu - Fin d'une partie en mode classique";
+		public static const SOLO_END_SCREEN:String = "Jeu - Fin d'une partie en mode solo";
 		/** Ecran de fin de tournoi. */		
-		public static const TOURNAMENT_GAME_END_SCREEN:String = "Jeu - Fin d'une partie en mode tournoi";
+		public static const TOURNAMENT_END_SCREEN:String = "Jeu - Fin d'une partie en mode tournoi";
 		/** Ecran de dépassement de score d'un ami Facebook. */		
 		public static const FACEBOOK_END_SCREEN:String = "Jeu - Dépassement d'amis Facebook";
 		/** Ecran du classement du tournoi en cours. */		

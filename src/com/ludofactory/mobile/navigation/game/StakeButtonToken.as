@@ -96,7 +96,7 @@ package com.ludofactory.mobile.navigation.game
 		 */		
 		private function onUpdateData(event:Event = null):void
 		{
-			_isEnabled = MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE : StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE);
+			_isEnabled = MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE : StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE);
 			
 			_iconClock.visible = false;
 
@@ -107,16 +107,16 @@ package com.ludofactory.mobile.navigation.game
 			
 			if( _isEnabled )
 			{
-				_label.text = formatString( _n("{0} Jeton", "{0} Jetons", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
-					Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
+				_label.text = formatString( _n("{0} Jeton", "{0} Jetons", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
+					Storage.getInstance().getProperty( _gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
 				_label.color = 0x0d2701;
 			}
 			else
 			{
 				if( MemberManager.getInstance().getNumFreeGameSessions() != 0 || !MemberManager.getInstance().isLoggedIn() )
 				{
-					_label.text = formatString( _n("{0} Jeton", "{0} Jetons", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
-						Storage.getInstance().getProperty( _gameType == GameSession.TYPE_CLASSIC ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
+					_label.text = formatString( _n("{0} Jeton", "{0} Jetons", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
+						Storage.getInstance().getProperty( _gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
 					_label.color = 0x2d2d2d;
 				}
 				else
@@ -129,7 +129,7 @@ package com.ludofactory.mobile.navigation.game
 					else
 					{
 						if( MemberManager.getInstance().getCanWatchVideo() && AbstractEntryPoint.vidCoin.videoIsAvailableForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID) && 
-								AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_CLASSIC )
+								AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_SOLO )
 						{
 							_label.text = formatString(_("Regarder une vidéo pour jouer gratuitement."));
 							//_label.color = 0xffffff;

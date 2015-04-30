@@ -294,7 +294,7 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			else
 			{
-				advancedOwner.showScreen( advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameSession.TYPE_CLASSIC ? ScreenIds.FREE_GAME_END_SCREEN:ScreenIds.TOURNAMENT_GAME_END_SCREEN) );
+				advancedOwner.showScreen( advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameSession.TYPE_SOLO ? ScreenIds.SOLO_END_SCREEN:ScreenIds.TOURNAMENT_END_SCREEN) );
 			}
 		}
 		
