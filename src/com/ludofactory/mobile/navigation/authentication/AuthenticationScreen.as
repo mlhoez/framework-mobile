@@ -161,13 +161,13 @@ package com.ludofactory.mobile.navigation.authentication
 					_loginButton.width = _registerButton.width = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.4);
 					_loginButton.x = ((actualWidth * 0.5) - (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.4))) * 0.5;
 					_registerButton.x = (actualWidth * 0.5) + _loginButton.x;
-					_loginButton.y = _registerButton.y = _logo.y + _logo.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_loginButton.y = _registerButton.y = _logo.y + _logo.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 30);
 					_loginButton.validate();
 					_registerButton.validate();
 					_loginButton.height = _registerButton.height = Math.max(_loginButton.height, _registerButton.height);
 					
 					_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.5 : 0.4);
-					_facebookButton.y = _loginButton.y + _loginButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					_facebookButton.y = _loginButton.y + _loginButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 30);
 					_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
 				}
 				else
