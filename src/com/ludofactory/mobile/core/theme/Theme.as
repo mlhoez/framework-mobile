@@ -1,7 +1,6 @@
 package com.ludofactory.mobile.core.theme
 {
 	
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -62,6 +61,7 @@ package com.ludofactory.mobile.core.theme
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.geom.Rectangle;
+	import flash.system.Capabilities;
 	import flash.text.AutoCapitalize;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
@@ -109,6 +109,30 @@ package com.ludofactory.mobile.core.theme
 		/**
 		 * The scale factor. */		
 		protected var scaleFactor:Number = 1;
+		
+		public static const ORIGINAL_X_TABLETTE:int= 1024;
+		public static const ORIGINAL_Y_TABLETTE:int = 768;
+		public static const ORIGINAL_X:int= 960;
+		public static const ORIGINAL_Y:int = 640;
+		public static var SCREEN_X:int;
+		public static var SCREEN_Y:int;
+		
+		public static var REDUCTION_RATIO:Number;
+		
+		
+		private function getReductionRatio():void
+		{
+			SCREEN_X = Capabilities.screenResolutionX;
+			SCREEN_Y = Capabilities.screenResolutionY;
+			var ratioX:Number = SCREEN_X / (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE);
+			var ratioY:Number = SCREEN_Y / (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE);
+			
+			if (ratioX < ratioY) {
+				REDUCTION_RATIO = ratioX;
+			}else {
+				REDUCTION_RATIO = ratioY;
+			}
+		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Colors
@@ -233,8 +257,8 @@ package com.ludofactory.mobile.core.theme
 			}
 			this.scaleFactor = GlobalConfig.dpiScale = scaledDPI / this._originalDPI;
 			//this.stageTextScale = this.scaleFactor / nativeScaleFactor; // TODO A remettre ?
-			
-			log("Scale = " + GlobalConfig.dpiScale);
+			getReductionRatio();
+			this.scaleFactor = GlobalConfig.dpiScale = (REDUCTION_RATIO + GlobalConfig.dpiScale) / 2; // moyenne des deux calculés (plus précis ?)
 		}
 		
 		public static var baseLabelTextFormat:TextFormat;
