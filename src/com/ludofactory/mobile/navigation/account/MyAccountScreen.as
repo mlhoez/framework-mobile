@@ -54,7 +54,7 @@ package com.ludofactory.mobile.navigation.account
 			
 			_menu = new OffsetTabBar();
 			_menu.dataProvider = new ListCollection( [ _("Infos perso"),
-													   _("Paiments"),
+													   _("Paiements"),
 													   _("Historique") ] );
 			_menu.addEventListener(Event.CHANGE, onMenuChange);
 			addChild(_menu);
