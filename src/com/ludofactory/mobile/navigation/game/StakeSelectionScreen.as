@@ -13,6 +13,7 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameMode;
 	import com.ludofactory.mobile.core.StakeType;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
@@ -95,14 +96,15 @@ package com.ludofactory.mobile.navigation.game
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				var buttonGap:int;
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					var buttonGap:int = scaleAndRoundToDpi(30);
+					buttonGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 6 : 30);
 					
 					_title.width = actualWidth;
 					_title.validate();
 					
-					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 70 : 140);
+					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150);
 					if( _withPoints ) _withPoints.height = _withTokens.height;
 					
 					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.45);
@@ -123,7 +125,7 @@ package com.ludofactory.mobile.navigation.game
 				}
 				else
 				{
-					var buttonGap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 40);
+					buttonGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 40);
 					var titleGap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 60);
 					
 					// define width
