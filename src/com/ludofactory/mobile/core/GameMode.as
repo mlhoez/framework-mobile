@@ -1,5 +1,5 @@
 /*
- Copyright © 2006-2015 Ludo Factory
+ Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
  Game Server - Ludokado
  Author  : Maxime Lhoez
  Created : 18 août 2014

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright © 2006-2015 Ludo Factory
+Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
 Framework mobile
 Author  : Olivier Chevarin - Maxime Lhoez
 Created : 11 déc. 2012

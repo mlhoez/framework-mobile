@@ -1,5 +1,5 @@
 /*
-Copyright © 2006-2015 Ludo Factory
+Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
 Based on the work of Vincent Petithory https://github.com/vincent-petithory/as3-gettext
 Framework mobile
 Author  : Maxime Lhoez
