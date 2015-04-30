@@ -8,6 +8,7 @@ package com.ludofactory.mobile.navigation
 {
 
 	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.StakeType;
 	import com.ludofactory.mobile.core.controls.*;
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
@@ -141,13 +142,13 @@ package com.ludofactory.mobile.navigation
 			_menuButton.addEventListener(Event.TRIGGERED, onMainMenuTouched);
 			addChild(_menuButton);
 			
-			_freeContainer = new SummaryElement( GameSession.PRICE_FREE );
+			_freeContainer = new SummaryElement( StakeType.TOKEN );
 			addChild(_freeContainer);
 			
-			_pointsContainer = new SummaryElement( GameSession.PRICE_POINT );
+			_pointsContainer = new SummaryElement( StakeType.POINT );
 			addChild(_pointsContainer);
 			
-			_creditsContainer = new SummaryElement( GameSession.PRICE_CREDIT );
+			_creditsContainer = new SummaryElement( StakeType.CREDIT );
 			addChild(_creditsContainer);
 			
 			GameSessionTimer.registerFunction(_freeContainer.setLabelText);
@@ -223,17 +224,17 @@ package com.ludofactory.mobile.navigation
 		{
 			switch(data.type)
 			{
-				case GameSession.PRICE_FREE:
+				case StakeType.TOKEN:
 				{
 					_freeContainer.animateChange( data.value );
 					break;
 				}
-				case GameSession.PRICE_CREDIT:
+				case StakeType.CREDIT:
 				{
 					_creditsContainer.animateChange( data.value );
 					break;
 				}
-				case GameSession.PRICE_POINT:
+				case StakeType.POINT:
 				{
 					_pointsContainer.animateChange( data.value );
 					break;

@@ -11,6 +11,8 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.GameMode;
+	import com.ludofactory.mobile.core.StakeType;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
@@ -81,7 +83,7 @@ package com.ludofactory.mobile.navigation.game
 			if( MemberManager.getInstance().isLoggedIn() )
 				MemberManager.getInstance().updateVidCoinData();
 			
-			if( advancedOwner.screenData.gameType == GameSession.TYPE_TOURNAMENT )
+			if( advancedOwner.screenData.gameType == GameMode.TOURNAMENT )
 			{
 				_withPoints = new StakeButtonPoint();
 				_withPoints.addEventListener(Event.TRIGGERED, onPlayWithPoints);
@@ -162,8 +164,8 @@ package com.ludofactory.mobile.navigation.game
 		 */		
 		private function onPlayWithPoints(event:Event):void
 		{
-			this.advancedOwner.screenData.gamePrice = GameSession.PRICE_POINT;
-			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:GameSession.PRICE_POINT, value:-Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) })
+			this.advancedOwner.screenData.gamePrice = StakeType.POINT;
+			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:StakeType.POINT, value:-Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) })
 			handleNextScreen();
 		}
 		
@@ -175,8 +177,8 @@ package com.ludofactory.mobile.navigation.game
 		 */		
 		private function onPlayWithFree(event:Event):void
 		{
-			this.advancedOwner.screenData.gamePrice = GameSession.PRICE_FREE;
-			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:GameSession.PRICE_FREE, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) })
+			this.advancedOwner.screenData.gamePrice = StakeType.TOKEN;
+			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:StakeType.TOKEN, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) })
 			handleNextScreen();
 		}
 		
@@ -190,8 +192,8 @@ package com.ludofactory.mobile.navigation.game
 		{
 			if( _withCredits.isEnabled )
 			{
-				this.advancedOwner.screenData.gamePrice = GameSession.PRICE_CREDIT;
-				advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:GameSession.PRICE_CREDIT, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) })
+				this.advancedOwner.screenData.gamePrice = StakeType.CREDIT;
+				advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:StakeType.CREDIT, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) })
 				handleNextScreen();
 			}
 			else

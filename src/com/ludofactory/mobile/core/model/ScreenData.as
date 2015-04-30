@@ -11,8 +11,8 @@ package com.ludofactory.mobile.core.model
 
 	public class ScreenData
 	{
-		public var gameType:String;
-		public var gamePrice:String;
+		public var gameType:int;
+		public var gamePrice:int;
 		
 		public var defaultPseudo:String;
 		
@@ -57,8 +57,8 @@ package com.ludofactory.mobile.core.model
 		{
 			// bug si on va sur la sélection de mise, puis on se connecte, quand on revient => comme on fait
 			// un purgeData au changement d'écran, la push partie merde
-			gameType = "";
-			gamePrice = "";
+			gameType = 0;
+			gamePrice = 0;
 			
 			defaultPseudo = "";
 			

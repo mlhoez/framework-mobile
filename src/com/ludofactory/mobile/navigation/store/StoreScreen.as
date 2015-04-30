@@ -13,6 +13,7 @@ package com.ludofactory.mobile.navigation.store
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.StakeType;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.navigation.authentication.NotLoggedInContainer;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
@@ -472,7 +473,7 @@ package com.ludofactory.mobile.navigation.store
 		private function onAlertClosed(value:int, newRank:Boolean):void
 		{
 			// FIXME Utiliser useFrames pour TweenMax partout dans l'application ?
-			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:GameSession.PRICE_CREDIT, value:value } );
+			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:StakeType.CREDIT, value:value } );
 			
 			if( newRank == true )
 			{

@@ -13,6 +13,7 @@ package com.ludofactory.mobile.navigation.alert
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.GameMode;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -211,7 +212,7 @@ package com.ludofactory.mobile.navigation.alert
 								
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-game-session-simple-icon");
 								
-								_message.text = formatString( GameSession(_data).gameType == GameSession.TYPE_SOLO ? _n("{0} Point sera définitivement crédité sur votre compte dès que vous serez connecté à internet.", "{0} Points seront définitivement crédités sur votre compte dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned) : _n("{0} Rubis sera définitivement comptabilisée pour le tournoi en cours dès que vous serez connecté à internet.", "{0} Rubis seront définitivement comptabilisées pour le tournoi en cours dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned),
+								_message.text = formatString( GameSession(_data).gameType == GameMode.SOLO ? _n("{0} Point sera définitivement crédité sur votre compte dès que vous serez connecté à internet.", "{0} Points seront définitivement crédités sur votre compte dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned) : _n("{0} Rubis sera définitivement comptabilisée pour le tournoi en cours dès que vous serez connecté à internet.", "{0} Rubis seront définitivement comptabilisées pour le tournoi en cours dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned),
 									GameSession(_data).numStarsOrPointsEarned);
 								
 								break;

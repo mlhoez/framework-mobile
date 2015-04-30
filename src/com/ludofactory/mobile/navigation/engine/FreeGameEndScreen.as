@@ -19,6 +19,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.StakeType;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
@@ -268,7 +269,7 @@ package com.ludofactory.mobile.navigation.engine
 			_cumulatedPointsContainer.addChild(_pointsIcon);
 			
 			_starsToAddLabel = new Label();
-			_starsToAddLabel.text = "+" + (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == GameSession.PRICE_CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().getRank() < 5 ? 0 : 1]) : 1 ));
+			_starsToAddLabel.text = "+" + (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == StakeType.CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().getRank() < 5 ? 0 : 1]) : 1 ));
 			_starsToAddLabel.alpha = 0;
 			_starsToAddLabel.visible = false;
 			addChild(_starsToAddLabel);
@@ -380,7 +381,7 @@ package com.ludofactory.mobile.navigation.engine
 			_playAgainButton.addEventListener(starling.events.Event.TRIGGERED, onPlayAgain);
 			_buttonsContainer.addChild(_playAgainButton);
 			
-			if( advancedOwner.screenData.gamePrice == GameSession.PRICE_CREDIT )
+			if( advancedOwner.screenData.gamePrice == StakeType.CREDIT )
 			{
 				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().getRank() < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
 				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = GlobalConfig.dpiScale;
@@ -575,7 +576,7 @@ package com.ludofactory.mobile.navigation.engine
 				return;
 			
 			_oldTweenValue = 0;
-			_targetTweenValue = (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == GameSession.PRICE_CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().getRank() < 5 ? 0 : 1]) : 1 ));
+			_targetTweenValue = (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == StakeType.CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().getRank() < 5 ? 0 : 1]) : 1 ));
 			TweenMax.to(this, 0.25, { _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _pointsValue.text = Utilities.splitThousands(_oldTweenValue); }, onComplete:animateLabelFromPointsToCumulatedPoints, ease:Linear.easeNone } );
 		}
 		
@@ -586,7 +587,7 @@ package com.ludofactory.mobile.navigation.engine
 			if( !_continueButton.isEnabled )
 				return;
 			
-			if( advancedOwner.screenData.gamePrice == GameSession.PRICE_CREDIT )
+			if( advancedOwner.screenData.gamePrice == StakeType.CREDIT )
 			{
 				_winMorePointsImage.x = _scoreContainer.x + _pointsContainer.x + _pointsContainer.width * 0.75;
 				_winMorePointsImage.y = _scoreContainer.y;

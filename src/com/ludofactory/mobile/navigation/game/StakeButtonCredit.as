@@ -10,6 +10,7 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.GameMode;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.MemberManager;
@@ -32,9 +33,9 @@ package com.ludofactory.mobile.navigation.game
 		private var _winMorePointsImage:Image;
 		/**
 		 * The game type. */		
-		private var _gameType:String;
+		private var _gameType:int;
 		
-		public function StakeButtonCredit(gameType:String)
+		public function StakeButtonCredit(gameType:int)
 		{
 			super();
 			
@@ -54,7 +55,7 @@ package com.ludofactory.mobile.navigation.game
 			_addIcon.alignPivot();
 			_container.addChild(_addIcon);
 			
-			if( _gameType == GameSession.TYPE_SOLO )
+			if( _gameType == GameMode.SOLO )
 			{
 				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().getRank() < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
 				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = GlobalConfig.dpiScale;
@@ -84,10 +85,10 @@ package com.ludofactory.mobile.navigation.game
 		
 		private function onUpdateData(event:Event = null):void
 		{
-			_isEnabled = MemberManager.getInstance().getCredits() >= Storage.getInstance().getProperty(  AbstractEntryPoint.screenNavigator.screenData.gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) ? true:false;
+			_isEnabled = MemberManager.getInstance().getCredits() >= Storage.getInstance().getProperty(  AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) ? true:false;
 			
-			_label.text = formatString( _n("{0} crédit", "{0} crédits", Storage.getInstance().getProperty( _gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE )),
-				Storage.getInstance().getProperty( _gameType == GameSession.TYPE_SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
+			_label.text = formatString( _n("{0} crédit", "{0} crédits", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE )),
+				Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
 			
 			_icon.texture = MemberManager.getInstance().isLoggedIn() ? AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIcon") : AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIconDisabled");
 			_addIcon.visible = MemberManager.getInstance().isLoggedIn() ? !_isEnabled : false;

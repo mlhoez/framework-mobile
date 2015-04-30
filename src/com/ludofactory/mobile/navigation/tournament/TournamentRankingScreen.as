@@ -14,6 +14,7 @@ package com.ludofactory.mobile.navigation.tournament
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.GameMode;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -582,7 +583,7 @@ package com.ludofactory.mobile.navigation.tournament
 			{
 				if( MemberManager.getInstance().isLoggedIn() )
 				{
-					advancedOwner.screenData.gameType = GameSession.TYPE_TOURNAMENT;
+					advancedOwner.screenData.gameType = GameMode.TOURNAMENT;
 					advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 				}
 				else
@@ -609,7 +610,7 @@ package com.ludofactory.mobile.navigation.tournament
 					}
 					else
 					{
-						advancedOwner.screenData.gameType = GameSession.TYPE_TOURNAMENT;
+						advancedOwner.screenData.gameType = GameMode.TOURNAMENT;
 						advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 					}
 				}

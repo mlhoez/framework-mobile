@@ -14,6 +14,7 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.GameMode;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.manager.TimerManager;
@@ -321,7 +322,7 @@ package com.ludofactory.mobile.navigation.game
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
-				AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_SOLO;
+				AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.SOLO;
 				AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 			}
 			else
@@ -336,7 +337,7 @@ package com.ludofactory.mobile.navigation.game
 				else
 				{
 					AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
-					AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_SOLO;
+					AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.SOLO;
 					AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 				}
 				

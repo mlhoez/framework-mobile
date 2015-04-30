@@ -14,6 +14,7 @@ package com.ludofactory.mobile.navigation.home.summary
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.GameSessionTimer;
+	import com.ludofactory.mobile.core.StakeType;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.ScreenIds;
@@ -59,7 +60,7 @@ package com.ludofactory.mobile.navigation.home.summary
 		
 		/**
 		 * The type used to choose the correct icon and background. */		
-		private var _type:String;
+		private var _stakeType:int;
 		/**
 		 * The icon background name. */		
 		private var _backgroundTextureName:String;
@@ -82,10 +83,10 @@ package com.ludofactory.mobile.navigation.home.summary
 		 * Particles */		
 		private var _particles:PDParticleSystem;
 		
-		public function SummaryElement(type:String)
+		public function SummaryElement(type:int)
 		{
 			super();
-			_type = type;
+			_stakeType = type;
 		}
 		
 		override protected function initialize():void
@@ -94,23 +95,23 @@ package com.ludofactory.mobile.navigation.home.summary
 			
 			_calloutLabel = new Label();
 			
-			switch(_type)
+			switch(_stakeType)
 			{
-				case GameSession.PRICE_FREE:
+				case StakeType.TOKEN:
 				{
 					_backgroundTextureName = "summary-green-container";
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-token" : "summary-icon-token-hd";
 					//_calloutLabel.text = formatString(_("Vos parties gratuites ({0} par jour)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 					break;
 				}
-				case GameSession.PRICE_CREDIT:
+				case StakeType.CREDIT:
 				{
 					_backgroundTextureName = "summary-yellow-container";
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-credits" : "summary-icon-credits-hd";
 					//_calloutLabel.text = _("Vos Crédits de jeu");
 					break;
 				}
-				case GameSession.PRICE_POINT:
+				case StakeType.POINT:
 				{
 					_backgroundTextureName = "summary-blue-container";
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-points" : "summary-icon-points-hd";
@@ -275,14 +276,14 @@ package com.ludofactory.mobile.navigation.home.summary
 				{
 					_isCalloutDisplaying = true;
 					
-					switch(_type)
+					switch(_stakeType)
 					{
-						case GameSession.PRICE_FREE:
+						case StakeType.TOKEN:
 						{
 							_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? ( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED ? _("Reconnectez-vous pour récupérer vos {0} Jetons.") : _("Vos Jetons ({0} par jour)")) : _("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getTotalTokensADay());
 							break;
 						}
-						case GameSession.PRICE_CREDIT:
+						case StakeType.CREDIT:
 						{
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
 								_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? _("Vos Crédits de jeu") : _("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getTotalTokensADay());
@@ -290,7 +291,7 @@ package com.ludofactory.mobile.navigation.home.summary
 								_calloutLabel.text = _("Vos Crédits de jeu");
 							break;
 						}
-						case GameSession.PRICE_POINT:
+						case StakeType.POINT:
 						{
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumFreeGameSessions() == 0 )
 								_calloutLabel.text = formatString(_("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getTotalTokensADay());
@@ -306,7 +307,7 @@ package com.ludofactory.mobile.navigation.home.summary
 					callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
 					_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 					
-					if( !MemberManager.getInstance().isLoggedIn() && (_type == GameSession.PRICE_FREE || MemberManager.getInstance().getNumFreeGameSessions() == 0))
+					if( !MemberManager.getInstance().isLoggedIn() && (_stakeType == StakeType.TOKEN || MemberManager.getInstance().getNumFreeGameSessions() == 0))
 					{
 						callout.touchable = true;
 						callout.addEventListener(TouchEvent.TOUCH, onRegister);

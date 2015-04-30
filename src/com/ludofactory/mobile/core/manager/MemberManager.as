@@ -11,6 +11,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.common.encryption.Encryption;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.GameMode;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.push.GameSession;
@@ -504,7 +505,7 @@ package com.ludofactory.mobile.core.manager
 			for(var i:int = 0; i < getAnonymousGameSessions().length; i++)
 			{
 				gameSession = getAnonymousGameSessions()[i];
-				if( gameSession.gameType == GameSession.TYPE_TOURNAMENT )
+				if( gameSession.gameType == GameMode.TOURNAMENT )
 					count += gameSession.numStarsOrPointsEarned;
 			}
 			return count;

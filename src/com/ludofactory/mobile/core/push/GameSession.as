@@ -4,13 +4,6 @@ package com.ludofactory.mobile.core.push
 
 	public class GameSession extends AbstractElementToPush
 	{
-		public static const TYPE_SOLO:String = "solo";
-		public static const TYPE_TOURNAMENT:String = "tournoi";
-		
-		public static const PRICE_FREE:String = "jeton";
-		public static const PRICE_CREDIT:String = "credit";
-		public static const PRICE_POINT:String = "point";
-		
 		/**
 		 * A unique id generated at creation. */		
 		private var _uniqueId:String;
@@ -21,11 +14,11 @@ package com.ludofactory.mobile.core.push
 		
 		/**
 		 * The price paid by the user to play : free, paid or point */		
-		private var _gamePrice:String;
+		private var _gamePrice:int;
 		
 		/**
 		 * The game type (whether free or tournament). */		
-		private var _gameType:String;
+		private var _gameType:int;
 		
 		/**
 		 * The date the game session was played so that when the
@@ -55,11 +48,11 @@ package com.ludofactory.mobile.core.push
 		 * The time elapsed on the game. */		
 		private var _elapsedTime:int;
 		
-		public function GameSession(pushType:String = null, gameType:String = null, gamePrice:String = null)
+		public function GameSession(pushType:String = null, gameType:int = 0, gamePrice:int = 0)
 		{
 			super(pushType);
 			
-			if( gamePrice == null )
+			if( gamePrice == 0 )
 				return;
 			
 			_uniqueId = String(new Date().getTime());
@@ -81,11 +74,11 @@ package com.ludofactory.mobile.core.push
 		public function get uniqueId():String { return _uniqueId; }
 		public function set uniqueId(val:String):void { _uniqueId = val; }
 		
-		public function get gameType():String { return _gameType; }
-		public function set gameType(val:String):void { _gameType = val; }
+		public function get gameType():int { return _gameType; }
+		public function set gameType(val:int):void { _gameType = val; }
 		
-		public function get gamePrice():String { return _gamePrice; }
-		public function set gamePrice(val:String):void { _gamePrice = val; }
+		public function get gamePrice():int { return _gamePrice; }
+		public function set gamePrice(val:int):void { _gamePrice = val; }
 		
 		public function get score():int { return _score; }
 		public function set score(val:int):void { _score = val; }
