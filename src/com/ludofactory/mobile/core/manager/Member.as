@@ -1,23 +1,22 @@
 /*
-Copyright © 2006-2014 Ludo Factory
+Copyright © 2006-2015 Ludo Factory
 Framework mobile
 Author  : Maxime Lhoez
 Created : 12 Août 2013
 */
 package com.ludofactory.mobile.core.manager
 {
+	
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	
 	/**
-	 * Member
+	 * Member object class.
 	 * 
-	 * <p>All properties should be enough for each new application, but in case you
-	 * need to have more properties here, you can add them if you also add getters and 
-	 * setters for those properties. They will be accessible even if the previous encrypted
-	 * and stored member didn't have this property.</p>
+	 * <p>All properties should be enough for each new application, but in case you need to have more properties here,
+	 * you can add them if you also add getters and setters for those properties. They will be accessible even if the
+	 * previous encrypted and stored member didn't have those properties.</p>
 	 * 
-	 * <p>But you CANNOT remove properties from here because the decryption must
-	 * probably fail.</p>
+	 * <p>But you CANNOT remove properties from here because the decryption must probably fail.</p>
 	 */	
 	public class Member
 	{
