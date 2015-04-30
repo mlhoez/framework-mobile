@@ -244,10 +244,11 @@ package com.ludofactory.common.utils
 		 */
 		public static function getScaleToFill(refWidth:Number, refHeight:Number, contentToFillWidth:Number, contentToFillHeight:Number):Number
 		{
-			var ratio:Number;
-			if (contentToFillWidth / refWidth > contentToFillHeight / refHeight)
+			// /!\ Attention : il faut ne pas mettre de scaleX et / ou scaleY sur l'item dont on récupère _item.width/height, sinon ça fausse le calcul
+			var ratio:Number = 1;
+			if (!isNaN(contentToFillWidth) && contentToFillWidth / refWidth > contentToFillHeight / refHeight)
 				ratio = contentToFillWidth / refWidth;
-			else
+			else if(!isNaN(contentToFillHeight))
 				ratio = contentToFillHeight / refHeight;
 			return ratio;
 		}
