@@ -290,9 +290,9 @@ package com.ludofactory.mobile.core.manager
 		 */		
 		public function setNumFreeGameSessions(val:int):void
 		{
-			if( _member.numFreeGameSessions != val )
+			if( _member.numTokens != val )
 			{
-				_member.numFreeGameSessions = val;
+				_member.numTokens = val;
 				setEncryptedMember();
 				
 				// the data changed, so we need to update the footer
@@ -459,9 +459,9 @@ package com.ludofactory.mobile.core.manager
 		/** Returns the member's number of cumulated stars for the current tournament. */		
 		public function getCumulatedStars():int { return _member.cumulatedStars; }
 		/** Returns the member's number of free game sessions. */		
-		public function getNumFreeGameSessions():int { return _member.numFreeGameSessions; }
+		public function getNumFreeGameSessions():int { return _member.numTokens; }
 		/**  Returns the member's total of free game sessions. */		
-		public function getNumFreeGameSessionsTotal():int { return _member.numFreeGameSessionsTotal; }
+		public function getTotalTokensADay():int { return _member.totalTokensADay; }
 		/**  Returns the member's pseudo. */		
 		public function getPseudo():String { return _member.pseudo; }
 		/**  Returns the member's birth date. */

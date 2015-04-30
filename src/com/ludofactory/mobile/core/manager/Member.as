@@ -96,12 +96,13 @@ package com.ludofactory.mobile.core.manager
 		private var _credits:int = 0;
 		
 		/**
-		 * The member's number of free game sessions (default is 10 for an anonymous member) */		
-		private var _numFreeGameSessions:int = 10;
+		 * The member's number of tokens (default is 50 for an anonymous member) */		
+		private var _numTokens:int = 10;
 		
 		/**
-		 * The member's total of free game sessions available (10 by default with a common rank). */		
-		private var _numFreeGameSessionsTotal:int = 10;
+		 * The total of tokens available each day (50 by default with a common rank). (this is static unlike _numTokens
+		 * which is decremented). */		
+		private var _totalTokensADay:int = 10;
 		
 		/**
 		 * The member's number of points */		
@@ -154,23 +155,23 @@ package com.ludofactory.mobile.core.manager
 		 */		
 		public function parseData(memberData:Object):void
 		{
-			if( "id_membre" in memberData && memberData.id_membre != null )                           _id = int(memberData.id_membre);
-			if( "mail" in memberData && memberData.mail != null )                                     _mail = String(memberData.mail);
-			if( "mdp" in memberData && memberData.mdp != null )                                       _password = String(memberData.mdp);
-			if( "pseudo" in memberData && memberData.pseudo != null )                                 _pseudo = String(memberData.pseudo);
-			if( "date_naissance" in memberData && memberData.date_naissance != null )                 _birthDate = String(memberData.date_naissance);
-			if( "sexe" in memberData && memberData.sexe != null )                                     _title = String(memberData.sexe);
-			if( "credits" in memberData && memberData.credits != null )                               _credits = int(memberData.credits);
-			if( "parties_gratuites" in memberData && memberData.parties_gratuites != null )           _numFreeGameSessions = int(memberData.parties_gratuites);
-			if( "score_cumule" in memberData && memberData.score_cumule != null )                     _cumulatedStars = int(memberData.score_cumule);
-			if( "points" in memberData && memberData.points != null )                                 _points = int(memberData.points);
-			if( "rang" in memberData && memberData.rang != null )                                     _rank = int(memberData.rang);
-			if( "id_facebook" in memberData && memberData.id_facebook != null )                       _facebookId = Number(memberData.id_facebook);
-			if( "nb_credit_acheter" in memberData && memberData.nb_credit_acheter != null )           _numCreditsBought = int(memberData.nb_credit_acheter);
-			if( "date_parties_gratuites" in memberData && memberData.date_parties_gratuites != null ) _updateDate = String(memberData.date_parties_gratuites);
-			if( "id_pays_pseudo" in memberData && memberData.id_pays_pseudo != null )                 _countryId = int(memberData.id_pays_pseudo);
-			if( "parties_quotidiennes" in memberData && memberData.parties_quotidiennes != null )     _numFreeGameSessionsTotal = int(memberData.parties_quotidiennes);
-			if( "video_disponible" in memberData && memberData.video_disponible != null )             _canWatchVideo = Boolean(memberData.video_disponible);
+			if( "id_membre" in memberData && memberData.id_membre != null )                  _id = int(memberData.id_membre);
+			if( "mail" in memberData && memberData.mail != null )                            _mail = String(memberData.mail);
+			if( "mdp" in memberData && memberData.mdp != null )                              _password = String(memberData.mdp);
+			if( "pseudo" in memberData && memberData.pseudo != null )                        _pseudo = String(memberData.pseudo);
+			if( "date_naissance" in memberData && memberData.date_naissance != null )        _birthDate = String(memberData.date_naissance);
+			if( "sexe" in memberData && memberData.sexe != null )                            _title = String(memberData.sexe);
+			if( "credits" in memberData && memberData.credits != null )                      _credits = int(memberData.credits);
+			if( "jetons" in memberData && memberData.jetons != null )                        _numTokens = int(memberData.jetons);
+			if( "score_cumule" in memberData && memberData.score_cumule != null )            _cumulatedStars = int(memberData.score_cumule);
+			if( "points" in memberData && memberData.points != null )                        _points = int(memberData.points);
+			if( "rang" in memberData && memberData.rang != null )                            _rank = int(memberData.rang);
+			if( "id_facebook" in memberData && memberData.id_facebook != null )              _facebookId = Number(memberData.id_facebook);
+			if( "nb_credit_acheter" in memberData && memberData.nb_credit_acheter != null )  _numCreditsBought = int(memberData.nb_credit_acheter);
+			if( "date_jetons" in memberData && memberData.date_jetons != null )              _updateDate = String(memberData.date_jetons);
+			if( "id_pays_pseudo" in memberData && memberData.id_pays_pseudo != null )        _countryId = int(memberData.id_pays_pseudo);
+			if( "jetons_quotidiens" in memberData && memberData.jetons_quotidiens != null )  _totalTokensADay = int(memberData.jetons_quotidiens);
+			if( "video_disponible" in memberData && memberData.video_disponible != null )    _canWatchVideo = Boolean(memberData.video_disponible);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
 		
@@ -188,11 +189,11 @@ package com.ludofactory.mobile.core.manager
 		public function get title():String { return _title; }
 		public function set title(val:String):void { _title = val; }
 		
-		public function get numFreeGameSessions():int { return _numFreeGameSessions; }
-		public function set numFreeGameSessions(val:int):void { _numFreeGameSessions = val; }
+		public function get numTokens():int { return _numTokens; }
+		public function set numTokens(val:int):void { _numTokens = val; }
 		
-		public function get numFreeGameSessionsTotal():int { return _numFreeGameSessionsTotal; }
-		public function set numFreeGameSessionsTotal(val:int):void { _numFreeGameSessionsTotal = val; }
+		public function get totalTokensADay():int { return _totalTokensADay; }
+		public function set totalTokensADay(val:int):void { _totalTokensADay = val; }
 		
 		public function get credits():int { return _credits; }
 		public function set credits(val:int):void { _credits = val; }
