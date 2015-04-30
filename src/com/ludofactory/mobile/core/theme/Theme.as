@@ -1,6 +1,7 @@
 package com.ludofactory.mobile.core.theme
 {
 	
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -122,8 +123,8 @@ package com.ludofactory.mobile.core.theme
 		
 		private function getReductionRatio():void
 		{
-			SCREEN_X = Capabilities.screenResolutionX;
-			SCREEN_Y = Capabilities.screenResolutionY;
+			SCREEN_X = Capabilities.screenResolutionX; // mauvaise résolution dans le simulateur
+			SCREEN_Y = Capabilities.screenResolutionY; // mauvaise résolution dans le simulateur
 			var ratioX:Number = SCREEN_X / (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE);
 			var ratioY:Number = SCREEN_Y / (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE);
 			
@@ -255,10 +256,14 @@ package com.ludofactory.mobile.core.theme
 					this._originalDPI = ORIGINAL_DPI_IPHONE_RETINA;
 				}
 			}
+			
 			this.scaleFactor = GlobalConfig.dpiScale = scaledDPI / this._originalDPI;
+			if(GlobalConfig.deviceId != "simulator")
+			{
+				getReductionRatio();
+				this.scaleFactor = GlobalConfig.dpiScale = (REDUCTION_RATIO + GlobalConfig.dpiScale) / 2; // moyenne des deux calculés (plus précis ?)
+			}
 			//this.stageTextScale = this.scaleFactor / nativeScaleFactor; // TODO A remettre ?
-			getReductionRatio();
-			this.scaleFactor = GlobalConfig.dpiScale = (REDUCTION_RATIO + GlobalConfig.dpiScale) / 2; // moyenne des deux calculés (plus précis ?)
 		}
 		
 		public static var baseLabelTextFormat:TextFormat;
@@ -565,6 +570,9 @@ package com.ludofactory.mobile.core.theme
 			
 		}
 		
+		/**
+		 * Initializes the particles
+		 */
 		protected function initializeParticles():void
 		{
 			var fileStream:FileStream = new FileStream();
