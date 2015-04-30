@@ -3,11 +3,11 @@
  */
 package com.ludofactory.mobile.core.notification
 {
-
+	
 	import com.greensock.TweenMax;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-
+	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.display.Quad;
@@ -15,7 +15,7 @@ package com.ludofactory.mobile.core.notification
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-
+	
 	public class NotificationPopupManager
 	{
 		/**

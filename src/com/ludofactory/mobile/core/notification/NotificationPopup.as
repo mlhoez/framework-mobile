@@ -6,23 +6,22 @@ Created : 2 déc. 2013
 */
 package com.ludofactory.mobile.core.notification
 {
-
+	
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Elastic;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-
+	
 	import feathers.core.FeathersControl;
 	import feathers.display.Scale9Image;
 	import feathers.display.TiledImage;
-
+	
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-
+	
 	/**
 	 * The pop up used to display a popup content.
 	 */	
@@ -291,6 +290,9 @@ package com.ludofactory.mobile.core.notification
 			if( _content )
 			{
 				addChild(_content);
+				
+				validate(); // otherwise the reported _frontSkin.width/height is wrong
+				
 				_content.width = _frontSkin.width * 0.9;
 				_content.height = _frontSkin.height * 0.85;
 				_content.alignPivot();

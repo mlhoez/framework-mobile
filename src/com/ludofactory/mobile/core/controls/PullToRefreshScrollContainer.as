@@ -6,29 +6,29 @@ Created : 27 août 2013
 */
 package com.ludofactory.mobile.core.controls
 {
-
+	
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Power1;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	
 	import feathers.controls.Label;
 	import feathers.controls.ScrollContainer;
 	import feathers.layout.VerticalLayout;
-
+	
 	import flash.text.TextFormat;
-
+	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
 	import starling.utils.deg2rad;
-
+	
 	public class PullToRefreshScrollContainer extends ScrollContainer
 	{
 		/**
