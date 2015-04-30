@@ -6,21 +6,15 @@ Created : 11 Avril 2013
 */
 package com.ludofactory.mobile.navigation.home
 {
-
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.AbstractGame;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
@@ -28,13 +22,13 @@ package com.ludofactory.mobile.navigation.home
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
-
+	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
-
+	
 	import starling.display.Image;
 	import starling.events.Event;
-
+	
 	/**
 	 * The application's home screen.
 	 */	
@@ -152,7 +146,7 @@ package com.ludofactory.mobile.navigation.home
 					var gap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
 					var padding:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
 				
-				var buttonHeight:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 128) : 128);
+				var buttonHeight:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 148) : 128);
 					
 					_giftsButton.validate();
 					var logoMaxHeight:int = hheight - (buttonHeight + _giftsButton.height + (padding * 2) + (gap * 2));
@@ -171,7 +165,7 @@ package com.ludofactory.mobile.navigation.home
 				if( _gameCenterButton )
 					_gameCenterButton.validate();
 				
-					_playButton.width = _logo.width * 0.9 - ((GlobalConfig.ios && GameCenterManager.available) ? _gameCenterButton.width : 0 );
+					_playButton.width = _logo.width * (GlobalConfig.isPhone ? 0.9 : 0.8) - ((GlobalConfig.ios && GameCenterManager.available) ? _gameCenterButton.width : 0 );
 					_playButton.x = roundUp((actualWidth - _playButton.width - ((GlobalConfig.ios && GameCenterManager.available) ? _gameCenterButton.width : 0 )) * 0.5);
 					_playButton.y = _logo.y + _logo.height + gap;
 					_playButton.height = buttonHeight;
@@ -185,7 +179,7 @@ package com.ludofactory.mobile.navigation.home
 					_gameCenterButton.y = _playButton.y;
 				}
 				
-					_giftsButton.width = _logo.width * 0.8;
+					_giftsButton.width = _logo.width * (GlobalConfig.isPhone ? 0.8 : 0.7);
 					_giftsButton.x = roundUp((actualWidth - _giftsButton.width) * 0.5);
 					_giftsButton.y = _playButton.y + _playButton.height + gap;
 				
