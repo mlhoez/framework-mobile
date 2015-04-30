@@ -6,24 +6,25 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.navigation.game
 {
-
+	
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	
 	import feathers.controls.LayoutGroup;
 	import feathers.core.FeathersControl;
 	import feathers.display.Scale9Image;
-
+	
 	import flash.geom.Point;
-
+	
 	import starling.display.Image;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
-
+	
 	public class StakeButton extends FeathersControl
 	{
 		/**
@@ -82,10 +83,9 @@ package com.ludofactory.mobile.navigation.game
 			_container.addChild(_backgroundSkin);
 			
 			_icon = new Image( AbstractEntryPoint.assets.getTexture("GameTypeSelectionPointsIcon") );
-			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale;
 			_container.addChild(_icon);
 
-			_label = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(42), 0x002432);
+			_label = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 42 : 60), 0x002432);
 			_label.autoScale = true;
 			_container.addChild(_label);
 			
@@ -99,6 +99,7 @@ package com.ludofactory.mobile.navigation.game
 			_backgroundSkin.width = this.actualWidth;
 			_backgroundSkin.height = this.actualHeight;
 
+			_icon.scaleX = _icon.scaleY = Utilities.getScaleToFillHeight(_icon.height, actualHeight * 0.8);
 			_icon.x = scaleAndRoundToDpi(40);
 			_icon.y = (this.actualHeight - _icon.height) * 0.5;
 

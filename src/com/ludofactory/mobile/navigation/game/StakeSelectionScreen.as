@@ -95,8 +95,13 @@ package com.ludofactory.mobile.navigation.game
 			{
 				if( AbstractGameInfo.LANDSCAPE )
 				{
+					var buttonGap:int = scaleAndRoundToDpi(30);
+					
 					_title.width = actualWidth;
 					_title.validate();
+					
+					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 70 : 140);
+					if( _withPoints ) _withPoints.height = _withTokens.height;
 					
 					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.45);
 					if( _withPoints ) _withPoints.width = _withTokens.width;
