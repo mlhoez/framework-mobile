@@ -39,13 +39,13 @@ package com.ludofactory.mobile.core.purchases
 	{
 		/**
 		 * Flox only : for logging purpose when a purchase is cancelled. */		
-		private static const PURCHASE_TYPE_CANCELLED:String = "Annule"
+		private static const PURCHASE_TYPE_CANCELLED:String = "Annule";
 		/**
 		 * Flox only : for logging purpose when a purchase is validated. */		
-		private static const PURCHASE_TYPE_SUCCEED:String = "Valide"
+		private static const PURCHASE_TYPE_SUCCEED:String = "Valide";
 		/**
 		 * Flox only : for logging purpose when a purchase has failed. */		
-		private static const PURCHASE_TYPE_FAILED:String = "Echec"
+		private static const PURCHASE_TYPE_FAILED:String = "Echec";
 		
 		/**
 		 * Whether the user can make purchases : if the store is available on this

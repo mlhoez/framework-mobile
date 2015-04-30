@@ -100,12 +100,13 @@ package com.ludofactory.mobile.core
 		{
 			var filePath:String;
 			var isPortraitOnly:Boolean = false;
+			var isCurrentlyPortrait:Boolean;
 			if(Capabilities.manufacturer.indexOf("iOS") >= 0)
 			{
 				if(Capabilities.screenResolutionX == 1536 && Capabilities.screenResolutionY == 2048)
 				{
 					// iPad retina
-					var isCurrentlyPortrait:Boolean = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
+					isCurrentlyPortrait = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
 					filePath = isCurrentlyPortrait ? "Default-Portrait@2x.png" : "Default-Landscape@2x.png";
 				}
 				else if(Capabilities.screenResolutionX == 768 && Capabilities.screenResolutionY == 1024)
