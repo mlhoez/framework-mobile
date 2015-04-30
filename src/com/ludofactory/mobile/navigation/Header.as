@@ -258,7 +258,8 @@ package com.ludofactory.mobile.navigation
 			if( numChanges > 1 )
 				sourceName = "header-alert-icon";
 			
-			_alertIcon.texture = AbstractEntryPoint.assets.getTexture(sourceName);
+			if( sourceName )
+				_alertIcon.texture = AbstractEntryPoint.assets.getTexture(sourceName);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
