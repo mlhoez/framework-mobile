@@ -1,5 +1,5 @@
 /*
-Copyright © 2006-2014 Ludo Factory
+Copyright © 2006-2015 Ludo Factory
 Framework mobile
 Author  : Maxime Lhoez
 Created : 22 août 2013
@@ -253,7 +253,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 		
 		/**
 		 * If the shop is not available, we need to redirect the user to
-		 * the onine shop of Ludokado / Copyright © 2006-2014 Ludo Factory.
+		 * the onine shop of Ludokado / Copyright © 2006-2015 Ludo Factory.
 		 */		
 		private function onGoOnlineShop(event:starling.events.Event):void
 		{

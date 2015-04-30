@@ -3,7 +3,7 @@
 # !!! ARCHIVE CAR INUTILISE MAINTENANT !!!
 
 # -------------------------------------------
-# Copyright © 2006-2014 Ludo Factory
+# Copyright © 2006-2015 Ludo Factory
 # Framework mobile
 # Author  : Maxime Lhoez
 # Created : 9 avril 2013
