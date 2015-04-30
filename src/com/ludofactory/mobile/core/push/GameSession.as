@@ -7,7 +7,7 @@ package com.ludofactory.mobile.core.push
 		public static const TYPE_SOLO:String = "solo";
 		public static const TYPE_TOURNAMENT:String = "tournoi";
 		
-		public static const PRICE_FREE:String = "gratuit";
+		public static const PRICE_FREE:String = "jeton";
 		public static const PRICE_CREDIT:String = "credit";
 		public static const PRICE_POINT:String = "point";
 		
