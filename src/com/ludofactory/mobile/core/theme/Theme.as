@@ -694,9 +694,6 @@ package com.ludofactory.mobile.core.theme
 			// MenuItemRenderer
 			getStyleProviderForClass(MenuItemRenderer).defaultStyleFunction = menuItemRendererInitializer;
 			
-			// CSThreadItemRenderer
-			getStyleProviderForClass(CSThreadItemRenderer).defaultStyleFunction = customerServiceThreadItemRendererInitializer;
-			
 			// AdTournamentItemRenderer
 			getStyleProviderForClass(AdTournamentItemRenderer).defaultStyleFunction = adTournamentItemRendererInitializer;
 			
@@ -2070,22 +2067,11 @@ package com.ludofactory.mobile.core.theme
 //
 //------------------------------------------------------------------------------------------------------------
 		
-		protected var customerServiceThreadBackgroundSkinTextures:Scale9Textures;
+		public static var customerServiceThreadBackgroundSkinTextures:Scale9Textures;
 		protected static const CUSTOMER_SERVICE_BACKGROUND_CONTAINER_GRID:Rectangle = new Rectangle(25, 50, 10, 20);
 		
-		protected var customerServiceDefaultAvatarTexture:Texture;
-		protected var customerServiceDefaultUserAvatarTexture:Texture;
-		
-		protected function customerServiceThreadItemRendererInitializer(renderer:CSThreadItemRenderer):void
-		{
-			renderer.messageBackground = new Scale9Image(customerServiceThreadBackgroundSkinTextures, scaleFactor);
-			renderer.csDefaultTexture = customerServiceDefaultAvatarTexture;
-			renderer.csDefaultUserTexture = customerServiceDefaultUserAvatarTexture;
-			renderer.minItemHeight = 150 * scaleFactor;
-			renderer.stripeHeight = 90 * scaleFactor;
-			renderer.paddingMessageTop = renderer.paddingMessageBottom = 20 * scaleFactor;
-			renderer.paddingMessageLeft = renderer.paddingMessageRight = 40 * scaleFactor;
-		}
+		public static var customerServiceDefaultAvatarTexture:Texture;
+		public static var customerServiceDefaultUserAvatarTexture:Texture;
 		
 //------------------------------------------------------------------------------------------------------------
 //

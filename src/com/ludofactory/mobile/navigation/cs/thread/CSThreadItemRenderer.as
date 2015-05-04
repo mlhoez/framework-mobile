@@ -6,28 +6,26 @@ Created : 25 août 2013
 */
 package com.ludofactory.mobile.navigation.cs.thread
 {
+	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.controls.ImageLoaderCache;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.ImageLoaderCache;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
+	import feathers.controls.Label;
+	import feathers.controls.List;
+	import feathers.controls.renderers.IListItemRenderer;
+	import feathers.core.FeathersControl;
+	import feathers.display.Scale9Image;
 	import feathers.skins.IStyleProvider;
 	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
-	import feathers.controls.Label;
-	import feathers.controls.List;
-	import feathers.controls.renderers.IListItemRenderer;
-	import feathers.controls.text.TextBlockTextRenderer;
-	import feathers.core.FeathersControl;
-	import feathers.display.Scale9Image;
-	
 	import starling.display.Quad;
 	import starling.display.QuadBatch;
 	import starling.events.Event;
-	import starling.textures.Texture;
 	
 	/**
 	 * Custom item renderer used in the CSThreadScreen to display
@@ -100,6 +98,11 @@ package com.ludofactory.mobile.navigation.cs.thread
 			
 			_lineHeight = scaleAndRoundToDpi(2);
 			
+			_minItemHeight = scaleAndRoundToDpi(150);
+			_stripeHeight = scaleAndRoundToDpi(90);
+			_paddingMessageTop = _paddingMessageBottom = scaleAndRoundToDpi(20);
+			_paddingMessageLeft = _paddingMessageRight = scaleAndRoundToDpi(40);
+			
 			_gradient = new Quad(this.width, _minItemHeight, 0xffffff);
 			_gradient.setVertexColor(3, 0xeeeeee);
 			_gradient.setVertexColor(2, 0xfafafa);
@@ -128,6 +131,7 @@ package com.ludofactory.mobile.navigation.cs.thread
 			quad.setVertexAlpha(3, 0);
 			_stripe.addQuad(quad);
 			
+			_messageBackground = new Scale9Image(Theme.customerServiceThreadBackgroundSkinTextures, GlobalConfig.dpiScale);
 			addChild(_messageBackground);
 			
 			_picture = new ImageLoaderCache();
@@ -197,9 +201,9 @@ package com.ludofactory.mobile.navigation.cs.thread
 					// small - normal - large - square
 					// FIXME Intégrer ça plutôt : "https://graph.facebook.com/" + _facebookId + "/picture?type=large&width=" + int(actualHeight * 0.8) + "&height=" + int(actualHeight * 0.8);
 					if( !_data.incoming )
-						_picture.source = MemberManager.getInstance().getFacebookId() != 0 ? ("https://graph.facebook.com/" + MemberManager.getInstance().getFacebookId() + "/picture?type=square") : _csDefaultUserTexture;
+						_picture.source = MemberManager.getInstance().getFacebookId() != 0 ? ("https://graph.facebook.com/" + MemberManager.getInstance().getFacebookId() + "/picture?type=square") : Theme.customerServiceDefaultUserAvatarTexture;
 					else
-						_picture.source = _csDefaultTexture;
+						_picture.source = Theme.customerServiceDefaultAvatarTexture;
 				}
 				else
 				{
@@ -341,55 +345,6 @@ package com.ludofactory.mobile.navigation.cs.thread
 			this._isSelected = value;
 			this.invalidate(INVALIDATION_FLAG_SELECTED);
 			this.dispatchEventWith(Event.CHANGE);
-		}
-		
-		public function set messageBackground(val:Scale9Image):void
-		{
-			_messageBackground = val;
-		}
-		
-		public function set minItemHeight(val:int):void
-		{
-			_minItemHeight = val;
-		}
-		
-		public function set stripeHeight(val:int):void
-		{
-			_stripeHeight = val;
-		}
-		
-		public function set paddingMessageLeft(val:int):void
-		{
-			_paddingMessageLeft = val;
-		}
-		
-		public function set paddingMessageRight(val:int):void
-		{
-			_paddingMessageRight = val;
-		}
-		
-		public function set paddingMessageTop(val:int):void
-		{
-			_paddingMessageTop = val;
-		}
-		
-		public function set paddingMessageBottom(val:int):void
-		{
-			_paddingMessageBottom = val;
-		}
-		
-		private var _csDefaultTexture:Texture;
-		
-		public function set csDefaultTexture(val:Texture):void
-		{
-			_csDefaultTexture = val;
-		}
-		
-		private var _csDefaultUserTexture:Texture;
-		
-		public function set csDefaultUserTexture(val:Texture):void
-		{
-			_csDefaultUserTexture = val;
 		}
 		
 		/**
