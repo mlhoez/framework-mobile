@@ -556,7 +556,7 @@ package com.ludofactory.mobile.navigation.highscore
 		 */		
 		private function connectFacebook():void
 		{
-			_retryContainer.message = _("Vous ne pouvez pas afficher le contenu de cette page car vous n'êtes pas connecté à Internet.");;
+			_retryContainer.message = _("Vous ne pouvez pas afficher le contenu de cette page car vous n'êtes pas connecté à Internet.");
 			_retryContainer.singleMessageMode = false;
 			
 			if( MemberManager.getInstance().isLoggedIn() )
