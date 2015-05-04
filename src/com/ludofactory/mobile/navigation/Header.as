@@ -26,7 +26,7 @@ package com.ludofactory.mobile.navigation
 	import starling.text.TextField;
 	
 	/**
-	 * Application's header.
+	 * Application header.
 	 */	
 	public class Header extends Sprite
 	{
@@ -73,6 +73,7 @@ package com.ludofactory.mobile.navigation
 			this.visible = false;
 			
 			_background = new Image( AbstractEntryPoint.assets.getTexture("header-background-skin") );
+			_background.scaleX = _background.scaleY = GlobalConfig.dpiScale;
 			_background.touchable = false;
 			_background.visible = false;
 			_background.alpha = 0;
