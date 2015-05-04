@@ -175,6 +175,7 @@ package com.ludofactory.mobile.navigation.news
 				formattedNews.push( new NewsData( news[i] ) );
 			
 			_gamesList.dataProvider = new ListCollection( formattedNews );
+			_gamesList.validate();
 			
 			var len:int = (_gamesList.viewPort as ListDataViewPort).numChildren;
 			var gameItemRenderer:NewsItemRenderer;
