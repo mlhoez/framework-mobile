@@ -6,7 +6,7 @@ Created : 7 mars 2014
 */
 package com.ludofactory.mobile.core
 {
-
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.freshplanet.nativeExtensions.PushNotificationEvent;
@@ -85,10 +85,10 @@ package com.ludofactory.mobile.core
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceInfo;
 	import com.vidcoin.vidcoincontroller.VidCoinController;
-
+	
 	import eu.alebianco.air.extensions.analytics.Analytics;
 	import eu.alebianco.air.extensions.analytics.api.ITracker;
-
+	
 	import feathers.controls.Drawers;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.ProgressBar;
@@ -97,11 +97,11 @@ package com.ludofactory.mobile.core
 	import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 	import feathers.system.DeviceCapabilities;
 	import feathers.textures.Scale9Textures;
-
+	
 	import flash.filesystem.File;
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
-
+	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -110,7 +110,7 @@ package com.ludofactory.mobile.core
 	import starling.textures.Texture;
 	import starling.utils.AssetManager;
 	import starling.utils.deg2rad;
-
+	
 	/**
 	 * The Root class is the topmost display object in the game. It loads all the assets.
 	 * Keep this class rather lightweight : it controls the high level behaviour of the game.

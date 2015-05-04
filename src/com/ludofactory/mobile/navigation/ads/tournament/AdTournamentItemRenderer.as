@@ -13,6 +13,8 @@ package com.ludofactory.mobile.navigation.ads.tournament
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
+	import feathers.skins.IStyleProvider;
+	
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextFormat;
 	
@@ -365,6 +367,14 @@ package com.ludofactory.mobile.navigation.ads.tournament
 		public function set thirdTextFormat(val:TextFormat):void
 		{
 			_thirdTextFormat = val;
+		}
+		
+		/**
+		 * Required for the new Theme. */
+		public static var globalStyleProvider:IStyleProvider;
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return AdTournamentItemRenderer.globalStyleProvider;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -12,6 +12,8 @@ package com.ludofactory.mobile.navigation.cs.thread
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
+	import feathers.skins.IStyleProvider;
+	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
@@ -388,6 +390,14 @@ package com.ludofactory.mobile.navigation.cs.thread
 		public function set csDefaultUserTexture(val:Texture):void
 		{
 			_csDefaultUserTexture = val;
+		}
+		
+		/**
+		 * Required for the new Theme. */
+		public static var globalStyleProvider:IStyleProvider;
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return CSThreadItemRenderer.globalStyleProvider;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

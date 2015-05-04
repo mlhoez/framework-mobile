@@ -18,6 +18,7 @@ package com.ludofactory.mobile.navigation.menu
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.controls.ScrollContainer;
+	import feathers.skins.IStyleProvider;
 	
 	import starling.display.Quad;
 	import starling.display.QuadBatch;
@@ -201,6 +202,14 @@ package com.ludofactory.mobile.navigation.menu
 		public function set stripeThickness(val:int):void
 		{
 			_stripeThickness = val;
+		}
+		
+		/**
+		 * Required for the new Theme. */
+		public static var globalStyleProvider:IStyleProvider;
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return MenuItemRenderer.globalStyleProvider;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

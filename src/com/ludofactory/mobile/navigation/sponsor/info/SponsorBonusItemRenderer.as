@@ -14,6 +14,8 @@ package com.ludofactory.mobile.navigation.sponsor.info
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	
+	import feathers.skins.IStyleProvider;
+	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
@@ -259,6 +261,14 @@ package com.ludofactory.mobile.navigation.sponsor.info
 			}
 			this._index = value;
 			this.invalidate(INVALIDATION_FLAG_DATA);
+		}
+		
+		/**
+		 * Required for the new Theme. */
+		public static var globalStyleProvider:IStyleProvider;
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return SponsorBonusItemRenderer.globalStyleProvider;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

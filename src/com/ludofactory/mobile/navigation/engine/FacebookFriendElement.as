@@ -13,6 +13,8 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	
+	import feathers.skins.IStyleProvider;
+	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
@@ -199,6 +201,14 @@ package com.ludofactory.mobile.navigation.engine
 		public function getUpValue():String
 		{
 			return (_previousRank - _currentRank) < 0 ? ("" + (_previousRank - _currentRank)) : ("+" + (_previousRank - _currentRank));
+		}
+		
+		/**
+		 * Required for the new Theme. */
+		public static var globalStyleProvider:IStyleProvider;
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return FacebookFriendElement.globalStyleProvider;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

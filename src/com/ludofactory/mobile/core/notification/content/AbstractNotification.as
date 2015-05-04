@@ -16,6 +16,7 @@ package com.ludofactory.mobile.core.notification.content
 	import feathers.controls.Scroller;
 	import feathers.display.Scale3Image;
 	import feathers.display.Scale9Image;
+	import feathers.skins.IStyleProvider;
 	
 	import starling.display.Button;
 	import starling.display.Quad;
@@ -235,5 +236,13 @@ package com.ludofactory.mobile.core.notification.content
 		
 		public function set bottomRightDecoration(val:Scale3Image):void { _bottomRightDecoration = val; }
 		public function get bottomRightDecoration():Scale3Image { return _bottomRightDecoration; }
+		
+		/**
+		 * Required for the new Theme. */
+		public static var globalStyleProvider:IStyleProvider;
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return AbstractNotification.globalStyleProvider;
+		}
 	}
 }

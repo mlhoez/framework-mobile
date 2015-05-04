@@ -6,24 +6,26 @@ Created : 25 oct. 2013
 */
 package com.ludofactory.mobile.navigation.store
 {
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AbstractListItemRenderer;
 	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.filters.DropShadowFilter;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
 	import feathers.display.Scale3Image;
 	import feathers.display.Scale9Image;
+	import feathers.skins.IStyleProvider;
+	
+	import flash.filters.DropShadowFilter;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.display.Image;
 	import starling.utils.formatString;
@@ -63,6 +65,12 @@ package com.ludofactory.mobile.navigation.store
 		
 		override protected function initialize():void
 		{
+			_paddingLeft = scaleAndRoundToDpi(18);
+			_paddingRight = scaleAndRoundToDpi(18);
+			_paddingBottom = scaleAndRoundToDpi(20);
+			_headerHeight = scaleAndRoundToDpi(54);
+			
+			_backgroundSkin = new Scale9Image(Theme.storeBackgroundSkinTextures, GlobalConfig.dpiScale);
 			addChild( _backgroundSkin );
 			
 			_gainLabel = new Label();
@@ -80,9 +88,11 @@ package com.ludofactory.mobile.navigation.store
 			_priceButton.styleName = Theme.BUTTON_GREEN;
 			addChild(_priceButton);
 			
+			_topOfferImage =  new Scale3Image(Theme.storeTopOfferTexture, GlobalConfig.dpiScale);
 			addChild(_topOfferImage);
 			_topOfferImage.visible = false;
 			
+			_playersChoiceImage = new Scale3Image(Theme.storePlayersChoiceTexture, GlobalConfig.dpiScale);
 			addChild(_playersChoiceImage);
 			_playersChoiceImage.visible = false;
 			
@@ -266,6 +276,14 @@ package com.ludofactory.mobile.navigation.store
 		public function set headerHeight(val:int):void
 		{
 			_headerHeight = val;
+		}
+		
+		/**
+		 * Required for the new Theme. */
+		public static var globalStyleProvider:IStyleProvider;
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return StoreItemRenderer.globalStyleProvider;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -31,6 +31,8 @@ package com.ludofactory.mobile.navigation.alert
 	import com.ludofactory.mobile.core.push.PushType;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
+	import feathers.skins.IStyleProvider;
+	
 	import flash.geom.Point;
 	import flash.text.TextFormat;
 	
@@ -109,6 +111,11 @@ package com.ludofactory.mobile.navigation.alert
 		override protected function initialize():void
 		{
 			super.initialize();
+			
+			_minItemHeight = scaleAndRoundToDpi(100);
+			_gap = scaleAndRoundToDpi(10);
+			_paddingMessageTop = _paddingMessageBottom = scaleAndRoundToDpi(20);
+			_paddingMessageLeft = _paddingMessageRight = scaleAndRoundToDpi(20);
 			
 			this.width = _savedWidth = GlobalConfig.stageWidth * (AbstractGameInfo.LANDSCAPE ? 0.6 : 0.8);
 			this.height = _minItemHeight;
@@ -547,6 +554,14 @@ package com.ludofactory.mobile.navigation.alert
 				}
 			}
 			HELPER_TOUCHES_VECTOR.length = 0;
+		}
+		
+		/**
+		 * Required for the new Theme. */
+		public static var globalStyleProvider:IStyleProvider;
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return AlertItemRenderer.globalStyleProvider;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

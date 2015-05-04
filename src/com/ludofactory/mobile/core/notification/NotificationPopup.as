@@ -11,7 +11,9 @@ package com.ludofactory.mobile.core.notification
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Elastic;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.core.FeathersControl;
 	import feathers.display.Scale9Image;
@@ -93,16 +95,43 @@ package com.ludofactory.mobile.core.notification
 		{
 			super.initialize();
 			
-			_backgroundSkin.useSeparateBatch = false;
-			_frontSkin.useSeparateBatch = false;
-			_tiledBackground.useSeparateBatch = false;
+			_shadowThickness = scaleAndRoundToDpi(10);
+			_buttonAdjustment = scaleAndRoundToDpi(23);
 			
+			_backgroundSkin = new Scale9Image(Theme.gameModeSelectionBackgroundTextures, GlobalConfig.dpiScale);
+			_backgroundSkin.useSeparateBatch = false;
 			addChild(_backgroundSkin);
+			
+			_topLeftDecoration = new Image(Theme.topLeftLeavesTexture);
+			_topLeftDecoration.pivotX = _topLeftDecoration.width * 0.35;
+			_topLeftDecoration.pivotY = _topLeftDecoration.height * 0.35;
+			_topLeftDecoration.scaleX = _topLeftDecoration.scaleY = GlobalConfig.dpiScale;
 			addChild(_topLeftDecoration);
+			
+			_bottomLeftDecoration = new Image(Theme.bottomLeftLeavesTexture);
+			_bottomLeftDecoration.pivotX = _bottomLeftDecoration.width * 0.35;
+			_bottomLeftDecoration.pivotY = _bottomLeftDecoration.height * 0.6;
+			_bottomLeftDecoration.scaleX = _bottomLeftDecoration.scaleY = GlobalConfig.dpiScale;
 			addChild(_bottomLeftDecoration);
+			
+			_bottomMiddleDecoration = new Image(Theme.bottomMiddleLeavesTexture);
+			_bottomMiddleDecoration.pivotX = _bottomMiddleDecoration.width * 0.5;
+			_bottomMiddleDecoration.pivotY = _bottomMiddleDecoration.height * 0.6;
+			_bottomMiddleDecoration.scaleX = _bottomMiddleDecoration.scaleY = GlobalConfig.dpiScale;
 			addChild(_bottomMiddleDecoration);
+			
+			_bottomRightDecoration = new Image(Theme.bottomRightLeavesTexture);
+			_bottomRightDecoration.pivotX = _bottomRightDecoration.width * 0.6;
+			_bottomRightDecoration.pivotY = _bottomRightDecoration.height * 0.6;
+			_bottomRightDecoration.scaleX = _bottomRightDecoration.scaleY = GlobalConfig.dpiScale;
 			addChild(_bottomRightDecoration);
+			
+			_frontSkin = new Scale9Image(Theme.gameModeSelectionFrontTextures, GlobalConfig.dpiScale);
+			_frontSkin.useSeparateBatch = false;
 			addChild(_frontSkin);
+			
+			_tiledBackground = new TiledImage(Theme.gameModeSelectionTileTexture, GlobalConfig.dpiScale);
+			_tiledBackground.useSeparateBatch = false;
 			addChild(_tiledBackground);
 			
 			_closeQuad = new Quad(scaleAndRoundToDpi(100), scaleAndRoundToDpi(100));
@@ -168,7 +197,7 @@ package com.ludofactory.mobile.core.notification
 				_bottomRightLeavesSaveX = _bottomRightDecoration.x = int(_frontSkin.x - _shadowThickness - _buttonAdjustment + halfWidth - _offset);
 				_bottomRightLeavesSaveY = _bottomRightDecoration.y = int(_frontSkin.y - _shadowThickness + halfHeight - _offset);
 
-				_closeQuad.x = _backgroundSkin.width - _closeQuad.width
+				_closeQuad.x = _backgroundSkin.width - _closeQuad.width;
 
 				_backgroundSkin.scaleX = _backgroundSkin.scaleY = 0;
 				_frontSkin.scaleX = _frontSkin.scaleY = 0;
@@ -305,24 +334,6 @@ package com.ludofactory.mobile.core.notification
 		}
 		
 		public function set backgroundSkin(val:Scale9Image):void { _backgroundSkin = val; }
-		public function set frontSkin(val:Scale9Image):void { _frontSkin = val; }
-		public function set tiledBackground(val:TiledImage):void { _tiledBackground = val; }
-		
-		public function get topLeftDecoration():Image { return _topLeftDecoration; }
-		public function set topLeftDecoration(val:Image):void { _topLeftDecoration = val; }
-		
-		public function get bottomLeftDecoration():Image { return _bottomLeftDecoration; }
-		public function set bottomLeftDecoration(val:Image):void { _bottomLeftDecoration = val; }
-		
-		public function get bottomMiddleDecoration():Image { return _bottomMiddleDecoration; }
-		public function set bottomMiddleDecoration(val:Image):void { _bottomMiddleDecoration = val; }
-		
-		public function get bottomRightDecoration():Image { return _bottomRightDecoration; }
-		public function set bottomRightDecoration(val:Image):void { _bottomRightDecoration = val; }
-		
-		public function set shadowThickness(val:Number):void { _shadowThickness = val; }
-		
-		public function set buttonAdjustment(val:Number):void { _buttonAdjustment = val; }
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose

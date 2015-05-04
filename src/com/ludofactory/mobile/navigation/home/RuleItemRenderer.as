@@ -12,6 +12,8 @@ package com.ludofactory.mobile.navigation.home
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
+	import feathers.skins.IStyleProvider;
+	
 	import flash.text.TextFormat;
 	
 	import feathers.controls.ImageLoader;
@@ -377,6 +379,14 @@ package com.ludofactory.mobile.navigation.home
 		public function set ruleTextFormat(val:TextFormat):void
 		{
 			_ruleTextFormat = val;
+		}
+		
+		/**
+		 * Required for the new Theme. */
+		public static var globalStyleProvider:IStyleProvider;
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return RuleItemRenderer.globalStyleProvider;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

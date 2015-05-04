@@ -32,6 +32,7 @@ package com.ludofactory.mobile.core.controls
 		public function BadgedButton()
 		{
 			super();
+			styleProvider = null;
 		}
 		
 		override protected function initialize():void

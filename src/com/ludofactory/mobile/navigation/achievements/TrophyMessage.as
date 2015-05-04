@@ -11,6 +11,8 @@ package com.ludofactory.mobile.navigation.achievements
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
+	import feathers.skins.IStyleProvider;
+	
 	import flash.text.TextFormat;
 	
 	import feathers.controls.ImageLoader;
@@ -141,6 +143,14 @@ package com.ludofactory.mobile.navigation.achievements
 		public function set textFormatGain(val:TextFormat):void
 		{
 			_textFormatGain = val;
+		}
+		
+		/**
+		 * Required for the new Theme. */
+		public static var globalStyleProvider:IStyleProvider;
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return TrophyMessage.globalStyleProvider;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

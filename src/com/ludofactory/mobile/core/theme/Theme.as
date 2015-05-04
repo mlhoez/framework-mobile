@@ -5,14 +5,12 @@ package com.ludofactory.mobile.core.theme
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.notification.NotificationPopup;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.navigation.achievements.TrophyMessage;
 	import com.ludofactory.mobile.navigation.ads.tournament.AdTournamentItemRenderer;
 	import com.ludofactory.mobile.navigation.alert.AlertItemRenderer;
 	import com.ludofactory.mobile.navigation.cs.thread.CSThreadItemRenderer;
 	import com.ludofactory.mobile.navigation.engine.FacebookFriendElement;
-	import com.ludofactory.mobile.navigation.game.GameModeSelectionPopup;
 	import com.ludofactory.mobile.navigation.home.RuleItemRenderer;
 	import com.ludofactory.mobile.navigation.menu.MenuItemRenderer;
 	import com.ludofactory.mobile.navigation.sponsor.info.SponsorBonusItemRenderer;
@@ -47,7 +45,6 @@ package com.ludofactory.mobile.core.theme
 	import feathers.core.PopUpManager;
 	import feathers.display.Scale3Image;
 	import feathers.display.Scale9Image;
-	import feathers.display.TiledImage;
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
 	import feathers.skins.SmartDisplayObjectStateValueSelector;
@@ -70,6 +67,7 @@ package com.ludofactory.mobile.core.theme
 	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Quad;
+	import starling.events.Event;
 	import starling.textures.Texture;
 	
 	public class Theme extends StyleNameFunctionTheme
@@ -227,8 +225,10 @@ package com.ludofactory.mobile.core.theme
 		
 		public function Theme(scaleToDPI:Boolean = true)
 		{
+			super();
 			this._scaleToDPI = scaleToDPI;
 			this.initialize();
+			this.dispatchEventWith(Event.COMPLETE);
 		}
 		
 		/**
@@ -241,16 +241,9 @@ package com.ludofactory.mobile.core.theme
 			initializeFonts();
 			initializeTextures();
 			initializeTexturesNew();
-			
 			initializeParticles();
 			initializeGlobals();
-			setInitializers();
-			
-			// TODO A checker
-			setInitializerForClass(Button, nothingInitializer, SimpleScrollBar.DEFAULT_CHILD_NAME_THUMB);
-			this.setInitializerForClass(List, nothingInitializer, PickerList.DEFAULT_CHILD_NAME_LIST);
-			this.setInitializerForClassAndSubclasses(ScrollText, scrollTextListInitializer);
-			this.setInitializerForClassAndSubclasses(GroupedList, groupedListInitializer);
+			initializeStyleProviders();
 		}
 		
 		protected function initializeScale():void
@@ -302,7 +295,7 @@ package com.ludofactory.mobile.core.theme
 			buttonFlatGreenTextFormat             = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_WHITE, true);
 			buttonFlatGreenDisabledTextFormat     = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_GREEN, true);
 			buttonAdTextFormat                    = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(28), COLOR_ORANGE);
-			buttonTransparentWhiteTextFormat      = x TextFormat(FONT_SANSITA, scaleAndRoundToDpi(32), COLOR_WHITE);
+			buttonTransparentWhiteTextFormat      = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(32), COLOR_WHITE);
 			buttonTransparentBlueTextFormat       = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 26), COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
 			buttonTransparentBlueDarkerTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 32), COLOR_DARK_GREY);
 			
@@ -531,8 +524,8 @@ package com.ludofactory.mobile.core.theme
 			sponsorBonusBackground = new Scale3Textures(AbstractEntryPoint.assets.getTexture("sponsor-bonus-background"), SPONSOR_BONUS_REGION1, SPONSOR_BONUS_REGION2, Scale3Textures.DIRECTION_HORIZONTAL);
 			
 			// GameTypeSelection
-			gameTypeSelectionFrontTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("game-type-selection-front-skin"), GAME_TYPE_SELECTION_POPUP_FRONT_GRID);
-			gameTypeSelectionBackgroundTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("game-type-selection-background-skin"), GAME_TYPE_SELECTION_POPUP_BACKGROUND_GRID);
+			gameModeSelectionFrontTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("game-type-selection-front-skin"), GAME_TYPE_SELECTION_POPUP_FRONT_GRID);
+			gameModeSelectionBackgroundTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("game-type-selection-background-skin"), GAME_TYPE_SELECTION_POPUP_BACKGROUND_GRID);
 			topLeftLeavesTexture = AbstractEntryPoint.assets.getTexture("game-type-selection-deco-top-left");
 			bottomLeftLeavesTexture = AbstractEntryPoint.assets.getTexture("game-type-selection-deco-bottom-left");
 			bottomMiddleLeavesTexture = AbstractEntryPoint.assets.getTexture("game-type-selection-deco-bottom-middle");
@@ -542,7 +535,7 @@ package com.ludofactory.mobile.core.theme
 			lockClosed = AbstractEntryPoint.assets.getTexture("lock");
 			lockGlow = AbstractEntryPoint.assets.getTexture("MiniLueur");
 			lockOpened = AbstractEntryPoint.assets.getTexture("unlock");
-			gameTypeSelectionTileTexture = AbstractEntryPoint.assets.getTexture("game-type-selection-tile");
+			gameModeSelectionTileTexture = AbstractEntryPoint.assets.getTexture("game-type-selection-tile");
 			
 			// AbstractNotification
 			notificationContainerBackgroundSkinTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("notification-background-skin"), NOTIFICATION_CONTAINER_GRID);
@@ -614,125 +607,121 @@ package com.ludofactory.mobile.core.theme
 			Callout.stagePaddingTop = Callout.stagePaddingRight = Callout.stagePaddingBottom = Callout.stagePaddingLeft = 16 * this.scaleFactor;
 		}
 		
-		protected function setInitializers():void
+		protected function initializeStyleProviders():void
 		{
+			// TODO A checker
+			getStyleProviderForClass(Button).setFunctionForStyleName(SimpleScrollBar.DEFAULT_CHILD_NAME_THUMB, nothingInitializer);
+			getStyleProviderForClass(List).setFunctionForStyleName(PickerList.DEFAULT_CHILD_NAME_LIST, nothingInitializer);
+			getStyleProviderForClass(ScrollText).defaultStyleFunction = scrollTextListInitializer;
+			getStyleProviderForClass(GroupedList).defaultStyleFunction = groupedListInitializer;
+			
 			// Screen
-			setInitializerForClassAndSubclasses(Screen, screenInitializer);
+			getStyleProviderForClass(Screen).defaultStyleFunction = screenInitializer;
 			
 			// OffsetTabBar
-			setInitializerForClass(ToggleButton, buttonRulesAndScoresLeftInitializer, BUTTON_OFFSET_TAB_BAR_LEFT);
-			setInitializerForClass(ToggleButton, buttonRulesAndScoresRightInitializer, BUTTON_OFFSET_TAB_BAR_RIGHT);
-			setInitializerForClass(ToggleButton, buttonRulesAndScoresMiddleInitializer, BUTTON_OFFSET_TAB_BAR_MIDDLE);
+			getStyleProviderForClass(ToggleButton).setFunctionForStyleName(BUTTON_OFFSET_TAB_BAR_LEFT, buttonRulesAndScoresLeftInitializer);
+			getStyleProviderForClass(ToggleButton).setFunctionForStyleName(BUTTON_OFFSET_TAB_BAR_RIGHT, buttonRulesAndScoresRightInitializer);
+			getStyleProviderForClass(ToggleButton).setFunctionForStyleName(BUTTON_OFFSET_TAB_BAR_MIDDLE, buttonRulesAndScoresMiddleInitializer);
 			
 			// TextInput
-			setInitializerForClass(TextInput, textInputInitializer);
-			setInitializerForClass(TextInput, textInputFirstInitializer, TEXTINPUT_FIRST);
-			setInitializerForClass(TextInput, textInputLastInitializer, TEXTINPUT_LAST);
-			setInitializerForClass(TextInput, textInputMiddleInitializer, TEXTINPUT_MIDDLE);
+			getStyleProviderForClass(TextInput).defaultStyleFunction = textInputInitializer;
+			getStyleProviderForClass(TextInput).setFunctionForStyleName(TEXTINPUT_FIRST, textInputFirstInitializer);
+			getStyleProviderForClass(TextInput).setFunctionForStyleName(TEXTINPUT_LAST, textInputLastInitializer);
+			getStyleProviderForClass(TextInput).setFunctionForStyleName(TEXTINPUT_MIDDLE, textInputMiddleInitializer);
 			
 			// Button
-			setInitializerForClass(Button, buttonInitializer);
-			setInitializerForClass(Button, buttonYellowSquaredLeftInitializer, BUTTON_YELLOW_SQUARED_LEFT);
-			setInitializerForClass(Button, buttonYellowSquaredRightInitializer, BUTTON_YELLOW_SQUARED_RIGHT);
-			setInitializerForClass(Button, buttonSpecialBiggerInitializer, BUTTON_SPECIAL_BIGGER);
-			setInitializerForClass(Button, buttonSpecialInitializer, BUTTON_SPECIAL);
-			setInitializerForClass(Button, buttonSpecialSquaredLeftInitializer, BUTTON_SPECIAL_SQUARED_LEFT);
-			setInitializerForClass(Button, buttonSpecialSquaredRightInitializer, BUTTON_SPECIAL_SQUARED_RIGHT);
-			setInitializerForClass(Button, buttonSpecialSquaredRightBiggerInitializer, BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER);
-			setInitializerForClass(Button, buttonBlueInitializer, BUTTON_BLUE);
-			setInitializerForClass(Button, buttonBlueSquaredRightInitializer, BUTTON_BLUE_SQUARED_RIGHT);
-			setInitializerForClass(Button, buttonRedInitializer, BUTTON_RED);
-			setInitializerForClass(Button, buttonGreenInitializer, BUTTON_GREEN);
-			setInitializerForClass(Button, buttonNewsInitializer, BUTTON_NEWS);
-			setInitializerForClass(Button, buttonFlatGreenInitializer, BUTTON_FLAT_GREEN);
-			setInitializerForClass(Button, buttonAdInitializer, BUTTON_AD);
-			setInitializerForClass(Button, buttonAdLandscapeInitializer, BUTTON_AD_LANDSCAPE);
-			setInitializerForClass(Button, buttonTransparentWhiteInitializer, BUTTON_TRANSPARENT_WHITE);
-			setInitializerForClass(Button, buttonTransparentBlueInitializer, BUTTON_TRANSPARENT_BLUE);
-			setInitializerForClass(Button, buttonTransparentBlueDarkerInitializer, BUTTON_TRANSPARENT_BLUE_DARKER);
-			setInitializerForClass(Button, buttonEmptyInitializer, BUTTON_EMPTY);
+			getStyleProviderForClass(Button).defaultStyleFunction = buttonInitializer;
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_YELLOW_SQUARED_LEFT, buttonYellowSquaredLeftInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_YELLOW_SQUARED_RIGHT, buttonYellowSquaredRightInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_SPECIAL_BIGGER, buttonSpecialBiggerInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_SPECIAL, buttonSpecialInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_SPECIAL_SQUARED_LEFT, buttonSpecialSquaredLeftInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_SPECIAL_SQUARED_RIGHT, buttonSpecialSquaredRightInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER, buttonSpecialSquaredRightBiggerInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_BLUE, buttonBlueInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_BLUE_SQUARED_RIGHT, buttonBlueSquaredRightInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_RED, buttonRedInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_GREEN, buttonGreenInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_NEWS, buttonNewsInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_FLAT_GREEN, buttonFlatGreenInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_AD, buttonAdInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_AD_LANDSCAPE, buttonAdLandscapeInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_TRANSPARENT_WHITE, buttonTransparentWhiteInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_TRANSPARENT_BLUE, buttonTransparentBlueInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_TRANSPARENT_BLUE_DARKER, buttonTransparentBlueDarkerInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_EMPTY, buttonEmptyInitializer);
 			
 			// ToggleSwitch
-			setInitializerForClassAndSubclasses(ToggleSwitch, toggleSwitchInitializer);
+			getStyleProviderForClass(ToggleSwitch).defaultStyleFunction = toggleSwitchInitializer;
 			//setInitializerForClass(Button, buttonToggleSwitchInitializer, BUTTON_TOGGLE_SWITCH_THUMB); // avant quand le Button avait la propriété isSelected (qui maintenant a migré dans le ToggleButton)
-			setInitializerForClass(ToggleButton, buttonToggleSwitchInitializer, BUTTON_TOGGLE_SWITCH_THUMB);
-			setInitializerForClass(Button, toggleSwitchTrackInitializer, ToggleSwitch.DEFAULT_CHILD_NAME_ON_TRACK);
+			getStyleProviderForClass(ToggleButton).setFunctionForStyleName(BUTTON_TOGGLE_SWITCH_THUMB, buttonToggleSwitchInitializer);
+			getStyleProviderForClass(Button).setFunctionForStyleName(ToggleSwitch.DEFAULT_CHILD_NAME_ON_TRACK, toggleSwitchTrackInitializer);
 			
 			// PageIndicator
-			setInitializerForClass(PageIndicator, pageIndicatorInitializer);
+			getStyleProviderForClass(PageIndicator).defaultStyleFunction = pageIndicatorInitializer;
 			
 			// Callout
-			setInitializerForClass(Callout, calloutInitializer);
+			getStyleProviderForClass(Callout).defaultStyleFunction = calloutInitializer;
 			
 			// Radio
-			setInitializerForClass(Radio, radioInitializer);
+			getStyleProviderForClass(Radio).defaultStyleFunction = radioInitializer;
 			
 			// PickerList
-			setInitializerForClass(PickerList, pickerListInitializer);
-			setInitializerForClass(Button, pickerListButtonInitializer, PickerList.DEFAULT_CHILD_NAME_BUTTON);
-			setInitializerForClass(DefaultListItemRenderer, pickerListItemRendererInitializer, COMPONENT_NAME_PICKER_LIST_ITEM_RENDERER);
+			getStyleProviderForClass(PickerList).defaultStyleFunction = pickerListInitializer;
+			getStyleProviderForClass(Button).setFunctionForStyleName(PickerList.DEFAULT_CHILD_NAME_BUTTON, pickerListButtonInitializer);
+			getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(COMPONENT_NAME_PICKER_LIST_ITEM_RENDERER, pickerListItemRendererInitializer);
 			
 			// GroupedList (custom in the shop)
-			setInitializerForClass(GroupedList, subCategoryGroupedListInitializer, SUB_CATEGORY_GROUPED_LIST);
-			setInitializerForClass(DefaultGroupedListHeaderOrFooterRenderer, nothingInitializer, SUB_CATEGORY_INSET_HEADER_RENDERER);
-			setInitializerForClass(DefaultGroupedListItemRenderer, insetSubCatgoryMiddleItemRendererInitializer, SUB_CATEGORY_INSET_MIDDE_ITEM_RENDERER);
-			setInitializerForClass(DefaultGroupedListItemRenderer, insetSubCatgoryFirstItemRendererInitializer, SUB_CATEGORY_INSET_FIRST_ITEM_RENDERER);
-			setInitializerForClass(DefaultGroupedListItemRenderer, insetSubCatgoryLastItemRendererInitializer, SUB_CATEGORY_INSET_LAST_ITEM_RENDERER);
-			setInitializerForClass(DefaultGroupedListItemRenderer, insetSubCatgorySingleItemRendererInitializer, SUB_CATEGORY_INSET_SINGLE_ITEM_RENDERER);
+			getStyleProviderForClass(GroupedList).setFunctionForStyleName(SUB_CATEGORY_GROUPED_LIST, subCategoryGroupedListInitializer);
+			getStyleProviderForClass(DefaultGroupedListHeaderOrFooterRenderer).setFunctionForStyleName(SUB_CATEGORY_INSET_HEADER_RENDERER, nothingInitializer);
+			getStyleProviderForClass(DefaultGroupedListItemRenderer).setFunctionForStyleName(SUB_CATEGORY_INSET_MIDDE_ITEM_RENDERER, insetSubCatgoryMiddleItemRendererInitializer);
+			getStyleProviderForClass(DefaultGroupedListItemRenderer).setFunctionForStyleName(SUB_CATEGORY_INSET_FIRST_ITEM_RENDERER, insetSubCatgoryFirstItemRendererInitializer);
+			getStyleProviderForClass(DefaultGroupedListItemRenderer).setFunctionForStyleName(SUB_CATEGORY_INSET_LAST_ITEM_RENDERER, insetSubCatgoryLastItemRendererInitializer);
+			getStyleProviderForClass(DefaultGroupedListItemRenderer).setFunctionForStyleName(SUB_CATEGORY_INSET_SINGLE_ITEM_RENDERER, insetSubCatgorySingleItemRendererInitializer);
 			
 			// List
-			setInitializerForClassAndSubclasses(List, listInitializer);
+			getStyleProviderForClass(List).defaultStyleFunction = listInitializer;
 			
 			// Parrainage
-			setInitializerForClass(SponsorBonusItemRenderer, sponsorBonusItemRendererInitializer);
-			
-			// GameTypeSelection
-			setInitializerForClass(GameModeSelectionPopup, gameTypeSelectionPopupInitializer);
-			setInitializerForClass(NotificationPopup, notificationPopupInitializer);
+			getStyleProviderForClass(SponsorBonusItemRenderer).defaultStyleFunction = sponsorBonusItemRendererInitializer;
 			
 			// AbstractNotification
-			setInitializerForClassAndSubclasses(AbstractNotification, abstractNotificationInitializer);
+			getStyleProviderForClass(AbstractNotification).defaultStyleFunction = abstractNotificationInitializer;
 			
 			// Trophies (display and list)
-			setInitializerForClass(TrophyMessage, trophyMessageInitializer);
+			getStyleProviderForClass(TrophyMessage).defaultStyleFunction = trophyMessageInitializer;
 			
 			// MenuItemRenderer
-			setInitializerForClass(MenuItemRenderer, menuItemRendererInitializer);
-			
-			// StoreItemRenderer
-			setInitializerForClass(StoreItemRenderer, sotreItemRendererInitializer);
+			getStyleProviderForClass(MenuItemRenderer).defaultStyleFunction = menuItemRendererInitializer;
 			
 			// CSThreadItemRenderer
-			setInitializerForClass(CSThreadItemRenderer, customerServiceThreadItemRendererInitializer);
+			getStyleProviderForClass(CSThreadItemRenderer).defaultStyleFunction = customerServiceThreadItemRendererInitializer;
 			
 			// AdTournamentItemRenderer
-			setInitializerForClass(AdTournamentItemRenderer, adTournamentItemRendererInitializer);
+			getStyleProviderForClass(AdTournamentItemRenderer).defaultStyleFunction = adTournamentItemRendererInitializer;
 			
 			// Rules
-			setInitializerForClass(RuleItemRenderer, ruleItemRendererInitializer);
-			
-			// AlertItemRenderer
-			setInitializerForClass(AlertItemRenderer, alertItemRendererInitializer);
+			getStyleProviderForClass(RuleItemRenderer).defaultStyleFunction = ruleItemRendererInitializer;
 			
 			// FacebookFriendElement
-			setInitializerForClass(FacebookFriendElement, facebookFriendElementInitializer);
+			getStyleProviderForClass(FacebookFriendElement).defaultStyleFunction = facebookFriendElementInitializer;
 			
 			// ScrollContainer
-			setInitializerForClassAndSubclasses(ScrollContainer, scrollContainerInitializer);
-			setInitializerForClass(ScrollContainer, scrollContainerWhiteInitializer, SCROLL_CONTAINER_WHITE);
-			setInitializerForClass(ScrollContainer, scrollContainerTournamentEndArrowInitializer, TOURNAMENT_END_ARROW_CONTAINER);
-			setInitializerForClass(ScrollContainer, scrollContainerResultGreyInitializer, SCROLL_CONTAINER_RESULT_GREY);
-			setInitializerForClass(ScrollContainer, scrollContainerBadgeInitializer, SCROLL_CONTAINER_BADGE);
-			setInitializerForClass(ScrollContainer, scrollContainerAlertInitializer, SCROLL_CONTAINER_ALERT);
-			setInitializerForClass(ScrollContainer, scrollContainerLabelInitializer, SCROLL_CONTAINER_LABEL);
-			setInitializerForClass(ScrollContainer, scrollContainerResultCornerBottomRightInitializer, SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_RIGHT);
-			setInitializerForClass(ScrollContainer, scrollContainerResultCornerBottomLeftInitializer, SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_LEFT);
-			setInitializerForClass(ScrollContainer, scrollContainerResultCornerTopLeftInitializer, SCROLL_CONTAINER_RESULT_DARK_CORNER_TOP_LEFT);
+			getStyleProviderForClass(ScrollContainer).defaultStyleFunction = scrollContainerInitializer;
+			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(SCROLL_CONTAINER_WHITE, scrollContainerWhiteInitializer);
+			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(TOURNAMENT_END_ARROW_CONTAINER, scrollContainerTournamentEndArrowInitializer);
+			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(SCROLL_CONTAINER_RESULT_GREY, scrollContainerResultGreyInitializer);
+			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(SCROLL_CONTAINER_BADGE, scrollContainerBadgeInitializer);
+			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(SCROLL_CONTAINER_ALERT, scrollContainerAlertInitializer);
+			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(SCROLL_CONTAINER_LABEL, scrollContainerLabelInitializer);
+			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_RIGHT, scrollContainerResultCornerBottomRightInitializer);
+			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_LEFT, scrollContainerResultCornerBottomLeftInitializer);
+			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(SCROLL_CONTAINER_RESULT_DARK_CORNER_TOP_LEFT, scrollContainerResultCornerTopLeftInitializer);
 			
 			// Label
-			setInitializerForClass(Label, baseLabelInitializer);
-			setInitializerForClass(Label, labelAlignRightInitializer, LABEL_ALIGN_RIGHT);
-			setInitializerForClass(Label, labelAlignCenterInitializer, LABEL_ALIGN_CENTER);
+			getStyleProviderForClass(Label).defaultStyleFunction = baseLabelInitializer;
+			getStyleProviderForClass(Label).setFunctionForStyleName(LABEL_ALIGN_RIGHT, labelAlignRightInitializer);
+			getStyleProviderForClass(Label).setFunctionForStyleName(LABEL_ALIGN_CENTER, labelAlignCenterInitializer);
 		}
 		
 		
@@ -1974,7 +1963,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//										G A M E  T Y P E  S E L E C T I O N
+//					    G A M E  M O D E  S E L E C T I O N  &  N O T I F I C A T I O N S
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -1992,95 +1981,29 @@ package com.ludofactory.mobile.core.theme
 		public static var bottomRightLeavesTexture:Texture;
 		
 		/**
-		 * Left chain. */		
-		protected var leftChainTexture:Texture;
+		 * Left chain. */
+		public static var leftChainTexture:Texture;
 		/**
-		 * Right chain. */		
-		protected var rightChainTexture:Texture;
+		 * Right chain. */
+		public static var rightChainTexture:Texture;
 		/**
-		 * Lock closed. */		
-		protected var lockClosed:Texture;
+		 * Lock closed. */
+		public static var lockClosed:Texture;
 		/**
-		 * Lock opened. */		
-		protected var lockOpened:Texture;
+		 * Lock opened. */
+		public static var lockOpened:Texture;
 		/**
-		 * Lock glow. */		
-		protected var lockGlow:Texture;
+		 * Lock glow. */
+		public static var lockGlow:Texture;
 		/**
 		 * Tile. */
-		public static var gameTypeSelectionTileTexture:Texture;
+		public static var gameModeSelectionTileTexture:Texture;
 		
 		protected static const GAME_TYPE_SELECTION_POPUP_FRONT_GRID:Rectangle = new Rectangle(38, 72, 19, 13);
-		public static var gameTypeSelectionFrontTextures:Scale9Textures;
+		public static var gameModeSelectionFrontTextures:Scale9Textures;
 		
 		protected static const GAME_TYPE_SELECTION_POPUP_BACKGROUND_GRID:Rectangle = new Rectangle(30, 30, 20, 20);
-		public static var gameTypeSelectionBackgroundTextures:Scale9Textures;
-		
-		/**
-		 * GameTypeSelectionPopup displayed in the home screen.
-		 */		
-		protected function gameTypeSelectionPopupInitializer(popup:GameModeSelectionPopup):void
-		{
-			popup.frontSkin = new Scale9Image(gameTypeSelectionFrontTextures, scaleFactor);
-			popup.backgroundSkin = new Scale9Image(gameTypeSelectionBackgroundTextures, scaleFactor);
-			popup.topLeftLeaves = new Image(topLeftLeavesTexture);
-			popup.topLeftLeaves.pivotX = popup.topLeftLeaves.width * 0.35;
-			popup.topLeftLeaves.pivotY = popup.topLeftLeaves.height * 0.35;
-			popup.topLeftLeaves.scaleX = popup.topLeftLeaves.scaleY = scaleFactor;
-			popup.bottomLeftLeaves = new Image(bottomLeftLeavesTexture);
-			popup.bottomLeftLeaves.pivotX = popup.bottomLeftLeaves.width * 0.35;
-			popup.bottomLeftLeaves.pivotY = popup.bottomLeftLeaves.height * 0.6;
-			popup.bottomLeftLeaves.scaleX = popup.bottomLeftLeaves.scaleY = scaleFactor;
-			popup.bottomMiddleLeaves = new Image(bottomMiddleLeavesTexture);
-			popup.bottomMiddleLeaves.pivotX = popup.bottomMiddleLeaves.width * 0.5;
-			popup.bottomMiddleLeaves.pivotY = popup.bottomMiddleLeaves.height * 0.6;
-			popup.bottomMiddleLeaves.scaleX = popup.bottomMiddleLeaves.scaleY = scaleFactor;
-			popup.bottomRightLeaves = new Image(bottomRightLeavesTexture);
-			popup.bottomRightLeaves.pivotX = popup.bottomRightLeaves.width * 0.6;
-			popup.bottomRightLeaves.pivotY = popup.bottomRightLeaves.height * 0.6;
-			popup.bottomRightLeaves.scaleX = popup.bottomRightLeaves.scaleY = scaleFactor;
-			popup.shadowThickness = 10 * scaleFactor;
-			popup.buttonAdjustment = 23 * scaleFactor;
-			popup.leftLock = new Image(leftChainTexture);
-			popup.leftLock.scaleX = popup.leftLock.scaleY = scaleFactor;
-			popup.rightLock = new Image(rightChainTexture);
-			popup.rightLock.scaleX = popup.rightLock.scaleY = scaleFactor;
-			popup.lock = new Image(lockClosed);
-			popup.lock.scaleX = popup.lock.scaleY = scaleFactor;
-			popup.glow = new Image(lockGlow);
-			popup.glow.alignPivot();
-			popup.glow.scaleX = popup.glow.scaleY = 0;
-			popup.unlockTexture = lockOpened;
-			popup.tiledBackground = new TiledImage(gameTypeSelectionTileTexture, scaleFactor);
-		}
-		
-		/**
-		 * GameTypeSelectionPopup displayed in the home screen.
-		 */		
-		protected function notificationPopupInitializer(popup:NotificationPopup):void
-		{
-			popup.frontSkin = new Scale9Image(gameTypeSelectionFrontTextures, scaleFactor);
-			popup.backgroundSkin = new Scale9Image(gameTypeSelectionBackgroundTextures, scaleFactor);
-			popup.topLeftDecoration = new Image(topLeftLeavesTexture);
-			popup.topLeftDecoration.pivotX = popup.topLeftDecoration.width * 0.35;
-			popup.topLeftDecoration.pivotY = popup.topLeftDecoration.height * 0.35;
-			popup.topLeftDecoration.scaleX = popup.topLeftDecoration.scaleY = scaleFactor;
-			popup.bottomLeftDecoration = new Image(bottomLeftLeavesTexture);
-			popup.bottomLeftDecoration.pivotX = popup.bottomLeftDecoration.width * 0.35;
-			popup.bottomLeftDecoration.pivotY = popup.bottomLeftDecoration.height * 0.6;
-			popup.bottomLeftDecoration.scaleX = popup.bottomLeftDecoration.scaleY = scaleFactor;
-			popup.bottomMiddleDecoration = new Image(bottomMiddleLeavesTexture);
-			popup.bottomMiddleDecoration.pivotX = popup.bottomMiddleDecoration.width * 0.5;
-			popup.bottomMiddleDecoration.pivotY = popup.bottomMiddleDecoration.height * 0.6;
-			popup.bottomMiddleDecoration.scaleX = popup.bottomMiddleDecoration.scaleY = scaleFactor;
-			popup.bottomRightDecoration = new Image(bottomRightLeavesTexture);
-			popup.bottomRightDecoration.pivotX = popup.bottomRightDecoration.width * 0.6;
-			popup.bottomRightDecoration.pivotY = popup.bottomRightDecoration.height * 0.6;
-			popup.bottomRightDecoration.scaleX = popup.bottomRightDecoration.scaleY = scaleFactor;
-			popup.shadowThickness = 10 * scaleFactor;
-			popup.buttonAdjustment = 23 * scaleFactor;
-			popup.tiledBackground = new TiledImage(gameTypeSelectionTileTexture, scaleFactor);
-		}
+		public static var gameModeSelectionBackgroundTextures:Scale9Textures;
 		
 //------------------------------------------------------------------------------------------------------------
 //
@@ -2136,21 +2059,10 @@ package com.ludofactory.mobile.core.theme
 //
 //------------------------------------------------------------------------------------------------------------
 		
-		protected var storeBackgroundSkinTextures:Scale9Textures;
-		protected var storeTopOfferTexture:Scale3Textures;
-		protected var storePlayersChoiceTexture:Scale3Textures;
+		public static var storeBackgroundSkinTextures:Scale9Textures;
+		public static var storeTopOfferTexture:Scale3Textures;
+		public static var storePlayersChoiceTexture:Scale3Textures;
 		protected static const STORE_BACKGROUND_CONTAINER_GRID:Rectangle = new Rectangle(20, 55, 20, 30);
-		
-		protected function sotreItemRendererInitializer(renderer:StoreItemRenderer):void
-		{
-			renderer.topOfferTexture =  new Scale3Image(storeTopOfferTexture, this.scaleFactor);
-			renderer.playersChoiceTexture = new Scale3Image(storePlayersChoiceTexture, this.scaleFactor);
-			renderer.backgroundSkin = new Scale9Image(storeBackgroundSkinTextures, this.scaleFactor);
-			renderer.paddingLeft = scaleAndRoundToDpi(18);
-			renderer.paddingRight = scaleAndRoundToDpi(18);
-			renderer.paddingBottom = scaleAndRoundToDpi(20);
-			renderer.headerHeight = scaleAndRoundToDpi(54);
-		}
 		
 //------------------------------------------------------------------------------------------------------------
 //
@@ -2205,20 +2117,6 @@ package com.ludofactory.mobile.core.theme
 		{
 			renderer.titleTextFormat = ruleTitleTextFormat;
 			renderer.ruleTextFormat = ruleNormalTextFormat;
-		}
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//								A L E R T  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		protected function alertItemRendererInitializer(renderer:AlertItemRenderer):void
-		{
-			renderer.minItemHeight = 100 * this.scaleFactor;
-			renderer.gap = 10 * this.scaleFactor;
-			renderer.paddingMessageTop = renderer.paddingMessageBottom = 20 * this.scaleFactor;
-			renderer.paddingMessageLeft = renderer.paddingMessageRight = 20 * this.scaleFactor;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

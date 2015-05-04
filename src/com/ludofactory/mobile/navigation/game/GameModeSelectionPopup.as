@@ -6,6 +6,7 @@ Created : 2 déc. 2013
 */
 package com.ludofactory.mobile.navigation.game
 {
+	
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Elastic;
@@ -15,19 +16,13 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.GameMode;
-	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.TimerManager;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
-	import com.ludofactory.mobile.navigation.MarketingRegisterNotification;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Callout;
@@ -36,6 +31,10 @@ package com.ludofactory.mobile.navigation.game
 	import feathers.core.FeathersControl;
 	import feathers.display.Scale9Image;
 	import feathers.display.TiledImage;
+	import feathers.skins.IStyleProvider;
+	
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -43,7 +42,6 @@ package com.ludofactory.mobile.navigation.game
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	import starling.textures.Texture;
 	import starling.utils.deg2rad;
 	
 	/**
@@ -106,7 +104,6 @@ package com.ludofactory.mobile.navigation.game
 		private var _bottomRightLeavesSaveX:Number;
 		private var _bottomRightLeavesSaveY:Number;
 		
-		private var _unlockTexture:Texture;
 		
 		private var _canBeClosed:Boolean = true;
 		
@@ -127,12 +124,42 @@ package com.ludofactory.mobile.navigation.game
 		{
 			super.initialize();
 			
+			_shadowThickness = scaleAndRoundToDpi(10);
+			_buttonAdjustment = scaleAndRoundToDpi(23);
+			
+			_backgroundSkin = new Scale9Image(Theme.gameModeSelectionBackgroundTextures, GlobalConfig.dpiScale);
 			addChild(_backgroundSkin);
+			
+			_topLeftLeaves = new Image(Theme.topLeftLeavesTexture);
+			_topLeftLeaves.pivotX = _topLeftLeaves.width * 0.35;
+			_topLeftLeaves.pivotY = _topLeftLeaves.height * 0.35;
+			_topLeftLeaves.scaleX = _topLeftLeaves.scaleY = GlobalConfig.dpiScale;
 			addChild(_topLeftLeaves);
+			
+			_bottomLeftLeaves = new Image(Theme.bottomLeftLeavesTexture);
+			_bottomLeftLeaves.pivotX = _bottomLeftLeaves.width * 0.35;
+			_bottomLeftLeaves.pivotY = _bottomLeftLeaves.height * 0.6;
+			_bottomLeftLeaves.scaleX = _bottomLeftLeaves.scaleY = GlobalConfig.dpiScale;
 			addChild(_bottomLeftLeaves);
+			
+			_bottomMiddleLeaves = new Image(Theme.bottomMiddleLeavesTexture);
+			_bottomMiddleLeaves.pivotX = _bottomMiddleLeaves.width * 0.5;
+			_bottomMiddleLeaves.pivotY = _bottomMiddleLeaves.height * 0.6;
+			_bottomMiddleLeaves.scaleX = _bottomMiddleLeaves.scaleY = GlobalConfig.dpiScale;
 			addChild(_bottomMiddleLeaves);
+			
+			_bottomRightLeaves = new Image(Theme.bottomRightLeavesTexture);
+			_bottomRightLeaves.pivotX = _bottomRightLeaves.width * 0.6;
+			_bottomRightLeaves.pivotY = _bottomRightLeaves.height * 0.6;
+			_bottomRightLeaves.scaleX = _bottomRightLeaves.scaleY = GlobalConfig.dpiScale;
 			addChild(_bottomRightLeaves);
+			
+			_frontSkin = new Scale9Image(Theme.gameModeSelectionFrontTextures, GlobalConfig.dpiScale);
+			_frontSkin.useSeparateBatch = false;
 			addChild(_frontSkin);
+			
+			_tiledBackground = new TiledImage(Theme.gameModeSelectionTileTexture, GlobalConfig.dpiScale);
+			_tiledBackground.useSeparateBatch = false;
 			addChild(_tiledBackground);
 			
 			_soloButton = new Button();
@@ -158,14 +185,26 @@ package com.ludofactory.mobile.navigation.game
 			_closeQuad.addEventListener(TouchEvent.TOUCH, onTouchCloseButton);
 			addChild(_closeQuad);
 			
+			_leftLock = new Image(Theme.leftChainTexture);
+			_leftLock.scaleX = _leftLock.scaleY = GlobalConfig.dpiScale;
 			_leftLock.touchable = false;
 			_tournamentButtonContainer.addChild(_leftLock);
+			
+			_glow = new Image(Theme.lockGlow);
+			_glow.alignPivot();
+			_glow.scaleX = _glow.scaleY = 0;
 			_glow.touchable = false;
 			_glow.alpha = 0;
 			_glow.visible = false;
 			_tournamentButtonContainer.addChild(_glow);
+			
+			_lock = new Image(Theme.lockClosed);
+			_lock.scaleX = _lock.scaleY = GlobalConfig.dpiScale;
 			_lock.touchable = false;
 			_tournamentButtonContainer.addChild(_lock);
+			
+			_rightLock = new Image(Theme.rightChainTexture);
+			_rightLock.scaleX = _rightLock.scaleY = GlobalConfig.dpiScale;
 			_rightLock.touchable = false;
 			_tournamentButtonContainer.addChild(_rightLock);
 			
@@ -533,7 +572,7 @@ package com.ludofactory.mobile.navigation.game
 			TweenMax.to(_glow, 0.75, { delay:1, rotation:deg2rad(360) } );
 			TweenMax.to(_lock, 0.75, { delay:1, autoAlpha:0, onComplete:enableButtons });
 			
-			_lock.texture = _unlockTexture;
+			_lock.texture = Theme.lockOpened;
 		}
 		
 		private function enableButtons():void
@@ -606,41 +645,19 @@ package com.ludofactory.mobile.navigation.game
 //------------------------------------------------------------------------------------------------------------
 		
 		public function set backgroundSkin(val:Scale9Image):void { _backgroundSkin = val; }
-		public function set frontSkin(val:Scale9Image):void { _frontSkin = val; }
-		public function set tiledBackground(val:TiledImage):void { _tiledBackground = val; }
-		
-		public function get topLeftLeaves():Image { return _topLeftLeaves; }
-		public function set topLeftLeaves(val:Image):void { _topLeftLeaves = val; }
-		
-		public function get bottomLeftLeaves():Image { return _bottomLeftLeaves; }
-		public function set bottomLeftLeaves(val:Image):void { _bottomLeftLeaves = val; }
-		
-		public function get bottomMiddleLeaves():Image { return _bottomMiddleLeaves; }
-		public function set bottomMiddleLeaves(val:Image):void { _bottomMiddleLeaves = val; }
-		
-		public function get bottomRightLeaves():Image { return _bottomRightLeaves; }
-		public function set bottomRightLeaves(val:Image):void { _bottomRightLeaves = val; }
-		
-		public function set shadowThickness(val:Number):void { _shadowThickness = val; }
-		
-		public function set buttonAdjustment(val:Number):void { _buttonAdjustment = val; }
-		
-		public function get leftLock():Image { return _leftLock; }
-		public function set leftLock(val:Image):void { _leftLock = val; }
-		
-		public function get rightLock():Image { return _rightLock; }
-		public function set rightLock(val:Image):void { _rightLock = val; }
-		
-		public function get lock():Image { return _lock; }
-		public function set lock(val:Image):void { _lock = val; }
-		
-		public function get unlockTexture():Texture { return _unlockTexture; }
-		public function set unlockTexture(val:Texture):void { _unlockTexture = val; }
 		
 		public function get glow():Image { return _glow; }
 		public function set glow(val:Image):void { _glow = val; }
 		
 		public function get canBeClosed():Boolean { return _canBeClosed; }
+		
+		/**
+		 * Required for the new Theme. */
+		public static var globalStyleProvider:IStyleProvider;
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return GameModeSelectionPopup.globalStyleProvider;
+		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
