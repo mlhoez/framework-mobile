@@ -332,15 +332,6 @@ package com.ludofactory.mobile.core.theme
 			contactIRNameTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_DARK_GREY, true);
 			contactIRValueTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_LIGHT_GREY, true, true);
 			
-			// CSMessageItemRenderer
-			csMessageIRTitleReadTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 32), COLOR_ORANGE);
-			csMessageIRMessageReadTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 32), COLOR_LIGHT_GREY, false, true);
-			csMessageIRDateReadTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 32), COLOR_LIGHT_GREY);
-			
-			csMessageIRTitleTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 32), COLOR_ORANGE, true);
-			csMessageIRMessageTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 32), COLOR_LIGHT_GREY, true, true);
-			csMessageIRDateTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 32), COLOR_LIGHT_GREY, true, false, null, null, null, TextFormatAlign.RIGHT);
-			
 			// CSThreadItemRenderer
 			csThreadIRMessageTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(25), COLOR_LIGHT_GREY, false, true);
 			csThreadIRDateTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(25), COLOR_DARK_GREY, false, true);
@@ -2668,24 +2659,6 @@ package com.ludofactory.mobile.core.theme
 		
 		public static var contactIRNameTextFormat:TextFormat;
 		public static var contactIRValueTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//
-//
-//				C U S T O M E R  S E R V I C E  M E S S A G E  I T E M  R E N D E R E R
-//
-//
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var csMessageIRTitleReadTextFormat:TextFormat;
-		public static var csMessageIRMessageReadTextFormat:TextFormat;
-		public static var csMessageIRDateReadTextFormat:TextFormat;
-		
-		public static var csMessageIRTitleTextFormat:TextFormat;
-		public static var csMessageIRMessageTextFormat:TextFormat;
-		public static var csMessageIRDateTextFormat:TextFormat;
 		
 //------------------------------------------------------------------------------------------------------------
 //

@@ -6,23 +6,27 @@ Created : 25 août 2013
 */
 package com.ludofactory.mobile.navigation.cs.display
 {
+	
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import flash.geom.Point;
-	
-	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
+	
+	import flash.geom.Point;
 	
 	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.text.TextField;
+	import starling.utils.HAlign;
+	import starling.utils.VAlign;
 	
 	/**
 	 * Item renderer used to display the customer service messages.
@@ -49,13 +53,13 @@ package com.ludofactory.mobile.navigation.cs.display
 		
 		/**
 		 * Title of the message, it's the name of the choosed theme. */		
-		private var _title:Label;
+		private var _title:TextField;
 		/**
 		 * A preview (75 chars max) of the last message sent. */		
-		private var _message:Label;
+		private var _message:TextField;
 		/**
 		 * Date on which the thread was created. */		
-		private var _date:Label;
+		private var _date:TextField;
 		
 		/**
 		 * The top stripe displayed in each item renderer. */		
@@ -94,20 +98,21 @@ package com.ludofactory.mobile.navigation.cs.display
 			_bottomStripe.visible = false;
 			addChild(_bottomStripe);
 			
-			_title = new Label();
+			_title = new TextField(10, 10, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 32), Theme.COLOR_ORANGE);
+			_title.vAlign = VAlign.TOP;
+			_title.hAlign = HAlign.LEFT;
 			addChild(_title);
-			_title.textRendererProperties.textFormat = Theme.csMessageIRTitleTextFormat;
-			_title.textRendererProperties.wordWrap = false;
 			
-			_message = new Label();
+			_message = new TextField(10, 10, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 32), Theme.COLOR_LIGHT_GREY);
+			_message.vAlign = VAlign.TOP;
+			_message.hAlign = HAlign.LEFT;
+			_message.italic = true;
 			addChild(_message);
-			_message.textRendererProperties.textFormat = Theme.csMessageIRMessageTextFormat;
-			_message.textRendererProperties.wordWrap = false;
 			
-			_date = new Label();
+			_date = new TextField(10, 10, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 32), Theme.COLOR_LIGHT_GREY);
+			_date.vAlign = VAlign.TOP;
+			_date.hAlign = HAlign.RIGHT;
 			addChild(_date);
-			_date.textRendererProperties.textFormat = Theme.csMessageIRDateTextFormat;
-			_date.textRendererProperties.wordWrap = false;
 			
 			_whiteGradient = new Quad(scaleAndRoundToDpi(100), _itemHeight * 0.5);
 			_whiteGradient.setVertexAlpha(0, 0.4);
@@ -118,7 +123,6 @@ package com.ludofactory.mobile.navigation.cs.display
 		override protected function draw():void
 		{
 			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
 			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
 			
 			if(dataInvalid)
@@ -144,7 +148,6 @@ package com.ludofactory.mobile.navigation.cs.display
 			}
 			_title.width = NaN;
 			_title.height = NaN;
-			_title.validate();
 			var newWidth:Number = this.explicitWidth;
 			if(needsWidth)
 			{
@@ -172,15 +175,15 @@ package com.ludofactory.mobile.navigation.cs.display
 					
 					if( _data.read )
 					{
-						_title.textRendererProperties.textFormat = Theme.csMessageIRTitleReadTextFormat;
-						_message.textRendererProperties.textFormat = Theme.csMessageIRMessageReadTextFormat;
-						_date.textRendererProperties.textFormat = Theme.csMessageIRDateReadTextFormat;
+						_title.bold = false;
+						_message.bold = false;
+						_date.bold = false;
 					}
 					else
 					{
-						_title.textRendererProperties.textFormat = Theme.csMessageIRTitleTextFormat;
-						_message.textRendererProperties.textFormat = Theme.csMessageIRMessageTextFormat;
-						_date.textRendererProperties.textFormat = Theme.csMessageIRDateTextFormat;
+						_title.bold = true;
+						_message.bold = true;
+						_date.bold = true;
 					}
 				}
 				else
@@ -209,20 +212,18 @@ package com.ludofactory.mobile.navigation.cs.display
 				_bottomStripe.visible = false;
 			}
 			
-			_title.width = this.actualWidth * 0.5 - _padding;
-			_title.validate();
-			_title.y = ((_itemHeight * 0.5) - _title.height) * 0.5;
+			_title.width = this.actualWidth - _padding;
+			_title.height = roundUp(_itemHeight * 0.5);
 			_title.x = _padding;
 			
-			_message.width = this.actualWidth - _padding * 2;
-			_message.validate();
-			_message.y = ((_itemHeight * 0.5) - _title.height) * 0.5 + (_itemHeight * 0.5);
+			_message.width = this.actualWidth - _padding;
+			_message.height = roundUp(_itemHeight * 0.5);
+			_message.y = roundUp(_itemHeight * 0.5) - scaleAndRoundToDpi(5);
 			_message.x = _padding;
 			
-			_date.width = this.actualWidth * 0.5 - _padding;
+			_date.width = this.actualWidth * 0.5;
+			_date.height = roundUp(_itemHeight * 0.5);
 			_date.x = this.actualWidth - _date.width - _padding;
-			_date.validate();
-			_date.y = _title.y;
 			
 			_whiteGradient.x = actualWidth - _whiteGradient.width - _padding;
 			_whiteGradient.y = _itemHeight * 0.5 - _strokeThickness;
@@ -369,7 +370,6 @@ package com.ludofactory.mobile.navigation.cs.display
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{
