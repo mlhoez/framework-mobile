@@ -112,6 +112,7 @@ package com.ludofactory.mobile.navigation.sponsor
 			
 			_mainContainer = new LayoutGroup();
 			_mainContainer.layout = new VerticalLayout();
+			(_mainContainer.layout as VerticalLayout).gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
 			(_mainContainer.layout as VerticalLayout).horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_CENTER;
 			_mainContainer.clipContent = false;
 			addChild(_mainContainer);
@@ -210,6 +211,7 @@ package com.ludofactory.mobile.navigation.sponsor
 				{
 					_mainContainer.width = _rewardValueLabel.width = _titleLabel.width = _byFilleulLabel.width = actualWidth * 0.5;
 					_mainContainer.validate();
+					_mainContainer.x = scaleAndRoundToDpi(20);
 					_mainContainer.y = (actualHeight - _mainContainer.height) * 0.5;
 					
 					_glow.x = _mainContainer.x + (_mainContainer.width * 0.5);
@@ -236,6 +238,7 @@ package com.ludofactory.mobile.navigation.sponsor
 				{
 					_mainContainer.width = _rewardValueLabel.width = _titleLabel.width = _byFilleulLabel.width = actualWidth;
 					_mainContainer.validate();
+					_mainContainer.x = scaleAndRoundToDpi(10);
 					_mainContainer.y = (actualHeight - _mainContainer.height) * 0.1;
 					
 					_buttonsContainer.width = actualWidth * (GlobalConfig.isPhone ? 1 : 0.9);
@@ -256,6 +259,8 @@ package com.ludofactory.mobile.navigation.sponsor
 					TweenMax.to(_glow, 1.25, { alpha:0.1, repeat:-1, yoyo:true, ease:Linear.easeNone });
 					TweenMax.to(_glow, 25, { rotation:deg2rad(360), repeat:-1, ease:Linear.easeNone });
 				}
+				
+				_knowMoreButton.width += scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 60);
 			}
 		}
 		
