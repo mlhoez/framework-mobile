@@ -1,7 +1,6 @@
 package com.ludofactory.mobile.core.theme
 {
 	
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -44,7 +43,6 @@ package com.ludofactory.mobile.core.theme
 	import feathers.controls.renderers.DefaultListItemRenderer;
 	import feathers.controls.text.StageTextTextEditor;
 	import feathers.controls.text.TextFieldTextRenderer;
-	import feathers.core.DisplayListWatcher;
 	import feathers.core.FeathersControl;
 	import feathers.core.PopUpManager;
 	import feathers.display.Scale3Image;
@@ -57,6 +55,7 @@ package com.ludofactory.mobile.core.theme
 	import feathers.system.DeviceCapabilities;
 	import feathers.textures.Scale3Textures;
 	import feathers.textures.Scale9Textures;
+	import feathers.themes.StyleNameFunctionTheme;
 	
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -69,12 +68,11 @@ package com.ludofactory.mobile.core.theme
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
-	import starling.display.DisplayObjectContainer;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.textures.Texture;
 	
-	public class Theme extends DisplayListWatcher
+	public class Theme extends StyleNameFunctionTheme
 	{
 		
 //------------------------------------------------------------------------------------------------------------
@@ -99,39 +97,60 @@ package com.ludofactory.mobile.core.theme
 		public static const FONT_SANSITA:String = "Sansita";
 		
 //------------------------------------------------------------------------------------------------------------
-//	Reference DPI
+//	Scale factor
+		
+		protected var _originalDPI:int;
+		protected var _scaleToDPI:Boolean;
 		
 		/**
-		 * Dpi de référence pour iPhone retina. */		
-		public static const ORIGINAL_DPI_IPHONE_RETINA:int = 326; // original = 326 - modifié = 260
+		 * DPI reference for the iPhone Retina. Since all the SD assets have been designed for this reolution,
+		 * this value will help us to calculate the appropriate dpi scale value.
+		 * 
+		 * Default is 326. */		
+		public static const ORIGINAL_DPI_IPHONE_RETINA:int = 326;
 		/**
-		 * Dpi de référence pour iPad retina. */		
-		public static const ORIGINAL_DPI_IPAD_RETINA:int = 264; // original = 264 - modifié = 170
+		 * Resolution in which the SD assets (i.e the smartphone assets) have been designed.
+		 * It matches the iPhone Retina resolution. */
+		public static const ORIGINAL_X:int = 960;
+		public static const ORIGINAL_Y:int = 640;
+		
+		
+		/**
+		 * DPI reference for the iPad Retina. Since all the SD assets have been designed for this reolution,
+		 * this value will help us to calculate the appropriate dpi scale value.
+		 * 
+		 * Defauly is 264. */
+		public static const ORIGINAL_DPI_IPAD_RETINA:int = 264;
+		/**
+		 * Resolution in which the HD assets (i.e the smartphone assets) have been designed.
+		 * It matches the iPad Retina resolution. */
+		public static const ORIGINAL_X_TABLETTE:int= 1024;
+		public static const ORIGINAL_Y_TABLETTE:int = 768;
+		
+		
 		/**
 		 * The scale factor. */		
 		protected var scaleFactor:Number = 1;
 		
-		public static const ORIGINAL_X_TABLETTE:int= 1024;
-		public static const ORIGINAL_Y_TABLETTE:int = 768;
-		public static const ORIGINAL_X:int= 960;
-		public static const ORIGINAL_Y:int = 640;
-		public static var SCREEN_X:int;
-		public static var SCREEN_Y:int;
-		
-		public static var REDUCTION_RATIO:Number;
-		
-		
-		private function getReductionRatio():void
+		/**
+		 * Calculates the appropriate scale factor depending on the screen resolution.
+		 *
+		 * Base on : http://salsadepixeles.blogspot.com.es/2013/05/fitting-game-to-in-any-screen-resolution.html
+		 */
+		private static function getScaleFactor():Number
 		{
-			SCREEN_X = Capabilities.screenResolutionX; // mauvaise résolution dans le simulateur
-			SCREEN_Y = Capabilities.screenResolutionY; // mauvaise résolution dans le simulateur
-			var ratioX:Number = SCREEN_X / (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE);
-			var ratioY:Number = SCREEN_Y / (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE);
+			var screenResolutionX:int = Capabilities.screenResolutionX; // WARNING : this reports the computer resolution in the simulator !
+			var screenResolutionY:int = Capabilities.screenResolutionY; // WARNING : this reports the computer resolution in the simulator !
+			var ratioX:Number = screenResolutionX / (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE);
+			var ratioY:Number = screenResolutionY / (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE);
 			
-			if (ratioX < ratioY) {
-				REDUCTION_RATIO = ratioX;
-			}else {
-				REDUCTION_RATIO = ratioY;
+			if (ratioX < ratioY)
+			{
+				return ratioX;
+			}
+			else
+			{
+				return ratioY;
 			}
 		}
 		
@@ -206,17 +225,16 @@ package com.ludofactory.mobile.core.theme
 //------------------------------------------------------------------------------------------------------------
 //	Init
 		
-		public function Theme(container:DisplayObjectContainer = null, scaleToDPI:Boolean = true)
+		public function Theme(scaleToDPI:Boolean = true)
 		{
-			if(!container)
-			{
-				container = Starling.current.stage;
-			}
-			super(container);
 			this._scaleToDPI = scaleToDPI;
 			this.initialize();
 		}
 		
+		/**
+		 * Initializes the theme. Expected to be called by subclasses after the
+		 * assets have been loaded and the skin texture atlas has been created.
+		 */
 		protected function initialize():void
 		{
 			initializeScale();
@@ -260,8 +278,7 @@ package com.ludofactory.mobile.core.theme
 			this.scaleFactor = GlobalConfig.dpiScale = scaledDPI / this._originalDPI;
 			if(GlobalConfig.deviceId != "simulator")
 			{
-				getReductionRatio();
-				this.scaleFactor = GlobalConfig.dpiScale = (REDUCTION_RATIO + GlobalConfig.dpiScale) / 2; // moyenne des deux calculés (plus précis ?)
+				this.scaleFactor = GlobalConfig.dpiScale = (getScaleFactor() + GlobalConfig.dpiScale) / 2; // moyenne des deux calculés (plus précis ?)
 			}
 			//this.stageTextScale = this.scaleFactor / nativeScaleFactor; // TODO A remettre ?
 		}
@@ -285,7 +302,7 @@ package com.ludofactory.mobile.core.theme
 			buttonFlatGreenTextFormat             = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_WHITE, true);
 			buttonFlatGreenDisabledTextFormat     = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_GREEN, true);
 			buttonAdTextFormat                    = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(28), COLOR_ORANGE);
-			buttonTransparentWhiteTextFormat      = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(32), COLOR_WHITE);
+			buttonTransparentWhiteTextFormat      = x TextFormat(FONT_SANSITA, scaleAndRoundToDpi(32), COLOR_WHITE);
 			buttonTransparentBlueTextFormat       = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 26), COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
 			buttonTransparentBlueDarkerTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 32), COLOR_DARK_GREY);
 			
@@ -718,11 +735,7 @@ package com.ludofactory.mobile.core.theme
 			setInitializerForClass(Label, labelAlignCenterInitializer, LABEL_ALIGN_CENTER);
 		}
 		
-		protected var _originalDPI:int;
-		public function get originalDPI():int { return this._originalDPI; }
 		
-		protected var _scaleToDPI:Boolean;
-		public function get scaleToDPI():Boolean { return this._scaleToDPI; }
 		
 //------------------------------------------------------------------------------------------------------------
 //
@@ -789,11 +802,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //										S C R E E N
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -804,11 +813,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //										O F F S E T  T A B  B A R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -900,11 +905,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //												T E X T I N P U T
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -985,11 +986,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //												B U T T O N
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -1548,11 +1545,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //												T O G G L E  S W I T C H
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -1617,11 +1610,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //												P A G E  I N D I C A T O R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -1656,11 +1645,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //												C A L L O U T
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -1699,11 +1684,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //												R A D I O
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -1739,11 +1720,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //												P I C K E R  L I S T
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -1871,11 +1848,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //												G R O U P E D  L I S T
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -1974,11 +1947,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //												L I S T
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -1990,11 +1959,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //												P A R R A I N A G E
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2009,11 +1974,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //										G A M E  T Y P E  S E L E C T I O N
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2123,11 +2084,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //										N O T I F I C A T I O N S
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2155,11 +2112,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //										T R O P H Y  M E S S A G E
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2179,11 +2132,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //										S T O R E  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2205,11 +2154,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
-//						C U S T O M E R  S E R V I C E  T H R E A D  I T E M  R E N D E R E R 
-//
-//
+//						C U S T O M E R  S E R V I C E  T H R E A D  I T E M  R E N D E R E R
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2232,11 +2177,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							A D  T O U R N A M E N T  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2253,11 +2194,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //											R U L E S
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2272,11 +2209,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //								A L E R T  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2290,11 +2223,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //								F A C E B O O K  F R I E N D  E L E M E N T
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2309,11 +2238,7 @@ package com.ludofactory.mobile.core.theme
 
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //								S C R O L L  C O N T A I N E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2538,11 +2463,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //											S C R O L L  B A R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2576,11 +2497,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //											L A B E L
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2605,11 +2522,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //								A C C O U N T  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2618,11 +2531,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //								F A Q  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2630,11 +2539,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //								M E N U  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2649,11 +2554,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							C O N T A C T  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2662,11 +2563,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //					C U S T O M E R  T H R E A D  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2675,11 +2572,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //				B O U T I Q U E  C A T E G O R Y  M E S S A G E  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2687,11 +2580,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //								F I L L E U L  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2699,11 +2588,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							G I F T  H I S T O R Y  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2711,11 +2596,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							H I S T O R Y  H E A D E R  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2723,11 +2604,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							P A Y M E N T  H I S T O R Y  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2735,11 +2612,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //									N E W S  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2748,11 +2621,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //						P R E V I O U S  T O U R N A M E N T  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2760,11 +2629,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //								S E T T I N G S  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2772,11 +2637,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //								N O T  L O G G E D  I N  C O N T A I N E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2785,11 +2646,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							F I L L E U L  R E W A R D  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2797,11 +2654,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							R A N K  H E A D E R  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2809,11 +2662,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
-//								R E T R Y  C O N T A I N E R 
-//
-//
+//								R E T R Y  C O N T A I N E R
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2822,11 +2671,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							R A N K  H E A D E R  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2834,11 +2679,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							C O M M O N  B I D  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2846,11 +2687,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							A C C O U N T  H I S T O R Y  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2858,11 +2695,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //										I N F O  M A N A G E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2870,11 +2703,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //										F R E E  G A M E  E N D  S C R E E N
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2882,11 +2711,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							S C O R E  T O  P O I N T S  I T E M  R E N D E R E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
@@ -2894,11 +2719,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//
-//
 //							H I G H  S C O R E  L I S T  H E A D E R
-//
-//
 //
 //------------------------------------------------------------------------------------------------------------
 		
