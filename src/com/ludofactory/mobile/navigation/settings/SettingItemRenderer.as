@@ -202,11 +202,17 @@ package com.ludofactory.mobile.navigation.settings
 			
 			if( _control )
 			{
-				_control.width = (actualWidth - _title.x) * (GlobalConfig.isPhone ? 0.35 : 0.25);
+				_control.width = scaleAndRoundToDpi(220);
 				if( _control is CustomToggleSwitch )
+				{
 					_control.validate();
+				}
 				else
+				{
+					//_control.width = (actualWidth - _title.x) * (GlobalConfig.isPhone ? 0.35 : 0.25);
 					_control.height = actualHeight * 0.6;
+				}
+				
 				_control.x = actualWidth - _control.width - _padding;
 				_control.y = (_itemHeight - _control.height) * 0.5;
 			}
