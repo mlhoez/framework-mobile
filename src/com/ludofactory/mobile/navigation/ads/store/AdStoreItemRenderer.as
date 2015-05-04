@@ -6,19 +6,20 @@ Created : 25 nov. 2013
 */
 package com.ludofactory.mobile.navigation.ads.store
 {
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	
-	import flash.geom.Point;
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
-	import flash.text.TextFormat;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
+	
+	import flash.geom.Point;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
+	import flash.text.TextFormat;
 	
 	import starling.events.Event;
 	import starling.events.Touch;
@@ -304,7 +305,7 @@ package com.ludofactory.mobile.navigation.ads.store
 			HELPER_TOUCHES_VECTOR.length = 0;
 		}
 		
-		protected function owner_scrollHandler(event:Event):void
+		public function owner_scrollHandler(event:Event = null):void
 		{
 			this._touchPointID = -1;
 		}

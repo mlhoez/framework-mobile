@@ -6,10 +6,12 @@ Created : 25 nov. 2013
 */
 package com.ludofactory.mobile.navigation.ads.store
 {
+	
 	import com.ludofactory.mobile.core.manager.TimerManager;
 	
 	import feathers.controls.List;
 	import feathers.controls.Scroller;
+	import feathers.controls.supportClasses.ListDataViewPort;
 	import feathers.core.FeathersControl;
 	import feathers.data.ListCollection;
 	import feathers.events.FeathersEventType;
@@ -120,6 +122,21 @@ package com.ludofactory.mobile.navigation.ads.store
 				_list.dataProvider.removeAll();
 				_list.dataProvider = new ListCollection(_dataProvider);
 			}
+		}
+		
+		/**
+		 * Called by the StoreScreen when we scroll in the main container.
+		 */
+		public function resetTouchId():void
+		{
+			var len:int = (_list.viewPort as ListDataViewPort).numChildren;
+			var gameItemRenderer:AdStoreItemRenderer;
+			for(var i:int = 0; i < len; i++)
+			{
+				gameItemRenderer = AdStoreItemRenderer( (_list.viewPort as ListDataViewPort).getChildAt(i) );
+				gameItemRenderer.owner_scrollHandler();
+			}
+			gameItemRenderer = null;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

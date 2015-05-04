@@ -37,34 +37,31 @@ package com.ludofactory.mobile.navigation.store
 	import feathers.controls.Scroller;
 	import feathers.controls.supportClasses.ListDataViewPort;
 	import feathers.data.ListCollection;
+	import feathers.events.FeathersEventType;
 	import feathers.layout.TiledRowsLayout;
 	import feathers.layout.VerticalLayout;
 	
 	import starling.events.Event;
 	
 	/**
-	 * In-App Purchases ids cannot be shared between two applications. Instead, we
-	 * need to define the same offer over each application. On Google Play, everything
-	 * is fine because applications can have the same in-app purchase id, but on iTunes
-	 * Connect, two applications cannot have the same in-app purchase id.
+	 * In-App Purchases ids cannot be shared between two applications. Instead, we need to define the same offer over
+	 * each application. On Google Play, everything is fine because applications can have the same in-app purchase id,
+	 * but on iTunes Connect, two applications cannot have the same in-app purchase id.
 	 * 
-	 * <p>Because of this, we need to add a prefix to each offer to uniquely identify
-	 * each in-app purchase over each application. For example, Pyramid will have an
-	 * in-app purchase "pyramid.1" and Gold Digger will have an in-app purchase with
-	 * id "gold_digger.1".</p>
+	 * <p>Because of this, we need to add a prefix to each offer to uniquely identify each in-app purchase over each
+	 * application. For example, Pyramid will have an in-app purchase "pyramid.1" and Gold Digger will have an in-app
+	 * purchase with id "gold_digger.1".</p>
 	 * 
-	 * <p>Later, when all the products have been retreived in the StoreScreen, we need
-	 * to extract the id of the offer that will match the one set in the database. For
-	 * instance, "pyramid.1" will give us the offer id "1".</p>
+	 * <p>Later, when all the products have been retreived in the StoreScreen, we need to extract the id of the offer
+	 * that will match the one set in the database. For instance, "pyramid.1" will give us the offer id "1".</p>
 	 * 
-	 * <p>When all the ids have been extracted, we send them to our server to retreive
-	 * the number of credits that will be given to the player when he buy this offer.</p>
+	 * <p>When all the ids have been extracted, we send them to our server to retreive the number of credits that will
+	 * be given to the player when he buy this offer.</p>
 	 */	
 	public class StoreScreen extends AdvancedScreen
 	{
 		/**
-		 * Main container used to scroll the ads
-		 * add the list within the same container. */		
+		 * Main container used to scroll the ads add the list within the same container. */		
 		private var _container:ScrollContainer;
 		/**
 		 * The ad container. */		
@@ -115,6 +112,7 @@ package com.ludofactory.mobile.navigation.store
 			_container = new ScrollContainer();
 			_container.layout = vlayout;
 			_container.visible = false;
+			_container.addEventListener(FeathersEventType.SCROLL_START, onStartScroll);
 			addChild(_container);
 			
 			_adContainer = new AdStoreContainer();
@@ -184,7 +182,14 @@ package com.ludofactory.mobile.navigation.store
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
-//------------------------------------------------------------------------------------------------------------
+		
+		private function onStartScroll(event:Event):void
+		{
+			if(_adContainer)
+			{
+				_adContainer.resetTouchId();
+			}
+		}
 		
 		/**
 		 * When the store is initialized and if it is available, we need to fetch
@@ -573,6 +578,7 @@ package com.ludofactory.mobile.navigation.store
 			_list.removeFromParent(true);
 			_list = null;
 			
+			_container.removeEventListener(FeathersEventType.SCROLL_START, onStartScroll);
 			_container.removeFromParent(true);
 			_container = null;
 			
