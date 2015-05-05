@@ -11,6 +11,7 @@ package com.ludofactory.mobile.navigation.sponsor.info
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	
@@ -69,6 +70,7 @@ package com.ludofactory.mobile.navigation.sponsor.info
 			//this.width = GlobalConfig.stageWidth;
 			this.height = _itemHeight;
 			
+			_backgroundSkin = new Scale3Image(Theme.sponsorBonusBackground, GlobalConfig.dpiScale);
 			addChild(_backgroundSkin);
 			
 			_title = new Label();

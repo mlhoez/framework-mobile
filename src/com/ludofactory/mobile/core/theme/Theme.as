@@ -8,13 +8,9 @@ package com.ludofactory.mobile.core.theme
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.navigation.achievements.TrophyMessage;
 	import com.ludofactory.mobile.navigation.ads.tournament.AdTournamentItemRenderer;
-	import com.ludofactory.mobile.navigation.alert.AlertItemRenderer;
-	import com.ludofactory.mobile.navigation.cs.thread.CSThreadItemRenderer;
 	import com.ludofactory.mobile.navigation.engine.FacebookFriendElement;
 	import com.ludofactory.mobile.navigation.home.RuleItemRenderer;
 	import com.ludofactory.mobile.navigation.menu.MenuItemRenderer;
-	import com.ludofactory.mobile.navigation.sponsor.info.SponsorBonusItemRenderer;
-	import com.ludofactory.mobile.navigation.store.StoreItemRenderer;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Callout;
@@ -681,9 +677,6 @@ package com.ludofactory.mobile.core.theme
 			
 			// List
 			getStyleProviderForClass(List).defaultStyleFunction = listInitializer;
-			
-			// Parrainage
-			getStyleProviderForClass(SponsorBonusItemRenderer).defaultStyleFunction = sponsorBonusItemRendererInitializer;
 			
 			// AbstractNotification
 			getStyleProviderForClass(AbstractNotification).defaultStyleFunction = abstractNotificationInitializer;
@@ -1949,14 +1942,9 @@ package com.ludofactory.mobile.core.theme
 //
 //------------------------------------------------------------------------------------------------------------
 		
-		protected var sponsorBonusBackground:Scale3Textures;
+		public static var sponsorBonusBackground:Scale3Textures;
 		protected static const SPONSOR_BONUS_REGION1:int = 5; // the x position westart to slice
 		protected static const SPONSOR_BONUS_REGION2:int = 20; // the width after the x position
-		
-		protected function sponsorBonusItemRendererInitializer(renderer:SponsorBonusItemRenderer):void
-		{
-			renderer.backgroundSkin = new Scale3Image(this.sponsorBonusBackground, this.scaleFactor);
-		}
 		
 //------------------------------------------------------------------------------------------------------------
 //
