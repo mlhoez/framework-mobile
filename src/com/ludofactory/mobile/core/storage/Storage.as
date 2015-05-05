@@ -275,7 +275,7 @@ package com.ludofactory.mobile.core.storage
 			if( propertyName in _configurationSharedObject.data && _configurationSharedObject.data[propertyName] != null )
 			{
 				// FIXME This is a temporary hack in order to change the value of the number
-				// of free games required to play in tournament when the rank is equal or greater
+				// of tokens required to play in tournament when the rank is equal or greater
 				// than the rank 2 (which is : ...).
 				if( propertyName == StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE && MemberManager.getInstance().getRank() >= 2)
 					return int(_configurationSharedObject.data[propertyName]) - 1;
