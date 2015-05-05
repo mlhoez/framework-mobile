@@ -589,7 +589,7 @@ package com.ludofactory.mobile.navigation.tournament
 				else
 				{
 					// si pas de passage à la page de sélection de mise
-					/*if( (MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ))
+					/*if( (MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty( StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE ))
 						// || (MemberManager.getInstance().getPoints() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE))
 					)
 					{
@@ -602,7 +602,7 @@ package com.ludofactory.mobile.navigation.tournament
 						AbstractEntryPoint.screenNavigator.showScreen( AdvancedScreen.AUTHENTICATION_SCREEN );
 					}*/
 					
-					if( MemberManager.getInstance().getNumTokens() < int(Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)) )
+					if( MemberManager.getInstance().getNumTokens() < int(Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)) )
 					{
 						//AbstractEntryPoint.screenNavigator.showScreen( AdvancedScreen.AUTHENTICATION_SCREEN );
 						//NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.TOURNAMENT_RANKING_SCREEN) );

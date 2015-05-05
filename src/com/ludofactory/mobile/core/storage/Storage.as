@@ -147,7 +147,7 @@ package com.ludofactory.mobile.core.storage
 						setProperty(StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE, int(result.participation.solo.credits));
 					
 					if( result.participation.solo.hasOwnProperty("jetons") && result.participation.solo.jetons != null )
-						setProperty(StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE, int(result.participation.solo.jetons));
+						setProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE, int(result.participation.solo.jetons));
 				}
 				
 				if( result.participation.hasOwnProperty("tournoi") && result.participation.tournoi != null )
@@ -159,7 +159,7 @@ package com.ludofactory.mobile.core.storage
 						setProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE, int(result.participation.tournoi.points));
 					
 					if( result.participation.tournoi.hasOwnProperty("jetons") && result.participation.tournoi.jetons != null )
-						setProperty(StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE, int(result.participation.tournoi.jetons));
+						setProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE, int(result.participation.tournoi.jetons));
 				}
 			}
 			
@@ -194,7 +194,6 @@ package com.ludofactory.mobile.core.storage
 		{
 			var faq:Object = Storage.getInstance().getProperty(StorageConfig.PROPERTY_FAQ);
 			faq[LanguageManager.getInstance().lang] = JSON.stringify(data.tabFaq);
-			//setProperty(StorageConfig.PROPERTY_FAQ_VERSION, int(data.version));
 			setProperty(StorageConfig.PROPERTY_FAQ, faq);
 		}
 		
@@ -277,7 +276,7 @@ package com.ludofactory.mobile.core.storage
 				// FIXME This is a temporary hack in order to change the value of the number
 				// of tokens required to play in tournament when the rank is equal or greater
 				// than the rank 2 (which is : ...).
-				if( propertyName == StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE && MemberManager.getInstance().getRank() >= 2)
+				if( propertyName == StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE && MemberManager.getInstance().getRank() >= 2)
 					return int(_configurationSharedObject.data[propertyName]) - 10; // -10 jetons si le grade est ok
 				else
 					return _configurationSharedObject.data[propertyName];

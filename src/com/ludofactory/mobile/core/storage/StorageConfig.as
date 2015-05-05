@@ -68,6 +68,57 @@ package com.ludofactory.mobile.core.storage
 		 */		
 		internal static const GLOBAL_CONFIG_SO_NAME:String = "pyramid_config";
 		
+	// ----------------------- STAKES
+		
+		/**
+		 * Number of tokens required to play in solo mode. */
+		public static const NUM_TOKENS_IN_SOLO_MODE:String = "DEFAULT_NUM_TOKENS_IN_SOLO_MODE";
+		public static const DEFAULT_NUM_TOKENS_IN_SOLO_MODE:int = 5;
+		/**
+		 * Number of credits required to play in solo mode. */
+		public static const PROPERTY_NUM_CREDITS_IN_FREE_MODE:String = "DEFAULT_NUM_CREDITS_IN_FREE_MODE";
+		public static const DEFAULT_NUM_CREDITS_IN_FREE_MODE:int = 1;
+		
+		/**
+		 * Number of tokens required to play in tournament mode. Without VIP bonus, so 30 instead of 20 (30 -10 VIP). */
+		public static const NUM_TOKENS_IN_TOURNAMENT_MODE:String = "DEFAULT_NUM_TOKENS_IN_TOURNAMENT_MODE";
+ 		public static const DEFAULT_NUM_TOKENS_IN_TOURNAMENT_MODE:int = 30;
+		/**
+		 * Number of points required to play in tournament mode. */
+		public static const PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE:String = "DEFAULT_NUM_POINTS_IN_TOURNAMENT_MODE";
+ 		public static const DEFAULT_NUM_POINTS_IN_TOURNAMENT_MODE:int = 2000;
+		/**
+		 * Number of credits required to play in tournament mode. */
+		public static const PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE:String = "DEFAULT_NUM_CREDITS_IN_TOURNAMENT_MODE";
+ 		public static const DEFAULT_NUM_CREDITS_IN_TOURNAMENT_MODE:int = 5;
+		
+	// ----------------------- LANGUAGE
+		
+		/**
+		 * Default loaded language. The default value is "unknown" so that the LanguageManager know it has to
+		 * parse all available languages from the file system and determine to best one. */
+		public static const DEFAULT_LANGUAGE:String = "unknown";
+		
+	// ----------------------- 
+		
+		/**
+		 * The FAQ. */
+		public static const PROPERTY_FAQ:String = "DEFAULT_FAQ";
+		public static const DEFAULT_FAQ:Object = { fr : DefaultFaq.FR, en : DefaultFaq.EN };
+		
+		/**
+		 * <strong>This is the default value for the vip
+		 * ranks</strong><br />
+		 *
+		 * <p>Go to the debug screen to get the default values
+		 * for the current language. You just need to copy and
+		 * paste here the values prompted in the console. </p> */
+		public static const DEFAULT_VIP:Object = { fr : DefaultVip.FR,
+			en : DefaultVip.EN  };
+		
+		public static const DEFAULT_VIP_WITHOUT_GIFTS:Object = { fr : '[{"presentation":"Dès maintenant, faites évoluer votre rang VIP et obtenez de nombreux avantages pour jouer plus longtemps et gagner plus facilement des cadeaux !","condition":"Il suffit de s\'inscrire","rang":1,"nom_rang":"Moussaillon","acces":-1,"tab_privileges":[]},{"acces":-1,"condition":"Il suffit de cliquer sur le lien du mail reçu lors de l\'inscription.","rang":2,"nom_rang":"Matelot","tab_privileges":[{"titre":"25% d\'économie sur les Tournois","description":"En tournoi, au lieu d\'utiliser 4 parties gratuites vous n\'en utilisez plus que 3."}]},{"acces":10,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":3,"nom_rang":"Boucanier","tab_privileges":[{"titre":"1 partie gratuite en plus","description":"Vous pouvez faire une partie supplémentaire gratuite par jour."}]},{"acces":50,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":4,"nom_rang":"Aventurier I","tab_privileges":[{"titre":"Accès Boutique VIP","description":"Avec ce rang, vous pouvez accèder à la boutique VIP. Echangez directement vos Points contre le cadeau de vos rêves."},{"titre":"400 Points par filleuls","description":"En parrainant de futurs pirates, vous obtiendrez non plus 200 Points mais 400 Points par tête !"}]},{"acces":100,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":5,"nom_rang":"Aventurier II","tab_privileges":[{"titre":"Gain X6 en utilisant un crédit","description":"Vos Points sont multipliés par 6 quand vous utilisez un crédit."}]},{"acces":150,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":6,"nom_rang":"Aventurier III","tab_privileges":[{"titre":"5% des gains des filleuls","description":"Désormais avec ce rang, vous gagnez des Points même les jours où vous ne jouez pas. C\'est simple à chaque fois qu\'un de vos filleuls gagne des Points sur une partie classique, votre solde de Points est augmenté de 5% des points qu\'il fera. Ces Points seront ajoutés chaque jour à Minuit à votre solde de Points."},{"titre":"50 Points max par partie gratuite","description":"Grâce à ce rang, quand vous atteignez le dernier palier de score pour les parties gratuites, vous gagnez 50 Points au lieu de 40 Points."}]},{"acces":200,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":7,"nom_rang":"Pirate I","tab_privileges":[{"titre":"10% sur toutes les parties","description":"Avec ce rang, vous gagnez 10% de Points supplémentaires sur vos parties classiques. Ces Points seront ajoutés à votre solde de Points tous les jours à Minuit."}]},{"acces":300,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":8,"nom_rang":"Pirate II","tab_privileges":[{"titre":"5% sur la boutique","description":"Avec ce rang, la valeur des lots de la boutique est diminuée. Vous économisez 5% de vos Points pour en profiter sur les autres lots ou en Tournoi."}]},{"acces":400,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":9,"nom_rang":"Pirate III","tab_privileges":[{"titre":"5% sur les crédits","description":"Avec ce rang, vous gagnez 5 Crédits supplémentaires tous les 100 Crédits achetés. Agréable pour rejouer à vos jeux préférés ou devenir le premier à un tournoi !!!"}]},{"acces":600,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":10,"nom_rang":"1er Maître","tab_privileges":[{"titre":"10% sur la boutique","description":"Avec ce rang, la valeur des lots de la boutique est diminuée. Vous économisez 10% de vos Points pour en profiter sur les autres lots ou en Tournoi."}]},{"acces":1200,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":11,"nom_rang":"2nd Maître","tab_privileges":[{"titre":"10% sur les crédits","description":"Avec ce rang, vous gagnez 10 Crédits supplémentaires tous les 100 Crédits achetés. Agréable pour rejouer à vos jeux préférés ou devenir le premier à un tournoi !!!"}]},{"acces":2400,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":12,"nom_rang":"Capitaine","tab_privileges":[{"titre":"Relation privilégiée","description":"Avec ce rang, Ludokado n\'aura plus de secret pour vous. Vous devenez un véritable acteur du site. Ludokado vous sollicitera pour avoir votre avis sur les futures évolutions du site. Palpitant !!!"}]}]',
+			en : '[{"condition":"You just need to register","rang":1,"nom_rang":"Midshipman","presentation":"Reach new VIP levels and get lots of advantages to play longer and win prizes easily right now !","acces":-1,"tab_privileges":[]},{"condition":"You just need to click on the link in the email you received when registering.","acces":-1,"rang":2,"nom_rang":"Seaman","tab_privileges":[{"titre":"Save 25% on Tournaments","description":"When playing tournaments, you only use 3 free games instead of 4."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":10,"rang":3,"nom_rang":"Buccaneer","tab_privileges":[{"titre":"1 extra free game","description":"You can play an extra free game every day."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":50,"rang":4,"nom_rang":"Explorer I ","tab_privileges":[{"titre":"Go to the VIP shop","description":"In this level, you can access our VIP shop. Exchange your Points for amazing gifts."},{"titre":"400 Points per friend","description":"When referring future pirates, you will get 400 Points per friend instead of 200 !"}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":100,"rang":5,"nom_rang":"Explorer II","tab_privileges":[{"titre":"Winnings X6 when using a credit","description":"You win 6 times more Points when you use a credit."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":150,"rang":6,"nom_rang":"Explorer III","tab_privileges":[{"titre":"5% on your friends\' winnings","description":"In this level, you win Points even when you don\'t play. Indeed, each time one of your friends win Points on a classic game, the number of your Points increases by 5% of the points won by your friend. These Points are added to your account every day at midnight."},{"titre":"50 Points max per free game","description":"In this level, when you reach the last level of score on free games, you win 50 Points instead of 40."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":200,"rang":7,"nom_rang":"Pirate I","tab_privileges":[{"titre":"10% on all games","description":"In this level, you win 10% extra Points on your classic games. These Points are added to your Points balance every day at midnight."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":300,"rang":8,"nom_rang":"Pirate II","tab_privileges":[{"titre":"5% in the shop","description":"In this level, the value of the prizes available in our shop decreases. You save 5% of your Points to use them for other prizes or for Tournaments."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":400,"rang":9,"nom_rang":"Pirate III","tab_privileges":[{"titre":"5% on credits","description":"In this level, you win 5 extra Credits every 100 Credits you buy. This is great news to play your favourite games or to become first in a tournament !!!"}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":600,"rang":10,"nom_rang":"1st Master","tab_privileges":[{"titre":"10% on the shop","description":"In this level, the value of the prizes available in our shop decreases. You save 10% of your Points to use them for other prizes or for Tournaments."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":1200,"rang":11,"nom_rang":"2nd Master","tab_privileges":[{"titre":"10% on credits","description":"In this level, you win 10 extra Credits every 100 Credits you buy. This is great news to play again your favourite games or to become first in a tournament !!!"}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":2400,"rang":12,"nom_rang":"Captain","tab_privileges":[{"titre":"Special relationship","description":"In this level, LudoKado has no secret for you. Thus, you become a real actor on our website. LudoKado might ask you your opinion about future changes in the website. Thrilling !!!"}]}]'  };
+		
 //------------------------------------------------------------------------------------------------------------
 //	Configuration default values
 		
@@ -102,35 +153,9 @@ package com.ludofactory.mobile.core.storage
 														  new ScoreToStarsData( { items:9,  inf:55001,  sup:63000 } ),
 														  new ScoreToStarsData( { items:10, inf:63001,  sup:8388607 } ) ];
 		
-		/**
-		 * <strong>This is the default value for the preferred language</strong><br />
-		 * The default is "unknown" so that the Localizer know it has to parse all
-		 * available languages from the file system.
-		 * 
-		 * @see com.ludofactory.mobile.core.Localizer
-		 */		
-		public static const DEFAULT_LANGUAGE:String = "unknown";
 		
-		/**
-		 * <strong>This is the default value for the number of free game sessions required to play in free play
-		 * mode.</strong> */		
-		public static const DEFAULT_NUM_FREE_IN_FREE_MODE:int = 5;
-		/**
-		 * <strong>This is the default value for the number of free game sessions
-		 * required to play in tournament mode.</strong> Without VIP bonus, so 30 always here instead of 20 (30 -10 VIP). */	
-		public static const DEFAULT_NUM_FREE_IN_TOURNAMENT_MODE:int = 30;
-		/**
-		 * <strong>This is the default value for the number of points
-		 * required to play in tournament mode.</strong> */	
-		public static const DEFAULT_NUM_POINTS_IN_TOURNAMENT_MODE:int = 2000;
-		/**
-		 * <strong>This is the default value for the number of credits
-		 * required to play in free play mode.</strong> */	
-		public static const DEFAULT_NUM_CREDITS_IN_FREE_MODE:int = 1;
-		/**
-		 * <strong>This is the default value for the number of credits
-		 * required to play in tournament mode.</strong> */	
-		public static const DEFAULT_NUM_CREDITS_IN_TOURNAMENT_MODE:int = 5;
+		
+	
 		
 		/**
 		 * <strong>This is the default value for the customer service themes</strong><br />Theses values are
@@ -166,30 +191,9 @@ package com.ludofactory.mobile.core.storage
                                                                                     new CSThemeData( { id:7, key:"Autre",              index:7 } ) ];
 
 		
-		/**
-		 * <strong>This is the default value for the game
-		 * faq</strong><br />
-		 * 
-		 * <p>Go to the debug screen to get the default values
-		 * for the current language. You just need to copy and
-		 * paste here the values prompted in the console. </p> */	
-		public static const DEFAULT_FAQ:Object = { fr : DefaultFaq.FR,
-												   en : DefaultFaq.EN };
-		public static const DEFAULT_FAQ_VERSION:int = 1;
 		
-		/**
-		 * <strong>This is the default value for the vip
-		 * ranks</strong><br />
-		 * 
-		 * <p>Go to the debug screen to get the default values
-		 * for the current language. You just need to copy and
-		 * paste here the values prompted in the console. </p> */	
-		public static const DEFAULT_VIP:Object = { fr : DefaultVip.FR,
-												   en : DefaultVip.EN  };
-
-        public static const DEFAULT_VIP_WITHOUT_GIFTS:Object = { fr : '[{"presentation":"Dès maintenant, faites évoluer votre rang VIP et obtenez de nombreux avantages pour jouer plus longtemps et gagner plus facilement des cadeaux !","condition":"Il suffit de s\'inscrire","rang":1,"nom_rang":"Moussaillon","acces":-1,"tab_privileges":[]},{"acces":-1,"condition":"Il suffit de cliquer sur le lien du mail reçu lors de l\'inscription.","rang":2,"nom_rang":"Matelot","tab_privileges":[{"titre":"25% d\'économie sur les Tournois","description":"En tournoi, au lieu d\'utiliser 4 parties gratuites vous n\'en utilisez plus que 3."}]},{"acces":10,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":3,"nom_rang":"Boucanier","tab_privileges":[{"titre":"1 partie gratuite en plus","description":"Vous pouvez faire une partie supplémentaire gratuite par jour."}]},{"acces":50,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":4,"nom_rang":"Aventurier I","tab_privileges":[{"titre":"Accès Boutique VIP","description":"Avec ce rang, vous pouvez accèder à la boutique VIP. Echangez directement vos Points contre le cadeau de vos rêves."},{"titre":"400 Points par filleuls","description":"En parrainant de futurs pirates, vous obtiendrez non plus 200 Points mais 400 Points par tête !"}]},{"acces":100,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":5,"nom_rang":"Aventurier II","tab_privileges":[{"titre":"Gain X6 en utilisant un crédit","description":"Vos Points sont multipliés par 6 quand vous utilisez un crédit."}]},{"acces":150,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":6,"nom_rang":"Aventurier III","tab_privileges":[{"titre":"5% des gains des filleuls","description":"Désormais avec ce rang, vous gagnez des Points même les jours où vous ne jouez pas. C\'est simple à chaque fois qu\'un de vos filleuls gagne des Points sur une partie classique, votre solde de Points est augmenté de 5% des points qu\'il fera. Ces Points seront ajoutés chaque jour à Minuit à votre solde de Points."},{"titre":"50 Points max par partie gratuite","description":"Grâce à ce rang, quand vous atteignez le dernier palier de score pour les parties gratuites, vous gagnez 50 Points au lieu de 40 Points."}]},{"acces":200,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":7,"nom_rang":"Pirate I","tab_privileges":[{"titre":"10% sur toutes les parties","description":"Avec ce rang, vous gagnez 10% de Points supplémentaires sur vos parties classiques. Ces Points seront ajoutés à votre solde de Points tous les jours à Minuit."}]},{"acces":300,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":8,"nom_rang":"Pirate II","tab_privileges":[{"titre":"5% sur la boutique","description":"Avec ce rang, la valeur des lots de la boutique est diminuée. Vous économisez 5% de vos Points pour en profiter sur les autres lots ou en Tournoi."}]},{"acces":400,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":9,"nom_rang":"Pirate III","tab_privileges":[{"titre":"5% sur les crédits","description":"Avec ce rang, vous gagnez 5 Crédits supplémentaires tous les 100 Crédits achetés. Agréable pour rejouer à vos jeux préférés ou devenir le premier à un tournoi !!!"}]},{"acces":600,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":10,"nom_rang":"1er Maître","tab_privileges":[{"titre":"10% sur la boutique","description":"Avec ce rang, la valeur des lots de la boutique est diminuée. Vous économisez 10% de vos Points pour en profiter sur les autres lots ou en Tournoi."}]},{"acces":1200,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":11,"nom_rang":"2nd Maître","tab_privileges":[{"titre":"10% sur les crédits","description":"Avec ce rang, vous gagnez 10 Crédits supplémentaires tous les 100 Crédits achetés. Agréable pour rejouer à vos jeux préférés ou devenir le premier à un tournoi !!!"}]},{"acces":2400,"condition":"Rechargez votre compte de {0} Crédits\\npour obtenir ce rang !","rang":12,"nom_rang":"Capitaine","tab_privileges":[{"titre":"Relation privilégiée","description":"Avec ce rang, Ludokado n\'aura plus de secret pour vous. Vous devenez un véritable acteur du site. Ludokado vous sollicitera pour avoir votre avis sur les futures évolutions du site. Palpitant !!!"}]}]',
-                                                                 en : '[{"condition":"You just need to register","rang":1,"nom_rang":"Midshipman","presentation":"Reach new VIP levels and get lots of advantages to play longer and win prizes easily right now !","acces":-1,"tab_privileges":[]},{"condition":"You just need to click on the link in the email you received when registering.","acces":-1,"rang":2,"nom_rang":"Seaman","tab_privileges":[{"titre":"Save 25% on Tournaments","description":"When playing tournaments, you only use 3 free games instead of 4."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":10,"rang":3,"nom_rang":"Buccaneer","tab_privileges":[{"titre":"1 extra free game","description":"You can play an extra free game every day."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":50,"rang":4,"nom_rang":"Explorer I ","tab_privileges":[{"titre":"Go to the VIP shop","description":"In this level, you can access our VIP shop. Exchange your Points for amazing gifts."},{"titre":"400 Points per friend","description":"When referring future pirates, you will get 400 Points per friend instead of 200 !"}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":100,"rang":5,"nom_rang":"Explorer II","tab_privileges":[{"titre":"Winnings X6 when using a credit","description":"You win 6 times more Points when you use a credit."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":150,"rang":6,"nom_rang":"Explorer III","tab_privileges":[{"titre":"5% on your friends\' winnings","description":"In this level, you win Points even when you don\'t play. Indeed, each time one of your friends win Points on a classic game, the number of your Points increases by 5% of the points won by your friend. These Points are added to your account every day at midnight."},{"titre":"50 Points max per free game","description":"In this level, when you reach the last level of score on free games, you win 50 Points instead of 40."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":200,"rang":7,"nom_rang":"Pirate I","tab_privileges":[{"titre":"10% on all games","description":"In this level, you win 10% extra Points on your classic games. These Points are added to your Points balance every day at midnight."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":300,"rang":8,"nom_rang":"Pirate II","tab_privileges":[{"titre":"5% in the shop","description":"In this level, the value of the prizes available in our shop decreases. You save 5% of your Points to use them for other prizes or for Tournaments."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":400,"rang":9,"nom_rang":"Pirate III","tab_privileges":[{"titre":"5% on credits","description":"In this level, you win 5 extra Credits every 100 Credits you buy. This is great news to play your favourite games or to become first in a tournament !!!"}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":600,"rang":10,"nom_rang":"1st Master","tab_privileges":[{"titre":"10% on the shop","description":"In this level, the value of the prizes available in our shop decreases. You save 10% of your Points to use them for other prizes or for Tournaments."}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":1200,"rang":11,"nom_rang":"2nd Master","tab_privileges":[{"titre":"10% on credits","description":"In this level, you win 10 extra Credits every 100 Credits you buy. This is great news to play again your favourite games or to become first in a tournament !!!"}]},{"condition":"Top up your account with {0} Credits\\nto reach this level !","acces":2400,"rang":12,"nom_rang":"Captain","tab_privileges":[{"titre":"Special relationship","description":"In this level, LudoKado has no secret for you. Thus, you become a real actor on our website. LudoKado might ask you your opinion about future changes in the website. Thrilling !!!"}]}]'  };
-        public static const DEFAULT_VIP_VERSION:int = 1;
+		
+		
 		
 		/**
 		 * <strong>This is the default value for the game
@@ -338,21 +342,7 @@ package com.ludofactory.mobile.core.storage
 		 */			
 		public static const PROPERTY_TRANSLATIONS:String = "translations";
 		
-		/**
-		 * Access the number of free game sessions required to play in free play mode. */		
-		public static const PROPERTY_NUM_FREE_IN_FREE_MODE:String = "DEFAULT_NUM_FREE_IN_FREE_MODE";
-		/**
-		 * Access the number of free game sessions required to tournament mode. */		
-		public static const PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE:String = "DEFAULT_NUM_FREE_IN_TOURNAMENT_MODE";
-		/**
-		 * Access the number of points required to play in tournament mode. */		
-		public static const PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE:String = "DEFAULT_NUM_POINTS_IN_TOURNAMENT_MODE";
-		/**
-		 * Access the number of credits required to play in free play mode. */		
-		public static const PROPERTY_NUM_CREDITS_IN_FREE_MODE:String = "DEFAULT_NUM_CREDITS_IN_FREE_MODE";
-		/**
-		 * Access the number of credits required to play in tournament mode. */		
-		public static const PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE:String = "DEFAULT_NUM_CREDITS_IN_TOURNAMENT_MODE";
+		
 		
 		/**
 		 * Access the customer service themes. */		
@@ -361,18 +351,9 @@ package com.ludofactory.mobile.core.storage
 		 * Access the customer service themes. */
 		public static const PROPERTY_CUSTOMER_SERVICE_THEMES_WITHOUT_GIFTS:String = "DEFAULT_CUSTOMER_SERVICE_THEMES_WITHOUT_GIFTS";
 		
-		/**
-		 * Access the faq. */		
-		public static const PROPERTY_FAQ:String = "DEFAULT_FAQ";
-		public static const PROPERTY_FAQ_VERSION:String = "DEFAULT_FAQ_VERSION";
 		
-		/**
-		 * Access the vip. */		
-		public static const PROPERTY_VIP:String = "DEFAULT_VIP";
-        /**
-         * Access the vip. */
-        public static const PROPERTY_VIP_WITHOUT_GIFTS:String = "DEFAULT_VIP_WITHOUT_GIFTS";
-		public static const PROPERTY_VIP_VERSION:String = "DEFAULT_VIP_VERSION";
+		
+		
 		
 		/**
 		 * Access the news. */		

@@ -396,7 +396,6 @@ package com.ludofactory.mobile.core.remoting
 		public function getFaq(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = getGenericParams();
-			//params.version = Storage.getInstance().getProperty(StorageConfig.PROPERTY_FAQ_VERSION);
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getFAQ", params);
 		}
 		

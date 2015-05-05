@@ -97,7 +97,7 @@ package com.ludofactory.mobile.navigation.game
 		 */		
 		private function onUpdateData(event:Event = null):void
 		{
-			_isEnabled = MemberManager.getInstance().getNumTokens() >= Storage.getInstance().getProperty(AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE : StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE);
+			_isEnabled = MemberManager.getInstance().getNumTokens() >= Storage.getInstance().getProperty(AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE : StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE);
 			
 			_iconClock.visible = false;
 
@@ -108,16 +108,16 @@ package com.ludofactory.mobile.navigation.game
 			
 			if( _isEnabled )
 			{
-				_label.text = formatString( _n("Utiliser {0} Jeton", "Utiliser {0} Jetons", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
-					Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
+				_label.text = formatString( _n("Utiliser {0} Jeton", "Utiliser {0} Jetons", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)),
+					Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE ));
 				_label.color = 0x0d2701;
 			}
 			else
 			{
 				if( MemberManager.getInstance().getNumTokens() != 0 || !MemberManager.getInstance().isLoggedIn() )
 				{
-					_label.text = formatString( _n("Utiliser {0} Jeton", "Utiliser {0} Jetons", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
-						Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
+					_label.text = formatString( _n("Utiliser {0} Jeton", "Utiliser {0} Jetons", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)),
+						Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE ));
 					_label.color = 0x2d2d2d;
 				}
 				else

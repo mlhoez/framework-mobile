@@ -381,7 +381,7 @@ package com.ludofactory.mobile.navigation.game
 				}
 				
 				// Ancienne gestion sans passage à l'écran de mises
-				/*if( MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE ) )
+				/*if( MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty( StorageConfig.NUM_TOKENS_IN_SOLO_MODE ) )
 				{
 					AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_FREE;
 					AbstractEntryPoint.screenNavigator.screenData.gamePrice = GameSession.PRICE_FREE;

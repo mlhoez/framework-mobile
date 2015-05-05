@@ -180,7 +180,7 @@ package com.ludofactory.mobile.navigation.game
 		private function onPlayWithFree(event:Event):void
 		{
 			this.advancedOwner.screenData.gamePrice = StakeType.TOKEN;
-			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:StakeType.TOKEN, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ) })
+			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:StakeType.TOKEN, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE ) })
 			handleNextScreen();
 		}
 		
