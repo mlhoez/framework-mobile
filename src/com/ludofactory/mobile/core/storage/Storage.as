@@ -141,13 +141,13 @@ package com.ludofactory.mobile.core.storage
 			// parse costs to play
 			if( result.hasOwnProperty("participation") && result.participation != null )
 			{
-				if( result.participation.hasOwnProperty("libre") && result.participation.libre != null )
+				if( result.participation.hasOwnProperty("solo") && result.participation.solo != null )
 				{
-					if( result.participation.libre.hasOwnProperty("credits") && result.participation.libre.credits != null )
-						setProperty(StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE, int(result.participation.libre.credits));
+					if( result.participation.solo.hasOwnProperty("credits") && result.participation.solo.credits != null )
+						setProperty(StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE, int(result.participation.solo.credits));
 					
-					if( result.participation.libre.hasOwnProperty("gratuit") && result.participation.libre.gratuit != null )
-						setProperty(StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE, int(result.participation.libre.gratuit));
+					if( result.participation.solo.hasOwnProperty("jetons") && result.participation.solo.jetons != null )
+						setProperty(StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE, int(result.participation.solo.jetons));
 				}
 				
 				if( result.participation.hasOwnProperty("tournoi") && result.participation.tournoi != null )
@@ -158,8 +158,8 @@ package com.ludofactory.mobile.core.storage
 					if( result.participation.tournoi.hasOwnProperty("points") && result.participation.tournoi.points != null )
 						setProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE, int(result.participation.tournoi.points));
 					
-					if( result.participation.tournoi.hasOwnProperty("gratuit") && result.participation.tournoi.gratuit != null )
-						setProperty(StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE, int(result.participation.tournoi.gratuit));
+					if( result.participation.tournoi.hasOwnProperty("jetons") && result.participation.tournoi.jetons != null )
+						setProperty(StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE, int(result.participation.tournoi.jetons));
 				}
 			}
 			
