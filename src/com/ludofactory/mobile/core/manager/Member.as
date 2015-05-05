@@ -96,12 +96,12 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * The member's number of tokens (default is 50 for an anonymous member) */		
-		private var _numTokens:int = 10;
+		private var _numTokens:int = 50;
 		
 		/**
 		 * The total of tokens available each day (50 by default with a common rank). (this is static unlike _numTokens
 		 * which is decremented). */		
-		private var _totalTokensADay:int = 10;
+		private var _totalTokensADay:int = 50;
 		
 		/**
 		 * The member's number of points */		
