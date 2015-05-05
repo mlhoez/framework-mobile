@@ -68,7 +68,7 @@ package com.ludofactory.mobile.navigation.game
 			
 			_title = new Label();
 			_title.touchable = false;
-			_title.text = _("Sélectionnez votre mise...");
+			_title.text = _("Choisissez votre mise");
 			addChild( _title );
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 70), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 5, 5, 3) ];
@@ -107,7 +107,7 @@ package com.ludofactory.mobile.navigation.game
 					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150);
 					if( _withPoints ) _withPoints.height = _withTokens.height;
 					
-					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.45);
+					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.58 : 0.45);
 					if( _withPoints ) _withPoints.width = _withTokens.width;
 					
 					_withTokens.x = _withCredits.x = ((actualWidth - _withTokens.width) * 0.5) << 0;

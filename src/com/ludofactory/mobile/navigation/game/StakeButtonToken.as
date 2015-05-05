@@ -108,7 +108,7 @@ package com.ludofactory.mobile.navigation.game
 			
 			if( _isEnabled )
 			{
-				_label.text = formatString( _n("{0} Jeton", "{0} Jetons", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
+				_label.text = formatString( _n("Utiliser {0} Jeton", "Utiliser {0} Jetons", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
 					Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
 				_label.color = 0x0d2701;
 			}
@@ -116,7 +116,7 @@ package com.ludofactory.mobile.navigation.game
 			{
 				if( MemberManager.getInstance().getNumTokens() != 0 || !MemberManager.getInstance().isLoggedIn() )
 				{
-					_label.text = formatString( _n("{0} Jeton", "{0} Jetons", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
+					_label.text = formatString( _n("Utiliser {0} Jeton", "Utiliser {0} Jetons", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE)),
 						Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_FREE_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE ));
 					_label.color = 0x2d2d2d;
 				}
@@ -143,7 +143,7 @@ package com.ludofactory.mobile.navigation.game
 						else
 						{
 							// mettre texte normal + timer
-							_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getTotalTokensADay()) + "--:--:--";
+							_label.text = formatString(_("{0} Jetons dans "), MemberManager.getInstance().getTotalTokensADay()) + "--:--:--";
 							_label.color = 0xffffff;
 							
 							_vidCoinEnabled = false;
@@ -206,7 +206,7 @@ package com.ludofactory.mobile.navigation.game
 		
 		private function setText(val:String):void
 		{
-			_label.text = formatString(_("{0} parties dans "), MemberManager.getInstance().getTotalTokensADay()) + val;
+			_label.text = formatString(_("{0} Jetons dans "), MemberManager.getInstance().getTotalTokensADay()) + val;
 		}
 		
 		private function onCalloutRemoved(event:Event):void

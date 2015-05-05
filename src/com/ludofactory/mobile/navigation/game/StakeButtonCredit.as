@@ -79,7 +79,7 @@ package com.ludofactory.mobile.navigation.game
 			if( _winMorePointsImage )
 			{
 				_winMorePointsImage.y = -int(_shadowThickness * 0.5) + (_winMorePointsImage.height * 0.5);
-				_winMorePointsImage.x = this.actualWidth - (_winMorePointsImage.width * 0.5) + int(_shadowThickness * 0.5);
+				_winMorePointsImage.x = this.actualWidth;
 			}
 		}
 		
@@ -87,7 +87,7 @@ package com.ludofactory.mobile.navigation.game
 		{
 			_isEnabled = MemberManager.getInstance().getCredits() >= Storage.getInstance().getProperty(  AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) ? true:false;
 			
-			_label.text = formatString( _n("{0} crédit", "{0} crédits", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE )),
+			_label.text = formatString( _n("Utiliser {0} Crédit", "Utiliser {0} Crédits", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE )),
 				Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
 			
 			_icon.texture = MemberManager.getInstance().isLoggedIn() ? AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIcon") : AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIconDisabled");
