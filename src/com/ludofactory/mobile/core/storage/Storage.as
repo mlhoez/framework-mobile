@@ -278,7 +278,7 @@ package com.ludofactory.mobile.core.storage
 				// of tokens required to play in tournament when the rank is equal or greater
 				// than the rank 2 (which is : ...).
 				if( propertyName == StorageConfig.PROPERTY_NUM_FREE_IN_TOURNAMENT_MODE && MemberManager.getInstance().getRank() >= 2)
-					return int(_configurationSharedObject.data[propertyName]) - 1;
+					return int(_configurationSharedObject.data[propertyName]) - 10; // -10 jetons si le grade est ok
 				else
 					return _configurationSharedObject.data[propertyName];
 			}

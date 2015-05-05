@@ -112,17 +112,17 @@ package com.ludofactory.mobile.core.storage
 		public static const DEFAULT_LANGUAGE:String = "unknown";
 		
 		/**
-		 * <strong>This is the default value for the number of free game sessions
-		 * required to play in free play mode.</strong> */		
-		public static const DEFAULT_NUM_FREE_IN_FREE_MODE:int = 1;
+		 * <strong>This is the default value for the number of free game sessions required to play in free play
+		 * mode.</strong> */		
+		public static const DEFAULT_NUM_FREE_IN_FREE_MODE:int = 5;
 		/**
 		 * <strong>This is the default value for the number of free game sessions
-		 * required to play in tournament mode.</strong> */	
-		public static const DEFAULT_NUM_FREE_IN_TOURNAMENT_MODE:int = 4;
+		 * required to play in tournament mode.</strong> Without VIP bonus, so 30 always here instead of 20 (30 -10 VIP). */	
+		public static const DEFAULT_NUM_FREE_IN_TOURNAMENT_MODE:int = 30;
 		/**
 		 * <strong>This is the default value for the number of points
 		 * required to play in tournament mode.</strong> */	
-		public static const DEFAULT_NUM_POINTS_IN_TOURNAMENT_MODE:int = 1200;
+		public static const DEFAULT_NUM_POINTS_IN_TOURNAMENT_MODE:int = 2000;
 		/**
 		 * <strong>This is the default value for the number of credits
 		 * required to play in free play mode.</strong> */	
@@ -130,7 +130,7 @@ package com.ludofactory.mobile.core.storage
 		/**
 		 * <strong>This is the default value for the number of credits
 		 * required to play in tournament mode.</strong> */	
-		public static const DEFAULT_NUM_CREDITS_IN_TOURNAMENT_MODE:int = 3;
+		public static const DEFAULT_NUM_CREDITS_IN_TOURNAMENT_MODE:int = 5;
 		
 		/**
 		 * <strong>This is the default value for the customer service themes</strong><br />Theses values are
