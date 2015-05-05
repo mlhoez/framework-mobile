@@ -1,14 +1,15 @@
 package com.ludofactory.mobile.navigation.home
 {
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
 	import com.ludofactory.mobile.core.scoring.ScoreToPointsContainer;
 	import com.ludofactory.mobile.core.scoring.ScoreToStarsContainer;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.ImageLoader;
@@ -50,6 +51,7 @@ package com.ludofactory.mobile.navigation.home
 			_logo.source = Theme.gameLogoTexture;
 			_logo.textureScale = GlobalConfig.dpiScale;
 			_logo.snapToPixels = true;
+			_logo.visible = !(AbstractGameInfo.LANDSCAPE && GlobalConfig.isPhone);
 			addChild(_logo);
 			
 			_gradient = new Quad(5, 5, 0xffffff);
@@ -95,7 +97,7 @@ package com.ludofactory.mobile.navigation.home
 				_logo.validate();
 				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
 				
-				_tabMenu.y = _logo.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				_tabMenu.y = !_logo.visible ? scaleAndRoundToDpi(5) : (_logo.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40));
 				_tabMenu.width = this.actualWidth;
 				_tabMenu.validate();
 				
