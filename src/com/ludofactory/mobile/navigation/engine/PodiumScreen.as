@@ -287,6 +287,7 @@ package com.ludofactory.mobile.navigation.engine
 					TweenMax.to(_podiumMessage, 0.75, { delay:2.5, alpha:1 } );
 				}
 				
+				// FIXME Vérifier en portrait
 				_confettis.emitterX = 0;
 				_confettis.x = actualWidth * 0.5;
 				_confettis.emitterXVariance = actualWidth * 2; // pourquoi * 2 ?

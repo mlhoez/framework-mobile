@@ -263,6 +263,7 @@ package com.ludofactory.mobile.navigation.engine
 				_particles.emitterYVariance = _highScoreLogo.height * 0.5;
 				TweenMax.delayedCall(0.5, _particles.start, [0.2]);
 				
+				// FIXME Vérifier en portrait
 				_confettis.emitterX = 0;
 				_confettis.x = actualWidth * 0.5;
 				_confettis.emitterXVariance = actualWidth * 2; // pourquoi * 2 ?
