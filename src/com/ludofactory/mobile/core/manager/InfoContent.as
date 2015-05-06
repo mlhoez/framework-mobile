@@ -6,6 +6,7 @@ Created : 6 janv. 2013
 */
 package com.ludofactory.mobile.core.manager
 {
+	
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
@@ -13,11 +14,11 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
 	import feathers.controls.Label;
 	import feathers.core.FeathersControl;
+	
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
@@ -241,16 +242,16 @@ package com.ludofactory.mobile.core.manager
 				{
 					_checkImage.visible = true;
 					_checkImage.alpha = 0;
-					_checkImage.scaleX = _checkImage.scaleY = 1.4;
-					TweenMax.to(_checkImage, 0.25, { alpha:1, scaleX:1, scaleY:1 });
+					_checkImage.scaleX = _checkImage.scaleY = GlobalConfig.dpiScale + 0.4;
+					TweenMax.to(_checkImage, 0.25, { alpha:1, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale });
 					break;
 				}
 				case ICON_CROSS:
 				{
 					_crossImage.visible = true;
 					_crossImage.alpha = 0;
-					_crossImage.scaleX = _crossImage.scaleY = 1.4;
-					TweenMax.to(_crossImage, 0.25, { alpha:1, scaleX:1, scaleY:1 });
+					_crossImage.scaleX = _crossImage.scaleY = GlobalConfig.dpiScale + 0.4;
+					TweenMax.to(_crossImage, 0.25, { alpha:1, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale });
 					break;
 				}
 			}
