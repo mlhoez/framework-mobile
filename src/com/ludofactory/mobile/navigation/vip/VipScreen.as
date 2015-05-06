@@ -6,6 +6,7 @@ Created : 3 sept. 2013
 */
 package com.ludofactory.mobile.navigation.vip
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
@@ -14,26 +15,26 @@ package com.ludofactory.mobile.navigation.vip
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.controls.Accordion;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
-	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	
 	import feathers.controls.Label;
-
+	
 	import flash.geom.Point;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.core.Starling;
 	import starling.display.Button;
 	import starling.display.DisplayObject;
@@ -48,7 +49,7 @@ package com.ludofactory.mobile.navigation.vip
 	import starling.textures.Texture;
 	import starling.utils.deg2rad;
 	import starling.utils.formatString;
-
+	
 	public class VipScreen extends AdvancedScreen
 	{
 		/**
@@ -264,12 +265,15 @@ package com.ludofactory.mobile.navigation.vip
 				addChild(_reloadButton);
 			}
 			
-			if( MemberManager.getInstance().isLoggedIn() && _currentIndex == 0 )
-			{
+			// FIXME Je crée le bouton dans tous les cas, car le joueur peut avoir un rang supérieur mais ne pas
+			// avoir validé son mail
+			//if( MemberManager.getInstance().isLoggedIn() && _currentIndex == 0 )
+			//{
 				_resendMailButton = new ArrowGroup(_("Renvoyer un email"));
 				_resendMailButton.addEventListener(Event.TRIGGERED, onResendMail);
+				_resendMailButton.visible = false;
 				addChild(_resendMailButton);
-			}
+			//}
 			
 			if( AbstractGameInfo.LANDSCAPE )
 			{
@@ -713,6 +717,10 @@ package com.ludofactory.mobile.navigation.vip
 					{
 						if( (_ranksData[ _targetIndex ] as VipData).accessValue - MemberManager.getInstance().getNumCreditsBought() <= 0 )
 						{
+							// rang acquis mais mail pas validé, donc on met le texte "cliquez dans le mail..."
+							// FIXME il faudrait changer le texte pour un truc plus parlant 
+							if( _resendMailButton )
+								_resendMailButton.visible = true;
 							_conditionLabel.text = formatString(VipData(_ranksData[1]).condition, ( (_ranksData[ _targetIndex ] as VipData).accessValue - MemberManager.getInstance().getNumCreditsBought() ));
 						}
 						else
@@ -746,30 +754,31 @@ package com.ludofactory.mobile.navigation.vip
 			{
 				var indexesToSetVisible:Array = [];
 				var newPrivilegesIndexes:Array = [];
-				for(var i:int = _targetIndex; i >= 0; i--)
+				for (var i:int = _targetIndex; i >= 0; i--)
 				{
-					for(var j:int = 0; j < _privileges[i].length; j++)
+					for (var j:int = 0; j < _privileges[i].length; j++)
 					{
-						indexesToSetVisible.push( AbstractAccordionItem(_privileges[i][j]).index );
-						if( i == _targetIndex )
+						indexesToSetVisible.push(AbstractAccordionItem(_privileges[i][j]).index);
+						if (i == _targetIndex)
 						{
 							// = new privilège par rapport au rang précédent
-							newPrivilegesIndexes.push( AbstractAccordionItem(_privileges[i][j]).index );
+							newPrivilegesIndexes.push(AbstractAccordionItem(_privileges[i][j]).index);
 						}
 					}
 				}
 				
-				_accordion.testVip( indexesToSetVisible, newPrivilegesIndexes );
+				_accordion.testVip(indexesToSetVisible, newPrivilegesIndexes);
 				
 				_currentPrivilege = _accordion;
-				if( _previousPrivilege == _currentPrivilege)
+				if (_previousPrivilege == _currentPrivilege)
 					return;
 				
-				if( _previousPrivilege )
-					TweenMax.to(_previousPrivilege, 0.25, { autoAlpha:0 });
+				if (_previousPrivilege)
+					TweenMax.to(_previousPrivilege, 0.25, {autoAlpha: 0});
 				
-				TweenMax.allTo([_currentPrivilege], 0.25, { autoAlpha:1 });
-				TweenMax.to(_defaultRankInformationLabel, 0.25, { autoAlpha:0 });
+				TweenMax.allTo([_currentPrivilege], 0.25, {autoAlpha: 1});
+				TweenMax.to(_defaultRankInformationLabel, 0.25, {autoAlpha: 0});
+				
 			}
 		}
 		
