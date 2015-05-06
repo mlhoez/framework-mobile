@@ -6,17 +6,14 @@ Created : 25 nov. 2013
 */
 package com.ludofactory.mobile.navigation.ads.tournament
 {
+	
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import feathers.skins.IStyleProvider;
-	
-	import flash.filters.DropShadowFilter;
-	import flash.text.TextFormat;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
@@ -24,6 +21,10 @@ package com.ludofactory.mobile.navigation.ads.tournament
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
+	import feathers.skins.IStyleProvider;
+	
+	import flash.filters.DropShadowFilter;
+	import flash.text.TextFormat;
 	
 	import starling.display.Quad;
 	import starling.events.Event;
@@ -100,21 +101,20 @@ package com.ludofactory.mobile.navigation.ads.tournament
 			addChild(_medal);
 			
 			_title = new Label();
-			_title.text = _("Classez-vous et gagnez :");
+			_title.text = AbstractGameInfo.LANDSCAPE ? _("Classez-vous\net gagnez :") : _("Classez-vous et gagnez :");
 			addChild(_title);
-			_title.textRendererProperties.wordWrap = AbstractGameInfo.LANDSCAPE ? true : false;
+			_title.textRendererProperties.wordWrap = AbstractGameInfo.LANDSCAPE;
 			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0xffffff, 1, 8, 8, 5) ];
 			
 			_giftName = new Label();
 			addChild(_giftName);
-			_giftName.textRendererProperties.wordWrap = AbstractGameInfo.LANDSCAPE ? true : false;
+			_giftName.textRendererProperties.wordWrap = AbstractGameInfo.LANDSCAPE;
 			_giftName.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0xffffff, 1, 8, 8, 5) ];
 		}
 		
 		override protected function draw():void
 		{
 			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
 			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
 			
 			if(dataInvalid)
@@ -243,7 +243,7 @@ package com.ludofactory.mobile.navigation.ads.tournament
 			if( AbstractGameInfo.LANDSCAPE )
 			{
 				_adButton.width = actualWidth;
-				_adButton.y = actualHeight - (GlobalConfig.isPhone ? 98 : 108) - _adButton.height - scaleAndRoundToDpi(20); // 10 de padding du play bouton + 10 au dessus du bouton
+				_adButton.y = actualHeight - scaleAndRoundToDpi(GlobalConfig.isPhone ? 98 : 108) - _adButton.height - scaleAndRoundToDpi(20); // 10 de padding du play bouton + 10 au dessus du bouton
 				
 				_title.width = _giftName.width = actualWidth * 0.9;
 				_title.validate();
@@ -255,8 +255,8 @@ package com.ludofactory.mobile.navigation.ads.tournament
 				
 				_giftImage.width = actualWidth * 0.8;
 				_giftImage.validate();
-				_giftImage.y =scaleAndRoundToDpi(20);
-				_giftImage.x = 0;
+				_giftImage.y = scaleAndRoundToDpi(30);
+				_giftImage.x = roundUp((actualWidth - _giftImage.width) * 0.5);
 			}
 			else
 			{
