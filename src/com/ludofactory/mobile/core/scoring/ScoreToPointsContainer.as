@@ -133,7 +133,7 @@ package com.ludofactory.mobile.core.scoring
 			_headerContainer.addChild(_pointsWithFreeGroup);
 			
 			_pointsWithFree = new Label();
-			_pointsWithFree.text = _("Mise : 1");
+			_pointsWithFree.text = formatString(_("Mise : {0}"), Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE));
 			_pointsWithFreeGroup.addChild(_pointsWithFree);
 			_pointsWithFree.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_ORANGE, true, true, null, null, null, TextFormatAlign.CENTER);
 			_pointsWithFree.textRendererProperties.wordWrap = false;
@@ -147,7 +147,7 @@ package com.ludofactory.mobile.core.scoring
 			_headerContainer.addChild(_pointsWithCreditsGroup);
 			
 			_pointsWithCredits = new Label();
-			_pointsWithCredits.text = _("Mise : 1");
+			_pointsWithCredits.text = formatString(_("Mise : {0}"), Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE));
 			_pointsWithCreditsGroup.addChild(_pointsWithCredits);
 			_pointsWithCredits.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_ORANGE, true, true, null, null, null, TextFormatAlign.CENTER);
 			_pointsWithCredits.textRendererProperties.wordWrap = false;
