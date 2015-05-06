@@ -6,23 +6,26 @@ Created : 7 nov. 2013
 */
 package com.ludofactory.mobile.navigation.highscore
 {
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
+	
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -81,7 +84,7 @@ package com.ludofactory.mobile.navigation.highscore
 			_headerTitle = _("Meilleurs scores");
 			
 			_icon = new Image(AbstractEntryPoint.assets.getTexture("menu-icon-highscore"));
-			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale;
+			_icon.scaleX = _icon.scaleY = AbstractGameInfo.LANDSCAPE ? Utilities.getScaleToFillWidth(_icon.width, (GlobalConfig.stageWidth * 0.25)) : GlobalConfig.dpiScale;
 			addChild(_icon);
 			
 			_message = new Label();
@@ -173,7 +176,7 @@ package com.ludofactory.mobile.navigation.highscore
 				var gap:int;
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_icon.x = (((actualWidth * 0.45) - _icon.width) * 0.5) << 0;
+					_icon.x = (((actualWidth * 0.5) - _icon.width) * 0.5) << 0;
 					
 					_message.width = actualWidth * 0.8;
 					_message.x = (((actualWidth * 0.5) - _message.width) * 0.5) << 0;
