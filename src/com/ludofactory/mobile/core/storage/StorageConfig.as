@@ -353,7 +353,12 @@ package com.ludofactory.mobile.core.storage
 		
 		
 		
-		
+		/**
+		 * Access the vip. */		
+		public static const PROPERTY_VIP:String = "DEFAULT_VIP";
+        /**
+         * Access the vip. */
+        public static const PROPERTY_VIP_WITHOUT_GIFTS:String = "DEFAULT_VIP_WITHOUT_GIFTS";
 		
 		/**
 		 * Access the news. */		
