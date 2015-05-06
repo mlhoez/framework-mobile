@@ -6,35 +6,27 @@ Created : 4 nov. 2013
 */
 package com.ludofactory.mobile.navigation.achievements
 {
+	
 	import com.greensock.TweenLite;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import feathers.skins.IStyleProvider;
-	
-	import flash.text.TextFormat;
-	
 	import feathers.controls.ImageLoader;
-	import feathers.controls.Label;
 	import feathers.core.FeathersControl;
 	import feathers.display.Scale9Image;
+	import feathers.skins.IStyleProvider;
 	
 	import starling.core.Starling;
 	import starling.extensions.PDParticleSystem;
+	import starling.text.TextField;
 	
 	/**
 	 * A trophy message.
 	 */	
 	public class TrophyMessage extends FeathersControl
 	{
-		/**
-		 * The common text format for the message. */
-		private var _textFormatMessage:TextFormat;
-		/**
-		 * The common text format for the gain. */
-		private var _textFormatGain:TextFormat;
-		
 		/**
 		 * The trophy background. */		
 		private var _background:Scale9Image;
@@ -45,7 +37,7 @@ package com.ludofactory.mobile.navigation.achievements
 		
 		/**
 		 * The trophy message. */		
-		private var _message:Label;
+		private var _message:TextField;
 		
 		/**
 		 * The trophy data. */		
@@ -58,6 +50,7 @@ package com.ludofactory.mobile.navigation.achievements
 		public function TrophyMessage( trophyData:TrophyData )
 		{
 			super();
+			touchable = false;
 			_trophyData = trophyData;
 		}
 		
@@ -65,15 +58,21 @@ package com.ludofactory.mobile.navigation.achievements
 		{
 			super.initialize();
 			
+			this.width = scaleAndRoundToDpi(500);
+			this.height = scaleAndRoundToDpi(130);
+			
+			_background = new Scale9Image(Theme.trophyBackgroundSkinTextures, GlobalConfig.dpiScale);
 			addChild(_background);
 			
 			_particles = new PDParticleSystem(Theme.particleSlowXml, Theme.particleRoundTexture);
 			_particles.touchable = false;
-			_particles.maxNumParticles = 100;
-			_particles.startSizeVariance = 15;
-			_particles.endSize = 10;
-			_particles.endSizeVariance = 10;
-			_particles.speed = 10;
+			_particles.maxNumParticles = scaleAndRoundToDpi(100);
+			_particles.startSizeVariance = scaleAndRoundToDpi(15);
+			_particles.endSize = scaleAndRoundToDpi(10);
+			_particles.endSizeVariance = scaleAndRoundToDpi(10);
+			_particles.speed = scaleAndRoundToDpi(10);
+			_particles.lifespan = scaleAndRoundToDpi(_particles.lifespan);
+			_particles.lifespanVariance = scaleAndRoundToDpi(_particles.lifespanVariance);
 			addChild(_particles);
 			Starling.juggler.add(_particles);
 			
@@ -82,10 +81,9 @@ package com.ludofactory.mobile.navigation.achievements
 			_image.snapToPixels = true;
 			addChild(_image);
 			
-			_message = new Label();
-			_message.text = /*formatText(Localizer.getInstance().translate("TROPHY.WIN_MESSAGE"), */ _trophyData.description /*)*/;
+			_message = new TextField(10, 10, _trophyData.description, Theme.FONT_SANSITA, scaleAndRoundToDpi(24), Theme.COLOR_WHITE);
+			_message.autoScale = true;
 			addChild(_message);
-			_message.textRendererProperties.textFormat = _textFormatMessage;
 		}
 		
 		override protected function draw():void
@@ -102,8 +100,7 @@ package com.ludofactory.mobile.navigation.achievements
 			
 			_message.x = scaleAndRoundToDpi(10);
 			_message.width = _image.x - _message.x - scaleAndRoundToDpi(5);
-			_message.validate();
-			_message.y = (Math.max(actualHeight, _message.height) - Math.min(actualHeight, _message.height)) * 0.5;
+			_message.height = actualHeight;
 			
 			_particles.emitterX = (actualWidth * 0.5);
 			_particles.emitterY = (actualHeight * 0.5);
@@ -120,8 +117,7 @@ package com.ludofactory.mobile.navigation.achievements
 		private function displayReward():void
 		{
 			_message.text = _trophyData.reward;
-			_message.textRendererProperties.textFormat = _textFormatGain;
-			_message.validate();
+			_message.fontSize = scaleAndRoundToDpi(38);
 			_message.y = (Math.max(actualHeight, _message.height) - Math.min(actualHeight, _message.height)) * 0.5;
 			TweenLite.to(_message, 0.5, { alpha:1 });
 		}
@@ -133,16 +129,6 @@ package com.ludofactory.mobile.navigation.achievements
 		public function set background(val:Scale9Image):void
 		{
 			_background = val;
-		}
-		
-		public function set textFormatMessage(val:TextFormat):void
-		{
-			_textFormatMessage = val;
-		}
-		
-		public function set textFormatGain(val:TextFormat):void
-		{
-			_textFormatGain = val;
 		}
 		
 		/**

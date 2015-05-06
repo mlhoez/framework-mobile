@@ -307,10 +307,6 @@ package com.ludofactory.mobile.core.theme
 			pickerListItemRendererTextFormat         = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(36), COLOR_LIGHT_GREY, true, true);
 			pickerListItemRendererSelectedTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(36), COLOR_ORANGE, true, true);
 			
-			// Trophies (display and list)
-			trophyMessageTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(24), COLOR_WHITE);
-			trophyGainTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(38), COLOR_WHITE);
-			
 			// AdTournamentItemRenderer
 			adTournamentFirstRankTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 28 : 36), COLOR_DARK_GREY, null, null, null, null, null, AbstractGameInfo.LANDSCAPE ? TextFormatAlign.CENTER : TextFormatAlign.LEFT); // 0x470000
 			adTournamentSecondRankTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 28 : 36), COLOR_DARK_GREY, null, null, null, null, null, AbstractGameInfo.LANDSCAPE ? TextFormatAlign.CENTER : TextFormatAlign.LEFT); // 0x470000
@@ -680,9 +676,6 @@ package com.ludofactory.mobile.core.theme
 			
 			// AbstractNotification
 			getStyleProviderForClass(AbstractNotification).defaultStyleFunction = abstractNotificationInitializer;
-			
-			// Trophies (display and list)
-			getStyleProviderForClass(TrophyMessage).defaultStyleFunction = trophyMessageInitializer;
 			
 			// MenuItemRenderer
 			getStyleProviderForClass(MenuItemRenderer).defaultStyleFunction = menuItemRendererInitializer;
@@ -2024,19 +2017,8 @@ package com.ludofactory.mobile.core.theme
 //
 //------------------------------------------------------------------------------------------------------------
 		
-		protected var trophyGainTextFormat:TextFormat;
-		protected var trophyMessageTextFormat:TextFormat;
-		protected var trophyBackgroundSkinTextures:Scale9Textures;
+		public static var trophyBackgroundSkinTextures:Scale9Textures;
 		protected var TROPHY_BACKGROUND_GRID:Rectangle = new Rectangle(11, 11, 18, 18);
-		
-		protected function trophyMessageInitializer(trophyMessage:TrophyMessage):void
-		{
-			trophyMessage.background = new Scale9Image(trophyBackgroundSkinTextures, this.scaleFactor);
-			trophyMessage.textFormatMessage = trophyMessageTextFormat;
-			trophyMessage.textFormatGain = trophyGainTextFormat;
-			trophyMessage.width = 500 * scaleFactor;
-			trophyMessage.height = 130 * scaleFactor
-		}
 		
 //------------------------------------------------------------------------------------------------------------
 //
