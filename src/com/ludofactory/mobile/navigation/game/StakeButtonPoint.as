@@ -43,7 +43,7 @@ package com.ludofactory.mobile.navigation.game
 		{
 			_isEnabled = MemberManager.getInstance().isLoggedIn() ? (MemberManager.getInstance().getPoints() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE)) : false;
 			
-			_label.text = formatString( _n("Utiliser {0} Points", "{0} Points", Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE)),
+			_label.text = formatString( _n("Utiliser {0} Points", "Utiliser {0} Points", Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE)),
 				Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE));
 			
 			_icon.texture = AbstractEntryPoint.assets.getTexture( _isEnabled ? "GameTypeSelectionPointsIcon" : "GameTypeSelectionPointsIconDisabled" );
