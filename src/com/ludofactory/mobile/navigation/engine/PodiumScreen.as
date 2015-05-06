@@ -207,7 +207,7 @@ package com.ludofactory.mobile.navigation.engine
 			
 			_confettis = new PDParticleSystem(Theme.particleConfettiXml, Theme.particleConfettiTexture);
 			_confettis.touchable = false;
-			_confettis.maxNumParticles = AbstractGameInfo.LANDSCAPE ? 750 : 500;
+			_confettis.maxNumParticles = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 750 : 500);
 			_confettis.lifespan *= AbstractGameInfo.LANDSCAPE ? 1 : 2;
 			_confettis.scaleX = _confettis.scaleY = GlobalConfig.dpiScale;
 			addChild(_confettis);
@@ -287,7 +287,9 @@ package com.ludofactory.mobile.navigation.engine
 					TweenMax.to(_podiumMessage, 0.75, { delay:2.5, alpha:1 } );
 				}
 				
-				_confettis.emitterX =_confettis.emitterXVariance = actualWidth * 0.6;
+				_confettis.emitterX = 0;
+				_confettis.x = actualWidth * 0.5;
+				_confettis.emitterXVariance = actualWidth * 2; // pourquoi * 2 ?
 				_confettis.emitterY = scaleAndRoundToDpi(-100);
 				_confettis.emitterYVariance = scaleAndRoundToDpi(25);
 				TweenMax.delayedCall(0.5, _confettis.start, [_facebookButton ? Number.MAX_VALUE : 5]);
