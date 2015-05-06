@@ -91,12 +91,12 @@ package com.ludofactory.mobile.core.notification.content
 			_title.autoScale = true;
 			addChild(_title);
 			
-			_reason1 = new TextField(50, scaleAndRoundToDpi(40), _("• Obtenir 10 parties par jour"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason1 = new TextField(50, scaleAndRoundToDpi(40), _("• Obtenir 50 Jetons par jour"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
 			_reason1.autoScale = true;
 			_reason1.hAlign = HAlign.LEFT;
 			addChild(_reason1);
 			
-			_reason2 = new TextField(50, scaleAndRoundToDpi(40), _( "• Obtenir 10 Nouvelles Parties"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason2 = new TextField(50, scaleAndRoundToDpi(40), _( "• Obtenir 50 Jetons supplémentaires"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
 			_reason2.autoScale = true;
 			_reason2.hAlign = HAlign.LEFT;
 			addChild(_reason2);
