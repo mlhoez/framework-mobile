@@ -209,6 +209,7 @@ package com.ludofactory.mobile.core
 		{
 			// create the loader
 			_loader = new MovieClip( AbstractEntryPoint.assets.getTextures("Loader") );
+			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
 			_loader.x = (GlobalConfig.stageWidth - _loader.width) * 0.5;
 			_loader.y = (GlobalConfig.stageHeight - _loader.height) * 0.5;
 			Starling.juggler.add(_loader);
