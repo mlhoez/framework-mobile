@@ -345,7 +345,7 @@ package com.ludofactory.mobile.navigation
 					_backInfoContainer.x = _arrow.x;
 					_backInfoContainer.y = _arrow.y - scaleAndRoundToDpi(50) - _backInfoContainer.height;
 					
-					TweenMax.to(_arrow, 0.75, { y:(_arrow.y - 50), yoyo:true, repeat:-1 });
+					TweenMax.to(_arrow, 0.75, { y:(_arrow.y - scaleAndRoundToDpi(50)), yoyo:true, repeat:-1 });
 					
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_NEED_HELP_ARROW, false);
 					
