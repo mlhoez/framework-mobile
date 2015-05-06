@@ -112,7 +112,7 @@ package com.ludofactory.mobile.navigation.sponsor
 			
 			_mainContainer = new LayoutGroup();
 			_mainContainer.layout = new VerticalLayout();
-			(_mainContainer.layout as VerticalLayout).gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
+			(_mainContainer.layout as VerticalLayout).gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 			(_mainContainer.layout as VerticalLayout).horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_CENTER;
 			_mainContainer.clipContent = false;
 			addChild(_mainContainer);
@@ -121,7 +121,8 @@ package com.ludofactory.mobile.navigation.sponsor
 			_titleLabel.touchable = false;
 			_titleLabel.text = _("Parrainez\net gagnez jusqu'à");
 			_mainContainer.addChild(_titleLabel);
-			_titleLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 52 : 82), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
+			_titleLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 52 : 72), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
+			_titleLabel.textRendererProperties.wordWrap = false;
 			_titleLabel.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, scaleAndRoundToDpi(5), scaleAndRoundToDpi(5)) ];
 			
 			_rewardValueLabel = new Label();
