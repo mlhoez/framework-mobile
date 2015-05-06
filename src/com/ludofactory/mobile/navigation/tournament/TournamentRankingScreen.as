@@ -6,8 +6,7 @@ Created : 24 juil. 2013
 */
 package com.ludofactory.mobile.navigation.tournament
 {
-
-	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Shaker;
@@ -15,40 +14,36 @@ package com.ludofactory.mobile.navigation.tournament
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameMode;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
+	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.CustomGroupedList;
-	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.TimerManager;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.navigation.MarketingRegisterNotification;
+	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.ads.tournament.AdTournamentContainer;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.push.GameSession;
+	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.navigation.tournament.listing.RankData;
 	import com.ludofactory.mobile.navigation.tournament.listing.RankHeaderData;
 	import com.ludofactory.mobile.navigation.tournament.listing.RankHeaderItemRenderer;
 	import com.ludofactory.mobile.navigation.tournament.listing.RankItemRenderer;
 	import com.ludofactory.mobile.navigation.tournament.listing.TournamentListHeader;
-	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Callout;
 	import feathers.controls.Label;
 	import feathers.data.HierarchicalCollection;
+	
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.display.Image;
 	import starling.display.Quad;

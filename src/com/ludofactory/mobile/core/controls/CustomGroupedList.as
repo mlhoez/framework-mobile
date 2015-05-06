@@ -7,6 +7,7 @@ Created : 16 sept. 2013
 package com.ludofactory.mobile.core.controls
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -133,6 +134,7 @@ package com.ludofactory.mobile.core.controls
 			if( !_loaderUp )
 			{
 				_loaderUp = new MovieClip(Theme.blackLoaderTextures);
+				_loaderUp.scaleX = _loaderUp.scaleY = GlobalConfig.dpiScale;
 				Starling.juggler.add(_loaderUp);
 				dataViewPort.addChild(_loaderUp);
 				
@@ -164,6 +166,7 @@ package com.ludofactory.mobile.core.controls
 			if( !_loaderDown )
 			{
 				_loaderDown = new MovieClip(Theme.blackLoaderTextures);
+				_loaderDown.scaleX = _loaderDown.scaleY = GlobalConfig.dpiScale;
 				Starling.juggler.add(_loaderDown);
 				dataViewPort.addChild(_loaderDown);
 				
