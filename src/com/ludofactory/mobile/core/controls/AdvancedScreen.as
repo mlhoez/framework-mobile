@@ -119,7 +119,7 @@ package com.ludofactory.mobile.core.controls
 		}
 		
 		/**
-		 * Whether this is a full screen. */		
+		 * Whether this is a full screen. No header & footer will be displayed if set to true. */		
 		protected var _fullScreen:Boolean;
 		
 		public function get fullScreen():Boolean
