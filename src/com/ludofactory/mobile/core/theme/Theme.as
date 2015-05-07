@@ -357,9 +357,6 @@ package com.ludofactory.mobile.core.theme
 			newsIRTitleTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_DARK_GREY, true);
 			newsIRMessageTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_LIGHT_GREY, true, true);
 			
-			// PreviousTournamentItemRenderer
-			previousTournamentIRTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(34), COLOR_DARK_GREY, true);
-			
 			// SettingsItemRenderer
 			settingsIRTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_DARK_GREY, true);
 			
@@ -2472,14 +2469,6 @@ package com.ludofactory.mobile.core.theme
 		
 		public static var newsIRTitleTextFormat:TextFormat;
 		public static var newsIRMessageTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//						P R E V I O U S  T O U R N A M E N T  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var previousTournamentIRTextFormat:TextFormat;
 		
 //------------------------------------------------------------------------------------------------------------
 //

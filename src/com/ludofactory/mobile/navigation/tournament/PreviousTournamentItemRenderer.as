@@ -6,6 +6,7 @@ Created : 8 sept. 2013
 */
 package com.ludofactory.mobile.navigation.tournament
 {
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
@@ -13,19 +14,19 @@ package com.ludofactory.mobile.navigation.tournament
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import flash.geom.Point;
-	
 	import feathers.controls.ImageLoader;
-	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
+	
+	import flash.geom.Point;
 	
 	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.text.TextField;
 	import starling.utils.formatString;
 	
 	/**
@@ -53,7 +54,7 @@ package com.ludofactory.mobile.navigation.tournament
 		
 		/**
 		 * The previous tournement title. */		
-		private var _title:Label;
+		private var _title:TextField;
 		
 		/**
 		 * The top stripe displayed in each item renderer. */		
@@ -73,6 +74,7 @@ package com.ludofactory.mobile.navigation.tournament
 		public function PreviousTournamentItemRenderer()
 		{
 			super();
+			touchGroup = true;
 			this.addEventListener(TouchEvent.TOUCH, touchHandler);
 		}
 		
@@ -94,10 +96,8 @@ package com.ludofactory.mobile.navigation.tournament
 			_bottomStripe.visible = false;
 			addChild(_bottomStripe);
 			
-			_title = new Label();
+			_title = new TextField(10, 10, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(34), Theme.COLOR_DARK_GREY, true);
 			addChild(_title);
-			_title.textRendererProperties.textFormat = Theme.previousTournamentIRTextFormat;
-			_title.textRendererProperties.wordWrap = false;
 			
 			_arrow = new ImageLoader();
 			_arrow.source = AbstractEntryPoint.assets.getTexture("arrow-right");
@@ -109,7 +109,6 @@ package com.ludofactory.mobile.navigation.tournament
 		override protected function draw():void
 		{
 			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
 			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
 			
 			if(dataInvalid)
@@ -135,7 +134,6 @@ package com.ludofactory.mobile.navigation.tournament
 			}
 			_title.width = NaN;
 			_title.height = NaN;
-			_title.validate();
 			var newWidth:Number = this.explicitWidth;
 			if(needsWidth)
 			{
@@ -195,7 +193,7 @@ package com.ludofactory.mobile.navigation.tournament
 			}
 			
 			_title.width = this.actualWidth - (_padding * 2);
-			_title.validate();
+			_title.height = actualHeight;
 			_title.y = (_itemHeight - _title.height) * 0.5;
 			_title.x = _padding;
 			
