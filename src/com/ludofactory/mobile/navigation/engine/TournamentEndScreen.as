@@ -6,6 +6,7 @@ Created : 13 Août 2013
 */
 package com.ludofactory.mobile.navigation.engine
 {
+	
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Bounce;
@@ -15,33 +16,25 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.HeartBeat;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.GameData;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.EventPushNotificationContent;
 	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.navigation.MarketingRegisterNotification;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.events.Event;
-	import flash.filters.DropShadowFilter;
-	import flash.geom.Point;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	import flash.utils.getTimer;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
@@ -52,6 +45,13 @@ package com.ludofactory.mobile.navigation.engine
 	import feathers.events.FeathersEventType;
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
+	
+	import flash.events.Event;
+	import flash.filters.DropShadowFilter;
+	import flash.geom.Point;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
+	import flash.utils.getTimer;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -310,7 +310,7 @@ package com.ludofactory.mobile.navigation.engine
 			addChild(_cumulatedStarsContainer);
 			
 			_cumulatedStarsTitleLabel = new Label();
-			_cumulatedStarsTitleLabel.text = _("Rubis cumulées :");
+			_cumulatedStarsTitleLabel.text = _("Rubis cumulés :");
 			_cumulatedStarsContainer.addChild(_cumulatedStarsTitleLabel);
 			_cumulatedStarsTitleLabel.textRendererProperties.textFormat = titleTextFormat
 			_cumulatedStarsTitleLabel.textRendererProperties.nativeFilters = [ dropShadowFilter ];
@@ -515,7 +515,7 @@ package com.ludofactory.mobile.navigation.engine
 				_resultArrowLabel.textRendererProperties.wordWrap = false;
 				
 				_resultArrowStar = new Image( _starTexture );
-				_resultArrowStar.scaleX = _resultArrowStar.scaleY = GlobalConfig.dpiScale - 0.3;
+				_resultArrowStar.scaleX = _resultArrowStar.scaleY = Utilities.getScaleToFillHeight(_resultArrowStar.height, (scaleAndRoundToDpi(83) * 0.4)); // 83 = hauteur de la flèche
 				_resultArrowContainer.addChild(_resultArrowStar);
 				
 				_totalTime = advancedOwner.screenData.gameData.timeUntilTournamentEnd * 1000;
@@ -882,7 +882,7 @@ package com.ludofactory.mobile.navigation.engine
 			else
 			{
 				TweenMax.allTo([_currentGiftContainer, _nextGiftContainer], 0.5, { delay:0.75, autoAlpha:1 });
-				TweenMax.to(_resultArrowContainer, 0.75, { delay:1.5, autoAlpha:1, x:(_resultArrowContainer.x + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 90)) });
+				TweenMax.to(_resultArrowContainer, 0.75, { delay:1.5, autoAlpha:1, x:(roundUp(actualWidth - _resultArrowContainer.width) * 0.5) });
 			}
 			_animationSkipped = true;
 		}
