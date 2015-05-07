@@ -91,7 +91,7 @@ package com.ludofactory.mobile.navigation.home
 				}
 				else
 				{
-					_logo.width = actualWidth * (GlobalConfig.isPhone ? GlobalConfig.homeScreenLogoScaleWidthPhone : GlobalConfig.homeScreenLogoScaleWidthTablet);
+					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.85 : 0.75);
 				}
 				
 				_logo.validate();
