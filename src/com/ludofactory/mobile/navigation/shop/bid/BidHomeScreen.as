@@ -81,7 +81,6 @@ package com.ludofactory.mobile.navigation.shop.bid
 			
 			_message = new TextField(10, scaleAndRoundToDpi(GlobalConfig.isPhone ? 100 : 200), _("Utilisez vos Points pour enchérir et\nremporter un des lots en jeu."), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 60), Theme.COLOR_DARK_GREY);
 			_message.autoScale = true;
-			_message.border = true;
 			addChild(_message);
 			
 			_bidsMenu = new OffsetTabBar();
