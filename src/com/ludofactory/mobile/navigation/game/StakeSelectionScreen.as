@@ -97,6 +97,7 @@ package com.ludofactory.mobile.navigation.game
 				var buttonGap:int;
 				var titleGap:int;
 				var padding:int;
+				var maxButtonHeight:int;
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
@@ -106,7 +107,7 @@ package com.ludofactory.mobile.navigation.game
 					_title.width = actualWidth;
 					_title.validate();
 					
-					var maxButtonHeight:int = ( actualHeight - _title.height - titleGap - (padding * 2) - (buttonGap * (_withPoints ? 2 : 1)) ) / (_withPoints ? 3 : 2);
+					maxButtonHeight = ( actualHeight - _title.height - titleGap - (padding * 2) - (buttonGap * (_withPoints ? 2 : 1)) ) / (_withPoints ? 3 : 2);
 					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150) > maxButtonHeight ? maxButtonHeight : scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150);
 					if( _withPoints ) _withPoints.height = _withTokens.height;
 					
@@ -128,31 +129,32 @@ package com.ludofactory.mobile.navigation.game
 				}
 				else
 				{
-					buttonGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 40);
-					titleGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 60);
+					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+					buttonGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 15 : 30);
+					titleGap = scaleAndRoundToDpi(_withTokens ? 20 : 60);
 					
-					// define width
 					_title.width = actualWidth;
-					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.55);
-					if( _withPoints ) _withPoints.width = _withTokens.width;
-					
-					// then validate each element to calculate the title y position
-					_withTokens.validate();
 					_title.validate();
-					_title.y = ((actualHeight - (_title.height + (_withTokens.height * (_withPoints ? 3 : 2)) + titleGap + (buttonGap * (_withPoints ? 1 : 2)))) * 0.5) << 0;
+					
+					maxButtonHeight = ( actualHeight - _title.height - titleGap - (padding * 2) - (buttonGap * (_withPoints ? 2 : 1)) ) / (_withPoints ? 3 : 2);
+					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150) > maxButtonHeight ? maxButtonHeight : scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150);
+					if( _withPoints ) _withPoints.height = _withTokens.height;
+					
+					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.55);
+					if( _withPoints ) _withPoints.width = _withTokens.width;
 					
 					_withTokens.x = _withCredits.x = ((actualWidth - _withTokens.width) * 0.5) << 0;
 					if( _withPoints ) _withPoints.x = _withTokens.x;
-					_withTokens.y = _title.y + _title.height + titleGap;
+					
 					_withTokens.validate();
 					
+					_title.y = padding + (actualHeight - _title.height - titleGap - (buttonGap * (_withPoints ? 2 : 1)) - (padding * 2) - (_withTokens.height * (_withPoints ? 3 : 2))) * 0.5;
+					
+					_withTokens.y = _title.y + _title.height + titleGap;
 					_withCredits.y = _withTokens.y + _withTokens.height + buttonGap;
 					
 					if( _withPoints )
-					{
-						_withCredits.validate();
-						_withPoints.y = _withCredits.y + _withCredits.height + buttonGap;
-					}
+						_withPoints.y = _withCredits.y + _withTokens.height + buttonGap;
 				}
 			}
 		}
