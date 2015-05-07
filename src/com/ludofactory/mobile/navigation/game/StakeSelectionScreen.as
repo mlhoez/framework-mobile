@@ -6,32 +6,30 @@ Created : 23 Juillet 2013
 */
 package com.ludofactory.mobile.navigation.game
 {
-
+	
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameMode;
+	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	
 	import feathers.controls.Label;
-
+	
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.events.Event;
-
+	
 	/**
 	 * The screen used to select a price for the next game session.
 	 * 
@@ -97,14 +95,19 @@ package com.ludofactory.mobile.navigation.game
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
 				var buttonGap:int;
+				var titleGap:int;
+				var padding:int;
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					buttonGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 6 : 30);
-					
+					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+					buttonGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 15 : 30);
+					titleGap = scaleAndRoundToDpi(_withTokens ? 20 : 60);
+						
 					_title.width = actualWidth;
 					_title.validate();
 					
-					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150);
+					var maxButtonHeight:int = ( actualHeight - _title.height - titleGap - (padding * 2) - (buttonGap * (_withPoints ? 2 : 1)) ) / (_withPoints ? 3 : 2);
+					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150) > maxButtonHeight ? maxButtonHeight : scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150);
 					if( _withPoints ) _withPoints.height = _withTokens.height;
 					
 					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.58 : 0.45);
@@ -115,18 +118,18 @@ package com.ludofactory.mobile.navigation.game
 					
 					_withTokens.validate();
 					
-					_title.y = (actualHeight - (_title.height + scaleAndRoundToDpi(_withTokens ? 40 : 140 ) + _withTokens.height * (_withPoints ? 3 : 2))) * 0.5;
+					_title.y = padding + (actualHeight - _title.height - titleGap - (buttonGap * (_withPoints ? 2 : 1)) - (padding * 2) - (_withTokens.height * (_withPoints ? 3 : 2))) * 0.5;
 					
-					_withTokens.y = _title.y + _title.height + buttonGap + scaleAndRoundToDpi(_withTokens ? 20 : 60);
-					_withCredits.y = _withTokens.y + _withTokens.height + buttonGap + scaleAndRoundToDpi(_withTokens ? 10 : 40);
+					_withTokens.y = _title.y + _title.height + titleGap;
+					_withCredits.y = _withTokens.y + _withTokens.height + buttonGap;
 					
 					if( _withPoints )
-						_withPoints.y = _withCredits.y + _withTokens.height + buttonGap + scaleAndRoundToDpi(_withTokens ? 10 : 40);
+						_withPoints.y = _withCredits.y + _withTokens.height + buttonGap;
 				}
 				else
 				{
 					buttonGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 40);
-					var titleGap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 60);
+					titleGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 60);
 					
 					// define width
 					_title.width = actualWidth;
@@ -223,7 +226,6 @@ package com.ludofactory.mobile.navigation.game
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{
