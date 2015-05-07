@@ -33,6 +33,28 @@ package com.ludofactory.common.utils
 		/**
 		 * Returns the App version defined in the application descriptor.
 		 */
+		public static function getBundleIdFromDescriptor():String
+		{
+			var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor;
+			var ns:Namespace = appXml.namespace();
+			trace(appXml.ns::id);
+			return appXml.ns::id;
+		}
+		
+		/**
+		 * Returns the App version defined in the application descriptor.
+		 */
+		public static function getGameNameFromDescriptor():String
+		{
+			var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor;
+			var ns:Namespace = appXml.namespace();
+			trace(appXml.ns::name);
+			return appXml.ns::name;
+		}
+		
+		/**
+		 * Returns the App version defined in the application descriptor.
+		 */
 		public static function getIsLandscapeFromDescriptor():Boolean
 		{
 			var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor;

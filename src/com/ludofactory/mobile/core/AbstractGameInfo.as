@@ -6,6 +6,9 @@ Created : 19 mars 2014
 */
 package com.ludofactory.mobile.core
 {
+	
+	import com.ludofactory.common.utils.Utilities;
+	
 	/**
 	 * Game info used in the framework.
 	 * 
@@ -22,20 +25,20 @@ package com.ludofactory.mobile.core
 //	Game informations
 			
 		/**
-		 * Game version. */		
-		public static var GAME_VERSION:String;
+		 * Game version. This is automatically set. */		
+		public static var GAME_VERSION:String = Utilities.getAppVersion();
 		/**
-		 * Game bundle id (in reverse dns style). */		
-		public static var GAME_BUNDLE_ID:String;
+		 * Game bundle id (in reverse dns style). This is automatically set. */		
+		public static var GAME_BUNDLE_ID:String = Utilities.getBundleIdFromDescriptor();
 		/**
-		 * Game name. */		
-		public static var GAME_NAME:String;
+		 * Game name. This is automatically set. */		
+		public static var GAME_NAME:String = Utilities.getGameNameFromDescriptor();
 		/**
 		 * The game id in the database. */		
 		public static var GAME_ID:int;
 		/**
-		 * Whether the game is in landscape. */		
-		public static var LANDSCAPE:Boolean;
+		 * Whether the game is in landscape. This is automatically set. */		
+		public static var LANDSCAPE:Boolean = Utilities.getIsLandscapeFromDescriptor();
 			
 //------------------------------------------------------------------------------------------------------------
 //	Tracking and logging
