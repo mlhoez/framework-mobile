@@ -9,9 +9,11 @@ package com.ludofactory.mobile.navigation.tournament
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.PullToRefreshList;
@@ -64,7 +66,7 @@ package com.ludofactory.mobile.navigation.tournament
 			if( !AbstractGameInfo.LANDSCAPE )
 			{
 				_logo = new Image( AbstractEntryPoint.assets.getTexture( "menu-icon-tournaments" ) );
-				_logo.scaleX = _logo.scaleY = GlobalConfig.dpiScale;
+				_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillWidth(_logo.width, (GlobalConfig.stageWidth * 0.4));
 				addChild( _logo );
 				
 				_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
