@@ -11,6 +11,7 @@ package com.ludofactory.mobile.navigation.settings
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -89,7 +90,7 @@ package com.ludofactory.mobile.navigation.settings
 			if( !AbstractGameInfo.LANDSCAPE )
 			{
 				_logo = new Image( AbstractEntryPoint.assets.getTexture( "menu-icon-settings" ) );
-				_logo.scaleX = _logo.scaleY = GlobalConfig.dpiScale;
+				_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillWidth(_logo.width, (GlobalConfig.stageWidth * 0.4));
 				addChild( _logo );
 				
 				_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
