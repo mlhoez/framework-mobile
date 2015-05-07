@@ -11,7 +11,6 @@ package com.ludofactory.mobile.core
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.freshplanet.nativeExtensions.PushNotificationEvent;
 	import com.gamua.flox.Flox;
-	import com.greensock.TweenMax;
 	import com.hasoffers.nativeExtensions.MobileAppTracker;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
