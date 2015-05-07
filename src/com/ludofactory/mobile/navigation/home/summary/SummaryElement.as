@@ -253,7 +253,7 @@ package com.ludofactory.mobile.navigation.home.summary
 			_animationLabel.visible = false;
 			_animationLabel.alpha = 0;
 			_animationLabel.y = 0;
-			TweenMax.to(_animationLabel, 1.25, { y:-50 });
+			TweenMax.to(_animationLabel, 1.25, { y:scaleAndRoundToDpi(-50) });
 			TweenMax.to(_animationLabel, 0.5, { autoAlpha:1, yoyo:true, repeatDelay:1, repeat:1 });
 			
 			Starling.juggler.add(_particles);
