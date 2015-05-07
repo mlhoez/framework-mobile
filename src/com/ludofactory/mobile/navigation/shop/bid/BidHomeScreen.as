@@ -9,9 +9,11 @@ package com.ludofactory.mobile.navigation.shop.bid
 
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
@@ -36,12 +38,13 @@ package com.ludofactory.mobile.navigation.shop.bid
 	import flash.text.TextFormatAlign;
 
 	import starling.events.Event;
-
+	import starling.text.TextField;
+	
 	public class BidHomeScreen extends AdvancedScreen
 	{
 		/**
 		 * Message */		
-		private var _message:Label;
+		private var _message:TextField;
 		
 		/**
 		 * Menu */		
@@ -76,10 +79,10 @@ package com.ludofactory.mobile.navigation.shop.bid
 		{
 			super.initialize();
 			
-			_message = new Label();
-			_message.text = _("Utilisez vos Points pour enchérir et\nremporter un des lots en jeu.");
+			_message = new TextField(10, scaleAndRoundToDpi(GlobalConfig.isPhone ? 100 : 200), _("Utilisez vos Points pour enchérir et\nremporter un des lots en jeu."), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 60), Theme.COLOR_DARK_GREY);
+			_message.autoScale = true;
+			_message.border = true;
 			addChild(_message);
-			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_bidsMenu = new OffsetTabBar();
 			_bidsMenu.dataProvider = new ListCollection( [ _("En cours"),
@@ -100,10 +103,9 @@ package com.ludofactory.mobile.navigation.shop.bid
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_message.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 5 : 10) : (AbstractGameInfo.LANDSCAPE ? 15 : 30));
-				_message.width = actualWidth * 0.9;
-				_message.x = (actualWidth - _message.width) * 0.5;
-				_message.validate();
+				_message.y = roundUp(scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 5 : 10) : (AbstractGameInfo.LANDSCAPE ? 15 : 30)));
+				_message.width = roundUp(actualWidth * 0.9);
+				_message.x = roundUp((actualWidth - _message.width) * 0.5);
 				
 				_bidsMenu.width = actualWidth;
 				_bidsMenu.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 10 : 20) : (AbstractGameInfo.LANDSCAPE ? 20 : 40));
