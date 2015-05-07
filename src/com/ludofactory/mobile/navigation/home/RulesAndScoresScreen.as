@@ -98,7 +98,7 @@ package com.ludofactory.mobile.navigation.home
 				_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
 				_logo.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
 				
-				_tabMenu.y = !_logo.visible ? scaleAndRoundToDpi(5) : (_logo.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40));
+				_tabMenu.y = !_logo.visible ? scaleAndRoundToDpi(5) : (_logo.y + _logo.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40));
 				_tabMenu.width = this.actualWidth;
 				_tabMenu.validate();
 				
