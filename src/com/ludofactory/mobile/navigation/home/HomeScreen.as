@@ -126,35 +126,50 @@ package com.ludofactory.mobile.navigation.home
 		{
 			if (isInvalid(INVALIDATION_FLAG_SIZE))
 			{
-				var padding:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
+				var padding:int;
 				var buttonHeight:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 148) : 128);
 				var gap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
 				
 				// 1) scale the logo
 				_giftsButton.validate();
-				var maxLogoHeight:int = actualHeight - (padding * 2) - buttonHeight - _giftsButton.height - (gap * 2);
-				// FIXME Modifier le max scale en portrait
-				var maxLogoScale:Number = AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 0.6 : 0.45) : (GlobalConfig.isPhone ? 0.6 : 0.5);
-				_logo.scaleX = _logo.scaleY = 1;
-				_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillHeight(_logo.height, maxLogoHeight);
-				if (_logo.height > (actualHeight * maxLogoScale))
+				if(AbstractGameInfo.LANDSCAPE)
 				{
+					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
+					var maxLogoHeight:int = actualHeight - (padding * 2) - buttonHeight - _giftsButton.height - (gap * 2);
+					var maxLogoScale:Number = (GlobalConfig.isPhone ? 0.6 : 0.45);
 					_logo.scaleX = _logo.scaleY = 1;
-					_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillHeight(_logo.height, (actualHeight * maxLogoScale));
+					_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillHeight(_logo.height, maxLogoHeight);
+					if (_logo.height > (actualHeight * maxLogoScale))
+					{
+						_logo.scaleX = _logo.scaleY = 1;
+						_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillHeight(_logo.height, (actualHeight * maxLogoScale));
+					}
+				}
+				else
+				{
+					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80);
+					var maxLogoWidth:int = actualWidth - (padding * 2);
+					var maxLogoScaleW:Number = (GlobalConfig.isPhone ? 0.6 : 0.45);
+					_logo.scaleX = _logo.scaleY = 1;
+					_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillWidth(_logo.width, maxLogoWidth);
+					if (_logo.height > (actualHeight * maxLogoScaleW))
+					{
+						_logo.scaleX = _logo.scaleY = 1;
+						_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillWidth(_logo.width, (actualWidth * maxLogoScaleW));
+					}
 				}
 				
 				// 2) place the elements
-				// FIXME Modifier les largeurs des boutons en portrait
 				_logo.x = roundUp((actualWidth - _logo.width) * 0.5);
 				_logo.y = padding + (actualHeight - (padding * 2) - buttonHeight - _giftsButton.height - _logo.height - (gap * 2)) * 0.5;
 				
 				if (_gameCenterButton) _gameCenterButton.validate();
 				var buttonWidth:int = 0;
-				var minWidth:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 450 : 800) : (GlobalConfig.isPhone ? 200 : 300)) + ((GlobalConfig.ios && GameCenterManager.available) ? _gameCenterButton.width : 0 );
+				var minWidth:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 450 : 800) : (GlobalConfig.isPhone ? 450 : 800)) + ((GlobalConfig.ios && GameCenterManager.available) ? _gameCenterButton.width : 0 );
 				if(minWidth > _logo.width * (GlobalConfig.isPhone ? 0.9:0.8))
 					buttonWidth = (_logo.width * (GlobalConfig.isPhone ? 0.9:0.8)) - ((GlobalConfig.ios && GameCenterManager.available) ? _gameCenterButton.width : 0 );
 				else
-					buttonWidth = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 450 : 800) : (GlobalConfig.isPhone ? 200 : 300)) - ((GlobalConfig.ios && GameCenterManager.available) ? _gameCenterButton.width : 0 );
+					buttonWidth = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 450 : 800) : (GlobalConfig.isPhone ? 450 : 800)) - ((GlobalConfig.ios && GameCenterManager.available) ? _gameCenterButton.width : 0 );
 				_playButton.width = buttonWidth;
 				_playButton.x = roundUp((actualWidth - _playButton.width - ((GlobalConfig.ios && GameCenterManager.available) ? _gameCenterButton.width : 0 )) * 0.5);
 				_playButton.y = _logo.y + _logo.height + gap;
