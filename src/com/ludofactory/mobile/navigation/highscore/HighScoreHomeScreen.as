@@ -10,9 +10,10 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -84,13 +85,13 @@ package com.ludofactory.mobile.navigation.highscore
 			_headerTitle = _("Meilleurs scores");
 			
 			_icon = new Image(AbstractEntryPoint.assets.getTexture("menu-icon-highscore"));
-			_icon.scaleX = _icon.scaleY = AbstractGameInfo.LANDSCAPE ? Utilities.getScaleToFillWidth(_icon.width, (GlobalConfig.stageWidth * 0.25)) : GlobalConfig.dpiScale;
+			_icon.scaleX = _icon.scaleY = Utilities.getScaleToFillWidth(_icon.width, (GlobalConfig.stageWidth * (AbstractGameInfo.LANDSCAPE ? 0.25: 0.35)));
 			addChild(_icon);
 			
 			_message = new Label();
 			_message.text = _("Serez-vous le meilleur\ndes meilleurs ?");
 			addChild(_message);
-			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 48), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
+			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 38 : 48) : (GlobalConfig.isPhone ? 38 : 68)), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			if( !AbstractGameInfo.LANDSCAPE )
 			{
@@ -174,6 +175,8 @@ package com.ludofactory.mobile.navigation.highscore
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
 				var gap:int;
+				var padding:int;
+				var maxButtonHeight:int;
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_icon.x = (((actualWidth * 0.5) - _icon.width) * 0.5) << 0;
@@ -182,17 +185,20 @@ package com.ludofactory.mobile.navigation.highscore
 					_message.x = (((actualWidth * 0.5) - _message.width) * 0.5) << 0;
 					_message.validate();
 					
-					_icon.y =  ( (actualHeight - (_icon.height + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 25 : 50))) * 0.5) << 0;
+					_icon.y =  roundUp( (actualHeight - (_icon.height + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 25 : 50))) * 0.5 );
 					_message.y = _icon.y + _icon.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 25 : 50 );
 					
+					gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
+					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+					maxButtonHeight = (actualHeight - (padding * 2) - (gap * 2)) / 3;
 					_internationalButton.width = _nationalButton.width = _facebookButton.width = actualWidth * 0.45;
-					_internationalButton.height = _nationalButton.height = _facebookButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
+					_internationalButton.height = _nationalButton.height = _facebookButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 138) > maxButtonHeight ? maxButtonHeight : scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 138);
 					_internationalButton.x = _nationalButton.x = _facebookButton.x = actualWidth * 0.5 + ((actualWidth * 0.5) - _internationalButton.width) * 0.5;
 					
 					_internationalButton.validate();
-					gap = (actualHeight - (_internationalButton.height * 3)) / 4;
+					gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 60);
 					
-					_internationalButton.y = gap;
+					_internationalButton.y = padding + (actualHeight - (_internationalButton.height * 3) - (gap * 2) - (padding * 2)) * 0.5;
 					
 					_nationalButton.y = _internationalButton.y + _internationalButton.height + gap;
 					_nationalButton.validate();
@@ -202,27 +208,28 @@ package com.ludofactory.mobile.navigation.highscore
 				else
 				{
 					_icon.x = (actualWidth - _icon.width) * 0.5;
-					_icon.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					_icon.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 60 );
 					
 					_message.y = _icon.y + _icon.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
 					_message.width = actualWidth * 0.8;
 					_message.x = (actualWidth - _message.width) * 0.5;
 					_message.validate();
 					
-					_shadow.y = _message.y + _message.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					_shadow.y = _message.y + _message.height + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 60 );
 					_shadow.width = this.actualWidth;
 					
 					_background.y = _shadow.y + _shadow.height;
 					_background.width = actualWidth;
 					_background.height = actualHeight - _background.y;
 					
-					gap = (actualHeight - _shadow.y - _shadow.y) / 4;
-					
+					gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 50);
+					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+					maxButtonHeight = (actualHeight - _background.y - (padding * 2) - (gap * 2)) / 3;
 					_internationalButton.width = _nationalButton.width = _facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-					_internationalButton.height = _nationalButton.height = _facebookButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
+					_internationalButton.height = _nationalButton.height = _facebookButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 148) > maxButtonHeight ? maxButtonHeight : scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 138);
 					_internationalButton.x = _nationalButton.x = _facebookButton.x = (actualWidth - _internationalButton.width) * 0.5;
 					
-					_internationalButton.y = _background.y + gap;
+					_internationalButton.y = _background.y + padding + (_background.height - (_internationalButton.height * 3) - (gap * 2) - (padding * 2)) * 0.5;
 					_internationalButton.validate();
 					
 					_nationalButton.y = _internationalButton.y + _internationalButton.height + gap;
