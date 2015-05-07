@@ -804,7 +804,10 @@ package com.ludofactory.mobile.core
 				
 				_header.y = -500;
 				
-				TweenMax.to(_footer, 0.25, { y:(GlobalConfig.stageHeight + _footer.height), autoAlpha:0 });
+				//TweenMax.to(_footer, 0.25, { y:(GlobalConfig.stageHeight + _footer.height), autoAlpha:0 });
+				_footer.alpha = 0;
+				_footer.visible = false;
+				_footer.y = GlobalConfig.stageHeight;
 			}
 			else
 			{
@@ -817,8 +820,12 @@ package com.ludofactory.mobile.core
 				
 				onHeaderVisibilityChanged();
 				
-				if( _footer.y > GlobalConfig.stageHeight )
-					TweenMax.to(_footer, 0.25, { y:(GlobalConfig.stageHeight - _footer.height), autoAlpha:1 });
+				//if( _footer.y >= GlobalConfig.stageHeight )
+					//TweenMax.to(_footer, 0.25, { y:(GlobalConfig.stageHeight - _footer.height), autoAlpha:1, onUpdate:function():void{log("Update : " + _footer.y);} });
+				
+				_footer.alpha = 1;
+				_footer.visible = true;
+				_footer.y = GlobalConfig.stageHeight - _footer.height;
 			}
 		}
 		
