@@ -30,6 +30,19 @@ package com.ludofactory.common.utils
 			return String(appXml.ns::versionNumber[0]).substr(0, 3); // remove the last .0 automatically added
 		}
 		
+		/**
+		 * Returns the App version defined in the application descriptor.
+		 */
+		public static function getIsLandscapeFromDescriptor():Boolean
+		{
+			var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor;
+			var ns:Namespace = appXml.namespace();
+			var str:String = String(appXml.ns::initialWindow)
+					.match(/<aspectRatio>(.+?)<\/aspectRatio>/gm)[0]
+					.replace(/<aspectRatio>|<\/aspectRatio>/gm, "");
+			return str == "landscape";
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Colors
 		
