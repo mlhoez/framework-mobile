@@ -59,7 +59,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 		 * The retry container. */		
 		private var _retryContainer:RetryContainer;
 		
-		private var _connectedContentInitialized:Boolean = false
+		private var _connectedContentInitialized:Boolean = false;
 		
 		public function BoutiqueCategoryScreen()
 		{

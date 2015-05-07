@@ -43,7 +43,7 @@ package com.ludofactory.mobile.navigation.shop
 	{
 		/**
 		 * The encheres title */		
-		private var _encheresTitle:Label
+		private var _encheresTitle:Label;
 		/**
 		 * The encheres image */		
 		private var _encheresImage:Image;
@@ -59,7 +59,7 @@ package com.ludofactory.mobile.navigation.shop
 		
 		/**
 		 * The boutique title */		
-		private var _boutiqueTitle:Label
+		private var _boutiqueTitle:Label;
 		/**
 		 * The boutique image */		
 		private var _boutiqueImage:Image;
@@ -84,6 +84,7 @@ package com.ludofactory.mobile.navigation.shop
 		{
 			super();
 			
+			_fullScreen = false;
 			_whiteBackground = true;
 		}
 		
