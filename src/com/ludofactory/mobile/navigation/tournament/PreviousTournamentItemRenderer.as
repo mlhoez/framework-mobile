@@ -27,6 +27,7 @@ package com.ludofactory.mobile.navigation.tournament
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
+	import starling.utils.HAlign;
 	import starling.utils.formatString;
 	
 	/**
@@ -97,6 +98,7 @@ package com.ludofactory.mobile.navigation.tournament
 			addChild(_bottomStripe);
 			
 			_title = new TextField(10, 10, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(34), Theme.COLOR_DARK_GREY, true);
+			_title.hAlign = HAlign.LEFT;
 			addChild(_title);
 			
 			_arrow = new ImageLoader();
