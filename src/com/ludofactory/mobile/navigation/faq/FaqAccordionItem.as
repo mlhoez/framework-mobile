@@ -82,7 +82,7 @@ package com.ludofactory.mobile.navigation.faq
 			_headerBackground.addQuad( quad );
 			quad.height = scaleAndRoundToDpi(2);
 			quad.color = 0xbfbfbf;
-			quad.y = scaleAndRoundToDpi(84);
+			quad.y = scaleAndRoundToDpi(82);
 			_headerBackground.addQuad( quad );
 			
 			headerHeight = scaleAndRoundToDpi(84);

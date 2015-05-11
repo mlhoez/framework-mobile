@@ -90,7 +90,7 @@ package com.ludofactory.mobile.navigation.vip
 			quad.height = scaleAndRoundToDpi(2);
 			quad.color = 0xbfbfbf;
 			_headerBackground.addQuad( quad );
-			quad.y = scaleAndRoundToDpi(84);
+			quad.y = scaleAndRoundToDpi(82);
 			_headerBackground.addQuad( quad );
 
 			headerHeight = scaleAndRoundToDpi(84);
