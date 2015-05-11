@@ -6,6 +6,7 @@ Created : 26 juil. 2013
 */
 package com.ludofactory.mobile.core.scoring
 {
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
@@ -13,7 +14,6 @@ package com.ludofactory.mobile.core.scoring
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
@@ -23,6 +23,7 @@ package com.ludofactory.mobile.core.scoring
 	import starling.display.QuadBatch;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.text.TextField;
 	
 	public class ScoreToStarsItemRenderer extends FeathersControl implements IListItemRenderer
 	{
@@ -38,8 +39,8 @@ package com.ludofactory.mobile.core.scoring
 		
 		private var _idleContainer:Sprite;
 		private var _idleQuadBatch:QuadBatch;
-		private var _level:Label;
-		private var _pointsWithCredits:Label;
+		private var _level:TextField;
+		private var _pointsWithCredits:TextField;
 		
 		private var _starIcon:Image;
 		
@@ -80,15 +81,11 @@ package com.ludofactory.mobile.core.scoring
 			_idleQuadBatch.addQuad( background );
 			_idleContainer.addChild( _idleQuadBatch );
 			
-			_level = new Label();
-			_level.text = "999999";
+			_level = new TextField(_textWidth, _itemHeight, "0", Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, true);
 			_idleContainer.addChild(_level);
-			_level.textRendererProperties.textFormat = Theme.scoreToPointsIRTextFormat;
 			
-			_pointsWithCredits = new Label();
-			_pointsWithCredits.text = "999999";
+			_pointsWithCredits = new TextField(_textWidth, _itemHeight, "0", Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, true);
 			_idleContainer.addChild(_pointsWithCredits);
-			_pointsWithCredits.textRendererProperties.textFormat = Theme.scoreToPointsIRTextFormat;
 			
 			_starIcon = new Image( AbstractEntryPoint.assets.getTexture("ruby") );
 			_starIcon.scaleX = _starIcon.scaleY = (GlobalConfig.dpiScale - 0.4) < 0.3 ? 0.3 : (GlobalConfig.dpiScale - 0.4);
@@ -121,9 +118,8 @@ package com.ludofactory.mobile.core.scoring
 			{
 				return false;
 			}
-			_level.width = NaN;
-			_level.height = NaN;
-			_level.validate();
+			//_level.width = NaN;
+			//_level.height = NaN;
 			var newWidth:Number = this.explicitWidth;
 			if(needsWidth)
 			{
@@ -177,9 +173,6 @@ package com.ludofactory.mobile.core.scoring
 				_level.width = _pointsWithCredits.width = _textWidth;
 				
 				_pointsWithCredits.x = _textWidth;
-				
-				_level.validate();
-				_level.y = _pointsWithCredits.y = (_itemHeight - _level.height) * 0.5;
 				
 				_starIcon.x = _textWidth + (_textWidth * 0.5) + scaleAndRoundToDpi(25);
 				_starIcon.y = (actualHeight - _starIcon.height) * 0.5;

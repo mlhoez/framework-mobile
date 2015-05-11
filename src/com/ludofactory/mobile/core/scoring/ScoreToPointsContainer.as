@@ -6,17 +6,18 @@ Created : 5 août 2013
 */
 package com.ludofactory.mobile.core.scoring
 {
+	
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	
 	import feathers.controls.Label;
 	import feathers.controls.LayoutGroup;
 	import feathers.controls.List;
@@ -24,14 +25,14 @@ package com.ludofactory.mobile.core.scoring
 	import feathers.controls.Scroller;
 	import feathers.data.ListCollection;
 	import feathers.layout.HorizontalLayout;
-
+	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.utils.formatString;
-
+	
 	public class ScoreToPointsContainer extends ScrollContainer
 	{
 		/**
@@ -54,13 +55,13 @@ package com.ludofactory.mobile.core.scoring
 		
 		/**
 		 * The points with free group. */		
-		private var _pointsWithFreeGroup:LayoutGroup;
+		private var _pointsWithTokensGroup:LayoutGroup;
 		/**
 		 * The points with free list title */		
-		private var _pointsWithFree:Label;
+		private var _pointsWithTokens:Label;
 		/**
 		 * The free icon. */		
-		private var _freeIcon:Image
+		private var _tokenIcon:Image;
 		
 		/**
 		 * The points with credits group. */		
@@ -128,19 +129,19 @@ package com.ludofactory.mobile.core.scoring
 			hlayout.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_LEFT;
 			hlayout.verticalAlign = HorizontalLayout.VERTICAL_ALIGN_MIDDLE;
 			
-			_pointsWithFreeGroup = new LayoutGroup();
-			_pointsWithFreeGroup.layout = hlayout;
-			_headerContainer.addChild(_pointsWithFreeGroup);
+			_pointsWithTokensGroup = new LayoutGroup();
+			_pointsWithTokensGroup.layout = hlayout;
+			_headerContainer.addChild(_pointsWithTokensGroup);
 			
-			_pointsWithFree = new Label();
-			_pointsWithFree.text = formatString(_("Mise : {0}"), Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE));
-			_pointsWithFreeGroup.addChild(_pointsWithFree);
-			_pointsWithFree.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_ORANGE, true, true, null, null, null, TextFormatAlign.CENTER);
-			_pointsWithFree.textRendererProperties.wordWrap = false;
+			_pointsWithTokens = new Label();
+			_pointsWithTokens.text = formatString(_("Mise : {0}"), Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE));
+			_pointsWithTokensGroup.addChild(_pointsWithTokens);
+			_pointsWithTokens.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_ORANGE, true, true, null, null, null, TextFormatAlign.CENTER);
+			_pointsWithTokens.textRendererProperties.wordWrap = false;
 			
-			_freeIcon = new Image( AbstractEntryPoint.assets.getTexture("summary-icon-token") );
-			_freeIcon.scaleX = _freeIcon.scaleY = GlobalConfig.dpiScale;
-			_pointsWithFreeGroup.addChild( _freeIcon );
+			_tokenIcon = new Image( AbstractEntryPoint.assets.getTexture("summary-icon-token") );
+			_tokenIcon.scaleX = _tokenIcon.scaleY = GlobalConfig.dpiScale;
+			_pointsWithTokensGroup.addChild( _tokenIcon );
 			
 			_pointsWithCreditsGroup = new LayoutGroup();
 			_pointsWithCreditsGroup.layout = hlayout;
@@ -190,7 +191,7 @@ package com.ludofactory.mobile.core.scoring
 			_scoreTitle.width = this.actualWidth / 3;
 			
 			_pointsWithCreditsGroup.validate();
-			_pointsWithFreeGroup.x = _scoreTitle.width + (_scoreTitle.width - _pointsWithFreeGroup.width) * 0.5;
+			_pointsWithTokensGroup.x = _scoreTitle.width + (_scoreTitle.width - _pointsWithTokensGroup.width) * 0.5;
 			_pointsWithCreditsGroup.x = (_scoreTitle.width * 2) + (_scoreTitle.width - _pointsWithCreditsGroup.width) * 0.5;
 			
 			_titleContainer.y = scaleAndRoundToDpi(20);
@@ -226,8 +227,8 @@ package com.ludofactory.mobile.core.scoring
 			_pointsWithCredits.removeFromParent(true);
 			_pointsWithCredits = null;
 			
-			_pointsWithFree.removeFromParent(true);
-			_pointsWithFree = null;
+			_pointsWithTokens.removeFromParent(true);
+			_pointsWithTokens = null;
 			
 			_headerContainer.removeFromParent(true);
 			_headerContainer = null;

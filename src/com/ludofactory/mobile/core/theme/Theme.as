@@ -258,8 +258,6 @@ package com.ludofactory.mobile.core.theme
 			//this.stageTextScale = this.scaleFactor / nativeScaleFactor; // TODO A remettre ?
 		}
 		
-		public static var baseLabelTextFormat:TextFormat;
-		
 		protected function initializeFonts():void
 		{
 			// OffsetTabBar
@@ -380,9 +378,6 @@ package com.ludofactory.mobile.core.theme
 			
 			// FreeGameEndScreen
 			freeGameEndScreenContainerTitleTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 72), COLOR_ORANGE, false, false, null, null, null, TextFormatAlign.CENTER);
-			
-			// ScoreToPointsItemRenderer
-			scoreToPointsIRTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(25), COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
 			
 			// ScoreToPointsItemRenderer
 			highScoreListHeaderTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(30), COLOR_LIGHT_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
@@ -2198,7 +2193,7 @@ package com.ludofactory.mobile.core.theme
 			container.minHeight = container.minWidth = 30 * this.scaleFactor; // same as text input
 			container.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			container.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			container.paddingTop = container.paddingBottom = 0 * this.scaleFactor;
+			container.paddingTop = container.paddingBottom = 0;
 			container.paddingLeft = container.paddingRight = 2 * this.scaleFactor;
 		}
 		
@@ -2366,6 +2361,7 @@ package com.ludofactory.mobile.core.theme
 			renderer.stripeThickness = scaleAndRoundToDpi(48);
 		}
 		
+		public static var baseLabelTextFormat:TextFormat;                       // Base label
 		public static var accountIRTextFormat:TextFormat;                       // Account IR
 		public static var accountIRLabelTextFormat:TextFormat;                  // Account IR
 		public static var faqIRTextFormat:TextFormat;                           // FAQ IR
@@ -2392,7 +2388,6 @@ package com.ludofactory.mobile.core.theme
 		public static var accoutHistoryIRTitleTextFormat:TextFormat;            // Account history item renderer
 		public static var infoManagerOverlay:Texture;                           // Info manager
 		public static var freeGameEndScreenContainerTitleTextFormat:TextFormat; // Solo end screen
-		public static var scoreToPointsIRTextFormat:TextFormat;                 // Score to points IR
 		public static var highScoreListHeaderTextFormat:TextFormat;             // High score list header
 		public static var labelMessageHighscorePodiumTextFormat:TextFormat;     // Game top podium
 		public static var labelPodiumTopTextFormat:TextFormat;                  // Game top podium

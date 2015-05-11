@@ -6,15 +6,15 @@ Created : 26 juil. 2013
 */
 package com.ludofactory.mobile.core.scoring
 {
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
@@ -24,6 +24,7 @@ package com.ludofactory.mobile.core.scoring
 	import starling.display.QuadBatch;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.text.TextField;
 	
 	public class ScoreToPointsItemRenderer extends FeathersControl implements IListItemRenderer
 	{
@@ -39,9 +40,9 @@ package com.ludofactory.mobile.core.scoring
 		
 		private var _idleContainer:Sprite;
 		private var _idleQuadBatch:QuadBatch;
-		private var _level:Label;
-		private var _pointsWithCredits:Label;
-		private var _pointsWithFree:Label;
+		private var _level:TextField;
+		private var _pointsWithCredits:TextField;
+		private var _pointsWithFree:TextField;
 		
 		private var _pointsIcon:Image;
 		private var _pointsIconBis:Image;
@@ -84,20 +85,14 @@ package com.ludofactory.mobile.core.scoring
 			_idleQuadBatch.addQuad( background );
 			_idleContainer.addChild( _idleQuadBatch );
 			
-			_level = new Label();
-			_level.text = "999999";
+			_level = new TextField(_textWidth, _itemHeight, "0", Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, true);
 			_idleContainer.addChild(_level);
-			_level.textRendererProperties.textFormat = Theme.scoreToPointsIRTextFormat;
 			
-			_pointsWithCredits = new Label();
-			_pointsWithCredits.text = "999999";
+			_pointsWithCredits = new TextField(_textWidth, _itemHeight, "0", Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, true);
 			_idleContainer.addChild(_pointsWithCredits);
-			_pointsWithCredits.textRendererProperties.textFormat = Theme.scoreToPointsIRTextFormat;
 			
-			_pointsWithFree = new Label();
-			_pointsWithFree.text = "999999";
+			_pointsWithFree = new TextField(_textWidth, _itemHeight, "0", Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, true);
 			_idleContainer.addChild(_pointsWithFree);
-			_pointsWithFree.textRendererProperties.textFormat = Theme.scoreToPointsIRTextFormat;
 			
 			_pointsIcon = new Image( AbstractEntryPoint.assets.getTexture("summary-icon-points") );
 			_pointsIcon.scaleX = _pointsIcon.scaleY = (GlobalConfig.dpiScale - 0.4) < 0.3 ? 0.3 : (GlobalConfig.dpiScale - 0.4);
@@ -111,7 +106,6 @@ package com.ludofactory.mobile.core.scoring
 		override protected function draw():void
 		{
 			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
 			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
 			
 			if(dataInvalid)
@@ -135,9 +129,8 @@ package com.ludofactory.mobile.core.scoring
 			{
 				return false;
 			}
-			_level.width = NaN;
-			_level.height = NaN;
-			_level.validate();
+		//	_level.width = NaN;
+			//_level.height = NaN;
 			var newWidth:Number = this.explicitWidth;
 			if(needsWidth)
 			{
@@ -190,12 +183,8 @@ package com.ludofactory.mobile.core.scoring
 			if( !_elementsPositioned )
 			{
 				_level.width = _pointsWithCredits.width = _pointsWithFree.width = _textWidth;
-				
 				_pointsWithFree.x = _textWidth;
 				_pointsWithCredits.x = _textWidth * 2;
-				
-				_level.validate();
-				_level.y = _pointsWithFree.y = _pointsWithCredits.y = (_itemHeight - _level.height) * 0.5;
 				
 				_pointsIcon.x = _textWidth + (_textWidth * 0.5) + scaleAndRoundToDpi(25);
 				_pointsIcon.y = (actualHeight - _pointsIcon.height) * 0.5;
@@ -381,6 +370,9 @@ package com.ludofactory.mobile.core.scoring
 			this._paddingLeft = value;
 			this.invalidate(INVALIDATION_FLAG_STYLES);
 		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Dispose
 		
 		override public function dispose():void
 		{
