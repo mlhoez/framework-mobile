@@ -33,20 +33,20 @@ package com.ludofactory.mobile.core.controls
 	{
 		/**
 		 * Flag to indicate that the refreshable state have changed. */
-		public static const INVALIDATION_FLAG_REFRESHABLE_STATE:String = "refreshable-state";
+		public static const INVALIDATION_FLAG_REFRESHABLE_STATE:String = _("refreshable-state"); // FIXME Vérifier que la trad est bien récupérée
 		
 		/**
 		 * "Pull to refresh" default Localizer translation key. */		
-		private static const DEFAULT_PULL_TO_REFRESH_KEY:String = "Tirer pour mettre à jour";
+		private static const DEFAULT_PULL_TO_REFRESH_KEY:String = _("Tirer pour mettre à jour");
 		/**
 		 * "Release to refresh" default Localizer translation key. */		
-		private static const DEFAULT_RELEASE_TO_REFRESH_KEY:String = "Lâcher pour mettre à jour";
+		private static const DEFAULT_RELEASE_TO_REFRESH_KEY:String = _("Lâcher pour mettre à jour");
 		/**
 		 * "Refreshing..." default Localizer translation key. */		
-		private static const DEFAULT_REFRESHING_KEY:String = "Mise à jour...";
+		private static const DEFAULT_REFRESHING_KEY:String = _("Mise à jour...");
 		/**
 		 * "Last refresh : --/--/--" default Localizer translation key. */		
-		private static const DEFAULT_LAST_REFRESH_KEY:String = "Dernière mise à jour à";
+		private static const DEFAULT_LAST_REFRESH_KEY:String = _("Dernière mise à jour à");
 		
 		/**
 		 * "Pull to refresh" translated value. */		
@@ -91,8 +91,8 @@ package com.ludofactory.mobile.core.controls
 		private var _wasRefreshing:Boolean = false;
 		
 		/**
-		 * Top refresh offset used to determine when the update
-		 * should be triggered. */		
+		 * Top refresh offset used to determine when the update should be triggered = how much we need to scroll
+		 * down to trigger the refresh. */		
 		private var _refreshOffset:int = 0;
 		
 		public function PullToRefreshScrollContainer()
@@ -266,10 +266,8 @@ package com.ludofactory.mobile.core.controls
 			// Ajout Max
 			if( _wasRefreshing )
 			{
-				// because when we update the dataProvider and we add elements at
-				// the top of the list the list will automatically be positioned
-				// at the very top, we need to scroll down where it was before the
-				// update.
+				// because when we update the dataProvider and we add elements at the top of the list the list will
+				// automatically be positioned at the very top, we need to scroll down where it was before the update.
 				this.throwTo(NaN, _minVerticalScrollPosition, 0.5);
 				_wasRefreshing = _isRefreshing = false;
 			}
