@@ -30,7 +30,7 @@ package com.ludofactory.mobile.core.controls
 	{
 		private static const HELPER_POINT:Point = new Point();
 		private static const HELPER_TOUCHES_VECTOR:Vector.<Touch> = new <Touch>[];
-		private var _touchPointID:int = -1;
+		//private var _touchPointID:int = -1;
 
 		/**
 		 * Header height used to calculate the scroll position. */
@@ -235,7 +235,6 @@ package com.ludofactory.mobile.core.controls
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{

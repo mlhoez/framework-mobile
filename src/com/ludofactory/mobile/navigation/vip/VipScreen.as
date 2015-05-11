@@ -46,6 +46,7 @@ package com.ludofactory.mobile.navigation.vip
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.text.TextField;
 	import starling.textures.Texture;
 	import starling.utils.deg2rad;
 	import starling.utils.formatString;
@@ -68,7 +69,7 @@ package com.ludofactory.mobile.navigation.vip
 		private var _rankTitleLabel:Label;
 		/**
 		 * The access condition label. */		
-		private var _conditionLabel:Label;
+		private var _conditionLabel:TextField;
 		/**
 		 * The reload buton for when the user comes from
 		 * the store. */		
@@ -250,11 +251,10 @@ package com.ludofactory.mobile.navigation.vip
 			addChild(_rankTitleLabel);
 			_rankTitleLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 56 : 70), Theme.COLOR_ORANGE, false, false, null, null, null, TextFormatAlign.CENTER);
 			
-			_conditionLabel = new Label();
+			_conditionLabel = new TextField(10, scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 80 : 60), (_ranksData[ _currentIndex ] as VipData).condition, Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 40), Theme.COLOR_DARK_GREY);
 			_conditionLabel.touchable = false;
-			_conditionLabel.text = (_ranksData[ _currentIndex ] as VipData).condition;
+			_conditionLabel.autoScale = true;
 			addChild(_conditionLabel);
-			_conditionLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			if( advancedOwner.screenData.vipScreenInitializedFromStore )
 			{
@@ -381,16 +381,16 @@ package com.ludofactory.mobile.navigation.vip
 			{
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_iconsYPosition = actualHeight * 0.4;
+					_iconsYPosition = actualHeight * 0.45;
 					
 					_rankTitleLabel.y = (((_iconsYPosition - _iconHeight * 0.5) - scaleAndRoundToDpi(50)) * 0.5) << 0;
 					_rankTitleLabel.width = actualWidth * 0.5;
 					_rankTitleLabel.validate();
 					
 					_conditionLabel.y = _iconsYPosition + (_iconHeight * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
-					_conditionLabel.x = actualWidth * 0.05;
-					_conditionLabel.width = actualWidth * 0.4;
-					_conditionLabel.validate();
+					_conditionLabel.x = actualWidth * 0.025;
+					_conditionLabel.width = actualWidth * 0.45;
+					//_conditionLabel.validate();
 					
 					_topShadow.height = actualHeight;
 					_topShadow.x = actualWidth * 0.5 - _topShadow.width;
@@ -410,17 +410,14 @@ package com.ludofactory.mobile.navigation.vip
 					_iconsYPosition = _rankTitleLabel.y + _rankTitleLabel.height + (_iconHeight * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
 					
 					_conditionLabel.y = _iconsYPosition + (_iconHeight * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
-					_conditionLabel.width = actualWidth * 0.95;
+					_conditionLabel.width = (actualWidth - (_leftArrowButton.width * 2)) * 0.95;
 					_conditionLabel.x = (actualWidth - _conditionLabel.width) * 0.5;
-					_conditionLabel.validate();
+					//_conditionLabel.validate();
 					
 					_topShadow.width = actualWidth;
 
 					_leftArrowButton.x = scaleAndRoundToDpi(12);
-					_leftArrowButton.y = actualHeight - _leftArrowButton.height - scaleAndRoundToDpi(5);
-
 					_rightArrowButton.x = actualWidth - _rightArrowButton.width - scaleAndRoundToDpi(12);
-					_rightArrowButton.y = actualHeight - _rightArrowButton.height - scaleAndRoundToDpi(5);
 				}
 				
 				if( _reloadButton )
@@ -471,7 +468,7 @@ package com.ludofactory.mobile.navigation.vip
 			
 			if( isInvalid( INVALIDATION_FLAG_REDRAW ) && _isContentInitialized )
 			{
-				_conditionLabel.validate();
+				//_conditionLabel.validate();
 				
 				if( !AbstractGameInfo.LANDSCAPE )
 					_topShadow.y = _conditionLabel.y + _conditionLabel.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40) + ((_reloadButton && _reloadButton.visible) ? _reloadButton.height : 0) + ((_resendMailButton && _resendMailButton.visible) ? _resendMailButton.height : 0);
@@ -501,6 +498,12 @@ package com.ludofactory.mobile.navigation.vip
 					{
 						_currentPrivilege.y = _topShadow.y + _topShadow.height;
 						_currentPrivilege.height = actualHeight - _currentPrivilege.y;
+					}
+					
+					if( _leftArrowButton.y == 0 )
+					{
+						_leftArrowButton.y = _topShadow.y - _leftArrowButton.height //- scaleAndRoundToDpi(5);
+						_rightArrowButton.y = _topShadow.y - _rightArrowButton.height //- scaleAndRoundToDpi(5);
 					}
 				}
 				

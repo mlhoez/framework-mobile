@@ -1,25 +1,29 @@
 package com.ludofactory.mobile.navigation.vip
 {
+	
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.controls.ScrollContainer;
 	import feathers.layout.VerticalLayout;
 	
+	import flash.text.TextFormat;
+	
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.QuadBatch;
 	import starling.display.Sprite;
 	import starling.events.TouchEvent;
+	import starling.text.TextField;
+	import starling.utils.HAlign;
 	
 	public class VipAccordionItem extends AbstractAccordionItem
 	{
@@ -33,7 +37,7 @@ package com.ludofactory.mobile.navigation.vip
 		
 		/**
 		 * The header title. */		
-		private var _headerTitle:Label;
+		private var _headerTitle:TextField;
 		
 		/**
 		 * The content container's shadow. */		
@@ -92,18 +96,19 @@ package com.ludofactory.mobile.navigation.vip
 			headerHeight = scaleAndRoundToDpi(84);
 			
 			_newIcon = new Image( AbstractEntryPoint.assets.getTexture("vip-new-icon") );
-			_newIcon.scaleX = _newIcon.scaleY = GlobalConfig.dpiScale;
+			_newIcon.scaleX = _newIcon.scaleY = Utilities.getScaleToFillHeight(_newIcon.height, scaleAndRoundToDpi(84) * 0.9);
 			_newIcon.alignPivot();
 			_newIcon.visible = false;
 			_newIconWidth = _newIcon.width;
 			_headerContainer.addChild(_newIcon);
 			TweenMax.to(_newIcon, 0.4, { scaleX:(GlobalConfig.dpiScale - 0.15), scaleY:(GlobalConfig.dpiScale - 0.15), yoyo:true, repeat:-1, ease:Linear.easeNone });
 			
-			_headerTitle = new Label();
+			_headerTitle = new TextField(5, headerHeight, _vipPrivilegeData.title, Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_DARK_GREY);
 			_headerTitle.touchable = false;
+			_headerTitle.autoScale = true;
 			_headerTitle.text = _vipPrivilegeData.title;
+			_headerTitle.hAlign = HAlign.LEFT;
 			_headerContainer.addChild(_headerTitle);
-			_headerTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_DARK_GREY);
 			
 			_arrow = new ImageLoader();
 			_arrow.source = AbstractEntryPoint.assets.getTexture("arrow_down");
@@ -152,7 +157,6 @@ package com.ludofactory.mobile.navigation.vip
 				//_headerTitle.textRendererProperties.textFormat.color = _isNew ? Theme.COLOR_ORANGE : 0x565656;
 				_headerTitle.x = _isNew ? (_newIcon.x + (_newIconWidth * 0.5) + scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 )) : (scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 ));
 				_headerTitle.width = _arrow.x - _headerTitle.x - scaleAndRoundToDpi(20); // scaleAndRoundToDpi(20) = padding arrow
-				_headerTitle.validate();
 				_headerTitle.y = (_headerBackground.height - _headerTitle.height) * 0.5;
 				
 				_headerBackground.width = _contentContainer.width = _shadow.width = actualWidth;
@@ -192,7 +196,6 @@ package com.ludofactory.mobile.navigation.vip
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{

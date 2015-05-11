@@ -38,7 +38,7 @@ package com.ludofactory.mobile.core.controls
 				{
 					accordionElement = _dataProvider[i];
 					accordionElement.index = i;
-					accordionElement.isLast = i == (_dataProvider.length - 1) ? true : false;
+					accordionElement.isLast = i == (_dataProvider.length - 1);
 					accordionElement.addEventListener(LudoEventType.EXPAND_BEGIN, collapseAllOthers);
 					accordionElement.addEventListener(LudoEventType.EXPAND_COMPLETE, onExpandComplete);
 					addEventListener(Event.SCROLL, accordionElement.onScroll);
