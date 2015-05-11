@@ -6,7 +6,6 @@ package com.ludofactory.mobile.core.theme
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
-	import com.ludofactory.mobile.navigation.achievements.TrophyMessage;
 	import com.ludofactory.mobile.navigation.ads.tournament.AdTournamentItemRenderer;
 	import com.ludofactory.mobile.navigation.engine.FacebookFriendElement;
 	import com.ludofactory.mobile.navigation.home.RuleItemRenderer;
@@ -160,19 +159,6 @@ package com.ludofactory.mobile.core.theme
 		public static const COLOR_DARK_GREY:uint = 0x333333;
 		public static const COLOR_ORANGE:uint = 0xff4e00;
 		public static const COLOR_BLACK:uint = 0x353535;
-		
-		// Game Top Podium
-		public static var labelMessageHighscorePodiumTextFormat:TextFormat;
-		public static var labelPodiumTopTextFormat:TextFormat;
-		
-		// Arrows and shadow for the lists
-		public static var downArrowLists:Texture;
-		public static var downArrowShadow:Texture;
-		
-		// In Game
-		public static var inGameScoreTextFormat:TextFormat;
-		public static var inGameSuccessTextFormat:TextFormat;
-		public static var inGameFailTextFormat:TextFormat;
 		
 		public static const LABEL_ALIGN_RIGHT:String = "label-align-right";
 		public static const LABEL_ALIGN_CENTER:String = "label-align-center";
@@ -2315,8 +2301,6 @@ package com.ludofactory.mobile.core.theme
 //------------------------------------------------------------------------------------------------------------
 //
 //											S C R O L L  B A R
-//
-//------------------------------------------------------------------------------------------------------------
 		
 		protected static const SCROLL_BAR_THUMB_REGION1:int = 5;
 		protected static const SCROLL_BAR_THUMB_REGION2:int = 14;
@@ -2349,8 +2333,6 @@ package com.ludofactory.mobile.core.theme
 //------------------------------------------------------------------------------------------------------------
 //
 //											L A B E L
-//
-//------------------------------------------------------------------------------------------------------------
 		
 		protected function labelAlignRightInitializer(label:Label):void
 		{
@@ -2373,26 +2355,7 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //
-//								A C C O U N T  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var accountIRTextFormat:TextFormat;
-		public static var accountIRLabelTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//								F A Q  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var faqIRTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
 //								M E N U  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
 		
 		public static var menuIRTextFormat:TextFormat;
 		public static var menuIRBadgeTextFormat:TextFormat;
@@ -2403,170 +2366,41 @@ package com.ludofactory.mobile.core.theme
 			renderer.stripeThickness = scaleAndRoundToDpi(48);
 		}
 		
-//------------------------------------------------------------------------------------------------------------
-//
-//							C O N T A C T  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var contactIRNameTextFormat:TextFormat;
-		public static var contactIRValueTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//					C U S T O M E R  T H R E A D  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var csThreadIRMessageTextFormat:TextFormat;
-		public static var csThreadIRDateTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//				B O U T I Q U E  C A T E G O R Y  M E S S A G E  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var boutiqueCategoryIRTitleTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//								F I L L E U L  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var filleulIRNameTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//							G I F T  H I S T O R Y  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var giftIRTitleTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//							H I S T O R Y  H E A D E R  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var historyIRTitleTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//							P A Y M E N T  H I S T O R Y  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var paymentIRTitleTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//									N E W S  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var newsIRTitleTextFormat:TextFormat;
-		public static var newsIRMessageTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//								S E T T I N G S  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var settingsIRTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//								N O T  L O G G E D  I N  C O N T A I N E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var notLoggedInMessageTextFormat:TextFormat;
-		public static var notLoggedInButtonTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//							F I L L E U L  R E W A R D  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var filleulRewardIRTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//							R A N K  H E A D E R  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var rankHeaderIRTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//								R E T R Y  C O N T A I N E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var retryContainerLightTextFormat:TextFormat;
-		public static var retryContainerDarkTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//							R A N K  H E A D E R  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var boutiqueItemIRTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//							C O M M O N  B I D  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var commonBidIRTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//							A C C O U N T  H I S T O R Y  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var accoutHistoryIRTitleTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//										I N F O  M A N A G E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var infoManagerOverlay:Texture;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//										F R E E  G A M E  E N D  S C R E E N
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var freeGameEndScreenContainerTitleTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//							S C O R E  T O  P O I N T S  I T E M  R E N D E R E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var scoreToPointsIRTextFormat:TextFormat;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//							H I G H  S C O R E  L I S T  H E A D E R
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		public static var highScoreListHeaderTextFormat:TextFormat;
+		public static var accountIRTextFormat:TextFormat;                       // Account IR
+		public static var accountIRLabelTextFormat:TextFormat;                  // Account IR
+		public static var faqIRTextFormat:TextFormat;                           // FAQ IR
+		public static var contactIRNameTextFormat:TextFormat;                   // Contacts IR
+		public static var contactIRValueTextFormat:TextFormat;                  // Contacts IR
+		public static var csThreadIRMessageTextFormat:TextFormat;               // Customer thread IR
+		public static var csThreadIRDateTextFormat:TextFormat;                  // Customer thread IR
+		public static var boutiqueCategoryIRTitleTextFormat:TextFormat;         // Boutique category message IR
+		public static var filleulIRNameTextFormat:TextFormat;                   // filleul IR
+		public static var giftIRTitleTextFormat:TextFormat;                     // Gift history IR
+		public static var historyIRTitleTextFormat:TextFormat;                  // History header IR
+		public static var paymentIRTitleTextFormat:TextFormat;                  // Payment history IR
+		public static var newsIRTitleTextFormat:TextFormat;                     // news IR
+		public static var newsIRMessageTextFormat:TextFormat;                   // news IR
+		public static var settingsIRTextFormat:TextFormat;                      // settings IR
+		public static var notLoggedInMessageTextFormat:TextFormat;              // not logged in container
+		public static var notLoggedInButtonTextFormat:TextFormat;               // not logged in container
+		public static var filleulRewardIRTextFormat:TextFormat;                 // filleul reward IR
+		public static var rankHeaderIRTextFormat:TextFormat;                    // rank header IR
+		public static var retryContainerLightTextFormat:TextFormat;             // retry container
+		public static var retryContainerDarkTextFormat:TextFormat;              // retry container
+		public static var boutiqueItemIRTextFormat:TextFormat;                  // Rank header IR
+		public static var commonBidIRTextFormat:TextFormat;                     // common bid IR
+		public static var accoutHistoryIRTitleTextFormat:TextFormat;            // Account history item renderer
+		public static var infoManagerOverlay:Texture;                           // Info manager
+		public static var freeGameEndScreenContainerTitleTextFormat:TextFormat; // Solo end screen
+		public static var scoreToPointsIRTextFormat:TextFormat;                 // Score to points IR
+		public static var highScoreListHeaderTextFormat:TextFormat;             // High score list header
+		public static var labelMessageHighscorePodiumTextFormat:TextFormat;     // Game top podium
+		public static var labelPodiumTopTextFormat:TextFormat;                  // Game top podium
+		public static var downArrowLists:Texture;                               // Arrows and shadow for the lists
+		public static var downArrowShadow:Texture;                              // Arrows and shadow for the lists
+		public static var inGameScoreTextFormat:TextFormat;                     // In game
+		public static var inGameSuccessTextFormat:TextFormat;;                  // In game
+		public static var inGameFailTextFormat:TextFormat;;                     // In game
 		
 	}
 }
