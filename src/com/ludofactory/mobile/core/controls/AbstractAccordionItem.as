@@ -76,6 +76,8 @@ package com.ludofactory.mobile.core.controls
 		 * The item index in the accordion. */		
 		protected var _index:int;
 		
+		private var _tempIndexHackForVips:int = 0;
+		
 		public function AbstractAccordionItem()
 		{
 			super();
@@ -233,7 +235,18 @@ package com.ludofactory.mobile.core.controls
 			return _index;
 		}
 		
-//------------------------------------------------------------------------------------------------------------
+		
+		public function get tempIndexHackForVips():int
+		{
+			return _tempIndexHackForVips;
+		}
+		
+		public function set tempIndexHackForVips(value:int):void
+		{
+			_tempIndexHackForVips = value;
+		}
+		
+		//------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
 		override public function dispose():void

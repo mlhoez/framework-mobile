@@ -6,15 +6,16 @@ Created : 2 sept. 2013
 */
 package com.ludofactory.mobile.core.controls
 {
-
+	
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.navigation.vip.VipAccordionItem;
-
+	
 	import feathers.controls.ScrollContainer;
 	import feathers.layout.VerticalLayout;
-
+	
 	import starling.events.Event;
-
+	
 	public class Accordion extends ScrollContainer
 	{
 		private var _dataProvider:Vector.<AbstractAccordionItem>;
@@ -37,7 +38,7 @@ package com.ludofactory.mobile.core.controls
 				for( var i:int = 0; i < _dataProvider.length; i++)
 				{
 					accordionElement = _dataProvider[i];
-					accordionElement.index = i;
+					accordionElement.index = accordionElement.tempIndexHackForVips = i;
 					accordionElement.isLast = i == (_dataProvider.length - 1);
 					accordionElement.addEventListener(LudoEventType.EXPAND_BEGIN, collapseAllOthers);
 					accordionElement.addEventListener(LudoEventType.EXPAND_COMPLETE, onExpandComplete);
@@ -94,8 +95,23 @@ package com.ludofactory.mobile.core.controls
 					}
 				}
 			}
-
-            // go back to the top of the list
+			
+			if( _dataProvider )
+			{
+				var abstractAccordionItem:AbstractAccordionItem;
+				var index:int = 0;
+				for (var i:int = 0; i < _dataProvider.length; i++)
+				{
+					var ai:AbstractAccordionItem = _dataProvider[i];
+					if( ai.includeInLayout == true)
+					{
+						ai.tempIndexHackForVips = index;
+						index++;
+					}
+				}
+			}
+					
+			// go back to the top of the list
             scrollToPosition(0, 0, 0.5);
 		}
 		
@@ -125,7 +141,7 @@ package com.ludofactory.mobile.core.controls
 			//	scrollToPosition(NaN, maxVerticalScrollPosition, 0.5);
 			
 			//if( AbstractEntryPoint.screenNavigator.activeScreenID == ScreenIds.MY_ACCOUNT_SCREEN )
-				scrollToPosition(NaN, (AbstractAccordionItem(event.target).headerHeight * AbstractAccordionItem(event.target).index) , 0.5);
+				scrollToPosition(NaN, (AbstractAccordionItem(event.target).headerHeight * AbstractAccordionItem(event.target).tempIndexHackForVips) , 0.5);
 		}
 		
 		public function set dataProvider(val:Vector.<AbstractAccordionItem>):void
