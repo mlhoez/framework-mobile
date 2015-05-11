@@ -440,6 +440,8 @@ package com.ludofactory.mobile.navigation.shop.vip
 		private function onPreviousSubCat(event:Event):void
 		{
 			InfoManager.show(_("Chargement..."));
+			advancedOwner.screenData.idSubCategory = -1;
+			advancedOwner.screenData.selectedItemData = null;
 			
 			if( !_subCategories || _subCategories.length == 0 )
 			{
@@ -463,6 +465,8 @@ package com.ludofactory.mobile.navigation.shop.vip
 		private function onNextSubCat(event:Event):void
 		{
 			InfoManager.show(_("Chargement..."));
+			advancedOwner.screenData.idSubCategory = -1;
+			advancedOwner.screenData.selectedItemData = null;
 			
 			if( !_subCategories || _subCategories.length == 0 )
 			{
