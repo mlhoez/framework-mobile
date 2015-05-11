@@ -6,47 +6,25 @@ Created : 24 sept. 2013
 */
 package com.ludofactory.mobile.core.notification.content
 {
-
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.AbstractGame;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.controls.ArrowGroup;
-	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	
 	import feathers.controls.Button;
-	import feathers.controls.Label;
-	import feathers.controls.LayoutGroup;
-	import feathers.display.Scale9Image;
-	import feathers.display.TiledImage;
-	import feathers.layout.HorizontalLayout;
-	import feathers.layout.VerticalLayout;
-	import feathers.textures.Scale9Textures;
-
-	import flash.filters.DropShadowFilter;
-	import flash.geom.Rectangle;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-
-	import starling.display.BlendMode;
-	import starling.display.Quad;
+	
 	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.utils.HAlign;
-	import starling.utils.HAlign;
-
+	
 	public class MarketingRegisterNotificationContent extends AbstractNotificationPopupContent
 	{
 		/**
@@ -86,34 +64,35 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			super.initialize();
 			
-			_title = new TextField(10, scaleAndRoundToDpi(80), AbstractGameInfo.LANDSCAPE ? _("Créez votre compte dès maintenant pour :") : _("Créez votre compte dès\nmaintenant pour :"), Theme.FONT_SANSITA,
-					scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 34 : 46) : (AbstractGameInfo.LANDSCAPE ? 54 : 66)), Theme.COLOR_DARK_GREY);
+			_title = new TextField(10, scaleAndRoundToDpi(GlobalConfig.isPhone ? 80 : 140), AbstractGameInfo.LANDSCAPE ? _("Créez votre compte dès maintenant pour :") : _("Créez votre compte dès\nmaintenant pour :"), Theme.FONT_SANSITA,
+					scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 34 : 46) : (AbstractGameInfo.LANDSCAPE ? 76 : 76)), Theme.COLOR_DARK_GREY);
 			_title.autoScale = true;
+			_title.border = true;
 			addChild(_title);
 			
-			_reason1 = new TextField(50, scaleAndRoundToDpi(40), _("• Obtenir 50 Jetons par jour"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason1 = new TextField(50, scaleAndRoundToDpi(30), _("• Obtenir 50 Jetons par jour"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 46), Theme.COLOR_LIGHT_GREY);
 			_reason1.autoScale = true;
-			_reason1.hAlign = HAlign.LEFT;
+			_reason1.hAlign = HAlign.CENTER;
 			addChild(_reason1);
 			
-			_reason2 = new TextField(50, scaleAndRoundToDpi(40), _( "• Obtenir 50 Jetons supplémentaires"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason2 = new TextField(50, scaleAndRoundToDpi(30), _( "• Obtenir 50 Jetons supplémentaires"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 46), Theme.COLOR_LIGHT_GREY);
 			_reason2.autoScale = true;
-			_reason2.hAlign = HAlign.LEFT;
+			_reason2.hAlign = HAlign.CENTER;
 			addChild(_reason2);
 			
-			_reason3 = new TextField(50, scaleAndRoundToDpi(40), MemberManager.getInstance().getGiftsEnabled() ? _("• Convertir vos Points en Cadeaux") : _("• Convertir vos Points"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason3 = new TextField(50, scaleAndRoundToDpi(30), MemberManager.getInstance().getGiftsEnabled() ? _("• Convertir vos Points en Cadeaux") : _("• Convertir vos Points"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 46), Theme.COLOR_LIGHT_GREY);
 			_reason3.autoScale = true;
-			_reason3.hAlign = HAlign.LEFT;
+			_reason3.hAlign = HAlign.CENTER;
 			addChild(_reason3);
 			
-			_reason4 = new TextField(50, scaleAndRoundToDpi(40), _("• Gagner 200 Points en bonus"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason4 = new TextField(50, scaleAndRoundToDpi(30), _("• Gagner 200 Points en bonus"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 46), Theme.COLOR_LIGHT_GREY);
 			_reason4.autoScale = true;
-			_reason4.hAlign = HAlign.LEFT;
+			_reason4.hAlign = HAlign.CENTER;
 			addChild(_reason4);
 			
-			_reason5 = new TextField(50, scaleAndRoundToDpi(40), _("• Obtenir 1 Crédit gratuit"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 36), Theme.COLOR_LIGHT_GREY);
+			_reason5 = new TextField(50, scaleAndRoundToDpi(30), _("• Obtenir 1 Crédit gratuit"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 46), Theme.COLOR_LIGHT_GREY);
 			_reason5.autoScale = true;
-			_reason5.hAlign = AbstractGameInfo.LANDSCAPE ? HAlign.CENTER : HAlign.LEFT;
+			_reason5.hAlign = HAlign.CENTER;
 			addChild(_reason5);
 			
 			_laterButton = new Button();
@@ -148,21 +127,23 @@ package com.ludofactory.mobile.core.notification.content
 			_createButton.validate();
 			_laterButton.y = _createButton.y = _alreadyButton.y - _createButton.height + scaleAndRoundToDpi(10);
 
-			if( AbstractGameInfo.LANDSCAPE )
-			{
-				_reason1.width = _reason2.width = _reason3.width = _reason4.width = actualWidth * 0.5;
-				_reason5.width = actualWidth * 0.9;
-				var maxReasonsHeight:int = (_createButton.y - _title.y - _title.height) / 3;
+			/*if( AbstractGameInfo.LANDSCAPE )
+			{*/
+				_reason1.width = _reason2.width = _reason3.width = _reason4.width = _reason5.width = actualWidth * 0.9;
+				var maxReasonsHeight:int = (_createButton.y - _title.y - _title.height) / 5;
+				maxReasonsHeight = maxReasonsHeight > scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 110) ? scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 110) : maxReasonsHeight;
 				_reason1.height = _reason2.height = _reason3.height = _reason4.height = _reason5.height = maxReasonsHeight;
-				_reason1.x = _reason3.x = 0;
-				_reason2.x = _reason4.x = actualWidth * 0.5;
-				_reason5.x = (actualWidth - _reason5.width) * 0.5;
-				_reason1.y = _reason2.y = _title.y + _title.height;
-				_reason3.y = _reason4.y = _reason1.y + _reason1.height;
-				_reason5.y = _reason3.y + _reason3.height;
-			}
+				_reason1.x = _reason2.x = _reason3.x = _reason4.x = _reason5.x = actualWidth * 0.05;
+				var startY:int = _title.y + _title.height + ((_createButton.y - _title.y - _title.height) - (maxReasonsHeight * 5)) * 0.5;
+				_reason1.y = startY;
+				_reason2.y = _reason1.y + maxReasonsHeight;
+				_reason3.y = _reason2.y + maxReasonsHeight;
+				_reason4.y = _reason3.y + maxReasonsHeight;
+				_reason5.y = _reason4.y + maxReasonsHeight;
+			/*}
 			else
 			{
+				// TODO Voir pour faire la même technique qu'en paysage
 				_reason1.width = _reason2.width = _reason3.width = _reason4.width = _reason5.width = actualWidth * 0.9;
 				var maxReasonsHeight:int = (_createButton.y - _title.y - _title.height) / 5;
 				_reason1.height = _reason2.height = _reason3.height = _reason4.height = _reason5.height = maxReasonsHeight;
@@ -172,7 +153,7 @@ package com.ludofactory.mobile.core.notification.content
 				_reason3.y = _reason2.y + _reason2.height;
 				_reason4.y = _reason3.y + _reason3.height;
 				_reason5.y = _reason4.y + _reason4.height;
-			}
+			}*/
 			
 			super.draw();
 		}
