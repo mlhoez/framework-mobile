@@ -6,27 +6,27 @@ Created : 17 sept. 2013
 */
 package com.ludofactory.mobile.navigation.account.history.gifts
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.milkmangames.nativeextensions.CoreMobile;
+	import com.milkmangames.nativeextensions.events.CMDialogEvent;
 	
 	import feathers.controls.GroupedList;
 	import feathers.controls.Label;
 	import feathers.controls.renderers.IGroupedListItemRenderer;
 	import feathers.core.FeathersControl;
-	
-	import pl.mateuszmackowiak.nativeANE.dialogs.NativeAlertDialog;
-	import pl.mateuszmackowiak.nativeANE.events.NativeDialogEvent;
 	
 	import starling.display.Quad;
 	import starling.events.Event;
@@ -365,9 +365,9 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 		private function onExchangeWithCheque(event:Event):void
 		{
 			log("[GiftHistoryItemRender] Exchange gift with cheque");
-			if( NativeAlertDialog.isSupported )
+			if( CoreMobile.isSupported() )
 			{
-				NativeAlertDialog.showAlert(_("Voulez-vous vraiment échanger ce lot contre un chèque ?"), _("Confirmer"), Vector.<String>([_("Annuler"), _("Confirmer")]), onAlertChequeClosed);
+				CoreMobile.mobile.showModalYesNoDialog(_("Voulez-vous vraiment échanger ce lot contre un chèque ?"), _("Confirmer"), _("Annuler"), _("Confirmer")).addDismissListener(onAlertChequeClosed);
 			}
 			else
 			{
@@ -388,18 +388,18 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 			}
 		}
 		
-		private function onAlertChequeClosed(event:NativeDialogEvent):void
+		private function onAlertChequeClosed(event:CMDialogEvent):void
 		{
-			if( int(event.index) == 1 )
+			if( event.selectedButtonLabel == _("Confirmer") )
 				exchangeWithCheque();
 		}
 		
 		private function onExchangeWithPoints(event:Event):void
 		{
 			log("[GiftHistoryItemRender] Exchange gift with points");
-			if( NativeAlertDialog.isSupported )
+			if( CoreMobile.isSupported() )
 			{
-				NativeAlertDialog.showAlert(_("Voulez-vous vraiment échanger ce lot contre des points ?"), _("Confirmer"), Vector.<String>([_("Annuler"), _("Confirmer")]), onAlertPointsClosed);
+				CoreMobile.mobile.showModalYesNoDialog(_("Voulez-vous vraiment échanger ce lot contre des points ?"), _("Confirmer"), _("Annuler"), _("Confirmer")).addDismissListener(onAlertPointsClosed);
 			}
 			else
 			{
@@ -420,9 +420,9 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 			}
 		}
 		
-		private function onAlertPointsClosed(event:NativeDialogEvent):void
+		private function onAlertPointsClosed(event:CMDialogEvent):void
 		{
-			if( int(event.index) == 1 )
+			if( event.selectedButtonLabel == _("Confirmer") )
 				exchangeWithPoints();
 		}
 		
