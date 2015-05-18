@@ -6,31 +6,28 @@ Created : 20 sept. 2013
 */
 package com.ludofactory.mobile.navigation.store
 {
+	
 	import com.amazon.nativeextensions.android.AmazonItemData;
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.hasoffers.nativeExtensions.MobileAppTracker;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.StakeType;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.navigation.authentication.NotLoggedInContainer;
-	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.StakeType;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.purchases.Store;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.navigation.ads.store.AdStoreContainer;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.push.GameSession;
+	import com.ludofactory.mobile.navigation.authentication.NotLoggedInContainer;
+	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.milkmangames.nativeextensions.android.AndroidItemDetails;
 	import com.milkmangames.nativeextensions.ios.StoreKitProduct;
-	
-	import eu.alebianco.air.extensions.analytics.Analytics;
 	
 	import feathers.controls.List;
 	import feathers.controls.ScrollContainer;
@@ -449,9 +446,6 @@ package com.ludofactory.mobile.navigation.store
 		 */		
 		private function onPurchaseSuccess(event:Event):void
 		{
-			if( Analytics.isSupported() && AbstractEntryPoint.tracker )
-				AbstractEntryPoint.tracker.buildEvent("Achat Intégré", "Validé").withLabel(event.data.id).withValue( int(event.data.value) ).track();
-			
 			try
 			{
 				MobileAppTracker.instance.trackAction("purchase", event.data.value, "USD", event.data.id);

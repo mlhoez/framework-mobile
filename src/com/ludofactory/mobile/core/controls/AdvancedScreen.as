@@ -6,15 +6,14 @@ Created : 13 Juin 2013
 */
 package com.ludofactory.mobile.core.controls
 {
+	
 	import com.gamua.flox.Flox;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	
-	import eu.alebianco.air.extensions.analytics.Analytics;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Screen;
 	
@@ -33,8 +32,8 @@ package com.ludofactory.mobile.core.controls
 		override protected function initialize():void
 		{
 			// track screens with Google Analytics
-			if( Analytics.isSupported() && AbstractEntryPoint.tracker )
-				AbstractEntryPoint.tracker.buildView(screenID).track();
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackScreenView(screenID);
 			
 			// log the navigation in Flox
 			Flox.logInfo("\t<strong>&rarr; " + screenID + "</strong>");

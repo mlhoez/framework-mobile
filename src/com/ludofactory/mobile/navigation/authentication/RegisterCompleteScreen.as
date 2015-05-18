@@ -6,26 +6,25 @@ Created : 14 Juin 2013
 */
 package com.ludofactory.mobile.navigation.authentication
 {
+	
 	import com.gamua.flox.Flox;
 	import com.hasoffers.nativeExtensions.MobileAppTracker;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
-	import eu.alebianco.air.extensions.analytics.Analytics;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
+	
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.events.Event;
 	
@@ -86,8 +85,8 @@ package com.ludofactory.mobile.navigation.authentication
 			addChild( _validateButton );
 			
 			// Track registration
-			if( Analytics.isSupported() && AbstractEntryPoint.tracker )
-				AbstractEntryPoint.tracker.buildEvent("Inscription", "Inscription").withLabel("Inscription").track();
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Inscription", "Inscription");
 			
 			// Track registration
 			try

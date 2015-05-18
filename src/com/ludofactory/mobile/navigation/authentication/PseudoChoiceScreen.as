@@ -6,26 +6,22 @@ Created : 12 Juin 2013
 */
 package com.ludofactory.mobile.navigation.authentication
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.ReturnKeyLabel;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
-	import eu.alebianco.air.extensions.analytics.Analytics;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
@@ -35,6 +31,10 @@ package com.ludofactory.mobile.navigation.authentication
 	import feathers.controls.Scroller;
 	import feathers.controls.TextInput;
 	import feathers.events.FeathersEventType;
+	
+	import flash.text.ReturnKeyLabel;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.events.Event;
 	import starling.events.Touch;
@@ -346,8 +346,8 @@ package com.ludofactory.mobile.navigation.authentication
 					if( MemberManager.getInstance().getFacebookId() != 0 )
 					{
 						// Track subscription
-						if( Analytics.isSupported() && AbstractEntryPoint.tracker )
-							AbstractEntryPoint.tracker.buildEvent("Inscription", "Inscription").withLabel("Inscription").track();
+						if( GAnalytics.isSupported() )
+							GAnalytics.analytics.defaultTracker.trackEvent("Inscription", "Inscription");
 						
 						Flox.logWarning("Nouvelle inscription Facebook du membre : (" + MemberManager.getInstance().getId() + ")");
 						Flox.logEvent("Inscriptions", { Type:"Facebook" });

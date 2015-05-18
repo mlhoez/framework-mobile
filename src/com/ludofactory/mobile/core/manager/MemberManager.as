@@ -6,7 +6,7 @@ Created : 12 Août 2013
 */
 package com.ludofactory.mobile.core.manager
 {
-
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.encryption.Encryption;
 	import com.ludofactory.common.utils.log;
@@ -19,18 +19,17 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.push.PushNewCSThread;
 	import com.ludofactory.mobile.core.push.PushTrophy;
 	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.vidcoin.vidcoincontroller.VidCoinController;
-
-	import eu.alebianco.air.extensions.analytics.Analytics;
-
+	
 	import flash.data.EncryptedLocalStore;
 	import flash.net.registerClassAlias;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
-
+	
 	import starling.events.EventDispatcher;
-
+	
 	/**
 	 * Member manager.
 	 * 
@@ -163,8 +162,8 @@ package com.ludofactory.mobile.core.manager
 					AbstractEntryPoint.pushManager.onUserLoggedIn();
 				
 				// track the log in
-				if( Analytics.isSupported() && AbstractEntryPoint.tracker )
-					AbstractEntryPoint.tracker.buildEvent("Connexions", "-").withLabel("Compte (" + memberId + ")").track();
+				if( GAnalytics.isSupported() )
+					GAnalytics.analytics.defaultTracker.trackEvent("Connexions", "Connexion au compte", null, memberId);
 				log("<strong>Connexion du joueur " + memberId + "</strong>");
 				
 				updateVidCoinData();
@@ -238,8 +237,8 @@ package com.ludofactory.mobile.core.manager
 			InfoManager.hide("Toutes les données ont été envoyées.\n\nVous pouvez changer de compte.", InfoContent.ICON_CHECK);
 			
 			// track the log off
-			if( Analytics.isSupported() && AbstractEntryPoint.tracker )
-				AbstractEntryPoint.tracker.buildEvent("Déconnexions", "-").withLabel("Compte prédécent (" + _member.id + ")").track();
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Déconnexions", "Déconnexion du compte", null, _member.id);
 			log("<strong>Déconnexion du joueur (" + _member.id + ")</strong>");
 			
 			// before the user log off, we save the state of the tournament and

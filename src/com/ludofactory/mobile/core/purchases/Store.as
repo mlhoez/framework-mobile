@@ -6,6 +6,7 @@ Created : 22 sept. 2013
 */
 package com.ludofactory.mobile.core.purchases
 {
+	
 	import com.amazon.nativeextensions.android.AmazonPurchase;
 	import com.amazon.nativeextensions.android.AmazonPurchaseReceipt;
 	import com.amazon.nativeextensions.android.events.AmazonPurchaseEvent;
@@ -15,12 +16,13 @@ package com.ludofactory.mobile.core.purchases
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.navigation.store.StoreData;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.android.AndroidIAB;
 	import com.milkmangames.nativeextensions.android.AndroidItemDetails;
 	import com.milkmangames.nativeextensions.android.events.AndroidBillingErrorEvent;
@@ -286,7 +288,24 @@ package com.ludofactory.mobile.core.purchases
 		private function onValidatePurchaseSuccess(result:Object = null):void
 		{
 			log("[Store] Request " + _currentRequest.id + " validated.");
-			onPurchaseSuccess( _currentProductData.generatedId, result.nb_credits_ajouter, result.txt, int(result.changement_rang) == 1 ? true : false );
+			
+			if( GAnalytics.isSupported() )
+			{
+				try
+				{
+					var rand:String = "" + new Date().time;
+					var store:String = GlobalConfig.android ? (GlobalConfig.amazon ? "Amazon Store" : "Android Store") : "Apple Store;";
+					var price:Number = Number(_currentProductData.localizedPrice.replace(/[^a-zA-Z0-9_.,]+/g, ""));
+					GAnalytics.analytics.defaultTracker.trackTransaction(rand, store, price);
+					GAnalytics.analytics.defaultTracker.trackItem(rand, _currentProductData.generatedId, _currentProductData.generatedId, price);
+				}
+				catch(error:Error)
+				{
+					
+				}
+			}
+			
+			onPurchaseSuccess( _currentProductData.generatedId, result.nb_credits_ajouter, result.txt, int(result.changement_rang) == 1 );
 		}
 		
 		/**
