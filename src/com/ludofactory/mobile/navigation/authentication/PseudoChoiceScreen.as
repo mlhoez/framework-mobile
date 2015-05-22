@@ -134,6 +134,7 @@ package com.ludofactory.mobile.navigation.authentication
 			_customChoiceRadio = new Radio();
 			_customChoiceRadio.includeInLayout = false;
 			_customChoiceContainer.addChild(_customChoiceRadio);
+			_customChoiceRadio.addEventListener(Event.CHANGE, onChange);
 			
 			_validateButton = new Button();
 			_validateButton.label = _("Confirmer");
@@ -164,7 +165,7 @@ package com.ludofactory.mobile.navigation.authentication
 			{
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_logo.height = actualHeight * (GlobalConfig.isPhone ? 0.3 : 0.5);
+					_logo.height = actualHeight * (GlobalConfig.isPhone ? 0.3 : 0.4);
 					_logo.validate();
 					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 5 : 15 );
 					_logo.x = (((actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.5)) - _logo.width) * 0.5) << 0;
@@ -280,7 +281,7 @@ package com.ludofactory.mobile.navigation.authentication
 			if( !_defaultChoiceRadio )
 				defaultChoosed = false;
 			else
-				defaultChoosed = _defaultChoiceRadio.isSelected ? true:false;
+				defaultChoosed = _defaultChoiceRadio.isSelected;
 			
 			if( !defaultChoosed && _customChoiceInput.text == "")
 			{
@@ -416,6 +417,12 @@ package com.ludofactory.mobile.navigation.authentication
 			invalidate(INVALIDATION_FLAG_SIZE);
 		}
 		
+		private function onChange(event:Event):void
+		{
+			if(_customChoiceRadio.isSelected)
+				_customChoiceInput.setFocus();
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
@@ -453,6 +460,7 @@ package com.ludofactory.mobile.navigation.authentication
 			
 			if( _customChoiceRadio )
 			{
+				_customChoiceRadio.removeEventListener(Event.CHANGE, onChange);
 				_customChoiceRadio.removeFromParent(true);
 				_customChoiceRadio = null;
 			}
