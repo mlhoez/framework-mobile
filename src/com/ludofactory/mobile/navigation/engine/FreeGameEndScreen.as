@@ -348,7 +348,7 @@ package com.ludofactory.mobile.navigation.engine
 					_convertContainer.addChild(_convertIcon);
 					
 					_convertLabel = new Label();
-					_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte pour\nconvertir vos Points en Cadeaux !") : _("Créez votre compte pour\nconvertir vos Points !");
+					_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte et convertissez\nvos Points en Cadeaux !") : _("Créez votre compte et convertissez\nvos Points en Crédits !");
 					_convertContainer.addChild(_convertLabel);
 					_convertLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 38), Theme.COLOR_WHITE, true, false, null, null, null, TextFormatAlign.CENTER);
 				}
