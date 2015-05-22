@@ -81,7 +81,7 @@ package com.ludofactory.mobile.navigation.store
 			
 			_promoLabel = new Label();
 			addChild(_promoLabel);
-			_promoLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0x0d2701, false, false, null, null, null, TextFormatAlign.CENTER);
+			_promoLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0xC33028, false, false, null, null, null, TextFormatAlign.CENTER);
 			_promoLabel.textRendererProperties.wordWrap = false;
 			
 			_priceButton = new Button();
