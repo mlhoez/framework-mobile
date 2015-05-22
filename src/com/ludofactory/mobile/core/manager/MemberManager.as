@@ -162,8 +162,15 @@ package com.ludofactory.mobile.core.manager
 					AbstractEntryPoint.pushManager.onUserLoggedIn();
 				
 				// track the log in
+				try{
+					
 				if( GAnalytics.isSupported() )
 					GAnalytics.analytics.defaultTracker.trackEvent("Connexions", "Connexion au compte", null, memberId);
+				}
+				catch(error:Error)
+				{
+					
+				}
 				log("<strong>Connexion du joueur " + memberId + "</strong>");
 				
 				updateVidCoinData();
@@ -237,8 +244,15 @@ package com.ludofactory.mobile.core.manager
 			InfoManager.hide("Toutes les données ont été envoyées.\n\nVous pouvez changer de compte.", InfoContent.ICON_CHECK);
 			
 			// track the log off
+			try{
+				
 			if( GAnalytics.isSupported() )
 				GAnalytics.analytics.defaultTracker.trackEvent("Déconnexions", "Déconnexion du compte", null, _member.id);
+			}
+			catch(error:Error)
+			{
+				
+			}
 			log("<strong>Déconnexion du joueur (" + _member.id + ")</strong>");
 			
 			// before the user log off, we save the state of the tournament and
