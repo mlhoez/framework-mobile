@@ -6,6 +6,7 @@ Created : 21 août 2013
 */
 package com.ludofactory.mobile.navigation.shop
 {
+	
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Elastic;
 	import com.greensock.easing.Linear;
@@ -13,17 +14,17 @@ package com.ludofactory.mobile.navigation.shop
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.filters.DropShadowFilter;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
+	
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.core.Starling;
 	import starling.display.BlendMode;
@@ -43,7 +44,7 @@ package com.ludofactory.mobile.navigation.shop
 	{
 		/**
 		 * The encheres title */		
-		private var _encheresTitle:Label;
+		//private var _encheresTitle:Label;
 		/**
 		 * The encheres image */		
 		private var _encheresImage:Image;
@@ -59,7 +60,7 @@ package com.ludofactory.mobile.navigation.shop
 		
 		/**
 		 * The boutique title */		
-		private var _boutiqueTitle:Label;
+		//private var _boutiqueTitle:Label;
 		/**
 		 * The boutique image */		
 		private var _boutiqueImage:Image;
@@ -102,14 +103,14 @@ package com.ludofactory.mobile.navigation.shop
 			
 			_encheresImage = new Image( AbstractEntryPoint.assets.getTexture("EncheresImage") );
 			_encheresImage.touchable = false;
-			_encheresImage.scaleX = _encheresImage.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.5 : 0) * GlobalConfig.dpiScale) : 0);
+			_encheresImage.scaleX = _encheresImage.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.1 : 0) * GlobalConfig.dpiScale) : 0);
 			_encheresImage.alignPivot();
 			_encheresImage.alpha = 0;
 			_encheresImage.rotation = deg2rad(90);
 			addChild(_encheresImage);
 			
 			_encheresAccessButton = new Button();
-			_encheresAccessButton.label = _("Accès");
+			_encheresAccessButton.label = _("Enchères");
 			_encheresAccessButton.addEventListener(Event.TRIGGERED, onAccessEncheres);
 			_encheresAccessButton.alpha = 0;
 			addChild(_encheresAccessButton);
@@ -144,31 +145,35 @@ package com.ludofactory.mobile.navigation.shop
 			
 			_boutiqueImage = new Image( AbstractEntryPoint.assets.getTexture("BoutiqueImage") );
 			_boutiqueImage.touchable = false;
-			_boutiqueImage.scaleX = _boutiqueImage.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.5 : 0) * GlobalConfig.dpiScale) : 0);
+			_boutiqueImage.scaleX = _boutiqueImage.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.1 : 0) * GlobalConfig.dpiScale) : 0);
 			_boutiqueImage.alignPivot();
 			_boutiqueImage.alpha = 0;
 			_boutiqueImage.rotation = deg2rad(-90);
 			addChild(_boutiqueImage);
 			
 			_boutiqueAccessButton = new Button();
-			_boutiqueAccessButton.label = _("Accès");
+			_boutiqueAccessButton.label = _("Boutique VIP");
 			_boutiqueAccessButton.alpha = 0;
 			_boutiqueAccessButton.addEventListener(Event.TRIGGERED, onAccessBoutiqueVip);
 			addChild(_boutiqueAccessButton);
 			
+			/*
 			_encheresTitle = new Label();
 			_encheresTitle.touchable = false;
 			_encheresTitle.text = _("Enchères");
 			addChild(_encheresTitle);
 			_encheresTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 48 : 64), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_encheresTitle.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 5, 5, 3) ];
+			*/
 			
+			/*
 			_boutiqueTitle = new Label();
 			_boutiqueTitle.touchable = false;
 			_boutiqueTitle.text = _("Boutique VIP");
 			addChild(_boutiqueTitle);
 			_boutiqueTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 48 : 64), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_boutiqueTitle.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 5, 5, 3) ];
+			*/
 			
 			// vip info
 			
@@ -186,20 +191,28 @@ package com.ludofactory.mobile.navigation.shop
 				createBackground();
 				
 				TweenMax.killAll();
-				_encheresImage.scaleX = _encheresImage.scaleY = _boutiqueImage.scaleX = _boutiqueImage.scaleY = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.5 : 0) * GlobalConfig.dpiScale) : 0);
+				const scale:Number = GlobalConfig.dpiScale + (GlobalConfig.isPhone ? (-0.3 * GlobalConfig.dpiScale) : (0.3 * GlobalConfig.dpiScale));
+				_encheresImage.scaleX = _encheresImage.scaleY = _boutiqueImage.scaleX = _boutiqueImage.scaleY = scale; // GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.2 : 0) * GlobalConfig.dpiScale) : 0);
 				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_encheresTitle.width = _boutiqueTitle.width = actualWidth * 0.5;
+					/*_encheresTitle.width = _boutiqueTitle.width = actualWidth * 0.5;
 					_encheresTitle.y = _boutiqueTitle.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 30);
-					_boutiqueTitle.x = actualWidth * 0.5;
+					_boutiqueTitle.x = actualWidth * 0.5;*/
+					
+					_vipInfo.validate();
+					//_boutiqueMessage.validate();
+					_vipInfo.y = actualHeight - _vipInfo.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 15 : 40);
+					_vipInfo.x = (this.actualWidth - _vipInfo.width) * 0.5;
 					
 					_encheresImage.x = actualWidth * 0.25;
-					_encheresImage.y = _boutiqueImage.y = _glow.y = _buildings.y = this.actualHeight * 0.38;
+					_encheresImage.y = _boutiqueImage.y = _vipInfo.y * (GlobalConfig.isPhone ? 0.35 : 0.45);
+					_glow.y = _buildings.y = _vipInfo.y * (GlobalConfig.isPhone ? 0.25 : 0.35);
 					_boutiqueImage.x = _glow.x = _buildings.x = actualWidth * 0.75;
 					
+					_encheresAccessButton.height = _boutiqueAccessButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 100 : 140);
 					_encheresAccessButton.width = _boutiqueAccessButton.width = actualWidth * 0.35;
-					_encheresAccessButton.y =_boutiqueAccessButton.y =  _encheresImage.y + _encheresImage.height * 0.2;
+					_encheresAccessButton.y = _boutiqueAccessButton.y =  _boutiqueImage.y + _boutiqueImage.height * 0.4;
 					_encheresAccessButton.x = _encheresImage.x - _encheresAccessButton.width * 0.5;
 					_boutiqueAccessButton.x = _boutiqueImage.x - _boutiqueAccessButton.width * 0.5;
 					
@@ -211,17 +224,12 @@ package com.ludofactory.mobile.navigation.shop
 					_encheresMessage.y = _boutiqueMessage.y = _encheresAccessButton.y + _encheresAccessButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 40);
 					_encheresMessage.width = _boutiqueMessage.width = actualWidth * 0.5;
 					_boutiqueMessage.x = actualWidth * 0.5;
-					
-					_vipInfo.validate();
-					_boutiqueMessage.validate();
-					_vipInfo.y = actualHeight - _vipInfo.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 15 : 20);
-					_vipInfo.x = (this.actualWidth - _vipInfo.width) * 0.5;
 				}
 				else
 				{
-					_encheresTitle.width = _boutiqueTitle.width = actualWidth * 0.5;
+					/*_encheresTitle.width = _boutiqueTitle.width = actualWidth * 0.5;
 					_encheresTitle.y = _boutiqueTitle.y = this.actualHeight * (GlobalConfig.isPhone ? 0.05 : 0.1);
-					_boutiqueTitle.x = actualWidth * 0.5;
+					_boutiqueTitle.x = actualWidth * 0.5;*/
 					
 					_encheresImage.x = actualWidth * 0.25;
 					_encheresImage.y = _boutiqueImage.y = _glow.y = _buildings.y = this.actualHeight * 0.4;
@@ -246,8 +254,8 @@ package com.ludofactory.mobile.navigation.shop
 					_vipInfo.y = (_boutiqueMessage.y + _boutiqueMessage.height) + (  (this.actualHeight - (_boutiqueMessage.y + _boutiqueMessage.height) - _vipInfo.height) * 0.5 );
 					_vipInfo.x = (this.actualWidth - _vipInfo.width) * 0.5;
 				}
+				 
 				
-				const scale:Number = GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.2 : 0) * GlobalConfig.dpiScale) : 0);
 				_encheresImage.scaleX = _encheresImage.scaleY = _boutiqueImage.scaleX = _boutiqueImage.scaleY = 0;
 				TweenMax.to(_encheresParticles, 1, { alpha:1 });
 				TweenMax.allTo([_encheresImage, _boutiqueImage], 1.75, { delay:0.25, scaleX:scale, scaleY:scale, alpha:1, rotation:deg2rad(0), ease:Elastic.easeOut });
@@ -334,8 +342,8 @@ package com.ludofactory.mobile.navigation.shop
 		
 		override public function dispose():void
 		{
-			_encheresTitle.removeFromParent(true);
-			_encheresTitle = null;
+			//_encheresTitle.removeFromParent(true);
+			//_encheresTitle = null;
 			
 			TweenMax.killTweensOf(_encheresParticles);
 			Starling.juggler.remove(_encheresParticles);
@@ -355,8 +363,8 @@ package com.ludofactory.mobile.navigation.shop
 			_encheresMessage.removeFromParent(true);
 			_encheresMessage = null;
 			
-			_boutiqueTitle.removeFromParent(true);
-			_boutiqueTitle = null;
+			//_boutiqueTitle.removeFromParent(true);
+			//_boutiqueTitle = null;
 			
 			TweenMax.killTweensOf(_boutiqueImage);
 			_boutiqueImage.removeFromParent(true);
