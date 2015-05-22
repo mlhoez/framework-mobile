@@ -51,7 +51,7 @@ package com.ludofactory.mobile.navigation.home
 			_logo.source = Theme.gameLogoTexture;
 			_logo.textureScale = GlobalConfig.dpiScale;
 			_logo.snapToPixels = true;
-			_logo.visible = !(AbstractGameInfo.LANDSCAPE && GlobalConfig.isPhone);
+			_logo.visible = !AbstractGameInfo.LANDSCAPE;
 			addChild(_logo);
 			
 			_gradient = new Quad(5, 5, 0xffffff);
