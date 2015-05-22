@@ -77,7 +77,7 @@ package com.ludofactory.mobile.core.notification.content
 			var dataProvider:Array;
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
-				dataProvider = [ new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-11", rank:_("Matelot"), bonus:(MemberManager.getInstance().getRank() >= 4 ? _("400 points"):_("200 points")) } ),
+				dataProvider = [ new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-11", rank:_("Matelot"), bonus:(MemberManager.getInstance().getRank() >= 4 ? _("400 points"):_("200 points*")) } ),
 								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-10", rank:_("Boucanier"), bonus:_("2 crédits") } ),
 								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-4",  rank:_("Pirate III"),  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? _("25 000 points"):_("10 €")) } ),
 								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-1",  rank:_("Pirate III"),  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? _("75 000 points"):_("30 €")) } ) ];
@@ -121,7 +121,7 @@ package com.ludofactory.mobile.core.notification.content
 			_bonusContainer.addChild(_bonusMessageLabel);
 			_bonusMessageLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(28), Theme.COLOR_ORANGE, false, false, null, null, null, TextFormatAlign.RIGHT);
 			
-			if( !MemberManager.getInstance().isLoggedIn() )
+			if( !MemberManager.getInstance().isLoggedIn() || MemberManager.getInstance().getRank() < 4 )
 			{
 				_infoMessageLabel = new Label();
 				_infoMessageLabel.text = _("*400 Points offerts à chaque parrainage si votre rang est supérieur ou égal à Aventurier I sinon vous gagnez 200 Points.");
