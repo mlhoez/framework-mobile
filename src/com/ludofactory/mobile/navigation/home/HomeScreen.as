@@ -95,11 +95,13 @@ package com.ludofactory.mobile.navigation.home
 				addChild(_gameCenterButton);
 			}
 			
+			/*
 			_giftsButton = new Button();
 			_giftsButton.styleName = Theme.BUTTON_TRANSPARENT_WHITE;
 			_giftsButton.label = MemberManager.getInstance().getGiftsEnabled() ? _("Gagner des cadeaux") : _("Gagner des crédits");
 			_giftsButton.addEventListener(Event.TRIGGERED, onShowRules);
 			addChild(_giftsButton);
+			*/
 			
 			if( advancedOwner.screenData.displayPopupOnHome || (MemberManager.getInstance().getTournamentUnlocked() && MemberManager.getInstance().getTournamentAnimPending()) )
 			{
@@ -131,11 +133,12 @@ package com.ludofactory.mobile.navigation.home
 				var gap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
 				
 				// 1) scale the logo
-				_giftsButton.validate();
+				if( _giftsButton )
+					_giftsButton.validate();
 				if(AbstractGameInfo.LANDSCAPE)
 				{
 					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
-					var maxLogoHeight:int = actualHeight - (padding * 2) - buttonHeight - _giftsButton.height - (gap * 2);
+					var maxLogoHeight:int = actualHeight - (padding * 2) - buttonHeight - (_giftsButton ? _giftsButton.height : 0) - (gap * 2);
 					var maxLogoScale:Number = (GlobalConfig.isPhone ? 0.6 : 0.45);
 					_logo.scaleX = _logo.scaleY = 1;
 					_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillHeight(_logo.height, maxLogoHeight);
@@ -161,7 +164,7 @@ package com.ludofactory.mobile.navigation.home
 				
 				// 2) place the elements
 				_logo.x = roundUp((actualWidth - _logo.width) * 0.5);
-				_logo.y = padding + (actualHeight - (padding * 2) - buttonHeight - _giftsButton.height - _logo.height - (gap * 2)) * 0.5;
+				_logo.y = padding + (actualHeight - (padding * 2) - buttonHeight - (_giftsButton ? _giftsButton.height : 0) - _logo.height - (gap * 2)) * 0.5;
 				
 				if (_gameCenterButton) _gameCenterButton.validate();
 				var buttonWidth:int = 0;
@@ -183,9 +186,12 @@ package com.ludofactory.mobile.navigation.home
 					_gameCenterButton.y = _playButton.y;
 				}
 				
-				_giftsButton.width = (_playButton.width + (_gameCenterButton ? _gameCenterButton.width : 0)) * 0.9;
-				_giftsButton.x = roundUp((actualWidth - _giftsButton.width) * 0.5);
-				_giftsButton.y = _playButton.y + _playButton.height + gap;
+				if( _giftsButton )
+				{
+					_giftsButton.width = (_playButton.width + (_gameCenterButton ? _gameCenterButton.width : 0)) * 0.9;
+					_giftsButton.x = roundUp((actualWidth - _giftsButton.width) * 0.5);
+					_giftsButton.y = _playButton.y + _playButton.height + gap;
+				}
 				
 				if (GlobalConfig.DEBUG)
 				{
@@ -255,9 +261,12 @@ package com.ludofactory.mobile.navigation.home
 			_playButton.removeFromParent(true);
 			_playButton = null;
 			
-			_giftsButton.removeEventListener(Event.TRIGGERED, onShowRules);
-			_giftsButton.removeFromParent(true);
-			_giftsButton = null;
+			if( _giftsButton )
+			{
+				_giftsButton.removeEventListener(Event.TRIGGERED, onShowRules);
+				_giftsButton.removeFromParent(true);
+				_giftsButton = null;
+			}
 			
 			if( GlobalConfig.ios && GameCenterManager.available )
 			{
