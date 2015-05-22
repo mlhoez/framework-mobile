@@ -6,20 +6,21 @@ Created : 26 juil. 2013
 */
 package com.ludofactory.mobile.navigation.tournament.listing
 {
+	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.geom.Point;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Callout;
 	import feathers.controls.GroupedList;
 	import feathers.controls.Label;
 	import feathers.controls.renderers.IGroupedListItemRenderer;
 	import feathers.core.FeathersControl;
+	
+	import flash.geom.Point;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -28,6 +29,8 @@ package com.ludofactory.mobile.navigation.tournament.listing
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.text.TextField;
+	import starling.utils.HAlign;
 	
 	public class RankItemRenderer extends FeathersControl implements IGroupedListItemRenderer
 	{
@@ -86,7 +89,7 @@ package com.ludofactory.mobile.navigation.tournament.listing
 		private var _nameLabel:Label;
 		/**
 		 * The number of stars label. */		
-		private var _numStarsLabel:Label;
+		private var _numStarsLabel:TextField;
 		/**
 		 * The star icon. */		
 		private var _starIcon:Image;
@@ -161,11 +164,10 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			addChild(_nameLabel);
 			_nameLabel.textRendererProperties.textFormat = _normalTextFormat;
 			
-			_numStarsLabel = new Label();
+			_numStarsLabel = new TextField(5, 5, "999999", Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0x353535);
 			_numStarsLabel.touchable = false;
-			_numStarsLabel.text = "999999";
+			_numStarsLabel.hAlign = HAlign.RIGHT;
 			addChild(_numStarsLabel);
-			_numStarsLabel.textRendererProperties.textFormat = _normalTextFormat;
 			
 			if( !_calloutLabel )
 				_calloutLabel = new Label();
@@ -174,7 +176,6 @@ package com.ludofactory.mobile.navigation.tournament.listing
 		override protected function draw():void
 		{
 			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
 			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
 			
 			if(dataInvalid)
@@ -221,13 +222,14 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			{
 				if( _data )
 				{
-					_rankLabel.textRendererProperties.textFormat = _nameLabel.textRendererProperties.textFormat = _numStarsLabel.textRendererProperties.textFormat = _data.isMe ? _selectedTextFormat : _normalTextFormat;
+					_rankLabel.textRendererProperties.textFormat = _nameLabel.textRendererProperties.textFormat = _data.isMe ? _selectedTextFormat : _normalTextFormat;
+					_numStarsLabel.color = _data.isMe ? 0xffdd00 : 0x353535;
 					
 					_rankLabel.text =  _data.rankFormatted;
 					_nameLabel.text = _data.truncatedPseudo + " (" + _data.country + ")";
 					_numStarsLabel.text =  _data.starsFormatted;
 					
-					_selectedBackground.visible = _data.isMe ? true : false;
+					_selectedBackground.visible = _data.isMe;
 					_idleBackground.visible = !_selectedBackground.visible;
 				}
 				else
@@ -247,18 +249,19 @@ package com.ludofactory.mobile.navigation.tournament.listing
 		{
 			if( !_elementsPositioned )
 			{
-				_starIcon.x = this.actualWidth - _starIcon.width - scaleAndRoundToDpi(20);
+				_starIcon.x = _sideWidth + _middleWidth + ((_sideWidth - _starIcon.width) * 0.5) + scaleAndRoundToDpi(20);
 				_starIcon.y = (_itemHeight - _starIcon.height) * 0.5;
 				
 				_rankLabel.width = _sideWidth;
 				_nameLabel.width = _middleWidth;
-					
-				_numStarsLabel.width  = _sideWidth - (this.actualWidth - _starIcon.x);
+				
+				_numStarsLabel.height = actualHeight;
+				_numStarsLabel.width  = _sideWidth - (this.actualWidth - _starIcon.x) - scaleAndRoundToDpi(5);
 				_numStarsLabel.x = _sideWidth + _middleWidth;
 				_nameLabel.x = _sideWidth;
 				
 				_rankLabel.validate();
-				_rankLabel.y = _numStarsLabel.y = _nameLabel.y =  (_itemHeight - _rankLabel.height) * 0.5;
+				_rankLabel.y = _nameLabel.y =  (_itemHeight - _rankLabel.height) * 0.5;
 				
 				_elementsPositioned = true;
 			}
