@@ -81,12 +81,11 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.tournament.TournamentRankingScreen;
 	import com.ludofactory.mobile.navigation.vip.VipScreen;
 	import com.ludofactory.mobile.navigation.vip.VipUpScreen;
+	import com.milkmangames.nativeextensions.CoreMobile;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceInfo;
 	import com.vidcoin.vidcoincontroller.VidCoinController;
-	
-	import eu.alebianco.air.extensions.analytics.Analytics;
-	import eu.alebianco.air.extensions.analytics.api.ITracker;
 	
 	import feathers.controls.Drawers;
 	import feathers.controls.ImageLoader;
@@ -135,9 +134,6 @@ package com.ludofactory.mobile.core
 //------------------------------------------------------------------------------------------------------------
 //	Google Analytics tracker
 		
-		/**
-		 * Google Analytics Tracker */		
-		private static var _tracker:ITracker;
 		/**
 		 * VidCoin. */
 		public static var vidCoin:VidCoinController;
@@ -298,21 +294,53 @@ package com.ludofactory.mobile.core
 				// (it is the reference to the splash screen)
 				
 				// OLD
-				/*_loadingBackground = new Image( launchImageTexture );
-				_loadingBackground.width = GlobalConfig.stageWidth;
-				_loadingBackground.height = GlobalConfig.stageHeight;
-				addChild( _loadingBackground );*/
+				//_loadingBackground = new Image( launchImageTexture );
+				//_loadingBackground.width = GlobalConfig.stageWidth;
+				//_loadingBackground.height = GlobalConfig.stageHeight;
+				//addChild( _loadingBackground );
 				
 				_loadingBackground = new Image( launchImageTexture );
-				if( (AbstractGameInfo.LANDSCAPE && GlobalConfig.android) || (GlobalConfig.ios && AbstractGameInfo.LANDSCAPE && GlobalConfig.isPhone) )
+				
+				if(AbstractGameInfo.LANDSCAPE)
 				{
-                    // FIXME ?
+					if(_loadingBackground.height > _loadingBackground.width)
+					{
+						// landscape but the image is portrait
+						_loadingBackground.width = GlobalConfig.stageHeight;
+						_loadingBackground.height = GlobalConfig.stageWidth;
+						_loadingBackground.rotation = deg2rad(-90);
+						_loadingBackground.x = 0;
+						_loadingBackground.y = GlobalConfig.stageHeight;
+					}
+				}
+				else
+				{
+					// portrait but the image is landscape
+					if(_loadingBackground.height > _loadingBackground.width)
+					{
+						_loadingBackground.width = GlobalConfig.stageHeight;
+						_loadingBackground.height = GlobalConfig.stageWidth;
+						_loadingBackground.rotation = deg2rad(90);
+						_loadingBackground.x = 0;
+						_loadingBackground.y = 0;
+					}
+				}
+				
+				if( GlobalConfig.android )
+				{
+					_loadingBackground.width = stage.stageWidth;
+					_loadingBackground.height = stage.stageHeight;
+				}
+				
+				/*if( (AbstractGameInfo.LANDSCAPE && GlobalConfig.android) || (GlobalConfig.ios && AbstractGameInfo.LANDSCAPE && GlobalConfig.isPhone) )
+				{
 					_loadingBackground.width = GlobalConfig.stageHeight;
 					_loadingBackground.height = GlobalConfig.stageWidth;
 					_loadingBackground.rotation = deg2rad(-90);
 					_loadingBackground.x = 0;
 					_loadingBackground.y = GlobalConfig.stageHeight;
-				}
+				}*/
+				
 				addChild( _loadingBackground );
 			}
 			
@@ -406,17 +434,14 @@ package com.ludofactory.mobile.core
 				}
 				
 				//MobileAppTracker.instance.setUserId(GlobalConfig.deviceId);
-				MobileAppTracker.instance.trackInstall(); // track install (or update)
-				MobileAppTracker.instance.trackAction("open"); // track daily open
+				//MobileAppTracker.instance.trackInstall(); // track install (or update)
+				//MobileAppTracker.instance.trackAction("open"); // track daily open
 			} 
 			catch(error:Error) { }
 			
-			if( Analytics.isSupported() )
+			if( GAnalytics.isSupported() )
 			{
-				_tracker = Analytics.getInstance().getTracker(AbstractGameInfo.GOOGLE_ANALYTICS_TRACKER);
-				_tracker.appID = AbstractGameInfo.GAME_BUNDLE_ID;
-				_tracker.appName = AbstractGameInfo.GAME_NAME;
-				_tracker.appVersion = AbstractGameInfo.GAME_VERSION;
+				GAnalytics.create(AbstractGameInfo.GOOGLE_ANALYTICS_TRACKER);
 			}
 			
 			// parse device info
@@ -438,6 +463,10 @@ package com.ludofactory.mobile.core
 			_pushManager.addEventListener(LudoEventType.UPDATE_HEADER, onPushUpdate);
 			_pushManager.addEventListener(LudoEventType.UPDATE_ALERT_CONTAINER_LIST, _alertContainer.updateList);
 			
+			if( CoreMobile.isSupported() )
+			{
+				CoreMobile.create(); // only supported on Android and iOS
+			}
 			
 			if( GoViral.isSupported() )
 			{
@@ -1095,7 +1124,7 @@ package com.ludofactory.mobile.core
 		{
 			PushNotification.getInstance().removeEventListener(PushNotificationEvent.PERMISSION_GIVEN_WITH_TOKEN_EVENT, onPermissionGiven);
 			if( AirNetworkInfo.networkInfo.isConnected() )
-				Remote.getInstance().updatePushToken(event.token, null, null, null, 1);
+				Remote.getInstance().updatePushToken(event.token, null, null, null, 5);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -1121,7 +1150,6 @@ package com.ludofactory.mobile.core
 		public static function get pushManager():PushManager { return _pushManager; }
 		public static function get screenNavigator():AdvancedScreenNavigator { return _screenNavigator; }
 		public static function get gameTypeSelectionManager():GameModeSelectionManager { return _gameTypeSelectionManager; }
-		public static function get tracker():ITracker { return _tracker; }
 		
 		public static function get isSelectingPseudo():Boolean { return _isSelectingPseudo; }
 		public static function set isSelectingPseudo(val:Boolean):void { _isSelectingPseudo = val; }
