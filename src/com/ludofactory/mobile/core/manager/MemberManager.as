@@ -476,6 +476,8 @@ package com.ludofactory.mobile.core.manager
 		public function getNumTokens():int { return _member.numTokens; }
 		/**  Returns the member's total of free game sessions. */		
 		public function getTotalTokensADay():int { return _member.totalTokensADay; }
+		/**  Returns the member's total of free game sessions. */
+		public function getTotalBonusTokensADay():int { return _member.totalBonusTokensADay; }
 		/**  Returns the member's pseudo. */		
 		public function getPseudo():String { return _member.pseudo; }
 		/**  Returns the member's birth date. */

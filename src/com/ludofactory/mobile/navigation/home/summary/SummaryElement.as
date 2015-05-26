@@ -6,6 +6,7 @@ Created : 9 août 2013
 */
 package com.ludofactory.mobile.navigation.home.summary
 {
+	
 	import com.greensock.TweenLite;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
@@ -14,18 +15,11 @@ package com.ludofactory.mobile.navigation.home.summary
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.GameSessionTimer;
-	import com.ludofactory.mobile.core.StakeType;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.push.GameSession;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.filters.DropShadowFilter;
-	import flash.geom.Rectangle;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Callout;
 	import feathers.controls.ImageLoader;
@@ -33,6 +27,11 @@ package com.ludofactory.mobile.navigation.home.summary
 	import feathers.core.FeathersControl;
 	import feathers.display.Scale9Image;
 	import feathers.textures.Scale9Textures;
+	
+	import flash.filters.DropShadowFilter;
+	import flash.geom.Rectangle;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
@@ -280,7 +279,7 @@ package com.ludofactory.mobile.navigation.home.summary
 					{
 						case StakeType.TOKEN:
 						{
-							_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? ( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED ? _("Reconnectez-vous pour récupérer vos {0} Jetons.") : _("Vos Jetons ({0} par jour)")) : _("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getTotalTokensADay());
+							_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? ( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED ? _("Reconnectez-vous pour récupérer vos {0} Jetons.") : _("Vos Jetons ({0} par jour + {1} bonus)")) : _("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getTotalTokensADay(), MemberManager.getInstance().getTotalBonusTokensADay());
 							break;
 						}
 						case StakeType.CREDIT:

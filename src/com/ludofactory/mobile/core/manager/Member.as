@@ -104,6 +104,10 @@ package com.ludofactory.mobile.core.manager
 		private var _totalTokensADay:int = 50;
 		
 		/**
+		 * Bonus tokens. */
+		private var _totalBonusTokensADay:int = 0;
+		
+		/**
 		 * The member's number of points */		
 		private var _points:int = 0;
 		
@@ -170,6 +174,7 @@ package com.ludofactory.mobile.core.manager
 			if( "date_jetons" in memberData && memberData.date_jetons != null )              _updateDate = String(memberData.date_jetons);
 			if( "id_pays_pseudo" in memberData && memberData.id_pays_pseudo != null )        _countryId = int(memberData.id_pays_pseudo);
 			if( "jetons_quotidiens" in memberData && memberData.jetons_quotidiens != null )  _totalTokensADay = int(memberData.jetons_quotidiens);
+			if( "jetons_bonus" in memberData && memberData.jetons_bonus != null )            _totalBonusTokensADay = int(memberData.jetons_bonus);
 			if( "video_disponible" in memberData && memberData.video_disponible != null )    _canWatchVideo = Boolean(memberData.video_disponible);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
@@ -193,6 +198,9 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get totalTokensADay():int { return _totalTokensADay; }
 		public function set totalTokensADay(val:int):void { _totalTokensADay = val; }
+		
+		public function get totalBonusTokensADay():int { return _totalBonusTokensADay; }
+		public function set totalBonusTokensADay(val:int):void { _totalBonusTokensADay = val; }
 		
 		public function get credits():int { return _credits; }
 		public function set credits(val:int):void { _credits = val; }
