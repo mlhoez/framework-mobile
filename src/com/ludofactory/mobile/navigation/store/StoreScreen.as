@@ -448,7 +448,7 @@ package com.ludofactory.mobile.navigation.store
 		{
 			try
 			{
-				MobileAppTracker.instance.trackAction("purchase", event.data.value, "USD", event.data.id);
+				//MobileAppTracker.instance.trackAction("purchase", event.data.value, "USD", event.data.id);
 			} 
 			catch(error:Error) 
 			{
@@ -461,9 +461,8 @@ package com.ludofactory.mobile.navigation.store
 		}
 		
 		/**
-		 * The animation was closed (manually or automatically), then we
-		 * re-enable the navigation or we display the specific screen if
-		 * the used changed rank with this purchase.
+		 * The animation was closed (manually or automatically), then we re-enable the navigation or we display the
+		 * specific screen if the used changed rank with this purchase.
 		 * 
 		 * @param value Number of credits earned.
 		 * @param newRank Whether the user changed rank with this purchase

@@ -91,7 +91,7 @@ package com.ludofactory.mobile.navigation.authentication
 			// Track registration
 			try
 			{
-				MobileAppTracker.instance.trackAction("registration");
+				//MobileAppTracker.instance.trackAction("registration");
 			} 
 			catch(error:Error) 
 			{
