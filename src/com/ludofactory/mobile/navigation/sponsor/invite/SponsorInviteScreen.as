@@ -17,6 +17,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.navigation.authentication.NotLoggedInContainer;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
@@ -43,7 +44,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
 	
-	import pl.mllr.extensions.contactEditor.ContactEditor;
+	//import pl.mllr.extensions.contactEditor.ContactEditor;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -83,7 +84,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 		
 		/**
 		 * Contact editor. */		
-		private var _contactEditor:ContactEditor;
+		//private var _contactEditor:ContactEditor;
 		
 		/**
 		 * Contacts. */		
@@ -147,15 +148,15 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(24), 0x636363, true);
 			
 			_inviteAllButton = new Button();
-			_inviteAllButton.visible = false
+			_inviteAllButton.visible = false;
 			_inviteAllButton.styleName = Theme.BUTTON_FLAT_GREEN;
-			_inviteAllButton.label = _("Inviter\ntous");
+			_inviteAllButton.label = GlobalConfig.isPhone ? _("Inviter\ntous") : _("Inviter tous");
 			_inviteAllButton.addEventListener(Event.TRIGGERED, onInviteAll);
 			addChild(_inviteAllButton);
 			
 			_background = new Quad(5, 5);
 			addChild(_background);
-			
+			 
 			_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
 			_listShadow.setVertexColor(0, 0xffffff);
 			_listShadow.setVertexAlpha(0, 0);
@@ -233,8 +234,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			
 			if( AirAddressBook.isSupported )
 			{
-				if( GlobalConfig.ios )
-				{
+				//if( GlobalConfig.ios )
+				//{
 					if( AirAddressBook.getInstance().hasPermission() )
 					{
 						AirAddressBook.getInstance().addEventListener(AirAddressBook.CONTACTS_UPDATED, onContactsUpdated);
@@ -247,7 +248,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 						_retryContainer.singleMessageMode = true;
 						_retryContainer.message = formatString(_("L'application n'est pas autorisée à accéder à vos contacts.\n\nPour cela, allez sur l'application « Réglages » puis dans « Confidentialité », sélectionnez « Contacts » et autorisez {0}."), AbstractGameInfo.GAME_NAME);
 					}
-				}
+				/*}
 				else
 				{
 					var contacts:Array;
@@ -317,7 +318,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 					_loader.y = _inviteAllButton.y;
 					
 					_contactsList.dataProvider = new ListCollection( _contacts );
-				}
+				}*/
 			}
 			else
 			{
@@ -627,7 +628,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			_singleInviteNameInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
 			_singleInviteNameInput.addEventListener(FeathersEventType.SOFT_KEYBOARD_ACTIVATE, onSoftKeyboardActivated);
 			_singleInviteNameInput.addEventListener(FeathersEventType.ENTER, onEnter);
-			_singleInviteNameInput.setFocus();
+			
 			_singleInviteNameInput.alpha = 0;
 			_singleInviteNameInput.styleName = Theme.TEXTINPUT_FIRST;
 			addChild(_singleInviteNameInput);
@@ -646,6 +647,12 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			_validateSingleInviteButton.label = _("Confirmer");
 			_validateSingleInviteButton.alpha = 0;
 			addChild(_validateSingleInviteButton);
+			
+			if( !GlobalConfig.ios && !GlobalConfig.android && !GlobalConfig.amazon )
+				onSoftKeyboardActivated();
+			
+			onSoftKeyboardActivated();
+			TweenMax.delayedCall(0.5, _singleInviteNameInput.setFocus);
 		}
 		
 		private function onTouchOverlay(event:TouchEvent):void
@@ -672,12 +679,14 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			}
 		}
 		
-		private function onSoftKeyboardActivated(event:Event):void
+		private function onSoftKeyboardActivated(event:Event = null):void
 		{
+			var posY:int = Starling.current.nativeStage.softKeyboardRect.y > 0 ? Starling.current.nativeStage.softKeyboardRect.y : actualHeight;
+					
 			_singleInviteMailInput.width = actualWidth * 0.8;
 			_singleInviteMailInput.validate();
 			_singleInviteMailInput.x = (actualWidth - _singleInviteMailInput.width) * 0.5;
-			_singleInviteMailInput.y = (Starling.current.nativeStage.softKeyboardRect.y * 0.5) - _singleInviteMailInput.height;
+			_singleInviteMailInput.y = (posY * 0.5) - _singleInviteMailInput.height;
 			_singleInviteMailInput.alpha = 1;
 			
 			_singleInviteNameInput.width = actualWidth * 0.8;
@@ -688,8 +697,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			
 			_validateSingleInviteButton.width = _singleInviteMailInput.width * 0.8;
 			_validateSingleInviteButton.x = (actualWidth - _validateSingleInviteButton.width) * 0.5;
-			_validateSingleInviteButton.y = Starling.current.nativeStage.softKeyboardRect.y * 0.5;
-			_validateSingleInviteButton.alpha = 1;
+			_validateSingleInviteButton.y = posY * 0.5;
+			_validateSingleInviteButton.alpha = 1; 
 		}
 		
 		/**
@@ -761,7 +770,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 				{
 					Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Etat:"Echec" });
 					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
-					_singleInviteMailInput.setFocus();
+					//_singleInviteMailInput.setFocus();
 					break;
 				}
 				case 1: // success
@@ -799,7 +808,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 					break;
 				}
 			}
-			_singleInviteMailInput.setFocus();
+			//_singleInviteMailInput.setFocus();
 		}
 		
 		/**
@@ -817,6 +826,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 		
 		override public function dispose():void
 		{
+			TweenMax.killDelayedCallsTo(_singleInviteNameInput.setFocus);
+			
 			AirAddressBook.getInstance().removeEventListener(AirAddressBook.CONTACTS_UPDATED, onContactsUpdated);
 			
 			Starling.juggler.remove(_loader);
@@ -868,11 +879,11 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 				_contacts = null;
 			}
 			
-			if( _contactEditor )
+			/*if( _contactEditor )
 			{
 				_contactEditor.dispose();
 				_contactEditor = null;
-			}
+			}*/
 			
 			_contactsList.removeFromParent(true);
 			_contactsList = null;
