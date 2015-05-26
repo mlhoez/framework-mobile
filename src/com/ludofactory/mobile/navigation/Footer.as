@@ -101,7 +101,7 @@ package com.ludofactory.mobile.navigation
 		{
 			super();
 			
-			_sidePadding = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 20 : 10);
+			_sidePadding = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 36 : 10);
 			_containerHeight = scaleAndRoundToDpi(80);
 			height = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 88 : 118);
 		}
@@ -110,7 +110,7 @@ package com.ludofactory.mobile.navigation
 		{
 			super.initialize();
 			
-			var rect:Rectangle = (AbstractGameInfo.LANDSCAPE ? new Rectangle(165, 54, 10, 10) : new Rectangle(140, 54, 10, 10));
+			var rect:Rectangle = (AbstractGameInfo.LANDSCAPE ? new Rectangle(190, 54, 10, 10) : new Rectangle(140, 54, 10, 10));
 			_backgroundImage = new Scale9Image( new Scale9Textures(AbstractEntryPoint.assets.getTexture("footer-skin" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "")), rect), GlobalConfig.dpiScale );
 			_backgroundImage.touchable = false;
 			_backgroundImage.blendMode = BlendMode.NONE;
@@ -178,14 +178,14 @@ package com.ludofactory.mobile.navigation
 				_menuButton.x = (actualWidth - _menuButton.width - _sidePadding) << 0;
 				_menuButton.y = ((actualHeight - _menuButton.height) * 0.5) << 0;
 				
-				var containersMaxWidth:int = actualWidth - scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 270 : 200); // 100 + 100 padding on each side
+				var containersMaxWidth:int = actualWidth - scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 330 : 200); // 100 + 100 padding on each side
 				
 				_freeContainer.height = _pointsContainer.height = _creditsContainer.height = _containerHeight;
 				
 				_freeContainer.width = _creditsContainer.width = containersMaxWidth * 0.3 - scaleAndRoundToDpi(10);
 				_pointsContainer.width = containersMaxWidth * 0.4 - scaleAndRoundToDpi(10) * 2;
 				
-				_freeContainer.x = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 145 : 110);
+				_freeContainer.x = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 175 : 110);
 				_pointsContainer.x = (_freeContainer.x + _freeContainer.width + scaleAndRoundToDpi(10)) << 0;
 				_creditsContainer.x = (_pointsContainer.x + _pointsContainer.width + scaleAndRoundToDpi(10)) << 0;
 				
