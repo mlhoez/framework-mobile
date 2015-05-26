@@ -6,7 +6,7 @@ Created : 29 Mars 2013
 */
 package com.ludofactory.mobile.core
 {
-
+	
 	import com.freshplanet.ane.AirDeviceId;
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.gamua.flox.Flox;
@@ -19,11 +19,10 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.debug.TouchMarkerManager;
-
-	import eu.alebianco.air.extensions.analytics.Analytics;
-
+	import com.milkmangames.nativeextensions.GAnalytics;
+	
 	import feathers.system.DeviceCapabilities;
-
+	
 	import flash.desktop.NativeApplication;
 	import flash.display.Bitmap;
 	import flash.display.Loader;
@@ -41,13 +40,13 @@ package com.ludofactory.mobile.core
 	import flash.media.SoundMixer;
 	import flash.system.Capabilities;
 	import flash.utils.ByteArray;
-
+	
 	import starling.core.Starling;
 	import starling.events.Event;
 	import starling.textures.Texture;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
-
+	
 	// don't forget to add this in the subclasses :
 	// [SWF(frameRate="60", backgroundColor="#000000")]
 	
@@ -67,6 +66,8 @@ package com.ludofactory.mobile.core
 		/**
 		 *  */		
 		private var _launchImage:Loader;
+		
+		private var _savedAutoOrients:Boolean;
 		
 		public function AbstractMain()
 		{
@@ -99,40 +100,44 @@ package com.ludofactory.mobile.core
 		private function showLaunchImage():void
 		{
 			var filePath:String;
-			var isPortraitOnly:Boolean = false;
-			var isCurrentlyPortrait:Boolean;
 			if(Capabilities.manufacturer.indexOf("iOS") >= 0)
 			{
-				if(Capabilities.screenResolutionX == 1536 && Capabilities.screenResolutionY == 2048)
+				var isCurrentlyPortrait:Boolean = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
+				if(Capabilities.screenResolutionX == 1242 && Capabilities.screenResolutionY == 2208)
 				{
-					// iPad retina
-					isCurrentlyPortrait = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
+					//iphone 6 plus
+					filePath = isCurrentlyPortrait ? "Default-414w-736h@3x.png" : "Default-414w-736h-Landscape@3x.png";
+				}
+				else if(Capabilities.screenResolutionX == 1536 && Capabilities.screenResolutionY == 2048)
+				{
+					//ipad retina
 					filePath = isCurrentlyPortrait ? "Default-Portrait@2x.png" : "Default-Landscape@2x.png";
 				}
 				else if(Capabilities.screenResolutionX == 768 && Capabilities.screenResolutionY == 1024)
 				{
-					// iPad non retina
-					isCurrentlyPortrait = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
+					//ipad classic
 					filePath = isCurrentlyPortrait ? "Default-Portrait.png" : "Default-Landscape.png";
 				}
-				else if(Capabilities.screenResolutionX == 640)
+				else if(isCurrentlyPortrait && (Capabilities.screenResolutionX == 750))
 				{
-					isPortraitOnly = true;
-					if(Capabilities.screenResolutionY == 1136)
+					//iphone 6
+					filePath = "Default-375w-667h@2x.png";
+				}
+				else if(Capabilities.screenResolutionX == 640 || Capabilities.screenResolutionY == 640)
+				{
+					//iphone retina
+					if(Capabilities.screenResolutionY == 1136 || Capabilities.screenResolutionX == 1136)
 					{
-						// iPhone retina >= iPhone 5
 						filePath = "Default-568h@2x.png";
 					}
 					else
 					{
-						// iPhone retina < iPhone 5
 						filePath = "Default@2x.png";
 					}
 				}
-				else if(Capabilities.screenResolutionX == 320)
+				else if(Capabilities.screenResolutionX == 320 || Capabilities.screenResolutionY == 320)
 				{
-					// iPhone non retina
-					isPortraitOnly = true;
+					//iphone classic
 					filePath = "Default.png";
 				}
 			}
@@ -158,6 +163,63 @@ package com.ludofactory.mobile.core
 					stream.open(file, FileMode.READ);
 					stream.readBytes(bytes, 0, stream.bytesAvailable);
 					stream.close();
+					this._launchImage = new Loader();
+					this.addChild(this._launchImage);
+					
+					this._savedAutoOrients = this.stage.autoOrients;
+					this.stage.autoOrients = false;
+					
+					_launchImage.contentLoaderInfo.addEventListener(flash.events.Event.COMPLETE, function(event:flash.events.Event):void
+					{
+						_launchImage.contentLoaderInfo.removeEventListener(flash.events.Event.COMPLETE, arguments.callee);
+						
+						if(!isCurrentlyPortrait)
+						{
+							if(_launchImage.height > _launchImage.width)
+							{
+								// landscape but the image is portrait
+								_launchImage.width = GlobalConfig.stageHeight;
+								_launchImage.height = GlobalConfig.stageWidth;
+								_launchImage.rotation = -90;
+								_launchImage.x = 0;
+								_launchImage.y = GlobalConfig.stageHeight * 0.5;
+							}
+						}
+						else
+						{
+							// portrait but the image is landscape
+							if(_launchImage.height > _launchImage.width)
+							{
+								_launchImage.width = GlobalConfig.stageHeight;
+								_launchImage.height = GlobalConfig.stageWidth;
+								_launchImage.rotation = 45;
+								_launchImage.x = 0;
+								_launchImage.y = 0;
+							}
+						}
+						
+						if( Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0 )
+						{
+							_launchImage.width = stage.stageWidth;
+							_launchImage.height = stage.stageHeight;
+						}
+					});
+					
+					this._launchImage.loadBytes(bytes);
+				}
+			}
+			
+			
+			/*if(filePath)
+			{
+				var file:File = File.applicationDirectory.resolvePath(filePath);
+				if(file.exists)
+				{
+					var bytes:ByteArray = new ByteArray();
+					var stream:FileStream = new FileStream();
+					stream.open(file, FileMode.READ);
+					stream.readBytes(bytes, 0, stream.bytesAvailable);
+					stream.close();
 					
 					_launchImage = new Loader();
 					_launchImage.loadBytes(bytes);
@@ -173,14 +235,14 @@ package com.ludofactory.mobile.core
 					{
 						if( AbstractGameInfo.LANDSCAPE )
 						{
-							_launchImage.rotation = -90;
+							_launchImage.rotation = -45;
 							_launchImage.y = stage.fullScreenHeight;
 						}
 					}
 					
 					
 				}
-			}
+			}*/
 		}
 		
 		/**
@@ -197,7 +259,7 @@ package com.ludofactory.mobile.core
 			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
 			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
 			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : "android";
-			GlobalConfig.deviceId = AirDeviceId.getInstance().getID("ludofactory");
+			AirDeviceId.getInstance().getID("ludofactory", function(deviceId:String):void{ GlobalConfig.deviceId = deviceId; });
 			
 			// launch Starling
 			Starling.multitouchEnabled = false;  // useful on mobile devices
@@ -212,6 +274,8 @@ package com.ludofactory.mobile.core
 				_starling.showStats = true;
 				_starling.showStatsAt(HAlign.LEFT, VAlign.TOP);
 			}
+			
+			this.stage.autoOrients = this._savedAutoOrients;
 			
 			stage.addEventListener(flash.events.Event.RESIZE, onResize, false, int.MAX_VALUE, true);
 		}
@@ -329,8 +393,8 @@ package com.ludofactory.mobile.core
 				else
 					log(stackTrace);
 				
-				if( Analytics.isSupported() && AbstractEntryPoint.tracker )
-					AbstractEntryPoint.tracker.buildException(false).withDescription(stackTrace).track();
+				if( GAnalytics.isSupported() )
+					GAnalytics.analytics.defaultTracker.trackException(stackTrace, false);
 			} 
 			catch(error:Error) { }
 		}
