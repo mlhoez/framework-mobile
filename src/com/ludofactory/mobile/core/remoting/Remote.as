@@ -577,7 +577,7 @@ package com.ludofactory.mobile.core.remoting
 		public function accountUpdatePseudo(data:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = mergeWithGenericParams( data );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Compte", "majPseudoPays", params);
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Compte", "majPseudo", params);
 		}
 		
 		/**
