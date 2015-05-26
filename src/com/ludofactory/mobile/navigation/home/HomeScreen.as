@@ -24,7 +24,13 @@ package com.ludofactory.mobile.navigation.home
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	
 	import feathers.controls.Button;
+	import feathers.controls.Callout;
 	import feathers.controls.ImageLoader;
+	import feathers.controls.Label;
+	
+	import flash.text.TextFormat;
+	
+	import flash.text.TextFormatAlign;
 	
 	import starling.display.Image;
 	import starling.events.Event;
@@ -236,6 +242,7 @@ package com.ludofactory.mobile.navigation.home
 			if( GameCenterManager.available )
 			{
 				GameCenterManager.dispatcher.addEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
+				GameCenterManager.dispatcher.addEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
 				GameCenterManager.authenticateUser();
 			}
 		}
@@ -246,8 +253,52 @@ package com.ludofactory.mobile.navigation.home
 		private function onGameCenterAuthenticationFinished(event:Event):void
 		{
 			GameCenterManager.dispatcher.removeEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
+			GameCenterManager.dispatcher.removeEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
 			GameCenterManager.showAchievements();
 		}
+		
+		/**
+		 * Fail
+		 */
+		private function onGameCenterAuthenticationFailed(event:Event):void
+		{
+			GameCenterManager.dispatcher.removeEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
+			GameCenterManager.dispatcher.removeEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
+			// TODO show tooltip
+			
+			_isCalloutDisplaying = true;
+			
+			_calloutLabel = new Label();
+			_calloutLabel.width = GlobalConfig.stageWidth * 0.6;
+			_calloutLabel.text = _("Le Game Center est désactivé.\nPour le réactiver, connectez-vous directement à partir de l'application Game Center.");
+			_calloutLabel.validate();
+			
+			var callout:Callout = Callout.show(_calloutLabel, _gameCenterButton, Callout.DIRECTION_UP, false);
+			callout.touchable = false;
+			callout.disposeContent = false;
+			callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
+			_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
+		}
+		
+		private function onCalloutRemoved(event:Event):void
+		{
+			try
+			{
+				event.target.removeEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
+				(event.target as Callout).dispose();
+				_calloutLabel.removeFromParent(true);
+				_calloutLabel = null;
+			}
+			catch(error:Error)
+			{
+				// -
+			}
+			
+			_isCalloutDisplaying = false;
+		}
+		
+		private var _calloutLabel:Label;
+		private var _isCalloutDisplaying:Boolean = false;
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
