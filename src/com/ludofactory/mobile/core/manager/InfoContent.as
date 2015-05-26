@@ -26,6 +26,8 @@ package com.ludofactory.mobile.core.manager
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.text.TextField;
+	import starling.utils.VAlign;
 	
 	/**
 	 * InfoContent is the content displayed by the InfoManager when
@@ -59,7 +61,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * Message to display. */		
-		private var _message:Label;
+		private var _message:TextField;
 		
 		/**
 		 * Loader. */		
@@ -128,10 +130,11 @@ package com.ludofactory.mobile.core.manager
 			_loader.touchable = false;
 			addChild(_loader);
 			
-			_message = new Label();
+			_message = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_WHITE);
 			_message.touchable = false;
+			_message.vAlign = VAlign.TOP;
+			_message.autoScale = true;
 			addChild(_message);
-			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_tapToCloseLabel = new Label();
 			_tapToCloseLabel.touchable = false;
