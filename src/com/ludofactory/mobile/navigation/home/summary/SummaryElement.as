@@ -12,8 +12,11 @@ package com.ludofactory.mobile.navigation.home.summary
 	import com.greensock.easing.Linear;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGame;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameSessionTimer;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.StakeType;
@@ -40,6 +43,8 @@ package com.ludofactory.mobile.navigation.home.summary
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
+	import starling.text.TextField;
+	import starling.utils.VAlign;
 	import starling.utils.formatString;
 	
 	public class SummaryElement extends FeathersControl
@@ -49,7 +54,7 @@ package com.ludofactory.mobile.navigation.home.summary
 		private var _background:Scale9Image;
 		/**
 		 * The label. */		
-		private var _label:Label;
+		private var _label:TextField;
 		private var _firstQuestionLabel:Label;
 		private var _secondQuestionLabel:Label;
 		private var _thirdQuestionLabel:Label;
@@ -98,28 +103,32 @@ package com.ludofactory.mobile.navigation.home.summary
 			{
 				case StakeType.TOKEN:
 				{
-					_backgroundTextureName = "summary-green-container";
+					_backgroundTextureName = "summary-green-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-token" : "summary-icon-token-hd";
 					//_calloutLabel.text = formatString(_("Vos parties gratuites ({0} par jour)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
 					break;
 				}
 				case StakeType.CREDIT:
 				{
-					_backgroundTextureName = "summary-yellow-container";
+					_backgroundTextureName = "summary-yellow-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-credits" : "summary-icon-credits-hd";
 					//_calloutLabel.text = _("Vos Crédits de jeu");
 					break;
 				}
 				case StakeType.POINT:
 				{
-					_backgroundTextureName = "summary-blue-container";
+					_backgroundTextureName = "summary-blue-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-points" : "summary-icon-points-hd";
 					//_calloutLabel.text = _("Vos Points à convertir en Cadeaux");
 					break;
 				}
 			}
 			
-			const textures:Scale9Textures = new Scale9Textures( AbstractEntryPoint.assets.getTexture( _backgroundTextureName ), new Rectangle(18, 18, 14, 14) );
+			var textures:Scale9Textures;
+			if( AbstractGameInfo.LANDSCAPE )
+				textures = new Scale9Textures( AbstractEntryPoint.assets.getTexture( _backgroundTextureName ), new Rectangle(63, 16, 20, 28) );
+			else
+				textures = new Scale9Textures( AbstractEntryPoint.assets.getTexture( _backgroundTextureName ), new Rectangle(18, 18, 14, 14) );
 			_background = new Scale9Image( textures, GlobalConfig.dpiScale);
 			_background.useSeparateBatch = false;
 			addChild( _background );
@@ -143,10 +152,10 @@ package com.ludofactory.mobile.navigation.home.summary
 			_particles.lifespanVariance = 0.5;
 			addChild(_particles);
 			
-			_label = new Label();
-			_label.text = "00:00";
+			_label = new TextField(5, 5, "000000", Theme.FONT_SANSITA, scaleAndRoundToDpi(30), 0xe2bf89);
+			_label.vAlign = VAlign.CENTER;
+			_label.autoScale = true;
 			addChild(_label);
-			_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), 0xe2bf89, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_animationLabel = new Label();
 			_animationLabel.visible = false;
@@ -164,17 +173,44 @@ package com.ludofactory.mobile.navigation.home.summary
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_icon.x = ( (this.actualWidth - _icon.width) * 0.5 ) << 0;
-				_icon.y = _icon.y << 0;
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_icon.x = roundUp((scaleAndRoundToDpi(60) - _icon.width) * 0.5); // 60 = size of the colored part that contains the icon
+					_icon.y = roundUp((actualHeight - _icon.height) * 0.5);
+				}
+				else
+				{
+					_icon.x = ( (this.actualWidth - _icon.width) * 0.5 ) << 0;
+					_icon.y = _icon.y << 0;
+				}
 				
-				_background.width = this.actualWidth;
-				_background.y = (_icon.height * 0.35) << 0;
-				_background.x = _background.x << 0;
-				_background.height = this.actualHeight - _background.y;
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_background.width = this.actualWidth;
+					_background.height = this.actualHeight * 0.7;
+					_background.y = roundUp((actualHeight - _background.height) * 0.5);
+					_background.x = _background.x << 0;
+				}
+				else
+				{
+					_background.width = this.actualWidth;
+					_background.y = (_icon.height * 0.35) << 0;
+					_background.x = _background.x << 0;
+					_background.height = this.actualHeight - _background.y;
+				}
 				
-				_label.width = _background.width;
-				_label.validate();
-				_label.y = ((this.actualHeight - _icon.height - scaleAndRoundToDpi(10)) - _label.height) * 0.5 + _icon.height;
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_label.width = _background.width - scaleAndRoundToDpi(60) - scaleAndRoundToDpi(16); // 8 + 8 padding on each side
+					_label.x = scaleAndRoundToDpi(60) + scaleAndRoundToDpi(5);
+					_label.height = _background.height;
+					_label.y = _background.y;
+				}
+				else
+				{
+					_label.width = _background.width;
+					_label.y = ((this.actualHeight - _icon.height - scaleAndRoundToDpi(10)) - _label.height) * 0.5 + _icon.height;
+				}
 				
 				_calloutLabel.width = GlobalConfig.stageWidth * 0.9;
 				_calloutLabel.validate();
@@ -189,10 +225,21 @@ package com.ludofactory.mobile.navigation.home.summary
 					TweenLite.killTweensOf([_firstQuestionLabel,_secondQuestionLabel,_thirdQuestionLabel]);
 					
 					_firstQuestionLabel.validate();
-					_saveXFirst = _firstQuestionLabel.x = (_background.width - (_firstQuestionLabel.width * 3)) * 0.5;
-					_saveXSecond = _secondQuestionLabel.x = _firstQuestionLabel.x + _firstQuestionLabel.width;
-					_saveXThird = _thirdQuestionLabel.x = _firstQuestionLabel.x + (_firstQuestionLabel.width * 2);
-					_saveY = _firstQuestionLabel.y = _secondQuestionLabel.y = _thirdQuestionLabel.y = ((this.actualHeight - _icon.height - scaleAndRoundToDpi(10)) - _firstQuestionLabel.height) * 0.5 + _icon.height;
+					
+					if( AbstractGameInfo.LANDSCAPE )
+					{
+						_saveXFirst = _firstQuestionLabel.x = scaleAndRoundToDpi(60) + ((_background.width - scaleAndRoundToDpi(60)) - (_firstQuestionLabel.width * 3)) * 0.5;
+						_saveXSecond = _secondQuestionLabel.x = _firstQuestionLabel.x + _firstQuestionLabel.width;
+						_saveXThird = _thirdQuestionLabel.x = _firstQuestionLabel.x + (_firstQuestionLabel.width * 2);
+						_saveY = _firstQuestionLabel.y = _secondQuestionLabel.y = _thirdQuestionLabel.y = scaleAndRoundToDpi(10) + ((this.actualHeight - scaleAndRoundToDpi(10)) - _firstQuestionLabel.height) * 0.5;
+					}
+					else
+					{
+						_saveXFirst = _firstQuestionLabel.x = (_background.width - (_firstQuestionLabel.width * 3)) * 0.5;
+						_saveXSecond = _secondQuestionLabel.x = _firstQuestionLabel.x + _firstQuestionLabel.width;
+						_saveXThird = _thirdQuestionLabel.x = _firstQuestionLabel.x + (_firstQuestionLabel.width * 2);
+						_saveY = _firstQuestionLabel.y = _secondQuestionLabel.y = _thirdQuestionLabel.y = ((this.actualHeight - _icon.height - scaleAndRoundToDpi(10)) - _firstQuestionLabel.height) * 0.5 + _icon.height;
+					}
 					
 					_firstQuestionLabel.visible = _secondQuestionLabel.visible = _thirdQuestionLabel.visible = true;
 					repeatAnimation();

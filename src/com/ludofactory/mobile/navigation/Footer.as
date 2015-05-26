@@ -6,28 +6,26 @@ Created : 9 oct. 2013
 */
 package com.ludofactory.mobile.navigation
 {
-
-	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.StakeType;
-	import com.ludofactory.mobile.core.controls.*;
+	
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameSessionTimer;
-	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.StakeType;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.navigation.home.summary.SummaryElement;
-	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.geom.Rectangle;
-	import flash.text.TextFormat;
+	import com.ludofactory.mobile.navigation.home.summary.SummaryElement;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
@@ -35,6 +33,9 @@ package com.ludofactory.mobile.navigation
 	import feathers.core.FeathersControl;
 	import feathers.display.Scale9Image;
 	import feathers.textures.Scale9Textures;
+	
+	import flash.geom.Rectangle;
+	import flash.text.TextFormat;
 	
 	import starling.core.Starling;
 	import starling.display.BlendMode;
@@ -100,7 +101,7 @@ package com.ludofactory.mobile.navigation
 		{
 			super();
 			
-			_sidePadding = scaleAndRoundToDpi(10);
+			_sidePadding = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 20 : 10);
 			_containerHeight = scaleAndRoundToDpi(80);
 			height = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 88 : 118);
 		}
@@ -109,7 +110,8 @@ package com.ludofactory.mobile.navigation
 		{
 			super.initialize();
 			
-			_backgroundImage = new Scale9Image( new Scale9Textures(AbstractEntryPoint.assets.getTexture("footer-skin"), new Rectangle(140, 54, 10, 10)), GlobalConfig.dpiScale );
+			var rect:Rectangle = (AbstractGameInfo.LANDSCAPE ? new Rectangle(165, 54, 10, 10) : new Rectangle(140, 54, 10, 10));
+			_backgroundImage = new Scale9Image( new Scale9Textures(AbstractEntryPoint.assets.getTexture("footer-skin" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "")), rect), GlobalConfig.dpiScale );
 			_backgroundImage.touchable = false;
 			_backgroundImage.blendMode = BlendMode.NONE;
 			_backgroundImage.useSeparateBatch = false;
@@ -176,19 +178,19 @@ package com.ludofactory.mobile.navigation
 				_menuButton.x = (actualWidth - _menuButton.width - _sidePadding) << 0;
 				_menuButton.y = ((actualHeight - _menuButton.height) * 0.5) << 0;
 				
-				var containersMaxWidth:int = actualWidth - scaleAndRoundToDpi(200); // 100 + 100 padding on each side
+				var containersMaxWidth:int = actualWidth - scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 270 : 200); // 100 + 100 padding on each side
 				
 				_freeContainer.height = _pointsContainer.height = _creditsContainer.height = _containerHeight;
 				
 				_freeContainer.width = _creditsContainer.width = containersMaxWidth * 0.3 - scaleAndRoundToDpi(10);
 				_pointsContainer.width = containersMaxWidth * 0.4 - scaleAndRoundToDpi(10) * 2;
 				
-				_freeContainer.x = scaleAndRoundToDpi(110);
+				_freeContainer.x = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 145 : 110);
 				_pointsContainer.x = (_freeContainer.x + _freeContainer.width + scaleAndRoundToDpi(10)) << 0;
 				_creditsContainer.x = (_pointsContainer.x + _pointsContainer.width + scaleAndRoundToDpi(10)) << 0;
 				
 				_freeContainer.validate();
-				_freeContainer.y = _pointsContainer.y = _creditsContainer.y = ((actualHeight - _freeContainer.height) * 0.5) << 0;
+				_freeContainer.y = _pointsContainer.y = _creditsContainer.y = roundUp(((actualHeight - _freeContainer.height) * 0.5)) + (AbstractGameInfo.LANDSCAPE ? scaleAndRoundToDpi(2) : 0);
 			}
 		}
 		
@@ -212,7 +214,7 @@ package com.ludofactory.mobile.navigation
 			}
 			else
 			{
-				_pointsContainer.setLabelText( "" + MemberManager.getInstance().getPoints() );
+				_pointsContainer.setLabelText( MemberManager.getInstance().getAnonymousGameSessionsAlreadyUsed() ? "???" : ("" + MemberManager.getInstance().getPoints()) );
 				_creditsContainer.setLabelText( MemberManager.getInstance().getNumTokens() == 0 ? "???" : "-" );
 			}
 		}
