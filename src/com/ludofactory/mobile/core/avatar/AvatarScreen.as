@@ -68,12 +68,12 @@ package com.ludofactory.mobile.core.avatar
 			AbstractEntryPoint.assets.loadQueue(onProgress);
 			
 			_switchButton = new Button();
-			_switchButton.label = _("Changer anim");
+			_switchButton.label = "Changer anim";
 			_switchButton.addEventListener(starling.events.Event.TRIGGERED, onSwitch);
 			addChild(_switchButton);
 			
 			_switchWeaponButton = new Button();
-			_switchWeaponButton.label = _("Changer arme");
+			_switchWeaponButton.label = "Changer arme";
 			_switchWeaponButton.addEventListener(starling.events.Event.TRIGGERED, onSwitchWeapon);
 			addChild(_switchWeaponButton);
 		}
