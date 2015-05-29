@@ -109,31 +109,31 @@ import com.ludofactory.mobile.core.controls.ArrowGroup;
 			_container.addChild(_textGroup);
 			
 			_bonus = new Label();
-			_bonus.text = _("• Obtenir 10 parties par jour");
+			_bonus.text = "• Obtenir 10 parties par jour";
 			_textGroup.addChild(_bonus);
 			_bonus.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
 			_bonus.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
 			
 			_bonusOne = new Label();
-			_bonusOne.text = _( "• Obtenir 10 Nouvelles Parties");
+			_bonusOne.text =  "• Obtenir 10 Nouvelles Parties";
 			_textGroup.addChild(_bonusOne);
 			_bonusOne.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
 			_bonusOne.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
 			
 			_bonusTwo = new Label();
-			_bonusTwo.text = MemberManager.getInstance().getGiftsEnabled() ? _("• Convertir vos Points en Cadeaux") : _("• Convertir vos Points");
+			_bonusTwo.text = MemberManager.getInstance().getGiftsEnabled() ? "• Convertir vos Points en Cadeaux" : "• Convertir vos Points";
 			_textGroup.addChild(_bonusTwo);
 			_bonusTwo.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
 			_bonusTwo.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
 			
 			_bonusThree = new Label();
-			_bonusThree.text = _("• Gagner 200 Points en bonus");
+			_bonusThree.text = "• Gagner 200 Points en bonus";
 			_textGroup.addChild(_bonusThree);
 			_bonusThree.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
 			_bonusThree.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
 			
 			_bonusFour = new Label();
-			_bonusFour.text = _("• Obtenir 1 Crédit gratuit");
+			_bonusFour.text = "• Obtenir 1 Crédit gratuit";
 			_textGroup.addChild(_bonusFour);
 			_bonusFour.textRendererProperties.textFormat = Theme.marketingRegisterNotificationBonusTextFormat;
 			_bonusFour.textRendererProperties.nativeFilters = [ new DropShadowFilter(4, 75, 0x000000, 0.6, 5, 5) ];
@@ -142,17 +142,17 @@ import com.ludofactory.mobile.core.controls.ArrowGroup;
 			_container.addChild(_buttonGroup);
 			
 			_laterButton = new Button();
-			_laterButton.label = _("Plus tard");
+			_laterButton.label = "Plus tard";
 			_laterButton.styleName = Theme.BUTTON_BLUE;
 			_laterButton.addEventListener(Event.TRIGGERED, onCancel);
 			_buttonGroup.addChild(_laterButton);
 			
 			_createButton = new Button();
-			_createButton.label = _("Créer");
+			_createButton.label = "Créer";
 			_createButton.addEventListener(Event.TRIGGERED, onConfirm);
 			_buttonGroup.addChild(_createButton);
 			
-			_alreadyButton = new ArrowGroup( _("J'ai déjà un compte") );
+			_alreadyButton = new ArrowGroup( "J'ai déjà un compte" );
 			_alreadyButton.addEventListener(Event.TRIGGERED, onAlreadyHaveAccount);
 			_buttonGroup.addChild(_alreadyButton);
 			

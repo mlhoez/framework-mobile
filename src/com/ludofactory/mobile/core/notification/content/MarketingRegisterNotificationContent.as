@@ -9,17 +9,24 @@ package com.ludofactory.mobile.core.notification.content
 	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.games.pyramid.AppEntryPoint;
 	
 	import feathers.controls.Button;
+	
+	import starling.display.Image;
 	
 	import starling.events.Event;
 	import starling.text.TextField;
@@ -30,14 +37,6 @@ package com.ludofactory.mobile.core.notification.content
 		/**
 		 * The title. */		
 		private var _title:TextField;
-		
-		/**
-		 * The reasons. */		
-		private var _reason1:TextField;
-		private var _reason2:TextField;
-		private var _reason3:TextField;
-		private var _reason4:TextField;
-		private var _reason5:TextField;
 		
 		/**
 		 * The yes button. */		
@@ -53,6 +52,8 @@ package com.ludofactory.mobile.core.notification.content
 		 * The screen id if the user clicks on "continue" */		
 		private var _continueScreenId:String;
 		
+		private var _image:Image;
+		
 		public function MarketingRegisterNotificationContent( continueScreen:String )
 		{
 			super();
@@ -64,35 +65,14 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			super.initialize();
 			
-			_title = new TextField(10, scaleAndRoundToDpi(GlobalConfig.isPhone ? 80 : 140), AbstractGameInfo.LANDSCAPE ? _("Créez votre compte dès maintenant pour :") : _("Créez votre compte dès\nmaintenant pour :"), Theme.FONT_SANSITA,
+			_title = new TextField(10, scaleAndRoundToDpi(GlobalConfig.isPhone ? 80 : 140), _("Recevez 50 jetons gratuits\net un crédit bonus nen créant votre compte !"), Theme.FONT_SANSITA,
 					scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 34 : 46) : (AbstractGameInfo.LANDSCAPE ? 76 : 76)), Theme.COLOR_DARK_GREY);
 			_title.autoScale = true;
 			addChild(_title);
 			
-			_reason1 = new TextField(50, scaleAndRoundToDpi(30), _("• Obtenir 50 Jetons par jour"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 46), Theme.COLOR_LIGHT_GREY);
-			_reason1.autoScale = true;
-			_reason1.hAlign = HAlign.CENTER;
-			addChild(_reason1);
-			
-			_reason2 = new TextField(50, scaleAndRoundToDpi(30), _( "• Obtenir 50 Jetons supplémentaires"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 46), Theme.COLOR_LIGHT_GREY);
-			_reason2.autoScale = true;
-			_reason2.hAlign = HAlign.CENTER;
-			addChild(_reason2);
-			
-			_reason3 = new TextField(50, scaleAndRoundToDpi(30), MemberManager.getInstance().getGiftsEnabled() ? _("• Convertir vos Points en Cadeaux") : _("• Convertir vos Points"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 46), Theme.COLOR_LIGHT_GREY);
-			_reason3.autoScale = true;
-			_reason3.hAlign = HAlign.CENTER;
-			addChild(_reason3);
-			
-			_reason4 = new TextField(50, scaleAndRoundToDpi(30), _("• Gagner 200 Points en bonus"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 46), Theme.COLOR_LIGHT_GREY);
-			_reason4.autoScale = true;
-			_reason4.hAlign = HAlign.CENTER;
-			addChild(_reason4);
-			
-			_reason5 = new TextField(50, scaleAndRoundToDpi(30), _("• Obtenir 1 Crédit gratuit"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 46), Theme.COLOR_LIGHT_GREY);
-			_reason5.autoScale = true;
-			_reason5.hAlign = HAlign.CENTER;
-			addChild(_reason5);
+			_image = new Image(AbstractEntryPoint.assets.getTexture("marketing-popup-character" + (GlobalConfig.isPhone ? "" : "-hd")));
+			_image.scaleX = _image.scaleY = GlobalConfig.dpiScale;
+			addChild(_image);
 			
 			_laterButton = new Button();
 			_laterButton.label = _("Plus tard");
@@ -114,45 +94,25 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override protected function draw():void
 		{
-			_title.width = this.actualWidth;
+			_title.width = this.actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.5);
+			_title.x = (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)) + roundUp(((actualWidth * 0.5) - _title.width) * 0.5);
+			
+			_image.y = roundUp((actualHeight - _image.height) * 0.5);
+			_image.x = roundUp((actualWidth * 0.5 - _image.width) * 0.5);
+			
+			_laterButton.width = _createButton.width = actualWidth * 0.4;
+			_laterButton.height = _createButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 90 : 130);
+			
+			_createButton.validate();
+			_createButton.x = _laterButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _createButton.width) * 0.5;
 			
 			_alreadyButton.validate();
-			_alreadyButton.x = (actualWidth - _alreadyButton.width) * 0.5;
-			_alreadyButton.y = actualHeight - _alreadyButton.height;
-
-			_laterButton.width = _createButton.width = actualWidth * 0.4;
-			_laterButton.x = (actualWidth * 0.5) - _laterButton.width - scaleAndRoundToDpi(5);
-			_createButton.x = actualWidth * 0.5 + scaleAndRoundToDpi(5);
-			_createButton.validate();
-			_laterButton.y = _createButton.y = _alreadyButton.y - _createButton.height + scaleAndRoundToDpi(10);
-
-			/*if( AbstractGameInfo.LANDSCAPE )
-			{*/
-				_reason1.width = _reason2.width = _reason3.width = _reason4.width = _reason5.width = actualWidth * 0.9;
-				var maxReasonsHeight:int = (_createButton.y - _title.y - _title.height) / 5;
-				maxReasonsHeight = maxReasonsHeight > scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 110) ? scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 110) : maxReasonsHeight;
-				_reason1.height = _reason2.height = _reason3.height = _reason4.height = _reason5.height = maxReasonsHeight;
-				_reason1.x = _reason2.x = _reason3.x = _reason4.x = _reason5.x = actualWidth * 0.05;
-				var startY:int = _title.y + _title.height + ((_createButton.y - _title.y - _title.height) - (maxReasonsHeight * 5)) * 0.5;
-				_reason1.y = startY;
-				_reason2.y = _reason1.y + maxReasonsHeight;
-				_reason3.y = _reason2.y + maxReasonsHeight;
-				_reason4.y = _reason3.y + maxReasonsHeight;
-				_reason5.y = _reason4.y + maxReasonsHeight;
-			/*}
-			else
-			{
-				// TODO Voir pour faire la même technique qu'en paysage
-				_reason1.width = _reason2.width = _reason3.width = _reason4.width = _reason5.width = actualWidth * 0.9;
-				var maxReasonsHeight:int = (_createButton.y - _title.y - _title.height) / 5;
-				_reason1.height = _reason2.height = _reason3.height = _reason4.height = _reason5.height = maxReasonsHeight;
-				_reason1.x = _reason2.x = _reason3.x = _reason4.x = _reason5.x = actualWidth * 0.05;
-				_reason1.y = _title.y + _title.height;
-				_reason2.y = _reason1.y + _reason1.height;
-				_reason3.y = _reason2.y + _reason2.height;
-				_reason4.y = _reason3.y + _reason3.height;
-				_reason5.y = _reason4.y + _reason4.height;
-			}*/
+			_alreadyButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _alreadyButton.width) * 0.5;
+			
+			_title.y = roundUp((actualHeight - (_title.height + _createButton.height + _laterButton.height + _alreadyButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ?  20 : 80))) * 0.5);
+			_createButton.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
+			_laterButton.y = _createButton.y + _createButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
+			_alreadyButton.y = _laterButton.y + _laterButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 30);
 			
 			super.draw();
 		}
@@ -199,21 +159,6 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			_title.removeFromParent(true);
 			_title = null;
-			
-			_reason1.removeFromParent(true);
-			_reason1 = null;
-			
-			_reason2.removeFromParent(true);
-			_reason2 = null;
-			
-			_reason3.removeFromParent(true);
-			_reason3 = null;
-			
-			_reason4.removeFromParent(true);
-			_reason4 = null;
-			
-			_reason5.removeFromParent(true);
-			_reason5 = null;
 			
 			_createButton.removeEventListener(Event.TRIGGERED, onConfirm);
 			_createButton.removeFromParent(true);
