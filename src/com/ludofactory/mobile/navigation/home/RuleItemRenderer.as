@@ -6,6 +6,8 @@ Created : 26 déc. 2013
 */
 package com.ludofactory.mobile.navigation.home
 {
+	
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGame;
@@ -131,15 +133,19 @@ package com.ludofactory.mobile.navigation.home
 						if( !_picture )
 						{
 							_picture = new Image(AbstractEntryPoint.assets.getTexture(_data.imageSource));
-							_picture.scaleX = _picture.scaleY = GlobalConfig.dpiScale;
+							//_picture.scaleX = _picture.scaleY = GlobalConfig.dpiScale;
 							addChild(_picture);
 						}
 						else
 						{
 							_picture.texture = AbstractEntryPoint.assets.getTexture(_data.imageSource);
 							_picture.readjustSize();
+							//_picture.scaleX = _picture.scaleY = 1;
 						}
 					}
+					
+					
+					_isDataCommitted = true;
 				}
 				else
 				{
@@ -152,8 +158,13 @@ package com.ludofactory.mobile.navigation.home
 			}
 		}
 		
+		private var _isDataCommitted:Boolean = false;
+		
 		protected function layout():void
 		{
+			if(!_isDataCommitted )
+				return;
+			
 			switch(_data.type)
 			{
 				case RuleProperties.TYPE_TITLE:
@@ -205,7 +216,7 @@ package com.ludofactory.mobile.navigation.home
 							
 							_picture.x = _picture.y = 0;
 							
-							_picture.width = _background.width;
+							_picture.scaleX = _picture.scaleY = Utilities.getScaleToFillWidth(_picture.width, _background.width);
 							_background.height = _message.y + _message.height + _padding;
 							
 							break;
@@ -220,7 +231,7 @@ package com.ludofactory.mobile.navigation.home
 							_picture.x = 0;
 							_picture.y = _message.height + (_padding * 2);
 							
-							_picture.width = _background.width;
+							_picture.scaleX = _picture.scaleY = Utilities.getScaleToFillWidth(_picture.width, _background.width);
 							_background.height = _picture.y + _picture.height;
 							
 							break;
@@ -296,12 +307,9 @@ package com.ludofactory.mobile.navigation.home
 				}
 			}
 			
-			
-			
-			
-			
-			
 			setSize(actualWidth, _background.height);
+			
+			_isDataCommitted = false;
 		}
 		
 		protected var _data:RuleData;

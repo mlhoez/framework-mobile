@@ -15,7 +15,6 @@ package com.ludofactory.mobile.navigation.home.summary
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.AbstractGame;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameSessionTimer;
 	import com.ludofactory.mobile.core.ScreenIds;
@@ -209,6 +208,7 @@ package com.ludofactory.mobile.navigation.home.summary
 				else
 				{
 					_label.width = _background.width;
+					_label.height = _background.height;
 					_label.y = ((this.actualHeight - _icon.height - scaleAndRoundToDpi(10)) - _label.height) * 0.5 + _icon.height;
 				}
 				
@@ -326,7 +326,22 @@ package com.ludofactory.mobile.navigation.home.summary
 					{
 						case StakeType.TOKEN:
 						{
-							_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? ( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED ? _("Reconnectez-vous pour récupérer vos {0} Jetons.") : _("Vos Jetons ({0} par jour + {1} bonus)")) : _("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getTotalTokensADay(), MemberManager.getInstance().getTotalBonusTokensADay());
+							if( MemberManager.getInstance().isLoggedIn() )
+							{
+								if( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED )
+								{
+									_calloutLabel.text = formatString(_("Reconnectez-vous pour récupérer vos {0} Jetons."), MemberManager.getInstance().getTotalTokensADay());
+								}
+								else
+								{
+									// jetons - bonus (+bonus)
+									_calloutLabel.text = formatString(_("Vos Jetons ({0} quotidiens + {1} bonus)"), (MemberManager.getInstance().getNumTokens() - MemberManager.getInstance().getTotalBonusTokensADay()), MemberManager.getInstance().getTotalBonusTokensADay());
+								}
+							}
+							else
+							{
+								_calloutLabel.text = _("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)")
+							}
 							break;
 						}
 						case StakeType.CREDIT:

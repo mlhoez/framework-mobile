@@ -20,6 +20,7 @@ package com.ludofactory.mobile.core.purchases
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.navigation.store.StoreData;
 	import com.milkmangames.nativeextensions.GAnalytics;
@@ -296,8 +297,8 @@ package com.ludofactory.mobile.core.purchases
 					var rand:String = "" + new Date().time;
 					var store:String = GlobalConfig.android ? (GlobalConfig.amazon ? "Amazon Store" : "Android Store") : "Apple Store;";
 					var price:Number = Number(_currentProductData.localizedPrice.replace(/[^a-zA-Z0-9_.,]+/g, ""));
-					GAnalytics.analytics.defaultTracker.trackTransaction(rand, store, price);
-					GAnalytics.analytics.defaultTracker.trackItem(rand, _currentProductData.generatedId, _currentProductData.generatedId, price);
+					GAnalytics.analytics.defaultTracker.trackTransaction(rand, store, price, NaN, NaN, null, MemberManager.getInstance().getId());
+					GAnalytics.analytics.defaultTracker.trackItem(rand, _currentProductData.generatedId, _currentProductData.generatedId, price, null, 1, null, MemberManager.getInstance().getId());
 				}
 				catch(error:Error)
 				{

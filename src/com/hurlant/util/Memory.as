@@ -30,7 +30,7 @@ package com.hurlant.util
 		 */		
 		public static function gc():void
 		{
-			if( GlobalConfig.DEBUG )
+			if( CONFIG::DEBUG )
 			{
 				// force a GC only in debug mode !
 				try

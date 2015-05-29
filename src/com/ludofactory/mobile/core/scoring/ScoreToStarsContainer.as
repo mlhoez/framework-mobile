@@ -88,7 +88,7 @@ package com.ludofactory.mobile.core.scoring
 			if( MemberManager.getInstance().getGiftsEnabled() )
 				_title.text = _("Les parties en Tournoi vous permettent d’affronter d’autres joueurs pendant une durée déterminée. Cumulez des Rubis et gagnez le cadeau de vos rêves en fonction de votre classement final.\n\nUne partie en tournoi vous rapporte + ou - de Rubis en fonction de votre score.");
 			else
-				_title.text = _("Les parties en Tournoi vous permettent d’affronter d’autres joueurs pendant une durée déterminée. Cumulez des Rubis et gagnez le lot de vos rêves en fonction de votre classement final.\n\nUne partie en tournoi vous rapporte + ou - de Rubis en fonction de votre score.");
+				_title.text = _("Les parties en Tournoi vous permettent d’affronter d’autres joueurs pendant une durée déterminée. Cumulez des Rubis et classez-vous parmi les meilleurs pour remporter l'un des Jackpots.\n\nUne partie en tournoi vous rapporte + ou - de Rubis en fonction de votre score.");
 			_titleContainer.addChild( _title );
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, false, true, null, null, null, TextFormatAlign.CENTER);
 			

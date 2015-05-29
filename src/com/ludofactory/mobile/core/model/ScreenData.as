@@ -48,6 +48,8 @@ package com.ludofactory.mobile.core.model
 		
 		public var displayPopupOnHome:Boolean = false;
 		
+		public var indexToDisplayInMyAccount:int = 0;
+		
 		public function ScreenData()
 		{
 			
@@ -82,6 +84,8 @@ package com.ludofactory.mobile.core.model
 			highscoreRankingType = -1;
 			
 			vipScreenInitializedFromStore = false;
+			
+			indexToDisplayInMyAccount = 0;
 		}
 	}
 }

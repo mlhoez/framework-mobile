@@ -113,7 +113,7 @@ package com.ludofactory.mobile.core.scoring
 			if( MemberManager.getInstance().getGiftsEnabled() )
 				_title.text = _("Les parties Solo vous permettent de cumuler des points que vous pourrez ensuite convertir en cadeaux ou bien utiliser pour jouer en Tournoi.\n\nUne partie vous rapporte + ou - de Points en fonction de votre score et de votre mise.");
 			else
-				_title.text = _("Les parties Solo vous permettent de cumuler des points que vous pourrez ensuite convertir en crédits ou bien utiliser pour jouer en Tournoi.\n\nUne partie vous rapporte + ou - de Points en fonction de votre score et de votre mise.");
+				_title.text = _("Les parties Solo vous permettent de cumuler des points que vous pourrez ensuite convertir en Crédits de jeu ou bien utiliser pour jouer en Tournoi.\n\nUne partie vous rapporte + ou - de Points en fonction de votre score et de votre mise.");
 			_titleContainer.addChild( _title );
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, false, true, null, null, null, TextFormatAlign.CENTER);
 

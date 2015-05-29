@@ -9,6 +9,7 @@ package com.ludofactory.mobile.navigation.account
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
 	import com.ludofactory.mobile.navigation.account.history.account.AccountHistoryContainer;
@@ -76,6 +77,9 @@ package com.ludofactory.mobile.navigation.account
 				_personalInformationsContainer.width = this.actualWidth;
 				_personalInformationsContainer.y = _menu.y + _menu.height;
 				_personalInformationsContainer.height = this.actualHeight - _personalInformationsContainer.y;
+				
+				_menu.selectedIndex = AbstractEntryPoint.screenNavigator.screenData.indexToDisplayInMyAccount;
+				AbstractEntryPoint.screenNavigator.screenData.indexToDisplayInMyAccount = 0;
 			}
 		}
 		

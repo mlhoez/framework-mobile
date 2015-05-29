@@ -122,7 +122,7 @@ package com.ludofactory.mobile.navigation.home
 				}
 			}
 			
-			if( GlobalConfig.DEBUG )
+			if( CONFIG::DEBUG )
 			{
 				_debugButton = new ArrowGroup("Debug");
 				_debugButton.addEventListener(Event.TRIGGERED, onShowDebugScreen);
@@ -199,7 +199,7 @@ package com.ludofactory.mobile.navigation.home
 					_giftsButton.y = _playButton.y + _playButton.height + gap;
 				}
 				
-				if (GlobalConfig.DEBUG)
+				if (CONFIG::DEBUG)
 				{
 					_debugButton.validate();
 					_debugButton.x = actualWidth - _debugButton.width - scaleAndRoundToDpi(5);
@@ -329,7 +329,7 @@ package com.ludofactory.mobile.navigation.home
 				_gameCenterButton = null;
 			}
 			
-			if( GlobalConfig.DEBUG )
+			if( CONFIG::DEBUG )
 			{
 				_debugButton.removeEventListener(Event.TRIGGERED, onShowDebugScreen);
 				_debugButton.removeFromParent(true);

@@ -110,7 +110,7 @@ package com.ludofactory.mobile.navigation
 			addChild(_leftContainer);
 			
 			_leftDescription = new Label();
-			_leftDescription.text = _("Echangez vos\nPoints en Cadeaux");
+			_leftDescription.text = _("Echangez vos\nPoints en Crédits de jeu");
 			_leftContainer.addChild(_leftDescription);
 			_leftDescription.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 36), 0x356700, true, true, null, null, null, TextFormatAlign.CENTER);
 			

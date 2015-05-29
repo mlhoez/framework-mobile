@@ -68,7 +68,7 @@ package com.ludofactory.mobile.core.notification.content
 			this.layout = layout;
 			
 			_notificationTitle = new Label();
-			_notificationTitle.text = _("Gagnez ces cadeaux quand vos filleuls changent de rang.");
+			_notificationTitle.text = _("Gagnez ces récompenses quand vos filleuls changent de rang.");
 			addChild(_notificationTitle);
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(38), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			

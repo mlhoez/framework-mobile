@@ -86,7 +86,7 @@ package com.ludofactory.mobile.navigation.authentication
 			
 			// Track registration
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Inscription", "Inscription");
+				GAnalytics.analytics.defaultTracker.trackEvent("Inscription", "Inscription", null, NaN, MemberManager.getInstance().getId());
 			
 			// Track registration
 			try

@@ -23,7 +23,7 @@ package com.ludofactory.common.utils
 	 */		
 	public function log(value:*, color:uint=0x000000, indentationLevel:int = 0):String
 	{
-		if( !GlobalConfig.DEBUG )
+		if( !CONFIG::DEBUG )
 		{
 			// log in Flox anyway
 			Flox.logInfo(value);
