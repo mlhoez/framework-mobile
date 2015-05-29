@@ -27,7 +27,8 @@ package com.ludofactory.mobile.navigation.sponsor
 	import com.ludofactory.mobile.navigation.sponsor.info.SponsorNotification;
 	import com.ludofactory.mobile.navigation.sponsor.invite.SponsorTypes;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	import com.milkmangames.nativeextensions.GAnalytics;
+	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
@@ -388,6 +389,8 @@ package com.ludofactory.mobile.navigation.sponsor
 		private function onKnowMoreSelected(event:Event):void
 		{
 			//NotificationManager.addNotification( new SponsorNotification() );
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Accueil parrainage", "Popup de plus d'informations", null, NaN, MemberManager.getInstance().getId());
 			NotificationPopupManager.addNotification( new SponsorNotificationContent() );
 		}
 		

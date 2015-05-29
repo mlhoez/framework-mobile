@@ -27,6 +27,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import flash.text.ReturnKeyLabel;
 	import flash.text.SoftKeyboardType;
@@ -653,6 +654,9 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			
 			onSoftKeyboardActivated();
 			TweenMax.delayedCall(0.5, _singleInviteNameInput.setFocus);
+			
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Parrainage", "Ouverture invitation individuelle", null, NaN, MemberManager.getInstance().getId());
 		}
 		
 		private function onTouchOverlay(event:TouchEvent):void
@@ -706,6 +710,9 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 		 */		
 		private function onInvite(event:Event):void
 		{
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Parrainage", "Envoi invitation individuelle", null, NaN, MemberManager.getInstance().getId());
+			
 			if(_singleInviteNameInput.text == "")
 			{
 				InfoManager.showTimed( _("Nom du filleul invalide"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );

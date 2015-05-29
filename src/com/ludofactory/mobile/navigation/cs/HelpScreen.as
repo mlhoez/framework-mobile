@@ -16,11 +16,13 @@ package com.ludofactory.mobile.navigation.cs
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.CSNewThreadNotificationContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.cs.display.CSMessageData;
 	import com.ludofactory.mobile.navigation.cs.display.CSMessagesContainer;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
@@ -183,6 +185,8 @@ package com.ludofactory.mobile.navigation.cs
 		private function onContactCustomerServiceSelected(event:Event):void
 		{
 			Flox.logInfo("Ouverture de la popup de nouveau message au service client.");
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Ouverture formulaire Service Client", null, NaN, MemberManager.getInstance().getId());
 			//NotificationManager.addNotification( new CSNewThreadNotification(), onCloseNewMessageNotification );
 			NotificationPopupManager.addNotification( new CSNewThreadNotificationContent(), onCloseNewMessageNotification );
 		}

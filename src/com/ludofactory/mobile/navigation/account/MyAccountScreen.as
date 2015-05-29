@@ -6,15 +6,18 @@ Created : 1 septembre 2013
 */
 package com.ludofactory.mobile.navigation.account
 {
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.navigation.account.history.account.AccountHistoryContainer;
 	import com.ludofactory.mobile.navigation.account.history.payments.PaymentsHistoryContainer;
 	import com.ludofactory.mobile.navigation.account.history.settings.PersonalInformationsContainer;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.data.ListCollection;
 	
@@ -115,6 +118,9 @@ package com.ludofactory.mobile.navigation.account
 					if( _paymentsHistoryContainer )
 						_paymentsHistoryContainer.visible = false;
 					
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Mon Compte", "Informations personnelles", null, NaN, MemberManager.getInstance().getId());
+					
 					break;
 				}
 					
@@ -135,6 +141,9 @@ package com.ludofactory.mobile.navigation.account
 					if( _paymentsHistoryContainer )
 						_paymentsHistoryContainer.visible = true;
 					
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Mon Compte", "Historique du compte", null, NaN, MemberManager.getInstance().getId());
+					
 					break;
 				}
 					
@@ -154,6 +163,9 @@ package com.ludofactory.mobile.navigation.account
 						_paymentsHistoryContainer.visible = false;
 					if( _accountHistoryContainer )
 						_accountHistoryContainer.visible = true;
+					
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Mon Compte", "Historique des paiements", null, NaN, MemberManager.getInstance().getId());
 					
 					break;
 				}
