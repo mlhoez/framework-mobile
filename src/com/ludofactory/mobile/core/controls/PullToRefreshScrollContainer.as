@@ -33,7 +33,7 @@ package com.ludofactory.mobile.core.controls
 	{
 		/**
 		 * Flag to indicate that the refreshable state have changed. */
-		public static const INVALIDATION_FLAG_REFRESHABLE_STATE:String = _("refreshable-state"); // FIXME Vérifier que la trad est bien récupérée
+		public static const INVALIDATION_FLAG_REFRESHABLE_STATE:String = "refreshable-state"; // FIXME Vérifier que la trad est bien récupérée
 		
 		/**
 		 * "Pull to refresh" default Localizer translation key. */		
