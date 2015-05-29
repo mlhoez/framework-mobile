@@ -10,6 +10,7 @@ package com.ludofactory.mobile.navigation.authentication
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -165,15 +166,17 @@ package com.ludofactory.mobile.navigation.authentication
 			{
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_logo.height = actualHeight * (GlobalConfig.isPhone ? 0.3 : 0.4);
-					_logo.validate();
-					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 5 : 15 );
-					_logo.x = (((actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.5)) - _logo.width) * 0.5) << 0;
+					_logo.visible = false;
 					
-					_message.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5);
+					if( _defaultChoiceContainer )
+						_defaultChoiceContainer.validate();
+					_customChoiceContainer.validate();
+					_validateButton.validate();
+					
+					_message.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
 					_message.validate();
-					_message.x = _logo.x + _logo.width;
-					_message.y = _logo.y + ((_logo.height - _message.height) * 0.5) << 0;
+					_message.x = roundUp((actualWidth - _message.width) * 0.5);
+					_message.y = /*scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) +*/ ( (actualHeight - ((_defaultChoiceContainer ? _defaultChoiceContainer.height : 0) + _message.height + _customChoiceContainer.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60))) * 0.5) << 0;
 					
 					if( _defaultChoiceContainer )
 					{
@@ -183,10 +186,10 @@ package com.ludofactory.mobile.navigation.authentication
 						
 						_defaultChoiceContainer.width = _customChoiceContainer.width = _customChoiceInput.width = _defaultChoiceLabel.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
 						_defaultChoiceContainer.x = _customChoiceContainer.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-						_defaultChoiceContainer.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.y - _logo.height) - (_defaultChoiceContainer.height + _customChoiceContainer.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60))) * 0.5) << 0;
+						_defaultChoiceContainer.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 						
 						_customChoiceContainer.y = _defaultChoiceContainer.y + _defaultChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
-						_validateButton.y = _customChoiceContainer.y + _customChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+						_validateButton.y = _customChoiceContainer.y + _customChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 						
 						_customChoiceRadio.validate();
 						_defaultChoiceLabel.validate();
@@ -205,7 +208,7 @@ package com.ludofactory.mobile.navigation.authentication
 						
 						_customChoiceContainer.width = _customChoiceInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
 						_customChoiceContainer.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-						_customChoiceContainer.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.y - _logo.height) - (_customChoiceContainer.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40))) * 0.5) << 0;
+						_customChoiceContainer.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 						
 						//_customChoiceContainer.y = _defaultChoiceContainer.y + _defaultChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 						_validateButton.y = _customChoiceContainer.y + _customChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
@@ -348,7 +351,7 @@ package com.ludofactory.mobile.navigation.authentication
 					{
 						// Track subscription
 						if( GAnalytics.isSupported() )
-							GAnalytics.analytics.defaultTracker.trackEvent("Inscription", "Inscription");
+							GAnalytics.analytics.defaultTracker.trackEvent("Inscription", "Inscription", null, NaN, MemberManager.getInstance().getId());
 						
 						Flox.logWarning("Nouvelle inscription Facebook du membre : (" + MemberManager.getInstance().getId() + ")");
 						Flox.logEvent("Inscriptions", { Type:"Facebook" });
