@@ -10,6 +10,7 @@ package com.ludofactory.mobile.core.controls
 	import com.gamua.flox.Flox;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -33,7 +34,7 @@ package com.ludofactory.mobile.core.controls
 		{
 			// track screens with Google Analytics
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackScreenView(screenID);
+				GAnalytics.analytics.defaultTracker.trackScreenView(screenID, MemberManager.getInstance().getId());
 			
 			// log the navigation in Flox
 			Flox.logInfo("\t<strong>&rarr; " + screenID + "</strong>");

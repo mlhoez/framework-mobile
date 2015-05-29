@@ -70,7 +70,7 @@ package com.ludofactory.mobile.navigation.ads
 			{
 				AdMob.init(AbstractGameInfo.ADMOB_ANDROID_DEFAULT_BANNER_UNIT_ID, AbstractGameInfo.ADMOB_IOS_DEFAULT_BANNER_UNIT_ID);
 				// setup test devices to avoid making impressions while testing
-				if( GlobalConfig.DEBUG )
+				if( CONFIG::DEBUG )
 					AdMob.enableTestDeviceIDs(AdMob.getCurrentTestDeviceIDs());
 				
 				// preload interstitials for both plateforms

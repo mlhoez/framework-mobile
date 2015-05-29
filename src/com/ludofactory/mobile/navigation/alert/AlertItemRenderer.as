@@ -279,7 +279,7 @@ package com.ludofactory.mobile.navigation.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-gifts-simple-icon");
 								
 								_accessButton.visible = true;
-								_message.text = formatString(_n("Vous avez gagné {0} cadeau.", "Vous avez gagné {0} cadeaux.", AbstractEntryPoint.alertData.numGainAlerts), AbstractEntryPoint.alertData.numGainAlerts);
+								_message.text = formatString(_n("Vous avez gagné {0} récompense.", "Vous avez gagné {0} récompenses.", AbstractEntryPoint.alertData.numGainAlerts), AbstractEntryPoint.alertData.numGainAlerts);
 								break;
 							}
 							case AlertType.TROPHIES:
@@ -514,7 +514,8 @@ package com.ludofactory.mobile.navigation.alert
 							}
 							case AlertType.GIFTS:
 							{
-								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.MY_GIFTS_SCREEN );
+								AbstractEntryPoint.screenNavigator.screenData.indexToDisplayInMyAccount = 2;
+								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.MY_ACCOUNT_SCREEN );
 								break;
 							}
 							case AlertType.SPONSOR:

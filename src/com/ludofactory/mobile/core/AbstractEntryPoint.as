@@ -345,7 +345,7 @@ package com.ludofactory.mobile.core
 			}
 			
 			_assets = new AssetManager();
-			_assets.verbose = GlobalConfig.DEBUG;
+			_assets.verbose = CONFIG::DEBUG;
 			_assets.enqueue( File.applicationDirectory.resolvePath("./assets/splash/") );
 			_assets.loadQueue(onLoadingSplash);
 		}
@@ -411,7 +411,7 @@ package com.ludofactory.mobile.core
 			{
 				vidCoin = new VidCoinController();
 				vidCoin.startWithGameId(AbstractGameInfo.VID_COIN_GAME_ID);
-				vidCoin.setLoggingEnabled(GlobalConfig.DEBUG);
+				vidCoin.setLoggingEnabled(CONFIG::DEBUG);
 				if( MemberManager.getInstance().isLoggedIn() )
 				{
 					var dict:Dictionary = new Dictionary();
@@ -427,7 +427,7 @@ package com.ludofactory.mobile.core
 			{
 				MobileAppTracker.instance.init(AbstractGameInfo.HAS_OFFERS_ADVERTISER_ID, AbstractGameInfo.HAS_OFFERS_CONVERSION_KEY);
 				
-				if( GlobalConfig.DEBUG )
+				if( CONFIG::DEBUG )
 				{
 					MobileAppTracker.instance.setDebugMode(true);
 					MobileAppTracker.instance.setAllowDuplicates(true);
@@ -611,7 +611,7 @@ package com.ludofactory.mobile.core
 		protected function initializeScreenNavigator():void
 		{
 			_screenNavigator = new AdvancedScreenNavigator();
-			if( GlobalConfig.DEBUG ) SCREENS = SCREENS.concat(DEBUG_SCREENS);
+			if( CONFIG::DEBUG ) SCREENS = SCREENS.concat(DEBUG_SCREENS);
 			_screenNavigator.addScreensFromArray(SCREENS);
 			_screenNavigator.addEventListener(FeathersEventType.TRANSITION_START, onScreenTransitionStarted);
 			_screenNavigator.addEventListener(LudoEventType.UPDATE_HEADER_TITLE, onUpdateHeaderTitle);

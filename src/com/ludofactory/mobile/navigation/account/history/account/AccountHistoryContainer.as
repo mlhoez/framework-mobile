@@ -137,6 +137,9 @@ package com.ludofactory.mobile.navigation.account.history.account
 				}
 				case 3: // no action recorded
 				{
+					// reset alerts
+					AbstractEntryPoint.alertData.numGainAlerts = 0;
+					
 					if( !_isInUpdateMode )
 					{
 						_retryContainer.loadingMode = false;
@@ -149,6 +152,9 @@ package com.ludofactory.mobile.navigation.account.history.account
 				}
 				case 1: // success
 				{
+					// reset alerts
+					AbstractEntryPoint.alertData.numGainAlerts = 0;
+					
 					if( result.historique_membre.length == 0 )
 					{
 						// no messages

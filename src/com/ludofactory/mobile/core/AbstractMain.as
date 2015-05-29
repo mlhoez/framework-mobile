@@ -14,6 +14,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.pause.PauseManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -265,11 +266,11 @@ package com.ludofactory.mobile.core
 			Starling.multitouchEnabled = false;  // useful on mobile devices
 			Starling.handleLostContext = !GlobalConfig.ios;  // not necessary on iOS. Saves a lot of memory!
 			_starling = new Starling(_rootClass, stage, null, null, "auto", "auto");
-			_starling.enableErrorChecking = GlobalConfig.DEBUG;
+			_starling.enableErrorChecking = CONFIG::DEBUG;
 			_starling.simulateMultitouch  = false;
 			_starling.addEventListener(starling.events.Event.ROOT_CREATED, onRootCreated);
 			
-			if(GlobalConfig.DEBUG)
+			if(CONFIG::DEBUG)
 			{
 				_starling.showStats = true;
 				_starling.showStatsAt(HAlign.LEFT, VAlign.TOP);
@@ -330,7 +331,7 @@ package com.ludofactory.mobile.core
 			}
 			catch(error:Error) {}
 			
-			if(GlobalConfig.DEBUG)
+			if(CONFIG::DEBUG)
 				this._starling.showStatsAt(HAlign.LEFT, VAlign.TOP);
 		}
 		
@@ -394,7 +395,7 @@ package com.ludofactory.mobile.core
 					log(stackTrace);
 				
 				if( GAnalytics.isSupported() )
-					GAnalytics.analytics.defaultTracker.trackException(stackTrace, false);
+					GAnalytics.analytics.defaultTracker.trackException(stackTrace, false, MemberManager.getInstance());
 			} 
 			catch(error:Error) { }
 		}
