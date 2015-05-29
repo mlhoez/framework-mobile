@@ -165,7 +165,7 @@ package com.ludofactory.mobile.core.manager
 				try{
 					
 				if( GAnalytics.isSupported() )
-					GAnalytics.analytics.defaultTracker.trackEvent("Connexions", "Connexion au compte", null, memberId);
+					GAnalytics.analytics.defaultTracker.trackEvent("Connexions", "Connexion au compte", null, NaN, memberId);
 				}
 				catch(error:Error)
 				{
@@ -247,7 +247,7 @@ package com.ludofactory.mobile.core.manager
 			try{
 				
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Déconnexions", "Déconnexion du compte", null, _member.id);
+				GAnalytics.analytics.defaultTracker.trackEvent("Déconnexions", "Déconnexion du compte", null, NaN, _member.id);
 			}
 			catch(error:Error)
 			{
