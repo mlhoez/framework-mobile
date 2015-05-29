@@ -13,8 +13,11 @@ package com.ludofactory.mobile.navigation.vip
 	import com.greensock.easing.Linear;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
@@ -113,7 +116,7 @@ package com.ludofactory.mobile.navigation.vip
 			
 			_podiumGlow = new Image( AbstractEntryPoint.assets.getTexture("HighScoreGlow") );
 			_podiumGlow.alpha = 0;
-			_podiumGlow.scaleX = _podiumGlow.scaleY = GlobalConfig.stageWidth / _podiumGlow.width;
+			_podiumGlow.scaleX = _podiumGlow.scaleY = (GlobalConfig.stageWidth * (AbstractGameInfo.LANDSCAPE ? 0.5 : 1)) / _podiumGlow.width;
 			_podiumGlow.alignPivot();
 			addChild( _podiumGlow );
 			
@@ -133,7 +136,7 @@ package com.ludofactory.mobile.navigation.vip
 			_moreButton = new Button();
 			_moreButton.alpha = 0;
 			_moreButton.visible = false;
-			_moreButton.label = _("Voir mes privilèges !");
+			_moreButton.label = _("Voir mes privilèges");
 			_moreButton.addEventListener(Event.TRIGGERED, onKnowMore);
 			addChild(_moreButton);
 			
@@ -167,7 +170,7 @@ package com.ludofactory.mobile.navigation.vip
 				_facebookButton = new Button();
 				_facebookButton.alpha = 0;
 				_facebookButton.defaultIcon = _facebookIcon;
-				_facebookButton.label = MemberManager.getInstance().getFacebookId() != 0 ? _("Publier") : _("Associer")
+				_facebookButton.label = MemberManager.getInstance().getFacebookId() != 0 ? _("Publier") : _("Associer");
 				_facebookButton.addEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
 				addChild(_facebookButton);
 				_facebookButton.iconPosition = Button.ICON_POSITION_LEFT;
@@ -177,45 +180,90 @@ package com.ludofactory.mobile.navigation.vip
 			TweenMax.delayedCall(1, animateBase);
 		}
 		
+		private var _savecRankImageScaleX:Number = 1;
+		private var _savecRankImageScaleY:Number = 1;
+		
 		override protected function draw():void
 		{
 			super.draw();
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_rankImage.scaleX = _rankImage.scaleY = 1;
-				_rankImage.width = actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.30);
-				_rankImage.validate();
-				_rankImage.alignPivot();
-				_rankImage.y = _podiumGlow.y = scaleAndRoundToDpi( (_rankImage.height * 0.5) + (GlobalConfig.isPhone ? 100 : 100) );
-				_rankImage.x = _podiumGlow.x = (actualWidth * 0.5) << 0;
-				
-				//_moreButton.height = scaleAndRoundToDpi(118);
-				_moreButton.width = actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.7);
-				_moreButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.7))) * 0.5;
-				_moreButton.validate();
-				_continueButtonTrue.validate();
-				_continueButtonTrue.x = (actualWidth - _continueButtonTrue.width) * 0.5
-				
-				_continueButtonTrue.y = actualHeight - _continueButtonTrue.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 20 : 40 );
-				_moreButton.y = _continueButtonTrue.y - _moreButton.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
-				
-				if( _facebookButton )
+				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.7);
-					_facebookButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.7))) * 0.5;
-					_facebookButton.validate();
-					_facebookButton.y = _moreButton.y - _facebookButton.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					_rankImage.scaleX = _rankImage.scaleY = 1;
+					_rankImage.width = actualWidth * (GlobalConfig.isPhone ? 0.35 : 0.35);
+					_rankImage.validate();
+					_savecRankImageScaleX = _rankImage.scaleX;
+					_savecRankImageScaleY = _rankImage.scaleY;
+					_rankImage.alignPivot();
+					_rankImage.x = _podiumGlow.x = roundUp((actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.5)) * 0.5);
+					
+					_moreButton.width = actualWidth * (GlobalConfig.isPhone ? 0.48 : 0.35);
+					_moreButton.x = (actualWidth - _moreButton.width - (_facebookButton ? _facebookButton.width : 0) - scaleAndRoundToDpi(_facebookButton ? 10 : 0)) * 0.5;
+					_moreButton.validate();
+					
+					_continueButtonTrue.validate();
+					_continueButtonTrue.x = (actualWidth - _continueButtonTrue.width) * 0.5;
+					_continueButtonTrue.y = actualHeight - _continueButtonTrue.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					_moreButton.y = _continueButtonTrue.y - _moreButton.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					
+					if( _facebookButton )
+					{
+						_facebookButton.width = _moreButton.width;
+						_facebookButton.x = _moreButton.x + _moreButton.width + scaleAndRoundToDpi(10);
+						_facebookButton.validate();
+						_facebookButton.y = _moreButton.y
+					}
+					
+					_message.width = actualWidth * 0.6;
+					_message.validate();
+					_layoutLabel.validate();
+					_message.x = _rankImage.x + (_rankImage.width * 0.5) + (((actualWidth - _rankImage.x - (_rankImage.width * 0.5)) - _message.width) * 0.5);
+					
+					_message.y = (actualHeight - _message.height - _layoutLabel.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40) - _moreButton.height - _continueButtonTrue.height) * 0.5;
+					_layoutLabel.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40) + (_layoutLabel.height * 0.5);
+					
+					_rankImage.y = _podiumGlow.y = _message.y + ((_message.height + _layoutLabel.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40)) * 0.5);
+					
+					_rankImage.scaleX = _rankImage.scaleY = 0;
 				}
-				
-				_message.width = actualWidth * 0.9;
-				_message.validate();
-				_layoutLabel.validate();
-				_message.x = (actualWidth - (actualWidth * 0.9)) * 0.5;
-				_message.y = (_rankImage.y + (_rankImage.height * 0.5)) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((_moreButton.y - (_facebookButton ? _facebookButton.height : 0) - _rankImage.x - (_rankImage.height * 0.5)) - (_message.height + _layoutLabel.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60))) * 0.5) << 0;
-				_layoutLabel.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40) + (_layoutLabel.height * 0.5);
-				
-				_rankImage.scaleX = _rankImage.scaleY = 0;
+				else
+				{
+					_rankImage.scaleX = _rankImage.scaleY = 1;
+					_rankImage.width = actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.30);
+					_rankImage.validate();
+					_rankImage.alignPivot();
+					_rankImage.y = _podiumGlow.y = scaleAndRoundToDpi( (_rankImage.height * 0.5) + (GlobalConfig.isPhone ? 100 : 100) );
+					_rankImage.x = _podiumGlow.x = (actualWidth * 0.5) << 0;
+					
+					//_moreButton.height = scaleAndRoundToDpi(118);
+					_moreButton.width = actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.7);
+					_moreButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.7))) * 0.5;
+					_moreButton.validate();
+					_continueButtonTrue.validate();
+					_continueButtonTrue.x = (actualWidth - _continueButtonTrue.width) * 0.5;
+					
+					_continueButtonTrue.y = actualHeight - _continueButtonTrue.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					_moreButton.y = _continueButtonTrue.y - _moreButton.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 0 : 20 );
+					
+					if( _facebookButton )
+					{
+						_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.7);
+						_facebookButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.7))) * 0.5;
+						_facebookButton.validate();
+						_facebookButton.y = _moreButton.y - _facebookButton.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
+					}
+					
+					_message.width = actualWidth * 0.9;
+					_message.validate();
+					_layoutLabel.validate();
+					_message.x = (actualWidth - (actualWidth * 0.9)) * 0.5;
+					_message.y = (_rankImage.y + (_rankImage.height * 0.5)) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((_moreButton.y - (_facebookButton ? _facebookButton.height : 0) - _rankImage.y - (_rankImage.height * 0.5)) - (_message.height + _layoutLabel.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60))) * 0.5) << 0;
+					_layoutLabel.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40) + (_layoutLabel.height * 0.5);
+					
+					_rankImage.scaleX = _rankImage.scaleY = 0;
+				}
 			}
 		}
 		
@@ -224,7 +272,7 @@ package com.ludofactory.mobile.navigation.vip
 			TweenMax.to(_podiumGlow, 0.75, { delay:0.75, alpha:1 } );
 			TweenMax.to(_podiumGlow, 10, { delay:0.75, rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 } );
 			TweenMax.to(_message, 0.75, { delay:1, autoAlpha:1, onComplete:animate } );
-			TweenMax.to(_rankImage, 0.75, { scaleX:1, scaleY:1, ease:Back.easeOut } );
+			TweenMax.to(_rankImage, 0.75, { scaleX:_savecRankImageScaleX, scaleY:_savecRankImageScaleY, ease:Back.easeOut } );
 		}
 		
 		private function animate():void
@@ -271,7 +319,10 @@ package com.ludofactory.mobile.navigation.vip
 				charWidths.push(scoreLabel.width - 2); // 2 is the gutter Flash Player adds
 				totalLabelWdth += scoreLabel.width;
 			}
-			startX = (actualWidth - totalLabelWdth) * 0.5;
+			if( AbstractGameInfo.LANDSCAPE)
+				startX = _rankImage.x + (_rankImage.width * 0.5) + (actualWidth - _rankImage.x - (_rankImage.width * 0.5) - totalLabelWdth) * 0.5;
+			else
+				startX = (actualWidth - totalLabelWdth) * 0.5;
 			
 			for( i = 0; i < scoreStringLength; i++)
 			{
@@ -293,7 +344,9 @@ package com.ludofactory.mobile.navigation.vip
 		
 		private function displayButtons():void
 		{
-			TweenMax.allTo([_facebookButton, _continueButtonTrue, _moreButton], 0.75, { autoAlpha:1 });
+			TweenMax.allTo([_continueButtonTrue, _moreButton], 0.75, { autoAlpha:1 });
+			if( _facebookButton )
+				TweenMax.allTo([_facebookButton, _continueButtonTrue, _moreButton], 0.75, { autoAlpha:1 });
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -337,7 +390,7 @@ package com.ludofactory.mobile.navigation.vip
 			
 			GoViral.goViral.showFacebookShareDialog( formatString(_("{0} est maintenant {1}"), (event.data.nom + " " + event.data.prenom), _playerRankData.rankName),
 				"",
-				_("Avec ce nouveau rang, je peux bénéficier de nouveaux avantages pour gagner encore plus de cadeaux."),
+				_("Avec ce nouveau rang, je peux bénéficier de nouveaux avantages pour gagner encore plus vite."),
 				_("http://www.ludokado.com/"),
 				formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_vip_{1}.jpg"), LanguageManager.getInstance().lang, _playerRankData.id));
 		}
