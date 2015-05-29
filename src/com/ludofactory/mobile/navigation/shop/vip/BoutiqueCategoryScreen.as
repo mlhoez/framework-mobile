@@ -75,7 +75,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 			super.initialize();
 			
 			_message = new Label();
-			_message.text = _("Echangez vos Points contre\nles cadeaux de vos rêves !"); // pas besoin de remplacer la notion de cadeaux car cet écran est passé si on est un joueur non-cadeau
+			_message.text = _("Echangez vos Points contre\ndes Crédits de jeu !"); // pas besoin de remplacer la notion de cadeaux car cet écran est passé si on est un joueur non-cadeau
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(42), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			

@@ -23,7 +23,7 @@ package com.ludofactory.mobile.navigation.event
 		
 		/**
 		 * The color decoration. */		
-		private var _decorationColor:uint = 0xe9e9e9;
+		private var _decorationColor:uint = 0x000000; //0xe9e9e9;
 		
 		/**
 		 * Whether the decoration should be visible. */		
