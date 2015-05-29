@@ -485,6 +485,7 @@ package com.ludofactory.common.gettext
 		public function set lang(val:String):void
 		{
 			_currentLocale = val;
+			Storage.getInstance().setProperty(StorageConfig.PROPERTY_LANGUAGE, _currentLocale);
 			ASGettext.loadLocale(_currentLocale);
 		}
 		
