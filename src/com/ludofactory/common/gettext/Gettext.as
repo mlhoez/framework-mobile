@@ -87,7 +87,9 @@ package com.ludofactory.common.gettext
 		public function dgettext(domain:String, key:String):String
 		{
 			// domain contains a POFile
+			key = key.replace(/\n/g, "\\n"); // fixes a bug with multine strings like this : "blabla \n blabla"
 			_helperTrad = _locales[_currentLocale][domain].translations[key];
+			if( _helperTrad) _helperTrad = _helperTrad.replace(/\\n/g, "\n"); // fixes a bug with multine strings like this : "blabla \n blabla"
 			return (_helperTrad == null || _helperTrad == "") ? key : _helperTrad;
 		}
 		
@@ -118,6 +120,7 @@ package com.ludofactory.common.gettext
 		public function dngettext(domain:String, keySingular:String, keyPlural:String, n:int):String
 		{
 			// domain contains a POFile
+			// TODO maybe use the same technique as dgetext to fix the multine issues
 			_helperTradTab =  _locales[_currentLocale][domain].translations[keySingular];
 			if ( !_helperTradTab || _helperTradTab.length <= 0 )
 				return _locales[_currentLocale][domain].getPluralIndex(n) < 1 ? keySingular : keyPlural;
