@@ -26,7 +26,8 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.push.PushNewCSThread;
 	import com.ludofactory.mobile.core.push.PushType;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	import com.milkmangames.nativeextensions.GAnalytics;
+	
 	import feathers.controls.Button;
 	import feathers.controls.GroupedList;
 	import feathers.controls.Label;
@@ -208,6 +209,8 @@ package com.ludofactory.mobile.core.notification.content
 			InfoManager.show(_("Chargement..."));
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
+				if( GAnalytics.isSupported() )
+					GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Validation de la demande du Service Client", null, NaN, MemberManager.getInstance().getId());
 				Remote.getInstance().createNewCustomerServiceThread( CSThemeData(_themesList.selectedItem).id, (_mailInput ? _mailInput.text:null), _messageInput.text, onThreadCreateSuccess, onThreadCreateFailure, onThreadCreateFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 			}
 			else

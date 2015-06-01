@@ -35,6 +35,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
@@ -1018,12 +1019,16 @@ package com.ludofactory.mobile.navigation.engine
 			{
 				if( advancedOwner.screenData.gameData.displayPushAlert )
 				{
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Affichage popup notifications push", null, NaN, MemberManager.getInstance().getId());
 					//NotificationManager.addNotification( new EventPushNotification(ScreenIds.HOME_SCREEN) );
 					NotificationPopupManager.addNotification( new EventPushNotificationContent(ScreenIds.HOME_SCREEN) );
 				}
 				else
 				{
 					TweenMax.killAll();
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Redirection accueil", null, NaN, MemberManager.getInstance().getId());
 					this.advancedOwner.showScreen( ScreenIds.HOME_SCREEN  );
 				}
 			}
@@ -1047,12 +1052,16 @@ package com.ludofactory.mobile.navigation.engine
 			{
 				if( advancedOwner.screenData.gameData.displayPushAlert )
 				{
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Affichage popup notifications push", null, NaN, MemberManager.getInstance().getId());
 					//NotificationManager.addNotification( new EventPushNotification(ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
 					NotificationPopupManager.addNotification( new EventPushNotificationContent(ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
 				}
 				else
 				{
 					TweenMax.killAll();
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Rejouer", null, NaN, MemberManager.getInstance().getId());
 					this.advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
 				}
 			}

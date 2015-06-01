@@ -6,7 +6,7 @@ Created : 23 août 2013
 */
 package com.ludofactory.mobile.navigation.shop.bid
 {
-
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.roundUp;
@@ -16,27 +16,23 @@ package com.ludofactory.mobile.navigation.shop.bid
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.OffsetTabBar;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.ComingSoonBidDetailNotificationContent;
 	import com.ludofactory.mobile.core.notification.content.FinishedBidDetailNotificationContent;
 	import com.ludofactory.mobile.core.notification.content.PendingBidDetailNotificationContent;
+	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.shop.bid.comingsoon.ComingSoonBidContainer;
 	import com.ludofactory.mobile.navigation.shop.bid.comingsoon.ComingSoonBidItemData;
 	import com.ludofactory.mobile.navigation.shop.bid.finished.FinishedBidContainer;
 	import com.ludofactory.mobile.navigation.shop.bid.finished.FinishedBidItemData;
 	import com.ludofactory.mobile.navigation.shop.bid.pending.PendingBidContainer;
 	import com.ludofactory.mobile.navigation.shop.bid.pending.PendingBidItemData;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.theme.Theme;
-
-	import feathers.controls.Label;
+	import com.milkmangames.nativeextensions.GAnalytics;
+	
 	import feathers.data.ListCollection;
 	import feathers.display.TiledImage;
-
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-
+	
 	import starling.events.Event;
 	import starling.text.TextField;
 	
@@ -151,6 +147,9 @@ package com.ludofactory.mobile.navigation.shop.bid
 					if( _comingSoonBidsContainer )
 						_comingSoonBidsContainer.visible = false;
 					
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Enchères en cours", null, NaN, MemberManager.getInstance().getId());
+					
 					break;
 				}
 				case 1:
@@ -168,6 +167,9 @@ package com.ludofactory.mobile.navigation.shop.bid
 						layoutFinishedEncheresContainer();
 					}
 					_finishedBidsContainer.visible = true;
+					
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Enchères terminées", null, NaN, MemberManager.getInstance().getId());
 					
 					break;
 				}
@@ -187,6 +189,9 @@ package com.ludofactory.mobile.navigation.shop.bid
 					}
 					_comingSoonBidsContainer.visible = true;
 					
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Enchères à venir", null, NaN, MemberManager.getInstance().getId());
+					
 					break;
 				}
 			}
@@ -199,6 +204,8 @@ package com.ludofactory.mobile.navigation.shop.bid
 		{
 			Flox.logInfo("Affichage de l'enchère en cours <strong>{0} - {1}</strong>", PendingBidItemData(event.data).id, PendingBidItemData(event.data).name);
 			//NotificationManager.addNotification( new PendingBidDetailNotification( PendingBidItemData(event.data) ), onClosePendingBidDetailNotification, false );
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Affichage de l'enchère en cours " + PendingBidItemData(event.data).id + " - " + PendingBidItemData(event.data).name, null, NaN, MemberManager.getInstance().getId());
 			NotificationPopupManager.addNotification( new PendingBidDetailNotificationContent(PendingBidItemData(event.data)), onClosePendingBidDetailNotification);
 		}
 		
@@ -220,6 +227,8 @@ package com.ludofactory.mobile.navigation.shop.bid
 		{
 			Flox.logInfo("Affichage de l'enchère terminée <strong>{0} - {1}</strong>", FinishedBidItemData(event.data).name, FinishedBidItemData(event.data).winnerName);
 			//NotificationManager.addNotification( new FinishedBidDetailNotification( FinishedBidItemData(event.data) ) );
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Affichage de l'enchère terminée " + FinishedBidItemData(event.data).name + " - " + FinishedBidItemData(event.data).winnerName, null, NaN, MemberManager.getInstance().getId());
 			NotificationPopupManager.addNotification( new FinishedBidDetailNotificationContent( FinishedBidItemData(event.data) ) );
 		}
 		
@@ -230,6 +239,8 @@ package com.ludofactory.mobile.navigation.shop.bid
 		{
 			Flox.logInfo("Affichage de l'enchère à venir <strong>{0}</strong>", ComingSoonBidItemData(event.data).description);
 			//NotificationManager.addNotification( new ComingSoonBidDetailNotification( ComingSoonBidItemData(event.data) ) );
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Affichage de l'enchère à venir " + ComingSoonBidItemData(event.data).description, null, NaN, MemberManager.getInstance().getId());
 			NotificationPopupManager.addNotification( new ComingSoonBidDetailNotificationContent( ComingSoonBidItemData(event.data) ) );
 		}
 		

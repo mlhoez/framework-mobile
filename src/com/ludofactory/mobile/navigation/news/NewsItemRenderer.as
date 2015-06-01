@@ -10,7 +10,9 @@ package com.ludofactory.mobile.navigation.news
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.sticksports.nativeExtensions.canOpenUrl.CanOpenUrl;
 	
 	import flash.geom.Point;
@@ -379,6 +381,8 @@ package com.ludofactory.mobile.navigation.news
 							{
 								// the app is installed on the device, then open it
 								request.url = _data.urlScheme;
+								if( GAnalytics.isSupported() )
+									GAnalytics.analytics.defaultTracker.trackEvent("News", "Redirection vers l'app (app déjà installée) " + _data.urlScheme, null, NaN, MemberManager.getInstance().getId());
 							}
 							else if( _data.link != null && _data.link != "" )
 							{
@@ -394,12 +398,16 @@ package com.ludofactory.mobile.navigation.news
 								{
 									
 								}*/
+								if( GAnalytics.isSupported() )
+									GAnalytics.analytics.defaultTracker.trackEvent("News", "Redirection vers le store (app non installée) " + _data.link, null, NaN, MemberManager.getInstance().getId());
 								request.url = _data.link;
 							}
 						}
 						else if( _data.link != null && _data.link != "" )
 						{
 							// redirect to the link if defined
+							if( GAnalytics.isSupported() )
+								GAnalytics.analytics.defaultTracker.trackEvent("News", "News normale, redirection vers " + _data.link, null, NaN, MemberManager.getInstance().getId());
 							request.url = _data.link;
 						}
 						

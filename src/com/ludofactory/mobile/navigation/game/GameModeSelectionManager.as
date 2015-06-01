@@ -11,6 +11,8 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import starling.display.DisplayObject;
 	import starling.display.Quad;
@@ -66,6 +68,9 @@ package com.ludofactory.mobile.navigation.game
 				_popup.animateInSkip();
 			else
 				_popup.animateIn();
+			
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Accueil", "Affichage du choix du mode de jeu", null, NaN, MemberManager.getInstance().getId());
 		}
 		
 //------------------------------------------------------------------------------------------------------------

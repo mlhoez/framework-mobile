@@ -23,6 +23,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.games.pyramid.AppEntryPoint;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Button;
 	
@@ -124,6 +125,8 @@ package com.ludofactory.mobile.core.notification.content
 		private function onConfirm(event:Event):void
 		{
 			Flox.logEvent("Affichages popup marketing inscription", {Action:"Creation"});
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Popup marketing inscription", "Clic sur création de compte", null, NaN, MemberManager.getInstance().getId());
 			AuthenticationManager.startAuthenticationProcess(AbstractEntryPoint.screenNavigator, AbstractEntryPoint.screenNavigator.activeScreenID);
 			onClose();
 		}
@@ -131,13 +134,16 @@ package com.ludofactory.mobile.core.notification.content
 		private function onCancel(event:Event):void
 		{
 			Flox.logEvent("Affichages popup marketing inscription", {Action:"Annulation"});
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Popup marketing inscription", "Annulation", null, NaN, MemberManager.getInstance().getId());
 			AbstractEntryPoint.screenNavigator.showScreen( _continueScreenId );
 			onClose();
 		}
 		
 		private function onAlreadyHaveAccount(event:Event):void
 		{
-			Flox.logEvent("Affichages popup marketing inscription", {Action:"Connexion"});
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Popup marketing inscription", "Connexion à un compte existant", null, NaN, MemberManager.getInstance().getId());
 			AuthenticationManager.startAuthenticationProcess(AbstractEntryPoint.screenNavigator, AbstractEntryPoint.screenNavigator.activeScreenID);
 			onClose();
 		}

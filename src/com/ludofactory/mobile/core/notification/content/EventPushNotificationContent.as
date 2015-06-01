@@ -14,13 +14,15 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	import com.milkmangames.nativeextensions.GAnalytics;
+	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
 	import feathers.layout.VerticalLayout;
@@ -121,6 +123,9 @@ package com.ludofactory.mobile.core.notification.content
 			PushNotification.getInstance().addEventListener(PushNotificationEvent.PERMISSION_GIVEN_WITH_TOKEN_EVENT, onPermissionGiven);
 			PushNotification.getInstance().addEventListener(PushNotificationEvent.PERMISSION_REFUSED_EVENT, onPermissionRefused);
 			PushNotification.getInstance().registerForPushNotification(AbstractGameInfo.GCM_SENDER_ID);
+			
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Popup activation notifications push", "Activation", null, NaN, MemberManager.getInstance().getId());
 		}
 		
 		/**
@@ -151,6 +156,8 @@ package com.ludofactory.mobile.core.notification.content
 		
 		private function onCancel(event:Event):void
 		{
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("Popup activation notifications push", "Annulation", null, NaN, MemberManager.getInstance().getId());
 			AbstractEntryPoint.screenNavigator.showScreen(_completeScreenId);
 			close();
 		}

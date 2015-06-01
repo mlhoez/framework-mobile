@@ -14,12 +14,12 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
@@ -249,6 +249,8 @@ package com.ludofactory.mobile.navigation.highscore
 		private function onShowInternational(event:Event):void
 		{
 			Flox.logInfo("\t\tClic sur le bouton classement International");
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("HighScores", "Affichage du classement International", null, NaN, MemberManager.getInstance().getId());
 			advancedOwner.screenData.highscoreRankingType = 0;
 			advancedOwner.showScreen( ScreenIds.HIGH_SCORE_LIST_SCREEN );
 		}
@@ -259,6 +261,8 @@ package com.ludofactory.mobile.navigation.highscore
 		private function onShowNational(event:Event):void
 		{
 			Flox.logInfo("\t\tClic sur le bouton classement National");
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("HighScores", "Affichage du classement National", null, NaN, MemberManager.getInstance().getId());
 			advancedOwner.screenData.highscoreRankingType = MemberManager.getInstance().isLoggedIn() ? MemberManager.getInstance().getCountryId() : 1;
 			advancedOwner.showScreen( ScreenIds.HIGH_SCORE_LIST_SCREEN );
 		}
@@ -269,6 +273,8 @@ package com.ludofactory.mobile.navigation.highscore
 		private function onShowFacebook(event:Event):void
 		{
 			Flox.logInfo("\t\tClic sur le bouton classement Amis Facebook");
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("HighScores", "Affichage du classement des Amis Facebook", null, NaN, MemberManager.getInstance().getId());
 			advancedOwner.screenData.highscoreRankingType = -1;
 			advancedOwner.showScreen( ScreenIds.HIGH_SCORE_LIST_SCREEN );
 		}

@@ -14,6 +14,7 @@ package com.ludofactory.mobile.navigation.tournament
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.PullToRefreshList;
@@ -23,6 +24,7 @@ package com.ludofactory.mobile.navigation.tournament
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.data.ListCollection;
 	
@@ -229,6 +231,8 @@ package com.ludofactory.mobile.navigation.tournament
 			else
 			{
 				advancedOwner.screenData.previousTournementId = int(event.data);
+				if( GAnalytics.isSupported() )
+					GAnalytics.analytics.defaultTracker.trackEvent("Anciens tournois", "Affichage de l'ancien tournoi n°" + advancedOwner.screenData.previousTournementId, null, NaN, MemberManager.getInstance().getId());
 				advancedOwner.showScreen( ScreenIds.PREVIOUS_TOURNAMENTS_DETAIL_SCREEN );
 			}
 		}

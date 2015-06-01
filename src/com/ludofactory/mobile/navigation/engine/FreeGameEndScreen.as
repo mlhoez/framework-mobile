@@ -38,6 +38,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import flash.events.Event;
 	import flash.filters.DropShadowFilter;
@@ -762,6 +763,9 @@ package com.ludofactory.mobile.navigation.engine
 			advancedOwner.screenData.gameData = new GameData();
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
+				if( GAnalytics.isSupported() )
+					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Rejouer", null, NaN, MemberManager.getInstance().getId());
+				
 				TweenMax.killAll();
 				_homeButton.isEnabled = false;
 				_playAgainButton.isEnabled = false;
@@ -783,6 +787,8 @@ package com.ludofactory.mobile.navigation.engine
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
 				TweenMax.killAll();
+				if( GAnalytics.isSupported() )
+					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection boutique", null, NaN, MemberManager.getInstance().getId());
 				advancedOwner.showScreen( ScreenIds.BOUTIQUE_HOME );
 			}
 			touch = null;
@@ -797,6 +803,8 @@ package com.ludofactory.mobile.navigation.engine
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
 				TweenMax.killAll();
+				if( GAnalytics.isSupported() )
+					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection tournoi", null, NaN, MemberManager.getInstance().getId());
 				advancedOwner.showScreen( ScreenIds.TOURNAMENT_RANKING_SCREEN );
 			}
 			touch = null;
@@ -809,6 +817,8 @@ package com.ludofactory.mobile.navigation.engine
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
 				TweenMax.killAll();
+				if( GAnalytics.isSupported() )
+					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection boutique (non connecté)", null, NaN, MemberManager.getInstance().getId());
 				advancedOwner.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
 			}
 			touch = null;

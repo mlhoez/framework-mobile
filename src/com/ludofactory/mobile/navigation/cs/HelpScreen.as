@@ -226,6 +226,9 @@ package com.ludofactory.mobile.navigation.cs
 					if( _solvedMessagesContent )
 						_solvedMessagesContent.visible = false;
 					
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Affichage des problèmes en cours", null, NaN, MemberManager.getInstance().getId());
+					
 					break;
 				}
 				case 1:
@@ -241,6 +244,9 @@ package com.ludofactory.mobile.navigation.cs
 						layoutSolvedMessagesContainer();
 					}
 					_solvedMessagesContent.visible = true;
+					
+					if( GAnalytics.isSupported() )
+						GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Affichage des problèmes résolus", null, NaN, MemberManager.getInstance().getId());
 					
 					break;
 				}

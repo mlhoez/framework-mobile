@@ -23,6 +23,7 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
@@ -469,6 +470,9 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			_countryChoiceValue.text = _countriesList.selectedItem.toString();
 			_selectedCountryId = _countriesList.selectedItem.id;
+			
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackEvent("HighScores", "Affichage du classement " + _countryChoiceValue, null, NaN, MemberManager.getInstance().getId());
 			
 			_isInUpdateMode = false;
 			
