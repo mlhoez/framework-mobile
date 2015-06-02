@@ -158,7 +158,7 @@ package com.ludofactory.mobile.navigation.tournament
 					_listHeader.validate();
 					
 					_ranksList.width = _listHeader.width;
-					_ranksList.height = this.actualHeight;
+					_ranksList.height = this.actualHeight - _listHeader.y - _listHeader.height;
 					_ranksList.y = _listHeader.y + _listHeader.height;
 				}
 				else
