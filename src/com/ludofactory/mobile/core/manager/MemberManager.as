@@ -512,6 +512,9 @@ package com.ludofactory.mobile.core.manager
         public function getGiftsEnabled():Boolean { return _member.giftsEnabled; }
 		/** Returns */
 		public function getCanWatchVideo():Boolean { return _member.canWatchVideo; }
+		/**
+		 *  */
+		public function isAdmin():Boolean { return _member.isAdmin; }
 		
 		public function getNumStarsEarnedInAnonymousGameSessions():int
 		{

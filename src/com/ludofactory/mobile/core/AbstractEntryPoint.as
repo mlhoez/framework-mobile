@@ -611,7 +611,7 @@ package com.ludofactory.mobile.core
 		protected function initializeScreenNavigator():void
 		{
 			_screenNavigator = new AdvancedScreenNavigator();
-			if( CONFIG::DEBUG ) SCREENS = SCREENS.concat(DEBUG_SCREENS);
+			if( MemberManager.getInstance().isAdmin() ) SCREENS = SCREENS.concat(DEBUG_SCREENS);
 			_screenNavigator.addScreensFromArray(SCREENS);
 			_screenNavigator.addEventListener(FeathersEventType.TRANSITION_START, onScreenTransitionStarted);
 			_screenNavigator.addEventListener(LudoEventType.UPDATE_HEADER_TITLE, onUpdateHeaderTitle);

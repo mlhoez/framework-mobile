@@ -149,6 +149,11 @@ package com.ludofactory.mobile.core.manager
 		 */
 		private var _canWatchVideo:Boolean = false;
 		
+		
+		/**
+		 * Whether the user is admin or not. */
+		private var _isAdmin:Boolean = true;
+		
 		public function Member() { }
 		
 		/**
@@ -176,6 +181,7 @@ package com.ludofactory.mobile.core.manager
 			if( "jetons_quotidiens" in memberData && memberData.jetons_quotidiens != null )  _totalTokensADay = int(memberData.jetons_quotidiens);
 			if( "jetons_bonus" in memberData && memberData.jetons_bonus != null )            _totalBonusTokensADay = int(memberData.jetons_bonus);
 			if( "video_disponible" in memberData && memberData.video_disponible != null )    _canWatchVideo = Boolean(memberData.video_disponible);
+			if( "isAdmin" in memberData && memberData.isAdmin != null )                      _isAdmin = Boolean(memberData.isAdmin);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
 		
@@ -267,5 +273,8 @@ package com.ludofactory.mobile.core.manager
 
 		public function get canWatchVideo():Boolean { return _canWatchVideo; }
 		public function set canWatchVideo(val:Boolean):void { _canWatchVideo = val; }
+		
+		public function get isAdmin():Boolean { return _isAdmin; }
+		public function set isAdmin(val:Boolean):void { _isAdmin = val; }
 	}
 }
