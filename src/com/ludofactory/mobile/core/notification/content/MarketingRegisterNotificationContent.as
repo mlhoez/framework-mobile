@@ -66,7 +66,7 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			super.initialize();
 			
-			_title = new TextField(10, scaleAndRoundToDpi(GlobalConfig.isPhone ? 80 : 140), _("Recevez 50 jetons gratuits\net un crédit bonus nen créant votre compte !"), Theme.FONT_SANSITA,
+			_title = new TextField(10, scaleAndRoundToDpi(GlobalConfig.isPhone ? 80 : 140), _("Recevez 50 jetons gratuits\net un crédit bonus en créant votre compte !"), Theme.FONT_SANSITA,
 					scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 34 : 46) : (AbstractGameInfo.LANDSCAPE ? 76 : 76)), Theme.COLOR_DARK_GREY);
 			_title.autoScale = true;
 			addChild(_title);
