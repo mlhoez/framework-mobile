@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
 "POT-Creation-Date: 2015-06-02 15:05+0100\n"
-"PO-Revision-Date: 2015-06-02 15:09+0100\n"
+"PO-Revision-Date: 2015-06-02 16:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -2953,7 +2953,7 @@ msgstr "Watch a video to play for free."
 #: Mobile/src/com/ludofactory/mobile/navigation/game/StakeButtonToken.as:209
 #, python-brace-format
 msgid "{0} Jetons dans "
-msgstr "{0} Tokens in"
+msgstr "{0} Tokens in "
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/game/StakeButtonToken.as:233
