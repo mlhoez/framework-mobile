@@ -204,7 +204,7 @@ package com.ludofactory.mobile.navigation.news
 				if( _data )
 				{
 					_imageLoader.visible = _data.imageUrl.indexOf("http") == -1 ? false : true;
-					_image.visible = _data.imageUrl.indexOf("http") == -1 ? true : false;
+					_image.visible = _data.imageUrl.indexOf("http") == -1;
 					_image.source = _data.imageUrl.indexOf("http") == -1 ? AbstractEntryPoint.assets.getTexture(_data.imageUrl + (GlobalConfig.isPhone ? "" : "-hd")) : _data.imageUrl;
 					
 					if( _data.urlScheme == null || _data.link == null || _data.urlScheme == "" || _data.link == "" )
@@ -241,7 +241,7 @@ package com.ludofactory.mobile.navigation.news
 				_shadow.visible = false;
 			
 			_image.width = GlobalConfig.isPhone ? PHONE_IMAGE_BASE_WIDTH:TABLET_IMAGE_BASE_WIDTH;
-			_image.height = this.height *1;
+			_image.height = this.height;
 			_image.x = scaleAndRoundToDpi(15);
 			_image.y = (this.height - _image.height) * 0.5;
 			
@@ -258,7 +258,7 @@ package com.ludofactory.mobile.navigation.news
 			_title.y = _image.y + scaleAndRoundToDpi(10);
 			
 			_message.x = _image.x + _image.width + scaleAndRoundToDpi(10);
-			_message.y = _title.y + _title.height;
+			_message.y = _title.y + _title.height + scaleAndRoundToDpi(5);
 			_message.width = this.actualWidth - _message.x - scaleAndRoundToDpi(10);
 			_message.validate();
 			
