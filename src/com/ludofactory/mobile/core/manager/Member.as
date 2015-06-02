@@ -152,7 +152,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * Whether the user is admin or not. */
-		private var _isAdmin:Boolean = true;
+		private var _isAdmin:Boolean = false;
 		
 		public function Member() { }
 		
