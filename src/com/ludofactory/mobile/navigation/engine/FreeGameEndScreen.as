@@ -6,6 +6,7 @@ Created : 20 juin 2013
 */
 package com.ludofactory.mobile.navigation.engine
 {
+	
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Bounce;
@@ -19,31 +20,21 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.StakeType;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.StakeType;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.GameData;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.navigation.MarketingRegisterNotification;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.milkmangames.nativeextensions.GAnalytics;
-	
-	import flash.events.Event;
-	import flash.filters.DropShadowFilter;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
@@ -52,6 +43,11 @@ package com.ludofactory.mobile.navigation.engine
 	import feathers.controls.ScrollContainer;
 	import feathers.controls.Scroller;
 	import feathers.layout.HorizontalLayout;
+	
+	import flash.events.Event;
+	import flash.filters.DropShadowFilter;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -319,13 +315,13 @@ package com.ludofactory.mobile.navigation.engine
 				{
 					// Logged in content
 					
-					_convertShop = new FreeGameEndElement("convert-shop-icon", (MemberManager.getInstance().getGiftsEnabled() ? _("Convertir mes Points en\nCadeaux dans la boutique") : _("Convertir mes Points en\nCrédits dans la boutique")) ) ;
+					_convertShop = new FreeGameEndElement("convert-shop-icon", (MemberManager.getInstance().getGiftsEnabled() ? (AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Cadeaux dans la boutique"):_("Convertir mes Points en\nCadeaux dans la boutique")) : (AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Crédits dans la boutique"):_("Convertir mes Points en\nCrédits dans la boutique"))) ) ;
 					_convertShop.alpha = 0;
 					_convertShop.visible = false;
 					_convertShop.addEventListener(TouchEvent.TOUCH, onGoShop);
 					addChild(_convertShop);
 					
-					_convertTournament = new FreeGameEndElement("convert-tournament-icon", _("Utiliser mes Points sur\nle tournoi pour me classer"));
+					_convertTournament = new FreeGameEndElement("convert-tournament-icon", (AbstractGameInfo.LANDSCAPE ? _("Utiliser mes Points sur le tournoi pour me classer"):_("Utiliser mes Points sur\nle tournoi pour me classer")));
 					_convertTournament.alpha = 0;
 					_convertTournament.visible = false;
 					_convertTournament.addEventListener(TouchEvent.TOUCH, onGoTournament);
