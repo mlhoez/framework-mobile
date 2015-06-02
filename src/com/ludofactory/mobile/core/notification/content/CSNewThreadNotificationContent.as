@@ -306,7 +306,8 @@ package com.ludofactory.mobile.core.notification.content
 		 */
 		public function requestClose():void
 		{
-			dispatchEventWith(LudoEventType.CLOSE_NOTIFICATION, false, _data);
+			//dispatchEventWith(LudoEventType.CLOSE_NOTIFICATION, false, _data);
+			close();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
