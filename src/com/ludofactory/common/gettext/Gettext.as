@@ -90,6 +90,7 @@ package com.ludofactory.common.gettext
 			key = key.replace(/\n/g, "\\n"); // fixes a bug with multine strings like this : "blabla \n blabla"
 			_helperTrad = _locales[_currentLocale][domain].translations[key];
 			if( _helperTrad) _helperTrad = _helperTrad.replace(/\\n/g, "\n"); // fixes a bug with multine strings like this : "blabla \n blabla"
+			else key = key.replace(/\\n/g, "\n"); // fixes a bug with multine strings like this : "blabla \n blabla"
 			return (_helperTrad == null || _helperTrad == "") ? key : _helperTrad;
 		}
 		
