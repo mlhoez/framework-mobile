@@ -664,9 +664,6 @@ package com.ludofactory.mobile.core.theme
 			// Rules
 			getStyleProviderForClass(RuleItemRenderer).defaultStyleFunction = ruleItemRendererInitializer;
 			
-			// FacebookFriendElement
-			getStyleProviderForClass(FacebookFriendElement).defaultStyleFunction = facebookFriendElementInitializer;
-			
 			// ScrollContainer
 			getStyleProviderForClass(ScrollContainer).defaultStyleFunction = scrollContainerInitializer;
 			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(SCROLL_CONTAINER_WHITE, scrollContainerWhiteInitializer);
@@ -2060,13 +2057,7 @@ package com.ludofactory.mobile.core.theme
 //------------------------------------------------------------------------------------------------------------
 		
 		protected static const FACEBOOK_FRIEND_BACKGROUND_GRID:Rectangle = new Rectangle(22, 24, 17, 2);
-		protected var facebookFriendBackgroundSkinTextures:Scale9Textures;
-		
-		protected function facebookFriendElementInitializer(facebookFriendElement:FacebookFriendElement):void
-		{
-			facebookFriendElement.background = new Scale9Image(facebookFriendBackgroundSkinTextures, this.scaleFactor);
-			facebookFriendElement.height = (AbstractGameInfo.LANDSCAPE ? 100 : 160) * this.scaleFactor
-		}
+		public static var facebookFriendBackgroundSkinTextures:Scale9Textures;
 
 //------------------------------------------------------------------------------------------------------------
 //

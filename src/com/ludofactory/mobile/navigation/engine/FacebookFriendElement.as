@@ -9,6 +9,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.core.manager.MemberManager;
@@ -71,12 +72,12 @@ package com.ludofactory.mobile.navigation.engine
 		private var _currentScore:int;
 		/**
 		 * The previous score. */		
-		private var _previousScore:int
+		private var _previousScore:int;
 		/**
 		 * The name. */		
 		private var _name:String;
 		/**
-		 * Whether the data belongs to the current user. */		
+		 * Whether the data belongs to the current user. */	
 		private var _isMe:Boolean;
 		
 		private var _arrayPosition:int;
@@ -85,13 +86,16 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super();
 			
+			_background = new Scale9Image(Theme.facebookFriendBackgroundSkinTextures, GlobalConfig.dpiScale);
+			this.height = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 100 : 160);
+			
 			_currentRank = int(data.classement);
 			_previousRank = int(data.last_classement);
 			_facebookId = String(data.id_facebook);
 			_currentScore = int(data.score);
 			_previousScore = int(data.last_score);
 			_name = data.nom;
-			_isMe = MemberManager.getInstance().getId() == int(data.id) ? true : false;
+			_isMe = MemberManager.getInstance().getId() == int(data.id);
 			_arrayPosition = arrayPosition;
 		}
 		
