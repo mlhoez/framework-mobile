@@ -3,6 +3,7 @@ package com.ludofactory.mobile.navigation.home
 	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -102,7 +103,8 @@ package com.ludofactory.mobile.navigation.home
 				_tabMenu.width = this.actualWidth;
 				_tabMenu.validate();
 				
-				_rulesList.width = this.actualWidth;
+				_rulesList.width = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.8) : 560 ) : (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.9) : 760) );
+				_rulesList.x = roundUp((actualWidth - _rulesList.width) * 0.5);
 				_rulesList.y = _tabMenu.y + _tabMenu.height;
 				_rulesList.height = actualHeight - _rulesList.y;
 				
