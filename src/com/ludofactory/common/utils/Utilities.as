@@ -37,7 +37,6 @@ package com.ludofactory.common.utils
 		{
 			var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor;
 			var ns:Namespace = appXml.namespace();
-			trace(appXml.ns::id);
 			return appXml.ns::id;
 		}
 		
@@ -48,7 +47,6 @@ package com.ludofactory.common.utils
 		{
 			var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor;
 			var ns:Namespace = appXml.namespace();
-			trace(appXml.ns::name);
 			return appXml.ns::name;
 		}
 		
