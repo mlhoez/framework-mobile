@@ -8,9 +8,11 @@ package com.ludofactory.common.utils
 {
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import flash.desktop.NativeApplication;
-
+	import flash.system.Capabilities;
+	
 	public class Utilities
 	{
 		/**
@@ -27,7 +29,7 @@ package com.ludofactory.common.utils
 		{
 			var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor;
 			var ns:Namespace = appXml.namespace();
-			return String(appXml.ns::versionNumber[0]).substr(0, 3); // remove the last .0 automatically added
+			return Capabilities.manufacturer.indexOf("iOS") >= 0 ? String(appXml.ns::versionLabel[0]).substr(0, 3) : String(appXml.ns::versionNumber[0]).substr(0, 3); // remove the last .0 automatically added
 		}
 		
 		/**
