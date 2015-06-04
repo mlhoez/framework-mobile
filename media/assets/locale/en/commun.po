@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
 "POT-Creation-Date: 2015-06-02 15:05+0100\n"
-"PO-Revision-Date: 2015-06-02 16:23+0100\n"
+"PO-Revision-Date: 2015-06-04 11:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -1258,7 +1258,7 @@ msgstr "Select a topic"
 #: Mobile/src/com/ludofactory/mobile/navigation/game/GameModeSelectionPopup.as:456
 #: Mobile/src/com/ludofactory/mobile/navigation/game/GameModeSelectionPopup.as:513
 msgid "Partie Solo"
-msgstr "Solo Game"
+msgstr "Single Player"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/CSNewThreadNotificationContent.as:126
