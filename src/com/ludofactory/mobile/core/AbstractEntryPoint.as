@@ -695,8 +695,8 @@ package com.ludofactory.mobile.core
 			
 			*/
 			
-			Starling.juggler.tween(_loadingLogo, 1, { alpha:1 });
-			Starling.juggler.tween(_orangeBackground, 1, { alpha:1, onComplete:animateOut });
+			Starling.juggler.tween(_loadingLogo, 0.75, { alpha:1 });
+			Starling.juggler.tween(_orangeBackground, 0.75, { alpha:1, onComplete:animateOut });
 		}
 		
 		/**
@@ -717,8 +717,8 @@ package com.ludofactory.mobile.core
 				_progressBar = null;
 			}
 			
-			Starling.juggler.tween(_loadingLogo, 1, { delay:1, alpha:0 });
-			Starling.juggler.tween(_orangeBackground, 1, { delay:1, alpha:0, onComplete:removeSplashElements });
+			Starling.juggler.tween(_loadingLogo, 0.75, { delay:0.75, alpha:0 });
+			Starling.juggler.tween(_orangeBackground, 0.75, { delay:0.75, alpha:0, onComplete:removeSplashElements });
 		}
 		
 		/**

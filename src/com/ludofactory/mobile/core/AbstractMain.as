@@ -303,6 +303,8 @@ package com.ludofactory.mobile.core
 			if( GlobalConfig.DEMO_MODE )
 				new TouchMarkerManager();
 			
+			stage.autoOrients = true;
+			
 			NativeApplication.nativeApplication.addEventListener(flash.events.Event.DEACTIVATE, onPause, false, 0, true);
 		}
 		
