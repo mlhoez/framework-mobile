@@ -30,6 +30,7 @@ package com.ludofactory.mobile.core.purchases
 	import com.milkmangames.nativeextensions.android.events.AndroidBillingErrorID;
 	import com.milkmangames.nativeextensions.android.events.AndroidBillingEvent;
 	import com.milkmangames.nativeextensions.ios.StoreKit;
+	import com.milkmangames.nativeextensions.ios.StoreKit;
 	import com.milkmangames.nativeextensions.ios.events.StoreKitErrorEvent;
 	import com.milkmangames.nativeextensions.ios.events.StoreKitEvent;
 	
@@ -774,7 +775,15 @@ package com.ludofactory.mobile.core.purchases
 			result.originalErrorId = event.originalErrorId;
 			result.originalTransactionId = event.originalTransactionId;
 			result.productId = event.productId;
-			result.receipt = event.receipt;
+			if( StoreKit.storeKit.isAppReceiptAvailable() )
+			{
+				// iOS 7 and above
+				result.receipt = StoreKit.storeKit.getAppReceipt();
+			}
+			else
+			{
+				result.receipt = event.receipt;
+			}
 			result.transactionId = event.transactionId;
 			log(JSON.stringify(result));
 			
