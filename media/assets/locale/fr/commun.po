@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Français)\n"
-"POT-Creation-Date: 2015-06-02 10:48+0100\n"
-"PO-Revision-Date: 2015-06-02 10:48+0100\n"
+"POT-Creation-Date: 2015-06-04 16:42+0100\n"
+"PO-Revision-Date: 2015-06-04 16:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1114,12 +1114,19 @@ msgid "Tapotez n'importe où pour continuer..."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/core/notification/content/BoutiqueItemDetailNotification.as:117
+#: Mobile/src/com/ludofactory/mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:117
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueItemDetailNotification.as:117
+msgid "Commander"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/BoutiqueItemDetailNotification.as:175
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:173
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/CSNewThreadNotificationContent.as:209
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/PendingBidDetailNotificationContent.as:241
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/PendingBidDetailNotificationContent.as:289
-#: Mobile/src/com/ludofactory/mobile/core/purchases/Store.as:184
+#: Mobile/src/com/ludofactory/mobile/core/purchases/Store.as:185
 #: Mobile/src/com/ludofactory/mobile/navigation/FacebookManager.as:191
 #: Mobile/src/com/ludofactory/mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:382
 #: Mobile/src/com/ludofactory/mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:414
@@ -1133,7 +1140,7 @@ msgstr ""
 #: Mobile/src/com/ludofactory/mobile/navigation/cs/CSNewThreadNotification.as:198
 #: Mobile/src/com/ludofactory/mobile/navigation/cs/thread/CSThreadScreen.as:143
 #: Mobile/src/com/ludofactory/mobile/navigation/cs/thread/CSThreadScreen.as:251
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:167
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:163
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/HighScoreScreen.as:110
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/PodiumScreen.as:121
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/TournamentEndScreen.as:196
@@ -1201,7 +1208,7 @@ msgstr ""
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/CSNewThreadNotificationContent.as:269
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/PendingBidDetailNotificationContent.as:280
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/PendingBidDetailNotificationContent.as:345
-#: Mobile/src/com/ludofactory/mobile/core/purchases/Store.as:221
+#: Mobile/src/com/ludofactory/mobile/core/purchases/Store.as:222
 #: Mobile/src/com/ludofactory/mobile/navigation/FacebookManager.as:378
 #: Mobile/src/com/ludofactory/mobile/navigation/FacebookManager.as:443
 #: Mobile/src/com/ludofactory/mobile/navigation/account/history/account/AccountHistoryContainer.as:251
@@ -1247,7 +1254,7 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/CSNewThreadNotificationContent.as:116
-#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:166
+#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:165
 #: Mobile/src/com/ludofactory/mobile/navigation/cs/CSNewThreadNotification.as:105
 #: Mobile/src/com/ludofactory/mobile/navigation/game/GameModeSelectionPopup.as:167
 #: Mobile/src/com/ludofactory/mobile/navigation/game/GameModeSelectionPopup.as:456
@@ -1355,7 +1362,7 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/EventPushNotificationContent.as:97
-#: Mobile/src/com/ludofactory/mobile/core/notification/content/MarketingRegisterNotificationContent.as:79
+#: Mobile/src/com/ludofactory/mobile/core/notification/content/MarketingRegisterNotificationContent.as:74
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/EventPushNotification.as:94
 msgid "Plus tard"
 msgstr ""
@@ -1391,19 +1398,19 @@ msgid "Enchère terminée"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/notification/content/MarketingRegisterNotificationContent.as:69
+#: Mobile/src/com/ludofactory/mobile/core/notification/content/MarketingRegisterNotificationContent.as:64
 msgid ""
 "Recevez 50 jetons gratuits\n"
 "et un crédit bonus en créant votre compte !"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/notification/content/MarketingRegisterNotificationContent.as:85
+#: Mobile/src/com/ludofactory/mobile/core/notification/content/MarketingRegisterNotificationContent.as:80
 msgid "Créer"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/notification/content/MarketingRegisterNotificationContent.as:89
+#: Mobile/src/com/ludofactory/mobile/core/notification/content/MarketingRegisterNotificationContent.as:84
 msgid "J'ai déjà un compte"
 msgstr ""
 
@@ -1629,12 +1636,12 @@ msgid "Abandonner"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/purchases/Store.as:385
+#: Mobile/src/com/ludofactory/mobile/core/purchases/Store.as:386
 msgid "Achat annulé."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/purchases/Store.as:438
+#: Mobile/src/com/ludofactory/mobile/core/purchases/Store.as:439
 msgid "L'achat a échoué."
 msgstr ""
 
@@ -1659,7 +1666,7 @@ msgstr ""
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/scoring/ScoreToPointsContainer.as:124
 #: Mobile/src/com/ludofactory/mobile/core/scoring/ScoreToStarsContainer.as:99
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:205
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:201
 #: Mobile/src/com/ludofactory/mobile/navigation/highscore/HighScoreListHeader.as:78
 msgid "Score"
 msgstr ""
@@ -1721,46 +1728,43 @@ msgid "Par exemple : avec un score de {0}, vous gagnez {1} Rubis."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:167
-#: Mobile/src/com/ludofactory/mobile/navigation/home/RulesAndScoresScreen.as:79
+#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:166
+#: Mobile/src/com/ludofactory/mobile/navigation/home/RulesAndScoresScreen.as:80
 msgid "Tournoi"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:168
+#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:167
 msgid "Problème technique"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:169
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:89
+#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:168
 msgid "Cadeaux"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:170
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:85
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:103
+#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:169
 msgid "Mon Compte"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:171
+#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:170
 msgid "Informations"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:172
+#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:171
 msgid "Autre"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:219
+#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:217
 msgid "Français"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:220
+#: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:218
 msgid "Anglais"
 msgstr ""
 
@@ -1833,7 +1837,6 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/HowToWinGiftsScreen.as:119
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:107
 msgid "Boutique"
 msgstr ""
 
@@ -1846,8 +1849,6 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/HowToWinGiftsScreen.as:134
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:94
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:111
 msgid "Tournois"
 msgstr ""
 
@@ -1945,7 +1946,6 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/account/history/gifts/MyGiftsScreen.as:72
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:91
 msgid "Mes gains"
 msgstr ""
 
@@ -2147,8 +2147,6 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/achievements/TrophyScreen.as:43
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:93
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:110
 msgid "Coupes"
 msgstr ""
 
@@ -2319,8 +2317,6 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/authentication/LoginScreen.as:78
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:96
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:113
 #: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:200
 msgid "Connexion"
 msgstr ""
@@ -2406,7 +2402,7 @@ msgstr ""
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/authentication/RegisterCompleteScreen.as:83
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/FacebookEndScreen.as:147
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:370
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:366
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/HighScoreScreen.as:153
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/PodiumScreen.as:188
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/TournamentEndScreen.as:406
@@ -2573,63 +2569,78 @@ msgid "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jp
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:231
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:227
 msgid "Points"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:257
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:253
 msgid "Points cumulés : "
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:294
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:290
 msgid "Tournoi débloqué !"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:322
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:318
+msgid "Convertir mes Points en Cadeaux dans la boutique"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:318
 msgid ""
 "Convertir mes Points en\n"
 "Cadeaux dans la boutique"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:322
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:318
+msgid "Convertir mes Points en Crédits dans la boutique"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:318
 msgid ""
 "Convertir mes Points en\n"
 "Crédits dans la boutique"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:328
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:324
+msgid "Utiliser mes Points sur le tournoi pour me classer"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:324
 msgid ""
 "Utiliser mes Points sur\n"
 "le tournoi pour me classer"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:352
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:348
 msgid ""
 "Créez votre compte et convertissez\n"
 "vos Points en Cadeaux !"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:352
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:348
 msgid ""
 "Créez votre compte et convertissez\n"
 "vos Points en Crédits !"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:376
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:372
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/TournamentEndScreen.as:412
 msgid "Accueil"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:381
+#: Mobile/src/com/ludofactory/mobile/navigation/engine/FreeGameEndScreen.as:377
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/TournamentEndScreen.as:417
 msgid "Rejouer"
 msgstr ""
@@ -2942,12 +2953,12 @@ msgid ""
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/home/RulesAndScoresScreen.as:77
+#: Mobile/src/com/ludofactory/mobile/navigation/home/RulesAndScoresScreen.as:78
 msgid "Règles"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/home/RulesAndScoresScreen.as:78
+#: Mobile/src/com/ludofactory/mobile/navigation/home/RulesAndScoresScreen.as:79
 msgid "Solo"
 msgstr ""
 
@@ -2995,47 +3006,6 @@ msgid "Vos Points à convertir en Crédits"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:86
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:104
-msgid "Parrainage"
-msgstr ""
-
-#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:87
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:105
-msgid "Aide"
-msgstr ""
-
-#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:88
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:106
-msgid "Crédits"
-msgstr ""
-
-#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:90
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:108
-#: Mobile/src/com/ludofactory/mobile/navigation/vip/VipScreen.as:191
-msgid "Rangs VIP"
-msgstr ""
-
-#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:92
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:109
-msgid "High Scores"
-msgstr ""
-
-#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:95
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:112
-#: Mobile/src/com/ludofactory/mobile/navigation/settings/SettingsScreen.as:84
-#: Mobile/src/com/ludofactory/mobile/navigation/settings/SettingsScreen.as:219
-msgid "Réglages"
-msgstr ""
-
-#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:96
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:113
 #: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:200
 msgid "Déconnexion"
 msgstr ""
@@ -3082,6 +3052,12 @@ msgstr ""
 #: Mobile/src/com/ludofactory/mobile/navigation/news/NewsScreen.as:130
 #, python-brace-format
 msgid "Version {0}"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/settings/SettingsScreen.as:84
+#: Mobile/src/com/ludofactory/mobile/navigation/settings/SettingsScreen.as:219
+msgid "Réglages"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
@@ -3470,6 +3446,11 @@ msgstr ""
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/tournament/TournamentRankingScreen.as:141
 msgid "Participer"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/vip/VipScreen.as:191
+msgid "Rangs VIP"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework

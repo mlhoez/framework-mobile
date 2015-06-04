@@ -114,7 +114,7 @@ package com.ludofactory.mobile.core.notification.content
 			_giftPoints.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_orderButton = new Button();
-			_orderButton.label = "Commander";
+			_orderButton.label = _("Commander");
 			_orderButton.addEventListener(Event.TRIGGERED, onOrder);
 			addChild(_orderButton);
 			
