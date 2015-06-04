@@ -68,8 +68,6 @@ package com.ludofactory.mobile.core
 		 *  */		
 		private var _launchImage:Loader;
 		
-		private var _savedAutoOrients:Boolean;
-		
 		public function AbstractMain()
 		{
 			super();
@@ -104,17 +102,17 @@ package com.ludofactory.mobile.core
 			if(Capabilities.manufacturer.indexOf("iOS") >= 0)
 			{
 				var isCurrentlyPortrait:Boolean = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
-				if(Capabilities.screenResolutionX == 1242 && Capabilities.screenResolutionY == 2208)
+				if((Capabilities.screenResolutionX == 1242 || Capabilities.screenResolutionY == 1242) && (Capabilities.screenResolutionY == 2208 || Capabilities.screenResolutionX == 2208))
 				{
 					//iphone 6 plus
 					filePath = isCurrentlyPortrait ? "Default-414w-736h@3x.png" : "Default-414w-736h-Landscape@3x.png";
 				}
-				else if(Capabilities.screenResolutionX == 1536 && Capabilities.screenResolutionY == 2048)
+				else if((Capabilities.screenResolutionX == 1536 || Capabilities.screenResolutionY == 1536) && (Capabilities.screenResolutionY == 2048 || Capabilities.screenResolutionX == 2048))
 				{
 					//ipad retina
 					filePath = isCurrentlyPortrait ? "Default-Portrait@2x.png" : "Default-Landscape@2x.png";
 				}
-				else if(Capabilities.screenResolutionX == 768 && Capabilities.screenResolutionY == 1024)
+				else if((Capabilities.screenResolutionX == 768 || Capabilities.screenResolutionY == 768) && (Capabilities.screenResolutionY == 1024 || Capabilities.screenResolutionX == 1024))
 				{
 					//ipad classic
 					filePath = isCurrentlyPortrait ? "Default-Portrait.png" : "Default-Landscape.png";
@@ -167,7 +165,6 @@ package com.ludofactory.mobile.core
 					this._launchImage = new Loader();
 					this.addChild(this._launchImage);
 					
-					this._savedAutoOrients = this.stage.autoOrients;
 					this.stage.autoOrients = false;
 					
 					_launchImage.contentLoaderInfo.addEventListener(flash.events.Event.COMPLETE, function(event:flash.events.Event):void
@@ -275,8 +272,6 @@ package com.ludofactory.mobile.core
 				_starling.showStats = true;
 				_starling.showStatsAt(HAlign.LEFT, VAlign.TOP);
 			}
-			
-			this.stage.autoOrients = this._savedAutoOrients;
 			
 			stage.addEventListener(flash.events.Event.RESIZE, onResize, false, int.MAX_VALUE, true);
 		}
