@@ -9,29 +9,24 @@ package com.ludofactory.mobile.core.notification.content
 	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.games.pyramid.AppEntryPoint;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Button;
 	
 	import starling.display.Image;
-	
 	import starling.events.Event;
 	import starling.text.TextField;
-	import starling.utils.HAlign;
 	
 	public class MarketingRegisterNotificationContent extends AbstractNotificationPopupContent
 	{
@@ -72,7 +67,7 @@ package com.ludofactory.mobile.core.notification.content
 			addChild(_title);
 			
 			_image = new Image(AbstractEntryPoint.assets.getTexture("marketing-popup-character" + (GlobalConfig.isPhone ? "" : "-hd")));
-			_image.scaleX = _image.scaleY = GlobalConfig.dpiScale;
+			//_image.scaleX = _image.scaleY = GlobalConfig.dpiScale;
 			addChild(_image);
 			
 			_laterButton = new Button();
@@ -91,31 +86,42 @@ package com.ludofactory.mobile.core.notification.content
 			addChild(_alreadyButton);
 			
 			Flox.logEvent("Affichages popup marketing inscription", {Total:"Total"});
+			
+			_horizontalScrollPolicy = _verticalScrollPolicy = SCROLL_POLICY_OFF;
 		}
 		
+		var _ar:Boolean = false;
 		override protected function draw():void
 		{
-			_title.width = this.actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.5);
-			_title.x = (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)) + roundUp(((actualWidth * 0.5) - _title.width) * 0.5);
-			
-			_image.y = roundUp((actualHeight - _image.height) * 0.5);
-			_image.x = roundUp((actualWidth * 0.5 - _image.width) * 0.5);
-			
-			_laterButton.width = _createButton.width = actualWidth * 0.4;
-			_laterButton.height = _createButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 90 : 130);
-			
-			_createButton.validate();
-			_createButton.x = _laterButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _createButton.width) * 0.5;
-			
-			_alreadyButton.validate();
-			_alreadyButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _alreadyButton.width) * 0.5;
-			
-			_title.y = roundUp((actualHeight - (_title.height + _createButton.height + _laterButton.height + _alreadyButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ?  20 : 80))) * 0.5);
-			_createButton.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
-			_laterButton.y = _createButton.y + _createButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
-			_alreadyButton.y = _laterButton.y + _laterButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 30);
-			
-			super.draw();
+			if( isInvalid(INVALIDATION_FLAG_SIZE))
+			{
+				_title.width = this.actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.5);
+				_title.x = (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)) + roundUp(((actualWidth * 0.5) - _title.width) * 0.5);
+				
+				if( !_ar )
+				{
+					_image.scaleX = _image.scaleY = Utilities.getScaleToFill(_image.width, _image.height, (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)), actualHeight * 0.9);
+					_image.y = roundUp((actualHeight - _image.height) * 0.5);
+					_image.x = roundUp((actualWidth * 0.5 - _image.width) * 0.5);
+					_ar = true;
+				}
+				
+				_laterButton.width = _createButton.width = actualWidth * 0.4;
+				_laterButton.height = _createButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 90 : 130);
+				
+				_createButton.validate();
+				_createButton.x = _laterButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _createButton.width) * 0.5;
+				
+				_alreadyButton.validate();
+				_alreadyButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _alreadyButton.width) * 0.5;
+				
+				_title.y = roundUp((actualHeight - (_title.height + _createButton.height + _laterButton.height + _alreadyButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ?  20 : 80))) * 0.5);
+				_createButton.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
+				_laterButton.y = _createButton.y + _createButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
+				_alreadyButton.y = _laterButton.y + _laterButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 30);
+				
+				super.draw();
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
