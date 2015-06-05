@@ -198,7 +198,6 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 		override protected function draw():void
 		{
 			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
 			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
 			
 			if(dataInvalid)
@@ -335,7 +334,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			_arrowDown.y = (this.actualHeight - _contactLabel.height) * 0.5 + _contactLabel.y - _arrowDown.height * 0.5;
 			
 			_inviteButton.height = this.actualHeight * 0.7;
-			_inviteButton.width = this.actualWidth * 0.3;
+			_inviteButton.width = scaleAndRoundToDpi(180);
 			_inviteButton.alignPivot();
 			_inviteButton.x = _loader.x = this.actualWidth - (_inviteButton.width * 0.5) - scaleAndRoundToDpi(20);
 			_inviteButton.y = _loader.y = this.actualHeight * 0.5;

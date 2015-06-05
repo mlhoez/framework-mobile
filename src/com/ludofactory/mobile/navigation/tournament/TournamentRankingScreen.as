@@ -121,6 +121,7 @@ package com.ludofactory.mobile.navigation.tournament
 			_headerTitle = _("Tournoi en cours");
 			
 			_listHeader = new TournamentListHeader();
+			_listHeader.visible = false;
 			addChild(_listHeader);
 			
 			if( AbstractGameInfo.LANDSCAPE )
