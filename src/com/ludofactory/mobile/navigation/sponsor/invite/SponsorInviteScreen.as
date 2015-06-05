@@ -14,9 +14,13 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 	import com.greensock.easing.Bounce;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.navigation.authentication.NotLoggedInContainer;
@@ -45,6 +49,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
 	
+	import starling.text.TextField;
+	
 	//import pl.mllr.extensions.contactEditor.ContactEditor;
 	
 	import starling.core.Starling;
@@ -61,7 +67,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 	{
 		/**
 		 * The title. */		
-		private var _title:Label;
+		private var _title:TextField;
 		
 		/**
 		 * The invite all button. */		
@@ -142,16 +148,16 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			Starling.juggler.add(_loader);
 			addChild(_loader);
 			
-			_title = new Label();
+			_title = new TextField(5, 5, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(24), 0x636363, true);
 			_title.visible = false;
+			_title.autoScale = true;
 			_title.text = advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? _("Envoyer un sms de parrainage à tous vos contacts.") : _("Envoyer un email de parrainage à tous vos contacts.");
 			addChild(_title);
-			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(24), 0x636363, true);
 			
 			_inviteAllButton = new Button();
 			_inviteAllButton.visible = false;
 			_inviteAllButton.styleName = Theme.BUTTON_FLAT_GREEN;
-			_inviteAllButton.label = GlobalConfig.isPhone ? _("Inviter\ntous") : _("Inviter tous");
+			_inviteAllButton.label = AbstractGameInfo.LANDSCAPE ? _("Inviter tous") : (GlobalConfig.isPhone ? _("Inviter\ntous") : _("Inviter tous"));
 			_inviteAllButton.addEventListener(Event.TRIGGERED, onInviteAll);
 			addChild(_inviteAllButton);
 			
@@ -326,6 +332,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 				_retryContainer.loadingMode = false;
 				_retryContainer.singleMessageMode = true;
 				_retryContainer.message = _("Impossible d'accéder à vos contacts.");
+				
+				invalidate(INVALIDATION_FLAG_SIZE);
 			}
 		}
 		
@@ -398,10 +406,13 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 				_retryContainer.loadingMode = false;
 				_retryContainer.singleMessageMode = true;
 				_retryContainer.message = _("Aucun contact à afficher.");
+				
+				_inviteAllButton.visible = false;
 			}
 			else
 			{
 				_retryContainer.visible = false;
+				_inviteAllButton.visible = true;
 			}
 			
 			_temporaryContacts = null;
@@ -409,7 +420,6 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			_allContacts = null;
 			
 			_title.visible = true;
-			_inviteAllButton.visible = true;
 			
 			_loader.alpha = 0;
 			_loader.visible = false;
@@ -417,46 +427,94 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			_loader.y = _inviteAllButton.y;
 			
 			_contactsList.dataProvider = new ListCollection( _contacts );
+			
+			invalidate(INVALIDATION_FLAG_SIZE);
 		}
 		
 		override protected function draw():void
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_loader.x = this.actualWidth * 0.5;
-				_loader.y = this.actualHeight * 0.5;
-				
-				_inviteAllButton.width = (this.actualWidth - scaleAndRoundToDpi(40)) * 0.3;
-				_inviteAllButton.validate();
-				_inviteAllButton.height = _inviteAllButton.height;
-				_inviteAllButton.alignPivot();
-				_inviteAllButton.y = scaleAndRoundToDpi(20) + (_inviteAllButton.height * 0.5);
-				_inviteAllButton.x = this.actualWidth - scaleAndRoundToDpi(20) - (_inviteAllButton.width * 0.5);
-				
-				_title.x = scaleAndRoundToDpi(20);
-				_title.width = (this.actualWidth - scaleAndRoundToDpi(40)) * 0.7;
-				_title.validate();
-				_title.y = (_inviteAllButton.height - _title.height) + scaleAndRoundToDpi(20);
-				
-				_listShadow.width = this.actualWidth;
-				_listShadow.y = _inviteAllButton.y + (_inviteAllButton.height * 0.5) + scaleAndRoundToDpi(20);
-				
-				_singleInviteGroup.validate();
-				_singleInviteGroup.y = actualHeight - _singleInviteGroup.height - scaleAndRoundToDpi(10);
-				_singleInviteGroup.x = (actualWidth - _singleInviteGroup.width) * 0.5;
-				
-				_listBottomShadow.width = this.actualWidth;
-				_listBottomShadow.y = _singleInviteGroup.y - _listBottomShadow.height - scaleAndRoundToDpi(20);
-				
-				_background.width = _contactsList.width = actualWidth;
-				_contactsList.y = _background.y = _listShadow.y + _listShadow.height;
-				_contactsList.height = _background.height = _listBottomShadow.y - _contactsList.y;
-				
-				_retryContainer.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-				_retryContainer.height = actualHeight;
-				
-				_authenticationContainer.width = _retryContainer.width = actualWidth;
-				_authenticationContainer.height = _retryContainer.height = actualHeight;
+				if( AbstractGameInfo.LANDSCAPE )
+				{
+					_loader.x = this.actualWidth * 0.5;
+					_loader.y = this.actualHeight * 0.5;
+					
+					_title.border = true;
+					_title.height = scaleAndRoundToDpi(60);
+					_title.width = actualWidth;
+					_title.x = roundUp((this.actualWidth - _title.width) * 0.5);
+					
+					_listShadow.width = this.actualWidth;
+					_listShadow.y = _title.y + (_title.height * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+					
+					_singleInviteGroup.validate();
+					_singleInviteGroup.y = actualHeight - _singleInviteGroup.height - scaleAndRoundToDpi(20);
+					if( _inviteAllButton.visible == false )
+					{
+						_singleInviteGroup.x = roundUp((actualWidth - _singleInviteButton.width) * 0.5) - scaleAndRoundToDpi(5);
+					}
+					else
+					{
+						_singleInviteGroup.x = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					}
+					
+					_inviteAllButton.width = scaleAndRoundToDpi(180);
+					_inviteAllButton.validate();
+					_inviteAllButton.height = scaleAndRoundToDpi(70);
+					_inviteAllButton.alignPivot();
+					_inviteAllButton.y = _singleInviteGroup.y + (_singleInviteGroup.height * 0.5);
+					_inviteAllButton.x = this.actualWidth - scaleAndRoundToDpi(20) - (_inviteAllButton.width * 0.5);
+					
+					_listBottomShadow.width = this.actualWidth;
+					_listBottomShadow.y = _singleInviteGroup.y - _listBottomShadow.height - scaleAndRoundToDpi(10);
+					
+					_background.width = _contactsList.width = actualWidth;
+					_contactsList.y = _background.y = _listShadow.y + _listShadow.height;
+					_contactsList.height = _background.height = _listBottomShadow.y - _contactsList.y;
+					
+					_retryContainer.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_retryContainer.height = actualHeight;
+					
+					_authenticationContainer.width = _retryContainer.width = actualWidth;
+					_authenticationContainer.height = _retryContainer.height = actualHeight;
+				}
+				else
+				{
+					_loader.x = this.actualWidth * 0.5;
+					_loader.y = this.actualHeight * 0.5;
+					
+					_inviteAllButton.width = (this.actualWidth - scaleAndRoundToDpi(40)) * 0.3;
+					_inviteAllButton.validate();
+					_inviteAllButton.height = _inviteAllButton.height;
+					_inviteAllButton.alignPivot();
+					_inviteAllButton.y = scaleAndRoundToDpi(20) + (_inviteAllButton.height * 0.5);
+					_inviteAllButton.x = this.actualWidth - scaleAndRoundToDpi(20) - (_inviteAllButton.width * 0.5);
+					
+					_title.x = scaleAndRoundToDpi(20);
+					_title.width = (this.actualWidth - scaleAndRoundToDpi(40)) * 0.7;
+					_title.y = (_inviteAllButton.height - _title.height) + scaleAndRoundToDpi(20);
+					
+					_listShadow.width = this.actualWidth;
+					_listShadow.y = _inviteAllButton.y + (_inviteAllButton.height * 0.5) + scaleAndRoundToDpi(20);
+					
+					_singleInviteGroup.validate();
+					_singleInviteGroup.y = actualHeight - _singleInviteGroup.height - scaleAndRoundToDpi(10);
+					_singleInviteGroup.x = (actualWidth - _singleInviteGroup.width) * 0.5;
+					
+					_listBottomShadow.width = this.actualWidth;
+					_listBottomShadow.y = _singleInviteGroup.y - _listBottomShadow.height - scaleAndRoundToDpi(20);
+					
+					_background.width = _contactsList.width = actualWidth;
+					_contactsList.y = _background.y = _listShadow.y + _listShadow.height;
+					_contactsList.height = _background.height = _listBottomShadow.y - _contactsList.y;
+					
+					_retryContainer.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_retryContainer.height = actualHeight;
+					
+					_authenticationContainer.width = _retryContainer.width = actualWidth;
+					_authenticationContainer.height = _retryContainer.height = actualHeight;
+				}
 			}
 		}
 		
@@ -833,7 +891,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 		
 		override public function dispose():void
 		{
-			TweenMax.killDelayedCallsTo(_singleInviteNameInput.setFocus);
+			if( _singleInviteNameInput )
+				TweenMax.killDelayedCallsTo(_singleInviteNameInput.setFocus);
 			
 			AirAddressBook.getInstance().removeEventListener(AirAddressBook.CONTACTS_UPDATED, onContactsUpdated);
 			
