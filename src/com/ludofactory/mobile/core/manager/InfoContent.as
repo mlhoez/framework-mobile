@@ -212,6 +212,8 @@ package com.ludofactory.mobile.core.manager
 		 */		
 		public function set message(val:String):void
 		{
+			_message.visible = true;
+			_message.alpha = 1;
 			_message.text = val;
 		}
 		
