@@ -13,6 +13,7 @@ package com.ludofactory.mobile.navigation.shop.vip
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
@@ -121,6 +122,7 @@ package com.ludofactory.mobile.navigation.shop.vip
 			addChild(_previousSubCatButton);
 			_previousSubCatButton.minHeight = scaleAndRoundToDpi(70);
 			_previousSubCatButton.paddingTop = _previousSubCatButton.paddingBottom = (GlobalConfig.isPhone ? 10 : 30) * GlobalConfig.dpiScale;
+			_previousSubCatButton.visible = false;
 			
 			_arrowRight = new ImageLoader();
 			_arrowRight.source = AbstractEntryPoint.assets.getTexture("arrow-right-dark");
@@ -134,6 +136,7 @@ package com.ludofactory.mobile.navigation.shop.vip
 			addChild(_nextSubCatButton);
 			_nextSubCatButton.minHeight = scaleAndRoundToDpi(70);
 			_nextSubCatButton.paddingTop = _nextSubCatButton.paddingBottom = (GlobalConfig.isPhone ? 10 : 30) * GlobalConfig.dpiScale;
+			_nextSubCatButton.visible = false;
 			
 			_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
 			_listShadow.setVertexColor(0, 0xffffff);
@@ -189,7 +192,7 @@ package com.ludofactory.mobile.navigation.shop.vip
 				//_subCategoryChoiceButton.width = this.actualWidth * 0.8;
 				_subCategoryChoiceButton.validate();
 				_subCategoryChoiceButton.x = (actualWidth - _subCategoryChoiceButton.width) * 0.5;
-				_subCategoryChoiceButton.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				_subCategoryChoiceButton.y = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 10 : 40) : (GlobalConfig.isPhone ? 20 : 40));
 				
 				_previousSubCatButton.x = scaleAndRoundToDpi(10);
 				_previousSubCatButton.y = _subCategoryChoiceButton.y;
@@ -198,7 +201,7 @@ package com.ludofactory.mobile.navigation.shop.vip
 				_nextSubCatButton.x = actualWidth - _nextSubCatButton.width - scaleAndRoundToDpi(10);
 				_nextSubCatButton.y = _subCategoryChoiceButton.y;
 				
-				_listShadow.y = _subCategoryChoiceButton.y + _subCategoryChoiceButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				_listShadow.y = _subCategoryChoiceButton.y + _subCategoryChoiceButton.height + scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 5 : 40) : (GlobalConfig.isPhone ? 20 : 40));
 				_listShadow.width = actualWidth;
 				
 				_list.y = _listShadow.y + _listShadow.height;
@@ -247,6 +250,9 @@ package com.ludofactory.mobile.navigation.shop.vip
 		private function onGetSubCategoriesSuccess(result:Object):void
 		{
 			_subCategories = (result.sous_rubrique as Array).concat();
+			
+			_previousSubCatButton.visible = _subCategories.length > 1;
+			_nextSubCatButton.visible = _subCategories.length > 1;
 			
 			_subCategoriesList.dataProvider = new HierarchicalCollection([ { header: "", children: _subCategories } ]);
 			_subCategoriesList.width = this.actualWidth * 0.8;
