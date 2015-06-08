@@ -7,12 +7,10 @@ Created : 17 sept. 2012
 package com.ludofactory.common.utils
 {
 	
-	import com.freshplanet.ane.AirDeviceId;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	
 	import flash.desktop.NativeApplication;
-	import flash.system.Capabilities;
 	
 	public class Utilities
 	{
@@ -28,12 +26,13 @@ package com.ludofactory.common.utils
 		 */		
 		public static function getAppVersion():String
 		{
-			var theDeviceId:String = "";
-			AirDeviceId.getInstance().getID("ludofactory", function(deviceId:String):String { theDeviceId = deviceId; });
-			
 			var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor;
 			var ns:Namespace = appXml.namespace();
-			return (Capabilities.manufacturer.indexOf("iOS") >= 0 || theDeviceId == "simulator") ? String(appXml.ns::versionLabel[0]).substr(0, 3) : String(appXml.ns::versionNumber[0]).substr(0, 3); // remove the last .0 automatically added
+			
+			//if( Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0 )
+			//	return String(appXml.ns::versionNumber[0]).substr(0, 3);  // remove the last .0 automatically added
+			//else
+				return String(appXml.ns::versionLabel[0]).substr(0, 3);  // remove the last .0 automatically added
 		}
 		
 		/**
