@@ -7,9 +7,9 @@ Created : 29 Mars 2013
 package com.ludofactory.mobile.core
 {
 	
-	import com.freshplanet.ane.AirDeviceId;
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.gamua.flox.Flox;
+	import com.gamua.flox.utils.createUID;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.log;
@@ -81,6 +81,12 @@ package com.ludofactory.mobile.core
 				stage.align = StageAlign.TOP_LEFT;
 			}
 			
+			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0;
+			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
+			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
+			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : "android";
+			GlobalConfig.deviceId = (!GlobalConfig.ios && !GlobalConfig.android) ? "simulator" : createUID(16, "ludofactory");
+			
 			SoundMixer.audioPlaybackMode = AudioPlaybackMode.AMBIENT;
 			mouseEnabled = mouseChildren = false;
 			setGameInfo();
@@ -99,9 +105,9 @@ package com.ludofactory.mobile.core
 		private function showLaunchImage():void
 		{
 			var filePath:String;
-			if(Capabilities.manufacturer.indexOf("iOS") >= 0)
+			var isCurrentlyPortrait:Boolean = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
+			if(GlobalConfig.ios)
 			{
-				var isCurrentlyPortrait:Boolean = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
 				if((Capabilities.screenResolutionX == 1242 || Capabilities.screenResolutionY == 1242) && (Capabilities.screenResolutionY == 2208 || Capabilities.screenResolutionX == 2208))
 				{
 					//iphone 6 plus
@@ -144,11 +150,11 @@ package com.ludofactory.mobile.core
 			{
 				if( DeviceCapabilities.isPhone( stage ) )
 				{
-					filePath = "Default@2x.png";
+					filePath = isCurrentlyPortrait ? "Default@2x.png" : "Default-Landscape.png";
 				}
 				else if( DeviceCapabilities.isTablet( stage ) )
 				{
-					filePath = "Default-Portrait@2x.png";
+					filePath = isCurrentlyPortrait ? "Default-Portrait@2x.png" : "Default-Landscape@2x.png";
 				}
 			}
 			
@@ -165,42 +171,45 @@ package com.ludofactory.mobile.core
 					this._launchImage = new Loader();
 					this.addChild(this._launchImage);
 					
-					this.stage.autoOrients = false;
+					this.stage.autoOrients = GlobalConfig.android;
 					
 					_launchImage.contentLoaderInfo.addEventListener(flash.events.Event.COMPLETE, function(event:flash.events.Event):void
 					{
 						_launchImage.contentLoaderInfo.removeEventListener(flash.events.Event.COMPLETE, arguments.callee);
 						
-						if(!isCurrentlyPortrait)
-						{
-							if(_launchImage.height > _launchImage.width)
-							{
-								// landscape but the image is portrait
-								_launchImage.width = GlobalConfig.stageHeight;
-								_launchImage.height = GlobalConfig.stageWidth;
-								_launchImage.rotation = -90;
-								_launchImage.x = 0;
-								_launchImage.y = GlobalConfig.stageHeight * 0.5;
-							}
-						}
-						else
-						{
-							// portrait but the image is landscape
-							if(_launchImage.height > _launchImage.width)
-							{
-								_launchImage.width = GlobalConfig.stageHeight;
-								_launchImage.height = GlobalConfig.stageWidth;
-								_launchImage.rotation = 45;
-								_launchImage.x = 0;
-								_launchImage.y = 0;
-							}
-						}
-						
-						if( Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0 )
+						if( GlobalConfig.android )
 						{
 							_launchImage.width = stage.stageWidth;
 							_launchImage.height = stage.stageHeight;
 						}
+						else
+						{
+							if(!isCurrentlyPortrait)
+							{
+								if(_launchImage.height > _launchImage.width)
+								{
+									// landscape but the image is portrait
+									_launchImage.width = GlobalConfig.stageHeight;
+									_launchImage.height = GlobalConfig.stageWidth;
+									_launchImage.rotation = -90;
+									_launchImage.x = 0;
+									_launchImage.y = GlobalConfig.stageHeight * 0.5;
+								}
+							}
+							else
+							{
+								// portrait but the image is landscape
+								if(_launchImage.height > _launchImage.width)
+								{
+									_launchImage.width = GlobalConfig.stageHeight;
+									_launchImage.height = GlobalConfig.stageWidth;
+									_launchImage.rotation = 45;
+									_launchImage.x = 0;
+									_launchImage.y = 0;
+								}
+							}
+						}
+						
 					});
 					
 					this._launchImage.loadBytes(bytes);
@@ -253,12 +262,6 @@ package com.ludofactory.mobile.core
 			Flox.init(AbstractGameInfo.FLOX_ID, AbstractGameInfo.FLOX_KEY, AbstractGameInfo.GAME_VERSION);
 			Flox.traceLogs = false;
 			
-			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0;
-			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
-			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
-			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : "android";
-			AirDeviceId.getInstance().getID("ludofactory", function(deviceId:String):void{ GlobalConfig.deviceId = deviceId; });
-			
 			// launch Starling
 			Starling.multitouchEnabled = false;  // useful on mobile devices
 			Starling.handleLostContext = !GlobalConfig.ios;  // not necessary on iOS. Saves a lot of memory!
@@ -288,7 +291,7 @@ package com.ludofactory.mobile.core
 		{
 			_starling.removeEventListener(starling.events.Event.ROOT_CREATED, onRootCreated);
 			
-			if(_launchImage)
+			if(_launchImage && _launchImage.content)
 			{
 				var bgTexture:Texture = Texture.fromBitmap(_launchImage.content as Bitmap, false, false);
 				
