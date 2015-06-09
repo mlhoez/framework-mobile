@@ -116,6 +116,14 @@ package com.ludofactory.mobile.navigation.shop.bid.finished
 		 */		
 		private function onGetFinishedBidsSuccess(result:Object):void
 		{
+			if(result.code == 0)
+			{
+				_retryContainer.visible = true;
+				_retryContainer.loadingMode = false;
+				_retryContainer.message = result.txt;
+				return;
+			}
+			
 			_list.onRefreshComplete();
 			
 			if( _list.dataProvider )
