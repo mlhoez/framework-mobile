@@ -249,29 +249,13 @@ package com.ludofactory.mobile.navigation.shop.vip
 		 */		
 		private function onGetSubCategoriesSuccess(result:Object):void
 		{
-			_subCategories = (result.sous_rubrique as Array).concat();
-			
-			_previousSubCatButton.visible = _subCategories.length > 1;
-			_nextSubCatButton.visible = _subCategories.length > 1;
-			
-			_subCategoriesList.dataProvider = new HierarchicalCollection([ { header: "", children: _subCategories } ]);
-			_subCategoriesList.width = this.actualWidth * 0.8;
-			_subCategoriesList.setSelectedLocation(0,0);
-			_subCategoriesList.addEventListener(Event.CHANGE, onCategorySelected);
-			
-			//_subCategoryChoiceButton.label = formatText( Localizer.getInstance().translate("BOUTIQUE_SUB_CATEGORY_LIST_SCREEN.CHOICE_LIST_TITLE"), _subCategoriesList.selectedItem.nom);
-			//_subCategoryChoiceButton.validate();
-			//_subCategoryChoiceButton.x = (actualWidth - _subCategoryChoiceButton.width) * 0.5;
-			
-			Flox.logInfo("Affichage de la sous catégorie <strong>{0}</strong>", _subCategoriesList.selectedItem.nom);
-			//dispatchEventWith(LudoEventType.UPDATE_HEADER_TITLE, true, _subCategoriesList.selectedItem.nom);
-			
-			_subCategoryChoiceButton.label = _subCategoriesList.selectedItem.nom;
-			_subCategoryChoiceButton.validate();
-			_subCategoryChoiceButton.x = (actualWidth - _subCategoryChoiceButton.width) * 0.5;
-			
 			if( result.code == 0 )
 			{
+				_subCategoryChoiceButton.visible = false;
+				
+				_list.y = 0;
+				_list.height = actualHeight;
+				
 				// pas de lots
 				_informationLabel.visible = true;
 				_informationLabel.text = result.txt;
@@ -280,6 +264,29 @@ package com.ludofactory.mobile.navigation.shop.vip
 			}
 			else
 			{
+				_subCategories = [];
+				_subCategories = (result.sous_rubrique as Array).concat();
+				
+				_previousSubCatButton.visible = _subCategories.length > 1;
+				_nextSubCatButton.visible = _subCategories.length > 1;
+				
+				_subCategoriesList.dataProvider = new HierarchicalCollection([ { header: "", children: _subCategories } ]);
+				_subCategoriesList.width = this.actualWidth * 0.8;
+				_subCategoriesList.setSelectedLocation(0,0);
+				_subCategoriesList.addEventListener(Event.CHANGE, onCategorySelected);
+				
+				//_subCategoryChoiceButton.label = formatText( Localizer.getInstance().translate("BOUTIQUE_SUB_CATEGORY_LIST_SCREEN.CHOICE_LIST_TITLE"), _subCategoriesList.selectedItem.nom);
+				//_subCategoryChoiceButton.validate();
+				//_subCategoryChoiceButton.x = (actualWidth - _subCategoryChoiceButton.width) * 0.5;
+				
+				if(_subCategories.length > 0)
+					Flox.logInfo("Affichage de la sous catégorie <strong>{0}</strong>", _subCategoriesList.selectedItem.nom);
+				//dispatchEventWith(LudoEventType.UPDATE_HEADER_TITLE, true, _subCategoriesList.selectedItem.nom);
+				
+				_subCategoryChoiceButton.label = _subCategoriesList.selectedItem.nom;
+				_subCategoryChoiceButton.validate();
+				_subCategoryChoiceButton.x = (actualWidth - _subCategoryChoiceButton.width) * 0.5;
+				
 				_informationLabel.visible = false;
 				
 				//if( result.hasOwnProperty("articles") && result.articles != null )
