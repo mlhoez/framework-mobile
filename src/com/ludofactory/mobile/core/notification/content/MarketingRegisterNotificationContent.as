@@ -100,7 +100,7 @@ package com.ludofactory.mobile.core.notification.content
 				
 				if( !_ar )
 				{
-					_image.scaleX = _image.scaleY = Utilities.getScaleToFill(_image.width, _image.height, (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)), actualHeight * 0.9);
+					_image.scaleX = _image.scaleY = Utilities.getScaleToFill(_image.width, _image.height, (actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.5)), actualHeight * 0.8);
 					_image.y = roundUp((actualHeight - _image.height) * 0.5);
 					_image.x = roundUp((actualWidth * 0.5 - _image.width) * 0.5);
 					_ar = true;
