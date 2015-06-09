@@ -87,10 +87,8 @@ package com.ludofactory.common.gettext
 		public function dgettext(domain:String, key:String):String
 		{
 			// domain contains a POFile
-			key = key.replace(/\n/g, "\\n"); // fixes a bug with multine strings like this : "blabla \n blabla"
-			_helperTrad = _locales[_currentLocale][domain].translations[key];
+			_helperTrad = _locales[_currentLocale][domain].translations[ key.replace(/\n/g, "\\n") ]; // fixes a bug with multine strings like this : "blabla \n blabla"
 			if( _helperTrad) _helperTrad = _helperTrad.replace(/\\n/g, "\n"); // fixes a bug with multine strings like this : "blabla \n blabla"
-			else key = key.replace(/\\n/g, "\n"); // fixes a bug with multine strings like this : "blabla \n blabla"
 			return (_helperTrad == null || _helperTrad == "") ? key : _helperTrad;
 		}
 		
