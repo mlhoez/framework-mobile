@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Français)\n"
-"POT-Creation-Date: 2015-06-04 16:42+0100\n"
-"PO-Revision-Date: 2015-06-04 16:42+0100\n"
+"POT-Creation-Date: 2015-06-09 10:31+0100\n"
+"PO-Revision-Date: 2015-06-09 10:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -917,23 +917,23 @@ msgid "Zulu"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/common/utils/Utilities.as:165
-#: Mobile/src/com/ludofactory/common/utils/Utilities.as:172
+#: Mobile/src/com/ludofactory/common/utils/Utilities.as:168
+#: Mobile/src/com/ludofactory/common/utils/Utilities.as:175
 msgid "TOURNAMENT_END.POSITION_SECOND"
 msgstr "{0} ème"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/common/utils/Utilities.as:171
+#: Mobile/src/com/ludofactory/common/utils/Utilities.as:174
 msgid "TOURNAMENT_END.POSITION_FIRST"
 msgstr "{0} er"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/common/utils/Utilities.as:173
+#: Mobile/src/com/ludofactory/common/utils/Utilities.as:176
 msgid "TOURNAMENT_END.POSITION_THIRD"
 msgstr "{0} ème"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/common/utils/Utilities.as:174
+#: Mobile/src/com/ludofactory/common/utils/Utilities.as:177
 msgid "TOURNAMENT_END.POSITION_FOURTH"
 msgstr "{0} ème"
 
@@ -1147,11 +1147,11 @@ msgstr ""
 #: Mobile/src/com/ludofactory/mobile/navigation/shop/bid/pending/PendingBidDetailNotification.as:242
 #: Mobile/src/com/ludofactory/mobile/navigation/shop/bid/pending/PendingBidDetailNotification.as:290
 #: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueItemDetailNotification.as:175
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:181
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:340
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:442
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:467
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:744
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:184
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:353
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:455
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:480
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:798
 msgid "Chargement..."
 msgstr ""
 
@@ -1186,18 +1186,18 @@ msgstr ""
 #: Mobile/src/com/ludofactory/mobile/navigation/shop/bid/pending/PendingBidDetailNotification.as:316
 #: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:222
 #: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueItemDetailNotification.as:180
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:302
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:351
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:460
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:485
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:315
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:364
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:473
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:498
 #: Mobile/src/com/ludofactory/mobile/navigation/sponsor/filleuls/FilleulsScreen.as:192
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/ContactItemRenderer.as:366
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:520
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:753
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/ContactItemRenderer.as:365
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:574
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:807
 #: Mobile/src/com/ludofactory/mobile/navigation/store/StoreScreen.as:440
 #: Mobile/src/com/ludofactory/mobile/navigation/tournament/PreviousTournamentsScreen.as:255
 #: Mobile/src/com/ludofactory/mobile/navigation/tournament/PreviousTournementDetailScreen.as:386
-#: Mobile/src/com/ludofactory/mobile/navigation/tournament/TournamentRankingScreen.as:568
+#: Mobile/src/com/ludofactory/mobile/navigation/tournament/TournamentRankingScreen.as:569
 #: Mobile/src/com/ludofactory/mobile/navigation/vip/VipScreen.as:799
 msgid "Aucune connexion Internet."
 msgstr ""
@@ -1226,22 +1226,22 @@ msgstr ""
 #: Mobile/src/com/ludofactory/mobile/navigation/cs/display/CSMessagesContainer.as:197
 #: Mobile/src/com/ludofactory/mobile/navigation/cs/thread/CSThreadScreen.as:243
 #: Mobile/src/com/ludofactory/mobile/navigation/highscore/HighScoreListScreen.as:402
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/bid/comingsoon/ComingSoonBidContainer.as:149
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/bid/finished/FinishedBidContainer.as:149
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/bid/pending/PendingBidContainer.as:149
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/bid/comingsoon/ComingSoonBidContainer.as:157
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/bid/finished/FinishedBidContainer.as:157
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/bid/pending/PendingBidContainer.as:157
 #: Mobile/src/com/ludofactory/mobile/navigation/shop/bid/pending/PendingBidDetailNotification.as:281
 #: Mobile/src/com/ludofactory/mobile/navigation/shop/bid/pending/PendingBidDetailNotification.as:346
 #: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:203
 #: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueItemDetailNotification.as:233
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:318
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:419
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:331
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:432
 #: Mobile/src/com/ludofactory/mobile/navigation/sponsor/filleuls/FilleulsScreen.as:173
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:827
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:881
 #: Mobile/src/com/ludofactory/mobile/navigation/store/StoreScreen.as:298
 #: Mobile/src/com/ludofactory/mobile/navigation/store/StoreScreen.as:381
 #: Mobile/src/com/ludofactory/mobile/navigation/tournament/PreviousTournamentsScreen.as:221
 #: Mobile/src/com/ludofactory/mobile/navigation/tournament/PreviousTournementDetailScreen.as:365
-#: Mobile/src/com/ludofactory/mobile/navigation/tournament/TournamentRankingScreen.as:544
+#: Mobile/src/com/ludofactory/mobile/navigation/tournament/TournamentRankingScreen.as:545
 #: Mobile/src/com/ludofactory/mobile/navigation/vip/VipScreen.as:809
 msgid "Une erreur est survenue, veuillez réessayer."
 msgstr ""
@@ -1293,7 +1293,7 @@ msgstr ""
 #: Mobile/src/com/ludofactory/mobile/navigation/authentication/LoginScreen.as:189
 #: Mobile/src/com/ludofactory/mobile/navigation/authentication/RegisterScreen.as:201
 #: Mobile/src/com/ludofactory/mobile/navigation/cs/CSNewThreadNotification.as:193
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:727
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:781
 msgid "Email invalide."
 msgstr ""
 
@@ -1740,11 +1740,13 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:168
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:82
 msgid "Cadeaux"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/storage/StorageConfig.as:169
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:78
 msgid "Mon Compte"
 msgstr ""
 
@@ -1849,6 +1851,7 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/HowToWinGiftsScreen.as:134
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:87
 msgid "Tournois"
 msgstr ""
 
@@ -1935,7 +1938,7 @@ msgstr ""
 #: Mobile/src/com/ludofactory/mobile/navigation/authentication/PseudoChoiceScreen.as:141
 #: Mobile/src/com/ludofactory/mobile/navigation/authentication/RegisterScreen.as:116
 #: Mobile/src/com/ludofactory/mobile/navigation/authentication/SponsorScreen.as:93
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:648
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:702
 msgid "Confirmer"
 msgstr ""
 
@@ -1946,6 +1949,7 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/account/history/gifts/MyGiftsScreen.as:72
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:84
 msgid "Mes gains"
 msgstr ""
 
@@ -2147,6 +2151,7 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/achievements/TrophyScreen.as:43
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:86
 msgid "Coupes"
 msgstr ""
 
@@ -2317,7 +2322,7 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/authentication/LoginScreen.as:78
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:200
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:217
 msgid "Connexion"
 msgstr ""
 
@@ -2429,8 +2434,8 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/authentication/RetryContainer.as:64
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/ContactItemRenderer.as:455
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/ContactItemRenderer.as:500
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/ContactItemRenderer.as:454
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/ContactItemRenderer.as:499
 msgid "Réessayer"
 msgstr ""
 
@@ -2802,7 +2807,7 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/game/GameModeSelectionPopup.as:424
-#: Mobile/src/com/ludofactory/mobile/navigation/tournament/TournamentRankingScreen.as:626
+#: Mobile/src/com/ludofactory/mobile/navigation/tournament/TournamentRankingScreen.as:627
 msgid "Pour débloquer les parties en Tournoi, il suffit de terminer une partie Solo !"
 msgstr ""
 
@@ -3006,7 +3011,40 @@ msgid "Vos Points à convertir en Crédits"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:200
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:79
+msgid "Parrainage"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:80
+msgid "Aide"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:81
+msgid "Crédits"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:83
+#: Mobile/src/com/ludofactory/mobile/navigation/vip/VipScreen.as:191
+msgid "Rangs VIP"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:85
+msgid "High Scores"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:88
+#: Mobile/src/com/ludofactory/mobile/navigation/settings/SettingsScreen.as:84
+#: Mobile/src/com/ludofactory/mobile/navigation/settings/SettingsScreen.as:219
+msgid "Réglages"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/menu/Menu.as:217
 msgid "Déconnexion"
 msgstr ""
 
@@ -3052,12 +3090,6 @@ msgstr ""
 #: Mobile/src/com/ludofactory/mobile/navigation/news/NewsScreen.as:130
 #, python-brace-format
 msgid "Version {0}"
-msgstr ""
-
-#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/settings/SettingsScreen.as:84
-#: Mobile/src/com/ludofactory/mobile/navigation/settings/SettingsScreen.as:219
-msgid "Réglages"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
@@ -3186,9 +3218,9 @@ msgid "Vous devez être connecté à Internet pour afficher les lots."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:429
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:448
-#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:473
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:442
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:461
+#: Mobile/src/com/ludofactory/mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:486
 msgid "Aucune sous catégorie à afficher."
 msgstr ""
 
@@ -3268,54 +3300,54 @@ msgid "200 points"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/ContactItemRenderer.as:412
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/ContactItemRenderer.as:411
 msgid "Echec"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/ContactItemRenderer.as:426
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/ContactItemRenderer.as:425
 msgid "Envoyé"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:134
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:135
 msgid "Parrainer"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:147
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:149
 msgid "Envoyer un sms de parrainage à tous vos contacts."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:147
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:149
 msgid "Envoyer un email de parrainage à tous vos contacts."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:154
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:155
+msgid "Inviter tous"
+msgstr ""
+
+#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:155
 msgid ""
 "Inviter\n"
 "tous"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:154
-msgid "Inviter tous"
-msgstr ""
-
-#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:214
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:215
 msgid "Entrer un email."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:214
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:215
 msgid "Entrer un numéro de téléphone."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:250
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:251
 #, python-brace-format
 msgid ""
 "L'application n'est pas autorisée à accéder à vos contacts.\n"
@@ -3325,44 +3357,44 @@ msgid ""
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:306
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:400
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:307
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:404
 msgid "Aucun contact à afficher."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:328
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:329
 msgid "Impossible d'accéder à vos contacts."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:515
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:584
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:569
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:638
 msgid "Envoyés"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:628
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:682
 msgid "Nom du filleul..."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:638
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:692
 msgid "Saisissez son email..."
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:638
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:692
 msgid "Saisissez son numéro de téléphone"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:718
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:772
 msgid "Nom du filleul invalide"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:736
+#: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:790
 msgid "Ce numéro est invalide."
 msgstr ""
 
@@ -3439,18 +3471,13 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/tournament/PreviousTournementDetailScreen.as:240
-#: Mobile/src/com/ludofactory/mobile/navigation/tournament/TournamentRankingScreen.as:400
+#: Mobile/src/com/ludofactory/mobile/navigation/tournament/TournamentRankingScreen.as:401
 msgid "Personne n'est encore classé !"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/tournament/TournamentRankingScreen.as:141
+#: Mobile/src/com/ludofactory/mobile/navigation/tournament/TournamentRankingScreen.as:142
 msgid "Participer"
-msgstr ""
-
-#: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
-#: Mobile/src/com/ludofactory/mobile/navigation/vip/VipScreen.as:191
-msgid "Rangs VIP"
 msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
