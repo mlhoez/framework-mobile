@@ -253,7 +253,7 @@ package com.ludofactory.common.gettext
 		 */		
 		private function enqueue(data:Object):void
 		{
-			var moFileUrlList:Array;
+			var moFileUrlList:Array = [];
 			for(var languageIsoName:String in data)
 			{
 				if( !(data[languageIsoName] is Array) )
