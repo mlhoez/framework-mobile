@@ -72,6 +72,12 @@ package com.ludofactory.mobile.core
 		{
 			super();
 			
+			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0;
+			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
+			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
+			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : (GlobalConfig.android ? "android" : "simulator");
+			GlobalConfig.deviceId = (!GlobalConfig.ios && !GlobalConfig.android) ? "simulator" : createUID(16, "ludofactory");
+			
 			Remote.getInstance();
 			LanguageManager.getInstance();
 			
@@ -80,12 +86,6 @@ package com.ludofactory.mobile.core
 				stage.scaleMode = StageScaleMode.NO_SCALE;
 				stage.align = StageAlign.TOP_LEFT;
 			}
-			
-			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0;
-			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
-			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
-			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : "android";
-			GlobalConfig.deviceId = (!GlobalConfig.ios && !GlobalConfig.android) ? "simulator" : createUID(16, "ludofactory");
 			
 			SoundMixer.audioPlaybackMode = AudioPlaybackMode.AMBIENT;
 			mouseEnabled = mouseChildren = false;
