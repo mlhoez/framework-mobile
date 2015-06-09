@@ -366,9 +366,6 @@ package com.ludofactory.mobile.core
 		 */		
 		private function onResume(event:flash.events.Event):void
 		{
-			// FIXME A remettre ?
-			//if( AbstractEntryPoint.pushManager )
-			//	PushNotification.getInstance().setBadgeNumberValue( AbstractEntryPoint.numAlerts );
 			NativeApplication.nativeApplication.removeEventListener(flash.events.Event.ACTIVATE, onResume);
 			PauseManager.resume();
 			
