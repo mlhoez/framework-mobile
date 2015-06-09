@@ -73,6 +73,23 @@ package com.ludofactory.mobile.navigation.menu
 			listLayout.useSquareTiles = false;
 			listLayout.manageVisibility = true;
 			
+			/*
+			
+			_("Mon Compte");
+			_("Parrainage");
+			_("Aide");
+			_("Crédits");
+			_("Cadeaux");
+			_("Rangs VIP");
+			_("Mes gains");
+			_("High Scores");
+			_("Coupes");
+			_("Tournois");
+			_("Réglages");
+			
+			 */
+			
+			
 			_list = new List();
 			_list.layout = listLayout;
 			_list.isSelectable = false;
