@@ -7,7 +7,9 @@ Created : 31 août 2013
 package com.ludofactory.mobile.navigation.achievements
 {
 	
+	import com.ludofactory.common.gettext.Domains;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.gettext.aliases._d;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -238,9 +240,9 @@ package com.ludofactory.mobile.navigation.achievements
 				{
 					_title.visible = _description.visible = _reward.visible = true;
 					
-					_title.text = _data.title;
-					_description.text = _data.description;
-					_reward.text = _data.reward;
+					_title.text = _d(Domains.GAME, _data.title);
+					_description.text = _d(Domains.GAME, _data.description);
+					_reward.text = _d(Domains.GAME, _data.reward);
 					_trophyImage.source = AbstractEntryPoint.assets.getTexture(_data.textureName);
 					
 					// not owned

@@ -7,25 +7,23 @@ Created : 26 déc. 2013
 package com.ludofactory.mobile.navigation.home
 {
 	
+	import com.ludofactory.common.gettext.Domains;
+	import com.ludofactory.common.gettext.aliases._d;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.AbstractGame;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
-	import feathers.skins.IStyleProvider;
-	
-	import flash.text.TextFormat;
-	
-	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
-
+	import feathers.skins.IStyleProvider;
+	
+	import flash.text.TextFormat;
+	
 	import starling.display.Image;
-
 	import starling.display.Quad;
 	
 	/**
@@ -66,7 +64,7 @@ package com.ludofactory.mobile.navigation.home
 			
 			// TODO Ajuster la position ici pour le format portrait (GlobalConfig.stageWidth * xxx) comme ça a été fait pour le format paysage
 			// TODO et rescaler les images TOP et BOTTOM de façon proportionnelle
-			width = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 560 : 560 ) : (AbstractGameInfo.LANDSCAPE ? 760 : 760) );
+			width = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.8) : 560 ) : (AbstractGameInfo.LANDSCAPE ? 760 : 760) );
 			height = _minItemHeight = scaleAndRoundToDpi(150);
 			_padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 20);
 			
@@ -127,7 +125,7 @@ package com.ludofactory.mobile.navigation.home
 				if( _data )
 				{
 					_message.visible = true;
-					_message.text = _data.ruleText;
+					_message.text = _d(Domains.GAME, _data.ruleText);
 					if( _data.imageSource != null && _data.imageSource != "" )
 					{
 						if( !_picture )

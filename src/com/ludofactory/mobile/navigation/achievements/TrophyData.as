@@ -16,7 +16,7 @@ package com.ludofactory.mobile.navigation.achievements
 		private var _id:int;
 		
 		/**
-		 * The trophy title translation key. */		
+		 * The translated title. */		
 		private var _title:String;
 		
 		/**
@@ -46,9 +46,9 @@ package com.ludofactory.mobile.navigation.achievements
 			if( !data ) return;
 			
 			_id = data.id;
-			_title = data.title;
-			_description = data.description;
-			_reward = data.reward;
+			_title = data.originalTitle;
+			_description = data.originalDescription;
+			_reward = data.originalReward;
 			_values = data.values;
 			_textureName = data.textureName;
 		}
