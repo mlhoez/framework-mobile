@@ -6,14 +6,19 @@ Created : 27 mai 2013
 */
 package com.ludofactory.mobile.navigation.ads
 {
+	
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.milkmangames.nativeextensions.AdMob;
 	import com.milkmangames.nativeextensions.AdMobAdType;
 	import com.milkmangames.nativeextensions.AdMobAlignment;
+	import com.milkmangames.nativeextensions.events.AdMobErrorEvent;
+	import com.milkmangames.nativeextensions.events.AdMobEvent;
 	import com.milkmangames.nativeextensions.ios.IAd;
 	import com.milkmangames.nativeextensions.ios.IAdBannerAlignment;
 	import com.milkmangames.nativeextensions.ios.IAdContentSize;
+	import com.milkmangames.nativeextensions.ios.events.IAdErrorEvent;
+	import com.milkmangames.nativeextensions.ios.events.IAdEvent;
 	
 	/**
 	 * This is the main ad manager. It handles both iAd and AdMob networks so that both
@@ -60,7 +65,15 @@ package com.ludofactory.mobile.navigation.ads
 				{
 					// preload interstitial if possible (only available on iPad)
 					if( IAd.iAd.isInterstitialAvailable() )
+					{
+						IAd.iAd.addEventListener(IAdEvent.INTERSTITIAL_SHOWN, oniAdInterstitalShown);
+						IAd.iAd.addEventListener(IAdEvent.INTERSTITITAL_DISMISSED, oniAdInterstitalDismissed);
+						//IAd.iAd.addEventListener(IAdEvent.INTERSTITIAL_AD_UNLOADED, onInterstitalAdDismissed); // useless ?
+						IAd.iAd.addEventListener(IAdEvent.INTERSTITIAL_AD_LOADED, oniAdInterstitialLoaded);
+						IAd.iAd.addEventListener(IAdErrorEvent.INTERSTITIAL_AD_FAILED, oniAdInterstitalFailed);
 						IAd.iAd.loadInterstitial(false);
+						
+					}
 					_iAdAvailable = true;
 				}
 			}
@@ -74,6 +87,10 @@ package com.ludofactory.mobile.navigation.ads
 					AdMob.enableTestDeviceIDs(AdMob.getCurrentTestDeviceIDs());
 				
 				// preload interstitials for both plateforms
+				AdMob.addEventListener(AdMobEvent.SCREEN_PRESENTED, onAdMobInterstitialShown);
+				AdMob.addEventListener(AdMobEvent.SCREEN_DISMISSED, onAdMobInterstitalDismissed);
+				AdMob.addEventListener(AdMobEvent.RECEIVED_AD, onAdMobInterstitialLoaded);
+				AdMob.addEventListener(AdMobErrorEvent.FAILED_TO_RECEIVE_AD, onAdMobInterstitialFailed);
 				AdMob.loadInterstitial(AbstractGameInfo.ADMOB_ANDROID_INTERSTITIAL_ID, false, AbstractGameInfo.ADMOB_IOS_INTERSTITIAL_ID);
 
 				_adMobAvailable = true;
@@ -134,18 +151,28 @@ package com.ludofactory.mobile.navigation.ads
 		 * @return true if there is network, false otherwise
 		 * 
 		 */		
-		public static function showInterstitial():void
+		public static function showInterstitial():Boolean
 		{
 			if( _iAdAvailable && IAd.iAd.isInterstitialAvailable() )
 			{
 				if(IAd.iAd.isInterstitialReady())
+				{
 					IAd.iAd.showPendingInterstitial();
+					return true;
+				}
+				
 			}
-			else if( _adMobAvailable )
+			
+			if( _adMobAvailable )
 			{
 				if( AdMob.isInterstitialReady() )
+				{
 					AdMob.showPendingInterstitial();
+					return true;
+				}
 			}
+			
+			return false;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -198,6 +225,122 @@ package com.ludofactory.mobile.navigation.ads
 				{
 					// probably no banner currently created and/or visible
 				}
+			}
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Events
+		
+	// Interstitial loaded
+		
+		/**
+		 * When the interstitial have been loaded and now ready to display.
+		 */
+		public static function oniAdInterstitialLoaded(event:IAdEvent):void
+		{
+			log("[AdManager] iAd interstitial loaded.");
+		}
+		
+		/**
+		 * When the interstitial have been loaded and now ready to display.
+		 */
+		public static function onAdMobInterstitialLoaded(event:AdMobEvent):void
+		{
+			if(event.isInterstitial)
+				log("[AdManager] AdMob interstitial loaded.");
+		}
+		
+	// Interstitial dismissed
+		
+		/**
+		 * When the interstitial was dismissed by the user. In this case we can load another one for the next time.
+		 */
+		public static function oniAdInterstitalDismissed(event:IAdEvent):void
+		{
+			log("[AdManager] iAd interstitial dismissed.");
+			
+			// interstitial dismissed, so we can load another one for the next time
+			try
+			{
+				IAd.iAd.loadInterstitial(false);
+			}
+			catch (e:Error)
+			{
+				trace("[AdManager] Can't preload iAd interstitial again yet.");
+			}
+		}
+		
+		/**
+		 * When the interstitial was dismissed by the user. In this case we can load another one for the next time.
+		 */
+		public static function onAdMobInterstitalDismissed(event:AdMobEvent):void
+		{
+			log("[AdManager] AdMob interstitial dismissed.");
+			
+			// interstitial dismissed, so we can load another one for the next time
+			try
+			{
+				AdMob.loadInterstitial(AbstractGameInfo.ADMOB_ANDROID_INTERSTITIAL_ID, false, AbstractGameInfo.ADMOB_IOS_INTERSTITIAL_ID);
+			}
+			catch (e:Error)
+			{
+				trace("[AdManager] Can't preload AdMob interstitial again yet.");
+			}
+		}
+		
+	// Interstitial shown
+		
+		/**
+		 * The interstitial was successfully shown.
+		 */
+		public static function oniAdInterstitalShown(event:IAdEvent):void
+		{
+			log("[AdManager] Showing iAd interstitial.");
+		}
+		
+		/**
+		 * The interstitial was successfully shown.
+		 */
+		public static function onAdMobInterstitialShown(event:AdMobEvent):void
+		{
+			log("[AdManager] Showing AdMob interstitial.");
+		}
+		
+	// Interstitial failed
+		
+		/**
+		 * When the interstitial failed to load. In this case we try to load another one.
+		 */
+		public static function oniAdInterstitalFailed(event:IAdErrorEvent):void
+		{
+			log("[AdManager] iAd interstitial failed to load.");
+			
+			// interstitial failed to load, so we can load another one for the next time
+			try
+			{
+				IAd.iAd.loadInterstitial(false);
+			}
+			catch (e:Error)
+			{
+				trace("[AdManager] Can't preload iAd again yet.");
+			}
+		}
+		
+		/**
+		 * When the interstitial failed to load. In this case we try to load another one.
+		 */
+		public static function onAdMobInterstitialFailed(event:AdMobErrorEvent):void
+		{
+			log("[AdManager] AdMob interstitial failed to load.");
+			
+			// interstitial failed to load, so we can load another one for the next time
+			try
+			{
+				AdMob.loadInterstitial(AbstractGameInfo.ADMOB_ANDROID_INTERSTITIAL_ID, false, AbstractGameInfo.ADMOB_IOS_INTERSTITIAL_ID);
+			}
+			catch (e:Error)
+			{
+				trace("[AdManager] Can't preload AdMob interstitial again yet.");
 			}
 		}
 		
