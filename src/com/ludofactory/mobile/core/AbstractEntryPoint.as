@@ -743,14 +743,6 @@ package com.ludofactory.mobile.core
 			
 			_assets.removeTextureAtlas("splash");
 			
-			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_ADS) == true )
-			{
-				if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_CAN_LAUNCH_INTERSTITIAL) )
-					AdManager.showInterstitial();
-				else
-					Storage.getInstance().setProperty(StorageConfig.PROPERTY_CAN_LAUNCH_INTERSTITIAL, true);
-			}
-			
 			if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() && MemberManager.getInstance().getFacebookId() != 0 && !GoViral.goViral.isFacebookAuthenticated() )
 				GoViral.goViral.authenticateWithFacebook( AbstractGameInfo.FACEBOOK_PERMISSIONS );
 			
