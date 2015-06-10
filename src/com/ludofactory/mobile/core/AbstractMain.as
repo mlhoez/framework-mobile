@@ -7,12 +7,11 @@ Created : 29 Mars 2013
 package com.ludofactory.mobile.core
 {
 	
+	import com.freshplanet.ane.AirDeviceId;
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.gamua.flox.Flox;
-	import com.gamua.flox.utils.createUID;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.sound.SoundManager;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.pause.PauseManager;
@@ -75,8 +74,8 @@ package com.ludofactory.mobile.core
 			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0;
 			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
 			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
-			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : (GlobalConfig.android ? "android" : "simulator");
-			GlobalConfig.deviceId = (!GlobalConfig.ios && !GlobalConfig.android) ? "simulator" : createUID(16, "ludofactory");
+			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : (GlobalConfig.android ? "android" : "simulator"); // FIXME Remettre "simulator" quand le modif aura été faite côté PHP
+			AirDeviceId.getInstance().getID("ludofactory", function(deviceId:String):void{ GlobalConfig.deviceId = deviceId; trace("Ancien device id : " + deviceId); });
 			
 			Remote.getInstance();
 			LanguageManager.getInstance();
@@ -381,7 +380,7 @@ package com.ludofactory.mobile.core
 		/**
 		 * Log any uncaught error in Flox.
 		 */		
-		private function onUncaughtError(event:UncaughtErrorEvent):void
+		/*private function onUncaughtError(event:UncaughtErrorEvent):void
 		{	
 			try
 			{
@@ -395,6 +394,23 @@ package com.ludofactory.mobile.core
 					GAnalytics.analytics.defaultTracker.trackException(stackTrace, false, MemberManager.getInstance());
 			} 
 			catch(error:Error) { }
+		}*/
+		
+		public static function onUncaughtError(event:UncaughtErrorEvent):void
+		{
+			try
+			{
+				throw event.error;
+			}
+			catch(error:Error)
+			{
+				var stackTrace:String = error.getStackTrace();
+				reportError(error);
+				
+				Flox.logError("<strong>Uncaught error :</strong>", "[{0}] {1}<br><br><strong>Occured at :</strong><br>{2}", Error(event.error).errorID, Error(event.error).message, stackTrace);
+				if( GAnalytics.isSupported() )
+					GAnalytics.analytics.defaultTracker.trackException(stackTrace, false, MemberManager.getInstance());
+			}
 		}
 		
 	}
