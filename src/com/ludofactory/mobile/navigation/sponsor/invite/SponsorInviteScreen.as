@@ -6,6 +6,7 @@ Created : 8 sept. 2013
 */
 package com.ludofactory.mobile.navigation.sponsor.invite
 {
+	
 	import com.freshplanet.ane.airaddressbook.AirAddressBook;
 	import com.freshplanet.ane.airaddressbook.AirAddressBookContactsEvent;
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
@@ -18,28 +19,18 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.navigation.authentication.NotLoggedInContainer;
-	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.authentication.NotLoggedInContainer;
+	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
-	import flash.text.ReturnKeyLabel;
-	import flash.text.SoftKeyboardType;
-	import flash.text.TextFormat;
-	import flash.utils.Dictionary;
-	
 	import feathers.controls.Button;
-	import feathers.controls.Label;
 	import feathers.controls.LayoutGroup;
 	import feathers.controls.List;
 	import feathers.controls.TextInput;
@@ -49,9 +40,10 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
 	
-	import starling.text.TextField;
-	
-	//import pl.mllr.extensions.contactEditor.ContactEditor;
+	import flash.text.ReturnKeyLabel;
+	import flash.text.SoftKeyboardType;
+	import flash.text.TextFormat;
+	import flash.utils.Dictionary;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -61,8 +53,11 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.text.TextField;
 	import starling.utils.formatString;
 	
+	//import pl.mllr.extensions.contactEditor.ContactEditor;
+
 	public class SponsorInviteScreen extends AdvancedScreen
 	{
 		/**
@@ -106,7 +101,10 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 		private var _retryContainer:RetryContainer;
 		
 		private var _allContacts:Array;
-		private var _temporaryContacts:Dictionary;
+		
+		/**
+		 * Static because on android, the contacts are retrieved once (bug or not ?) */
+		private static var _temporaryContacts:Dictionary;
 		
 		/**
 		 * The authentication container. */		
@@ -236,7 +234,9 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 		
 		private function initializeContacts():void
 		{
-			_temporaryContacts = new Dictionary();
+			if( GlobalConfig.android && !_temporaryContacts )
+				_temporaryContacts = new Dictionary();
+			
 			_singleInviteGroup.visible = true;
 			
 			if( AirAddressBook.isSupported )
@@ -246,8 +246,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 					if( AirAddressBook.getInstance().hasPermission() )
 					{
 						AirAddressBook.getInstance().addEventListener(AirAddressBook.CONTACTS_UPDATED, onContactsUpdated);
+						AirAddressBook.getInstance().addEventListener(AirAddressBook.JOB_FINISHED, onContactsRetreived);
 						AirAddressBook.getInstance().check(50);
-						TweenMax.to(this, 5, { onComplete:onContactsRetreived });
 					}
 					else
 					{
@@ -344,41 +344,44 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			var contactData:Object;
 			var temporaryPhoneNumber:String;
 			var key:String;
+			var name:String;
 			
 			for(key in event.contactsData)
 			{
 				contactData = event.contactsData[key];
 				
-				if( !_temporaryContacts.hasOwnProperty(contactData.compositeName) )
-					_temporaryContacts[contactData.compositeName] = { compositename:contactData.compositeName, phones:[], emails:[] };
+				name = contactData.hasOwnProperty("compositeName") ? contactData.compositeName : contactData.firstName;
+				if( !_temporaryContacts.hasOwnProperty(name) )
+					_temporaryContacts[name] = { compositename:name, phones:[], emails:[] };
 				
 				if( key.indexOf("phoneNumber_") != -1 )
 				{
 					temporaryPhoneNumber = key.split("_")[1];
 					if( Utilities.isFrenchPortableOnly( temporaryPhoneNumber ) )
-						_temporaryContacts[contactData.compositeName].phones.push( Utilities.isFrenchPortableOnly( temporaryPhoneNumber ) );
+						_temporaryContacts[name].phones.push( Utilities.isFrenchPortableOnly( temporaryPhoneNumber ) );
 				}
 				if( key.indexOf("email_") != -1 )
-					_temporaryContacts[contactData.compositeName].emails.push( key.split("_")[1] );
+					_temporaryContacts[name].emails.push( key.split("_")[1] );
 			}
 			
 			if( event.isLastPacket )
 			{
-				AirAddressBook.getInstance().removeEventListener(AirAddressBook.CONTACTS_UPDATED, onContactsUpdated);
-				_allContacts = [];
-				for(key in _temporaryContacts)
-					_allContacts.push( _temporaryContacts[key] );
-				_allContacts.sortOn("compositename", Array.CASEINSENSITIVE);
 				onContactsRetreived();
 			}
 		}
 		
-		private function onContactsRetreived():void
+		private function onContactsRetreived(event:* = null):void
 		{
+			AirAddressBook.getInstance().removeEventListener(AirAddressBook.CONTACTS_UPDATED, onContactsUpdated);
+			AirAddressBook.getInstance().removeEventListener(AirAddressBook.JOB_FINISHED, onContactsRetreived);
+			
+			_allContacts = [];
+			for(var key:String in _temporaryContacts)
+				_allContacts.push( _temporaryContacts[key] );
+			_allContacts.sortOn("compositename", Array.CASEINSENSITIVE);
+			
 			_contacts = new Vector.<ContactData>();
 			var singleContact:Object;
-			var phoneNumberString:String;
-			var tempPhoneNumbers:Array;
 			for each(singleContact in _allContacts)
 			{
 				// for each contact, we need to check 
@@ -415,7 +418,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 				_inviteAllButton.visible = true;
 			}
 			
-			_temporaryContacts = null;
+			//_temporaryContacts = null; // we need it on android for the next time we show the screen
 			_allContacts = [];
 			_allContacts = null;
 			
