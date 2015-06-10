@@ -7,7 +7,9 @@ Created : 11 déc. 2012
 package com.ludofactory.common.utils
 {
 	import com.gamua.flox.Flox;
+	import com.ludofactory.mobile.core.Logger;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	
 	import flash.utils.getQualifiedClassName;
 
@@ -21,7 +23,7 @@ package com.ludofactory.common.utils
 	 * @return String 
 	 * 
 	 */		
-	public function log(value:*, color:uint=0x000000, indentationLevel:int = 0):String
+	/*public function log(value:*, color:uint=0x000000, indentationLevel:int = 0):String
 	{
 		if( !CONFIG::DEBUG )
 		{
@@ -70,6 +72,13 @@ package com.ludofactory.common.utils
 		}
 		
 		return output;
-	}
+	}*/
 	
+	public function log(obj:*, name:String = "", levelMax:int = 1 , forceLog:Boolean = false, level:int = 0):String
+	{
+		if (MemberManager.getInstance().isAdmin() || CONFIG::DEBUG || forceLog)
+			return Logger.getLog(obj, name, levelMax, forceLog, level);
+		return "";
+	}
+
 }
