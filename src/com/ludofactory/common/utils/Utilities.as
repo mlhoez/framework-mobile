@@ -11,6 +11,8 @@ package com.ludofactory.common.utils
 	import com.ludofactory.common.gettext.aliases._;
 	
 	import flash.desktop.NativeApplication;
+	import flash.utils.describeType;
+	import flash.utils.getDefinitionByName;
 	
 	public class Utilities
 	{
@@ -358,5 +360,57 @@ package com.ludofactory.common.utils
 			var dst:Number = (d.timezoneOffset * 60000) - tzd
 			return dst
 		}*/
+		
+		
+		
+		
+		
+		
+		public static function countObject(value:Object):int
+		{
+			var i:int = 0;
+			if(CONFIG::DEBUG)
+				enableEnumerableObject(value);
+			for each(var o:Object in value)
+			{
+				i++;
+			}
+			
+			return i;
+		}
+		
+		// Permet de rendre les variables de 'obj' enumerable au for in comme s'il été de type Object
+		public static function enableEnumerableObject(obj:Object):void
+		{
+			//			trace("enableEnumerableClass")
+			var key:String;
+			var xml:XML = describeType(obj);
+			var classPath:String = xml.@name
+			
+			
+			if(classPath == "Array" || classPath == "Vector" || classPath == "Object"   )
+			{
+				return ;
+			}
+			
+			var className:Class = getDefinitionByName(classPath) as Class;
+			// permet de rendre la class enumérable pour les for in
+			for each(key in xml.variable.@name)
+			{
+				className.prototype[key] = obj[key];
+			}
+			for each(key in xml.accessor.(@declaredBy == classPath).@name)
+			{
+				try
+				{
+					className.prototype[key] = obj[key];
+					
+				}catch(e:Error)
+				{
+					className.prototype[key] = e.message
+				}
+			}
+			
+		}
 	}
 }
