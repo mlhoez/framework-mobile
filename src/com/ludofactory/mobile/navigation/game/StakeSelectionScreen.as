@@ -12,6 +12,7 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameMode;
+	import com.ludofactory.mobile.core.GameMode;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -21,6 +22,7 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.ads.AdManager;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Label;
@@ -73,7 +75,7 @@ package com.ludofactory.mobile.navigation.game
 			_title.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 0.75, 5, 5, 3) ];
 			
 			_withTokens = new StakeButtonToken( this.advancedOwner.screenData.gameType );
-			_withTokens.addEventListener(Event.TRIGGERED, onPlayWithFree);
+			_withTokens.addEventListener(Event.TRIGGERED, onPlayWithTokens);
 			addChild(_withTokens);
 			
 			_withCredits = new StakeButtonCredit(this.advancedOwner.screenData.gameType);
@@ -186,7 +188,7 @@ package com.ludofactory.mobile.navigation.game
 		 * <p>No verification is needed here because this listener is not set if
 		 * the user doesn't have free game sessions left.</p>
 		 */		
-		private function onPlayWithFree(event:Event):void
+		private function onPlayWithTokens(event:Event):void
 		{
 			if( GAnalytics.isSupported() )
 				GAnalytics.analytics.defaultTracker.trackEvent("Choix des mises (mode " + this.advancedOwner.screenData.gameType +  ")", "Choix de la mise Jetons", null, NaN, MemberManager.getInstance().getId());
@@ -227,6 +229,11 @@ package com.ludofactory.mobile.navigation.game
 			_withTokens.touchable = false;
 			_canBack = false;
 			
+			if( this.advancedOwner.screenData.gameType == GameMode.SOLO && MemberManager.getInstance().canDisplayInterstitial() )
+			{
+				AdManager.showInterstitial();
+			}
+			
 			TweenMax.delayedCall(2, changeScreen);
 		}
 		
@@ -251,7 +258,7 @@ package com.ludofactory.mobile.navigation.game
 				_withPoints = null;
 			}
 			
-			_withTokens.removeEventListener(Event.TRIGGERED, onPlayWithFree);
+			_withTokens.removeEventListener(Event.TRIGGERED, onPlayWithTokens);
 			_withTokens.removeFromParent(true);
 			_withTokens = null;
 			
