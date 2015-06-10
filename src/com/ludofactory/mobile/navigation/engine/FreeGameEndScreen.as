@@ -569,7 +569,7 @@ package com.ludofactory.mobile.navigation.engine
 		
 		private function onAddLabelAnimatedFromScoreToPoints():void
 		{
-			if( !_continueButton.isEnabled )
+			if( _continueButton && !_continueButton.isEnabled )
 				return;
 			
 			_oldTweenValue = 0;
