@@ -6,23 +6,20 @@ Created : 18 sept. 2013
 */
 package com.ludofactory.mobile.navigation.news
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
@@ -33,6 +30,11 @@ package com.ludofactory.mobile.navigation.news
 	import feathers.controls.supportClasses.ListDataViewPort;
 	import feathers.data.ListCollection;
 	import feathers.layout.VerticalLayout;
+	
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.core.Starling;
 	import starling.display.MovieClip;
@@ -217,8 +219,16 @@ package com.ludofactory.mobile.navigation.news
 		 */		
 		private function onTouchCgu(event:Event):void
 		{
-			advancedOwner.showScreen(ScreenIds.CGU_SCREEN);
-			//navigateToURL( new URLRequest("http://www.ludokado.com/reglement-ludokado.html") );
+			if( GlobalConfig.android )
+			{
+				// bug on android when the text is too long so we simply redirect
+				navigateToURL(new URLRequest("http://www.ludokado.com/?m=243&lng=" + LanguageManager.getInstance().lang));
+			}
+			else
+			{
+				advancedOwner.showScreen(ScreenIds.CGU_SCREEN);
+				//navigateToURL( new URLRequest("http://www.ludokado.com/reglement-ludokado.html") );
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
