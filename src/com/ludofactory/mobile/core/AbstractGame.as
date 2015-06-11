@@ -260,7 +260,6 @@ package com.ludofactory.mobile.core
 			_playButton.y = (GlobalConfig.stageHeight - _playButton.height) * 0.5;
 			
 			// enable the pause view and listeners
-			PauseManager.isPlaying = true;
 			PauseManager.dispatcher.addEventListener(LudoEventType.EXIT, giveUp);
 			PauseManager.dispatcher.addEventListener(LudoEventType.RESUME, resume);
 		}
@@ -271,6 +270,8 @@ package com.ludofactory.mobile.core
 		 */		
 		protected function onPlay(event:starling.events.Event):void
 		{
+			PauseManager.isPlaying = true;
+			
 			_playOverlay.removeFromParent(true);
 			_playOverlay = null;
 			
