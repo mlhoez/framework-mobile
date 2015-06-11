@@ -90,7 +90,6 @@ package com.ludofactory.mobile.core.notification.content
 			_horizontalScrollPolicy = _verticalScrollPolicy = SCROLL_POLICY_OFF;
 		}
 		
-		var _ar:Boolean = false;
 		override protected function draw():void
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE))
@@ -98,13 +97,10 @@ package com.ludofactory.mobile.core.notification.content
 				_title.width = this.actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.5);
 				_title.x = (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)) + roundUp(((actualWidth * 0.5) - _title.width) * 0.5);
 				
-				if( !_ar )
-				{
-					_image.scaleX = _image.scaleY = Utilities.getScaleToFill(_image.width, _image.height, (actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.5)), actualHeight * 0.8);
-					_image.y = roundUp((actualHeight - _image.height) * 0.5);
-					_image.x = roundUp((actualWidth * 0.5 - _image.width) * 0.5);
-					_ar = true;
-				}
+				_image.scaleX = _image.scaleY = 1;
+				_image.scaleX = _image.scaleY = Utilities.getScaleToFill(_image.width, _image.height, (actualWidth * (GlobalConfig.isPhone ? 0.5 : 0.5)), (actualHeight * 0.9));
+				_image.y = roundUp((actualHeight - _image.height) * 0.5);
+				_image.x = roundUp((actualWidth * 0.5 - _image.width) * 0.5);
 				
 				_laterButton.width = _createButton.width = actualWidth * 0.4;
 				_laterButton.height = _createButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 90 : 130);
