@@ -154,7 +154,7 @@ package com.ludofactory.mobile.core.controls
 			{
 				if( this.actualHeight < this.viewPort.height )
 				{
-					log("[PullToRefreshScrollContainer] ScrollContainer should display arrows !");
+					//log("[PullToRefreshScrollContainer] ScrollContainer should display arrows !");
 					_zone = new Image(Theme.downArrowShadow);
 					_zone.y = this.actualHeight - _zone.height;
 					_zone.width = actualWidth;
