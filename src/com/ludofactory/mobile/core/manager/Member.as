@@ -149,10 +149,21 @@ package com.ludofactory.mobile.core.manager
 		 */
 		private var _canWatchVideo:Boolean = false;
 		
+		/**
+		 * Whether we can display an interstital after a stake have been selected. */
+		private var _canDisplayInterstitial:Boolean = false;
 		
 		/**
 		 * Whether the user is admin or not. */
 		private var _isAdmin:Boolean = false;
+		
+		/**
+		 * Facebook token. */
+		private var _facebookToken:String = "";
+		/**
+		 * Facebook token expiry date (time in ms).
+		 * use new Date(tokenExpiryDate) to get the full date to compare. */
+		private var _facebookTokenExpiryDate:Number = 0;
 		
 		public function Member() { }
 		
@@ -163,25 +174,26 @@ package com.ludofactory.mobile.core.manager
 		 */		
 		public function parseData(memberData:Object):void
 		{
-			if( "id_membre" in memberData && memberData.id_membre != null )                  _id = int(memberData.id_membre);
-			if( "mail" in memberData && memberData.mail != null )                            _mail = String(memberData.mail);
-			if( "mdp" in memberData && memberData.mdp != null )                              _password = String(memberData.mdp);
-			if( "pseudo" in memberData && memberData.pseudo != null )                        _pseudo = String(memberData.pseudo);
-			if( "date_naissance" in memberData && memberData.date_naissance != null )        _birthDate = String(memberData.date_naissance);
-			if( "sexe" in memberData && memberData.sexe != null )                            _title = String(memberData.sexe);
-			if( "credits" in memberData && memberData.credits != null )                      _credits = int(memberData.credits);
-			if( "jetons" in memberData && memberData.jetons != null )                        _numTokens = int(memberData.jetons);
-			if( "score_cumule" in memberData && memberData.score_cumule != null )            _cumulatedStars = int(memberData.score_cumule);
-			if( "points" in memberData && memberData.points != null )                        _points = int(memberData.points);
-			if( "rang" in memberData && memberData.rang != null )                            _rank = int(memberData.rang);
-			if( "id_facebook" in memberData && memberData.id_facebook != null )              _facebookId = Number(memberData.id_facebook);
-			if( "nb_credit_acheter" in memberData && memberData.nb_credit_acheter != null )  _numCreditsBought = int(memberData.nb_credit_acheter);
-			if( "date_jetons" in memberData && memberData.date_jetons != null )              _updateDate = String(memberData.date_jetons);
-			if( "id_pays_pseudo" in memberData && memberData.id_pays_pseudo != null )        _countryId = int(memberData.id_pays_pseudo);
-			if( "jetons_quotidiens" in memberData && memberData.jetons_quotidiens != null )  _totalTokensADay = int(memberData.jetons_quotidiens);
-			if( "jetons_bonus" in memberData && memberData.jetons_bonus != null )            _totalBonusTokensADay = int(memberData.jetons_bonus);
-			if( "video_disponible" in memberData && memberData.video_disponible != null )    _canWatchVideo = Boolean(memberData.video_disponible);
-			if( "isAdmin" in memberData && memberData.isAdmin != null )                      _isAdmin = Boolean(memberData.isAdmin);
+			if( "id_membre" in memberData && memberData.id_membre != null )                     _id = int(memberData.id_membre);
+			if( "mail" in memberData && memberData.mail != null )                               _mail = String(memberData.mail);
+			if( "mdp" in memberData && memberData.mdp != null )                                 _password = String(memberData.mdp);
+			if( "pseudo" in memberData && memberData.pseudo != null )                           _pseudo = String(memberData.pseudo);
+			if( "date_naissance" in memberData && memberData.date_naissance != null )           _birthDate = String(memberData.date_naissance);
+			if( "sexe" in memberData && memberData.sexe != null )                               _title = String(memberData.sexe);
+			if( "credits" in memberData && memberData.credits != null )                         _credits = int(memberData.credits);
+			if( "jetons" in memberData && memberData.jetons != null )                           _numTokens = int(memberData.jetons);
+			if( "score_cumule" in memberData && memberData.score_cumule != null )               _cumulatedStars = int(memberData.score_cumule);
+			if( "points" in memberData && memberData.points != null )                           _points = int(memberData.points);
+			if( "rang" in memberData && memberData.rang != null )                               _rank = int(memberData.rang);
+			if( "id_facebook" in memberData && memberData.id_facebook != null )                 _facebookId = Number(memberData.id_facebook);
+			if( "nb_credit_acheter" in memberData && memberData.nb_credit_acheter != null )     _numCreditsBought = int(memberData.nb_credit_acheter);
+			if( "date_jetons" in memberData && memberData.date_jetons != null )                 _updateDate = String(memberData.date_jetons);
+			if( "id_pays_pseudo" in memberData && memberData.id_pays_pseudo != null )           _countryId = int(memberData.id_pays_pseudo);
+			if( "jetons_quotidiens" in memberData && memberData.jetons_quotidiens != null )     _totalTokensADay = int(memberData.jetons_quotidiens);
+			if( "jetons_bonus" in memberData && memberData.jetons_bonus != null )               _totalBonusTokensADay = int(memberData.jetons_bonus);
+			if( "video_disponible" in memberData && memberData.video_disponible != null )       _canWatchVideo = Boolean(memberData.video_disponible);
+			if( "isAdmin" in memberData && memberData.isAdmin != null )                         _isAdmin = Boolean(memberData.isAdmin);
+			if( "displayInterstitial" in memberData && memberData.displayInterstitial != null ) _canDisplayInterstitial = Boolean(memberData.displayInterstitial);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
 		
@@ -276,5 +288,14 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get isAdmin():Boolean { return _isAdmin; }
 		public function set isAdmin(val:Boolean):void { _isAdmin = val; }
+		
+		public function get canDisplayInterstitial():Boolean { return _canDisplayInterstitial; }
+		public function set canDisplayInterstitial(val:Boolean):void { _canDisplayInterstitial = val; }
+		
+		public function get facebookToken():String { return _facebookToken; }
+		public function set facebookToken(val:String):void { _facebookToken = val; }
+		
+		public function get facebookTokenExpiryDate():Number { return _facebookTokenExpiryDate; }
+		public function set facebookTokenExpiryDate(val:Number):void { _facebookTokenExpiryDate = val; }
 	}
 }

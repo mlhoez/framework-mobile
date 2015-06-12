@@ -171,7 +171,7 @@ package com.ludofactory.mobile.core.manager
 				{
 					
 				}
-				log("<strong>Connexion du joueur " + memberId + "</strong>");
+				//log("<strong>Connexion du joueur " + memberId + "</strong>");
 				
 				updateVidCoinData();
 			}
@@ -456,6 +456,16 @@ package com.ludofactory.mobile.core.manager
 			_member.giftsEnabled = value;
 		}
 		
+		public function setFacebookToken(value:String):void
+		{
+			_member.facebookToken = value;
+		}
+		
+		public function setFacebookTokenExpiryDate(value:Number):void
+		{
+			_member.facebookTokenExpiryDate = value;
+		}
+		
 		/** Returns the member's id. */		
 		public function getId():int { return _member.id; }
 		/** Returns the member's highscore */		
@@ -512,9 +522,14 @@ package com.ludofactory.mobile.core.manager
         public function getGiftsEnabled():Boolean { return _member.giftsEnabled; }
 		/** Returns */
 		public function getCanWatchVideo():Boolean { return _member.canWatchVideo; }
-		/**
-		 *  */
+		/** Returns */
 		public function isAdmin():Boolean { return _member.isAdmin; }
+		/** Returns */
+		public function canDisplayInterstitial():Boolean { return _member.canDisplayInterstitial; }
+		/** Returns */
+		public function getFacebookToken():String { return _member.facebookToken; }
+		/** Returns */
+		public function getFacebookTokenExpiryDate():Number { return _member.facebookTokenExpiryDate; }
 		
 		public function getNumStarsEarnedInAnonymousGameSessions():int
 		{
