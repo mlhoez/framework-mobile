@@ -37,8 +37,6 @@ package com.ludofactory.mobile.navigation.event
 		
 		private var _closeButton:Button;
 		
-		private var _facebookManager:FacebookManager;
-		
 		public function FullScreenFacebookEvent( data:EventData )
 		{
 			super();
@@ -66,8 +64,7 @@ package com.ludofactory.mobile.navigation.event
 			_closeButton.addEventListener(Event.TRIGGERED, onClose);
 			addChild(_closeButton);
 			
-			_facebookManager = new FacebookManager();
-			_facebookManager.addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
+			FacebookManager.getInstance().addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
 		}
 		
 		override protected function draw():void
@@ -94,7 +91,7 @@ package com.ludofactory.mobile.navigation.event
 			if( touch && touch.phase == TouchPhase.BEGAN )
 			{
 				// Association Facebook
-				_facebookManager.associate();
+				FacebookManager.getInstance().associate();
 			}
 			touch = null;
 		}
@@ -132,9 +129,7 @@ package com.ludofactory.mobile.navigation.event
 			_closeButton.removeFromParent(true);
 			_closeButton = null;
 			
-			_facebookManager.removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-			_facebookManager.dispose();
-			_facebookManager = null;
+			FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
 			
 			super.dispose();
 		}

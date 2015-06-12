@@ -101,10 +101,6 @@ package com.ludofactory.mobile.navigation.highscore
 		 * Associate button. */		
 		private var _associateButton:ArrowGroup;
 		
-		/**
-		 * The Facebook manager. */		
-		private var _facebookManager:FacebookManager;
-		
 		public function HighScoreListScreen()
 		{
 			super();
@@ -209,9 +205,8 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			_selectedCountryId = advancedOwner.screenData.highscoreRankingType;
 			
-			_facebookManager = new FacebookManager();
-			_facebookManager.addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, launchRequestAfterSuccessLoginFacebook);
-			_facebookManager.addEventListener(FacebookManager.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
+			FacebookManager.getInstance().addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, launchRequestAfterSuccessLoginFacebook);
+			FacebookManager.getInstance().addEventListener(FacebookManager.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
 			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
@@ -542,17 +537,17 @@ package com.ludofactory.mobile.navigation.highscore
 		
 		private function getToken(event:Event):void
 		{
-			_facebookManager.getToken();
+			FacebookManager.getInstance().getToken();
 		}
 		
 		private function onAuthenticateFacebook(event:Event):void
 		{
-			_facebookManager.register();
+			FacebookManager.getInstance().register();
 		}
 		
 		private function onAssociateAccount(event:Event):void
 		{
-			_facebookManager.associate();
+			FacebookManager.getInstance().associate();
 		}
 		
 		/**
@@ -579,7 +574,7 @@ package com.ludofactory.mobile.navigation.highscore
 					
 					invalidate(INVALIDATION_FLAG_SIZE);
 					
-					_facebookManager.getToken();
+					FacebookManager.getInstance().getToken();
 				}
 				else
 				{
@@ -615,10 +610,8 @@ package com.ludofactory.mobile.navigation.highscore
 		
 		override public function dispose():void
 		{
-			_facebookManager.removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, launchRequestAfterSuccessLoginFacebook);
-			_facebookManager.removeEventListener(FacebookManager.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
-			_facebookManager.dispose();
-			_facebookManager = null;
+			FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, launchRequestAfterSuccessLoginFacebook);
+			FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
 			
 			_associateButton.removeEventListener(Event.TRIGGERED, onAuthenticateFacebook);
 			_associateButton.removeEventListener(Event.TRIGGERED, onAssociateAccount);

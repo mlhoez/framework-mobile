@@ -76,8 +76,6 @@ package com.ludofactory.mobile.navigation.engine
 		 * The continue button. */		
 		private var _continueButton:Button;
 		
-		private var _facebookManager:FacebookManager;
-		
 		public function HighScoreScreen()
 		{
 			super();
@@ -142,9 +140,8 @@ package com.ludofactory.mobile.navigation.engine
 			
 			if( MemberManager.getInstance().isLoggedIn() && GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
 			{
-				_facebookManager = new FacebookManager();
-				_facebookManager.addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-				_facebookManager.addEventListener(FacebookManager.AUTHENTICATED, onPublish);
+				FacebookManager.getInstance().addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
+				FacebookManager.getInstance().addEventListener(FacebookManager.AUTHENTICATED, onPublish);
 					
 				_continueButton = new Button();
 				_continueButton.alpha = 0;
@@ -307,7 +304,7 @@ package com.ludofactory.mobile.navigation.engine
 		
 		private function onAssociateOrPublish(event:starling.events.Event):void
 		{
-			_facebookManager.associateForPublish();
+			FacebookManager.getInstance().associateForPublish();
 		}
 		
 		private function onAccountAssociated(event:starling.events.Event):void
@@ -403,10 +400,8 @@ package com.ludofactory.mobile.navigation.engine
 			
 			if( _facebookButton )
 			{
-				_facebookManager.removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-				_facebookManager.removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
-				_facebookManager.dispose();
-				_facebookManager = null;
+				FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
+				FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
 				
 				_continueButton.removeEventListener(starling.events.Event.TRIGGERED, onContinue);
 				_continueButton.removeFromParent(true);

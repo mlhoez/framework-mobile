@@ -89,8 +89,6 @@ package com.ludofactory.mobile.navigation.vip
 		 * the actual state. */		
 		private var _facebookButton:Button;
 		
-		private var _facebookManager:FacebookManager;
-		
 		public function VipUpScreen()
 		{
 			super();
@@ -158,9 +156,8 @@ package com.ludofactory.mobile.navigation.vip
 			
 			if( MemberManager.getInstance().isLoggedIn() && GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
 			{
-				_facebookManager = new FacebookManager();
-				_facebookManager.addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-				_facebookManager.addEventListener(FacebookManager.AUTHENTICATED, onPublish);
+				FacebookManager.getInstance().addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
+				FacebookManager.getInstance().addEventListener(FacebookManager.AUTHENTICATED, onPublish);
 				
 				_facebookIcon = new ImageLoader();
 				_facebookIcon.source = AbstractEntryPoint.assets.getTexture( GlobalConfig.isPhone ? "facebook-icon" : "facebook-icon-hd");
@@ -371,7 +368,7 @@ package com.ludofactory.mobile.navigation.vip
 		
 		private function onAssociateOrPublish(event:starling.events.Event):void
 		{
-			_facebookManager.associateForPublish();
+			FacebookManager.getInstance().associateForPublish();
 		}
 		
 		private function onAccountAssociated(event:starling.events.Event):void
@@ -473,10 +470,8 @@ package com.ludofactory.mobile.navigation.vip
 			
 			if( _facebookButton )
 			{
-				_facebookManager.removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-				_facebookManager.removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
-				_facebookManager.dispose();
-				_facebookManager = null;
+				FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
+				FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
 				
 				_facebookIcon.removeFromParent(true);
 				_facebookIcon = null;

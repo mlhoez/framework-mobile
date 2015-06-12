@@ -51,7 +51,6 @@ package com.ludofactory.mobile.navigation.engine
 		/**
 		 * The continue button. */		
 		private var _continueButton:Button;
-		private var _facebookManager:FacebookManager;
 		
 		/**
 		 * The first friend container.*/		
@@ -124,9 +123,8 @@ package com.ludofactory.mobile.navigation.engine
 			addChild(_title);
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 48 : 50), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			
-			_facebookManager = new FacebookManager();
-			_facebookManager.addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-			_facebookManager.addEventListener(FacebookManager.AUTHENTICATED, onPublish);
+			FacebookManager.getInstance().addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
+			FacebookManager.getInstance().addEventListener(FacebookManager.AUTHENTICATED, onPublish);
 			
 			_facebookIcon = new ImageLoader();
 			_facebookIcon.source = AbstractEntryPoint.assets.getTexture( GlobalConfig.isPhone ? "facebook-icon" : "facebook-icon-hd");
@@ -342,7 +340,7 @@ package com.ludofactory.mobile.navigation.engine
 		
 		private function onAssociateOrPublish(event:starling.events.Event):void
 		{
-			_facebookManager.associateForPublish();
+			FacebookManager.getInstance().associateForPublish();
 		}
 		
 		private function onAccountAssociated(event:starling.events.Event):void
@@ -398,10 +396,8 @@ package com.ludofactory.mobile.navigation.engine
 			_all = [];
 			_all = null;
 			
-			_facebookManager.removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-			_facebookManager.removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
-			_facebookManager.dispose();
-			_facebookManager = null;
+			FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
+			FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
 			
 			_facebookIcon.removeFromParent(true);
 			_facebookIcon = null;
