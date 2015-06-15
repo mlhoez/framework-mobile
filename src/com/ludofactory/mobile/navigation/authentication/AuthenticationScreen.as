@@ -17,6 +17,7 @@ package com.ludofactory.mobile.navigation.authentication
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -294,29 +295,28 @@ package com.ludofactory.mobile.navigation.authentication
 			// the graphPath property is 'me' for a profile request.
 			if(event.graphPath == "me")
 			{
-				var me:GVFacebookFriend = event.friends[0];
+				GoViral.goViral.removeEventListener(GVFacebookEvent.FB_REQUEST_RESPONSE, onFacebookResponse);
+				GoViral.goViral.removeEventListener(GVFacebookEvent.FB_REQUEST_FAILED, onRequestFailed);
 				
+				// small - normal - large - square
+				//https://graph.facebook.com/100003577159732/picture?type=large
+				
+				var me:GVFacebookFriend = event.friends[0];
 				var formattedUserData:Object = {};
-				if( me.properties.hasOwnProperty("id") )
-					formattedUserData.id_facebook = me.properties.id;
-				if( me.properties.hasOwnProperty("email") )
-					formattedUserData.mail = me.properties.email;
-				if( me.properties.hasOwnProperty("last_name") )
-					formattedUserData.nom = me.properties.last_name;
-				if( me.properties.hasOwnProperty("first_name") )
-					formattedUserData.prenom = me.properties.first_name;
-				if( me.properties.hasOwnProperty("gender") )
-					formattedUserData.titre = me.properties.gender == "male" ? 1:2;
-				if( me.properties.hasOwnProperty("location") )
-					formattedUserData.ville = me.locationName;
-				if( me.properties.hasOwnProperty("birthday") )
-					formattedUserData.date_naissance = me.properties.birthday;
+				if( me.properties.hasOwnProperty("id") )         formattedUserData.id_facebook = me.properties.id;
+				if( me.properties.hasOwnProperty("email") )      formattedUserData.mail = me.properties.email;
+				if( me.properties.hasOwnProperty("last_name") )  formattedUserData.nom = me.properties.last_name;
+				if( me.properties.hasOwnProperty("first_name") ) formattedUserData.prenom = me.properties.first_name;
+				if( me.properties.hasOwnProperty("gender") )     formattedUserData.titre = me.properties.gender == "male" ? 1:2;
+				if( me.properties.hasOwnProperty("location") )   formattedUserData.ville = me.locationName;
+				if( me.properties.hasOwnProperty("birthday") )   formattedUserData.date_naissance = me.properties.birthday;
 				formattedUserData.id_parrain = -1;
 				formattedUserData.type_inscription = RegisterType.FACEBOOK;
 				formattedUserData.langue = LanguageManager.getInstance().lang;
 				
-				GoViral.goViral.removeEventListener(GVFacebookEvent.FB_REQUEST_RESPONSE, onFacebookResponse);
-				GoViral.goViral.removeEventListener(GVFacebookEvent.FB_REQUEST_FAILED, onRequestFailed);
+				// also update the token and its expiration date here
+				MemberManager.getInstance().setFacebookToken(GoViral.goViral.getFbAccessToken());
+				MemberManager.getInstance().setFacebookTokenExpiryTimestamp(GoViral.goViral.getFbAccessExpiry());
 				
 				if( !formattedUserData.hasOwnProperty("mail") || formattedUserData.mail == null || formattedUserData.mail == "" )
 				{
