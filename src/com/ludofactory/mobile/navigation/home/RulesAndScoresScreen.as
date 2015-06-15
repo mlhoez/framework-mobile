@@ -103,7 +103,7 @@ package com.ludofactory.mobile.navigation.home
 				_tabMenu.width = this.actualWidth;
 				_tabMenu.validate();
 				
-				_rulesList.width = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.9) : 560 ) : (AbstractGameInfo.LANDSCAPE ? 760 : 760) );
+				_rulesList.width = GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.9) : scaleAndRoundToDpi(560) ) : (AbstractGameInfo.LANDSCAPE ? scaleAndRoundToDpi(760) : scaleAndRoundToDpi(760));
 				_rulesList.x = roundUp((actualWidth - _rulesList.width) * 0.5);
 				_rulesList.y = _tabMenu.y + _tabMenu.height;
 				_rulesList.height = actualHeight - _rulesList.y;

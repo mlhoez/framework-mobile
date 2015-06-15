@@ -68,9 +68,7 @@ package com.ludofactory.mobile.navigation.engine
 		 * Facebook icon for the button. */		
 		private var _facebookIcon:ImageLoader;
 		/**
-		 * Facebook button that will associate the
-		 * account or directly publish, depending on
-		 * the actual state. */		
+		 * Facebook button that will associate the account or directly publish, depending on the actual state. */		
 		private var _facebookButton:Button;
 		/**
 		 * The continue button. */		

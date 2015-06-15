@@ -64,7 +64,7 @@ package com.ludofactory.mobile.navigation.home
 			
 			// TODO Ajuster la position ici pour le format portrait (GlobalConfig.stageWidth * xxx) comme ça a été fait pour le format paysage
 			// TODO et rescaler les images TOP et BOTTOM de façon proportionnelle
-			width = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.8) : 560 ) : (AbstractGameInfo.LANDSCAPE ? 760 : 760) );
+			width = GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.stageWidth * 0.8) : scaleAndRoundToDpi(560) ) : (AbstractGameInfo.LANDSCAPE ? scaleAndRoundToDpi(760) : scaleAndRoundToDpi(760)) ;
 			height = _minItemHeight = scaleAndRoundToDpi(150);
 			_padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 20);
 			
