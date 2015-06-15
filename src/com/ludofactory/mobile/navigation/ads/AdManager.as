@@ -7,8 +7,10 @@ Created : 27 mai 2013
 package com.ludofactory.mobile.navigation.ads
 {
 	
+	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.manager.TimerManager;
 	import com.milkmangames.nativeextensions.AdMob;
 	import com.milkmangames.nativeextensions.AdMobAdType;
 	import com.milkmangames.nativeextensions.AdMobAlignment;
@@ -43,6 +45,9 @@ package com.ludofactory.mobile.navigation.ads
 		 * Whether AdMob is available. */		
 		private static var _adMobAvailable:Boolean = false;
 		
+		private static var _timeriAd:TimerManager;
+		private static var _timerAdMob:TimerManager;
+		
 		/**
 		 * Initializes both iAd and adMob ad networks.
 		 * 
@@ -71,7 +76,16 @@ package com.ludofactory.mobile.navigation.ads
 						//IAd.iAd.addEventListener(IAdEvent.INTERSTITIAL_AD_UNLOADED, onInterstitalAdDismissed); // useless ?
 						IAd.iAd.addEventListener(IAdEvent.INTERSTITIAL_AD_LOADED, oniAdInterstitialLoaded);
 						IAd.iAd.addEventListener(IAdErrorEvent.INTERSTITIAL_AD_FAILED, oniAdInterstitalFailed);
-						IAd.iAd.loadInterstitial(false);
+						
+						_timeriAd = new TimerManager(6, -1, null, onReloadiAdInterstitial, null);
+						if( AirNetworkInfo.networkInfo.isConnected() )
+						{
+							IAd.iAd.loadInterstitial(false);
+						}
+						else
+						{
+							_timeriAd.restart();
+						}
 						
 					}
 					_iAdAvailable = true;
@@ -91,7 +105,17 @@ package com.ludofactory.mobile.navigation.ads
 				AdMob.addEventListener(AdMobEvent.SCREEN_DISMISSED, onAdMobInterstitalDismissed);
 				AdMob.addEventListener(AdMobEvent.RECEIVED_AD, onAdMobInterstitialLoaded);
 				AdMob.addEventListener(AdMobErrorEvent.FAILED_TO_RECEIVE_AD, onAdMobInterstitialFailed);
-				AdMob.loadInterstitial(AbstractGameInfo.ADMOB_ANDROID_INTERSTITIAL_ID, false, AbstractGameInfo.ADMOB_IOS_INTERSTITIAL_ID);
+				
+				_timerAdMob = new TimerManager(6, -1, null, onReloadAdMobInterstitial, null);
+				if( AirNetworkInfo.networkInfo.isConnected() )
+				{
+					AdMob.loadInterstitial(AbstractGameInfo.ADMOB_ANDROID_INTERSTITIAL_ID, false, AbstractGameInfo.ADMOB_IOS_INTERSTITIAL_ID);
+				}
+				else
+				{
+					_timerAdMob.restart();
+				}
+				
 
 				_adMobAvailable = true;
 			}
@@ -238,6 +262,7 @@ package com.ludofactory.mobile.navigation.ads
 		 */
 		public static function oniAdInterstitialLoaded(event:IAdEvent):void
 		{
+			_timeriAd.stop();
 			log("[AdManager] iAd interstitial loaded.");
 		}
 		
@@ -247,7 +272,10 @@ package com.ludofactory.mobile.navigation.ads
 		public static function onAdMobInterstitialLoaded(event:AdMobEvent):void
 		{
 			if(event.isInterstitial)
+			{
+				_timerAdMob.stop();
 				log("[AdManager] AdMob interstitial loaded.");
+			}
 		}
 		
 	// Interstitial dismissed
@@ -262,6 +290,7 @@ package com.ludofactory.mobile.navigation.ads
 			// interstitial dismissed, so we can load another one for the next time
 			try
 			{
+				_timeriAd.stop();
 				IAd.iAd.loadInterstitial(false);
 			}
 			catch (e:Error)
@@ -280,6 +309,7 @@ package com.ludofactory.mobile.navigation.ads
 			// interstitial dismissed, so we can load another one for the next time
 			try
 			{
+				_timerAdMob.stop();
 				AdMob.loadInterstitial(AbstractGameInfo.ADMOB_ANDROID_INTERSTITIAL_ID, false, AbstractGameInfo.ADMOB_IOS_INTERSTITIAL_ID);
 			}
 			catch (e:Error)
@@ -295,6 +325,7 @@ package com.ludofactory.mobile.navigation.ads
 		 */
 		public static function oniAdInterstitalShown(event:IAdEvent):void
 		{
+			_timeriAd.stop();
 			log("[AdManager] Showing iAd interstitial.");
 		}
 		
@@ -303,6 +334,7 @@ package com.ludofactory.mobile.navigation.ads
 		 */
 		public static function onAdMobInterstitialShown(event:AdMobEvent):void
 		{
+			_timerAdMob.stop();
 			log("[AdManager] Showing AdMob interstitial.");
 		}
 		
@@ -318,7 +350,32 @@ package com.ludofactory.mobile.navigation.ads
 			// interstitial failed to load, so we can load another one for the next time
 			try
 			{
-				IAd.iAd.loadInterstitial(false);
+				if( AirNetworkInfo.networkInfo.isConnected() )
+				{
+					_timeriAd.stop();
+					IAd.iAd.loadInterstitial(false);
+				}
+				else
+				{
+					_timeriAd.restart();
+				}
+			}
+			catch (e:Error)
+			{
+				trace("[AdManager] Can't preload iAd again yet.");
+			}
+		}
+		
+		public static function onReloadiAdInterstitial():void
+		{
+			trace("[AdManager] Reload iAd interstitial from timer callback.");
+			try
+			{
+				if( AirNetworkInfo.networkInfo.isConnected() )
+				{
+					_timeriAd.stop();
+					IAd.iAd.loadInterstitial(false);
+				}
 			}
 			catch (e:Error)
 			{
@@ -336,7 +393,32 @@ package com.ludofactory.mobile.navigation.ads
 			// interstitial failed to load, so we can load another one for the next time
 			try
 			{
-				AdMob.loadInterstitial(AbstractGameInfo.ADMOB_ANDROID_INTERSTITIAL_ID, false, AbstractGameInfo.ADMOB_IOS_INTERSTITIAL_ID);
+				if( AirNetworkInfo.networkInfo.isConnected() )
+				{
+					_timerAdMob.stop();
+					AdMob.loadInterstitial(AbstractGameInfo.ADMOB_ANDROID_INTERSTITIAL_ID, false, AbstractGameInfo.ADMOB_IOS_INTERSTITIAL_ID);
+				}
+				else
+				{
+					_timerAdMob.restart();
+				}
+			}
+			catch (e:Error)
+			{
+				trace("[AdManager] Can't preload AdMob interstitial again yet.");
+			}
+		}
+		
+		public static function onReloadAdMobInterstitial():void
+		{
+			log("[AdManager] Reload AdMob interstitial from timer callback.");
+			try
+			{
+				if( AirNetworkInfo.networkInfo.isConnected() )
+				{
+					_timerAdMob.stop();
+					AdMob.loadInterstitial(AbstractGameInfo.ADMOB_ANDROID_INTERSTITIAL_ID, false, AbstractGameInfo.ADMOB_IOS_INTERSTITIAL_ID);
+				}
 			}
 			catch (e:Error)
 			{
