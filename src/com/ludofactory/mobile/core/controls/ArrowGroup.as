@@ -64,7 +64,7 @@ package com.ludofactory.mobile.core.controls
 			_label = new Label();
 			_label.text = _labelName;
 			addChild(_label);
-			_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 38), Theme.COLOR_DARK_GREY, true, true);
+			_label.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 38), Theme.COLOR_DARK_GREY, true, false);
 			_label.textRendererProperties.wordWrap = false;
 			
 			addEventListener(TouchEvent.TOUCH, onTouch);
