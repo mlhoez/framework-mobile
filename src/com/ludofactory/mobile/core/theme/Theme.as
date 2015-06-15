@@ -291,6 +291,10 @@ package com.ludofactory.mobile.core.theme
 			pickerListItemRendererTextFormat         = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(36), COLOR_LIGHT_GREY, true, true);
 			pickerListItemRendererSelectedTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(36), COLOR_ORANGE, true, true);
 			
+			pickerListDebugButtonTextFormat               = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_LIGHT_GREY, false, true);
+			pickerListDebugItemRendererTextFormat         = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(22), COLOR_LIGHT_GREY, true, true);
+			pickerListDebugItemRendererSelectedTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(22), COLOR_ORANGE, true, true);
+			
 			// AdTournamentItemRenderer
 			adTournamentFirstRankTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 28 : 36), COLOR_DARK_GREY, null, null, null, null, null, AbstractGameInfo.LANDSCAPE ? TextFormatAlign.CENTER : TextFormatAlign.LEFT); // 0x470000
 			adTournamentSecondRankTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 28 : 36), COLOR_DARK_GREY, null, null, null, null, null, AbstractGameInfo.LANDSCAPE ? TextFormatAlign.CENTER : TextFormatAlign.LEFT); // 0x470000
@@ -638,8 +642,10 @@ package com.ludofactory.mobile.core.theme
 			
 			// PickerList
 			getStyleProviderForClass(PickerList).defaultStyleFunction = pickerListInitializer;
+			getStyleProviderForClass(PickerList).setFunctionForStyleName(PICKER_LIST_DEBUG, pickerListDebugInitializer);
 			getStyleProviderForClass(Button).setFunctionForStyleName(PickerList.DEFAULT_CHILD_NAME_BUTTON, pickerListButtonInitializer);
 			getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(COMPONENT_NAME_PICKER_LIST_ITEM_RENDERER, pickerListItemRendererInitializer);
+			getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(PICKER_LIST_DEBUG_ITEM_RENDERER, pickerListDebugItemRendererInitializer);
 			
 			// GroupedList (custom in the shop)
 			getStyleProviderForClass(GroupedList).setFunctionForStyleName(SUB_CATEGORY_GROUPED_LIST, subCategoryGroupedListInitializer);
@@ -1681,7 +1687,14 @@ package com.ludofactory.mobile.core.theme
 		protected var pickerListItemRendererTextFormat:TextFormat;
 		protected var pickerListItemRendererSelectedTextFormat:TextFormat;
 		
-		protected function pickerListInitializer(list:PickerList):void
+		protected var pickerListDebugButtonTextFormat:TextFormat;
+		protected var pickerListDebugItemRendererTextFormat:TextFormat;
+		protected var pickerListDebugItemRendererSelectedTextFormat:TextFormat;
+		
+		public static const PICKER_LIST_DEBUG:String = "picker-list-debug";
+		public static const PICKER_LIST_DEBUG_ITEM_RENDERER:String = "picker-list-debug-item-renderer";
+		
+		protected function basePickerListInitializer(list:PickerList):void
 		{
 			if(DeviceCapabilities.isTablet(Starling.current.nativeStage))
 			{
@@ -1691,7 +1704,7 @@ package com.ludofactory.mobile.core.theme
 			{
 				const centerStage:VerticalCenteredPopUpContentManager = new VerticalCenteredPopUpContentManager();
 				centerStage.marginTop = centerStage.marginRight = centerStage.marginBottom =
-					centerStage.marginLeft = 24 * this.scaleFactor;
+						centerStage.marginLeft = 24 * this.scaleFactor;
 				list.popUpContentManager = centerStage;
 			}
 			
@@ -1701,7 +1714,7 @@ package com.ludofactory.mobile.core.theme
 			layout.useVirtualLayout = true;
 			layout.gap = 0;
 			layout.paddingTop = layout.paddingRight = layout.paddingBottom =
-				layout.paddingLeft = 0;
+					layout.paddingLeft = 0;
 			list.listProperties.layout = layout;
 			list.listProperties.verticalScrollPolicy = List.SCROLL_POLICY_ON;
 			list.listProperties.verticalScrollBarFactory = this.verticalScrollBarFactory;
@@ -1719,11 +1732,22 @@ package com.ludofactory.mobile.core.theme
 				backgroundSkin.height = 20 * this.scaleFactor;
 				list.listProperties.backgroundSkin = backgroundSkin;
 				list.listProperties.paddingTop = list.listProperties.paddingRight =
-					list.listProperties.paddingBottom = list.listProperties.paddingLeft = 8 * this.scaleFactor;
+						list.listProperties.paddingBottom = list.listProperties.paddingLeft = 8 * this.scaleFactor;
 			}
-			
+		}
+		
+		protected function pickerListInitializer(list:PickerList):void
+		{
+			basePickerListInitializer(list);
 			list.listProperties.itemRendererName = COMPONENT_NAME_PICKER_LIST_ITEM_RENDERER;
 		}
+		
+		protected function pickerListDebugInitializer(list:PickerList):void
+		{
+			basePickerListInitializer(list);
+			list.listProperties.itemRendererName = PICKER_LIST_DEBUG_ITEM_RENDERER;
+		}
+		
 		
 		/**
 		 * Button used for the picker list
@@ -1775,6 +1799,41 @@ package com.ludofactory.mobile.core.theme
 			renderer.defaultLabelProperties.textFormat = pickerListItemRendererTextFormat;
 			renderer.downLabelProperties.textFormat = pickerListItemRendererSelectedTextFormat;
 			renderer.defaultSelectedLabelProperties.textFormat = pickerListItemRendererSelectedTextFormat;
+			
+			// taille 26 pour le debug
+			
+			renderer.horizontalAlign = Button.HORIZONTAL_ALIGN_LEFT;
+			renderer.paddingTop = renderer.paddingBottom = 8 * this.scaleFactor;
+			renderer.paddingLeft = 32 * this.scaleFactor;
+			renderer.paddingRight = 24 * this.scaleFactor;
+			renderer.gap = 20 * this.scaleFactor;
+			renderer.iconPosition = Button.ICON_POSITION_LEFT;
+			renderer.accessoryGap = Number.POSITIVE_INFINITY;
+			renderer.accessoryPosition = BaseDefaultItemRenderer.ACCESSORY_POSITION_RIGHT;
+			renderer.minWidth = renderer.minHeight = 88 * this.scaleFactor;
+			renderer.minTouchWidth = renderer.minTouchHeight = 88 * this.scaleFactor;
+			
+			renderer.accessoryLoaderFactory = this.imageLoaderFactory;
+			renderer.iconLoaderFactory = this.imageLoaderFactory;
+		}
+		
+		protected function pickerListDebugItemRendererInitializer(renderer:BaseDefaultItemRenderer):void
+		{
+			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
+			skinSelector.defaultValue = groupedListMiddleBackgroundSkinTextures;
+			skinSelector.defaultSelectedValue = groupedListMiddleBackgroundSelectedSkinTextures;
+			skinSelector.setValueForState(groupedListMiddleBackgroundSelectedSkinTextures, Button.STATE_DOWN, false);
+			skinSelector.displayObjectProperties =
+			{
+				width: 88 * this.scaleFactor,
+				height: 88 * this.scaleFactor,
+				textureScale: this.scaleFactor
+			};
+			renderer.stateToSkinFunction = skinSelector.updateValue;
+			
+			renderer.defaultLabelProperties.textFormat = pickerListDebugItemRendererTextFormat;
+			renderer.downLabelProperties.textFormat = pickerListDebugItemRendererSelectedTextFormat;
+			renderer.defaultSelectedLabelProperties.textFormat = pickerListDebugItemRendererSelectedTextFormat;
 			
 			// taille 26 pour le debug
 			

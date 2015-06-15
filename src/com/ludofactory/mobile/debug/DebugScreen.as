@@ -8,6 +8,7 @@ package com.ludofactory.mobile.debug
 {
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
@@ -20,6 +21,9 @@ package com.ludofactory.mobile.debug
 	import com.ludofactory.mobile.navigation.settings.SettingItemRenderer;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
+	import feathers.controls.ScrollContainer;
+	import feathers.controls.Scroller;
+	
 	import flash.desktop.NativeApplication;
 	
 	import feathers.controls.Button;
@@ -28,13 +32,21 @@ package com.ludofactory.mobile.debug
 	import feathers.data.ListCollection;
 	import feathers.layout.VerticalLayout;
 	
+	import flash.text.TextFormatAlign;
+	
 	import starling.events.Event;
+	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
+	import starling.utils.HAlign;
 	
 	public class DebugScreen extends AdvancedScreen
 	{
 		/**
 		 * The list. */		
 		private var _list:List;
+		
+		private var _currentRepository:TextField;
+		private var _changeRepository:TextField;
 		
 		/**
 		 * Repo picker. */		
@@ -58,6 +70,8 @@ package com.ludofactory.mobile.debug
 		 * Retreive default data. */		
 		private var _getdefaultData:Button;
 		
+		private var _mainContainer:ScrollContainer;
+		
 		public function DebugScreen()
 		{
 			super();
@@ -71,20 +85,38 @@ package com.ludofactory.mobile.debug
 			
 			_headerTitle = "Debug";
 			
+			_mainContainer = new ScrollContainer();
+			_mainContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
+			_mainContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
+			addChild(_mainContainer);
+			
+			_currentRepository = new TextField(5, scaleAndRoundToDpi(50), "Connecté à : " + Remote.getInstance().baseGatewayUrl + (Remote.getInstance().gatewayPortNumber ? (":" + Remote.getInstance().gatewayPortNumber) : ""), Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, true);
+			_currentRepository.hAlign = HAlign.LEFT;
+			_mainContainer.addChild(_currentRepository);
+			
+			_changeRepository = new TextField(5, scaleAndRoundToDpi(50), "Changer : ", Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, true);
+			_changeRepository.hAlign = HAlign.LEFT;
+			_changeRepository.autoSize = TextFieldAutoSize.HORIZONTAL;
+			_mainContainer.addChild(_changeRepository);
+			
 			_repoPicker = new PickerList();
-			_repoPicker.dataProvider = new ListCollection( ["http://ludomobile.ludokado.com",
-															"http://ludomobile.ludokado.dev",
+			_repoPicker.nameList.add(Theme.PICKER_LIST_DEBUG);
+			_repoPicker.dataProvider = new ListCollection( ["http://www.ludokado.com",
+															"http://appmobile.ludokado.com",
 															"http://ludokado.mlhoez.ludofactory.dev",
 															"http://ludokado2.pterrier.ludofactory.dev",
 															"http://ludokado.aguerreiro.ludofactory.dev"] );
 			_repoPicker.selectedItem = Remote.getInstance().baseGatewayUrl;
+			_mainContainer.addChild(_repoPicker);
 			
 			_portPicker = new PickerList();
 			_portPicker.dataProvider = new ListCollection( [80, 9999] );
 			_portPicker.selectedItem = Remote.getInstance().gatewayPortNumber;
+			_mainContainer.addChild(_portPicker);
 			
 			_connectButton = new ArrowGroup("Connecter");
 			_connectButton.addEventListener(Event.TRIGGERED, onChangeRepo);
+			_mainContainer.addChild(_connectButton);
 			
 			_resetButton = new ArrowGroup("Reset");
 			_resetButton.addEventListener(Event.TRIGGERED, onReset);
@@ -114,17 +146,13 @@ package com.ludofactory.mobile.debug
 			_list = new List();
 			_list.isSelectable = false;
 			_list.layout = vlayout;
-			_list.itemRendererType = SettingItemRenderer;
-			_list.dataProvider = new ListCollection( [ { title:"Dépôt : " + Remote.getInstance().baseGatewayUrl + (Remote.getInstance().gatewayPortNumber ? (":" + Remote.getInstance().gatewayPortNumber) : ""), value:"" },
-													   { title:"Changer dépôt", value:"", accessory:_repoPicker },
-													   { title:"", value:"", accessory:_portPicker },
-													   { title:"", value:"", accessory:_connectButton },
-													   { title:"Reset données", value:"", accessory:_resetButton },
+			_list.itemRendererType = DebugItemRenderer;
+			_list.dataProvider = new ListCollection( [ { title:"Reset données", value:"", accessory:_resetButton },
 													   { title:"Tournoi débloqué", value:"", accessory:_tournamentToggleSwitch },
 													   { title:"Gagner toutes les coupes", value:"", accessory:_winAllTrophiesButton },
 													   { title:"Get données par défaut", value:"", accessory:_getdefaultData }
 													 ] );
-			addChild(_list);
+			_mainContainer.addChild(_list);
 		}
 		
 		override protected function draw():void
@@ -133,17 +161,29 @@ package com.ludofactory.mobile.debug
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				/*_repositoryLabel.y = scaleAndRoundToDpi(10);
-				_repositoryLabel.x = scaleAndRoundToDpi(10);
-				_repositoryLabel.width = actualWidth - _repositoryLabel.x;*/
-				_list.width = actualWidth;
-				_list.height = actualHeight;
+				_mainContainer.width = this.actualWidth;
+				_mainContainer.height = this.actualHeight;
+				
+				_currentRepository.width = actualWidth;
+				_changeRepository.y = _repoPicker.y = _portPicker.y = _currentRepository.height + scaleAndRoundToDpi(5);
+				_portPicker.validate();
+				_portPicker.width += scaleAndRoundToDpi(10);
+				_portPicker.x = actualWidth - _portPicker.width - scaleAndRoundToDpi(10);
+				_repoPicker.width = _portPicker.x - _changeRepository.width - scaleAndRoundToDpi(20);
+				_repoPicker.x = _changeRepository.width + scaleAndRoundToDpi(10);
+				
+				_connectButton.validate();
+				_connectButton.y = _portPicker.y + _portPicker.height;
+				_connectButton.x = actualWidth - _connectButton.width - scaleAndRoundToDpi(10);
+				
+				_list.y = _connectButton.y + _connectButton.height + scaleAndRoundToDpi(5);
+				_list.width = this.actualWidth;
+				_list.validate();
 			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Temporary function used to reset the application data.
@@ -236,6 +276,12 @@ package com.ludofactory.mobile.debug
 		
 		override public function dispose():void
 		{
+			_currentRepository.removeFromParent(true);
+			_currentRepository = null;
+			
+			_changeRepository.removeFromParent(true);
+			_changeRepository = null;
+			
 			_repoPicker.removeFromParent(true);
 			_repoPicker = null;
 			
