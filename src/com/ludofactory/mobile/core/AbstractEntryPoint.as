@@ -15,6 +15,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -31,6 +32,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.debug.DebugScreen;
+	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.ludofactory.mobile.navigation.Footer;
 	import com.ludofactory.mobile.navigation.Header;
 	import com.ludofactory.mobile.navigation.HowToWinGiftsScreen;
@@ -99,6 +101,14 @@ package com.ludofactory.mobile.core
 	import flash.filesystem.File;
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
+	
+	import org.gestouch.core.Gestouch;
+	import org.gestouch.core.GesturesManager;
+	import org.gestouch.events.GestureEvent;
+	import org.gestouch.extensions.starling.StarlingDisplayListAdapter;
+	import org.gestouch.extensions.starling.StarlingTouchHitTester;
+	import org.gestouch.gestures.TapGesture;
+	import org.gestouch.input.NativeInputAdapter;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -742,10 +752,6 @@ package com.ludofactory.mobile.core
 			}
 			
 			_assets.removeTextureAtlas("splash");
-			
-			if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() && MemberManager.getInstance().getFacebookId() != 0 && !GoViral.goViral.isFacebookAuthenticated() )
-				GoViral.goViral.authenticateWithFacebook( AbstractGameInfo.FACEBOOK_PERMISSIONS );
-			
 			GameCenterManager.authenticateUser();
 		}
 		
