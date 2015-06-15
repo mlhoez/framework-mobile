@@ -163,7 +163,7 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * Facebook token expiry date (time in ms).
 		 * use new Date(tokenExpiryDate) to get the full date to compare. */
-		private var _facebookTokenExpiryDate:Number = 0;
+		private var _facebookTokenExpiryTimestamp:Number = 0;
 		
 		public function Member() { }
 		
@@ -295,7 +295,7 @@ package com.ludofactory.mobile.core.manager
 		public function get facebookToken():String { return _facebookToken; }
 		public function set facebookToken(val:String):void { _facebookToken = val; }
 		
-		public function get facebookTokenExpiryDate():Number { return _facebookTokenExpiryDate; }
-		public function set facebookTokenExpiryDate(val:Number):void { _facebookTokenExpiryDate = val; }
+		public function get facebookTokenExpiryTimestamp():Number { return _facebookTokenExpiryTimestamp; }
+		public function set facebookTokenExpiryTimestamp(val:Number):void { _facebookTokenExpiryTimestamp = val; }
 	}
 }

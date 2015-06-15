@@ -461,9 +461,9 @@ package com.ludofactory.mobile.core.manager
 			_member.facebookToken = value;
 		}
 		
-		public function setFacebookTokenExpiryDate(value:Number):void
+		public function setFacebookTokenExpiryTimestamp(value:Number):void
 		{
-			_member.facebookTokenExpiryDate = value;
+			_member.facebookTokenExpiryTimestamp = value;
 		}
 		
 		/** Returns the member's id. */		
@@ -529,7 +529,7 @@ package com.ludofactory.mobile.core.manager
 		/** Returns */
 		public function getFacebookToken():String { return _member.facebookToken; }
 		/** Returns */
-		public function getFacebookTokenExpiryDate():Number { return _member.facebookTokenExpiryDate; }
+		public function getFacebookTokenExpiryTimestamp():Number { return _member.facebookTokenExpiryTimestamp; }
 		
 		public function getNumStarsEarnedInAnonymousGameSessions():int
 		{

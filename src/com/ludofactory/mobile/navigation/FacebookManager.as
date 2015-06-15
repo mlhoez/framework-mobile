@@ -6,17 +6,19 @@ Created : 30 janv. 2014
 */
 package com.ludofactory.mobile.navigation
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.navigation.authentication.RegisterType;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.ludofactory.mobile.navigation.authentication.RegisterType;
 	import com.milkmangames.nativeextensions.GVFacebookFriend;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
@@ -30,7 +32,7 @@ package com.ludofactory.mobile.navigation
 	public class FacebookManager extends EventDispatcher
 	{
 		/**
-		 * Register the user via Facebook. */		
+		 * Registering mode. */		
 		private static const MODE_REGISTER:String = "register";
 		/**
 		 * Associating mode. */		
@@ -39,7 +41,7 @@ package com.ludofactory.mobile.navigation
 		 * Publishing mode. */		
 		private static const MODE_PUBLISHING:String = "publishing";
 		/**
-		 * Get token. */		
+		 * Get token. */
 		private static const MODE_TOKEN:String = "token";
 		
 		/**
@@ -49,76 +51,52 @@ package com.ludofactory.mobile.navigation
 		 * Authenticated. */		
 		public static const AUTHENTICATED:String = "authenticated";
 		
-		private var _mode:String;
+		private static var _mode:String;
 		
-		public function FacebookManager()
+		private static var _instance:FacebookManager;
+		
+		public function FacebookManager(sk:SecurityKey)
 		{
-			
+			if(sk == null)
+				throw new Error("Erreur : Echec de l'instanciation : Utiliser FacebookManager.getInstance() au lieu de new.");
 		}
 		
 		/**
-		 * Use this funtion when we want to publish a news on the user's wall.
-		 * 
-		 * <p>If the user is not connected to Internet or if Facebook is not
-		 * supported on the device, we first return an error.</p>
-		 * 
-		 * <p>If everything is ok, we check if the user have already associated
-		 * his account with Facebook, if yes, we check if the current Facebook
-		 * session is the good one (by checking the user's Facebook id and the
-		 * one returned by the current Facebook session), otherwise, we ask the
-		 * user to log in and on ce the account is associated, we launch the
-		 * publication.</p>
-		 */		
-		public function associateForPublish():void
+		 * Checks if the Facebook token is still valid, if so, we don't need to do anything special, otherwise,
+		 * we authenticate the user to retrieve a new one.
+		 */
+		public function checkTokenValidity():void
 		{
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
 				if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
 				{
-					if( MemberManager.getInstance().getFacebookId() != 0 )
+					if( MemberManager.getInstance().isLoggedIn() ) // just in case but usually this test is done before in the screen
 					{
-						// this account is associated to a Facebook account, in this case we need to
-						// authenticate with Facebook and then check if the Facebook id matches the
-						// user's. If there is a match, then we can directly publish the stream on
-						// the user's wall, otherwise, we need to tell the user that the current
-						// Facebook session is not the good one.
-						_mode = MODE_PUBLISHING;
+						if( MemberManager.getInstance().getFacebookId() != 0 )
+						{
+							var now:Date = new Date();
+							var tokenExpiryDate:Date = new Date( MemberManager.getInstance().getFacebookTokenExpiryTimestamp() );
+							if( now < tokenExpiryDate )
+							{
+								// the token is still valid, then we don't need to do something special
+								requestMe();
+							}
+							else
+							{
+								// the token has expired, we need to authenticate again
+								authenticate();
+							}
+						}
+						else
+						{
+							authenticate();
+						}
 					}
 					else
 					{
-						// this account is not associated to a Facebook account, in this case we need
-						// to associate the current Facebook session to this account, and then launch
-						// the publication.
-						_mode = MODE_ASSOCIATING;
+						authenticate();
 					}
-					authenticate();
-				}
-				else
-				{
-					// Facebook is not supported on this device
-					InfoManager.showTimed(_("Facebook n'est pas supporté sur cet appareil."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
-				}
-			}
-			else
-			{
-				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
-			}
-		}
-		
-		/**
-		 * Association function used in the Facebook full screen event.
-		 * 
-		 * @see com.ludofactory.mobile.application.event.FullScreenFacebookEvent
-		 */		
-		public function associate():void
-		{
-			if( AirNetworkInfo.networkInfo.isConnected() )
-			{
-				if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
-				{
-					// FIXME Plus de vérifications ?
-					_mode = MODE_ASSOCIATING;
-					authenticate();
 				}
 				else
 				{
@@ -130,6 +108,47 @@ package com.ludofactory.mobile.navigation
 			{
 				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 			}
+		}
+		
+		/**
+		 * Use this funtion when we want to publish a news on the user's wall.
+		 * 
+		 * <p>If the user is not connected to Internet or if Facebook is not supported on the device, we first return
+		 * an error.</p>
+		 * 
+		 * <p>If everything is ok, we check if the user have already associated his account with Facebook, if yes, we
+		 * check if the current Facebook session is the good one (by checking the user's Facebook id and the one returned
+		 * by the current Facebook session), otherwise, we ask the user to log in and on ce the account is associated,
+		 * we launch the publication.</p>
+		 */		
+		public function associateForPublish():void
+		{
+			if( MemberManager.getInstance().getFacebookId() != 0 )
+			{
+				// this account is associated to a Facebook account, in this case we need to authenticate with
+				// Facebook and then check if the Facebook id matches the user's. If there is a match, then we
+				// can directly publish the stream on the user's wall, otherwise, we need to tell the user that
+				// the current Facebook session is not the good one.
+				_mode = MODE_PUBLISHING;
+			}
+			else
+			{
+				// this account is not associated to a Facebook account, in this case we need to associate the
+				// current Facebook session to this account, and then launch the publication.
+				_mode = MODE_ASSOCIATING;
+			}
+			checkTokenValidity();
+		}
+		
+		/**
+		 * Association function used in the Facebook full screen event.
+		 * 
+		 * @see com.ludofactory.mobile.navigation.event.FullScreenFacebookEvent
+		 */		
+		public function associate():void
+		{
+			_mode = MODE_ASSOCIATING;
+			checkTokenValidity();
 		}
 		
 		/**
@@ -137,47 +156,17 @@ package com.ludofactory.mobile.navigation
 		 */		
 		public function register():void
 		{
-			if( AirNetworkInfo.networkInfo.isConnected() )
-			{
-				if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
-				{
-					// FIXME Plus de vérifications ?
-					_mode = MODE_REGISTER;
-					authenticate();
-				}
-				else
-				{
-					// Facebook is not supported on this plateform
-					InfoManager.showTimed(_("Facebook n'est pas supporté sur cet appareil."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
-				}
-			}
-			else
-			{
-				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
-			}
+			_mode = MODE_REGISTER;
+			checkTokenValidity();
 		}
 		
-		
+		/**
+		 * Register or connect the user with Facebook.
+		 */
 		public function getToken():void
 		{
-			if( AirNetworkInfo.networkInfo.isConnected() )
-			{
-				if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
-				{
-					// FIXME Plus de vérifications ?
-					_mode = MODE_TOKEN;
-					authenticate();
-				}
-				else
-				{
-					// Facebook is not supported on this plateform
-					InfoManager.showTimed(_("Facebook n'est pas supporté sur cet appareil."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
-				}
-			}
-			else
-			{
-				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
-			}
+			_mode = MODE_TOKEN;
+			checkTokenValidity();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -189,16 +178,19 @@ package com.ludofactory.mobile.navigation
 		private function authenticate():void
 		{
 			InfoManager.show(_("Chargement..."));
+			
+			log(GoViral.goViral.getFbAccessToken());
+			
 			if( GoViral.goViral.isFacebookAuthenticated() )
 			{
-				// the user is already authenticated (so we already have a token stored
-				// in the application), then we directly request his profile.
+				// the user is already authenticated (so we already have a token stored in the application),
+				// then we directly request his profile.
 				requestMe();
 			}
 			else
 			{
-				// the user is not authenticated, then we need to log in with Facebook before
-				// in order to get a token, and then request his profile
+				// the user is not authenticated, then we need to log in with Facebook before in order to get a token,
+				// and then request his profile
 				GoViral.goViral.addEventListener(GVFacebookEvent.FB_LOGGED_IN, requestMe);
 				GoViral.goViral.addEventListener(GVFacebookEvent.FB_LOGIN_CANCELED, onAuthenticationCancelledOrFailed);
 				GoViral.goViral.addEventListener(GVFacebookEvent.FB_LOGIN_FAILED, onAuthenticationCancelledOrFailed);
@@ -247,23 +239,20 @@ package com.ludofactory.mobile.navigation
 				
 				var me:GVFacebookFriend = event.friends[0];
 				var formattedUserData:Object = {};
-				if( me.properties.hasOwnProperty("id") )
-					formattedUserData.id_facebook = me.properties.id;
-				if( me.properties.hasOwnProperty("email") )
-					formattedUserData.mail = me.properties.email;
-				if( me.properties.hasOwnProperty("last_name") )
-					formattedUserData.nom = me.properties.last_name;
-				if( me.properties.hasOwnProperty("first_name") )
-					formattedUserData.prenom = me.properties.first_name;
-				if( me.properties.hasOwnProperty("gender") )
-					formattedUserData.titre = me.properties.gender == "male" ? 1:2;
-				if( me.properties.hasOwnProperty("location") )
-					formattedUserData.ville = me.locationName;
-				if( me.properties.hasOwnProperty("birthday") )
-					formattedUserData.date_naissance = me.properties.birthday;
+				if( me.properties.hasOwnProperty("id") )         formattedUserData.id_facebook = me.properties.id;
+				if( me.properties.hasOwnProperty("email") )      formattedUserData.mail = me.properties.email;
+				if( me.properties.hasOwnProperty("last_name") )  formattedUserData.nom = me.properties.last_name;
+				if( me.properties.hasOwnProperty("first_name") ) formattedUserData.prenom = me.properties.first_name;
+				if( me.properties.hasOwnProperty("gender") )     formattedUserData.titre = me.properties.gender == "male" ? 1:2;
+				if( me.properties.hasOwnProperty("location") )   formattedUserData.ville = me.locationName;
+				if( me.properties.hasOwnProperty("birthday") )   formattedUserData.date_naissance = me.properties.birthday;
 				formattedUserData.id_parrain = -1;
 				formattedUserData.type_inscription = RegisterType.FACEBOOK;
 				formattedUserData.langue = LanguageManager.getInstance().lang;
+				
+				// also update the token and its expiration date here
+				MemberManager.getInstance().setFacebookToken(GoViral.goViral.getFbAccessToken());
+				MemberManager.getInstance().setFacebookTokenExpiryTimestamp(GoViral.goViral.getFbAccessExpiry());
 				
 				switch(_mode)
 				{
@@ -287,34 +276,34 @@ package com.ludofactory.mobile.navigation
 					}
 					case MODE_PUBLISHING:
 					{
-						if( me.properties.id == MemberManager.getInstance().getFacebookId() )
-						{
+						/*if( me.properties.id  == MemberManager.getInstance().getFacebookId() )
+						{*/
 							// there is a match, then the user is allowed to publish
 							InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
 							dispatchEventWith(AUTHENTICATED, false, formattedUserData);
-						}
+						/*}
 						else
 						{
 							// no match, we display an error and clear the token
 							GoViral.goViral.logoutFacebook();
 							InfoManager.hide(_("Ce compte Facebook ne correspond pas à celui associé à votre compte Ludokado.\n\nMerci de vous connecter avec le bon compte Facebook pour continuer."), InfoContent.ICON_CROSS, 5);
-						}
+						}*/
 						
 						break;
 					}
 					case MODE_TOKEN:
 					{
-						if( me.properties.id == MemberManager.getInstance().getFacebookId() )
-						{
+						/*if( me.properties.id == MemberManager.getInstance().getFacebookId() )
+						{*/
 							InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
 							dispatchEventWith(AUTHENTICATED);
-						}
+						/*}
 						else
 						{
 							// no match, we display an error and clear the token
 							GoViral.goViral.logoutFacebook();
 							InfoManager.hide(_("Ce compte Facebook ne correspond pas à celui associé à votre compte Ludokado.\n\nMerci de vous connecter avec le bon compte Facebook pour continuer."), InfoContent.ICON_CROSS, 5);
-						}
+						}*/
 						break;
 					}
 				}
@@ -465,5 +454,17 @@ package com.ludofactory.mobile.navigation
 			}
 		}
 		
+//------------------------------------------------------------------------------------------------------------
+//	Singleton
+		
+		public static function getInstance():FacebookManager
+		{
+			if(_instance == null)
+				_instance = new FacebookManager(new SecurityKey());
+			return _instance;
+		}
+		
 	}
 }
+
+internal class SecurityKey{}
