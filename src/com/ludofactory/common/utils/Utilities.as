@@ -282,7 +282,7 @@ package com.ludofactory.common.utils
 		 * @param contentToFillHeight
 		 * @return
 		 */
-		public static function getScaleToFill(refWidth:Number, refHeight:Number, contentToFillWidth:Number, contentToFillHeight:Number):Number
+		/*public static function getScaleToFill(refWidth:Number, refHeight:Number, contentToFillWidth:Number, contentToFillHeight:Number):Number
 		{
 			// /!\ Attention : il faut ne pas mettre de scaleX et / ou scaleY sur l'item dont on récupère _item.width/height, sinon ça fausse le calcul
 			var ratio:Number = 1;
@@ -291,7 +291,41 @@ package com.ludofactory.common.utils
 			else if(!isNaN(contentToFillHeight))
 				ratio = contentToFillHeight / refHeight;
 			return ratio;
+		}*/
+		
+		// version olivier, à tester
+		/**
+		 * Can be bigger = si true, le scale va faire déborder l'image, en gros c'est à utiliser surtout pour les backgrounds dont
+		 * on veut qu'ils prennent toute la largeur et hauteur de l'écran, peu importe s'ils débordent.
+		 * 
+		 * @param itemToScaleWidth
+		 * @param itemToScaleHeight
+		 * @param widthToFit
+		 * @param heightToFit
+		 * @param canBeBigger
+		 * @return
+		 */
+		public static function getScaleToFill(itemToScaleWidth:Number, itemToScaleHeight:Number, widthToFit:Number, heightToFit:Number, canBeBigger:Boolean = false):Number
+		{
+			var ratio:Number = 1;
+			if( !canBeBigger )
+			{
+				if (widthToFit / itemToScaleWidth < heightToFit / itemToScaleHeight)
+					ratio = widthToFit / itemToScaleWidth;
+				else
+					ratio = heightToFit / itemToScaleHeight;
+			}
+			else
+			{
+				if (widthToFit / itemToScaleWidth > heightToFit / itemToScaleHeight)
+					ratio = widthToFit / itemToScaleWidth;
+				else
+					ratio = heightToFit / itemToScaleHeight;
+			}
+			
+			return ratio;
 		}
+		
 		public static function getScaleToFillWidth(refWidth:Number, contentToFillWidth:Number):Number
 		{
 			return contentToFillWidth / refWidth;
