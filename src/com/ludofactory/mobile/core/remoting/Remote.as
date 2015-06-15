@@ -6,30 +6,30 @@ Created : 9 avril 2013
 */
 package com.ludofactory.mobile.core.remoting
 {
-
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.InvalidSessionNotificationContent;
+	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.push.GameSession;
-	import com.ludofactory.mobile.navigation.store.StoreData;
 	import com.ludofactory.mobile.debug.ErrorDisplayer;
+	import com.ludofactory.mobile.navigation.store.StoreData;
 	import com.milkmangames.nativeextensions.GoViral;
-
+	
 	import flash.system.Capabilities;
-
+	
 	import starling.events.EventDispatcher;
 	import starling.utils.formatString;
-
+	
 	/**
 	 * Simplifies the amfphp connection and the remote calls.
 	 */	
@@ -42,11 +42,11 @@ package com.ludofactory.mobile.core.remoting
 		private const AMF_PATH:String = "/amfphp2/";
 		
 		// url quand on n'est pas sur le réseau local
-		//private const DEV_PORT:int = 9999;
-		//private const DEV_URL:String = "http://appmobile.ludokado.com";
+		private const DEV_PORT:int = 9999;
+		private const DEV_URL:String = "http://appmobile.ludokado.com";
 		
 		// urls et port quand on est sur le réseau local
-		private const DEV_PORT:int = 80;
+		//private const DEV_PORT:int = 80;
 		//private const DEV_URL:String = "http://www.ludokado.com";
 		//private const DEV_URL:String = "http://ludokado.dev";
 		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
@@ -54,7 +54,7 @@ package com.ludofactory.mobile.core.remoting
 		//private const DEV_URL:String = "http://ludokadom.mlhoez.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado3.sravet.ludofactory.dev";
-		private const DEV_URL:String = "http://semiprod.ludokado.com";
+		//private const DEV_URL:String = "http://semiprod.ludokado.com";
 		
 		/**
 		 * Production PORT. Automatically used when the GlobalConfig.DEBUG variable
@@ -184,6 +184,8 @@ package com.ludofactory.mobile.core.remoting
 		
 		/**
 		 * Register the user via facebook.
+		 * 
+		 * Utilisé pour l'inscription ET le login (même fonction commune pour facebook)
 		 * 
 		 * @param userData All the data already formatted into an object
 		 */		
