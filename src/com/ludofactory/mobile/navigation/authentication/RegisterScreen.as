@@ -31,6 +31,8 @@ package com.ludofactory.mobile.navigation.authentication
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalLayout;
 	
+	import starling.core.Starling;
+	
 	import starling.events.Event;
 	
 	/**
@@ -217,6 +219,8 @@ package com.ludofactory.mobile.navigation.authentication
 				_mailInput.clearFocus();
 				_passwordInput.clearFocus();
 				_sponsorInput.clearFocus();
+				
+				Starling.current.nativeStage.focus = null;
 				
 				// if _data.tempFacebookData is defined, it means that the user tried to register
 				// via Facebook but no mail could be retreived, thus we need to complete the object

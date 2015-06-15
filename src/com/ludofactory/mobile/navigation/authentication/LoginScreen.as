@@ -31,6 +31,8 @@ package com.ludofactory.mobile.navigation.authentication
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalLayout;
 	
+	import starling.core.Starling;
+	
 	import starling.events.Event;
 	import starling.events.TouchEvent;
 	
@@ -202,6 +204,7 @@ package com.ludofactory.mobile.navigation.authentication
 				InfoManager.show(_("Chargement..."));
 				_mailInput.clearFocus();
 				_passwordInput.clearFocus();
+				Starling.current.nativeStage.focus = null;
 				Remote.getInstance().logIn(_mailInput.text, _passwordInput.text, onLoginSuccess, onLoginFailure, onLoginFailure, 2, advancedOwner.activeScreenID);
 			}
 			else

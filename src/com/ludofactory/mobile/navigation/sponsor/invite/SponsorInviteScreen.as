@@ -807,6 +807,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 				Flox.logEvent("Parrainage par " + (advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? "sms" : "email"), { Total:"Total" });
 				_singleInviteNameInput.clearFocus();
 				_singleInviteMailInput.clearFocus();
+				Starling.current.nativeStage.focus = null;
 				Remote.getInstance().parrainer(advancedOwner.screenData.sponsorType, [ { identifiant:_singleInviteMailInput.text, filleul:_singleInviteNameInput.text } ], onSingleParrainageSuccess, onSingleParrainageFailure, onSingleParrainageFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 			}
 			else

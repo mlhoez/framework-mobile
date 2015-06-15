@@ -37,6 +37,8 @@ package com.ludofactory.mobile.navigation.authentication
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
+	import starling.core.Starling;
+	
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -297,6 +299,7 @@ package com.ludofactory.mobile.navigation.authentication
 				this.isEnabled = false;
 				InfoManager.show(_("Chargement..."));
 				_customChoiceInput.clearFocus();
+				Starling.current.nativeStage.focus = null;
 				Remote.getInstance().createPseudo(defaultChoosed ? _defaultChoiceLabel.text:_customChoiceInput.text, onPseudoCreateSuccess, onPseudoCreateFailure, onPseudoCreateFailure, 2, advancedOwner.activeScreenID);
 			}
 			else
