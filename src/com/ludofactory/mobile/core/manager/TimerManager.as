@@ -7,6 +7,7 @@ Refractored : 11 déc. 2013
 */
 package com.ludofactory.mobile.core.manager
 {
+	
 	import com.ludofactory.mobile.core.HeartBeat;
 	
 	public class TimerManager
@@ -47,10 +48,14 @@ package com.ludofactory.mobile.core.manager
 		private var _totalElapsedTime:int;
 		
 		/**
+		 * Whether the timer is running. */
+		private var _isRunning:Boolean = false;
+		
+		/**
 		 * Creates a timer.
 		 * 
 		 * @param timeInSeconds The time in seconds (will be converted into milliseconds).
-		 * @param repeat How many times the timer will repeat.
+		 * @param repeatCount How many times the timer will repeat.
 		 * @param updateFunction The function called on each update.
 		 * @param tickFunction The function called on each tick.
 		 * @param finishFunction The function called at the end.
@@ -137,6 +142,7 @@ package com.ludofactory.mobile.core.manager
 			reportStartTurn();
 			
 			HeartBeat.registerFunction(onTimerUpdate);
+			_isRunning = true;
 		}
 		
 		/**
@@ -145,6 +151,7 @@ package com.ludofactory.mobile.core.manager
 		public function stop():void
 		{
 			HeartBeat.unregisterFunction(onTimerUpdate);
+			_isRunning = false;
 		}
 		
 		/**
@@ -153,6 +160,7 @@ package com.ludofactory.mobile.core.manager
 		public function pause():void
 		{
 			HeartBeat.unregisterFunction(onTimerUpdate);
+			_isRunning = false;
 		}
 		
 		/**
@@ -161,6 +169,7 @@ package com.ludofactory.mobile.core.manager
 		public function resume():void
 		{
 			HeartBeat.registerFunction(onTimerUpdate);
+			_isRunning = true;
 		}
 		
 		/**
@@ -239,6 +248,9 @@ package com.ludofactory.mobile.core.manager
 		 * <p>Use totalElapsedTime / 1000 to get the time in seconds.</p>
 		 */		
 		public function get totalElapsedTime():int { return _totalElapsedTime; }
+		/**
+		 * Whether the timer is running. */
+		public function get isRunning():Boolean { return _isRunning; }
 		
 //------------------------------------------------------------------------------------------------------------
 //	Destroy
