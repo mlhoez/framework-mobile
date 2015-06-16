@@ -11,6 +11,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.common.encryption.Encryption;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractMain;
 	import com.ludofactory.mobile.core.GameMode;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
@@ -89,7 +90,7 @@ package com.ludofactory.mobile.core.manager
 			// launch of the application) or the ELS have been cleared for some reason.
 			// Otherwise we simply read the member id and we load it.
 			HELPER_BYTE_ARRAY = EncryptedLocalStore.getItem( LAST_LOGGED_IN_MEMBER_ID );	
-			loadEncryptedMember( HELPER_BYTE_ARRAY == null ? DEFAULT_MEMBER_ID : HELPER_BYTE_ARRAY.readInt() );
+			loadEncryptedMember( HELPER_BYTE_ARRAY == null ? DEFAULT_MEMBER_ID : HELPER_BYTE_ARRAY.readInt(), false );
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -102,14 +103,16 @@ package com.ludofactory.mobile.core.manager
 		 */		
 		public function parseData(memberData:Object):void
 		{
-			// if the id is different from the actual one, we need load the new one
-			// so that we don't affect someone's data to someone else (this should
-			// not happen actually, but leave it by security)
+			// if the id is different from the actual one, we need load the new one so that we don't affect someone's
+			// data to someone else (this should not happen actually, but leave it by security)
 			if( "id_membre" in memberData && int(memberData.id_membre) != _member.id )
 				loadEncryptedMember( int(memberData.id_membre) );
 			
 			_member.parseData(memberData);
 			setEncryptedMember();
+			
+			// check if we can enable logs
+			AbstractMain.checkToEnableLogs();
 		}
 		
 		/**
@@ -125,7 +128,7 @@ package com.ludofactory.mobile.core.manager
 		 * 
 		 * @see com.ludofactory.common.encryption.Encryption
 		 */		
-		private function loadEncryptedMember(memberId:int):void
+		private function loadEncryptedMember(memberId:int, checkForAdminParameters:Boolean = true):void
 		{
 			// clear all actual responders for security reasons
 			Remote.getInstance().clearAllResponders();
@@ -178,6 +181,9 @@ package com.ludofactory.mobile.core.manager
 			
 			// update the values of the footer
 			dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
+			
+			if( checkForAdminParameters ) // not done the first time
+				AbstractMain.checkToEnableLogs();
 		}
 		
 		public function updateVidCoinData():void
@@ -273,6 +279,8 @@ package com.ludofactory.mobile.core.manager
 			// clear Facebook session
 			if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
 				GoViral.goViral.logoutFacebook();
+			
+			AbstractMain.checkToEnableLogs();
 		}
 		
 		/**

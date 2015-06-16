@@ -3,6 +3,7 @@
  */
 package com.ludofactory.mobile.core {
 	
+	import com.ludofactory.common.utils.LogDisplayer;
 	import com.ludofactory.common.utils.Utilities;
 	
 	import flash.utils.getQualifiedClassName;
@@ -155,7 +156,7 @@ package com.ludofactory.mobile.core {
                 if(forceLog)
                     textLogged += output;
                 
-                //LogDisplayer.addLog(output);
+               LogDisplayer.getInstance().addLog(output);
             }
             return output;
         }

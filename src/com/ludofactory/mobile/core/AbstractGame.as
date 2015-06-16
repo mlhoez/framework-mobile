@@ -216,7 +216,7 @@ package com.ludofactory.mobile.core
 			addChild(_loader);
 			
 			var basePath:String = File.applicationDirectory.resolvePath( GlobalConfig.isPhone ? "assets/game/sd/" : "assets/game/hd/").url;
-			log("[AbstractGame] WARNING !!! THE GAME USES PNG ATLASES INSTEAD OF ATF !");
+			//log("[AbstractGame] WARNING !!! THE GAME USES PNG ATLASES INSTEAD OF ATF !");
 			AbstractEntryPoint.assets.enqueue( basePath + "/game.atf" ); // FIXME Remettre .atf après
 			AbstractEntryPoint.assets.enqueue( basePath + "/game.xml" );
 			AbstractEntryPoint.assets.loadQueue( function onLoading(ratio:Number):void{ if(ratio == 1) initializeContent(); });

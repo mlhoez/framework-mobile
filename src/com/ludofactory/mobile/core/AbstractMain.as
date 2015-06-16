@@ -12,6 +12,8 @@ package com.ludofactory.mobile.core
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.sound.SoundManager;
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.pause.PauseManager;
@@ -41,7 +43,15 @@ package com.ludofactory.mobile.core
 	import flash.system.Capabilities;
 	import flash.utils.ByteArray;
 	
+	import org.gestouch.core.Gestouch;
+	import org.gestouch.events.GestureEvent;
+	import org.gestouch.extensions.starling.StarlingDisplayListAdapter;
+	import org.gestouch.extensions.starling.StarlingTouchHitTester;
+	import org.gestouch.gestures.TapGesture;
+	import org.gestouch.input.NativeInputAdapter;
+	
 	import starling.core.Starling;
+	import starling.display.DisplayObject;
 	import starling.events.Event;
 	import starling.textures.Texture;
 	import starling.utils.HAlign;
@@ -74,17 +84,20 @@ package com.ludofactory.mobile.core
 			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0;
 			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
 			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
-			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : (GlobalConfig.android ? "android" : "simulator"); // FIXME Remettre "simulator" quand le modif aura été faite côté PHP
+			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : (GlobalConfig.android ? "android" : "android"); // FIXME Remettre "simulator" quand le modif aura été faite côté PHP
 			AirDeviceId.getInstance().getID("ludofactory", function(deviceId:String):void{ GlobalConfig.deviceId = deviceId; trace("Ancien device id : " + deviceId); });
-			
-			Remote.getInstance();
-			LanguageManager.getInstance();
 			
 			if(stage)
 			{
 				stage.scaleMode = StageScaleMode.NO_SCALE;
 				stage.align = StageAlign.TOP_LEFT;
+				
+				GlobalConfig.stageWidth = stage.stageWidth;
+				GlobalConfig.stageHeight = stage.stageHeight;
 			}
+			
+			Remote.getInstance();
+			LanguageManager.getInstance();
 			
 			SoundMixer.audioPlaybackMode = AudioPlaybackMode.AMBIENT;
 			mouseEnabled = mouseChildren = false;
@@ -96,10 +109,9 @@ package com.ludofactory.mobile.core
 		/**
 		 * Adds the Splash Screen.
 		 * 
-		 * A png file for the landscape mode is needed only if the application can start in 
-		 * this orientation, which is not our case because we force the portrait orientation
-		 * in the Main-app.xml. That's why we can remove it so that the application package
-		 * is not so heavy.
+		 * A png file for the landscape mode is needed only if the application can start in  this orientation, which is
+		 * not our case because we force the portrait orientation in the Main-app.xml. That's why we can remove it so
+		 * that the application package is not so heavy.
 		 */		
 		private function showLaunchImage():void
 		{
@@ -178,8 +190,9 @@ package com.ludofactory.mobile.core
 						
 						if( GlobalConfig.android )
 						{
-							_launchImage.width = stage.stageWidth;
-							_launchImage.height = stage.stageHeight;
+							//_launchImage.width = stage.stageWidth;
+							//_launchImage.height = stage.stageHeight;
+							_launchImage.scaleX = _launchImage.scaleY = Utilities.getScaleToFill(_launchImage.width, _launchImage.height, GlobalConfig.stageWidth, GlobalConfig.stageHeight);
 						}
 						else
 						{
@@ -305,7 +318,7 @@ package com.ludofactory.mobile.core
 			if( GlobalConfig.DEMO_MODE )
 				new TouchMarkerManager();
 			
-			stage.autoOrients = true;
+			Gestouch.addDisplayListAdapter(DisplayObject, new StarlingDisplayListAdapter());
 			
 			NativeApplication.nativeApplication.addEventListener(flash.events.Event.DEACTIVATE, onPause, false, 0, true);
 		}
@@ -410,6 +423,92 @@ package com.ludofactory.mobile.core
 				Flox.logError("<strong>Uncaught error :</strong>", "[{0}] {1}<br><br><strong>Occured at :</strong><br>{2}", Error(event.error).errorID, Error(event.error).message, stackTrace);
 				if( GAnalytics.isSupported() )
 					GAnalytics.analytics.defaultTracker.trackException(stackTrace, false, MemberManager.getInstance());
+			}
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	
+		
+		/**
+		 * Tap gesture. */
+		private static var _tapGesture:TapGesture;
+		/**
+		 * Starling touch hit tester. */
+		private static var _starlingTouchHitTester:StarlingTouchHitTester;
+		/**
+		 * Whether the logs are enabled. */
+		private static var _areLogsEnabled:Boolean = false;
+		
+		public static function checkToEnableLogs():void
+		{
+			if( MemberManager.getInstance().isAdmin() )
+				enableLogs();
+			else
+				disableLogs();
+		}
+		
+		/**
+		 * Enables the logs (for an admin user).
+		 */
+		public static function enableLogs():void
+		{
+			if( !_areLogsEnabled )
+			{
+				if(!Starling.current)
+					return;
+				
+				if( !GlobalConfig.ios && !GlobalConfig.android && !GlobalConfig.amazon )
+				{
+					_areLogsEnabled = false;
+					return;
+				}
+				
+				// Initialized native (default) input adapter. Needed for non-DisplayList usage.
+				Gestouch.inputAdapter ||= new NativeInputAdapter(Starling.current.nativeStage);
+				
+				_starlingTouchHitTester = new StarlingTouchHitTester(Starling.current);
+				Gestouch.addTouchHitTester(_starlingTouchHitTester, -1);
+				
+				_tapGesture = new TapGesture(Starling.current.root);
+				_tapGesture.numTapsRequired = 3;
+				_tapGesture.addEventListener(GestureEvent.GESTURE_RECOGNIZED, onGesture);
+				
+				_areLogsEnabled = true;
+			}
+		}
+		
+		/**
+		 * Gesture detected.
+		 */
+		private static function onGesture(event:GestureEvent):void
+		{
+			if( Starling.current && MemberManager.getInstance().isAdmin() ) // just in case
+			{
+				(Starling.current.root as AbstractEntryPoint).showOrHideLogs();
+			}
+		}
+		
+		/**
+		 * disables the logs (for a non admin user).
+		 */
+		public static function disableLogs():void
+		{
+			if( _areLogsEnabled )
+			{
+				if(Starling.current)
+					(Starling.current.root as AbstractEntryPoint).hideLogs();
+				
+				(Gestouch.inputAdapter as NativeInputAdapter).onDispose();
+				
+				Gestouch.removeTouchHitTester(_starlingTouchHitTester);
+				
+				_starlingTouchHitTester = null;
+				
+				_tapGesture.removeEventListener(GestureEvent.GESTURE_RECOGNIZED, onGesture);
+				_tapGesture.dispose();
+				_tapGesture = null;
+				
+				_areLogsEnabled = false;
 			}
 		}
 		
