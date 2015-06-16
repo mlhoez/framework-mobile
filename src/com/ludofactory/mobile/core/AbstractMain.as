@@ -191,7 +191,7 @@ package com.ludofactory.mobile.core
 						{
 							//_launchImage.width = stage.stageWidth;
 							//_launchImage.height = stage.stageHeight;
-							_launchImage.scaleX = _launchImage.scaleY = Utilities.getScaleToFill(_launchImage.width, _launchImage.height, GlobalConfig.stageWidth, GlobalConfig.stageHeight);
+							_launchImage.scaleX = _launchImage.scaleY = Utilities.getScaleToFill(_launchImage.width, _launchImage.height, Capabilities.screenResolutionX, Capabilities.screenResolutionY);
 						}
 						else
 						{
@@ -200,11 +200,11 @@ package com.ludofactory.mobile.core
 								if(_launchImage.height > _launchImage.width)
 								{
 									// landscape but the image is portrait
-									_launchImage.width = GlobalConfig.stageHeight;
-									_launchImage.height = GlobalConfig.stageWidth;
+									_launchImage.width = Capabilities.screenResolutionY;
+									_launchImage.height = Capabilities.screenResolutionX;
 									_launchImage.rotation = -90;
 									_launchImage.x = 0;
-									_launchImage.y = GlobalConfig.stageHeight * 0.5;
+									_launchImage.y = Capabilities.screenResolutionY * 0.5;
 								}
 							}
 							else
@@ -212,8 +212,8 @@ package com.ludofactory.mobile.core
 								// portrait but the image is landscape
 								if(_launchImage.height > _launchImage.width)
 								{
-									_launchImage.width = GlobalConfig.stageHeight;
-									_launchImage.height = GlobalConfig.stageWidth;
+									_launchImage.width = Capabilities.screenResolutionY;
+									_launchImage.height = Capabilities.screenResolutionX;
 									_launchImage.rotation = 45;
 									_launchImage.x = 0;
 									_launchImage.y = 0;
