@@ -13,7 +13,6 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.pause.PauseManager;
@@ -84,7 +83,7 @@ package com.ludofactory.mobile.core
 			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0;
 			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
 			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
-			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : (GlobalConfig.android ? "android" : "android"); // FIXME Remettre "simulator" quand le modif aura été faite côté PHP
+			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : (GlobalConfig.android ? "android" : "ios"); // FIXME Remettre "simulator" quand le modif aura été faite côté PHP
 			AirDeviceId.getInstance().getID("ludofactory", function(deviceId:String):void{ GlobalConfig.deviceId = deviceId; trace("Ancien device id : " + deviceId); });
 			
 			if(stage)
@@ -351,6 +350,14 @@ package com.ludofactory.mobile.core
 //	Pause / Resume handlers
 		
 		/**
+		 * Saved date when the app is deactivated. */
+		private var _deactivationDate:Date;
+		
+		/**
+		 * Saved date when the app is reactivated. */
+		private var _reactivationDate:Date;
+		
+		/**
 		 * Pauses the engine.
 		 * 
 		 * <p>When the game becomes inactive, we pause Starling, otherwise, the enter frame
@@ -371,6 +378,8 @@ package com.ludofactory.mobile.core
 				SoundManager.getInstance().mutePlaylist("sfx", 0);
 			if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_MUSIC_ENABLED)) )
 				SoundManager.getInstance().mutePlaylist("music", 0);
+			
+			_deactivationDate = new Date();
 		}
 		
 		/**
@@ -385,6 +394,10 @@ package com.ludofactory.mobile.core
 				SoundManager.getInstance().unmutePlaylist("sfx", 0.5);
 			if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_MUSIC_ENABLED)) )
 				SoundManager.getInstance().unmutePlaylist("music", 0.5);
+			
+			_reactivationDate = new Date();
+			if( _deactivationDate && (_reactivationDate.time - _deactivationDate.time) > Storage.getInstance().getProperty(StorageConfig.PROPERTY_IDLE_TIME) ) // 3 600 000 = 1 hour
+				Storage.getInstance().initialize();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

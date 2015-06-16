@@ -111,6 +111,9 @@ package com.ludofactory.mobile.core.storage
 		 */		
 		private function onLoadConfigSuccess(result:Object):void
 		{
+			if( result.hasOwnProperty( "maxIdleTime" ) && result.maxIdleTime != null && result.maxIdleTime > 10000 ) // min 10 sec
+				Storage.getInstance().setProperty(StorageConfig.PROPERTY_IDLE_TIME, Number(result.maxIdleTime));
+			
 			if( result.hasOwnProperty( "correspondance_score" ) && result.correspondance_score != null )
 			{
 				var arr:Array;

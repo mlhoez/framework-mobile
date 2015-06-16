@@ -99,6 +99,13 @@ package com.ludofactory.mobile.core.storage
 		 * parse all available languages from the file system and determine to best one. */
 		public static const DEFAULT_LANGUAGE:String = "unknown";
 		
+	// ----------------------- CONFIG
+		
+		/**
+		 * Idle time after which we relaunch an "init" to keep the app up to date after a long idle time. */
+		public static const PROPERTY_IDLE_TIME:String = "DEFAULT_IDLE_TIME";
+		public static const DEFAULT_IDLE_TIME:Number = 3600000; // 1 hour by default
+		
 	// ----------------------- 
 		
 		/**
@@ -404,5 +411,7 @@ package com.ludofactory.mobile.core.storage
 		public static const PROPERTY_GAME_VERSION:String = "DEFAULT_GAME_VERSION";
 		
 		public static const PROPERTY_NEW_LANGUAGES:String = "DEFAULT_NEW_LANGUAGES";
+		
+		
 	}
 }
