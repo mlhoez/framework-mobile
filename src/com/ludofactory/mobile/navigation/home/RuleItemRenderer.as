@@ -10,6 +10,7 @@ package com.ludofactory.mobile.navigation.home
 	import com.ludofactory.common.gettext.Domains;
 	import com.ludofactory.common.gettext.aliases._d;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -137,8 +138,8 @@ package com.ludofactory.mobile.navigation.home
 						else
 						{
 							_picture.texture = AbstractEntryPoint.assets.getTexture(_data.imageSource);
+							_picture.scaleX = _picture.scaleY = 1;
 							_picture.readjustSize();
-							//_picture.scaleX = _picture.scaleY = 1;
 						}
 					}
 					
@@ -185,7 +186,10 @@ package com.ludofactory.mobile.navigation.home
 				case RuleProperties.TYPE_RULE_WITH_IMAGE:
 				{
 					if( _picture )
+					{
+						_picture.scaleX = _picture.scaleY = 1;
 						_picture.visible = true;
+					}
 					_background.visible = true;
 					
 					//_picture.validate();
@@ -236,11 +240,13 @@ package com.ludofactory.mobile.navigation.home
 						}
 						case RuleProperties.POSITION_LEFT:
 						{
+							_picture.x = _picture.y = 0;
+							_picture.scaleX = _picture.scaleY = Utilities.getScaleToFillWidth(_picture.width, (_background.width * 0.25));
+							
 							_message.width = actualWidth - _picture.width - (_padding * 2);
 							_message.x = _picture.width + _padding;
 							_message.validate();
 							
-							_picture.x = _picture.y = 0;
 							if( _message.height > _picture.height )
 							{
 								_message.y = _padding;
@@ -260,6 +266,7 @@ package com.ludofactory.mobile.navigation.home
 						case RuleProperties.POSITION_RIGHT:
 						{
 							_picture.y = 0;
+							_picture.scaleX = _picture.scaleY = Utilities.getScaleToFillWidth(_picture.width, (_background.width * 0.25));
 							_picture.x = actualWidth - _picture.width;
 							
 							_message.width = _picture.x - (_padding * 2);
@@ -304,6 +311,9 @@ package com.ludofactory.mobile.navigation.home
 					break;
 				}
 			}
+			
+			if(_picture)
+				log(_picture.scaleX);
 			
 			setSize(actualWidth, _background.height);
 			
