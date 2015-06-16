@@ -197,10 +197,8 @@ package com.ludofactory.mobile.core.storage
 		/**
 		 * <strong>This is the default value for the game
 		 * news.</strong><br /> */	
-		public static const DEFAULT_NEWS:Object = { fr : '[{"id":1, "titre":"Découvrez Ludokado", "description":"Touchez ici pour découvrir Ludokado.com et jouez à plus de jeux gratuits !", "url_image":"default-news-ludokado", "lien":"http://www.ludokado.com"},' +
-                                                          '{"id":-1, "titre":"Lancement de Pyramid", "description":"Lancement de la première application de Ludokado pour tablettes et mobiles.", "url_image":"default-news"}]',
-													en : '[{"id":1, "titre":"Discover Ludokado", "description":"Tap here to discover Ludokado and play more free games!", "url_image":"default-news-ludokado", "lien":"http://www.ludokado.com"},' +
-                                                          '{"id":-1, "titre":"Launch of Pyramid", "description":"Launch of the first LudoKado\'s application available for tablets and smartphones.", "url_image":"default-news"}]' };
+		public static const DEFAULT_NEWS:Object = { fr : '[{"url_image":"http://img.ludokado.com/img/frontoffice/fr/mobile/actualites/news_pyramid_lancement_tel.jpg","id":1,"lien":"","titre":"Lancement de Pyramid","description":"Lancement de la première application de Ludokado pour tablettes et mobiles.","urlScheme":""},{"url_image":"http://img.ludokado.com/img/frontoffice/fr/mobile/actualites/default-news-ludokado.jpg","id":2,"lien":"http://www.ludokado.com","titre":"Découvrez Ludokado","description":"Touchez ici pour découvrir Ludokado.com et jouez à plus de jeux gratuits !","urlScheme":""}]',
+													en : '[{"url_image":"http://img.ludokado.com/img/frontoffice/fr/mobile/actualites/news_pyramid_lancement_tel.jpg","id":1,"lien":"","titre":"Launch of Pyramid","description":"Launch of the first LudoKado\'s application available for tablets and smartphones.","urlScheme":""},{"url_image":"http://img.ludokado.com/img/frontoffice/fr/mobile/actualites/default-news-ludokado.jpg","id":2,"lien":"http://www.ludokado.com","titre":"Discover Ludokado","description":"Touch here to discover Ludokado.com and play more free games!","urlScheme":""}]' };
 		
 		/**
 		 * <strong>This is the default value for the terms
