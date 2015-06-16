@@ -15,7 +15,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.LogDisplayer;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -32,7 +32,6 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.debug.DebugScreen;
-	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.ludofactory.mobile.navigation.Footer;
 	import com.ludofactory.mobile.navigation.Header;
 	import com.ludofactory.mobile.navigation.HowToWinGiftsScreen;
@@ -101,14 +100,6 @@ package com.ludofactory.mobile.core
 	import flash.filesystem.File;
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
-	
-	import org.gestouch.core.Gestouch;
-	import org.gestouch.core.GesturesManager;
-	import org.gestouch.events.GestureEvent;
-	import org.gestouch.extensions.starling.StarlingDisplayListAdapter;
-	import org.gestouch.extensions.starling.StarlingTouchHitTester;
-	import org.gestouch.gestures.TapGesture;
-	import org.gestouch.input.NativeInputAdapter;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -372,12 +363,14 @@ package com.ludofactory.mobile.core
 				_progressBar = new ProgressBar();
 				_progressBar.backgroundSkin = new Scale9Image( new Scale9Textures(_assets.getTexture("progress-bar-background"), new Rectangle(9, 8, 12, 1)) );
 				_progressBar.fillSkin = new Scale9Image( new Scale9Textures(_assets.getTexture("progress-bar-fill"), new Rectangle(9, 8, 12, 1)) );
-				_progressBar.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.7 : 0.4);
+				_progressBar.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.5 : 0.4);
 				_progressBar.x = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.15 : 0.3);
 				_progressBar.y = GlobalConfig.stageHeight * 0.9;
 				addChild(_progressBar);
 				
 				_assetsToLoad = [ File.applicationDirectory.resolvePath("assets/ui/") ];
+				
+				Starling.current.nativeStage.autoOrients = true;
 				
 				loadAssets();
 			}
@@ -580,6 +573,9 @@ package com.ludofactory.mobile.core
 			}
 			
 			layout();
+			
+			//addChild(LogDisplayer.getInstance());
+			//LogDisplayer.getInstance().touchable = true;
 		}
 		
 		/**
@@ -1129,14 +1125,54 @@ package com.ludofactory.mobile.core
 //	Divers
 		
 		/**
-		 * When the user have not finished the account creation process (mainly
-		 * because he didn't choose a pseudo), we will lock the navigation to
-		 * force the user to finish the process. 
+		 * When the user have not finished the account creation process (mainly because he didn't choose a pseudo),
+		 * we will lock the navigation to force the user to finish the process. 
 		 */		
 		private static function displayPseudoSelectionError():void
 		{
 			// pseudo choice screen error or for the sponsor for now
 			InfoManager.showTimed(_screenNavigator.activeScreenID == ScreenIds.PSEUDO_CHOICE_SCREEN ? _("Vous devez choisir un pseudo !") : _("Merci d'entrer un code parrain ou passez cette étape pour continuer."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Logs
+		
+		private var _areLogsShowing:Boolean = false;
+		
+		public function showOrHideLogs():void
+		{
+			if(_areLogsShowing)
+			{
+				hideLogs()
+			}
+			else
+			{
+				showLogs();
+			}
+		}
+		
+		/**
+		 * 
+		 */
+		public function showLogs():void
+		{
+			if( !_areLogsShowing )
+			{
+				addChild(LogDisplayer.getInstance());
+				_areLogsShowing = true;
+			}
+		}
+		
+		/**
+		 * 
+		 */
+		public function hideLogs():void
+		{
+			if( _areLogsShowing )
+			{
+				removeChild(LogDisplayer.getInstance());
+				_areLogsShowing = false;
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
