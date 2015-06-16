@@ -10,7 +10,6 @@ package com.ludofactory.mobile.navigation.home
 	import com.ludofactory.common.gettext.Domains;
 	import com.ludofactory.common.gettext.aliases._d;
 	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -311,9 +310,6 @@ package com.ludofactory.mobile.navigation.home
 					break;
 				}
 			}
-			
-			if(_picture)
-				log(_picture.scaleX);
 			
 			setSize(actualWidth, _background.height);
 			
