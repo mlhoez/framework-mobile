@@ -714,7 +714,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 				onSoftKeyboardActivated();
 			
 			onSoftKeyboardActivated();
-			TweenMax.delayedCall(0.5, _singleInviteNameInput.setFocus);
+			//TweenMax.delayedCall(0.5, _singleInviteNameInput.setFocus);
 			
 			if( GAnalytics.isSupported() )
 				GAnalytics.analytics.defaultTracker.trackEvent("Parrainage", "Ouverture invitation individuelle", null, NaN, MemberManager.getInstance().getId());
