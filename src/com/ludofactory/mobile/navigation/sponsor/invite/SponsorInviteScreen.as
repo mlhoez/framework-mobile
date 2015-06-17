@@ -236,6 +236,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 		{
 			if( GlobalConfig.android && !_temporaryContacts )
 				_temporaryContacts = new Dictionary();
+			else if( GlobalConfig.ios )
+				_temporaryContacts = new Dictionary();
 			
 			_singleInviteGroup.visible = true;
 			
