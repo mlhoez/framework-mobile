@@ -16,6 +16,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.LogDisplayer;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -329,8 +330,12 @@ package com.ludofactory.mobile.core
 				
 				if( GlobalConfig.android )
 				{
-					_loadingBackground.width = stage.stageWidth;
-					_loadingBackground.height = stage.stageHeight;
+					//_loadingBackground.width = stage.stageWidth;
+					//_loadingBackground.height = stage.stageHeight;
+					_loadingBackground.scaleX = _loadingBackground.scaleY = 1;
+					_loadingBackground.scaleX = _loadingBackground.scaleY = Utilities.getScaleToFill(_loadingBackground.width, _loadingBackground.height, GlobalConfig.stageWidth, GlobalConfig.stageHeight, true);
+					_loadingBackground.x = (GlobalConfig.stageWidth - _loadingBackground.width) * 0.5;
+					_loadingBackground.y = (GlobalConfig.stageHeight - _loadingBackground.height) * 0.5;
 				}
 				
 				/*if( (AbstractGameInfo.LANDSCAPE && GlobalConfig.android) || (GlobalConfig.ios && AbstractGameInfo.LANDSCAPE && GlobalConfig.isPhone) )

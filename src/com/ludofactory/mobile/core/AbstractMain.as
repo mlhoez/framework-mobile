@@ -14,6 +14,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.pause.PauseManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -85,6 +86,7 @@ package com.ludofactory.mobile.core
 			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
 			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : (GlobalConfig.android ? "android" : "ios"); // FIXME Remettre "simulator" quand le modif aura été faite côté PHP
 			AirDeviceId.getInstance().getID("ludofactory", function(deviceId:String):void{ GlobalConfig.deviceId = deviceId; trace("Ancien device id : " + deviceId); });
+			showLaunchImage();
 			
 			if(stage)
 			{
@@ -101,7 +103,6 @@ package com.ludofactory.mobile.core
 			SoundMixer.audioPlaybackMode = AudioPlaybackMode.AMBIENT;
 			mouseEnabled = mouseChildren = false;
 			setGameInfo();
-			showLaunchImage();
 			loaderInfo.addEventListener(flash.events.Event.COMPLETE, onAppLoaded);
 		}
 		
@@ -116,6 +117,7 @@ package com.ludofactory.mobile.core
 		{
 			var filePath:String;
 			var isCurrentlyPortrait:Boolean = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
+			
 			if(GlobalConfig.ios)
 			{
 				if((Capabilities.screenResolutionX == 1242 || Capabilities.screenResolutionY == 1242) && (Capabilities.screenResolutionY == 2208 || Capabilities.screenResolutionX == 2208))
@@ -191,7 +193,9 @@ package com.ludofactory.mobile.core
 						{
 							//_launchImage.width = stage.stageWidth;
 							//_launchImage.height = stage.stageHeight;
-							_launchImage.scaleX = _launchImage.scaleY = Utilities.getScaleToFill(_launchImage.width, _launchImage.height, Capabilities.screenResolutionX, Capabilities.screenResolutionY);
+							_launchImage.scaleX = _launchImage.scaleY = Utilities.getScaleToFill(_launchImage.width, _launchImage.height, Capabilities.screenResolutionX, Capabilities.screenResolutionY, true);
+							_launchImage.x = (Capabilities.screenResolutionX - _launchImage.width) * 0.5;
+							_launchImage.y = (Capabilities.screenResolutionY - _launchImage.height) * 0.5;
 						}
 						else
 						{
@@ -305,10 +309,17 @@ package com.ludofactory.mobile.core
 			if(_launchImage && _launchImage.content)
 			{
 				var bgTexture:Texture = Texture.fromBitmap(_launchImage.content as Bitmap, false, false);
-				
+			}
+			
+			try
+			{
 				removeChild(_launchImage);
 				_launchImage.unloadAndStop(true);
 				_launchImage = null;
+			}
+			catch(error:Error)
+			{
+				
 			}
 			
 			appl.loadTheme(bgTexture);
@@ -341,6 +352,14 @@ package com.ludofactory.mobile.core
 					(_starling.root as AbstractEntryPoint).onResize();
 			}
 			catch(error:Error) {}
+			
+			if( _launchImage )
+			{
+				_launchImage.scaleX = _launchImage.scaleY = 1;
+				_launchImage.scaleX = _launchImage.scaleY = Utilities.getScaleToFill(_launchImage.width, _launchImage.height, GlobalConfig.stageWidth, GlobalConfig.stageHeight, true);
+				_launchImage.x = (GlobalConfig.stageWidth - _launchImage.width) * 0.5;
+				_launchImage.y = (GlobalConfig.stageHeight - _launchImage.height) * 0.5;
+			}
 			
 			if(CONFIG::DEBUG)
 				this._starling.showStatsAt(HAlign.LEFT, VAlign.TOP);
