@@ -777,7 +777,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			if(_singleInviteNameInput.text == "")
 			{
 				InfoManager.showTimed( _("Nom du filleul invalide"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
-				_singleInviteNameInput.setFocus();
+				//_singleInviteNameInput.setFocus();
+				Starling.current.nativeStage.focus = null;
 				return;
 			}
 			
@@ -786,7 +787,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 				if(_singleInviteMailInput.text == "" || !Utilities.isValidMail(_singleInviteMailInput.text))
 				{
 					InfoManager.showTimed( _("Email invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
-					_singleInviteMailInput.setFocus();
+					//_singleInviteMailInput.setFocus();
+					Starling.current.nativeStage.focus = null;
 					return;
 				}
 			}
@@ -795,7 +797,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 				if(_singleInviteMailInput.text == "" || !Utilities.isFrenchPortableOnly(_singleInviteMailInput.text))
 				{
 					InfoManager.showTimed( _("Ce numéro est invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
-					_singleInviteMailInput.setFocus();
+					//_singleInviteMailInput.setFocus();
+					Starling.current.nativeStage.focus = null;
 					return;
 				}
 			}

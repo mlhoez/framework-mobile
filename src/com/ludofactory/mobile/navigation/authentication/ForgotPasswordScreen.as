@@ -157,6 +157,7 @@ package com.ludofactory.mobile.navigation.authentication
 			if( _mailInput.text == "" || !Utilities.isValidMail(_mailInput.text) )
 			{
 				InfoManager.showTimed( _("Email invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				Starling.current.nativeStage.focus = null;
 				return;
 			}
 			

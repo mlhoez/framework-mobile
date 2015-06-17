@@ -291,6 +291,7 @@ package com.ludofactory.mobile.navigation.authentication
 			if( !defaultChoosed && _customChoiceInput.text == "")
 			{
 				InfoManager.showTimed( _("Le pseudo ne peut être vide !"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				Starling.current.nativeStage.focus = null;
 				return;
 			}
 			

@@ -201,12 +201,14 @@ package com.ludofactory.mobile.navigation.authentication
 			if( _mailInput.text == "" || !Utilities.isValidMail(_mailInput.text) )
 			{
 				InfoManager.showTimed( _("Email invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				Starling.current.nativeStage.focus = null;
 				return;
 			}
 			
 			if( _passwordInput.text == "" )
 			{
 				InfoManager.showTimed( _("Le mot de passe ne peut être vide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				Starling.current.nativeStage.focus = null;
 				return;
 			}
 			

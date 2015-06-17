@@ -189,12 +189,14 @@ package com.ludofactory.mobile.navigation.authentication
 			if(_mailInput.text == "" || (!Utilities.isValidMail(_mailInput.text) && !CONFIG::DEBUG))
 			{
 				InfoManager.showTimed( _("Email invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				Starling.current.nativeStage.focus = null;
 				return;
 			}
 			
 			if(_passwordInput.text == "")
 			{
 				InfoManager.showTimed( _("Mot de passe invalide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				Starling.current.nativeStage.focus = null;
 				return;
 			}
 			

@@ -165,6 +165,7 @@ package com.ludofactory.mobile.navigation.authentication
 			if( _sponsorInput.text == "" || !Utilities.isNumberOnly(_sponsorInput.text))
 			{
 				InfoManager.showTimed( _("Le code parrain est invalide"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				Starling.current.nativeStage.focus = null;
 				return;
 			}
 			
