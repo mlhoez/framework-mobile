@@ -552,6 +552,8 @@ package com.ludofactory.mobile.core
 				// we requested the user to update the application, here we check if he did it
 				if( Number(AbstractGameInfo.GAME_VERSION) > Number(Storage.getInstance().getProperty(StorageConfig.PROPERTY_GAME_VERSION)) )
 				{
+					// FIXME Si on downgrade le numéro de version en base, gérer le cas pour réactiver l'appli peut être
+					
 					// the actual game version is higher than the old one stored when the update was requested
 					// them we can disable the force update because it means that the user updated the game
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE, false);
