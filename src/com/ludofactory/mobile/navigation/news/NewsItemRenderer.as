@@ -153,7 +153,6 @@ package com.ludofactory.mobile.navigation.news
 		override protected function draw():void
 		{
 			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
 			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
 			
 			if(dataInvalid)

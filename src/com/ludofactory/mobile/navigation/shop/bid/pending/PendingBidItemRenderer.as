@@ -106,13 +106,9 @@ package com.ludofactory.mobile.navigation.shop.bid.pending
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_ORANGE, false, false, null, null, null, TextFormatAlign.CENTER);
 		}
 		
-		override protected function draw():void
+		protected function commitData():void
 		{
-			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
-			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
-			
-			if(dataInvalid)
+			if(this._owner)
 			{
 				if(this._fadeTween)
 				{
@@ -120,13 +116,20 @@ package com.ludofactory.mobile.navigation.shop.bid.pending
 				}
 				if(this._data)
 				{
-					_imageLoader.visible = true;
 					if( _borderBatch )
 						_borderBatch.visible = true;
 					_stripe.visible = true;
 					_title.visible = true;
 					
-					_image.visible = false;
+					if( _image.source != this._data.imageUrl )
+					{
+						_image.visible = false;
+						_imageLoader.visible = true;
+					}
+					else
+					{
+						_imageLoader.visible = false;
+					}
 					_image.source = _data.imageUrl;
 					
 					if( _data.state == PendingBidItemData.STATE_FINISHED || _data.timeLeft <= 0 )
@@ -149,12 +152,23 @@ package com.ludofactory.mobile.navigation.shop.bid.pending
 					_image.source = null;
 				}
 			}
+		}
+		
+		override protected function draw():void
+		{
+			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
+			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
+			
+			if(dataInvalid)
+			{
+				this.commitData();
+			}
 			
 			sizeInvalid = this.autoSizeIfNeeded() || sizeInvalid;
 			
-			if(sizeInvalid)
+			if(dataInvalid || sizeInvalid || dataInvalid)
 			{
-				layout();
+				this.layout();
 			}
 		}
 		

@@ -6,13 +6,12 @@ Created : 27 août 2013
 */
 package com.ludofactory.mobile.navigation.shop.bid.finished
 {
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.geom.Point;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
@@ -20,6 +19,8 @@ package com.ludofactory.mobile.navigation.shop.bid.finished
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
 	import feathers.events.FeathersEventType;
+	
+	import flash.geom.Point;
 	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
@@ -93,13 +94,9 @@ package com.ludofactory.mobile.navigation.shop.bid.finished
 			_title.textRendererProperties.textFormat = Theme.commonBidIRTextFormat;
 		}
 		
-		override protected function draw():void
+		protected function commitData():void
 		{
-			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
-			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
-			
-			if(dataInvalid)
+			if(this._owner)
 			{
 				if(this._fadeTween)
 				{
@@ -107,13 +104,21 @@ package com.ludofactory.mobile.navigation.shop.bid.finished
 				}
 				if(this._data)
 				{
-					_imageLoader.visible = true;
+					
 					if( _borderBatch )
 						_borderBatch.visible = true;
 					_stripe.visible = true;
 					_title.visible = true;
 					
-					_image.visible = false;
+					if( _image.source != this._data.imageUrl )
+					{
+						_image.visible = false;
+						_imageLoader.visible = true;
+					}
+					else
+					{
+						_imageLoader.visible = false;
+					}
 					_image.source = this._data.imageUrl;
 					
 					_title.text = _("Terminée");
@@ -128,12 +133,23 @@ package com.ludofactory.mobile.navigation.shop.bid.finished
 					_image.source = null;
 				}
 			}
+		}
+		
+		override protected function draw():void
+		{
+			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
+			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
+			
+			if(dataInvalid)
+			{
+				this.commitData();
+			}
 			
 			sizeInvalid = this.autoSizeIfNeeded() || sizeInvalid;
 			
-			if(sizeInvalid)
+			if(dataInvalid || sizeInvalid || dataInvalid)
 			{
-				layout();
+				this.layout();
 			}
 		}
 		

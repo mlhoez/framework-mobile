@@ -93,13 +93,9 @@ package com.ludofactory.mobile.navigation.shop.bid.comingsoon
 			_title.textRendererProperties.textFormat = Theme.commonBidIRTextFormat;
 		}
 		
-		override protected function draw():void
+		protected function commitData():void
 		{
-			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
-			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
-			
-			if(dataInvalid)
+			if(this._owner)
 			{
 				if(this._fadeTween)
 				{
@@ -107,13 +103,20 @@ package com.ludofactory.mobile.navigation.shop.bid.comingsoon
 				}
 				if(this._data)
 				{
-					_imageLoader.visible = true;
 					if( _borderBatch )
 						_borderBatch.visible = true;
 					_stripe.visible = true;
 					_title.visible = true;
 					
-					_image.visible = false;
+					if( _image.source != this._data.imageUrl )
+					{
+						_image.visible = false;
+						_imageLoader.visible = true;
+					}
+					else
+					{
+						_imageLoader.visible = false;
+					}
 					_image.source = this._data.imageUrl;
 					
 					_title.text = _("A venir");
@@ -128,12 +131,23 @@ package com.ludofactory.mobile.navigation.shop.bid.comingsoon
 					_image.source = null;
 				}
 			}
+		}
+		
+		override protected function draw():void
+		{
+			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
+			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
+			
+			if(dataInvalid)
+			{
+				this.commitData();
+			}
 			
 			sizeInvalid = this.autoSizeIfNeeded() || sizeInvalid;
 			
-			if(sizeInvalid)
+			if(dataInvalid || sizeInvalid || dataInvalid)
 			{
-				layout();
+				this.layout();
 			}
 		}
 		
