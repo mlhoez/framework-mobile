@@ -38,6 +38,16 @@ package com.ludofactory.common.utils
 		}
 		
 		/**
+		 * Returns the Build version defined in the application descriptor.
+		 */
+		public static function getBuildVersion():String
+		{
+			var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor;
+			var ns:Namespace = appXml.namespace();
+			return String(appXml.ns::versionNumber[0]);
+		}
+		
+		/**
 		 * Returns the App version defined in the application descriptor.
 		 */
 		public static function getBundleIdFromDescriptor():String

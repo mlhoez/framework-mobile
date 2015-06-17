@@ -28,6 +28,9 @@ package com.ludofactory.mobile.core
 		 * Game version. This is automatically set. */		
 		public static var GAME_VERSION:String = Utilities.getAppVersion();
 		/**
+		 * Build version. This is automatically set. */
+		public static var GAME_BUILD_VERSION:String = Utilities.getBuildVersion();
+		/**
 		 * Game bundle id (in reverse dns style). This is automatically set. */		
 		public static var GAME_BUNDLE_ID:String = Utilities.getBundleIdFromDescriptor();
 		/**
