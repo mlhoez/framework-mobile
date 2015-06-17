@@ -368,7 +368,7 @@ package com.ludofactory.mobile.core
 				_progressBar = new ProgressBar();
 				_progressBar.backgroundSkin = new Scale9Image( new Scale9Textures(_assets.getTexture("progress-bar-background"), new Rectangle(9, 8, 12, 1)) );
 				_progressBar.fillSkin = new Scale9Image( new Scale9Textures(_assets.getTexture("progress-bar-fill"), new Rectangle(9, 8, 12, 1)) );
-				_progressBar.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.3 : 0.4);
+				_progressBar.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.3 : 0.3);
 				addChild(_progressBar);
 				_progressBar.validate();
 				_progressBar.x = (GlobalConfig.stageWidth - _progressBar.width) * 0.5;
