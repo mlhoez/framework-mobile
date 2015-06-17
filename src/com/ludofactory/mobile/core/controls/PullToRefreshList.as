@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core.controls
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -129,7 +130,7 @@ package com.ludofactory.mobile.core.controls
 			
 			if( _isRefreshable && isInvalid(INVALIDATION_FLAG_REFRESHABLE_STATE) )
 			{
-				const paddingRefresh:int = scaleAndRoundToDpi(40);
+				const paddingRefresh:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 20 : 40);
 				
 				_message.validate();
 				
