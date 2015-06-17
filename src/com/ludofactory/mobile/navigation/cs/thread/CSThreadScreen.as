@@ -11,6 +11,8 @@ package com.ludofactory.mobile.navigation.cs.thread
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ImageLoaderCache;
 	import com.ludofactory.mobile.core.controls.PullToRefreshList;
@@ -120,13 +122,13 @@ package com.ludofactory.mobile.navigation.cs.thread
 				
 				_messageInput = new TextInput();
 				_messageInput.prompt = _("Votre message...");
-				_messageInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.DONE;
+				_messageInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
 				_messageInput.addEventListener(FeathersEventType.ENTER, onSendMessage);
 				_messageInput.isEnabled = false;
 				addChild(_messageInput);
 				
 				_sendButtonIcon = new Image( AbstractEntryPoint.assets.getTexture("cs-send-button-icon") );
-				_sendButtonIcon.scaleX = _sendButtonIcon.scaleY = GlobalConfig.dpiScale;
+				_sendButtonIcon.scaleX = _sendButtonIcon.scaleY = GlobalConfig.dpiScale + scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 0.2 : 0);
 				_sendButton = new Button();
 				_sendButton.defaultIcon = _sendButtonIcon;
 				_sendButton.styleName = Theme.BUTTON_EMPTY;
@@ -154,11 +156,11 @@ package com.ludofactory.mobile.navigation.cs.thread
 					_inputBackground.y = this.actualHeight - _inputBackground.height;
 					
 					_sendButton.validate();
-					_sendButton.x = this.actualWidth - _sendButton.width - scaleAndRoundToDpi(20);
+					_sendButton.x = this.actualWidth - _sendButton.width - scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 40 : 20);
 					_sendButton.y = _inputBackground.y + (_inputBackground.height - _sendButton.height) * 0.5;
 					
 					_messageInput.validate();
-					_messageInput.width = _sendButton.x - scaleAndRoundToDpi(40);
+					_messageInput.width = _sendButton.x - scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 80 : 40);
 					_messageInput.y = _inputBackground.y + (_inputBackground.height - _messageInput.height) * 0.5;
 					_messageInput.x = scaleAndRoundToDpi(20);
 					
@@ -264,6 +266,7 @@ package com.ludofactory.mobile.navigation.cs.thread
 			if( _messageInput.text == "" )
 			{
 				InfoManager.showTimed( _("Votre message ne peut être vide."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS );
+				Starling.current.nativeStage.focus = null;
 				return;
 			}
 			
@@ -288,6 +291,7 @@ package com.ludofactory.mobile.navigation.cs.thread
 				AbstractEntryPoint.pushManager.addElementToPush( new PushNewCSMessage(PushType.CUSTOMER_SERVICE_NEW_MESSAGE, advancedOwner.screenData.thread.id, _messageInput.text) );
 				_messageInput.text = "";
 				createAlert(false);
+				Starling.current.nativeStage.focus = null;
 			}
 		}
 		
