@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core
 	
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.remoting.Remote;
 	
 	import flash.utils.Timer;
 	
@@ -90,9 +91,8 @@ package com.ludofactory.mobile.core
 				objCall.location = location;
 				log(args,"reportError args.length > 1 ");
 			}
-			// TODO remote call here
-			//ExternalInterfaceManager.call(AbstractServer.LogErrorJSFunctionName,false,objCall);
 			
+			Remote.getInstance().reportError(objCall);
 		}
 		catch(err:Error)
 		{

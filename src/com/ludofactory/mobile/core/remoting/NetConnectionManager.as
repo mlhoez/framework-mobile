@@ -88,6 +88,8 @@ package com.ludofactory.mobile.core.remoting
 		 * by the real targetted service (ex : LudoMobile). */		
 		private var _encryptionBridge:String;
 		
+		private var _reportErrorFunctionName:String;
+		
 		/**
 		 * Static encryption key.
 		 * 
@@ -349,6 +351,12 @@ package com.ludofactory.mobile.core.remoting
 				// remote call
 				_nc.call.apply(null, responderManager.params);
 			}
+		}
+		
+		public function reportError(data:Object, callbacks:Array, screenName:String, maxAttempts:int):void
+		{
+			var responderManager:NetResponder = createResponder(callbacks, "", maxAttempts, screenName, [data]);
+			_nc.call(_reportErrorFunctionName, responderManager, data);
 		}
 		
 		/**
@@ -736,6 +744,9 @@ package com.ludofactory.mobile.core.remoting
 		
 		public function get bridgeName():String { return _encryptionBridge; }
 		public function set bridgeName(value:String):void { _encryptionBridge = value; }
+		
+		public function get reportErrorFunctionName():String { return _reportErrorFunctionName; }
+		public function set reportErrorFunctionName(value:String):void { _reportErrorFunctionName = value; }
 		
 		public function set baseGatewayUrl(value:String):void { _baseGatewayUrl = value; }
 		public function get baseGatewayUrl():String { return _baseGatewayUrl; }

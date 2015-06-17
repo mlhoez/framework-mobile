@@ -42,16 +42,16 @@ package com.ludofactory.mobile.core.remoting
 		private const AMF_PATH:String = "/amfphp2/";
 		
 		// url quand on n'est pas sur le réseau local
-		private const DEV_PORT:int = 9999;
-		private const DEV_URL:String = "http://appmobile.ludokado.com";
+		//private const DEV_PORT:int = 9999;
+		//private const DEV_URL:String = "http://appmobile.ludokado.com";
 		
 		// urls et port quand on est sur le réseau local
-		//private const DEV_PORT:int = 80;
-		//private const DEV_URL:String = "http://www.ludokado.com";
-		//private const DEV_URL:String = "http://ludokado.dev";
+		private const DEV_PORT:int = 80;
+		private const DEV_URL:String = "http://www.ludokado.com";
+		//private const DEV_URL:String = "http://www.ludokado.dev";
 		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokado2.pterrier.ludofactory.dev";
-		//private const DEV_URL:String = "http://ludokadom.mlhoez.ludofactory.dev";
+		//private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado3.sravet.ludofactory.dev";
 		//private const DEV_URL:String = "http://semiprod.ludokado.com";
@@ -78,6 +78,7 @@ package com.ludofactory.mobile.core.remoting
 			_netConnectionManager.amfPath = AMF_PATH;
 			_netConnectionManager.appName = "LudoMobile";
 			_netConnectionManager.bridgeName = "LudoMobileEncryption.callAction";
+			_netConnectionManager.reportErrorFunctionName = "LudoMobileEncryption.reportError";
 			_netConnectionManager.encrypt = true;
 			_netConnectionManager.useSecureConnection = Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_USE_SECURED_CALLS));
 			_netConnectionManager.genericSuccessCallback = onQueryComplete;
@@ -744,6 +745,14 @@ package com.ludofactory.mobile.core.remoting
 			//var params:Object = mergeWithGenericParams( { token:token } ); 
 			//log( JSON.stringify(params) );
 			_netConnectionManager.call("test", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, token);
+		}
+		
+		/**
+		 * Generic test function (must return a string, not an object because of the addslash)
+		 */
+		public function reportError(errorObject:Object, maxAttempts:int = 1, screenName:String = "error"):void
+		{
+			_netConnectionManager.reportError(errorObject, [null, null, null], screenName, maxAttempts);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
