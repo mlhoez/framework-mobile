@@ -8,10 +8,9 @@ package com.ludofactory.mobile.core
 {
 	
 	import com.ludofactory.common.utils.log;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	
-	import flash.utils.Timer;
 	
 	/**
 	 * report error in JS or PHP 
@@ -40,7 +39,7 @@ package com.ludofactory.mobile.core
 		try
 		{
 			var location:String ="";
-			location += AbstractGameInfo.GAME_NAME + " (v" + AbstractGameInfo.GAME_VERSION + ")";
+			location += AbstractGameInfo.GAME_NAME + " (v" + AbstractGameInfo.GAME_VERSION + " build " + AbstractGameInfo.GAME_BUILD_VERSION + ")";
 		}
 		catch(err:Error)
 		{
@@ -68,6 +67,9 @@ package com.ludofactory.mobile.core
 				
 				objCall.memberId = MemberManager.getInstance().getId();
 				objCall.gameName = AbstractGameInfo.GAME_NAME;
+				objCall.plateforme = GlobalConfig.platformName;
+				objCall.deviceType = GlobalConfig.isPhone ? "smartphone":"tablette";
+				objCall.deviceId = GlobalConfig.deviceId;
 				
 				if(arg is String)
 				{
