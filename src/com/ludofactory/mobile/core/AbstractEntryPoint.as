@@ -87,7 +87,7 @@ package com.ludofactory.mobile.core
 	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceInfo;
-	import com.vidcoin.vidcoincontroller.VidCoinController;
+	import com.vidcoin.extension.ane.VidCoinController;
 	
 	import feathers.controls.Drawers;
 	import feathers.controls.ImageLoader;

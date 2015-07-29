@@ -22,7 +22,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.GoViral;
-	import com.vidcoin.vidcoincontroller.VidCoinController;
+	import com.vidcoin.extension.ane.VidCoinController;
 	
 	import flash.data.EncryptedLocalStore;
 	import flash.net.registerClassAlias;

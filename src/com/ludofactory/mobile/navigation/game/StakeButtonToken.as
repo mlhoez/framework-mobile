@@ -6,7 +6,7 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.navigation.game
 {
-
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.gettext.aliases._n;
@@ -18,24 +18,21 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.LudoEventType;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.vidcoin.vidcoincontroller.VidCoinController;
-	import com.vidcoin.vidcoincontroller.events.VidCoinEvent;
-
+	
 	import feathers.controls.Callout;
 	import feathers.controls.Label;
-
+	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.utils.formatString;
-
+	
 	public class StakeButtonToken extends StakeButton
 	{
 		public static var IS_TIMER_OVER_AND_REQUEST_FAILED:Boolean = false;
@@ -156,7 +153,7 @@ package com.ludofactory.mobile.navigation.game
 			}
 		}
 
-		public function handleVidCoinEvent(event:VidCoinEvent):void
+		public function handleVidCoinEvent(event:VidCoinEvents):void
 		{
 			if(event.code == "vidcoinViewWillAppear")
 			{
@@ -245,7 +242,7 @@ package com.ludofactory.mobile.navigation.game
 				else if( _vidCoinEnabled )
 				{
 					Flox.logEvent("Affichages d'une vidéo VidCoin", {Total:"Total"});
-					AbstractEntryPoint.vidCoin.addEventListener(VidCoinEvent.VIDCOIN, handleVidCoinEvent);
+					AbstractEntryPoint.vidCoin.addEventListener(VidCoinEvents.VIDCOIN, handleVidCoinEvent);
 					AbstractEntryPoint.vidCoin.playAdForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID);
 				}
 			}
@@ -259,7 +256,7 @@ package com.ludofactory.mobile.navigation.game
 			MemberManager.getInstance().removeEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateData);
 			GameSessionTimer.unregisterFunction(setText);
 
-			AbstractEntryPoint.vidCoin.removeEventListener(VidCoinEvent.VIDCOIN, handleVidCoinEvent);
+			AbstractEntryPoint.vidCoin.removeEventListener(VidCoinEvents.VIDCOIN, handleVidCoinEvent);
 			Remote.getInstance().removeEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateData);
 			
 			if( _iconClock )
