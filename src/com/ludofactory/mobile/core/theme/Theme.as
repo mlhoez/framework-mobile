@@ -134,8 +134,8 @@ package com.ludofactory.mobile.core.theme
 		{
 			var screenResolutionX:int = Capabilities.screenResolutionX; // WARNING : this reports the computer resolution in the simulator !
 			var screenResolutionY:int = Capabilities.screenResolutionY; // WARNING : this reports the computer resolution in the simulator !
-			var ratioX:Number = screenResolutionX / (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE);
-			var ratioY:Number = screenResolutionY / (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE);
+			var ratioX:Number = screenResolutionX / (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE));
+			var ratioY:Number = screenResolutionY / (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE));
 			
 			if (ratioX < ratioY)
 			{
