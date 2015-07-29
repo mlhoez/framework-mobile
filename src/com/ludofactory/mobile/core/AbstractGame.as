@@ -55,7 +55,6 @@ package com.ludofactory.mobile.core
 		/**
 		 * Loader */		
 		private var _loader:MovieClip;
-		
 		/**
 		 * The transparent black overlay. */		
 		protected var _playOverlay:Image;
@@ -63,27 +62,20 @@ package com.ludofactory.mobile.core
 		 * The play button displayed at the begining of a game session. */		
 		protected var _playButton:Button;
 		
-		private var _nextScreenId:String;
-		
 		/**
 		 * Whether the player gave up this game session. */		
 		private var _gaveUp:Boolean;
-		
 		/**
-		 * Whether the screen is validating. This is added for security reason
-		 * in order to avoid multiple validations.
-		 */		
+		 * Whether the screen is validating. This is added for security reason in order to avoid multiple validations. */		
 		private var _isValidatingGame:Boolean = false;
 		
-		/**
-		 * @param isLandscape
-		 */		
-		public function AbstractGame(isLandscape:Boolean)
+		private var _nextScreenId:String;
+		
+		public function AbstractGame()
 		{
 			super();
 			
 			_fullScreen = true;
-			_isLandscape = isLandscape;
 			_canBack = false;
 			_gaveUp = false;
 		}
@@ -171,16 +163,7 @@ package com.ludofactory.mobile.core
 				MemberManager.getInstance().setAnonymousGameSessions( MemberManager.getInstance().getAnonymousGameSessions() );
 			}
 			
-			// FIXME A décommenter pour gérer l'orientation
-			/*if( _isLandscape )
-			{
-				Starling.current.nativeStage.addEventListener(flash.events.Event.RESIZE, onOrientationChanged, false, int.MAX_VALUE, true);
-				Starling.current.nativeStage.setAspectRatio(StageAspectRatio.LANDSCAPE);
-			}
-			else
-			{*/
-				initializeGame();
-			//}
+			initializeGame();
 		}
 		
 		private function onOrientationChanged(event:flash.events.Event):void
