@@ -559,7 +559,7 @@ package com.ludofactory.mobile.core.manager
 			for(var i:int = 0; i < getAnonymousGameSessions().length; i++)
 			{
 				gameSession = getAnonymousGameSessions()[i];
-				if( gameSession.trophiesWon.length > 0 )
+				if( gameSession.trophiesWon && gameSession.trophiesWon.length > 0 )
 					count += gameSession.trophiesWon.length;
 			}
 			return count;

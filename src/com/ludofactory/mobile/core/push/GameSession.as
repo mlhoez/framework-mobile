@@ -42,7 +42,7 @@ package com.ludofactory.mobile.core.push
 		
 		/**
 		 * Trophies won on the game session. */		
-		private var _trophiesWon:Array;
+		private var _trophiesWon:Array = [];
 		
 		/**
 		 * The time elapsed on the game. */		
