@@ -22,6 +22,8 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.vidcoin.extension.ane.VidCoinController;
+	import com.vidcoin.extension.ane.events.VidCoinEvents;
 	
 	import feathers.controls.Callout;
 	import feathers.controls.Label;
