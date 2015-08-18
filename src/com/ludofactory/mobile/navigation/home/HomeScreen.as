@@ -93,6 +93,7 @@ package com.ludofactory.mobile.navigation.home
 				_gameCenterIcon.source = Theme.gameCenterTexture;
 				_gameCenterIcon.snapToPixels = true;
 				_gameCenterIcon.textureScale = GlobalConfig.dpiScale;
+				_gameCenterIcon.color = Theme.COLOR_BROWN;
 				
 				_gameCenterButton = new Button();
 				_gameCenterButton.defaultIcon = _gameCenterIcon;
@@ -156,7 +157,7 @@ package com.ludofactory.mobile.navigation.home
 				}
 				else
 				{
-					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80);
+					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 100);
 					var maxLogoWidth:int = actualWidth - (padding * 2);
 					var maxLogoScaleW:Number = (GlobalConfig.isPhone ? 0.6 : 0.45);
 					_logo.scaleX = _logo.scaleY = 1;
