@@ -85,7 +85,7 @@ package com.ludofactory.mobile.core
 			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
 			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
 			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : (GlobalConfig.android ? "android" : "android"); // FIXME Remettre "simulator" quand le modif aura été faite côté PHP
-			AirDeviceId.getInstance().getID("ludofactory", function(deviceId:String):void{ GlobalConfig.deviceId = deviceId; trace("Ancien device id : " + deviceId); });
+			AirDeviceId.getInstance().getID(null, function(deviceId:String):void{ GlobalConfig.deviceId = deviceId; });
 			showLaunchImage();
 			
 			if(stage)
@@ -279,7 +279,7 @@ package com.ludofactory.mobile.core
 			
 			// launch Starling
 			Starling.multitouchEnabled = false;  // useful on mobile devices
-			Starling.handleLostContext = !GlobalConfig.ios;  // not necessary on iOS. Saves a lot of memory!
+			Starling.handleLostContext = true; //!GlobalConfig.ios;  // not necessary on iOS. Saves a lot of memory! // FIXME Fait buguer vid coin sur ipad voir si ça vient pas du UI qq chose aussi (statusbar visible en haut)
 			_starling = new Starling(_rootClass, stage, null, null, "auto", "auto");
 			_starling.enableErrorChecking = CONFIG::DEBUG;
 			_starling.simulateMultitouch  = false;
