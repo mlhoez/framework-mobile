@@ -6,6 +6,7 @@ Created : 31 août 2013
 */
 package com.ludofactory.mobile.navigation.achievements
 {
+	
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.manager.MemberManager;
@@ -13,7 +14,7 @@ package com.ludofactory.mobile.navigation.achievements
 	
 	import starling.events.Event;
 	import starling.events.EventDispatcher;
-
+	
 	/**
 	 * Manage all the process associated to a trophy.
 	 */	
@@ -119,6 +120,8 @@ package com.ludofactory.mobile.navigation.achievements
 			GameCenterManager.reportAchievement(AbstractGameInfo.ACHIEVEMENTS_PREFIX + "." + trophyId, 100);
 			
 			_trophyDisplayer.onTrophyWon( getTrophyDataById(trophyId) );
+			
+			SoundManager.getInstance().playSound("trophy-won", "sfx");
 		}
 		
 		/**
