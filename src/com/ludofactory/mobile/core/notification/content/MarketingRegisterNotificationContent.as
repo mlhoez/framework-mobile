@@ -94,27 +94,54 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE))
 			{
-				_title.width = this.actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.5);
-				_title.x = (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)) + roundUp(((actualWidth * 0.5) - _title.width) * 0.5);
-				
-				_image.scaleX = _image.scaleY = 1;
-				_image.scaleX = _image.scaleY = Utilities.getScaleToFill(_image.width, _image.height, (actualWidth * (GlobalConfig.isPhone ? 0.5 : 0.5)), (actualHeight * 0.9));
-				_image.y = roundUp((actualHeight - _image.height) * 0.5);
-				_image.x = roundUp((actualWidth * 0.5 - _image.width) * 0.5);
-				
-				_laterButton.width = _createButton.width = actualWidth * 0.4;
-				_laterButton.height = _createButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 90 : 130);
-				
-				_createButton.validate();
-				_createButton.x = _laterButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _createButton.width) * 0.5;
-				
-				_alreadyButton.validate();
-				_alreadyButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _alreadyButton.width) * 0.5;
-				
-				_title.y = roundUp((actualHeight - (_title.height + _createButton.height + _laterButton.height + _alreadyButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ?  20 : 80))) * 0.5);
-				_createButton.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
-				_laterButton.y = _createButton.y + _createButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
-				_alreadyButton.y = _laterButton.y + _laterButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 30);
+				if(AbstractGameInfo.LANDSCAPE)
+				{
+					_title.width = this.actualWidth * (GlobalConfig.isPhone ? 0.55 : 0.5);
+					_title.x = (actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)) + roundUp(((actualWidth * 0.5) - _title.width) * 0.5);
+					
+					_image.scaleX = _image.scaleY = 1;
+					_image.scaleX = _image.scaleY = Utilities.getScaleToFill(_image.width, _image.height, (actualWidth * (GlobalConfig.isPhone ? 0.5 : 0.5)), (actualHeight * 0.9));
+					_image.y = roundUp((actualHeight - _image.height) * 0.5);
+					_image.x = roundUp((actualWidth * 0.5 - _image.width) * 0.5);
+					
+					_laterButton.width = _createButton.width = actualWidth * 0.4;
+					_laterButton.height = _createButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 90 : 130);
+					
+					_createButton.validate();
+					_createButton.x = _laterButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _createButton.width) * 0.5;
+					
+					_alreadyButton.validate();
+					_alreadyButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _alreadyButton.width) * 0.5;
+					
+					_title.y = roundUp((actualHeight - (_title.height + _createButton.height + _laterButton.height + _alreadyButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ?  20 : 80))) * 0.5);
+					_createButton.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
+					_laterButton.y = _createButton.y + _createButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
+					_alreadyButton.y = _laterButton.y + _laterButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 30);
+				}
+				else
+				{
+					_image.scaleX = _image.scaleY = 1;
+					_image.scaleX = _image.scaleY = Utilities.getScaleToFill(_image.width, _image.height, (actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.8)), (actualHeight * 0.5));
+					_image.x = roundUp((actualWidth - _image.width) * 0.5);
+					_image.y = scaleAndRoundToDpi(20);
+					
+					_title.width = this.actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.8);
+					_title.x = roundUp((actualWidth - _title.width) * 0.5);
+					
+					_laterButton.width = _createButton.width = actualWidth * 0.5;
+					_laterButton.height = _createButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 90 : 130);
+					
+					_createButton.validate();
+					_createButton.x = (actualWidth - (_createButton.width + _laterButton.width)) * 0.5;
+					_laterButton.x = _createButton.x + _createButton.width;
+					
+					_alreadyButton.validate();
+					_alreadyButton.x = roundUp((actualWidth - _alreadyButton.width) * 0.5);
+					
+					_title.y = roundUp(_image.y + _image.height + ((actualHeight - _image.y - _image.height) - (_title.height + _createButton.height + _alreadyButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ?  10 : 45))) * 0.5);
+					_createButton.y = _laterButton.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
+					_alreadyButton.y = _laterButton.y + _laterButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 15);
+				}
 				
 				super.draw();
 			}
