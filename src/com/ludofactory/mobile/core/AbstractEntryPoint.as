@@ -432,6 +432,14 @@ package com.ludofactory.mobile.core
 			}
 			catch(error:Error) { Flox.logError("Erreur lors de l'intialisation de VidCoin.") }
 			
+			// load common sounds
+			var musicPath:String = File.applicationDirectory.resolvePath("assets/sounds/music/").url;
+			var sfxPath:String = File.applicationDirectory.resolvePath("assets/sounds/sfx/").url;
+			
+			// default in framework
+			SoundManager.getInstance().addSound("new-highscore", sfxPath + "/new-highscore.mp3", "sfx");
+			SoundManager.getInstance().addSound("trophy-won", sfxPath + "/trophy-won.mp3", "sfx");
+			
 			try
 			{
 				MobileAppTracker.instance.init(AbstractGameInfo.HAS_OFFERS_ADVERTISER_ID, AbstractGameInfo.HAS_OFFERS_CONVERSION_KEY);
