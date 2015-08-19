@@ -10,7 +10,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.navigation.authentication.*;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
-	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	
 	/**
 	 * Checks whether the user is logged in and if he has completed the

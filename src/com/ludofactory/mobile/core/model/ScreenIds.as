@@ -4,7 +4,7 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 25 févr. 2014
 */
-package com.ludofactory.mobile.core
+package com.ludofactory.mobile.core.model
 {
 	public class ScreenIds
 	{

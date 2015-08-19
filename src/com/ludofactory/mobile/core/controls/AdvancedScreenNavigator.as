@@ -7,7 +7,7 @@ Created : 13 Juin 2013
 package com.ludofactory.mobile.core.controls
 {
 	
-	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.ScreenData;

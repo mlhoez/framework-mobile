@@ -7,7 +7,7 @@ Created : 27 oct. 2013
 package com.ludofactory.mobile.core.manager
 {
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	
 	/**
 	 * The BackManager handles the way the navigation is done within
