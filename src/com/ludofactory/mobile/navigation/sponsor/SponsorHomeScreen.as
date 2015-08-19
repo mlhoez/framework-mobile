@@ -73,7 +73,7 @@ package com.ludofactory.mobile.navigation.sponsor
 		
 		/**
 		 * The buttons container. */		
-		private var _buttonsContainer:LayoutGroup;
+		//private var _buttonsContainer:LayoutGroup;
 		/**
 		 * The email button. */		
 		private var _emailButton:Button;
@@ -147,7 +147,7 @@ package com.ludofactory.mobile.navigation.sponsor
 			_mainContainer.addChild(_knowMoreButton);
 			_knowMoreButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_WHITE);
 			
-			if( !AbstractGameInfo.LANDSCAPE )
+			/*if( !AbstractGameInfo.LANDSCAPE )
 			{
 				const hlayout:HorizontalLayout = new HorizontalLayout();
 				hlayout.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_CENTER;
@@ -156,7 +156,7 @@ package com.ludofactory.mobile.navigation.sponsor
 				_buttonsContainer.clipContent = false;
 				_buttonsContainer.layout = hlayout;
 				_mainContainer.addChild( _buttonsContainer );
-			}
+			}*/
 			
 			/*
 			_emailIcon = new ImageLoader();
@@ -167,10 +167,10 @@ package com.ludofactory.mobile.navigation.sponsor
 			
 			_emailButton = new Button();
 			_emailButton.addEventListener(Event.TRIGGERED, onEmailSelected);
-			_emailButton.styleName = AbstractGameInfo.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_RIGHT;
+			//_emailButton.styleName = AbstractGameInfo.LANDSCAPE ? "" : Theme.BUTTON_YELLOW_SQUARED_RIGHT;
 			//_emailButton.defaultIcon = _emailIcon;
 			_emailButton.label = _("Inviter");  // _("Par Email");
-			AbstractGameInfo.LANDSCAPE ? addChild(_emailButton) : _buttonsContainer.addChild(_emailButton);
+			/*AbstractGameInfo.LANDSCAPE ? */addChild(_emailButton)/* : _buttonsContainer.addChild(_emailButton)*/;
 			_emailButton.gap = GlobalConfig.isPhone ? 0 : 20;
 			_emailButton.minHeight = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
 			
@@ -307,20 +307,23 @@ package com.ludofactory.mobile.navigation.sponsor
 					_mainContainer.x = scaleAndRoundToDpi(10);
 					_mainContainer.y = (actualHeight - _mainContainer.height) * 0.1;
 					
-					_buttonsContainer.width = actualWidth * (GlobalConfig.isPhone ? 1 : 0.9);
-					_buttonsContainer.x = (actualWidth - _buttonsContainer.width) * 0.5;
-					/*_smsButton.width = */_emailButton.width = _buttonsContainer.width * 0.5;
+					_emailButton.width = actualWidth * 0.7;
+					_emailButton.x = (actualWidth - _emailButton.width) * 0.5;
 					
 					_glow.x = _mainContainer.x + (_mainContainer.width * 0.5);
 					_glow.y = _mainContainer.y + (_mainContainer.height * 0.35);
 					
 					_myFriendsButton.width = actualWidth * 0.7;
-					_myFriendsButton.x = (actualWidth - _myFriendsButton.width) * 0.5;
-					_myFriendsButton.validate();
-					_myFriendsButton.y = _mainContainer.y + _mainContainer.height + ((actualHeight - _mainContainer.y - _mainContainer.height) - _myFriendsButton.height) * 0.75;
 					
-					_friendsImage.y = _myFriendsButton.y - (_friendsImage.height * 0.6);
-					_friendsImage.x = (actualWidth - _friendsImage.width) * 0.5;
+					_emailButton.validate();
+					_friendsImage.y = _knowMoreButton.y + _knowMoreButton.height + ((actualHeight - _knowMoreButton.y - _knowMoreButton.height) - (_emailButton.height * 2 + _friendsImage.height * 0.4 + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 50)) ) * 0.5;
+					_myFriendsButton.x = _emailButton.x = (actualWidth - _myFriendsButton.width) * 0.5;
+					_myFriendsButton.validate();
+					_myFriendsButton.y = _friendsImage.y + _friendsImage.height * 0.6;
+					
+					_friendsImage.x = _myFriendsButton.x + (_myFriendsButton.width - _friendsImage.width) * 0.5;
+					
+					_emailButton.y = _myFriendsButton.y + _myFriendsButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 50);
 					
 					TweenMax.to(_glow, 1.25, { alpha:0.1, repeat:-1, yoyo:true, ease:Linear.easeNone });
 					TweenMax.to(_glow, 25, { rotation:deg2rad(360), repeat:-1, ease:Linear.easeNone });
@@ -430,11 +433,11 @@ package com.ludofactory.mobile.navigation.sponsor
 			_emailButton.removeFromParent(true);
 			_emailButton = null;
 			
-			if( _buttonsContainer )
+			/*if( _buttonsContainer )
 			{
 				_buttonsContainer.removeFromParent(true);
 				_buttonsContainer = null;
-			}
+			}*/
 			
 			_myFriendsButton.removeEventListener(Event.TRIGGERED, onMyFriendsSelected);
 			_myFriendsButton.removeFromParent(true);
