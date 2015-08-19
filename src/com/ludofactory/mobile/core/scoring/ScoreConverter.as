@@ -7,8 +7,8 @@ Created : 7 août 2013
 package com.ludofactory.mobile.core.scoring
 {
 	
-	import com.ludofactory.mobile.core.GameMode;
-	import com.ludofactory.mobile.core.StakeType;
+	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;

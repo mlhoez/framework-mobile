@@ -12,7 +12,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractMain;
-	import com.ludofactory.mobile.core.GameMode;
+	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.push.GameSession;

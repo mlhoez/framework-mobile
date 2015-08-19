@@ -13,7 +13,7 @@ package com.ludofactory.mobile.navigation.alert
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.GameMode;
+	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.storage.Storage;

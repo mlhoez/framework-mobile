@@ -11,10 +11,10 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.GameMode;
-	import com.ludofactory.mobile.core.GameMode;
+	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.StakeType;
+	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;

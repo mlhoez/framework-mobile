@@ -4,7 +4,7 @@
  Author  : Maxime Lhoez
  Created : 18 août 2014
 */
-package com.ludofactory.mobile.core
+package com.ludofactory.mobile.core.model
 {
 	/**
 	 * All the Ludokado game modes.
