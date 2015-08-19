@@ -16,7 +16,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -198,10 +198,14 @@ package com.ludofactory.mobile.core
 			Starling.juggler.add(_loader);
 			addChild(_loader);
 			
-			var basePath:String = File.applicationDirectory.resolvePath( GlobalConfig.isPhone ? "assets/game/sd/" : "assets/game/hd/").url;
-			//log("[AbstractGame] WARNING !!! THE GAME USES PNG ATLASES INSTEAD OF ATF !");
-			AbstractEntryPoint.assets.enqueue( basePath + "/game.atf" ); // FIXME Remettre .atf après
-			AbstractEntryPoint.assets.enqueue( basePath + "/game.xml" );
+			var path:File = File.applicationDirectory.resolvePath( GlobalConfig.isPhone ? "assets/game/sd/" : "assets/game/hd/");
+			AbstractEntryPoint.assets.enqueue( path.url + "/game.atf" );
+			AbstractEntryPoint.assets.enqueue( path.url + "/game.xml" );
+			// load common assets if found
+			path = File.applicationDirectory.resolvePath("assets/game/common/");
+			if(path.exists)
+				AbstractEntryPoint.assets.enqueue(path);
+			path = null;
 			AbstractEntryPoint.assets.loadQueue( function onLoading(ratio:Number):void{ if(ratio == 1) initializeContent(); });
 		}
 		
@@ -243,8 +247,8 @@ package com.ludofactory.mobile.core
 			_playButton.y = (GlobalConfig.stageHeight - _playButton.height) * 0.5;
 			
 			// enable the pause view and listeners
-			PauseManager.dispatcher.addEventListener(LudoEventType.EXIT, giveUp);
-			PauseManager.dispatcher.addEventListener(LudoEventType.RESUME, resume);
+			PauseManager.dispatcher.addEventListener(MobileEventTypes.EXIT, giveUp);
+			PauseManager.dispatcher.addEventListener(MobileEventTypes.RESUME, resume);
 		}
 		
 		
@@ -278,9 +282,17 @@ package com.ludofactory.mobile.core
 		 */		
 		public function giveUp(event:starling.events.Event):void
 		{
-			// to override
-			_gaveUp = true;
-			gameOver();
+			if(!_gaveUp)
+			{
+				_gaveUp = true;
+				PauseManager.isPlaying = false;
+				onGaveUp();
+			}
+		}
+		
+		public function onGaveUp():void
+		{
+			throw new Error("onGaveUp is meant to be overridden in each game.")
 		}
 		
 		/**
@@ -584,9 +596,13 @@ package com.ludofactory.mobile.core
 		
 		override public function dispose():void
 		{
+			// free memory
+			AbstractEntryPoint.assets.removeTextureAtlas("game", true);
+			AbstractEntryPoint.assets.removeTextureAtlas("common", true);
+			
 			PauseManager.isPlaying = false;
-			PauseManager.dispatcher.removeEventListener(LudoEventType.EXIT, giveUp);
-			PauseManager.dispatcher.removeEventListener(LudoEventType.RESUME, resume);
+			PauseManager.dispatcher.removeEventListener(MobileEventTypes.EXIT, giveUp);
+			PauseManager.dispatcher.removeEventListener(MobileEventTypes.RESUME, resume);
 			
 			if( _loader )
 			{
