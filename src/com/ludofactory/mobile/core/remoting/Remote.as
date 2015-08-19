@@ -12,7 +12,7 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
@@ -47,8 +47,8 @@ package com.ludofactory.mobile.core.remoting
 		
 		// urls et port quand on est sur le réseau local
 		private const DEV_PORT:int = 80;
-		private const DEV_URL:String = "http://www.ludokado.com";
-		//private const DEV_URL:String = "http://www.ludokado.dev";
+		//private const DEV_URL:String = "http://www.ludokado.com";
+		private const DEV_URL:String = "http://www.ludokado.dev";
 		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokado2.pterrier.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
@@ -800,7 +800,7 @@ package com.ludofactory.mobile.core.remoting
 				if( "obj_membre_mobile" in result && result.obj_membre_mobile)
 				{
 					MemberManager.getInstance().parseData(result.obj_membre_mobile);
-					dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
+					dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
 				}
 				
 				if( "afficher_cadeau" in result && result.afficher_cadeau != null )
