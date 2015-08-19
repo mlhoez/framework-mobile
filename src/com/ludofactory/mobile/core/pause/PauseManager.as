@@ -9,7 +9,7 @@ package com.ludofactory.mobile.core.pause
 	import com.greensock.TweenMax;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.HeartBeat;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	
 	import starling.core.Starling;
 	import starling.events.Event;
@@ -76,10 +76,10 @@ package com.ludofactory.mobile.core.pause
 						_pauseView = new PauseView();
 					(Starling.current.root as AbstractEntryPoint).addChild(_pauseView);
 					if(!manualCall)
-						_pauseView.addEventListener(LudoEventType.ANIMATION_IN_COMPLETE, onPauseViewDisplayed);
-					_pauseView.addEventListener(LudoEventType.ANIMATION_OUT_COMPLETE, onPauseViewHidden);
-					_pauseView.addEventListener(LudoEventType.RESUME, onResumeButtonClicked);
-					_pauseView.addEventListener(LudoEventType.EXIT, onExitButtonClicked);
+						_pauseView.addEventListener(MobileEventTypes.ANIMATION_IN_COMPLETE, onPauseViewDisplayed);
+					_pauseView.addEventListener(MobileEventTypes.ANIMATION_OUT_COMPLETE, onPauseViewHidden);
+					_pauseView.addEventListener(MobileEventTypes.RESUME, onResumeButtonClicked);
+					_pauseView.addEventListener(MobileEventTypes.EXIT, onExitButtonClicked);
 					_pauseView.animateIn(manualCall);
 				}
 				else
@@ -148,11 +148,11 @@ package com.ludofactory.mobile.core.pause
 		{
 			if(_pauseView != null && _isPauseViewDisplaying)
 			{
-				if(_pauseView.hasEventListener(LudoEventType.ANIMATION_IN_COMPLETE))
-					_pauseView.removeEventListener(LudoEventType.ANIMATION_IN_COMPLETE, onPauseViewDisplayed);
-				_pauseView.removeEventListener(LudoEventType.ANIMATION_OUT_COMPLETE, onPauseViewHidden);
-				_pauseView.removeEventListener(LudoEventType.RESUME, onResumeButtonClicked);
-				_pauseView.removeEventListener(LudoEventType.EXIT, onExitButtonClicked);
+				if(_pauseView.hasEventListener(MobileEventTypes.ANIMATION_IN_COMPLETE))
+					_pauseView.removeEventListener(MobileEventTypes.ANIMATION_IN_COMPLETE, onPauseViewDisplayed);
+				_pauseView.removeEventListener(MobileEventTypes.ANIMATION_OUT_COMPLETE, onPauseViewHidden);
+				_pauseView.removeEventListener(MobileEventTypes.RESUME, onResumeButtonClicked);
+				_pauseView.removeEventListener(MobileEventTypes.EXIT, onExitButtonClicked);
 				
 				_pauseView.removeFromParent(true);
 				_pauseView = null;
@@ -171,7 +171,7 @@ package com.ludofactory.mobile.core.pause
 		 */		
 		private static function onResumeButtonClicked(evt:Event):void
 		{
-			_dispatcher.dispatchEventWith(LudoEventType.RESUME);
+			_dispatcher.dispatchEventWith(MobileEventTypes.RESUME);
 		}
 		
 		/**
@@ -181,7 +181,7 @@ package com.ludofactory.mobile.core.pause
 		 */		
 		private static function onExitButtonClicked(evt:Event):void
 		{
-			_dispatcher.dispatchEventWith(LudoEventType.EXIT);
+			_dispatcher.dispatchEventWith(MobileEventTypes.EXIT);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

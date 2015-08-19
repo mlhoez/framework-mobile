@@ -13,7 +13,7 @@ package com.ludofactory.mobile.navigation.menu
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
 	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
@@ -94,7 +94,7 @@ package com.ludofactory.mobile.navigation.menu
 			_list.layout = listLayout;
 			_list.isSelectable = false;
 			_list.itemRendererType = MenuItemRenderer;
-			_list.addEventListener(LudoEventType.MENU_ICON_TOUCHED, onMenuIconTouched);
+			_list.addEventListener(MobileEventTypes.MENU_ICON_TOUCHED, onMenuIconTouched);
             if( MemberManager.getInstance().getGiftsEnabled() )
             {
                 _list.dataProvider = new ListCollection(
@@ -245,7 +245,7 @@ package com.ludofactory.mobile.navigation.menu
 					if( _screenNavigator.activeScreenID != ScreenIds.AUTHENTICATION_SCREEN )
 						AuthenticationManager.startAuthenticationProcess(_screenNavigator, _screenNavigator.activeScreenID);
 					else
-						dispatchEventWith(LudoEventType.HIDE_MAIN_MENU);
+						dispatchEventWith(MobileEventTypes.HIDE_MAIN_MENU);
 				}
 			}
 			else
@@ -269,7 +269,7 @@ package com.ludofactory.mobile.navigation.menu
 							if( _screenNavigator.activeScreenID != ScreenIds.AUTHENTICATION_SCREEN )
 								_screenNavigator.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
 							else
-								dispatchEventWith(LudoEventType.HIDE_MAIN_MENU);
+								dispatchEventWith(MobileEventTypes.HIDE_MAIN_MENU);
 						}
 						else
 						{
@@ -279,7 +279,7 @@ package com.ludofactory.mobile.navigation.menu
 				}
 				else
 				{
-					dispatchEventWith(LudoEventType.HIDE_MAIN_MENU);
+					dispatchEventWith(MobileEventTypes.HIDE_MAIN_MENU);
 				}
 			}
 		}
@@ -306,7 +306,7 @@ package com.ludofactory.mobile.navigation.menu
 				if( _screenNavigator.activeScreenID != ScreenIds.HOME_SCREEN )
 					_screenNavigator.showScreen( ScreenIds.HOME_SCREEN );
 				else
-					dispatchEventWith(LudoEventType.HIDE_MAIN_MENU);
+					dispatchEventWith(MobileEventTypes.HIDE_MAIN_MENU);
 			}
 		}
 		
@@ -320,7 +320,7 @@ package com.ludofactory.mobile.navigation.menu
 			_tiledBackground.removeFromParent(true);
 			_tiledBackground = null;
 			
-			_list.removeEventListener(LudoEventType.MENU_ICON_TOUCHED, onMenuIconTouched);
+			_list.removeEventListener(MobileEventTypes.MENU_ICON_TOUCHED, onMenuIconTouched);
 			_list.removeFromParent(true);
 			_list = null;
 			

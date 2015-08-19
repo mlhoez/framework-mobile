@@ -14,7 +14,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -388,7 +388,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 				touchable = false;
 				
 				TweenMax.to(_saveButton, 0.75, { scaleX:0, scaleY:0, autoAlpha:0, ease:Bounce.easeOut });
-				TweenMax.to(_loader, 1, { delay:0.5, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, autoAlpha:1, ease:Elastic.easeOut, onComplete:owner.dispatchEventWith, onCompleteParams:[LudoEventType.SAVE_ACCOUNT_INFORMATION, false] });
+				TweenMax.to(_loader, 1, { delay:0.5, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, autoAlpha:1, ease:Elastic.easeOut, onComplete:owner.dispatchEventWith, onCompleteParams:[MobileEventTypes.SAVE_ACCOUNT_INFORMATION, false] });
 			}
 			else
 			{

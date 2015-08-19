@@ -5,7 +5,7 @@ package com.ludofactory.mobile.core.notification
 {
 
 	import com.ludofactory.mobile.core.controls.PullToRefreshScrollContainer;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 
 	public class AbstractNotificationPopupContent extends PullToRefreshScrollContainer
 	{

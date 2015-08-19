@@ -12,7 +12,7 @@ package com.ludofactory.mobile.navigation.alert
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.dispatcher;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -70,7 +70,7 @@ package com.ludofactory.mobile.navigation.alert
 			super.initialize();
 			
 			_alertData = new AlertData();
-			_alertData.addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onAlertUpdated);
+			_alertData.addEventListener(MobileEventTypes.ALERT_COUNT_UPDATED, onAlertUpdated);
 			
 			_background = new Quad(5, 5);
 			_background.touchable = false;
@@ -186,7 +186,7 @@ package com.ludofactory.mobile.navigation.alert
 		 */		
 		private function onClose(event:Event):void
 		{
-			dispatcher.dispatchEventWith(LudoEventType.OPEN_ALERTS_FROM_HEADER);
+			dispatcher.dispatchEventWith(MobileEventTypes.OPEN_ALERTS_FROM_HEADER);
 		}
 		
 		public function fetchAlerts():void
@@ -203,12 +203,12 @@ package com.ludofactory.mobile.navigation.alert
 		private function onGetAlertsSuccess(result:Object):void
 		{
 			_alertData.parse( result.alertes );
-			dispatcher.dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
+			dispatcher.dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
 		}
 		
 		private function onAlertUpdated(event:Event):void
 		{
-			dispatcher.dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
+			dispatcher.dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
 		}
 		
 		public function get alertData():AlertData

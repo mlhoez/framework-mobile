@@ -18,7 +18,7 @@ package com.ludofactory.mobile.navigation.home
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
@@ -242,8 +242,8 @@ package com.ludofactory.mobile.navigation.home
 		{
 			if( GameCenterManager.available )
 			{
-				GameCenterManager.dispatcher.addEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
-				GameCenterManager.dispatcher.addEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
+				GameCenterManager.dispatcher.addEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
+				GameCenterManager.dispatcher.addEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
 				GameCenterManager.authenticateUser();
 			}
 		}
@@ -253,8 +253,8 @@ package com.ludofactory.mobile.navigation.home
 		 */		
 		private function onGameCenterAuthenticationFinished(event:Event):void
 		{
-			GameCenterManager.dispatcher.removeEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
-			GameCenterManager.dispatcher.removeEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
+			GameCenterManager.dispatcher.removeEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
+			GameCenterManager.dispatcher.removeEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
 			GameCenterManager.showAchievements();
 		}
 		
@@ -263,8 +263,8 @@ package com.ludofactory.mobile.navigation.home
 		 */
 		private function onGameCenterAuthenticationFailed(event:Event):void
 		{
-			GameCenterManager.dispatcher.removeEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
-			GameCenterManager.dispatcher.removeEventListener(LudoEventType.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
+			GameCenterManager.dispatcher.removeEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
+			GameCenterManager.dispatcher.removeEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
 			// TODO show tooltip
 			
 			_isCalloutDisplaying = true;

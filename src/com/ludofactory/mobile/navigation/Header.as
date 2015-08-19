@@ -12,7 +12,7 @@ package com.ludofactory.mobile.navigation
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.*;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -271,7 +271,7 @@ package com.ludofactory.mobile.navigation
 		 */		
 		private function onAlertButtonTouched(event:Event):void
 		{
-			dispatchEventWith(LudoEventType.OPEN_ALERTS_FROM_HEADER);
+			dispatchEventWith(MobileEventTypes.OPEN_ALERTS_FROM_HEADER);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -289,7 +289,7 @@ package com.ludofactory.mobile.navigation
 		override public function set visible(value:Boolean):void
 		{
 			super.visible = value;
-			dispatchEventWith(LudoEventType.HEADER_VISIBILITY_CHANGED);
+			dispatchEventWith(MobileEventTypes.HEADER_VISIBILITY_CHANGED);
 		}
 		
 	}

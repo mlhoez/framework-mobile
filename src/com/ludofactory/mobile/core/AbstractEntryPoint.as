@@ -22,7 +22,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
 	import com.ludofactory.mobile.core.display.TiledBackground;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
@@ -318,7 +318,7 @@ package com.ludofactory.mobile.core
 				else
 				{
 					// portrait but the image is landscape
-					if(_loadingBackground.height > _loadingBackground.width)
+					if(_loadingBackground.width > _loadingBackground.height)
 					{
 						_loadingBackground.width = GlobalConfig.stageHeight;
 						_loadingBackground.height = GlobalConfig.stageWidth;
@@ -472,13 +472,13 @@ package com.ludofactory.mobile.core
 			initializeBackgrounds();
 			
 			_alertContainer = new AlertManager();
-			dispatcher.addEventListener(LudoEventType.OPEN_ALERTS_FROM_HEADER, onAlertButtonTouched);
+			dispatcher.addEventListener(MobileEventTypes.OPEN_ALERTS_FROM_HEADER, onAlertButtonTouched);
 			addChild(_alertContainer);
 			
 			// controllrs
 			_pushManager = new PushManager();
-			_pushManager.addEventListener(LudoEventType.UPDATE_HEADER, onPushUpdate);
-			_pushManager.addEventListener(LudoEventType.UPDATE_ALERT_CONTAINER_LIST, _alertContainer.updateList);
+			_pushManager.addEventListener(MobileEventTypes.UPDATE_HEADER, onPushUpdate);
+			_pushManager.addEventListener(MobileEventTypes.UPDATE_ALERT_CONTAINER_LIST, _alertContainer.updateList);
 			
 			if( CoreMobile.isSupported() )
 			{
@@ -505,7 +505,7 @@ package com.ludofactory.mobile.core
 			_drawer.rightDrawer = _alertContainer;
 			_drawer.autoSizeMode = Drawers.AUTO_SIZE_MODE_CONTENT;
 			_drawer.openOrCloseDuration = 0.5;
-			_drawer.rightDrawerToggleEventType = LudoEventType.OPEN_ALERTS_FROM_HEADER;
+			_drawer.rightDrawerToggleEventType = MobileEventTypes.OPEN_ALERTS_FROM_HEADER;
 			_drawer.addEventListener(FeathersEventType.BEGIN_INTERACTION, onStartInteractWithDrawer);
 			_drawer.openGesture = Drawers.OPEN_GESTURE_NONE;
 			addChild(_drawer);
@@ -515,14 +515,14 @@ package com.ludofactory.mobile.core
 			
 			// Header
 			_header = new Header();
-			_header.addEventListener(LudoEventType.OPEN_ALERTS_FROM_HEADER, onAlertButtonTouched);
-			_header.addEventListener(LudoEventType.HEADER_VISIBILITY_CHANGED, onHeaderVisibilityChanged);
+			_header.addEventListener(MobileEventTypes.OPEN_ALERTS_FROM_HEADER, onAlertButtonTouched);
+			_header.addEventListener(MobileEventTypes.HEADER_VISIBILITY_CHANGED, onHeaderVisibilityChanged);
 			_container.addChild(_header);
 			
 			_footer = new Footer();
-			_footer.addEventListener(LudoEventType.MAIN_MENU_TOUCHED, onMenuButtonTouched);
-			_footer.addEventListener(LudoEventType.BACK_BUTTON_TOUCHED, onBackButtonTouched);
-			_footer.addEventListener(LudoEventType.NEWS_BUTTON_TOUCHED, onNewsButtonTouched);
+			_footer.addEventListener(MobileEventTypes.MAIN_MENU_TOUCHED, onMenuButtonTouched);
+			_footer.addEventListener(MobileEventTypes.BACK_BUTTON_TOUCHED, onBackButtonTouched);
+			_footer.addEventListener(MobileEventTypes.NEWS_BUTTON_TOUCHED, onNewsButtonTouched);
 			_container.addChild(_footer);
 			
 			_shadow = new Quad(scaleAndRoundToDpi(10), 5, 0x000000);
@@ -536,10 +536,10 @@ package com.ludofactory.mobile.core
 			_shadow.setVertexColor(3, 0xffffff);
 			_container.addChild(_shadow);
 			
-			MemberManager.getInstance().addEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateSummary);
-			Remote.getInstance().addEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateSummary);
+			MemberManager.getInstance().addEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateSummary);
+			Remote.getInstance().addEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateSummary);
 			
-			dispatcher.addEventListener(LudoEventType.ALERT_COUNT_UPDATED, onPushUpdate);
+			dispatcher.addEventListener(MobileEventTypes.ALERT_COUNT_UPDATED, onPushUpdate);
 			LanguageManager.getInstance().checkForUpdate(false);
 			
 			if( PushNotification.getInstance().isPushNotificationSupported && (Boolean(Storage.getInstance().getProperty( StorageConfig.PROPERTY_PUSH_INITIALIZED )) || GlobalConfig.android) )
@@ -636,11 +636,11 @@ package com.ludofactory.mobile.core
 			SCREENS = SCREENS.concat(DEBUG_SCREENS);
 			_screenNavigator.addScreensFromArray(SCREENS);
 			_screenNavigator.addEventListener(FeathersEventType.TRANSITION_START, onScreenTransitionStarted);
-			_screenNavigator.addEventListener(LudoEventType.UPDATE_HEADER_TITLE, onUpdateHeaderTitle);
-			_screenNavigator.addEventListener(LudoEventType.SHOW_MAIN_MENU, onMenuButtonTouched);
-			_screenNavigator.addEventListener(LudoEventType.HIDE_MAIN_MENU, hideMenu);
-			_screenNavigator.addEventListener(LudoEventType.ANIMATE_SUMMARY, onAnimateSummary);
-			_screenNavigator.addEventListener(LudoEventType.UPDATE_SUMMARY, onUpdateSummary);
+			_screenNavigator.addEventListener(MobileEventTypes.UPDATE_HEADER_TITLE, onUpdateHeaderTitle);
+			_screenNavigator.addEventListener(MobileEventTypes.SHOW_MAIN_MENU, onMenuButtonTouched);
+			_screenNavigator.addEventListener(MobileEventTypes.HIDE_MAIN_MENU, hideMenu);
+			_screenNavigator.addEventListener(MobileEventTypes.ANIMATE_SUMMARY, onAnimateSummary);
+			_screenNavigator.addEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateSummary);
 			//_screenNavigator.clipContent = true;
 			_container.addChild(_screenNavigator);
 		}
@@ -900,7 +900,7 @@ package com.ludofactory.mobile.core
 				if( !_mainMenu )
 				{
 					_mainMenu = new Menu(_screenNavigator, showHomeOnClose);
-					_mainMenu.addEventListener(LudoEventType.HIDE_MAIN_MENU, hideMenu);
+					_mainMenu.addEventListener(MobileEventTypes.HIDE_MAIN_MENU, hideMenu);
 					_mainMenu.alpha = 0;
 					_mainMenu.visible = false;
 					_mainMenu.width = _screenNavigator.width;
@@ -999,7 +999,7 @@ package com.ludofactory.mobile.core
 		private function onAlertButtonTouched(event:Event = null):void
 		{
 			onStartInteractWithDrawer(event);
-			_container.dispatchEventWith( LudoEventType.OPEN_ALERTS_FROM_HEADER );
+			_container.dispatchEventWith( MobileEventTypes.OPEN_ALERTS_FROM_HEADER );
 			hideMenu();
 		}
 		

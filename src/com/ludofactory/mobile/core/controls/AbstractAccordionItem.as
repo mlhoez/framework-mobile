@@ -7,7 +7,7 @@ Created : 6 sept. 2013
 package com.ludofactory.mobile.core.controls
 {
 	import com.greensock.TweenMax;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	
 	import flash.geom.Point;
 	
@@ -159,7 +159,7 @@ package com.ludofactory.mobile.core.controls
 			if( isNaN(duration) )
 				duration = _expandOrCollapseDuration;
 			
-			dispatchEventWith(LudoEventType.EXPAND_BEGIN);
+			dispatchEventWith(MobileEventTypes.EXPAND_BEGIN);
 			_contentContainer.visible = true;
 			_isExpanding = true;
 			
@@ -167,7 +167,7 @@ package com.ludofactory.mobile.core.controls
 			{
 				_isExpanding = false;
 				resizeToContent();
-				dispatchEventWith(LudoEventType.EXPAND_COMPLETE);
+				dispatchEventWith(MobileEventTypes.EXPAND_COMPLETE);
 			} });
 			
 			if( _arrow )
@@ -184,10 +184,10 @@ package com.ludofactory.mobile.core.controls
 			if(isNaN(duration))
 				duration = _expandOrCollapseDuration;
 			
-			dispatchEventWith(LudoEventType.COLLAPSE_BEGIN);
+			dispatchEventWith(MobileEventTypes.COLLAPSE_BEGIN);
 			TweenMax.to(_contentContainer, duration, { height:0, onComplete:function():void
 			{
-				dispatchEventWith(LudoEventType.COLLAPSE_COMPLETE);
+				dispatchEventWith(MobileEventTypes.COLLAPSE_COMPLETE);
 				_contentContainer.visible = false;
 			} });
 			

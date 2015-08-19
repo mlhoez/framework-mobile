@@ -14,7 +14,7 @@ package com.ludofactory.mobile.navigation.cs.display
 	import com.ludofactory.mobile.navigation.authentication.NotLoggedInContainer;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.PullToRefreshList;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -68,7 +68,7 @@ package com.ludofactory.mobile.navigation.cs.display
 			_list.visible = false;
 			_list.itemRendererType = CSMessageItemRenderer;
 			_list.addEventListener(Event.CHANGE, onItemSelected);
-			_list.addEventListener(LudoEventType.REFRESH_TOP, onRefreshTop);
+			_list.addEventListener(MobileEventTypes.REFRESH_TOP, onRefreshTop);
 			addChild(_list);
 			
 			_authenticationContainer = new NotLoggedInContainer();
@@ -265,7 +265,7 @@ package com.ludofactory.mobile.navigation.cs.display
 			_retryContainer = null;
 			
 			_list.removeEventListener(Event.CHANGE, onItemSelected);
-			_list.removeEventListener(LudoEventType.REFRESH_TOP, onRefreshTop);
+			_list.removeEventListener(MobileEventTypes.REFRESH_TOP, onRefreshTop);
 			_list.removeFromParent(true);
 			_list = null;
 			

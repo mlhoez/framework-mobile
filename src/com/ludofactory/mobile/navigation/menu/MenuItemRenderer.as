@@ -11,7 +11,7 @@ package com.ludofactory.mobile.navigation.menu
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.controls.AbstractListItemRenderer;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -161,7 +161,7 @@ package com.ludofactory.mobile.navigation.menu
 		
 		override protected function onTouched():void
 		{
-			owner.dispatchEventWith(LudoEventType.MENU_ICON_TOUCHED, false, _data.screenLinked);
+			owner.dispatchEventWith(MobileEventTypes.MENU_ICON_TOUCHED, false, _data.screenLinked);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

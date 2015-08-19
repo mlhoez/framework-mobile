@@ -16,7 +16,7 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.CustomGroupedList;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -92,8 +92,8 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 			_list.visible = false;
 			_list.headerRendererType = HistoryHeaderItemRenderer;
 			_list.itemRendererType = GiftHistoryItemRenderer;
-			_list.addEventListener(LudoEventType.LIST_BOTTOM_UPDATE, onBottomUpdate);
-			_list.addEventListener(LudoEventType.REFRESH_GIFTS_LIST, onRefreshList);
+			_list.addEventListener(MobileEventTypes.LIST_BOTTOM_UPDATE, onBottomUpdate);
+			_list.addEventListener(MobileEventTypes.REFRESH_GIFTS_LIST, onRefreshList);
 			addChild(_list);
 			
 			_authenticationContainer = new NotLoggedInContainer();
@@ -375,7 +375,7 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 				_listShadow = null;
 			}
 			
-			_list.removeEventListener(LudoEventType.LIST_BOTTOM_UPDATE, onBottomUpdate);
+			_list.removeEventListener(MobileEventTypes.LIST_BOTTOM_UPDATE, onBottomUpdate);
 			_list.removeFromParent(true);
 			_list = null;
 			

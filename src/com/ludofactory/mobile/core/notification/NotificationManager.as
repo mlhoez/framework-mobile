@@ -1,7 +1,7 @@
 package com.ludofactory.mobile.core.notification
 {
 	import com.greensock.TweenMax;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
@@ -68,7 +68,7 @@ package com.ludofactory.mobile.core.notification
 			_currentNotification.visible = true;
 			_currentNotification.touchable = false;
 			_currentNotification.width = GlobalConfig.stageWidth;
-			_currentNotification.addEventListener(LudoEventType.CLOSE_NOTIFICATION, removeNotification);
+			_currentNotification.addEventListener(MobileEventTypes.CLOSE_NOTIFICATION, removeNotification);
 			calculatedRoot.addChild(_currentNotification);
 			_currentNotification.validate();
 			_currentNotification.y = GlobalConfig.stageHeight;
@@ -151,7 +151,7 @@ package com.ludofactory.mobile.core.notification
 			
 			_overlay.removeEventListener(TouchEvent.TOUCH, onCloseNotification);
 			
-			_currentNotification.removeEventListener(LudoEventType.CLOSE_NOTIFICATION, removeNotification);
+			_currentNotification.removeEventListener(MobileEventTypes.CLOSE_NOTIFICATION, removeNotification);
 			_currentNotification.touchable = false;
 			_currentNotification.flatten();
 			

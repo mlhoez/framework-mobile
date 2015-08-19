@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core.controls
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.List;
@@ -164,13 +164,13 @@ package com.ludofactory.mobile.core.controls
 					// if the actual scroll position is at the maximum less the down
 					// offset value we can trigger an update
 					_isRefreshingDown = true;
-					dispatchEventWith(LudoEventType.LIST_BOTTOM_UPDATE);
+					dispatchEventWith(MobileEventTypes.LIST_BOTTOM_UPDATE);
 				}
 				else if( !_isRefreshingUp && _isRefreshableUp && _verticalScrollPosition < 0 )
 				{
 					// if the actual scroll position is at the top, we trigger an update
 					_isRefreshingUp = true;
-					dispatchEventWith(LudoEventType.LIST_TOP_UPDATE);
+					dispatchEventWith(MobileEventTypes.LIST_TOP_UPDATE);
 				}
 			}
 		}

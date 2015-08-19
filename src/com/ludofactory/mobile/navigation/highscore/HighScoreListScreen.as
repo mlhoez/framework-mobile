@@ -16,7 +16,7 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.controls.AutoRefreshableList;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -124,8 +124,8 @@ package com.ludofactory.mobile.navigation.highscore
 			_list.isSelectable = false;
 			_list.visible = false;
 			_list.itemRendererType = HighScoreItemRenderer;
-			_list.addEventListener(LudoEventType.LIST_BOTTOM_UPDATE, onBottomUpdate);
-			_list.addEventListener(LudoEventType.LIST_TOP_UPDATE, onTopUpdate);
+			_list.addEventListener(MobileEventTypes.LIST_BOTTOM_UPDATE, onBottomUpdate);
+			_list.addEventListener(MobileEventTypes.LIST_TOP_UPDATE, onTopUpdate);
 			addChild(_list);
 			
 			_countriesList = new GroupedList();
@@ -639,8 +639,8 @@ package com.ludofactory.mobile.navigation.highscore
 			_listHeader.removeFromParent(true);
 			_listHeader = null;
 			
-			_list.removeEventListener(LudoEventType.LIST_BOTTOM_UPDATE, onBottomUpdate);
-			_list.removeEventListener(LudoEventType.LIST_TOP_UPDATE, onTopUpdate);
+			_list.removeEventListener(MobileEventTypes.LIST_BOTTOM_UPDATE, onBottomUpdate);
+			_list.removeEventListener(MobileEventTypes.LIST_TOP_UPDATE, onTopUpdate);
 			_list.removeFromParent(true);
 			_list = null;
 			

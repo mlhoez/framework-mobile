@@ -17,7 +17,7 @@ package com.ludofactory.mobile.core.purchases
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
@@ -127,7 +127,7 @@ package com.ludofactory.mobile.core.purchases
 			else
 			{
 				log("[Store] No store is available on this platform.");
-				dispatchEventWith(LudoEventType.STORE_INITIALIZED);
+				dispatchEventWith(MobileEventTypes.STORE_INITIALIZED);
 			}
 			
 			_isInitialized = true;
@@ -331,7 +331,7 @@ package com.ludofactory.mobile.core.purchases
 			Flox.logWarning("Item " + itemId + " successfully purchased, giving " + numCreditsBought + " Game Credits.");
 			logPurchaseEvent(itemId, PURCHASE_TYPE_SUCCEED);
 			
-			dispatchEventWith(LudoEventType.STORE_PURCHASE_SUCCESS, false, { value:numCreditsBought, id:itemId, txt:textValue, newRank:newRank });
+			dispatchEventWith(MobileEventTypes.STORE_PURCHASE_SUCCESS, false, { value:numCreditsBought, id:itemId, txt:textValue, newRank:newRank });
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -384,7 +384,7 @@ package com.ludofactory.mobile.core.purchases
 			logPurchaseEvent(itemId, PURCHASE_TYPE_CANCELLED);
 			
 			InfoManager.hide(_("Achat annulé."), InfoContent.ICON_CROSS, 3);
-			dispatchEventWith(LudoEventType.STORE_PURCHASE_CANCELLED, false, itemId);
+			dispatchEventWith(MobileEventTypes.STORE_PURCHASE_CANCELLED, false, itemId);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -437,7 +437,7 @@ package com.ludofactory.mobile.core.purchases
 			logPurchaseEvent(itemId, PURCHASE_TYPE_FAILED);
 			
 			InfoManager.hide(_("L'achat a échoué."), InfoContent.ICON_CROSS, 3);
-			dispatchEventWith(LudoEventType.STORE_PURCHASE_FAILURE, false, itemId);
+			dispatchEventWith(MobileEventTypes.STORE_PURCHASE_FAILURE, false, itemId);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -462,7 +462,7 @@ package com.ludofactory.mobile.core.purchases
 			{
 				log("[Store] Android store is not available on this platform.");
 				_available = false;
-				dispatchEventWith(LudoEventType.STORE_INITIALIZED);
+				dispatchEventWith(MobileEventTypes.STORE_INITIALIZED);
 				return;
 			}
 			
@@ -501,7 +501,7 @@ package com.ludofactory.mobile.core.purchases
 			AndroidIAB.androidIAB.addEventListener(AndroidBillingEvent.PURCHASE_SUCCEEDED, onGooglePurchaseSuccess);
 			AndroidIAB.androidIAB.addEventListener(AndroidBillingErrorEvent.PURCHASE_FAILED, onGooglePurchaseFail);
 			
-			dispatchEventWith(LudoEventType.STORE_INITIALIZED);
+			dispatchEventWith(MobileEventTypes.STORE_INITIALIZED);
 		}
 		
 		/**
@@ -513,7 +513,7 @@ package com.ludofactory.mobile.core.purchases
 			
 			_available = false;
 			
-			dispatchEventWith(LudoEventType.STORE_INITIALIZED);
+			dispatchEventWith(MobileEventTypes.STORE_INITIALIZED);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -556,7 +556,7 @@ package com.ludofactory.mobile.core.purchases
 					// everything have been consumed, now we can really start
 					// the store (because all items are now available for purchase).
 					log("[Store] Every item have been consumed, now making the store available.");
-					dispatchEventWith(LudoEventType.STORE_PRODUCTS_LOADED, false, _temporaryItemDetails);
+					dispatchEventWith(MobileEventTypes.STORE_PRODUCTS_LOADED, false, _temporaryItemDetails);
 					_androidInitialized = true;
 				}
 				else
@@ -574,7 +574,7 @@ package com.ludofactory.mobile.core.purchases
 			log("Android inventory not loaded : " + log(event) );
 			if( !_androidInitialized )
 			{
-				dispatchEventWith(LudoEventType.STORE_PRODUCTS_NOT_LOADED, false, event.text);
+				dispatchEventWith(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, false, event.text);
 				_androidInitialized = true;
 			}
 		}
@@ -704,7 +704,7 @@ package com.ludofactory.mobile.core.purchases
 			{
 				log("[Store] Apple store is not supported on this platform.");
 				_available = false;
-				dispatchEventWith(LudoEventType.STORE_INITIALIZED);
+				dispatchEventWith(MobileEventTypes.STORE_INITIALIZED);
 				return;
 			}
 			
@@ -729,13 +729,13 @@ package com.ludofactory.mobile.core.purchases
 				StoreKit.storeKit.addEventListener(StoreKitEvent.PURCHASE_CANCELLED, onApplePurchaseCancelled);
 				StoreKit.storeKit.addEventListener(StoreKitErrorEvent.PURCHASE_FAILED, onApplePurchaseFailed);
 				
-				dispatchEventWith(LudoEventType.STORE_INITIALIZED);
+				dispatchEventWith(MobileEventTypes.STORE_INITIALIZED);
 			}
 			else
 			{
 				log("[StoreKitManager] StoreKit is disabled for this device (parental control or other reason).");
 				_available = false;
-				dispatchEventWith(LudoEventType.STORE_INITIALIZED);
+				dispatchEventWith(MobileEventTypes.STORE_INITIALIZED);
 			}
 		}
 		
@@ -748,7 +748,7 @@ package com.ludofactory.mobile.core.purchases
 		private function onAppleProductsLoaded(event:StoreKitEvent):void
 		{
 			log("[Store] onAppleProductsLoaded - Number of Apple products loaded : " + event.validProducts.length);
-			dispatchEventWith(LudoEventType.STORE_PRODUCTS_LOADED, false, event.validProducts);
+			dispatchEventWith(MobileEventTypes.STORE_PRODUCTS_LOADED, false, event.validProducts);
 		}
 		
 		/**
@@ -757,7 +757,7 @@ package com.ludofactory.mobile.core.purchases
 		private function onAppleProductsFailed(event:StoreKitErrorEvent):void
 		{
 			log("[Store] onAppleProductsFailed - Error loading products : " + event.text);
-			dispatchEventWith(LudoEventType.STORE_PRODUCTS_NOT_LOADED, false, event.text);
+			dispatchEventWith(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, false, event.text);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -829,7 +829,7 @@ package com.ludofactory.mobile.core.purchases
 			{
 				log("[Store] Le store Amazon n'est pas disponible sur cette plateforme.");
 				_available = false;
-				dispatchEventWith(LudoEventType.STORE_INITIALIZED);
+				dispatchEventWith(MobileEventTypes.STORE_INITIALIZED);
 				return;
 			}
 			
@@ -850,7 +850,7 @@ package com.ludofactory.mobile.core.purchases
 			AmazonPurchase.amazonPurchase.addEventListener(AmazonPurchaseEvent.PURCHASE_SUCCEEDED, onAmazonPurchaseSuccess);
 			AmazonPurchase.amazonPurchase.addEventListener(AmazonPurchaseEvent.PURCHASE_FAILED, onAmazonPurchaseFailed);
 			
-			dispatchEventWith(LudoEventType.STORE_INITIALIZED);
+			dispatchEventWith(MobileEventTypes.STORE_INITIALIZED);
 		}
 		
 		/**
@@ -865,7 +865,7 @@ package com.ludofactory.mobile.core.purchases
 		private function onAmazonProductsLoaded(event:AmazonPurchaseEvent):void
 		{
 			log("[Store] onAmazonProductsLoaded - Number of Amazon products loaded : " + event.itemDatas.length);
-			dispatchEventWith(LudoEventType.STORE_PRODUCTS_LOADED, false, event.itemDatas);
+			dispatchEventWith(MobileEventTypes.STORE_PRODUCTS_LOADED, false, event.itemDatas);
 		}
 		
 		/**
@@ -874,7 +874,7 @@ package com.ludofactory.mobile.core.purchases
 		private function onAmazonProductsFailed(event:AmazonPurchaseEvent):void
 		{
 			log("[Store] onAmazonProductsFailed - Error loading products : " + log(event));
-			dispatchEventWith(LudoEventType.STORE_PRODUCTS_NOT_LOADED, false, event.toString());
+			dispatchEventWith(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, false, event.toString());
 		}
 		
 		/**

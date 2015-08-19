@@ -11,7 +11,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
@@ -106,7 +106,7 @@ package com.ludofactory.mobile.core.notification.content
 			//this.isRefreshable = true;
 			this.verticalScrollPolicy = Scroller.SCROLL_POLICY_ON;
 			this.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			this.addEventListener(LudoEventType.REFRESH_TOP, onRefreshPendingBid);
+			this.addEventListener(MobileEventTypes.REFRESH_TOP, onRefreshPendingBid);
 			
 			_notificationTitle = new Label();
 			_notificationTitle.text = _("Enchère");
@@ -420,7 +420,7 @@ package com.ludofactory.mobile.core.notification.content
 			
 			_pendingBidItemData = null;
 
-			this.removeEventListener(LudoEventType.REFRESH_TOP, onRefreshPendingBid);
+			this.removeEventListener(MobileEventTypes.REFRESH_TOP, onRefreshPendingBid);
 			
 			super.dispose();
 		}

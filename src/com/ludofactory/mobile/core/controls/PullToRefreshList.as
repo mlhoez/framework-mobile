@@ -10,7 +10,7 @@ package com.ludofactory.mobile.core.controls
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -180,7 +180,7 @@ package com.ludofactory.mobile.core.controls
 				_arrow.visible = false;
 				_loader.visible = _isRefreshing = true;
 				
-				dispatchEventWith(LudoEventType.REFRESH_TOP);
+				dispatchEventWith(MobileEventTypes.REFRESH_TOP);
 			}
 			
 			super.finishScrollingVertically();

@@ -10,7 +10,7 @@ package com.ludofactory.mobile.navigation.home.summary
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.HeartBeat;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.push.GameSession;
@@ -143,7 +143,7 @@ package com.ludofactory.mobile.navigation.home.summary
 				IS_TIMER_OVER_AND_REQUEST_FAILED = true;
 			else
 				IS_TIMER_OVER_AND_REQUEST_FAILED = false;
-			MemberManager.getInstance().dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
+			MemberManager.getInstance().dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
 		}
 		
 		/*private function onUpdateFreeTimer(min:int, sec:int, formattedTime:String):void

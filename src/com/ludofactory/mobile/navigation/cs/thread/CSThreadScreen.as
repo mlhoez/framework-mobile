@@ -16,7 +16,7 @@ package com.ludofactory.mobile.navigation.cs.thread
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ImageLoaderCache;
 	import com.ludofactory.mobile.core.controls.PullToRefreshList;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -99,7 +99,7 @@ package com.ludofactory.mobile.navigation.cs.thread
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FLOAT;
 			_list.isSelectable = false;
-			_list.addEventListener(LudoEventType.REFRESH_TOP , onRefreshThread);
+			_list.addEventListener(MobileEventTypes.REFRESH_TOP , onRefreshThread);
 			_list.itemRendererType = CSThreadItemRenderer;
 			addChild(_list);
 			
@@ -391,7 +391,7 @@ package com.ludofactory.mobile.navigation.cs.thread
 				_loader = null;
 			}
 			
-			_list.removeEventListener(LudoEventType.REFRESH_TOP , onRefreshThread);
+			_list.removeEventListener(MobileEventTypes.REFRESH_TOP , onRefreshThread);
 			_list.removeFromParent(true);
 			_list = null;
 			

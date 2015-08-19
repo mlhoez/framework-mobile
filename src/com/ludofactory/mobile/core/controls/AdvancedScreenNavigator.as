@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core.controls
 {
 
 	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
@@ -70,13 +70,13 @@ package com.ludofactory.mobile.core.controls
 			{
 				if( _backScreenId == ScreenIds.SHOW_MENU )
 				{
-					dispatchEventWith(LudoEventType.SHOW_MAIN_MENU, false, true);
+					dispatchEventWith(MobileEventTypes.SHOW_MAIN_MENU, false, true);
 				}
 				else
 				{
 					if( _activeScreenID == _backScreenId )
 					{
-						dispatchEventWith(LudoEventType.HIDE_MAIN_MENU);
+						dispatchEventWith(MobileEventTypes.HIDE_MAIN_MENU);
 					}
 					else
 					{

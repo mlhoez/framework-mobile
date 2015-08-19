@@ -10,7 +10,7 @@ package com.ludofactory.mobile.navigation.shop.vip
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -301,7 +301,7 @@ package com.ludofactory.mobile.navigation.shop.vip
 					var isInBounds:Boolean = this.hitTest(HELPER_POINT, true) != null;
 					if(isInBounds)
 					{
-						owner.dispatchEventWith(LudoEventType.BOUTIQUE_CATEGORY_TOUCHED, false, _data);
+						owner.dispatchEventWith(MobileEventTypes.BOUTIQUE_CATEGORY_TOUCHED, false, _data);
 					}
 				}
 			}

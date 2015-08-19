@@ -14,7 +14,7 @@ package com.ludofactory.mobile.navigation.store
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AbstractListItemRenderer;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Button;
@@ -201,7 +201,7 @@ package com.ludofactory.mobile.navigation.store
 		 */		
 		override protected function onTouched():void
 		{
-			owner.dispatchEventWith(LudoEventType.PURCHASE_ITEM, false, _data);
+			owner.dispatchEventWith(MobileEventTypes.PURCHASE_ITEM, false, _data);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

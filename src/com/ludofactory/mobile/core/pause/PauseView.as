@@ -13,8 +13,10 @@ package com.ludofactory.mobile.core.pause
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -105,7 +107,7 @@ package com.ludofactory.mobile.core.pause
 			{
 				//var rect:Rectangle = AdMobAdType.getPixelSize( AdMobAdType.IAB_MRECT );
 				
-				_resumeButton.width = _exitButton.width = GlobalConfig.stageWidth * ((GlobalConfig.stageWidth > GlobalConfig.stageHeight) ? 0.5 : 0.8);
+				_resumeButton.width = _exitButton.width = GlobalConfig.stageWidth * (AbstractGameInfo.LANDSCAPE ? 0.5 : (GlobalConfig.isPhone ? 0.6 : 0.5));
 				_resumeButton.validate();
 				_exitButton.validate();
 				
@@ -142,7 +144,7 @@ package com.ludofactory.mobile.core.pause
 		 */		
 		private function onAnimationInComplete():void
 		{
-			dispatchEventWith(LudoEventType.ANIMATION_IN_COMPLETE);
+			dispatchEventWith(MobileEventTypes.ANIMATION_IN_COMPLETE);
 			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_ADS) == true )
 				AdManager.setBannersVisibility(true);
 		}
@@ -163,7 +165,7 @@ package com.ludofactory.mobile.core.pause
 		{
 			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_ADS) == true )
 				AdManager.setBannersVisibility(false);
-			dispatchEventWith(LudoEventType.ANIMATION_OUT_COMPLETE);
+			dispatchEventWith(MobileEventTypes.ANIMATION_OUT_COMPLETE);
 		}
 		
 		private function onSwitchFx(event:Event):void
@@ -225,13 +227,13 @@ package com.ludofactory.mobile.core.pause
 		private function onResume(event:Event = null):void
 		{
 			animateOut();
-			dispatchEventWith(LudoEventType.RESUME);
+			dispatchEventWith(MobileEventTypes.RESUME);
 		}
 		
 		private function onExit(event:Event):void
 		{
 			animateOut();
-			dispatchEventWith(LudoEventType.EXIT);
+			dispatchEventWith(MobileEventTypes.EXIT);
 		}
 		
 		private function onTouchOverlay(event:TouchEvent):void

@@ -11,7 +11,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.navigation.home.RuleData;
 	import com.ludofactory.mobile.navigation.home.RuleItemRenderer;
@@ -154,7 +154,7 @@ package com.ludofactory.mobile.navigation.engine
 		override public function onBack():void
 		{
 			// give the credits / free games / points back in case on back
-			advancedOwner.dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
+			advancedOwner.dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
 			super.onBack();
 		}
 		

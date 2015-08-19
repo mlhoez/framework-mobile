@@ -19,7 +19,7 @@ package com.ludofactory.mobile.navigation.settings
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -85,7 +85,7 @@ package com.ludofactory.mobile.navigation.settings
 			
 			// reset alerts for new languages
 			Storage.getInstance().setProperty(StorageConfig.PROPERTY_NEW_LANGUAGES, []);
-			dispatcher.dispatchEventWith(LudoEventType.ALERT_COUNT_UPDATED);
+			dispatcher.dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
 			
 			if( !AbstractGameInfo.LANDSCAPE )
 			{
@@ -216,7 +216,7 @@ package com.ludofactory.mobile.navigation.settings
 					_list.dataProvider.updateItemAt(i);
 			}
 			
-			advancedOwner.dispatchEventWith(LudoEventType.UPDATE_HEADER_TITLE, false, _("Réglages"));
+			advancedOwner.dispatchEventWith(MobileEventTypes.UPDATE_HEADER_TITLE, false, _("Réglages"));
 			
 			_soundToggleSwitch.onThumbText = _("Oui");
 			_soundToggleSwitch.offThumbText = _("Non");

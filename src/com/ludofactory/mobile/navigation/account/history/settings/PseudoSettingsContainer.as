@@ -8,7 +8,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 {
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -73,7 +73,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			//}
 			
 			_list = new List();
-			_list.addEventListener(LudoEventType.SAVE_ACCOUNT_INFORMATION, onUpdateAccountSection);
+			_list.addEventListener(MobileEventTypes.SAVE_ACCOUNT_INFORMATION, onUpdateAccountSection);
 			_list.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.itemRendererType = AccountItemRenderer;
@@ -153,7 +153,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			//	_countryPseudoControl = null;
 			//}
 			
-			_list.removeEventListener(LudoEventType.SAVE_ACCOUNT_INFORMATION, onUpdateAccountSection);
+			_list.removeEventListener(MobileEventTypes.SAVE_ACCOUNT_INFORMATION, onUpdateAccountSection);
 			_list.removeFromParent(true);
 			_list = null;
 			

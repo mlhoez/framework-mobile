@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core.controls
 {
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.GroupedList;
@@ -272,12 +272,12 @@ package com.ludofactory.mobile.core.controls
 				if( !_isRefreshingDown && _isRefreshableDown && _verticalScrollPosition >= (_maxVerticalScrollPosition - _offsetDown))
 				{
 					_isRefreshingDown = true;
-					dispatchEventWith(LudoEventType.LIST_BOTTOM_UPDATE);
+					dispatchEventWith(MobileEventTypes.LIST_BOTTOM_UPDATE);
 				}
 				else if( !_isRefreshingUp && _isRefreshableUp && _verticalScrollPosition < 0 )
 				{
 					_isRefreshingUp = true;
-					dispatchEventWith(LudoEventType.LIST_TOP_UPDATE);
+					dispatchEventWith(MobileEventTypes.LIST_TOP_UPDATE);
 				}
 			}
 		}

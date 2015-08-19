@@ -17,7 +17,7 @@ package com.ludofactory.mobile.navigation.store
 	import com.ludofactory.mobile.core.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
@@ -129,7 +129,7 @@ package com.ludofactory.mobile.navigation.store
 			_list.snapToPages = false;
 			_list.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_list.addEventListener(LudoEventType.PURCHASE_ITEM, onPurchaseItem);
+			_list.addEventListener(MobileEventTypes.PURCHASE_ITEM, onPurchaseItem);
 			_list.itemRendererType = StoreItemRenderer;
 			_container.addChild(_list);
 			
@@ -143,7 +143,7 @@ package com.ludofactory.mobile.navigation.store
 			addChild(_retryContainer);
 			
 			_store = new Store();
-			_store.addEventListener(LudoEventType.STORE_INITIALIZED, onStoreInitialized);
+			_store.addEventListener(MobileEventTypes.STORE_INITIALIZED, onStoreInitialized);
 			
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
@@ -228,7 +228,7 @@ package com.ludofactory.mobile.navigation.store
 		 */		
 		private function onStoreInitialized():void
 		{
-			_store.removeEventListener(LudoEventType.STORE_INITIALIZED, onStoreInitialized);
+			_store.removeEventListener(MobileEventTypes.STORE_INITIALIZED, onStoreInitialized);
 			
 			if( !_store.available )
 			{
@@ -282,8 +282,8 @@ package com.ludofactory.mobile.navigation.store
 				_adContainer.height = 0;
 			}
 			
-			_store.addEventListener(LudoEventType.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
-			_store.addEventListener(LudoEventType.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
+			_store.addEventListener(MobileEventTypes.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
+			_store.addEventListener(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
 			_store.requestProductDetails( _temporaryProductsIds );
 		}
 		
@@ -306,11 +306,11 @@ package com.ludofactory.mobile.navigation.store
 		 */		
 		private function onProductsDetailsLoaded(event:Event):void
 		{
-			_store.removeEventListener(LudoEventType.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
-			_store.removeEventListener(LudoEventType.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
-			_store.addEventListener(LudoEventType.STORE_PURCHASE_SUCCESS, onPurchaseSuccess);
-			_store.addEventListener(LudoEventType.STORE_PURCHASE_CANCELLED, onPurchaseCancelled);
-			_store.addEventListener(LudoEventType.STORE_PURCHASE_FAILURE, onPurchaseFailure);
+			_store.removeEventListener(MobileEventTypes.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
+			_store.removeEventListener(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
+			_store.addEventListener(MobileEventTypes.STORE_PURCHASE_SUCCESS, onPurchaseSuccess);
+			_store.addEventListener(MobileEventTypes.STORE_PURCHASE_CANCELLED, onPurchaseCancelled);
+			_store.addEventListener(MobileEventTypes.STORE_PURCHASE_FAILURE, onPurchaseFailure);
 			
 			if( event.data )
 			{
@@ -386,8 +386,8 @@ package com.ludofactory.mobile.navigation.store
 		private function onProductsDetailsNotLoaded(event:Event):void
 		{
 			// no product details loaded : something is wrong
-			_store.removeEventListener(LudoEventType.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
-			_store.removeEventListener(LudoEventType.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
+			_store.removeEventListener(MobileEventTypes.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
+			_store.removeEventListener(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
 			
 			_retryContainer.visible = true;
 			_retryContainer.message = String(event.data);
@@ -430,8 +430,8 @@ package com.ludofactory.mobile.navigation.store
 				}
 				else
 				{
-					_store.addEventListener(LudoEventType.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
-					_store.addEventListener(LudoEventType.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
+					_store.addEventListener(MobileEventTypes.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
+					_store.addEventListener(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
 					_store.requestProductDetails(_temporaryProductsIds);
 				}
 			}
@@ -471,7 +471,7 @@ package com.ludofactory.mobile.navigation.store
 		private function onAlertClosed(value:int, newRank:Boolean):void
 		{
 			// FIXME Utiliser useFrames pour TweenMax partout dans l'application ?
-			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:StakeType.CREDIT, value:value } );
+			advancedOwner.dispatchEventWith(MobileEventTypes.ANIMATE_SUMMARY, false, { type:StakeType.CREDIT, value:value } );
 			
 			if( newRank == true )
 			{
@@ -567,7 +567,7 @@ package com.ludofactory.mobile.navigation.store
 				_container.removeEventListener(Event.SCROLL, storeItemRenderer.onScroll);
 			}
 			storeItemRenderer = null;
-			_list.removeEventListener(LudoEventType.PURCHASE_ITEM, onPurchaseItem);
+			_list.removeEventListener(MobileEventTypes.PURCHASE_ITEM, onPurchaseItem);
 			_list.removeFromParent(true);
 			_list = null;
 			
@@ -581,12 +581,12 @@ package com.ludofactory.mobile.navigation.store
 				_temporaryProductsIds = null;
 			}
 			
-			_store.removeEventListener(LudoEventType.STORE_PURCHASE_CANCELLED, onPurchaseCancelled);
-			_store.removeEventListener(LudoEventType.STORE_PURCHASE_FAILURE, onPurchaseFailure);
-			_store.removeEventListener(LudoEventType.STORE_PURCHASE_SUCCESS, onPurchaseSuccess);
-			_store.removeEventListener(LudoEventType.STORE_INITIALIZED, onStoreInitialized);
-			_store.removeEventListener(LudoEventType.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
-			_store.removeEventListener(LudoEventType.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
+			_store.removeEventListener(MobileEventTypes.STORE_PURCHASE_CANCELLED, onPurchaseCancelled);
+			_store.removeEventListener(MobileEventTypes.STORE_PURCHASE_FAILURE, onPurchaseFailure);
+			_store.removeEventListener(MobileEventTypes.STORE_PURCHASE_SUCCESS, onPurchaseSuccess);
+			_store.removeEventListener(MobileEventTypes.STORE_INITIALIZED, onStoreInitialized);
+			_store.removeEventListener(MobileEventTypes.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
+			_store.removeEventListener(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
 			_store.dispose();
 			_store = null;
 			

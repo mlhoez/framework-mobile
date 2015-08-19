@@ -7,7 +7,7 @@ Created : 4 sept. 2012
 package com.ludofactory.mobile.navigation.achievements
 {
 	import com.ludofactory.common.utils.log;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.milkmangames.nativeextensions.ios.GameCenter;
 	import com.milkmangames.nativeextensions.ios.events.GameCenterErrorEvent;
 	import com.milkmangames.nativeextensions.ios.events.GameCenterEvent;
@@ -86,7 +86,7 @@ package com.ludofactory.mobile.navigation.achievements
 		{
 			GameCenter.gameCenter.removeEventListener(GameCenterEvent.AUTH_SUCCEEDED, onAuthenticationSuccess);
 			GameCenter.gameCenter.removeEventListener(GameCenterErrorEvent.AUTH_FAILED, onAuthenticationFailure);
-			dispatcher.dispatchEventWith(LudoEventType.GAME_CENTER_AUTHENTICATION_SUCCESS);
+			dispatcher.dispatchEventWith(MobileEventTypes.GAME_CENTER_AUTHENTICATION_SUCCESS);
 		}
 		
 		/**
@@ -99,7 +99,7 @@ package com.ludofactory.mobile.navigation.achievements
 		{
 			GameCenter.gameCenter.removeEventListener(GameCenterEvent.AUTH_SUCCEEDED, onAuthenticationSuccess);
 			GameCenter.gameCenter.removeEventListener(GameCenterErrorEvent.AUTH_FAILED, onAuthenticationFailure);
-			dispatcher.dispatchEventWith(LudoEventType.GAME_CENTER_AUTHENTICATION_FAILURE);
+			dispatcher.dispatchEventWith(MobileEventTypes.GAME_CENTER_AUTHENTICATION_FAILURE);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

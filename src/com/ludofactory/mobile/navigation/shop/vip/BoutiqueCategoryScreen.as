@@ -15,7 +15,7 @@ import com.ludofactory.mobile.core.manager.MemberManager;
 import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -101,7 +101,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 			_list.layout = listLayout;
 			_list.snapToPages = false;
 			_list.itemRendererType = BoutiqueCategoryItemRenderer;
-			_list.addEventListener(LudoEventType.BOUTIQUE_CATEGORY_TOUCHED, onCategorySelected);
+			_list.addEventListener(MobileEventTypes.BOUTIQUE_CATEGORY_TOUCHED, onCategorySelected);
 			addChild(_list);
 			
 			_retryContainer = new RetryContainer();
@@ -282,7 +282,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 			
 			if( _list )
 			{
-				_list.removeEventListener(LudoEventType.BOUTIQUE_CATEGORY_TOUCHED, onCategorySelected);
+				_list.removeEventListener(MobileEventTypes.BOUTIQUE_CATEGORY_TOUCHED, onCategorySelected);
 				_list.removeFromParent(true);
 				_list = null;
 			}

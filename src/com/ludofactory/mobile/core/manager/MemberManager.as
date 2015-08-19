@@ -13,7 +13,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractMain;
 	import com.ludofactory.mobile.core.GameMode;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.push.PushNewCSMessage;
@@ -180,7 +180,7 @@ package com.ludofactory.mobile.core.manager
 			}
 			
 			// update the values of the footer
-			dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
+			dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
 			
 			if( checkForAdminParameters ) // not done the first time
 				AbstractMain.checkToEnableLogs();
@@ -318,7 +318,7 @@ package com.ludofactory.mobile.core.manager
 				setEncryptedMember();
 				
 				// the data changed, so we need to update the footer
-				dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
+				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
 			}
 		}
 		
@@ -333,7 +333,7 @@ package com.ludofactory.mobile.core.manager
 				setEncryptedMember();
 				
 				// the data changed, so we need to update the footer
-				dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
+				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
 			}
 		}
 		
@@ -348,7 +348,7 @@ package com.ludofactory.mobile.core.manager
 				setEncryptedMember();
 				
 				// the data changed, so we need to update the footer
-				dispatchEventWith(LudoEventType.UPDATE_SUMMARY);
+				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
 			}
 		}
 		

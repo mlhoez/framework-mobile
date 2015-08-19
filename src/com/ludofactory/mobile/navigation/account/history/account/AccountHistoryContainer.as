@@ -13,7 +13,7 @@ package com.ludofactory.mobile.navigation.account.history.account
 	import com.ludofactory.mobile.navigation.authentication.NotLoggedInContainer;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.CustomGroupedList;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -60,7 +60,7 @@ package com.ludofactory.mobile.navigation.account.history.account
 			_list.visible = false;
 			_list.headerRendererType = HistoryHeaderItemRenderer;
 			_list.itemRendererType = AccountHistoryItemRenderer;
-			_list.addEventListener(LudoEventType.LIST_BOTTOM_UPDATE, onBottomUpdate);
+			_list.addEventListener(MobileEventTypes.LIST_BOTTOM_UPDATE, onBottomUpdate);
 			addChild(_list);
 			
 			_authenticationContainer = new NotLoggedInContainer();
@@ -298,7 +298,7 @@ package com.ludofactory.mobile.navigation.account.history.account
 			_retryContainer.removeFromParent(true);
 			_retryContainer = null;
 			
-			_list.removeEventListener(LudoEventType.LIST_BOTTOM_UPDATE, onBottomUpdate);
+			_list.removeEventListener(MobileEventTypes.LIST_BOTTOM_UPDATE, onBottomUpdate);
 			_list.removeFromParent(true);
 			_list = null;
 			

@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core.controls
 {
 	
 	import com.ludofactory.common.utils.log;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.navigation.vip.VipAccordionItem;
 	
 	import feathers.controls.ScrollContainer;
@@ -40,8 +40,8 @@ package com.ludofactory.mobile.core.controls
 					accordionElement = _dataProvider[i];
 					accordionElement.index = accordionElement.tempIndexHackForVips = i;
 					accordionElement.isLast = i == (_dataProvider.length - 1);
-					accordionElement.addEventListener(LudoEventType.EXPAND_BEGIN, collapseAllOthers);
-					accordionElement.addEventListener(LudoEventType.EXPAND_COMPLETE, onExpandComplete);
+					accordionElement.addEventListener(MobileEventTypes.EXPAND_BEGIN, collapseAllOthers);
+					accordionElement.addEventListener(MobileEventTypes.EXPAND_COMPLETE, onExpandComplete);
 					addEventListener(Event.SCROLL, accordionElement.onScroll);
 					addChild(accordionElement);
 				}
@@ -166,8 +166,8 @@ package com.ludofactory.mobile.core.controls
 				for( var i:int = 0; i < _dataProvider.length; i++)
 				{
 					accordionElement = _dataProvider[i];
-					accordionElement.removeEventListener(LudoEventType.EXPAND_BEGIN, collapseAllOthers);
-					accordionElement.removeEventListener(LudoEventType.EXPAND_COMPLETE, onExpandComplete);
+					accordionElement.removeEventListener(MobileEventTypes.EXPAND_BEGIN, collapseAllOthers);
+					accordionElement.removeEventListener(MobileEventTypes.EXPAND_COMPLETE, onExpandComplete);
 					removeEventListener(Event.SCROLL, accordionElement.onScroll);
 					accordionElement.removeFromParent(true);
 					accordionElement = null;

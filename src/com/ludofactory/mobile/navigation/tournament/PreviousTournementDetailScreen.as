@@ -15,7 +15,7 @@ package com.ludofactory.mobile.navigation.tournament
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.CustomGroupedList;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -94,8 +94,8 @@ package com.ludofactory.mobile.navigation.tournament
 			_ranksList.visible = false;
 			_ranksList.headerRendererType = RankHeaderItemRenderer;
 			_ranksList.itemRendererType = RankItemRenderer;
-			_ranksList.addEventListener(LudoEventType.LIST_BOTTOM_UPDATE, onBottomUpdate);
-			_ranksList.addEventListener(LudoEventType.LIST_TOP_UPDATE, onTopUpdate);
+			_ranksList.addEventListener(MobileEventTypes.LIST_BOTTOM_UPDATE, onBottomUpdate);
+			_ranksList.addEventListener(MobileEventTypes.LIST_TOP_UPDATE, onTopUpdate);
 			addChild(_ranksList);
 			
 			_adContainer = new PreviousTournamentGiftBloc();
@@ -480,8 +480,8 @@ package com.ludofactory.mobile.navigation.tournament
 			_listHeader.removeFromParent(true);
 			_listHeader = null;
 			
-			_ranksList.removeEventListener(LudoEventType.LIST_BOTTOM_UPDATE, onBottomUpdate);
-			_ranksList.removeEventListener(LudoEventType.LIST_TOP_UPDATE, onTopUpdate);
+			_ranksList.removeEventListener(MobileEventTypes.LIST_BOTTOM_UPDATE, onBottomUpdate);
+			_ranksList.removeEventListener(MobileEventTypes.LIST_TOP_UPDATE, onTopUpdate);
 			_ranksList.removeFromParent(true);
 			_ranksList = null;
 			

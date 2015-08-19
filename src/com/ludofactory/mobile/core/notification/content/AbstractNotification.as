@@ -9,7 +9,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.controls.PullToRefreshScrollContainer;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import feathers.controls.ScrollContainer;
@@ -187,7 +187,7 @@ package com.ludofactory.mobile.core.notification.content
 		 */		
 		public function onClose():void
 		{
-			dispatchEventWith(LudoEventType.CLOSE_NOTIFICATION, false, _data);
+			dispatchEventWith(MobileEventTypes.CLOSE_NOTIFICATION, false, _data);
 		}
 		
 		override public function dispose():void

@@ -15,7 +15,7 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -441,7 +441,7 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 				case 1: // ok
 				{
 					InfoManager.hide(result.txt, InfoContent.ICON_CHECK);
-					owner.dispatchEventWith(LudoEventType.REFRESH_GIFTS_LIST);
+					owner.dispatchEventWith(MobileEventTypes.REFRESH_GIFTS_LIST);
 					break;
 				}
 					

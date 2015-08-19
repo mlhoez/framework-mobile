@@ -9,7 +9,7 @@ package com.ludofactory.mobile.core.push
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.HeartBeat;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	
@@ -121,7 +121,7 @@ package com.ludofactory.mobile.core.push
 				_elementsToPush = new Vector.<AbstractElementToPush>();
 			}
 			
-			dispatchEventWith(LudoEventType.UPDATE_HEADER);
+			dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 			_isInitialized = true;
 		}
 		
@@ -169,7 +169,7 @@ package com.ludofactory.mobile.core.push
 		{
 			stop();
 			_elementsToPush = new Vector.<AbstractElementToPush>();
-			dispatchEventWith(LudoEventType.UPDATE_HEADER);
+			dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 		}
 		
 		/**
@@ -191,7 +191,7 @@ package com.ludofactory.mobile.core.push
 				log("[PushManager] The user is logged in but there is no element to push.");
 			}
 			
-			dispatchEventWith(LudoEventType.UPDATE_HEADER);
+			dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -227,7 +227,7 @@ package com.ludofactory.mobile.core.push
 				if( !_isPushing && !_isRunning )
 					start();
 				
-				dispatchEventWith(LudoEventType.UPDATE_HEADER);
+				dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 			}
 		}
 		
@@ -246,7 +246,7 @@ package com.ludofactory.mobile.core.push
 			{
 				_elementsToPush.splice( _elementsToPush.indexOf(gameSession), 1 );
 				MemberManager.getInstance().setElementToPush( _elementsToPush );
-				dispatchEventWith(LudoEventType.UPDATE_HEADER);
+				dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 			}
 		}
 		
@@ -268,7 +268,7 @@ package com.ludofactory.mobile.core.push
 				log("[PushManager] removing first element because it have been pushed : " + elementToRemove);
 				MemberManager.getInstance().setElementToPush( _elementsToPush );
 				
-				dispatchEventWith(LudoEventType.UPDATE_HEADER);
+				dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 			}
 		}
 		
@@ -305,7 +305,7 @@ package com.ludofactory.mobile.core.push
 				if( change )
 				{
 					MemberManager.getInstance().setElementToPush( _elementsToPush );
-					dispatchEventWith(LudoEventType.UPDATE_HEADER);
+					dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 				}
 			}
 		}
@@ -359,7 +359,7 @@ package com.ludofactory.mobile.core.push
 								// and launch a push again
 								_elementsToPush.splice(i, 1);
 								MemberManager.getInstance().setElementToPush( _elementsToPush );
-								dispatchEventWith(LudoEventType.UPDATE_HEADER);
+								dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 								push();
 								return;
 							}
@@ -497,7 +497,7 @@ package com.ludofactory.mobile.core.push
 					// Case 1 : we don't store the returns
 					_elementsToPush.splice( i, 1);
 					MemberManager.getInstance().setElementToPush( _elementsToPush );
-					dispatchEventWith(LudoEventType.UPDATE_HEADER);
+					dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 					
 					// Case 2 : we store the returns
 					//MemberManager.getInstance().setElementToPush( _elementsToPush );

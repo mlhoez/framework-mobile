@@ -1,6 +1,6 @@
 package com.ludofactory.mobile.core.events
 {
-	public class LudoEventType
+	public class MobileEventTypes
 	{
 		/**
 		 * The <code>LudoEventType.REFRESH_TOP</code> event type is used

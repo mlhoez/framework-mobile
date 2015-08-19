@@ -17,7 +17,7 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -178,7 +178,7 @@ package com.ludofactory.mobile.navigation.game
 				GAnalytics.analytics.defaultTracker.trackEvent("Choix des mises (mode " + this.advancedOwner.screenData.gameType +  ")", "Choix de la mise Points", null, NaN, MemberManager.getInstance().getId());
 			
 			this.advancedOwner.screenData.gamePrice = StakeType.POINT;
-			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:StakeType.POINT, value:-Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) });
+			advancedOwner.dispatchEventWith(MobileEventTypes.ANIMATE_SUMMARY, false, { type:StakeType.POINT, value:-Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) });
 			handleNextScreen();
 		}
 		
@@ -194,7 +194,7 @@ package com.ludofactory.mobile.navigation.game
 				GAnalytics.analytics.defaultTracker.trackEvent("Choix des mises (mode " + this.advancedOwner.screenData.gameType +  ")", "Choix de la mise Jetons", null, NaN, MemberManager.getInstance().getId());
 			
 			this.advancedOwner.screenData.gamePrice = StakeType.TOKEN;
-			advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:StakeType.TOKEN, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE ) });
+			advancedOwner.dispatchEventWith(MobileEventTypes.ANIMATE_SUMMARY, false, { type:StakeType.TOKEN, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE ) });
 			handleNextScreen();
 		}
 		
@@ -212,7 +212,7 @@ package com.ludofactory.mobile.navigation.game
 					GAnalytics.analytics.defaultTracker.trackEvent("Choix des mises (mode " + this.advancedOwner.screenData.gameType +  ")", "Choix de la mise Crédits", null, NaN, MemberManager.getInstance().getId());
 				
 				this.advancedOwner.screenData.gamePrice = StakeType.CREDIT;
-				advancedOwner.dispatchEventWith(LudoEventType.ANIMATE_SUMMARY, false, { type:StakeType.CREDIT, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) });
+				advancedOwner.dispatchEventWith(MobileEventTypes.ANIMATE_SUMMARY, false, { type:StakeType.CREDIT, value:-Storage.getInstance().getProperty( this.advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) });
 				handleNextScreen();
 			}
 			else

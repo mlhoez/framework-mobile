@@ -20,7 +20,7 @@ package com.ludofactory.mobile.navigation
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -252,7 +252,7 @@ package com.ludofactory.mobile.navigation
 		 */		
 		private function onMainMenuTouched(event:Event):void
 		{
-			dispatchEventWith(LudoEventType.MAIN_MENU_TOUCHED);
+			dispatchEventWith(MobileEventTypes.MAIN_MENU_TOUCHED);
 		}
 		
 		/**
@@ -260,7 +260,7 @@ package com.ludofactory.mobile.navigation
 		 */		
 		private function onBackButtonTouched(event:Event):void
 		{
-			dispatchEventWith(LudoEventType.BACK_BUTTON_TOUCHED);
+			dispatchEventWith(MobileEventTypes.BACK_BUTTON_TOUCHED);
 		}
 		
 		/**
@@ -268,7 +268,7 @@ package com.ludofactory.mobile.navigation
 		 */		
 		private function onNewsButtonTouched(event:Event):void
 		{
-			dispatchEventWith(LudoEventType.NEWS_BUTTON_TOUCHED);
+			dispatchEventWith(MobileEventTypes.NEWS_BUTTON_TOUCHED);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

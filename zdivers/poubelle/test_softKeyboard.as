@@ -11,7 +11,7 @@ package com.ludofactory.mobile.features.customerservice.thread
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.RefreshableList;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.AlertManager;
 	import com.ludofactory.mobile.utils.log;
 	
@@ -89,7 +89,7 @@ package com.ludofactory.mobile.features.customerservice.thread
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.scrollerProperties.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FLOAT;
 			_list.isSelectable = false;
-			_list.addEventListener(LudoEventType.REFRESH_TOP , onRefreshThread);
+			_list.addEventListener(MobileEventTypes.REFRESH_TOP , onRefreshThread);
 			_list.itemRendererType = CSThreadItemRenderer;
 			addChild(_list);
 			
@@ -332,7 +332,7 @@ package com.ludofactory.mobile.features.customerservice.thread
 				_sendButton = null;
 			}
 			
-			_list.removeEventListener(LudoEventType.REFRESH_TOP , onRefreshThread);
+			_list.removeEventListener(MobileEventTypes.REFRESH_TOP , onRefreshThread);
 			_list.removeFromParent(true);
 			_list = null;
 			

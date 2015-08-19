@@ -13,7 +13,7 @@ package com.ludofactory.mobile.navigation.shop.bid.comingsoon
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.PullToRefreshList;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -56,7 +56,7 @@ package com.ludofactory.mobile.navigation.shop.bid.comingsoon
 			_list.isSelectable = false;
 			_list.paddingTop = scaleAndRoundToDpi(5);
 			_list.itemRendererType = ComingSoonBidItemRenderer;
-			_list.addEventListener(LudoEventType.REFRESH_TOP, onRefreshTop);
+			_list.addEventListener(MobileEventTypes.REFRESH_TOP, onRefreshTop);
 			_list.addEventListener(Event.CHANGE, onItemSelected);
 			addChild(_list);
 			
@@ -178,7 +178,7 @@ package com.ludofactory.mobile.navigation.shop.bid.comingsoon
 			_retryContainer = null;
 			
 			_list.removeEventListener(Event.CHANGE, onItemSelected);
-			_list.removeEventListener(LudoEventType.REFRESH_TOP, onRefreshTop);
+			_list.removeEventListener(MobileEventTypes.REFRESH_TOP, onRefreshTop);
 			_list.removeFromParent(true);
 			_list = null;
 			

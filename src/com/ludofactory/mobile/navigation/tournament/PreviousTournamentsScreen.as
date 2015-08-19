@@ -19,7 +19,7 @@ package com.ludofactory.mobile.navigation.tournament
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.PullToRefreshList;
 	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -85,7 +85,7 @@ package com.ludofactory.mobile.navigation.tournament
 			_list.isSelectable = false;
 			_list.backgroundSkin = new Quad(50, 50);
 			_list.addEventListener(Event.CHANGE, onPreviousTournamentSelected);
-			_list.addEventListener(LudoEventType.REFRESH_TOP, onRefreshTop);
+			_list.addEventListener(MobileEventTypes.REFRESH_TOP, onRefreshTop);
 			_list.itemRendererType = PreviousTournamentItemRenderer;
 			addChild(_list);
 			
@@ -288,7 +288,7 @@ package com.ludofactory.mobile.navigation.tournament
 			
 			
 			_list.removeEventListener(Event.CHANGE, onPreviousTournamentSelected);
-			_list.removeEventListener(LudoEventType.REFRESH_TOP, onRefreshTop);
+			_list.removeEventListener(MobileEventTypes.REFRESH_TOP, onRefreshTop);
 			_list.removeFromParent(true);
 			_list = null;
 			
