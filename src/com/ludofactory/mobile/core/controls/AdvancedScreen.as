@@ -11,7 +11,6 @@ package com.ludofactory.mobile.core.controls
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.milkmangames.nativeextensions.GAnalytics;
@@ -67,9 +66,8 @@ package com.ludofactory.mobile.core.controls
 		 */		
 		public function onBack():void
 		{
-			if( NotificationManager.isNotificationDisplaying || NotificationPopupManager.isNotificationDisplaying )
+			if( NotificationPopupManager.isNotificationDisplaying )
 			{
-				NotificationManager.closeNotification();
 				NotificationPopupManager.closeNotification();
 				return;
 			}

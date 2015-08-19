@@ -6,15 +6,11 @@ Created : 13 Juin 2013
 */
 package com.ludofactory.mobile.core.controls
 {
-
+	
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
-	import com.ludofactory.mobile.core.manager.InfoContent;
-	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.ScreenData;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	

@@ -1,12 +1,14 @@
-/**
- * Created by Max on 28/09/2014.
- */
+/*
+ Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
+ Framework mobile
+ Author  : Maxime Lhoez
+ Created : 28 septembre 2014
+*/
 package com.ludofactory.mobile.core.notification
 {
-
+	
 	import com.ludofactory.mobile.core.controls.PullToRefreshScrollContainer;
-	import com.ludofactory.mobile.core.events.MobileEventTypes;
-
+	
 	public class AbstractPopupContent extends PullToRefreshScrollContainer
 	{
 		/**
@@ -14,7 +16,7 @@ package com.ludofactory.mobile.core.notification
 		private var _data:Object = {};
 		
 		/**
-		 * 
+		 * Abstract popup used to display popup content.
 		 */
 		public function AbstractPopupContent()
 		{
@@ -22,8 +24,7 @@ package com.ludofactory.mobile.core.notification
 			
 			isRefreshable = false;
 		}
-
-
+		
 		public function get data():Object
 		{
 			return _data;
