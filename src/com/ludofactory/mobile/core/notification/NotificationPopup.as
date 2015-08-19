@@ -10,9 +10,10 @@ package com.ludofactory.mobile.core.notification
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Elastic;
+	import com.greensock.easing.ElasticOut;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.events.LudoEventType;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.core.FeathersControl;
@@ -81,7 +82,7 @@ package com.ludofactory.mobile.core.notification
 
 		/**
 		 * The content to display inside the popup. */
-		private var _content:AbstractNotificationPopupContent;
+		private var _content:AbstractPopupContent;
 		/**
 		 * The callback to call when the popup is closed. */
 		private var _callback:Function;
@@ -198,14 +199,28 @@ package com.ludofactory.mobile.core.notification
 				_bottomRightLeavesSaveY = _bottomRightDecoration.y = int(_frontSkin.y - _shadowThickness + halfHeight - _offset);
 
 				_closeQuad.x = _backgroundSkin.width - _closeQuad.width;
-
+				
+				_offset *= -1;
+				
+				_topLeftDecoration.x = _topLeftLeavesSaveX + _offset;
+				_topLeftDecoration.y = _topLeftLeavesSaveY + _offset;
+				
+				_bottomLeftDecoration.x = _bottomLeftLeavesSaveX + _offset;
+				_bottomLeftDecoration.y = _bottomLeftLeavesSaveY - _offset;
+				
+				_bottomMiddleDecoration.y = _bottomMiddleLeavesSaveY - _offset;
+				
+				_bottomRightDecoration.x = _bottomRightLeavesSaveX - _offset;
+				_bottomRightDecoration.y = _bottomRightLeavesSaveY - _offset;
+				
+				/*
 				_backgroundSkin.scaleX = _backgroundSkin.scaleY = 0;
 				_frontSkin.scaleX = _frontSkin.scaleY = 0;
 				_tiledBackground.scaleX = _tiledBackground.scaleY = 0;
 				_topLeftDecoration.alpha = 0;
 				_bottomLeftDecoration.alpha = 0;
 				_bottomMiddleDecoration.alpha = 0;
-				_bottomRightDecoration.alpha = 0;
+				_bottomRightDecoration.alpha = 0;*/
 			}
 		}
 		
@@ -217,6 +232,21 @@ package com.ludofactory.mobile.core.notification
 		 */
 		public function animateIn():void
 		{
+			this.touchable = true;
+			
+			if( _content )
+			{
+				_content.x = _tiledBackground.x;
+				_content.y = _tiledBackground.y;
+			}
+			
+			this.scaleX = this.scaleY = 1.2;
+			TweenMax.to(this, 0.25, { autoAlpha:1 });
+			TweenMax.to(this, 1, { scaleX:1, scaleY:1, ease:new ElasticOut(1, 0.6) });
+			
+			return;
+			
+			
 			this.touchable = true;
 			this.visible = true;
 			this.alpha = 1;
@@ -246,6 +276,13 @@ package com.ludofactory.mobile.core.notification
 		 */
 		public function animateOut():void
 		{
+			this.touchable = false;
+			
+			TweenMax.to(this, 0.25, { autoAlpha:0, onComplete:removeAndDisposeContent });
+			
+			
+			return;
+			
 			this.touchable = false;
 			
 			TweenMax.killTweensOf([_backgroundSkin, _frontSkin, _tiledBackground, _topLeftDecoration, _bottomLeftDecoration, _bottomMiddleDecoration, _bottomRightDecoration]);
@@ -282,7 +319,7 @@ package com.ludofactory.mobile.core.notification
 			if( _callback )
 				_callback(_content.data); // TODO rajouter la data
 			
-			dispatchEventWith(LudoEventType.CLOSE_NOTIFICATION, false);
+			dispatchEventWith(MobileEventTypes.CLOSE_NOTIFICATION, false);
 		}
 
 		/**
@@ -311,7 +348,7 @@ package com.ludofactory.mobile.core.notification
 		 * @param value
 		 * @param callback
 		 */
-		public function setContentAndCallBack(value:AbstractNotificationPopupContent, callback:Function = null):void
+		public function setContentAndCallBack(value:AbstractPopupContent, callback:Function = null):void
 		{
 			_content = value;
 			_callback = callback;

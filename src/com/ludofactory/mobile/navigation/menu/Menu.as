@@ -6,22 +6,20 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.navigation.menu
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
-	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.DisconnectNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import feathers.controls.List;
 	import feathers.core.FeathersControl;

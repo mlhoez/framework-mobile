@@ -6,16 +6,14 @@ Created : 8 sept. 2013
 */
 package com.ludofactory.mobile.navigation.faq
 {
+	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.FaqNotificationContent;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
@@ -24,6 +22,8 @@ package com.ludofactory.mobile.navigation.faq
 	import feathers.controls.Scroller;
 	import feathers.data.ListCollection;
 	import feathers.layout.VerticalLayout;
+	
+	import flash.text.TextFormat;
 	
 	import starling.display.Quad;
 	import starling.display.QuadBatch;

@@ -15,7 +15,7 @@ package com.ludofactory.mobile.engine
 	import com.ludofactory.mobile.core.manager.AlertManager;
 	import com.ludofactory.mobile.core.manager.JugglerManager;
 	import com.ludofactory.mobile.core.membership.MemberManager;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import NotificationManager;
 	import com.ludofactory.mobile.core.notification.content.CreateAccountNotification;
 	import com.ludofactory.mobile.core.scoring.ScoreToStarsData;
 	import com.ludofactory.mobile.core.storage.Storage;

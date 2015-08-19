@@ -6,7 +6,7 @@ Created : 8 septembre 2013
 */
 package com.ludofactory.mobile.navigation.sponsor
 {
-
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
@@ -14,37 +14,34 @@ package com.ludofactory.mobile.navigation.sponsor
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.SponsorNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.navigation.sponsor.info.SponsorNotification;
-	import com.ludofactory.mobile.navigation.sponsor.invite.SponsorTypes;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.sponsor.invite.SponsorTypes;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Button;
-	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.controls.LayoutGroup;
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
-
+	
 	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.utils.deg2rad;
-
+	
 	public class SponsorHomeScreen extends AdvancedScreen
 	{
 		/**
