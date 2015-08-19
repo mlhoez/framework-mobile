@@ -4,7 +4,7 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 18 oct. 2013
 */
-package com.ludofactory.mobile.navigation
+package com.ludofactory.mobile.navigation.event
 {
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;

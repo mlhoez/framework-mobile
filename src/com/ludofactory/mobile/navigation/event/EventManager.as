@@ -80,7 +80,7 @@ package com.ludofactory.mobile.navigation.event
 							}
 							else
 							{
-								NotificationManager.addNotification( new EventNotification( new EventData(result) ) );
+								//NotificationManager.addNotification( new EventNotification( new EventData(result) ) );
 							}
 							
 							break;
