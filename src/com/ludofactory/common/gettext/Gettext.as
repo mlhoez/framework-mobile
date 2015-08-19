@@ -86,10 +86,14 @@ package com.ludofactory.common.gettext
 		 */		
 		public function dgettext(domain:String, key:String):String
 		{
-			// domain contains a POFile
-			_helperTrad = _locales[_currentLocale][domain].translations[ key.replace(/\n/g, "\\n") ]; // fixes a bug with multine strings like this : "blabla \n blabla"
-			if( _helperTrad) _helperTrad = _helperTrad.replace(/\\n/g, "\n"); // fixes a bug with multine strings like this : "blabla \n blabla"
-			return (_helperTrad == null || _helperTrad == "") ? key : _helperTrad;
+			if( _currentLocale )
+			{
+				// domain contains a POFile
+				_helperTrad = _locales[_currentLocale][domain].translations[ key.replace(/\n/g, "\\n") ]; // fixes a bug with multine strings like this : "blabla \n blabla"
+				if( _helperTrad) _helperTrad = _helperTrad.replace(/\\n/g, "\n"); // fixes a bug with multine strings like this : "blabla \n blabla"
+			}
+			
+			return (_helperTrad == null || _helperTrad == "" || !_currentLocale) ? key : _helperTrad;
 		}
 		
 		/**
@@ -120,10 +124,24 @@ package com.ludofactory.common.gettext
 		{
 			// domain contains a POFile
 			// TODO maybe use the same technique as dgetext to fix the multine issues
+			
+			/* AVANT
 			_helperTradTab =  _locales[_currentLocale][domain].translations[keySingular];
 			if ( !_helperTradTab || _helperTradTab.length <= 0 )
 				return _locales[_currentLocale][domain].getPluralIndex(n) < 1 ? keySingular : keyPlural;
 			return _helperTradTab[ _locales[_currentLocale][domain].getPluralIndex(n) ];
+			*/
+			
+			// domain contains a POFile
+			if( _currentLocale )
+			{
+				_helperTradTab =  _locales[_currentLocale][domain].translations[keySingular.replace(/\n/g, "\\n")];
+				if ( !_helperTradTab || _helperTradTab.length <= 0 )
+					return _locales[_currentLocale][domain].getPluralIndex(n) < 1 ? keySingular : keyPlural;
+				return _helperTradTab[ _locales[_currentLocale][domain].getPluralIndex(n) ].replace(/\\n/g, "\n");
+			}
+			
+			return n <= 1 ? keySingular : keyPlural;
 		}
 	}
 }
