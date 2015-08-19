@@ -11,6 +11,7 @@ package com.ludofactory.mobile.core.notification
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
+	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;

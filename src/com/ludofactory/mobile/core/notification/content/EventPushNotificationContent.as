@@ -16,7 +16,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
+	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;

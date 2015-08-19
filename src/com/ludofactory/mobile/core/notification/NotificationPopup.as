@@ -14,6 +14,7 @@ package com.ludofactory.mobile.core.notification
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
+	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.core.FeathersControl;

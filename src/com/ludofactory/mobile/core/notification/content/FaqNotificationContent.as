@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core.notification.content
 {
 
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
+	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.navigation.faq.*;
 	import com.ludofactory.mobile.core.theme.Theme;

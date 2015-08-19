@@ -4,8 +4,10 @@
  Author  : Maxime Lhoez
  Created : 28 septembre 2014
 */
-package com.ludofactory.mobile.core.notification
+package com.ludofactory.mobile.core.notification.content
 {
+	
+	import com.ludofactory.mobile.core.notification.*;
 	
 	import com.ludofactory.mobile.core.controls.PullToRefreshScrollContainer;
 	

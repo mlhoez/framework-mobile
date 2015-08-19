@@ -13,7 +13,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
+	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Button;

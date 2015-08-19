@@ -14,7 +14,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
+	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.navigation.shop.bid.pending.*;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
