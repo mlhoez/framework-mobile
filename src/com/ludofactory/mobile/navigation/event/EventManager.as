@@ -6,23 +6,22 @@ Created : 11 oct. 2013
 */
 package com.ludofactory.mobile.navigation.event
 {
-
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.EventPushNotificationContent;
 	import com.ludofactory.mobile.core.notification.content.RateNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.navigation.EventNotification;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-
+	
 	import starling.core.Starling;
 	import starling.events.Event;
-
+	
 	/**
 	 * The event manager.                                                                                                                                                                                                                                                                                                                                                              
 	 */	
