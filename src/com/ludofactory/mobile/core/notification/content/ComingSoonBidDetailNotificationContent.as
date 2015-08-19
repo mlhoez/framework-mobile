@@ -6,28 +6,27 @@ Created : 28 août 2013
 */
 package com.ludofactory.mobile.core.notification.content
 {
-
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
-	import com.ludofactory.mobile.navigation.shop.bid.comingsoon.*;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	import com.ludofactory.mobile.navigation.shop.bid.comingsoon.*;
+	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalLayout;
-
+	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.core.Starling;
 	import starling.display.MovieClip;
 	import starling.events.Event;
-
+	
 	public class ComingSoonBidDetailNotificationContent extends AbstractPopupContent
 	{
 		/**
