@@ -34,7 +34,7 @@ package com.ludofactory.common.utils
 			//if( Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0 )
 			//	return String(appXml.ns::versionNumber[0]).substr(0, 3);  // remove the last .0 automatically added
 			//else
-				return String(appXml.ns::versionLabel[0]).substr(0, 3);  // remove the last .0 automatically added
+				return String(appXml.ns::versionLabel[0])//.substr(0, 3);  // remove the last .0 automatically added
 		}
 		
 		/**
