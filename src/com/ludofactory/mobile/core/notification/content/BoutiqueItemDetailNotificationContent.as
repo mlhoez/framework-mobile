@@ -6,37 +6,36 @@ Created : 28 août 2013
 */
 package com.ludofactory.mobile.core.notification.content
 {
-
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.navigation.shop.vip.*;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	import com.ludofactory.mobile.navigation.shop.vip.*;
+	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalLayout;
-
+	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.core.Starling;
 	import starling.display.MovieClip;
 	import starling.events.Event;
-
+	
 	public class BoutiqueItemDetailNotificationContent extends AbstractPopupContent
 	{
 		/**

@@ -6,7 +6,7 @@ Created : 22 août 2013
 */
 package com.ludofactory.mobile.navigation.shop.vip
 {
-
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
@@ -14,18 +14,17 @@ package com.ludofactory.mobile.navigation.shop.vip
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.ScreenIds;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.BoutiqueItemDetailNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	
 	import feathers.controls.Button;
 	import feathers.controls.GroupedList;
 	import feathers.controls.ImageLoader;
@@ -38,13 +37,13 @@ package com.ludofactory.mobile.navigation.shop.vip
 	import feathers.data.ListCollection;
 	import feathers.display.TiledImage;
 	import feathers.layout.TiledRowsLayout;
-
+	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.display.Quad;
 	import starling.events.Event;
-
+	
 	public class BoutiqueSubCategoryScreen extends AdvancedScreen
 	{
 		/**
