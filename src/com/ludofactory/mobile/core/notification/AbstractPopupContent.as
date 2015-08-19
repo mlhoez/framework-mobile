@@ -7,14 +7,16 @@ package com.ludofactory.mobile.core.notification
 	import com.ludofactory.mobile.core.controls.PullToRefreshScrollContainer;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 
-	public class AbstractNotificationPopupContent extends PullToRefreshScrollContainer
+	public class AbstractPopupContent extends PullToRefreshScrollContainer
 	{
 		/**
-		 * Can be anything. Is mainly used as a parameter for the callback
-		 * function when the NotificationPopup is closed. */
+		 * Can be anything. Is mainly used as a parameter for the callback function when the popup is closed. */
 		private var _data:Object = {};
 		
-		public function AbstractNotificationPopupContent()
+		/**
+		 * 
+		 */
+		public function AbstractPopupContent()
 		{
 			super();
 			

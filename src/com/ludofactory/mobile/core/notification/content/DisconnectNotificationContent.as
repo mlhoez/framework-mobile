@@ -13,7 +13,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Button;
@@ -23,7 +23,7 @@ package com.ludofactory.mobile.core.notification.content
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
 	
-	public class DisconnectNotificationContent extends AbstractNotificationPopupContent
+	public class DisconnectNotificationContent extends AbstractPopupContent
 	{
 		/**
 		 * The disconnect icon. */		

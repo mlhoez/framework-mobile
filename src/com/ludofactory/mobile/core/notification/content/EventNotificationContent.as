@@ -10,7 +10,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.navigation.event.EventData;
@@ -33,7 +33,7 @@ package com.ludofactory.mobile.core.notification.content
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 
-	public class EventNotificationContent extends AbstractNotificationPopupContent
+	public class EventNotificationContent extends AbstractPopupContent
 	{
 		/**
 		 * Loader used while the image is loading. */		

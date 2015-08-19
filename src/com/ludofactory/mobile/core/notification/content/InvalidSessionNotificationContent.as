@@ -12,7 +12,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.*;
 	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.ScreenIds;
-	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 
@@ -26,7 +26,7 @@ package com.ludofactory.mobile.core.notification.content
 	import starling.display.Image;
 	import starling.events.Event;
 
-	public class InvalidSessionNotificationContent extends AbstractNotificationPopupContent
+	public class InvalidSessionNotificationContent extends AbstractPopupContent
 	{
 		/**
 		 * The disconnect icon. */		

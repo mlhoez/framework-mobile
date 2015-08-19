@@ -11,7 +11,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -29,7 +29,7 @@ package com.ludofactory.mobile.core.notification.content
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 
-	public class SponsorNotificationContent extends AbstractNotificationPopupContent
+	public class SponsorNotificationContent extends AbstractPopupContent
 	{
 		/**
 		 * The title. */		

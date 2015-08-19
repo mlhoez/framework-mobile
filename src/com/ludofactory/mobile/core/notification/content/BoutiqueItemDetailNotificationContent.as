@@ -16,7 +16,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -37,7 +37,7 @@ package com.ludofactory.mobile.core.notification.content
 	import starling.display.MovieClip;
 	import starling.events.Event;
 
-	public class BoutiqueItemDetailNotificationContent extends AbstractNotificationPopupContent
+	public class BoutiqueItemDetailNotificationContent extends AbstractPopupContent
 	{
 		/**
 		 * The gift image. */		

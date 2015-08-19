@@ -15,7 +15,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -33,7 +33,7 @@ package com.ludofactory.mobile.core.notification.content
 	import starling.display.Image;
 	import starling.events.Event;
 
-	public class EventPushNotificationContent extends AbstractNotificationPopupContent
+	public class EventPushNotificationContent extends AbstractPopupContent
 	{
 		/**
 		 * The disconnect icon. */		

@@ -9,7 +9,7 @@ package com.ludofactory.mobile.core.notification.content
 
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.navigation.sponsor.filleuls.*;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -26,7 +26,7 @@ package com.ludofactory.mobile.core.notification.content
 
 	import starling.display.Quad;
 
-	public class FilleulDetailNotificationContent extends AbstractNotificationPopupContent
+	public class FilleulDetailNotificationContent extends AbstractPopupContent
 	{
 		/**
 		 * The title. */		

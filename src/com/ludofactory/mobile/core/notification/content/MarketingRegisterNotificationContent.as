@@ -18,7 +18,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
@@ -28,7 +28,7 @@ package com.ludofactory.mobile.core.notification.content
 	import starling.events.Event;
 	import starling.text.TextField;
 	
-	public class MarketingRegisterNotificationContent extends AbstractNotificationPopupContent
+	public class MarketingRegisterNotificationContent extends AbstractPopupContent
 	{
 		/**
 		 * The title. */		

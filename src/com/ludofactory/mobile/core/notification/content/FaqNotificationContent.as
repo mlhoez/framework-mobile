@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core.notification.content
 {
 
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.navigation.faq.*;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -19,7 +19,7 @@ package com.ludofactory.mobile.core.notification.content
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 
-	public class FaqNotificationContent extends AbstractNotificationPopupContent
+	public class FaqNotificationContent extends AbstractPopupContent
 	{
 		/**
 		 * The title. */		

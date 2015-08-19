@@ -10,7 +10,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.navigation.shop.bid.comingsoon.*;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -28,7 +28,7 @@ package com.ludofactory.mobile.core.notification.content
 	import starling.display.MovieClip;
 	import starling.events.Event;
 
-	public class ComingSoonBidDetailNotificationContent extends AbstractNotificationPopupContent
+	public class ComingSoonBidDetailNotificationContent extends AbstractPopupContent
 	{
 		/**
 		 * The title */		
