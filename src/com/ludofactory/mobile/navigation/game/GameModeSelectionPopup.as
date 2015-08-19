@@ -15,7 +15,7 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.GameMode;
+	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.ScreenIds;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
@@ -528,12 +528,12 @@ package com.ludofactory.mobile.navigation.game
 				
 				TweenMax.allTo([_backgroundSkin, _frontSkin, _tiledBackground], 0.5, { scaleX:1, scaleY:1, ease:Back.easeOut });
 				
-				TweenMax.to(_topLeftLeaves,       1.25, { delay:0.4, alpha:1, x:(_topLeftLeavesSaveX + _offset), y:(_topLeftLeavesSaveY + _offset), ease:Elastic.easeOut });
-				TweenMax.to(_bottomLeftLeaves,    1.25, { delay:0.4, alpha:1, x:(_bottomLeftLeavesSaveX + _offset), y:(_bottomLeftLeavesSaveY - _offset), ease:Elastic.easeOut, onComplete:onAnimationInComplete });
-				TweenMax.to(_bottomMiddleLeaves,  1.25, { delay:0.4,  alpha:1, y:(_bottomMiddleLeavesSaveY - _offset), ease:Elastic.easeOut });
-				TweenMax.to(_bottomRightLeaves,   1.25, { delay:0.4,  alpha:1, x:(_bottomRightLeavesSaveX - _offset), y:(_bottomRightLeavesSaveY - _offset), ease:Elastic.easeOut });
+				TweenMax.to(_topLeftLeaves,       0.75, { delay:0.2, alpha:1, x:(_topLeftLeavesSaveX + _offset), y:(_topLeftLeavesSaveY + _offset), ease:Back.easeOut });
+				TweenMax.to(_bottomLeftLeaves,    0.75, { delay:0.2, alpha:1, x:(_bottomLeftLeavesSaveX + _offset), y:(_bottomLeftLeavesSaveY - _offset), ease:Back.easeOut, onComplete:onAnimationInComplete });
+				TweenMax.to(_bottomMiddleLeaves,  0.75, { delay:0.2,  alpha:1, y:(_bottomMiddleLeavesSaveY - _offset), ease:Back.easeOut });
+				TweenMax.to(_bottomRightLeaves,   0.75, { delay:0.2,  alpha:1, x:(_bottomRightLeavesSaveX - _offset), y:(_bottomRightLeavesSaveY - _offset), ease:Back.easeOut });
 				
-				TweenMax.allTo([_soloButton, _tournamentButtonContainer, _rulesButton], 0.75, { delay:0.6, autoAlpha:1, scaleX:1, scaleY:1, ease:Back.easeOut });
+				TweenMax.allTo([_soloButton, _tournamentButtonContainer, _rulesButton], 0.5, { autoAlpha:1, scaleX:1, scaleY:1, ease:Back.easeOut });
 			//}
 			
 			if( MemberManager.getInstance().getTournamentUnlocked() && MemberManager.getInstance().getTournamentAnimPending() )
