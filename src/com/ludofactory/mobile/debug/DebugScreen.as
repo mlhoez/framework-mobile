@@ -157,10 +157,10 @@ package com.ludofactory.mobile.debug
 		
 		override protected function draw():void
 		{
-			super.draw();
-			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				_mainContainer.width = this.actualWidth;
 				_mainContainer.height = this.actualHeight;
 				

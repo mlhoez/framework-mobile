@@ -122,10 +122,10 @@ package com.ludofactory.mobile.core.avatar
 		
 		override protected function draw():void
 		{
-			super.draw();
-			
 			if( isInvalid(INVALIDATION_FLAG_DATA) )
 			{
+				super.draw();
+				
 				_switchWeaponButton.validate();
 				_switchWeaponButton.x = actualWidth - _switchWeaponButton.width;
 			}

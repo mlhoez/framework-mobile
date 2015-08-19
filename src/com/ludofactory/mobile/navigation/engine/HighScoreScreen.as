@@ -185,6 +185,8 @@ package com.ludofactory.mobile.navigation.engine
 			// FIXME A décommenter pour gérer l'orientation
 			if( isInvalid(INVALIDATION_FLAG_SIZE) /* && _highScoreLogo */)
 			{
+				super.draw();
+				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_highScoreLogo.x = this.actualWidth * 0.5;

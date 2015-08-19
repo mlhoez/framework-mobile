@@ -94,6 +94,8 @@ package com.ludofactory.mobile.navigation.sponsor.filleuls
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				_list.height = this.actualHeight - _list.y;
 				
 				_authenticationContainer.width = _retryContainer.width = actualWidth;

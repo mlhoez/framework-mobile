@@ -147,6 +147,8 @@ package com.ludofactory.mobile.navigation.news
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				_loader.x = this.actualWidth * 0.5;
 				_loader.y = this.actualHeight * 0.5;
 				

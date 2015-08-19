@@ -188,6 +188,8 @@ package com.ludofactory.mobile.navigation.shop.vip
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				//_subCategoryChoiceButton.width = this.actualWidth * 0.8;
 				_subCategoryChoiceButton.validate();
 				_subCategoryChoiceButton.x = (actualWidth - _subCategoryChoiceButton.width) * 0.5;

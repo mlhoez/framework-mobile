@@ -167,6 +167,8 @@ package com.ludofactory.mobile.navigation.store
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				_container.width = _authenticationContainer.width = _retryContainer.width = actualWidth;
 				_container.height = _authenticationContainer.height = _retryContainer.height = actualHeight;
 				

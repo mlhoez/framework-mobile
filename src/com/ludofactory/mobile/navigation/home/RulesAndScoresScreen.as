@@ -86,6 +86,8 @@ package com.ludofactory.mobile.navigation.home
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_logo.height = actualHeight * 0.3;

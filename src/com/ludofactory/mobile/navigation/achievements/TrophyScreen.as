@@ -60,6 +60,8 @@ package com.ludofactory.mobile.navigation.achievements
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				_trophiesList.width = this.actualWidth;
 				_trophiesList.height = this.actualHeight;
 				

@@ -562,6 +562,8 @@ package com.ludofactory.mobile.navigation.engine
 			// FIXME A décommenter pour gérer l'orientation
 			if( isInvalid(INVALIDATION_FLAG_SIZE) /* && _logo */ )
 			{
+				super.draw();
+				
 				// position common elements
 				
 				if( !_animationSkipped )

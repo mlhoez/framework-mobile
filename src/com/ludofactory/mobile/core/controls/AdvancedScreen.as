@@ -17,6 +17,8 @@ package com.ludofactory.mobile.core.controls
 	
 	import feathers.controls.Screen;
 	
+	import starling.display.Quad;
+	
 	/**
 	 * A more advanced screen that handles the tracking of the navigation (with
 	 * Google Analytics and Flox) and the disposal of remote call when it is 
@@ -24,6 +26,10 @@ package com.ludofactory.mobile.core.controls
 	 */	
 	public class AdvancedScreen extends Screen
 	{
+		/**
+		 * Transparent quad used to help draging the screen back to the right when the push elements are displayed. */
+		private var _touchQuad:Quad;
+		
 		public function AdvancedScreen()
 		{
 			super();
@@ -31,6 +37,10 @@ package com.ludofactory.mobile.core.controls
 		
 		override protected function initialize():void
 		{
+			_touchQuad = new Quad(500, 500, 0x0000ff);
+			_touchQuad.alpha = 0;
+			addChildAt(_touchQuad, 0);
+			
 			// track screens with Google Analytics
 			if( GAnalytics.isSupported() )
 				GAnalytics.analytics.defaultTracker.trackScreenView(screenID, MemberManager.getInstance().getId());
@@ -39,6 +49,14 @@ package com.ludofactory.mobile.core.controls
 			Flox.logInfo("\t<strong>&rarr; " + screenID + "</strong>");
 			
 			this.backButtonHandler = onBack;
+		}
+		
+		override protected function draw():void
+		{
+			super.draw();
+			
+			_touchQuad.width = actualWidth;
+			_touchQuad.height = actualHeight;
 		}
 		
 		override public function set screenID(value:String):void
@@ -177,6 +195,17 @@ package com.ludofactory.mobile.core.controls
 		public function get isLandscape():Boolean
 		{
 			return _isLandscape;
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Dispose
+		
+		override public function dispose():void
+		{
+			_touchQuad.removeFromParent(true);
+			_touchQuad = null;
+			
+			super.dispose();
 		}
 		
 	}

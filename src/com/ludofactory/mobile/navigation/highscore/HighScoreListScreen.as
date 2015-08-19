@@ -225,6 +225,8 @@ package com.ludofactory.mobile.navigation.highscore
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				_countryChoiceBackground.width = this.actualWidth;
 				
 				_countryChoiceTitle.validate();

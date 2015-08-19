@@ -140,6 +140,8 @@ package com.ludofactory.mobile.navigation
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				var leftGap:Number;
 				var rightGap:Number;
 				if( AbstractGameInfo.LANDSCAPE )

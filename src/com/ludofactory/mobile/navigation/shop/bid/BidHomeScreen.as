@@ -98,6 +98,8 @@ package com.ludofactory.mobile.navigation.shop.bid
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				_message.y = roundUp(scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 5 : 10) : (AbstractGameInfo.LANDSCAPE ? 15 : 30)));
 				_message.width = roundUp(actualWidth * 0.9);
 				_message.x = roundUp((actualWidth - _message.width) * 0.5);

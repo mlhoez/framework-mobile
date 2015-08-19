@@ -127,6 +127,8 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				if( !AbstractGameInfo.LANDSCAPE )
 				{
 					_logo.x = (actualWidth - _logo.width) * 0.5;

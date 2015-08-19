@@ -94,10 +94,10 @@ package com.ludofactory.mobile.navigation.faq
 		}
 		override protected function draw():void
 		{
-			super.draw();
 			
 			if( isInvalid( INVALIDATION_FLAG_SIZE ) )
 			{
+				super.draw();
 				
 				if( !AbstractGameInfo.LANDSCAPE )
 				{

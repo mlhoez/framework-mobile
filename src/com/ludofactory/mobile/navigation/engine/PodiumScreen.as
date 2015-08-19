@@ -217,6 +217,8 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) && _podiumLogo )
 			{
+				super.draw();
+				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_podiumLogo.x = this.actualWidth * 0.5;

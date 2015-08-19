@@ -371,6 +371,8 @@ package com.ludofactory.mobile.navigation.vip
 		
 		override protected function draw():void
 		{
+			super.draw();
+			
 			if( _loader )
 			{
 				_loader.x = this.actualWidth * 0.5;

@@ -122,10 +122,10 @@ package com.ludofactory.mobile.navigation.authentication
 		
 		override protected function draw():void
 		{
-			super.draw();
-			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_logo.visible = false;

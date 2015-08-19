@@ -156,6 +156,8 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				_message.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 5 : 10) : (AbstractGameInfo.LANDSCAPE ? 15 : 30));
 				_message.width = actualWidth * 0.9;
 				_message.x = (actualWidth - _message.width) * 0.5;

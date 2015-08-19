@@ -188,6 +188,8 @@ package com.ludofactory.mobile.navigation.shop
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				createBackground();
 				
 				TweenMax.killAll();

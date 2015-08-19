@@ -212,6 +212,8 @@ package com.ludofactory.mobile.navigation.sponsor
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				// AVANT avec tous les boutons
 				/*
 				

@@ -174,6 +174,8 @@ package com.ludofactory.mobile.navigation.highscore
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				var gap:int;
 				var padding:int;
 				var maxButtonHeight:int;

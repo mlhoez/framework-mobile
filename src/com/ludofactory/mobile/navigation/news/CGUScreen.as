@@ -72,17 +72,20 @@ package com.ludofactory.mobile.navigation.news
 		
 		override protected function draw():void
 		{
-			super.draw();
-			
-			if( _loader )
+			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_loader.x = (actualWidth - _loader.width) * 0.5;
-				_loader.y = (actualHeight - _loader.height) * 0.5;
+				super.draw();
+				
+				if( _loader )
+				{
+					_loader.x = (actualWidth - _loader.width) * 0.5;
+					_loader.y = (actualHeight - _loader.height) * 0.5;
+				}
+				
+				_scrollText.y = scaleAndRoundToDpi(-60); // header"s height
+				_scrollText.width = actualWidth;
+				_scrollText.height = actualHeight + scaleAndRoundToDpi(60);
 			}
-			
-			_scrollText.y = scaleAndRoundToDpi(-60); // header"s height
-			_scrollText.width = actualWidth;
-			_scrollText.height = actualHeight + scaleAndRoundToDpi(60);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

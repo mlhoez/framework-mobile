@@ -144,6 +144,8 @@ package com.ludofactory.mobile.navigation.tournament
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_adContainer.visible = _hasGiftToDisplay;

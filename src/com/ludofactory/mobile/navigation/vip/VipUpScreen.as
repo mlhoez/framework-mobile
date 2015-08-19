@@ -182,10 +182,10 @@ package com.ludofactory.mobile.navigation.vip
 		
 		override protected function draw():void
 		{
-			super.draw();
-			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_rankImage.scaleX = _rankImage.scaleY = 1;

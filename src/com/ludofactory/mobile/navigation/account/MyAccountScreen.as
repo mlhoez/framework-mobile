@@ -69,10 +69,10 @@ package com.ludofactory.mobile.navigation.account
 		
 		override protected function draw():void
 		{
-			super.draw();
-			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
+				super.draw();
+				
 				_menu.width = this.actualWidth;
 				_menu.y = scaleAndRoundToDpi(10);
 				_menu.validate();
