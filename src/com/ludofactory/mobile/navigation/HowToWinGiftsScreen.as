@@ -140,8 +140,6 @@ package com.ludofactory.mobile.navigation
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				var leftGap:Number;
 				var rightGap:Number;
 				if( AbstractGameInfo.LANDSCAPE )
@@ -236,6 +234,8 @@ package com.ludofactory.mobile.navigation
 				_particles.emitterYVariance = (_gifts.height * 0.5);
 				_particles.start();
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

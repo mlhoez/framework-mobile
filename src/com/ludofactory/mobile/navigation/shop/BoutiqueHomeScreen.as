@@ -188,8 +188,6 @@ package com.ludofactory.mobile.navigation.shop
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				createBackground();
 				
 				TweenMax.killAll();
@@ -265,6 +263,8 @@ package com.ludofactory.mobile.navigation.shop
 				TweenMax.to([_glow, _buildings], 1.5, { delay:1, alpha:0.75 });
 				TweenMax.to(_glow, 20, { delay:0.5, rotation:deg2rad(360), repeat:-1, ease:Linear.easeNone });
 			}
+			
+			super.draw();
 		}
 		
 		private var _background:QuadBatch;

@@ -107,8 +107,6 @@ package com.ludofactory.mobile.navigation.authentication
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_logo.height = actualHeight * (GlobalConfig.isPhone ? 0.3 : 0.5);
@@ -151,6 +149,8 @@ package com.ludofactory.mobile.navigation.authentication
 					_cancelButton.y = _validateButton.y + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 				}
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

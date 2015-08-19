@@ -159,7 +159,6 @@ package com.ludofactory.mobile.debug
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
 				
 				_mainContainer.width = this.actualWidth;
 				_mainContainer.height = this.actualHeight;
@@ -180,6 +179,8 @@ package com.ludofactory.mobile.debug
 				_list.width = this.actualWidth;
 				_list.validate();
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

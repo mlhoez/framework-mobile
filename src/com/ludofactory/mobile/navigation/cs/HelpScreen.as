@@ -136,8 +136,6 @@ package com.ludofactory.mobile.navigation.cs
 		{
 			if( isInvalid( INVALIDATION_FLAG_SIZE ) )
 			{
-				super.draw();
-				
 				_faqButton.width = _contactCustomerServiceButton.width = this.actualWidth * 0.4;
 				_faqButton.x = (actualWidth * 0.5) - _faqButton.width - scaleAndRoundToDpi(20);
 				_contactCustomerServiceButton.x = (actualWidth * 0.5) + scaleAndRoundToDpi(20);
@@ -160,6 +158,8 @@ package com.ludofactory.mobile.navigation.cs
 				_pendingMessagesContent.width = _messagesBackground.width = this.actualWidth;
 				_pendingMessagesContent.height = _messagesBackground.height = this.actualHeight - _pendingMessagesContent.y;
 			}
+			
+			super.draw();
 		}
 		
 		private function layoutSolvedMessagesContainer():void

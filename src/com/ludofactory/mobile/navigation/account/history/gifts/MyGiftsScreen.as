@@ -127,8 +127,6 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				if( !AbstractGameInfo.LANDSCAPE )
 				{
 					_logo.x = (actualWidth - _logo.width) * 0.5;
@@ -146,6 +144,8 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 				_authenticationContainer.height = _retryContainer.height = actualHeight - _list.y;
 				_authenticationContainer.y = _retryContainer.y = _list.y;
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -71,8 +71,6 @@ package com.ludofactory.mobile.navigation.account
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				_menu.width = this.actualWidth;
 				_menu.y = scaleAndRoundToDpi(10);
 				_menu.validate();
@@ -84,6 +82,8 @@ package com.ludofactory.mobile.navigation.account
 				_menu.selectedIndex = AbstractEntryPoint.screenNavigator.screenData.indexToDisplayInMyAccount;
 				AbstractEntryPoint.screenNavigator.screenData.indexToDisplayInMyAccount = 0;
 			}
+			
+			super.draw();
 		}
 		
 		private function layoutPaymentsHistoryContainer():void

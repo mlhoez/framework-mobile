@@ -150,8 +150,6 @@ package com.ludofactory.mobile.navigation.cs.thread
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				if( advancedOwner.screenData.thread.state == CSState.PENDING )
 				{
 					_inputBackground.width = this.actualWidth;
@@ -173,6 +171,8 @@ package com.ludofactory.mobile.navigation.cs.thread
 				_list.width = this.actualWidth;
 				_list.height = advancedOwner.screenData.thread.state == CSState.PENDING ? _inputBackground.y : actualHeight;
 			}
+			
+			super.draw();
 		}
 		
 		override public function onBack():void

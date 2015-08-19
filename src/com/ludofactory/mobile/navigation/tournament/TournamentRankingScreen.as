@@ -258,8 +258,6 @@ package com.ludofactory.mobile.navigation.tournament
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					if( _adContainer )
@@ -341,6 +339,8 @@ package com.ludofactory.mobile.navigation.tournament
 					}
 				}
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

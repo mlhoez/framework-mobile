@@ -147,8 +147,6 @@ package com.ludofactory.mobile.navigation.news
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				_loader.x = this.actualWidth * 0.5;
 				_loader.y = this.actualHeight * 0.5;
 				
@@ -165,6 +163,8 @@ package com.ludofactory.mobile.navigation.news
 				
 				_copyrightLabel.width = _cguLabel.width = _versionLabel.width = this.actualWidth * 0.9;
 			}
+			
+			super.draw();
 		}
 		
 		private function initializeContent():void

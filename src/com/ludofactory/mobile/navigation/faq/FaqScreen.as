@@ -94,11 +94,8 @@ package com.ludofactory.mobile.navigation.faq
 		}
 		override protected function draw():void
 		{
-			
 			if( isInvalid( INVALIDATION_FLAG_SIZE ) )
 			{
-				super.draw();
-				
 				if( !AbstractGameInfo.LANDSCAPE )
 				{
 					_logo.x = (actualWidth - _logo.width) * 0.5;
@@ -121,6 +118,8 @@ package com.ludofactory.mobile.navigation.faq
 					_accordion.height = this.actualHeight - _accordion.y;
 				}
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

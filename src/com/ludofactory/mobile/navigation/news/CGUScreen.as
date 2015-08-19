@@ -74,8 +74,6 @@ package com.ludofactory.mobile.navigation.news
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				if( _loader )
 				{
 					_loader.x = (actualWidth - _loader.width) * 0.5;
@@ -86,6 +84,8 @@ package com.ludofactory.mobile.navigation.news
 				_scrollText.width = actualWidth;
 				_scrollText.height = actualHeight + scaleAndRoundToDpi(60);
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

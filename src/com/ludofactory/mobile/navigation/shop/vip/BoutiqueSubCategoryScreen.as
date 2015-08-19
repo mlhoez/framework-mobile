@@ -188,8 +188,6 @@ package com.ludofactory.mobile.navigation.shop.vip
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				//_subCategoryChoiceButton.width = this.actualWidth * 0.8;
 				_subCategoryChoiceButton.validate();
 				_subCategoryChoiceButton.x = (actualWidth - _subCategoryChoiceButton.width) * 0.5;
@@ -213,6 +211,8 @@ package com.ludofactory.mobile.navigation.shop.vip
 				_informationLabel.x = (actualWidth - _informationLabel.width) * 0.5;
 				_informationLabel.y = _list.y + (_list.height - _informationLabel.height) * 0.5;
 			}
+			
+			super.draw();
 		}
 		
 		override public function onBack():void

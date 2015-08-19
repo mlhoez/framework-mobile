@@ -185,8 +185,6 @@ package com.ludofactory.mobile.navigation.engine
 			// FIXME A décommenter pour gérer l'orientation
 			if( isInvalid(INVALIDATION_FLAG_SIZE) /* && _highScoreLogo */)
 			{
-				super.draw();
-				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_highScoreLogo.x = this.actualWidth * 0.5;
@@ -276,6 +274,8 @@ package com.ludofactory.mobile.navigation.engine
 				if( !_facebookButton )
 					Starling.juggler.delayCall(onContinue, 5);
 			}
+			
+			super.draw();
 		}
 		
 		/**

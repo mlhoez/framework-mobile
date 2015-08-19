@@ -135,8 +135,6 @@ package com.ludofactory.mobile.navigation.home
 		{
 			if (isInvalid(INVALIDATION_FLAG_SIZE))
 			{
-				super.draw();
-				
 				var padding:int;
 				var buttonHeight:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 148) : 128);
 				var gap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
@@ -209,6 +207,8 @@ package com.ludofactory.mobile.navigation.home
 					_debugButton.y = actualHeight - _debugButton.height;
 				}
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

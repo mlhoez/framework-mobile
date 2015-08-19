@@ -184,8 +184,6 @@ package com.ludofactory.mobile.navigation.vip
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_rankImage.scaleX = _rankImage.scaleY = 1;
@@ -262,6 +260,8 @@ package com.ludofactory.mobile.navigation.vip
 					_rankImage.scaleX = _rankImage.scaleY = 0;
 				}
 			}
+			
+			super.draw();
 		}
 		
 		private function animateBase():void

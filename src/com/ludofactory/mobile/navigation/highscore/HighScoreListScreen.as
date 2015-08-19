@@ -225,8 +225,6 @@ package com.ludofactory.mobile.navigation.highscore
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				_countryChoiceBackground.width = this.actualWidth;
 				
 				_countryChoiceTitle.validate();
@@ -266,6 +264,8 @@ package com.ludofactory.mobile.navigation.highscore
 				_associateLabel.x = (actualWidth - _associateLabel.width) * 0.5;
 				_associateLabel.y = _associateButton.y - _associateLabel.height - scaleAndRoundToDpi(10);
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

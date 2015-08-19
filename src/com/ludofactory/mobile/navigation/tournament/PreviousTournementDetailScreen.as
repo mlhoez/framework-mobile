@@ -144,8 +144,6 @@ package com.ludofactory.mobile.navigation.tournament
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_adContainer.visible = _hasGiftToDisplay;
@@ -185,6 +183,8 @@ package com.ludofactory.mobile.navigation.tournament
 				_retryContainer.height = actualHeight - _listHeader.y;
 				_retryContainer.y = _listHeader.y;
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

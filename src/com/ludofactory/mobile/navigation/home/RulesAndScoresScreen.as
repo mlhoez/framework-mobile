@@ -86,8 +86,6 @@ package com.ludofactory.mobile.navigation.home
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_logo.height = actualHeight * 0.3;
@@ -114,6 +112,8 @@ package com.ludofactory.mobile.navigation.home
 				_gradient.height = this.actualHeight - _rulesList.y;
 				_gradient.y = _rulesList.y;
 			}
+			
+			super.draw();
 		}
 		
 		private function layoutScoreToPoints():void

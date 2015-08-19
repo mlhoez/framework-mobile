@@ -440,8 +440,6 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_loader.x = this.actualWidth * 0.5;
@@ -523,6 +521,8 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 					_authenticationContainer.height = _retryContainer.height = actualHeight;
 				}
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -82,11 +82,12 @@ package com.ludofactory.mobile.core.avatar
 		{
 			if( isInvalid(INVALIDATION_FLAG_DATA) )
 			{
-				super.draw();
 				
 				_switchWeaponButton.validate();
 				_switchWeaponButton.x = actualWidth - _switchWeaponButton.width;
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

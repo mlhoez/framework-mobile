@@ -142,8 +142,6 @@ package com.ludofactory.mobile.navigation.authentication
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_logo.height = actualHeight * (GlobalConfig.isPhone ? 0.3 : 0.4);
@@ -199,6 +197,8 @@ package com.ludofactory.mobile.navigation.authentication
 					_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
 				}
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

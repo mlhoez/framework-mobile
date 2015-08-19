@@ -97,8 +97,6 @@ package com.ludofactory.mobile.navigation.game
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				var buttonGap:int;
 				var titleGap:int;
 				var padding:int;
@@ -162,6 +160,8 @@ package com.ludofactory.mobile.navigation.game
 						_withPoints.y = _withCredits.y + _withTokens.height + buttonGap;
 				}
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

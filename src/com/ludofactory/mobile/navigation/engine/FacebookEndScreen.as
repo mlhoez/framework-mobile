@@ -210,8 +210,6 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				_title.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
 				_title.width = actualWidth;
 				_title.validate();
@@ -257,6 +255,8 @@ package com.ludofactory.mobile.navigation.engine
 				
 				TweenMax.delayedCall(1.5, animate);
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

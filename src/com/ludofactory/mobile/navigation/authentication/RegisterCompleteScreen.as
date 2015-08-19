@@ -106,8 +106,6 @@ package com.ludofactory.mobile.navigation.authentication
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_logo.visible = false;
@@ -148,6 +146,8 @@ package com.ludofactory.mobile.navigation.authentication
 					_validateButton.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50);
 				}
 			}
+			
+			super.draw();
 		}
 		
 		override public function onBack():void

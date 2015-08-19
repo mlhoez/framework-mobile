@@ -217,8 +217,6 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) && _podiumLogo )
 			{
-				super.draw();
-				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
 					_podiumLogo.x = this.actualWidth * 0.5;
@@ -300,6 +298,8 @@ package com.ludofactory.mobile.navigation.engine
 				if( !_facebookButton )
 					Starling.juggler.delayCall(onContinue, 5);
 			}
+			
+			super.draw();
 		}
 		
 		private function displayPodiumLabel():void

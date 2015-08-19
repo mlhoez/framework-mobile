@@ -371,8 +371,6 @@ package com.ludofactory.mobile.navigation.vip
 		
 		override protected function draw():void
 		{
-			super.draw();
-			
 			if( _loader )
 			{
 				_loader.x = this.actualWidth * 0.5;
@@ -512,6 +510,8 @@ package com.ludofactory.mobile.navigation.vip
 				
 				_defaultRankInformationLabel.y = _whiteContentBackground.y + (_whiteContentBackground.height * 0.5) - (_defaultRankInformationLabel.height * 0.5);
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

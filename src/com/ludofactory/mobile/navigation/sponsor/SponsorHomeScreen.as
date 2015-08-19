@@ -212,8 +212,6 @@ package com.ludofactory.mobile.navigation.sponsor
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				super.draw();
-				
 				// AVANT avec tous les boutons
 				/*
 				
@@ -330,6 +328,8 @@ package com.ludofactory.mobile.navigation.sponsor
 				
 				_knowMoreButton.width += scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 60);
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
