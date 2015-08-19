@@ -13,7 +13,7 @@ package com.ludofactory.mobile.navigation
 	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 import com.ludofactory.mobile.core.manager.MemberManager;
 import com.ludofactory.mobile.core.controls.ArrowGroup;
-	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
+	import AbstractNotification;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;

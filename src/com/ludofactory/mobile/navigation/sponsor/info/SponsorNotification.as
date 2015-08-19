@@ -10,7 +10,7 @@ package com.ludofactory.mobile.navigation.sponsor.info
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
+	import AbstractNotification;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;

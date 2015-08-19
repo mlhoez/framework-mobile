@@ -10,7 +10,7 @@ package com.ludofactory.mobile.navigation.shop.bid.finished
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import NotificationManager;
-	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
+	import AbstractNotification;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	

@@ -16,10 +16,10 @@ package com.ludofactory.mobile.navigation.shop.vip
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
-	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
+	import AbstractNotification;
 	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.navigation.MarketingRegisterNotification;
+	import MarketingRegisterNotification;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	

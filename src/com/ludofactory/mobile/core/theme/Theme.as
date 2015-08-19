@@ -5,9 +5,7 @@ package com.ludofactory.mobile.core.theme
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.navigation.ads.tournament.AdTournamentItemRenderer;
-	import com.ludofactory.mobile.navigation.engine.FacebookFriendElement;
 	import com.ludofactory.mobile.navigation.home.RuleItemRenderer;
 	import com.ludofactory.mobile.navigation.menu.MenuItemRenderer;
 	

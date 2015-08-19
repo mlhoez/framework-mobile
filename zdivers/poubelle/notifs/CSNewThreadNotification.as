@@ -14,7 +14,7 @@ import com.ludofactory.mobile.core.AbstractEntryPoint;
 import com.ludofactory.mobile.core.manager.MemberManager;
 import com.ludofactory.mobile.core.manager.InfoContent;
 import com.ludofactory.mobile.core.manager.InfoManager;
-import com.ludofactory.mobile.core.notification.content.AbstractNotification;
+import AbstractNotification;
 import com.ludofactory.mobile.core.remoting.Remote;
 import com.ludofactory.mobile.core.storage.Storage;
 import com.ludofactory.mobile.core.storage.StorageConfig;

@@ -10,7 +10,7 @@ package com.ludofactory.mobile.navigation.event
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import NotificationManager;
-	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
+	import AbstractNotification;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.navigation.event.EventData;
 	import com.ludofactory.mobile.core.theme.Theme;
