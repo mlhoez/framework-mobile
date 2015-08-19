@@ -21,7 +21,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
-	import com.ludofactory.mobile.core.display.TiledBackground;
+	import com.ludofactory.mobile.core.controls.display.TiledBackground;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.manager.InfoContent;
