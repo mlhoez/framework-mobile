@@ -9,7 +9,7 @@ package com.ludofactory.mobile.navigation.shop.bid.comingsoon
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import NotificationManager;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;

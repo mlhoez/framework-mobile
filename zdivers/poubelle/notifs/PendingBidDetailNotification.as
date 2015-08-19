@@ -13,7 +13,7 @@ package com.ludofactory.mobile.navigation.shop.bid.pending
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import NotificationManager;
 	import com.ludofactory.mobile.core.notification.content.AbstractNotification;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
