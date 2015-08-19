@@ -13,7 +13,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.Localizer;
 	import com.ludofactory.mobile.core.manager.AuthenticationManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
+	import NotificationManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import flash.text.TextFormat;
