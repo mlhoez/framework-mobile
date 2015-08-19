@@ -509,11 +509,6 @@ package com.ludofactory.mobile.core.theme
 			lockOpened = AbstractEntryPoint.assets.getTexture("unlock");
 			gameModeSelectionTileTexture = AbstractEntryPoint.assets.getTexture("game-type-selection-tile");
 			
-			// AbstractNotification
-			notificationContainerBackgroundSkinTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("notification-background-skin"), NOTIFICATION_CONTAINER_GRID);
-			notificationContainerTopDecorationSkinTextures = new Scale3Textures(AbstractEntryPoint.assets.getTexture("notification-top-decoration"), NOTIFICATION_CONTAINER_TOP_DECORATION_REGION1, NOTIFICATION_CONTAINER_TOP_DECORATION_REGION2, Scale3Textures.DIRECTION_HORIZONTAL);
-			notificationContainerBottomDecorationSkinTextures = new Scale3Textures(AbstractEntryPoint.assets.getTexture("notification-bottom-decoration"), NOTIFICATION_CONTAINER_BOTTOM_DECORATION_REGION1, NOTIFICATION_CONTAINER_BOTTOM_DECORATION_REGION2, Scale3Textures.DIRECTION_HORIZONTAL);
-			
 			// Trophies (display and list)
 			trophyBackgroundSkinTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("trophy-background-skin"), TROPHY_BACKGROUND_GRID);
 			
@@ -655,9 +650,6 @@ package com.ludofactory.mobile.core.theme
 			
 			// List
 			getStyleProviderForClass(List).defaultStyleFunction = listInitializer;
-			
-			// AbstractNotification
-			getStyleProviderForClass(AbstractNotification).defaultStyleFunction = abstractNotificationInitializer;
 			
 			// MenuItemRenderer
 			getStyleProviderForClass(MenuItemRenderer).defaultStyleFunction = menuItemRendererInitializer;
@@ -2014,34 +2006,6 @@ package com.ludofactory.mobile.core.theme
 		
 		protected static const GAME_TYPE_SELECTION_POPUP_BACKGROUND_GRID:Rectangle = new Rectangle(30, 30, 20, 20);
 		public static var gameModeSelectionBackgroundTextures:Scale9Textures;
-		
-//------------------------------------------------------------------------------------------------------------
-//
-//										N O T I F I C A T I O N S
-//
-//------------------------------------------------------------------------------------------------------------
-		
-		protected var notificationContainerBackgroundSkinTextures:Scale9Textures;
-		protected var notificationContainerBottomDecorationSkinTextures:Scale3Textures;
-		protected var notificationContainerTopDecorationSkinTextures:Scale3Textures;
-		protected static const NOTIFICATION_CONTAINER_GRID:Rectangle = new Rectangle(30, 50, 4, 2);
-		protected static var NOTIFICATION_CONTAINER_TOP_DECORATION_REGION1:int = 135; // the x position westart to slice
-		protected static var NOTIFICATION_CONTAINER_TOP_DECORATION_REGION2:int = 2; // the width after the x position
-		protected static var NOTIFICATION_CONTAINER_BOTTOM_DECORATION_REGION1:int = 66; // the x position westart to slice
-		protected static var NOTIFICATION_CONTAINER_BOTTOM_DECORATION_REGION2:int = 2; // the width after the x position
-		
-		/**
-		 * AbstractNotification
-		 */		
-		protected function abstractNotificationInitializer(container:AbstractNotification):void
-		{
-			scrollContainerInitializer(container);
-			container.backgroundSkinou = new Scale9Image(notificationContainerBackgroundSkinTextures, scaleFactor);
-			container.topLeftDecoration = new Scale3Image(notificationContainerTopDecorationSkinTextures, scaleFactor);
-			container.topRightDecoration = new Scale3Image(notificationContainerTopDecorationSkinTextures, scaleFactor);
-			container.bottomLeftDecoration = new Scale3Image(notificationContainerBottomDecorationSkinTextures, scaleFactor);
-			container.bottomRightDecoration = new Scale3Image(notificationContainerBottomDecorationSkinTextures, scaleFactor);
-		}
 		
 //------------------------------------------------------------------------------------------------------------
 //
