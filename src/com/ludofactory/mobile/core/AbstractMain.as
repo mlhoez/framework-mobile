@@ -214,7 +214,7 @@ package com.ludofactory.mobile.core
 							else
 							{
 								// portrait but the image is landscape
-								if(_launchImage.height > _launchImage.width)
+								if(_launchImage.width > _launchImage.height)
 								{
 									_launchImage.width = Capabilities.screenResolutionY;
 									_launchImage.height = Capabilities.screenResolutionX;
