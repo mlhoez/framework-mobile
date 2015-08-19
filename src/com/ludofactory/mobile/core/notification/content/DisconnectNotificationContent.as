@@ -6,28 +6,23 @@ Created : 1 septembre 2013
 */
 package com.ludofactory.mobile.core.notification.content
 {
-
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.events.LudoEventType;
-	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.notification.AbstractNotificationPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	
 	import feathers.controls.Button;
-	import feathers.controls.Label;
-	import feathers.layout.VerticalLayout;
-
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-
+	
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.text.TextField;
-
+	import starling.text.TextFieldAutoSize;
+	
 	public class DisconnectNotificationContent extends AbstractNotificationPopupContent
 	{
 		/**
@@ -62,7 +57,8 @@ package com.ludofactory.mobile.core.notification.content
 			addChild(_icon);
 			
 			_notificationTitle = new TextField(10, 100, _("Voulez-vous vous déconnecter ?"), Theme.FONT_SANSITA, scaleAndRoundToDpi(50), Theme.COLOR_DARK_GREY);
-			_notificationTitle.autoScale = true;
+			_notificationTitle.autoScale = AbstractGameInfo.LANDSCAPE;
+			_notificationTitle.autoSize = AbstractGameInfo.LANDSCAPE ? TextFieldAutoSize.NONE : TextFieldAutoSize.VERTICAL;
 			addChild(_notificationTitle);
 			
 			_yesButton = new Button();
@@ -96,8 +92,14 @@ package com.ludofactory.mobile.core.notification.content
 			}
 			else
 			{
+				_icon.x = roundUp((actualWidth - _icon.width) * 0.5);
 				_yesButton.width = _cancelButton.width = this.actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-				// TODO faire le format portrait
+				_yesButton.x = _cancelButton.x = roundUp((actualWidth - _yesButton.width) * 0.5);
+				
+				_icon.y = (actualHeight - (_icon.height + _notificationTitle.height + _yesButton.height + _cancelButton.height + scaleAndRoundToDpi(3 * 20))) * 0.5;
+				_notificationTitle.y = _icon.y + _icon.height + scaleAndRoundToDpi(20);
+				_yesButton.y = _notificationTitle.y + _notificationTitle.height + scaleAndRoundToDpi(20);
+				_cancelButton.y = _yesButton.y + _yesButton.height + scaleAndRoundToDpi(20);
 			}
 			
 			super.draw();
