@@ -17,7 +17,6 @@ package com.ludofactory.mobile.navigation.event
 	import com.ludofactory.mobile.core.notification.content.EventPushNotificationContent;
 	import com.ludofactory.mobile.core.notification.content.RateNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.navigation.EventNotification;
 	
 	import starling.core.Starling;
 	import starling.events.Event;

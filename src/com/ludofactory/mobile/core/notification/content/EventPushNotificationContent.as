@@ -6,7 +6,7 @@ Created : 10 oct. 2013
 */
 package com.ludofactory.mobile.core.notification.content
 {
-
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.freshplanet.nativeExtensions.PushNotificationEvent;
@@ -14,25 +14,25 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
 	import feathers.layout.VerticalLayout;
-
+	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.display.Image;
 	import starling.events.Event;
-
+	
 	public class EventPushNotificationContent extends AbstractPopupContent
 	{
 		/**

@@ -6,24 +6,23 @@ Created : 18 oct. 2013
 */
 package com.ludofactory.mobile.core.notification.content
 {
-
+	
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
-	import com.ludofactory.mobile.core.notification.NotificationManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.navigation.event.EventData;
+	import com.ludofactory.mobile.core.notification.AbstractPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.event.EventData;
 	import com.sticksports.nativeExtensions.canOpenUrl.CanOpenUrl;
-
+	
 	import feathers.controls.ImageLoader;
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalLayout;
-
+	
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
-
+	
 	import starling.core.Starling;
 	import starling.display.MovieClip;
 	import starling.events.Event;
@@ -32,7 +31,7 @@ package com.ludofactory.mobile.core.notification.content
 	import starling.events.TouchPhase;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
-
+	
 	public class EventNotificationContent extends AbstractPopupContent
 	{
 		/**
