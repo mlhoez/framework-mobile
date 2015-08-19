@@ -71,7 +71,7 @@ package com.ludofactory.mobile.core
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 44 : 60), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_message = new Label();
-			_message.text = _("Vous avez été automatiquement déconnecté car vous avez probablement changé vos identifiants de connexion sur un autre appareil.\n\nMerci de vous identifier à nouveau.");
+			_message.text = _("Vous avez été automatiquement déconnecté, merci de vous identifier à nouveau.");
 			_container.addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 38), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
