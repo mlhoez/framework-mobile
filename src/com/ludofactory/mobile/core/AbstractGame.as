@@ -207,6 +207,13 @@ package com.ludofactory.mobile.core
 			path = File.applicationDirectory.resolvePath("assets/game/common/");
 			if(path.exists)
 				AbstractEntryPoint.assets.enqueue(path);
+			// load tutorial if necessary
+			if(MemberManager.getInstance().getDisplayTutorial())
+			{
+				path = File.applicationDirectory.resolvePath("assets/game/tutorial/");
+				if(path.exists)
+					AbstractEntryPoint.assets.enqueue(path);
+			}
 			path = null;
 			AbstractEntryPoint.assets.loadQueue( function onLoading(ratio:Number):void{ if(ratio == 1) initializeContent(); });
 		}
@@ -601,6 +608,7 @@ package com.ludofactory.mobile.core
 			// free memory
 			AbstractEntryPoint.assets.removeTextureAtlas("game", true);
 			AbstractEntryPoint.assets.removeTextureAtlas("common", true);
+			AbstractEntryPoint.assets.removeTextureAtlas("tutorial", true);
 			
 			PauseManager.isPlaying = false;
 			PauseManager.dispatcher.removeEventListener(MobileEventTypes.EXIT, giveUp);
