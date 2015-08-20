@@ -145,8 +145,8 @@ package com.ludofactory.mobile.core.notification
 				_frontSkin.x = (actualWidth - _frontSkin.width) * 0.5 + _shadowThickness;
 				_frontSkin.y = (actualHeight - _frontSkin.height) * 0.5 - _shadowThickness;
 
-				_tiledBackground.width = _frontSkin.width * 0.85;
-				_tiledBackground.height = _frontSkin.height * 0.85;
+				_tiledBackground.width = _frontSkin.width - scaleAndRoundToDpi(100); // -50 on each side
+				_tiledBackground.height = _frontSkin.height - scaleAndRoundToDpi(100); // -50 on each side
 				_tiledBackground.x = (actualWidth - _tiledBackground.width) * 0.5;
 				_tiledBackground.y = (actualHeight - _tiledBackground.height) * 0.5;
 
