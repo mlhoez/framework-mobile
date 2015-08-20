@@ -79,16 +79,17 @@ package com.ludofactory.mobile.core.notification.content
 			if( AbstractGameInfo.LANDSCAPE )
 			{
 				_icon.x = roundUp((actualWidth - _icon.width) * 0.5);
-				_icon.y = scaleAndRoundToDpi(20);
 				
 				_yesButton.width = _cancelButton.width = this.actualWidth * 0.4;
 				_yesButton.validate();
-				_yesButton.y = _cancelButton.y = actualHeight - _yesButton.height - scaleAndRoundToDpi(30);
+				
+				_notificationTitle.y = _icon.y + _icon.height + scaleAndRoundToDpi(20);
+				
+				_yesButton.y = _cancelButton.y = _notificationTitle.y + _notificationTitle.height + scaleAndRoundToDpi(20);
 				_yesButton.x = actualWidth * 0.5 + scaleAndRoundToDpi(5);
 				_cancelButton.x = actualWidth * 0.5 - _cancelButton.width - scaleAndRoundToDpi(5);
 				
-				_notificationTitle.height = _yesButton.y - _icon.height;
-				_notificationTitle.y = _icon.height + _icon.y;
+				paddingTop = paddingBottom = scaleAndRoundToDpi(40);
 			}
 			else
 			{
@@ -96,7 +97,7 @@ package com.ludofactory.mobile.core.notification.content
 				_yesButton.width = _cancelButton.width = this.actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
 				_yesButton.x = _cancelButton.x = roundUp((actualWidth - _yesButton.width) * 0.5);
 				
-				_icon.y = (actualHeight - (_icon.height + _notificationTitle.height + _yesButton.height + _cancelButton.height + scaleAndRoundToDpi(3 * 20))) * 0.5;
+				_icon.y = scaleAndRoundToDpi(20);
 				_notificationTitle.y = _icon.y + _icon.height + scaleAndRoundToDpi(20);
 				_yesButton.y = _notificationTitle.y + _notificationTitle.height + scaleAndRoundToDpi(20);
 				_cancelButton.y = _yesButton.y + _yesButton.height + scaleAndRoundToDpi(20);

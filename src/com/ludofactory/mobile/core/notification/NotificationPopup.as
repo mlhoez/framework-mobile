@@ -8,8 +8,6 @@ package com.ludofactory.mobile.core.notification
 {
 	
 	import com.greensock.TweenMax;
-	import com.greensock.easing.Back;
-	import com.greensock.easing.Elastic;
 	import com.greensock.easing.ElasticOut;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -32,15 +30,9 @@ package com.ludofactory.mobile.core.notification
 	public class NotificationPopup extends FeathersControl
 	{
 		
-	// Saved positions of the decorations
-		
-		private var _topLeftLeavesSaveX:Number;
-		private var _topLeftLeavesSaveY:Number;
-		private var _bottomLeftLeavesSaveX:Number;
-		private var _bottomLeftLeavesSaveY:Number;
-		private var _bottomMiddleLeavesSaveY:Number;
-		private var _bottomRightLeavesSaveX:Number;
-		private var _bottomRightLeavesSaveY:Number;
+		/**
+		 * Flag to indicate that we need to calculate the maximum content size. */
+		public static const INVALIDATION_FLAG_MAXIMUM_CONTENT_SIZE:String = "maximum-content-size";
 		
 	// Elements
 		
@@ -76,10 +68,6 @@ package com.ludofactory.mobile.core.notification
 		/**
 		 * A quad used as a button to close the popup. */
 		private var _closeQuad:Quad;
-		
-		/**
-		 * Offset used to move the leaves. */		
-		private var _offset:int;
 
 		/**
 		 * The content to display inside the popup. */
@@ -141,88 +129,68 @@ package com.ludofactory.mobile.core.notification
 			_closeQuad.addEventListener(TouchEvent.TOUCH, onTouchCloseButton);
 			addChild(_closeQuad);
 			
-			_offset = scaleAndRoundToDpi(50);
-			
 			if( _content )
 				addChild(_content);
 		}
 		
 		override protected function draw():void
 		{
-			super.draw();
-			
-			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
-			
-			if(sizeInvalid)
+			if(isInvalid(INVALIDATION_FLAG_SIZE))
 			{
-				// TODO quand on passe ici ppur la première fois, c'est que la popup vient de s'initialiser
-				// alors on peut calculer la hauteur maximal que le contenu de la popup peut avoir, et ainsi
-				// adapter la popup en fonction
-				
-				// tiledBackground = frontSkin.height * 0.8 donc le front skin et 0.2 fois plus grand que le
-				// tiledBackground (qui a la même taille que le contenu), donc on peut facilement calculer la
-				// taille de la popup si le contenu est trop petit en hauteur
-				
-				var halfWidth:Number;
-				var halfHeight:Number;
-
 				_backgroundSkin.width = actualWidth;
 				_backgroundSkin.height = actualHeight;
-				_backgroundSkin.alignPivot();
-				_backgroundSkin.x = actualWidth * 0.5;
-				_backgroundSkin.y = actualHeight * 0.5;
 
 				_frontSkin.width = actualWidth * 0.98;
 				_frontSkin.height = actualHeight * 0.98;
-				_frontSkin.alignPivot();
-				_frontSkin.x = actualWidth * 0.5 + _shadowThickness;
-				_frontSkin.y = actualHeight * 0.5 - _shadowThickness;
+				_frontSkin.x = (actualWidth - _frontSkin.width) * 0.5 + _shadowThickness;
+				_frontSkin.y = (actualHeight - _frontSkin.height) * 0.5 - _shadowThickness;
 
-				_tiledBackground.width = _frontSkin.width * 0.9;
-				_tiledBackground.height = _frontSkin.height * 0.9;
-				_tiledBackground.alignPivot();
-				_tiledBackground.x = actualWidth  * 0.5;
-				_tiledBackground.y = actualHeight * 0.5;
-
-				halfWidth = _frontSkin.width * 0.5;
-				halfHeight = _frontSkin.height * 0.5;
-
-				_topLeftLeavesSaveX = _topLeftDecoration.x = int(_frontSkin.x + _shadowThickness - halfWidth + _offset);
-				_topLeftLeavesSaveY = _topLeftDecoration.y = int(_frontSkin.y + _shadowThickness + _buttonAdjustment - halfHeight + _offset);
-
-				_bottomLeftLeavesSaveX = _bottomLeftDecoration.x = int(_frontSkin.x + _shadowThickness - halfWidth + _offset);
-				_bottomLeftLeavesSaveY = _bottomLeftDecoration.y = int(_frontSkin.y - _shadowThickness + halfHeight - _offset);
-
-				_bottomMiddleDecoration.x = int(_frontSkin.x);
-				_bottomMiddleLeavesSaveY = _bottomMiddleDecoration.y = int(_frontSkin.y + halfHeight - _offset);
-
-				_bottomRightLeavesSaveX = _bottomRightDecoration.x = int(_frontSkin.x - _shadowThickness - _buttonAdjustment + halfWidth - _offset);
-				_bottomRightLeavesSaveY = _bottomRightDecoration.y = int(_frontSkin.y - _shadowThickness + halfHeight - _offset);
+				_tiledBackground.width = _frontSkin.width * 0.85;
+				_tiledBackground.height = _frontSkin.height * 0.85;
+				_tiledBackground.x = (actualWidth - _tiledBackground.width) * 0.5;
+				_tiledBackground.y = (actualHeight - _tiledBackground.height) * 0.5;
 
 				_closeQuad.x = _backgroundSkin.width - _closeQuad.width;
 				
-				_offset *= -1;
+				if(isInvalid(INVALIDATION_FLAG_MAXIMUM_CONTENT_SIZE))
+				{
+					// this is done once
+					_maxContentHeight = _tiledBackground.height;
+				}
 				
-				_topLeftDecoration.x = _topLeftLeavesSaveX + _offset;
-				_topLeftDecoration.y = _topLeftLeavesSaveY + _offset;
+				if(_content)
+				{
+					_content.width = _tiledBackground.width;
+					_content.validate();
+					if(_content.height > _maxContentHeight)
+					{
+						_content.height = _maxContentHeight;
+					}
+					else
+					{
+						// we reduce the size because the content is smaller
+						_tiledBackground.height -= _maxContentHeight - _content.height;
+						_frontSkin.height -= _maxContentHeight - _content.height;
+						_backgroundSkin.height -= _maxContentHeight - _content.height;
+					}
+					_content.x = _tiledBackground.x;
+					_content.y = _tiledBackground.y;
+				}
 				
-				_bottomLeftDecoration.x = _bottomLeftLeavesSaveX + _offset;
-				_bottomLeftDecoration.y = _bottomLeftLeavesSaveY - _offset;
+				_topLeftDecoration.x = int(_frontSkin.x + _shadowThickness);
+				_topLeftDecoration.y = int(_frontSkin.y + _shadowThickness + _buttonAdjustment);
 				
-				_bottomMiddleDecoration.y = _bottomMiddleLeavesSaveY - _offset;
+				_bottomLeftDecoration.x = int(_frontSkin.x + _shadowThickness);
+				_bottomLeftDecoration.y = int(_frontSkin.y + _frontSkin.height - _shadowThickness);
 				
-				_bottomRightDecoration.x = _bottomRightLeavesSaveX - _offset;
-				_bottomRightDecoration.y = _bottomRightLeavesSaveY - _offset;
+				_bottomMiddleDecoration.x = int(_frontSkin.x + _frontSkin.width * 0.5);
+				_bottomMiddleDecoration.y = int(_frontSkin.y + _frontSkin.height - _shadowThickness);
 				
-				/*
-				_backgroundSkin.scaleX = _backgroundSkin.scaleY = 0;
-				_frontSkin.scaleX = _frontSkin.scaleY = 0;
-				_tiledBackground.scaleX = _tiledBackground.scaleY = 0;
-				_topLeftDecoration.alpha = 0;
-				_bottomLeftDecoration.alpha = 0;
-				_bottomMiddleDecoration.alpha = 0;
-				_bottomRightDecoration.alpha = 0;*/
+				_bottomRightDecoration.x = int(_frontSkin.x + _frontSkin.width - _shadowThickness - _buttonAdjustment);
+				_bottomRightDecoration.y = int(_frontSkin.y + _frontSkin.height - _shadowThickness);
 			}
+			
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -244,32 +212,6 @@ package com.ludofactory.mobile.core.notification
 			this.scaleX = this.scaleY = 1.2;
 			TweenMax.to(this, 0.25, { autoAlpha:1 });
 			TweenMax.to(this, 1, { scaleX:1, scaleY:1, ease:new ElasticOut(1, 0.6) });
-			
-			return;
-			
-			
-			this.touchable = true;
-			this.visible = true;
-			this.alpha = 1;
-			
-			// just in case, kill the previous tweens
-			TweenMax.killTweensOf([_backgroundSkin, _frontSkin, _tiledBackground, _topLeftDecoration, _bottomLeftDecoration, _bottomMiddleDecoration, _bottomRightDecoration]);
-			
-			_offset *= -1;
-			
-			TweenMax.allTo([_backgroundSkin, _frontSkin, _tiledBackground], 0.5, { scaleX:1, scaleY:1, ease:Back.easeOut });
-			if( _content )
-			{
-				_content.scaleX = _content.scaleY = 0;
-				_content.x = _tiledBackground.x;
-				_content.y = _tiledBackground.y;
-				TweenMax.to(_content, 0.5, { scaleX:1, scaleY:1, ease:Back.easeOut });
-			}
-			
-			TweenMax.to(_topLeftDecoration,       1.25, { delay:0.4, alpha:1, x:(_topLeftLeavesSaveX + _offset), y:(_topLeftLeavesSaveY + _offset), ease:Elastic.easeOut });
-			TweenMax.to(_bottomLeftDecoration,    1.25, { delay:0.4, alpha:1, x:(_bottomLeftLeavesSaveX + _offset), y:(_bottomLeftLeavesSaveY - _offset), ease:Elastic.easeOut });
-			TweenMax.to(_bottomMiddleDecoration,  1.25, { delay:0.4, alpha:1, y:(_bottomMiddleLeavesSaveY - _offset), ease:Elastic.easeOut });
-			TweenMax.to(_bottomRightDecoration,   1.25, { delay:0.4, alpha:1, x:(_bottomRightLeavesSaveX - _offset), y:(_bottomRightLeavesSaveY - _offset), ease:Elastic.easeOut });
 		}
 
 		/**
@@ -278,26 +220,7 @@ package com.ludofactory.mobile.core.notification
 		public function animateOut():void
 		{
 			this.touchable = false;
-			
 			TweenMax.to(this, 0.25, { autoAlpha:0, onComplete:removeAndDisposeContent });
-			
-			
-			return;
-			
-			this.touchable = false;
-			
-			TweenMax.killTweensOf([_backgroundSkin, _frontSkin, _tiledBackground, _topLeftDecoration, _bottomLeftDecoration, _bottomMiddleDecoration, _bottomRightDecoration]);
-			
-			_offset *= -1;
-			
-			TweenMax.allTo([_backgroundSkin, _frontSkin, _tiledBackground], 0.25, { scaleX:0, scaleY:0, ease:Back.easeIn, onComplete:removeAndDisposeContent });
-			if( _content )
-				TweenMax.to(_content, 0.25, { scaleX:0, scaleY:0, ease:Back.easeIn });
-			
-			TweenMax.to(_topLeftDecoration,       0.25, { alpha:0, x:(_topLeftLeavesSaveX + _offset), y:(_topLeftLeavesSaveY + _offset), ease:Back.easeIn });
-			TweenMax.to(_bottomLeftDecoration,    0.25, { alpha:0, x:(_bottomLeftDecoration.x + _offset), y:(_bottomLeftLeavesSaveY - _offset), ease:Back.easeIn });
-			TweenMax.to(_bottomMiddleDecoration,  0.25, { alpha:0, y:(_bottomMiddleLeavesSaveY - _offset), ease:Back.easeIn });
-			TweenMax.to(_bottomRightDecoration,   0.25, { alpha:0, x:(_bottomRightLeavesSaveX - _offset), y:(_bottomRightLeavesSaveY - _offset), ease:Back.easeIn });
 		}
 
 //------------------------------------------------------------------------------------------------------------
@@ -318,7 +241,7 @@ package com.ludofactory.mobile.core.notification
 		public function close():void
 		{
 			if( _callback )
-				_callback(_content.data); // TODO rajouter la data
+				_callback(_content.data);
 			
 			dispatchEventWith(MobileEventTypes.CLOSE_NOTIFICATION, false);
 		}
@@ -355,23 +278,20 @@ package com.ludofactory.mobile.core.notification
 			_callback = callback;
 			
 			if( _content )
-			{
 				addChild(_content);
-				
-				validate(); // otherwise the reported _frontSkin.width/height is wrong
-				
-				_content.width = _frontSkin.width * 0.9;
-				_content.height = _frontSkin.height * 0.85;
-				_content.alignPivot();
-				_content.validate();
-				
-				// TODO trouver une façon d'afficher des flèches dans le conteneur
-				//if( _content.height < _content.viewPort.height )
-				//	log("[NotificationPopup] ScrollContainer should display arrows !")
-			}
+			
+			invalidate(INVALIDATION_FLAG_SIZE);
 		}
 		
 		public function set backgroundSkin(val:Scale9Image):void { _backgroundSkin = val; }
+		
+		private var _maxContentHeight:Number;
+		
+		public function get offset():Number
+		{
+			// offset used to help centering the popup once validated in the NotificationPopupManager
+			return _content.height > _maxContentHeight ? 0 : ((_maxContentHeight - _content.height) * 0.5);
+		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose

@@ -8,6 +8,7 @@ package com.ludofactory.mobile.core.notification.content
 {
 
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.navigation.faq.*;
@@ -64,6 +65,11 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			_notificationTitle.width = _message.width = this.actualWidth * 0.9;
 			_notificationTitle.x = _message.x = (this.actualWidth - _notificationTitle.width) * 0.5;
+			
+			if(AbstractGameInfo.LANDSCAPE)
+			{
+				paddingTop = paddingBottom = scaleAndRoundToDpi(20);
+			}
 			
 			super.draw();
 		}

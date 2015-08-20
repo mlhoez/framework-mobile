@@ -8,7 +8,6 @@ package com.ludofactory.mobile.core.notification
 {
 	
 	import com.greensock.TweenMax;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
@@ -49,20 +48,9 @@ package com.ludofactory.mobile.core.notification
 			if( !_currentNotification )
 			{
 				_currentNotification = new NotificationPopup();
-				if(AbstractGameInfo.LANDSCAPE)
-				{
-					//_currentNotification.x = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.025 : 0.1);
-					//_currentNotification.y = GlobalConfig.stageHeight * (GlobalConfig.isPhone ? 0.025 : 0.1);
-					_currentNotification.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.95 : 0.8);
-					_currentNotification.height = GlobalConfig.stageHeight * (GlobalConfig.isPhone ? 0.95 : 0.8);
-				}
-				else
-				{
-					//_currentNotification.x = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.025 : 0.1);
-					//_currentNotification.y = GlobalConfig.stageHeight * (GlobalConfig.isPhone ? 0.1 : 0.25);
-					_currentNotification.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.95 : 0.8);
-					_currentNotification.height = GlobalConfig.stageHeight * (GlobalConfig.isPhone ? 0.8 : 0.5);
-				}
+				
+				_currentNotification.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.95 : 0.8);
+				_currentNotification.height = GlobalConfig.stageHeight * (GlobalConfig.isPhone ? 0.95 : 0.95);
 				_currentNotification.alignPivot();
 				_currentNotification.x = GlobalConfig.stageWidth * 0.5;
 				_currentNotification.y = GlobalConfig.stageHeight * 0.5;
@@ -93,10 +81,12 @@ package com.ludofactory.mobile.core.notification
 			_overlay.addEventListener(TouchEvent.TOUCH, onClose);
 			Starling.current.stage.addChild(_overlay);
 			TweenMax.to(_overlay, 0.5, { autoAlpha:0.75 });
-
+			
 			Starling.current.stage.addChild(_currentNotification);
 			_currentNotification.addEventListener(MobileEventTypes.CLOSE_NOTIFICATION, onNotificationClosed);
 			_currentNotification.setContentAndCallBack(content, callback);
+			_currentNotification.validate();
+			_currentNotification.y = GlobalConfig.stageHeight * 0.5 + _currentNotification.offset;
 			_currentNotification.animateIn();
 			
 			isNotificationDisplaying = true;
