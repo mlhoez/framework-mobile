@@ -101,6 +101,8 @@ package com.ludofactory.mobile.core.notification.content
 				_notificationTitle.y = _icon.y + _icon.height + scaleAndRoundToDpi(20);
 				_yesButton.y = _notificationTitle.y + _notificationTitle.height + scaleAndRoundToDpi(20);
 				_cancelButton.y = _yesButton.y + _yesButton.height + scaleAndRoundToDpi(20);
+				
+				paddingBottom = scaleAndRoundToDpi(10);
 			}
 			
 			super.draw();
