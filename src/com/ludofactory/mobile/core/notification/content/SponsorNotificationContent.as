@@ -72,7 +72,7 @@ package com.ludofactory.mobile.core.notification.content
 			addChild(_notificationTitle);
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(38), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
-			log("[SponsorNotification] Rank = " + MemberManager.getInstance().getRank() + "Type = " + Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE));
+			//log("[SponsorNotification] Rank = " + MemberManager.getInstance().getRank() + "Type = " + Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE));
 			
 			var dataProvider:Array;
 			if( MemberManager.getInstance().isLoggedIn() )
@@ -132,7 +132,7 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = _bonusList.width = _bonusContainer.width = this.actualWidth * 0.9;
+			_notificationTitle.width = _bonusList.width = _bonusContainer.width = this.actualWidth;
 			_bonusList.validate();
 			
 			_bonusTitleLabel.validate();
@@ -140,7 +140,7 @@ package com.ludofactory.mobile.core.notification.content
 			_bonusMessageLabel.width = _bonusContainer.width - _bonusTitleLabel.width - (_bonusContainer.padding * 6);
 			
 			if( _infoMessageLabel )
-				_infoMessageLabel.width = this.actualWidth * 0.9;
+				_infoMessageLabel.width = this.actualWidth;
 			
 			super.draw();
 		}
