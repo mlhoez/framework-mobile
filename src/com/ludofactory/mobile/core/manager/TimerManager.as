@@ -35,11 +35,6 @@ package com.ludofactory.mobile.core.manager
 		 * Function called on each tick. */		
 		private var _tickFunction:Function;
 		
-		//private var _currentHour:int;
-		private var _currentMin:int;
-		private var _currentSec:int;
-		private var _formatTime:String;
-		
 		/**
 		 * The saved time when the turn started. */		
 		private var _timeOnStartTurn:int;
@@ -267,11 +262,6 @@ package com.ludofactory.mobile.core.manager
 		 */
 		private function computeAndUpdate():void
 		{
-			//var timeInSecondes:Number = _currentTime / 1000;
-			//_currentHour = Math.round(timeInSecondes) / 3600
-			//_currentMin = (Math.round(timeInSecondes) / 60) % 60;
-			//_currentSec = Math.round(timeInSecondes) % 60;
-			
 			if(_updateFunction != null && _updateFunction is Function)
 				_updateFunction(getFormatedTime());
 		}
