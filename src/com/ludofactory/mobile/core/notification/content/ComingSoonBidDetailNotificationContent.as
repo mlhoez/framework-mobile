@@ -11,7 +11,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.shop.bid.comingsoon.*;
 	
@@ -121,7 +121,7 @@ package com.ludofactory.mobile.core.notification.content
 			if( _needResize )
 			{
 				_needResize = false;
-				//NotificationManager.replaceNotification();
+				NotificationPopupManager.adjustCurrentNotification();
 			}
 		}
 		

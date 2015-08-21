@@ -6,20 +6,20 @@ Created : 28 août 2013
 */
 package com.ludofactory.mobile.core.notification.content
 {
-
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.navigation.shop.bid.pending.*;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	import com.ludofactory.mobile.navigation.shop.bid.pending.*;
+	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
@@ -27,17 +27,17 @@ package com.ludofactory.mobile.core.notification.content
 	import feathers.controls.TextInput;
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalLayout;
-
+	
 	import flash.text.ReturnKeyLabel;
 	import flash.text.SoftKeyboardType;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.core.Starling;
 	import starling.display.MovieClip;
 	import starling.events.Event;
 	import starling.utils.formatString;
-
+	
 	public class PendingBidDetailNotificationContent extends AbstractPopupContent
 	{
 		/**
@@ -214,7 +214,7 @@ package com.ludofactory.mobile.core.notification.content
 			if( _needResize )
 			{
 				_needResize = false;
-				//NotificationManager.replaceNotification(); // FIXME A remettre ?
+				NotificationPopupManager.adjustCurrentNotification();
 			}
 		}
 		

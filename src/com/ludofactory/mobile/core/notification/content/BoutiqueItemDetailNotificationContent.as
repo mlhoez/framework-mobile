@@ -149,7 +149,7 @@ package com.ludofactory.mobile.core.notification.content
 			if( _needResize )
 			{
 				_needResize = false;
-				//NotificationManager.replaceNotification();
+				NotificationPopupManager.adjustCurrentNotification();
 			}
 		}
 		

@@ -12,6 +12,8 @@ package com.ludofactory.mobile.core.notification
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	
+	import feathers.core.FeathersControl;
+	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.display.Quad;
@@ -90,6 +92,13 @@ package com.ludofactory.mobile.core.notification
 			_currentNotification.animateIn();
 			
 			isNotificationDisplaying = true;
+		}
+		
+		public static function adjustCurrentNotification():void
+		{
+			_currentNotification.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
+			_currentNotification.validate();
+			_currentNotification.y = GlobalConfig.stageHeight * 0.5 + _currentNotification.offset;
 		}
 
 		/**
