@@ -38,7 +38,7 @@ package com.ludofactory.mobile.core.controls
 		
 		/**
 		 * The expand / collapse animation duration. */		
-		protected var _expandOrCollapseDuration:Number = 0.5;
+		protected var _expandOrCollapseDuration:Number = 0.25;
 		
 		/**
 		 * Whether the panel is expanded. */		
