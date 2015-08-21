@@ -17,6 +17,7 @@ package com.ludofactory.mobile.core.notification.content
 	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
+	import feathers.controls.Scroller;
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalLayout;
 	
@@ -82,6 +83,9 @@ package com.ludofactory.mobile.core.notification.content
 			vlayout.padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10:20);
 			vlayout.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20:40);
 			this.layout = vlayout;
+			
+			this.verticalScrollPolicy = Scroller.SCROLL_POLICY_ON;
+			this.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			
 			_notificationTitle = new Label();
 			_notificationTitle.text = _("Enchère terminée");
