@@ -14,6 +14,8 @@ package com.ludofactory.mobile.core.controls
 	import feathers.controls.ScrollContainer;
 	import feathers.layout.VerticalLayout;
 	
+	import starling.core.Starling;
+	
 	import starling.events.Event;
 	
 	public class Accordion extends ScrollContainer
@@ -112,7 +114,7 @@ package com.ludofactory.mobile.core.controls
 			}
 					
 			// go back to the top of the list
-            scrollToPosition(0, 0, 0.5);
+            scrollToPosition(0, 0, 0.25);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -141,7 +143,15 @@ package com.ludofactory.mobile.core.controls
 			//	scrollToPosition(NaN, maxVerticalScrollPosition, 0.5);
 			
 			//if( AbstractEntryPoint.screenNavigator.activeScreenID == ScreenIds.MY_ACCOUNT_SCREEN )
-				scrollToPosition(NaN, (AbstractAccordionItem(event.target).headerHeight * AbstractAccordionItem(event.target).tempIndexHackForVips) , 0.5);
+			//	scrollToPosition(NaN, (AbstractAccordionItem(event.target).headerHeight * AbstractAccordionItem(event.target).tempIndexHackForVips), 0.25);
+			
+			if(this.actualHeight < this.viewPort.height)
+			{
+				// this kind of scroll won't use the elastic edges that crates a weird effect otherwise
+				hasElasticEdges = false;
+				scrollToPosition(NaN, (AbstractAccordionItem(event.target).headerHeight * AbstractAccordionItem(event.target).tempIndexHackForVips), 0.5);
+				Starling.juggler.delayCall(function():void{ hasElasticEdges = true }, 0.5);
+			}
 		}
 		
 		public function set dataProvider(val:Vector.<AbstractAccordionItem>):void
