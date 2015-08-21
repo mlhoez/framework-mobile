@@ -89,14 +89,7 @@ package com.ludofactory.mobile.core.notification
 			_currentNotification.addEventListener(MobileEventTypes.CLOSE_NOTIFICATION, onNotificationClosed);
 			_currentNotification.setContentAndCallBack(content, callback);
 			_currentNotification.validate();
-			if(content is CSNewThreadNotificationContent)
-			{
-				_currentNotification.y = GlobalConfig.stageHeight * 0.5;
-			}
-			else
-			{
-				_currentNotification.y = GlobalConfig.stageHeight * 0.5 + _currentNotification.offset;
-			}
+			_currentNotification.y = GlobalConfig.stageHeight * 0.5 + _currentNotification.offset;
 			_currentNotification.animateIn();
 			
 			isNotificationDisplaying = true;
@@ -106,6 +99,16 @@ package com.ludofactory.mobile.core.notification
 		{
 			_currentNotification.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 			_currentNotification.validate();
+			_currentNotification.y = GlobalConfig.stageHeight * 0.5 + _currentNotification.offset;
+		}
+		
+		public static function moveCurrentToTop():void
+		{
+			_currentNotification.y = GlobalConfig.stageHeight * 0.5;
+		}
+		
+		public static function centerCurrent():void
+		{
 			_currentNotification.y = GlobalConfig.stageHeight * 0.5 + _currentNotification.offset;
 		}
 

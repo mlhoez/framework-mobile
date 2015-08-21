@@ -6,31 +6,29 @@ Created : 25 août 2013
 */
 package com.ludofactory.mobile.core.notification.content
 {
-
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
+	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.events.MobileEventTypes;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
+	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.push.PushNewCSThread;
+	import com.ludofactory.mobile.core.push.PushType;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.navigation.cs.*;
-	import com.ludofactory.mobile.core.push.PushNewCSThread;
-	import com.ludofactory.mobile.core.push.PushType;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.cs.*;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.Button;
 	import feathers.controls.GroupedList;
-	import feathers.controls.Label;
 	import feathers.controls.Scroller;
 	import feathers.controls.TextInput;
 	import feathers.controls.popups.IPopUpContentManager;
@@ -38,23 +36,26 @@ package com.ludofactory.mobile.core.notification.content
 	import feathers.data.HierarchicalCollection;
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalLayout;
-
+	
 	import flash.text.ReturnKeyLabel;
 	import flash.text.SoftKeyboardType;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-
+	
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-
+	import starling.text.TextField;
+	
 	public class CSNewThreadNotificationContent extends AbstractPopupContent
 	{
 		/**
+		 *  */
+		public static const INVALIDATION_FLAG_NEEDS_RESIZE_FOCUS:String = "needs-resize-focus";
+		
+		/**
 		 * The title. */		
-		private var _notificationTitle:Label;
+		private var _notificationTitle:TextField;
 		
 		/**
 		 * The down arrow. */		
@@ -105,11 +106,9 @@ package com.ludofactory.mobile.core.notification.content
 			layout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? 20:40 );
 			this.layout = layout;
 			
-			_notificationTitle = new Label();
-			_notificationTitle.text = _("Sélectionnez le thème concerné");
+			_notificationTitle = new TextField(5, scaleAndRoundToDpi(40), _("Nouveau message"), Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_ORANGE);
+			_notificationTitle.autoScale = true;
 			addChild(_notificationTitle);
-			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_ORANGE, false, false, null, null, null, TextFormatAlign.CENTER);
-			_notificationTitle.textRendererProperties.wordWrap = false;
 			
 			_themeSelectionInput = new TextInput();
 			_themeSelectionInput.addEventListener(TouchEvent.TOUCH, onShowThemeList);
@@ -124,6 +123,8 @@ package com.ludofactory.mobile.core.notification.content
 			{
 				_mailInput = new TextInput();
 				_mailInput.prompt = _("Votre email...");
+				_mailInput.addEventListener(FeathersEventType.FOCUS_IN, onFocusIn);
+				_mailInput.addEventListener(FeathersEventType.FOCUS_OUT, onFocusOut);
 				_mailInput.addEventListener(FeathersEventType.ENTER, onEnterKeyPressed);
 				_mailInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.NEXT;
 				_mailInput.textEditorProperties.softKeyboardType = SoftKeyboardType.EMAIL;
@@ -133,8 +134,9 @@ package com.ludofactory.mobile.core.notification.content
 			_messageInput = new TextInput();
 			_messageInput.prompt = _("Saisissez ici votre question...");
 			addChild(_messageInput);
-			//_messageInput.textEditorProperties.wordWrap = true; // FIXME A voir si c'est ok
-			_messageInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
+			_messageInput.addEventListener(FeathersEventType.FOCUS_IN, onFocusIn);
+			_messageInput.addEventListener(FeathersEventType.FOCUS_OUT, onFocusOut);
+			_messageInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.DEFAULT;
 			_messageInput.textEditorProperties.autoCorrect = true;
 			_messageInput.addEventListener(FeathersEventType.ENTER, onEnterKeyPressed);
 			_messageInput.textEditorProperties.multiline = true;
@@ -143,6 +145,8 @@ package com.ludofactory.mobile.core.notification.content
 			_sendButton.addEventListener(Event.TRIGGERED, onCreateMessage);
 			_sendButton.label = _("Envoyer");
 			addChild(_sendButton);
+			_sendButton.validate();
+			_sendButton.width = _sendButton.width + scaleAndRoundToDpi(40);
 			
 			const centerStage:VerticalCenteredPopUpContentManager = new VerticalCenteredPopUpContentManager();
 			centerStage.marginTop = centerStage.marginRight = centerStage.marginBottom =
@@ -165,19 +169,28 @@ package com.ludofactory.mobile.core.notification.content
 			//_container.width = this.actualWidth - padSide * 2 - scaleAndRoundToDpi( GlobalConfig.isPhone ? 40:60 );
 			//_container.x = (this.actualWidth - _container.width) * 0.5;
 			
-			if( _mailInput )
-				_mailInput.width = this.actualWidth;
+			if(isInvalid(INVALIDATION_FLAG_SIZE))
+			{
+				if( _mailInput )
+					_mailInput.width = this.actualWidth;
+				
+				_notificationTitle.width = _themeSelectionInput.width = _messageInput.width = this.actualWidth;
+				_messageInput.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 100 /* 2 lines */ : 250);
+				
+				_themeSelectionInput.validate();
+				_arrowDown.x = _themeSelectionInput.width - _arrowDown.width - scaleAndRoundToDpi(20);
+				_arrowDown.y = (_themeSelectionInput.height - _arrowDown.height) * 0.5;
+				
+				_themesList.width = this.actualWidth;
+			}
 			
-			_themeSelectionInput.width = _messageInput.width = this.actualWidth;
-			_messageInput.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 100 /* 2 lines */ : 250);
-			
-			_themeSelectionInput.validate();
-			_arrowDown.x = _themeSelectionInput.width - _arrowDown.width - scaleAndRoundToDpi(20);
-			_arrowDown.y = (_themeSelectionInput.height - _arrowDown.height) * 0.5;
-			
-			_themesList.width = this.actualWidth * 0.8;
-			
-			_sendButton.width = this.actualWidth * 0.8;
+			if(isInvalid(INVALIDATION_FLAG_NEEDS_RESIZE_FOCUS))
+			{
+				if(!_messageInput.hasFocus && (_mailInput && !_mailInput.hasFocus))
+					NotificationPopupManager.centerCurrent();
+				else
+					NotificationPopupManager.moveCurrentToTop();
+			}
 			
 			super.draw();
 		}
@@ -185,6 +198,22 @@ package com.ludofactory.mobile.core.notification.content
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
 //------------------------------------------------------------------------------------------------------------
+		
+		/**
+		 * When one of the TextInputs gets the focus, we need to move the popup to the top.
+		 */
+		private function onFocusIn(event:Event):void
+		{
+			NotificationPopupManager.moveCurrentToTop();
+		}
+		
+		/**
+		 * When one of the TextInputs looses the focus, we need to move the popup to the center.
+		 */
+		private function onFocusOut(event:Event):void
+		{
+			TweenMax.delayedCall(0.2, invalidate, [INVALIDATION_FLAG_NEEDS_RESIZE_FOCUS]);
+		}
 		
 		/**
 		 * When the user validates the form, we try to create a new thread.
@@ -316,6 +345,9 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override public function dispose():void
 		{
+			_notificationTitle.removeFromParent(true);
+			_notificationTitle = null;
+			
 			_arrowDown.removeFromParent(true);
 			_arrowDown = null;
 			
@@ -325,11 +357,15 @@ package com.ludofactory.mobile.core.notification.content
 			
 			if( _mailInput )
 			{
+				_mailInput.removeEventListener(FeathersEventType.FOCUS_IN, onFocusIn);
+				_mailInput.removeEventListener(FeathersEventType.FOCUS_OUT, onFocusOut);
 				_mailInput.removeEventListener(FeathersEventType.ENTER, onEnterKeyPressed);
 				_mailInput.removeFromParent(true);
 				_mailInput = null;
 			}
 			
+			_messageInput.removeEventListener(FeathersEventType.FOCUS_IN, onFocusIn);
+			_messageInput.removeEventListener(FeathersEventType.FOCUS_OUT, onFocusOut);
 			_messageInput.removeEventListener(FeathersEventType.ENTER, onEnterKeyPressed);
 			_messageInput.removeFromParent(true);
 			_messageInput = null;
