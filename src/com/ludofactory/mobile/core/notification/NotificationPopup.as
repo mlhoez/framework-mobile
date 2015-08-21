@@ -79,6 +79,10 @@ package com.ludofactory.mobile.core.notification
 		public function NotificationPopup()
 		{
 			super();
+			
+			// for the first time
+			this.alpha = 0;
+			this.visible = false;
 		}
 		
 		override protected function initialize():void
@@ -210,8 +214,8 @@ package com.ludofactory.mobile.core.notification
 			}
 			
 			this.scaleX = this.scaleY = 1.2;
-			TweenMax.to(this, 0.25, { autoAlpha:1 });
-			TweenMax.to(this, 1, { scaleX:1, scaleY:1, ease:new ElasticOut(1, 0.6) });
+			TweenMax.to(this, 0.15, { delay:0.1, autoAlpha:1 });
+			TweenMax.to(this, 1, { delay:0.1, scaleX:1, scaleY:1, ease:new ElasticOut(1, 0.6) });
 		}
 
 		/**
