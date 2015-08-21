@@ -45,7 +45,7 @@ package com.ludofactory.mobile.core.push
 		private var _trophiesWon:Array = [];
 		
 		/**
-		 * The time elapsed on the game. */		
+		 * The time elapsed on the game in seconds. */		
 		private var _elapsedTime:int;
 		
 		public function GameSession(pushType:String = null, gameType:int = 0, gamePrice:int = 0)
@@ -95,6 +95,8 @@ package com.ludofactory.mobile.core.push
 		public function get trophiesWon():Array { return _trophiesWon; }
 		public function set trophiesWon(val:Array):void { _trophiesWon = val; }
 		
+		/**
+		 * The time elapsed on the game in seconds. */
 		public function get elapsedTime():int { return _elapsedTime; }
 		public function set elapsedTime(val:int):void { _elapsedTime = val; }
 	}
