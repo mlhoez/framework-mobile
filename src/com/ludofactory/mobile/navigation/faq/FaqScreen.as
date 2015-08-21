@@ -47,6 +47,10 @@ package com.ludofactory.mobile.navigation.faq
 		 * The loader. */		
 		private var _loader:MovieClip;
 		
+		/**
+		 * Accordion background. */
+		private var _accordionBackground:Quad;
+		
 		public function FaqScreen()
 		{
 			super();
@@ -113,9 +117,9 @@ package com.ludofactory.mobile.navigation.faq
 				
 				if( _accordion )
 				{
-					_accordion.y = AbstractGameInfo.LANDSCAPE ? 0 : (_listShadow.y + _listShadow.height);
-					_accordion.width = this.actualWidth;
-					_accordion.height = this.actualHeight - _accordion.y;
+					_accordion.y = _accordionBackground.y = AbstractGameInfo.LANDSCAPE ? 0 : (_listShadow.y + _listShadow.height);
+					_accordion.width = _accordionBackground.width = this.actualWidth;
+					_accordion.height = _accordionBackground.height = this.actualHeight - _accordion.y;
 				}
 			}
 			
@@ -140,6 +144,9 @@ package com.ludofactory.mobile.navigation.faq
 			
 			for(var i:int = 0; i < faq.length; i++)
 				panels.push( new FaqAccordionItem( new FaqData(faq[i]) ) );
+			
+			_accordionBackground = new Quad(5, 5, 0xffffff);
+			addChild(_accordionBackground);
 			
 			_accordion = new Accordion();
 			_accordion.dataProvider = panels;
@@ -188,6 +195,12 @@ package com.ludofactory.mobile.navigation.faq
 			{
 				_accordion.removeFromParent(true);
 				_accordion = null;
+			}
+			
+			if(_accordionBackground)
+			{
+				_accordionBackground.removeFromParent(true);
+				_accordionBackground = null;
 			}
 			
 			super.dispose();
