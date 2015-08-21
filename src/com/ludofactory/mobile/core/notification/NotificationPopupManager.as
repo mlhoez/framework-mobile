@@ -80,7 +80,7 @@ package com.ludofactory.mobile.core.notification
 
 			_overlay.addEventListener(TouchEvent.TOUCH, onClose);
 			Starling.current.stage.addChild(_overlay);
-			TweenMax.to(_overlay, 0.5, { autoAlpha:0.75 });
+			TweenMax.to(_overlay, 0.25, { autoAlpha:0.75 });
 			
 			Starling.current.stage.addChild(_currentNotification);
 			_currentNotification.addEventListener(MobileEventTypes.CLOSE_NOTIFICATION, onNotificationClosed);
