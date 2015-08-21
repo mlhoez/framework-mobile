@@ -212,7 +212,7 @@ package com.ludofactory.mobile.core.notification.content
 		 */
 		private function onFocusOut(event:Event):void
 		{
-			TweenMax.delayedCall(0.2, invalidate, [INVALIDATION_FLAG_NEEDS_RESIZE_FOCUS]);
+			TweenMax.delayedCall(0.1, invalidate, [INVALIDATION_FLAG_NEEDS_RESIZE_FOCUS]);
 		}
 		
 		/**
