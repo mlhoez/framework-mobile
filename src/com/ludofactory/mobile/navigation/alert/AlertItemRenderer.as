@@ -305,7 +305,7 @@ package com.ludofactory.mobile.navigation.alert
 								
 								_accessButton.text = _("S'identifier");
 								_accessButton.visible = true;
-								_message.text = formatString(_n("{0} Coupe sera définitivement validée dès que vous serez identifié.", "{0} Coupes seront définitivement validées dès que vous serez identifié.", MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions());
+								_message.text = formatString(_n("{0} Coupe sera définitivement validée dès que vous serez identifié.", "{0} Coupes seront définitivement validées dès que vous serez identifié.", MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions());
 								break;
 							}
 							case AlertType.NEW_LANGAUGES:
@@ -313,7 +313,7 @@ package com.ludofactory.mobile.navigation.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-language-simple-icon");
 								
 								var newLanguages:Array = Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES).concat();
-								for(var i:int; i < newLanguages.length; i++)
+								for(var i:int = 0; i < newLanguages.length; i++)
 									newLanguages[i] = _(ISO_639_1[String(newLanguages[i]).toUpperCase()]); // replace by correct country name
 								
 								_accessButton.text = _("Accéder");
