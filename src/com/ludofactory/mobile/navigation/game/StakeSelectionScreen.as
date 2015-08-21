@@ -10,6 +10,7 @@ package com.ludofactory.mobile.navigation.game
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.model.GameMode;
@@ -30,6 +31,8 @@ package com.ludofactory.mobile.navigation.game
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
+	
+	import starling.display.Button;
 	
 	import starling.events.Event;
 	
@@ -55,6 +58,10 @@ package com.ludofactory.mobile.navigation.game
 		/**
 		 * Play with credits */		
 		private var _withCredits:StakeButtonCredit;
+		
+		/**
+		 * In tournament mode, a button to see the ranking. */
+		private var _tournamentRankingButton:Button;
 		
 		public function StakeSelectionScreen()
 		{
@@ -90,6 +97,11 @@ package com.ludofactory.mobile.navigation.game
 				_withPoints = new StakeButtonPoint();
 				_withPoints.addEventListener(Event.TRIGGERED, onPlayWithPoints);
 				addChild(_withPoints);
+				
+				_tournamentRankingButton = new Button(AbstractEntryPoint.assets.getTexture("tournament-ranking-icon"));
+				_tournamentRankingButton.scaleX = _tournamentRankingButton.scaleY = GlobalConfig.dpiScale;
+				_tournamentRankingButton.addEventListener(Event.TRIGGERED, onGoTournamentRanking);
+				addChild(_tournamentRankingButton);
 			}
 		}
 		
@@ -129,6 +141,12 @@ package com.ludofactory.mobile.navigation.game
 					
 					if( _withPoints )
 						_withPoints.y = _withCredits.y + _withTokens.height + buttonGap;
+					
+					if(_tournamentRankingButton)
+					{
+						_tournamentRankingButton.x = _withCredits.x + _withCredits.width + scaleAndRoundToDpi(20);
+						_tournamentRankingButton.y = _withCredits.y + ((_withPoints.height - _tournamentRankingButton.height) * 0.5);
+					}
 				}
 				else
 				{
@@ -139,7 +157,7 @@ package com.ludofactory.mobile.navigation.game
 					_title.width = actualWidth;
 					_title.validate();
 					
-					maxButtonHeight = ( actualHeight - _title.height - titleGap - (padding * 2) - (buttonGap * (_withPoints ? 2 : 1)) ) / (_withPoints ? 3 : 2);
+					maxButtonHeight = ( actualHeight - _title.height - titleGap - (padding * 2) - (_tournamentRankingButton ? _tournamentRankingButton.height : 0) - (buttonGap * (_withPoints ? 3 : 2)) ) / (_withPoints ? 3 : 2);
 					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150) > maxButtonHeight ? maxButtonHeight : scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150);
 					if( _withPoints ) _withPoints.height = _withTokens.height;
 					
@@ -151,13 +169,19 @@ package com.ludofactory.mobile.navigation.game
 					
 					_withTokens.validate();
 					
-					_title.y = padding + (actualHeight - _title.height - titleGap - (buttonGap * (_withPoints ? 2 : 1)) - (padding * 2) - (_withTokens.height * (_withPoints ? 3 : 2))) * 0.5;
+					_title.y = padding + (actualHeight - _title.height - titleGap - (buttonGap * (_withPoints ? 3 : 2)) - (_tournamentRankingButton ? _tournamentRankingButton.height : 0) - (padding * 2) - (_withTokens.height * (_withPoints ? 3 : 2))) * 0.5;
 					
 					_withTokens.y = _title.y + _title.height + titleGap;
 					_withCredits.y = _withTokens.y + _withTokens.height + buttonGap;
 					
 					if( _withPoints )
 						_withPoints.y = _withCredits.y + _withTokens.height + buttonGap;
+					
+					if(_tournamentRankingButton)
+					{
+						_tournamentRankingButton.x = _withPoints.x + ((_withPoints.width - _tournamentRankingButton.width) * 0.5);
+						_tournamentRankingButton.y = _withPoints.y + _withPoints.height + buttonGap;
+					}
 				}
 			}
 			
@@ -223,6 +247,11 @@ package com.ludofactory.mobile.navigation.game
 			}
 		}
 		
+		private function onGoTournamentRanking(event:Event):void
+		{
+			AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.TOURNAMENT_RANKING_SCREEN );
+		}
+		
 		private function handleNextScreen():void
 		{
 			_withCredits.touchable = false;
@@ -267,6 +296,13 @@ package com.ludofactory.mobile.navigation.game
 			_withCredits.removeEventListener(Event.TRIGGERED, onPlayWithCredits);
 			_withCredits.removeFromParent(true);
 			_withCredits = null;
+			
+			if(_tournamentRankingButton)
+			{
+				_tournamentRankingButton.removeEventListener(Event.TRIGGERED, onGoTournamentRanking);
+				_tournamentRankingButton.removeFromParent(true);
+				_tournamentRankingButton = null;
+			}
 			
 			super.dispose();
 		}

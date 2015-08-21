@@ -22,6 +22,8 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.manager.TimerManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
+	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Button;
@@ -317,7 +319,7 @@ package com.ludofactory.mobile.navigation.game
 			_rulesButton.y = _tournamentButtonContainer.y + (_tournamentButtonContainer.height * 0.5) + scaleAndRoundToDpi(10) + (_rulesButton.height * 0.5);
 			_rulesButton.x = actualWidth * 0.5;
 			
-			_closeQuad.x = _backgroundSkin.width - _closeQuad.width
+			_closeQuad.x = _backgroundSkin.width - _closeQuad.width;
 			
 			//if( !Storage.getInstance().getProperty(StorageConfig.PROPERTY_TOURNAMENT_UNLOCKED) || (Storage.getInstance().getProperty(StorageConfig.PROPERTY_TOURNAMENT_UNLOCKED) && Storage.getInstance().getProperty(StorageConfig.PROPERTY_TOURNAMENT_UNLOCKED_HOME_ANIM_PENDING)))
 			//{
@@ -358,9 +360,10 @@ package com.ludofactory.mobile.navigation.game
 		 */		
 		private function onPlayClassic(event:Event):void
 		{
+			AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
+			
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
-				AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
 				AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.SOLO;
 				AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 			}
@@ -368,30 +371,13 @@ package com.ludofactory.mobile.navigation.game
 			{
 				if( MemberManager.getInstance().getNumTokens() == 0 )
 				{
-					AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
-					//AbstractEntryPoint.screenNavigator.showScreen( AdvancedScreen.AUTHENTICATION_SCREEN );
-					//NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.HOME_SCREEN) );
 					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
 				}
 				else
 				{
-					AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
 					AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.SOLO;
 					AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 				}
-				
-				// Ancienne gestion sans passage à l'écran de mises
-				/*if( MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty( StorageConfig.NUM_TOKENS_IN_SOLO_MODE ) )
-				{
-					AbstractEntryPoint.screenNavigator.screenData.gameType = GameSession.TYPE_FREE;
-					AbstractEntryPoint.screenNavigator.screenData.gamePrice = GameSession.PRICE_FREE;
-					AbstractEntryPoint.screenNavigator.showScreen( MemberManager.getInstance().getDisplayRules() ? AdvancedScreen.SMALL_RULES_SCREEN : AdvancedScreen.GAME_SCREEN );
-				}
-				else
-				{
-					AbstractEntryPoint.screenNavigator.showScreen( AdvancedScreen.AUTHENTICATION_SCREEN );
-				}*/
-				
 			}
 			dispatchEventWith(Event.CLOSE);
 		}
@@ -404,7 +390,24 @@ package com.ludofactory.mobile.navigation.game
 			if( MemberManager.getInstance().getTournamentUnlocked() == true )
 			{
 				AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
-				AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.TOURNAMENT_RANKING_SCREEN );
+				
+				if( MemberManager.getInstance().isLoggedIn() )
+				{
+					AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.TOURNAMENT;
+					AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
+				}
+				else
+				{
+					if( MemberManager.getInstance().getNumTokens() < int(Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)) )
+					{
+						NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
+					}
+					else
+					{
+						AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.TOURNAMENT;
+						AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
+					}
+				}
 				
 				dispatchEventWith(Event.CLOSE);
 			}
@@ -444,7 +447,7 @@ package com.ludofactory.mobile.navigation.game
 		/**
 		 * Show game rules.
 		 */		
-		private function onShowRules():void
+		private function onShowRules(event:Event):void
 		{
 			AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
 			AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.RULES_AND_SCORES_SCREEN );
@@ -457,7 +460,7 @@ package com.ludofactory.mobile.navigation.game
 			_tournamentButton.label = _("Partie en Tournoi");
 			_rulesButton.label = _("Règles du jeu");
 			
-			_leftLock.visible = _lock.visible = _rightLock.visible = MemberManager.getInstance().getTournamentUnlocked() ? false : true;
+			_leftLock.visible = _lock.visible = _rightLock.visible = !MemberManager.getInstance().getTournamentUnlocked();
 			_leftLock.alpha = _lock.alpha = _rightLock.alpha = MemberManager.getInstance().getTournamentUnlocked() ? 0 : 1;
 			
 			_canBeClosed = true;
@@ -549,7 +552,7 @@ package com.ludofactory.mobile.navigation.game
 			}
 			else
 			{
-				enableListeners()
+				enableListeners();
 				if( _lock.visible )
 					_timer.restart();
 			}
