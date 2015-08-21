@@ -11,6 +11,7 @@ package com.ludofactory.mobile.core.notification
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
+	import com.ludofactory.mobile.core.notification.content.CSNewThreadNotificationContent;
 	
 	import feathers.core.FeathersControl;
 	
@@ -88,7 +89,14 @@ package com.ludofactory.mobile.core.notification
 			_currentNotification.addEventListener(MobileEventTypes.CLOSE_NOTIFICATION, onNotificationClosed);
 			_currentNotification.setContentAndCallBack(content, callback);
 			_currentNotification.validate();
-			_currentNotification.y = GlobalConfig.stageHeight * 0.5 + _currentNotification.offset;
+			if(content is CSNewThreadNotificationContent)
+			{
+				_currentNotification.y = GlobalConfig.stageHeight * 0.5;
+			}
+			else
+			{
+				_currentNotification.y = GlobalConfig.stageHeight * 0.5 + _currentNotification.offset;
+			}
 			_currentNotification.animateIn();
 			
 			isNotificationDisplaying = true;
