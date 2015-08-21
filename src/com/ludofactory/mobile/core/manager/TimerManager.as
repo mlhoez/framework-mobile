@@ -13,15 +13,17 @@ package com.ludofactory.mobile.core.manager
 	public class TimerManager
 	{
 		/**
-		 * The base time (converted from seconds to milliseconds
-		 * at creation). */		
+		 * The base time (converted from seconds to milliseconds at creation). */		
 		private var _baseTime:int = 1000;
 		/**
 		 * The current time. */		
 		private var _currentTime:int;
 		/**
-		 * How many times the timer will repeat. */		
-		private var _repeatCount:int;
+		 * How many times the timer will repeat. */
+		private var _baseRepeatCount:int;
+		/**
+		 * Current repeat count. */
+		private var _currentRepeatCount:int;
 		
 		/**
 		 * Function called on each update. */		
@@ -48,6 +50,13 @@ package com.ludofactory.mobile.core.manager
 		private var _totalElapsedTime:int;
 		
 		/**
+		 * A second converted in milliseconds. */
+		private var _baseSecond:int = 1000;
+		/**
+		 * The current second (used to update not at each frame but at each second). */
+		private var _currentSecond:int = 0;
+		
+		/**
 		 * Whether the timer is running. */
 		private var _isRunning:Boolean = false;
 		
@@ -69,42 +78,21 @@ package com.ludofactory.mobile.core.manager
 			_updateFunction = updateFunction;
 			_finishFunction = finishFunction;
 			_tickFunction = tickFunction;
-			_repeatCount = repeatCount;
+			_baseRepeatCount = repeatCount;
+			_currentRepeatCount = _baseRepeatCount;
 			_totalElapsedTime = 0;
-			computeAndUpdate();
-		}
-		
-		/**
-		 * Compute values and call the update function.
-		 */		
-		private function computeAndUpdate():void
-		{
-			const timeInSecondes:Number = _currentTime / 1000;
-			//_currentHour = Math.round(timeInSecondes) / 3600
-			_currentMin = (Math.round(timeInSecondes) / 60) % 60;
-			_currentSec = Math.round(timeInSecondes) % 60;
-			
-			if(_updateFunction != null && _updateFunction is Function)
-				_updateFunction(_currentMin, _currentSec, getFormatedTime());
-		}
-		
-		/**
-		 * 
-		 */		
-		public function getCurrentTime():int
-		{
-			return _currentTime / 1000;
+			//computeAndUpdate();
 		}
 		
 		/**
 		 * Save the current time as a "start point" in order
 		 * to be tracked later when the <code>getTurnTime</code>
-		 * is called to report an "end point". 
-		 * 
+		 * is called to report an "end point".
+		 *
 		 * <p>This function can be used when we need to
 		 * track a time to complete something (ex : finish
 		 * a level in less than 50 seconds).</p>
-		 */		
+		 */
 		public function reportStartTurn():void
 		{
 			_timeOnStartTurn = _currentTime / 1000;
@@ -115,7 +103,7 @@ package com.ludofactory.mobile.core.manager
 		 * reported earlier with the <code>reportStartTurn</code>
 		 * and the "end point" reported there when this function
 		 * is called.
-		 */		
+		 */
 		public function getTurnTime():int
 		{
 			return _timeOnStartTurn - (_currentTime / 1000);
@@ -123,30 +111,34 @@ package com.ludofactory.mobile.core.manager
 		
 //------------------------------------------------------------------------------------------------------------
 //	Main functions
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
-		 * Start (or restart) the timer.
-		 * 
-		 * <p>In case the repeat count is different from -1,
-		 * this function will only restart the current repeat
-		 * count.</p>
+		 * Starts the timer.
+		 */
+		public function start():void
+		{
+			HeartBeat.registerFunction(onTimerUpdate);
+			_isRunning = true;
+		}
+		
+		/**
+		 * Restarts the timer.
 		 */		
 		public function restart():void
 		{
 			stop();
 			
 			_currentTime = _baseTime;
+			_currentRepeatCount = _baseRepeatCount;
 			computeAndUpdate();
 			
 			reportStartTurn();
 			
-			HeartBeat.registerFunction(onTimerUpdate);
-			_isRunning = true;
+			start();
 		}
 		
 		/**
-		 * Stop the timer.
+		 * Stops the timer.
 		 */		
 		public function stop():void
 		{
@@ -155,7 +147,7 @@ package com.ludofactory.mobile.core.manager
 		}
 		
 		/**
-		 * Pause the timer.
+		 * Pauses the timer.
 		 */		
 		public function pause():void
 		{
@@ -164,12 +156,26 @@ package com.ludofactory.mobile.core.manager
 		}
 		
 		/**
-		 * Resume the timer.
+		 * Resumes the timer.
 		 */		
 		public function resume():void
 		{
 			HeartBeat.registerFunction(onTimerUpdate);
 			_isRunning = true;
+		}
+		
+		private function continueTick():void
+		{
+			if( _isRunning )
+			{
+				stop();
+				
+				_currentTime = _baseTime;
+				computeAndUpdate();
+				
+				HeartBeat.registerFunction(onTimerUpdate);
+				_isRunning = true;
+			}
 		}
 		
 		/**
@@ -188,7 +194,6 @@ package com.ludofactory.mobile.core.manager
 		
 //------------------------------------------------------------------------------------------------------------
 //	Utils
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Return a formated string for convinience.
@@ -197,36 +202,51 @@ package com.ludofactory.mobile.core.manager
 		 */		
 		private function getFormatedTime():String
 		{
-			return _currentSec < 10 ? (_currentMin + ":0" + _currentSec) : (_currentMin + ":" + _currentSec);
+			return currentSec < 10 ? (currentMin + ":0" + currentSec) : (currentMin + ":" + currentSec);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handler
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
-		 * Update the timer.
+		 * Updates the timer.
 		 * 
 		 * @param elapsedTime The elapsed time in milliseconds.
 		 */		
 		private function onTimerUpdate(elapsedTime:Number):void
 		{
+			// if elapsedTime is negative, we don't count this
+			if( elapsedTime < 0 /*&& (elapsedTime < 0 ? (elapsedTime*-1) : elapsedTime) > BaseServerData.dateChangeTolerance.value*/) // 1000 ms = 1 sec
+			{
+				// the date has changed
+				//CheatManager.getInstance().reportDateChange(elapsedTime, BaseServerData.dateChangeTolerance.value);
+				elapsedTime = 0;
+			}
 			_currentTime -= elapsedTime;
 			_totalElapsedTime += elapsedTime;
-			computeAndUpdate();
+			
+			_currentSecond -= elapsedTime;
+			if( _currentSecond <= 0 )
+			{
+				_currentSecond = _baseSecond;
+				computeAndUpdate();
+			}
 			
 			if(_currentTime <= 0)
 			{
-				if(_repeatCount == -1)
+				_currentTime = 0;
+				if(_currentRepeatCount == -1)
 				{
 					if(_tickFunction != null && _tickFunction is Function)
 						_tickFunction();
-					restart();
+					continueTick();
 				}
 				else
 				{
-					_repeatCount--;
-					if(_repeatCount <= 0)
+					// removed by security because it could be -1 which caused the timer to repeat endlessly
+					//_currentRepeatCount--;
+					_currentRepeatCount = (_currentRepeatCount - 1) < 0 ? 0 : (_currentRepeatCount - 1);
+					if(_currentRepeatCount == 0)
 					{
 						stop();
 						if(_finishFunction != null && _finishFunction is Function)
@@ -236,25 +256,62 @@ package com.ludofactory.mobile.core.manager
 					{
 						if(_tickFunction != null && _tickFunction is Function)
 							_tickFunction();
-						restart();
+						continueTick();
 					}
 				}
 			}
 		}
 		
 		/**
-		 * The total elapsed time.
+		 * Compute values and call the update function.
+		 */
+		private function computeAndUpdate():void
+		{
+			//var timeInSecondes:Number = _currentTime / 1000;
+			//_currentHour = Math.round(timeInSecondes) / 3600
+			//_currentMin = (Math.round(timeInSecondes) / 60) % 60;
+			//_currentSec = Math.round(timeInSecondes) % 60;
+			
+			if(_updateFunction != null && _updateFunction is Function)
+				_updateFunction(getFormatedTime());
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Get
+		
+		/**
+		 * The total elapsed time (in seconds).
 		 * 
-		 * <p>Use totalElapsedTime / 1000 to get the time in seconds.</p>
-		 */		
-		public function get totalElapsedTime():int { return _totalElapsedTime; }
+		 * FIXME Avant c'était return _totalElapsedTime et non pas _totalElapsedTime / 1000
+		 */
+		public function get totalElapsedTime():int { return _totalElapsedTime / 1000; }
+		
+		/**
+		 * Current time in seconds. */
+		public function get currentTime():int { return ((_currentTime / 1000) << 0); }
+		
+		/**
+		 * How many days left. */
+		public function get currentDay():int { return (((_currentTime / 1000) << 0) / 86400); }
+		/**
+		 * How many hours left.
+		 * Note that it's not the total of hours left, to get this value, remove the "% 24" */
+		public function get currentHour():int { return ((((_currentTime / 1000) << 0) / 3600) % 24); }
+		/**
+		 * How many minutes left.
+		 * Note that it's not the total of minutes left, to get this value, remove the "% 60" */
+		public function get currentMin():int { return ((((_currentTime / 1000) << 0) / 60) % 60); }
+		/**
+		 * How many seconds left.
+		 * Note that it's not the total of seconds left, to get this value, remove the "% 60" */
+		public function get currentSec():int { return (((_currentTime / 1000) << 0) % 60); }
+		
 		/**
 		 * Whether the timer is running. */
-		public function get isRunning():Boolean { return _isRunning; }
+		public function get isRunning():Boolean { return _isRunning; }
 		
 //------------------------------------------------------------------------------------------------------------
 //	Destroy
-//------------------------------------------------------------------------------------------------------------
 		
 		public function dispose():void
 		{
