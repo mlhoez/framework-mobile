@@ -8,11 +8,12 @@ package com.ludofactory.mobile.core.controls
 {
 	
 	import com.greensock.TweenMax;
+	import com.greensock.easing.Linear;
 	import com.greensock.easing.Power1;
 	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -131,7 +132,7 @@ package com.ludofactory.mobile.core.controls
 				_lastRefresh.x = _message.x = _arrow.x + (_arrow.width * 0.5) + scaleAndRoundToDpi(20);
 				_lastRefresh.width = _message.width = this.actualWidth * 0.75;
 				
-				_refreshOffset = Math.abs(_container.y) + (layout ? (VerticalLayout(layout).gap * 2) : 0);
+				_refreshOffset = (Math.abs(_container.y) + (layout ? (VerticalLayout(layout).gap * 2) : 0)) * (AbstractGameInfo.LANDSCAPE ? 0.5 : 0.5); // half in landscape, otherwise it's too hard
 				
 				_minVerticalScrollPosition = _viewPort.contentY + _container.height + (layout ? VerticalLayout(layout).gap : 0);
 			}
@@ -143,14 +144,14 @@ package com.ludofactory.mobile.core.controls
 					// if we scrolled enough to trigger a refresh, we need to
 					// update the current message
 					_message.text = RELEASE_TO_REFRESH_TEXT;
-					Starling.juggler.tween(_arrow, 0.25, { rotation:deg2rad(-180) });
+					TweenMax.to(_arrow, 0.15, { rotation:deg2rad(-180), ease:Linear.easeNone });
 				}
 				else
 				{
 					// if we aren't scrolling enough to trigger a refresh, we
 					// set the appropriate message
 					_message.text = PULL_TO_REFRESH_TEXT;
-					Starling.juggler.tween(_arrow, 0.25, { rotation:deg2rad(0) });
+					TweenMax.to(_arrow, 0.15, { rotation:deg2rad(0), ease:Linear.easeNone });
 				}
 			}
 			

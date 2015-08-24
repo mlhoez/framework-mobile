@@ -6,18 +6,21 @@ Created : 15 août 2013
 */
 package com.ludofactory.mobile.core.controls
 {
+	
+	import com.greensock.TweenMax;
+	import com.greensock.easing.Linear;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
 	
 	import feathers.controls.Label;
 	import feathers.controls.List;
+	
+	import flash.text.TextFormat;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -130,7 +133,7 @@ package com.ludofactory.mobile.core.controls
 			
 			if( _isRefreshable && isInvalid(INVALIDATION_FLAG_REFRESHABLE_STATE) )
 			{
-				const paddingRefresh:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 20 : 40);
+				const paddingRefresh:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 20 : 20);
 				
 				_message.validate();
 				
@@ -143,7 +146,7 @@ package com.ludofactory.mobile.core.controls
 				
 				_container.y = -_container.height - paddingRefresh;
 				
-				_refreshOffset = Math.abs(_container.y) + paddingRefresh;
+				_refreshOffset = Math.abs(_container.y) + paddingRefresh * (AbstractGameInfo.LANDSCAPE ? 0.5 : 0.5); // half in landscape, otherwise it's too hard
 			}
 			
 			if( _isRefreshable && !_isRefreshing )
@@ -153,14 +156,14 @@ package com.ludofactory.mobile.core.controls
 					// if we scrolled enough to trigger a refresh, we need to
 					// update the current message
 					_message.text = RELEASE_TO_REFRESH_TEXT;
-					Starling.juggler.tween(_arrow, 0.25, { rotation:deg2rad(-180) });
+					TweenMax.to(_arrow, 0.15, { rotation:deg2rad(-180), ease:Linear.easeNone });
 				}
 				else
 				{
 					// if we aren't scrolling enough to trigger a refresh, we
 					// set the appropriate message
 					_message.text = PULL_TO_REFRESH_TEXT;
-					Starling.juggler.tween(_arrow, 0.25, { rotation:deg2rad(0) });
+					TweenMax.to(_arrow, 0.15, { rotation:deg2rad(0), ease:Linear.easeNone });
 				}
 			}
 		}
