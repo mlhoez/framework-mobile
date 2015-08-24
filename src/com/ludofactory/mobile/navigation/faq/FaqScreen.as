@@ -6,19 +6,20 @@ Created : 1 septembre 2013
 */
 package com.ludofactory.mobile.navigation.faq
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.controls.Accordion;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import starling.core.Starling;
@@ -87,6 +88,9 @@ package com.ludofactory.mobile.navigation.faq
 			Starling.juggler.add( _loader );
 			addChild(_loader);
 			
+			_accordionBackground = new Quad(5, 5, 0xffffff);
+			addChild(_accordionBackground);
+			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
 				Remote.getInstance().getFaq(onGetFaqSuccess, onGetFaqFailure, onGetFaqFailure, 1, advancedOwner.activeScreenID);
@@ -117,10 +121,14 @@ package com.ludofactory.mobile.navigation.faq
 				
 				if( _accordion )
 				{
-					_accordion.y = _accordionBackground.y = AbstractGameInfo.LANDSCAPE ? 0 : (_listShadow.y + _listShadow.height);
-					_accordion.width = _accordionBackground.width = this.actualWidth;
-					_accordion.height = _accordionBackground.height = this.actualHeight - _accordion.y;
+					_accordion.y = AbstractGameInfo.LANDSCAPE ? 0 : (_listShadow.y + _listShadow.height);
+					_accordion.width = this.actualWidth;
+					_accordion.height = this.actualHeight - _accordion.y;
 				}
+				
+				_accordionBackground.y = AbstractGameInfo.LANDSCAPE ? 0 : (_listShadow.y + _listShadow.height);
+				_accordionBackground.width = this.actualWidth;
+				_accordionBackground.height = this.actualHeight - _accordionBackground.y;
 			}
 			
 			super.draw();
@@ -144,9 +152,6 @@ package com.ludofactory.mobile.navigation.faq
 			
 			for(var i:int = 0; i < faq.length; i++)
 				panels.push( new FaqAccordionItem( new FaqData(faq[i]) ) );
-			
-			_accordionBackground = new Quad(5, 5, 0xffffff);
-			addChild(_accordionBackground);
 			
 			_accordion = new Accordion();
 			_accordion.dataProvider = panels;
@@ -197,11 +202,8 @@ package com.ludofactory.mobile.navigation.faq
 				_accordion = null;
 			}
 			
-			if(_accordionBackground)
-			{
-				_accordionBackground.removeFromParent(true);
-				_accordionBackground = null;
-			}
+			_accordionBackground.removeFromParent(true);
+			_accordionBackground = null;
 			
 			super.dispose();
 		}
