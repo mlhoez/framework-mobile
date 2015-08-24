@@ -186,10 +186,10 @@ package com.ludofactory.mobile.core.notification.content
 			
 			if(isInvalid(INVALIDATION_FLAG_NEEDS_RESIZE_FOCUS))
 			{
-				if(!_messageInput.hasFocus && (_mailInput && !_mailInput.hasFocus))
-					NotificationPopupManager.centerCurrent();
-				else
+				if(_messageInput.hasFocus || (_mailInput && _mailInput.hasFocus))
 					NotificationPopupManager.moveCurrentToTop();
+				else
+					NotificationPopupManager.centerCurrent(); 
 			}
 			
 			super.draw();
