@@ -303,7 +303,6 @@ package com.ludofactory.mobile.navigation.sponsor.filleuls
 					touch.getLocation(this, HELPER_POINT);
 					if(this.hitTest(HELPER_POINT, true) != null && !this._isSelected)
 					{
-						//NotificationManager.addNotification( new FilleulDetailNotification(_data) );
 						NotificationPopupManager.addNotification( new FilleulDetailNotificationContent(_data) );
 					}
 				}
