@@ -76,7 +76,16 @@ package com.ludofactory.mobile.core.manager
 			_baseRepeatCount = repeatCount;
 			_currentRepeatCount = _baseRepeatCount;
 			_totalElapsedTime = 0;
-			//computeAndUpdate();
+			
+			try
+			{
+				// if we use the TimerManager instance in the update function, the instance will be null and create an error
+				computeAndUpdate();
+			}
+			catch(error:Error)
+			{
+				
+			}
 		}
 		
 		/**
