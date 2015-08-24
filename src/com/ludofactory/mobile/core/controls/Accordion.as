@@ -135,6 +135,14 @@ package com.ludofactory.mobile.core.controls
 				if(otherAccordionElements.isExpanded)
 					otherAccordionElements.collapse();
 			}
+			
+			if(this.actualHeight < this.viewPort.height)
+			{
+				// this kind of scroll won't use the elastic edges that crates a weird effect otherwise
+				hasElasticEdges = false;
+				scrollToPosition(NaN, (AbstractAccordionItem(event.target).headerHeight * AbstractAccordionItem(event.target).tempIndexHackForVips), 0.5);
+				Starling.juggler.delayCall(function():void{ hasElasticEdges = true }, 0.5);
+			}
 		}
 		
 		private function onExpandComplete(event:Event):void
@@ -144,6 +152,8 @@ package com.ludofactory.mobile.core.controls
 			
 			//if( AbstractEntryPoint.screenNavigator.activeScreenID == ScreenIds.MY_ACCOUNT_SCREEN )
 			//	scrollToPosition(NaN, (AbstractAccordionItem(event.target).headerHeight * AbstractAccordionItem(event.target).tempIndexHackForVips), 0.25);
+			
+			//return;
 			
 			if(this.actualHeight < this.viewPort.height)
 			{
