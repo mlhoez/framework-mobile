@@ -452,7 +452,7 @@ package com.ludofactory.mobile.navigation.tournament
 							}
 							_ranksList.dataProvider = new HierarchicalCollection( newDataProvider );
 							_ranksList.isRefreshableDown = true;
-							_ranksList.isRefreshableTop = true;
+							_ranksList.isRefreshableTop = !(newDataProvider[0].children[0].rank == 1);
 							
 							findMe();
 						}
