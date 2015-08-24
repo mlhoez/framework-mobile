@@ -14,11 +14,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import feathers.controls.Label;
 	import feathers.core.FeathersControl;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
@@ -27,6 +23,7 @@ package com.ludofactory.mobile.core.manager
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
 	import starling.utils.VAlign;
 	
 	/**
@@ -81,7 +78,7 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * Label that tells the user to touch the screen
 		 * to close the informaiton. */		
-		private var _tapToCloseLabel:Label;
+		private var _tapToCloseLabel:TextField;
 		
 		/**
 		 * Whether the information is closable. */		
@@ -124,7 +121,7 @@ package com.ludofactory.mobile.core.manager
 			_crossImage.touchable = false;
 			addChild(_crossImage);
 			
-			_loader = new MovieClip(AbstractEntryPoint.assets.getTextures("Loader"), 20);
+			_loader = new MovieClip(AbstractEntryPoint.assets.getTextures("character-loader-anim-"), 60);
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
 			_loader.alignPivot();
 			_loader.touchable = false;
@@ -136,11 +133,10 @@ package com.ludofactory.mobile.core.manager
 			_message.autoScale = true;
 			addChild(_message);
 			
-			_tapToCloseLabel = new Label();
+			_tapToCloseLabel = new TextField(5, 5, _("Tapotez n'importe où pour continuer..."), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 24 : 30), Theme.COLOR_WHITE);
 			_tapToCloseLabel.touchable = false;
-			_tapToCloseLabel.text = _("Tapotez n'importe où pour continuer...");
+			_tapToCloseLabel.autoSize = TextFieldAutoSize.VERTICAL;
 			addChild(_tapToCloseLabel);
-			_tapToCloseLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 24 : 30), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			stage.addEventListener(Event.RESIZE, draw);
 			
@@ -164,22 +160,21 @@ package com.ludofactory.mobile.core.manager
 			_checkImage.x = _crossImage.x = _loader.x = GlobalConfig.stageWidth * 0.5;
 			_checkImage.y = (GlobalConfig.stageHeight * 0.5) - _checkImage.height;
 			_crossImage.y = (GlobalConfig.stageHeight * 0.5) - _crossImage.height;
-			_loader.y = (GlobalConfig.stageHeight * 0.5) - _loader.height;
+			_loader.y = (GlobalConfig.stageHeight * 0.5) - (_loader.height * 0.5);
 			
 			_message.width = GlobalConfig.stageWidth * 0.9;
 			_message.x = (GlobalConfig.stageWidth - _message.width) * 0.5;
-			_message.y = (GlobalConfig.stageHeight * 0.5) + scaleAndRoundToDpi(10);
+			_message.y = (GlobalConfig.stageHeight * 0.5);
 			_message.height = GlobalConfig.stageHeight - _message.y;
 			
 			_tapToCloseLabel.width = GlobalConfig.stageWidth;
-			_tapToCloseLabel.validate();
 			_tapToCloseLabel.y = GlobalConfig.stageHeight - _tapToCloseLabel.height - scaleAndRoundToDpi(10);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
 		
-		protected function onAddedToStage():void
+		protected function onAddedToStage(event:Event = null):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
