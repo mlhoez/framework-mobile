@@ -189,7 +189,7 @@ package com.ludofactory.mobile.core.notification.content
 				if(_messageInput.hasFocus || (_mailInput && _mailInput.hasFocus))
 					NotificationPopupManager.moveCurrentToTop();
 				else
-					NotificationPopupManager.centerCurrent(); 
+					NotificationPopupManager.centerCurrent();
 			}
 			
 			super.draw();

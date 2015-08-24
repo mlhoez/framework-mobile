@@ -84,7 +84,7 @@ package com.ludofactory.mobile.core.notification.content
 			vlayout.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20:40);
 			this.layout = vlayout;
 			
-			this.verticalScrollPolicy = Scroller.SCROLL_POLICY_ON;
+			this.verticalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 			this.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			
 			_notificationTitle = new Label();
