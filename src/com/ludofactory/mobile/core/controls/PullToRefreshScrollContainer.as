@@ -36,17 +36,21 @@ package com.ludofactory.mobile.core.controls
 		public static const INVALIDATION_FLAG_REFRESHABLE_STATE:String = "refreshable-state"; // FIXME Vérifier que la trad est bien récupérée
 		
 		/**
-		 * "Pull to refresh" default Localizer translation key. */		
-		private static const DEFAULT_PULL_TO_REFRESH_KEY:String = _("Tirer pour mettre à jour");
+		 * "Pull to refresh" default Localizer translation key.
+		 * _("Tirer pour mettre à jour") */		
+		private static const DEFAULT_PULL_TO_REFRESH_KEY:String = "Tirer pour mettre à jour";
 		/**
-		 * "Release to refresh" default Localizer translation key. */		
-		private static const DEFAULT_RELEASE_TO_REFRESH_KEY:String = _("Lâcher pour mettre à jour");
+		 * "Release to refresh" default Localizer translation key.
+		 * _("Lâcher pour mettre à jour") */		
+		private static const DEFAULT_RELEASE_TO_REFRESH_KEY:String = "Lâcher pour mettre à jour";
 		/**
-		 * "Refreshing..." default Localizer translation key. */		
-		private static const DEFAULT_REFRESHING_KEY:String = _("Mise à jour...");
+		 * "Refreshing..." default Localizer translation key.
+		 * _("Mise à jour...")*/		
+		private static const DEFAULT_REFRESHING_KEY:String = "Mise à jour...";
 		/**
-		 * "Last refresh : --/--/--" default Localizer translation key. */		
-		private static const DEFAULT_LAST_REFRESH_KEY:String = _("Dernière mise à jour à");
+		 * "Last refresh : --/--/--" default Localizer translation key.
+		 * _("Dernière mise à jour à") */		
+		private static const DEFAULT_LAST_REFRESH_KEY:String = "Dernière mise à jour à";
 		
 		/**
 		 * "Pull to refresh" translated value. */		
