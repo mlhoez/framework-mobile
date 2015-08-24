@@ -83,13 +83,13 @@ package com.ludofactory.mobile.navigation.faq
 				addChild(_listShadow);
 			}
 			
+			_accordionBackground = new Quad(5, 5, 0xffffff);
+			addChild(_accordionBackground);
+			
 			_loader = new MovieClip( Theme.blackLoaderTextures );
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
 			Starling.juggler.add( _loader );
 			addChild(_loader);
-			
-			_accordionBackground = new Quad(5, 5, 0xffffff);
-			addChild(_accordionBackground);
 			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
