@@ -6,23 +6,22 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.navigation.game
 {
-
+	
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.push.GameSession;
+	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.utils.formatString;
-
+	
 	public class StakeButtonCredit extends StakeButton
 	{
 		/**
@@ -87,7 +86,7 @@ package com.ludofactory.mobile.navigation.game
 		{
 			_isEnabled = MemberManager.getInstance().getCredits() >= Storage.getInstance().getProperty(  AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) ? true:false;
 			
-			_label.text = formatString( _n("Utiliser {0} Crédit", "Utiliser {0} Crédits", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE )),
+			_label.text = formatString( _n("{0} Crédit", "{0} Crédits", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE )),
 				Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
 			
 			_icon.texture = MemberManager.getInstance().isLoggedIn() ? AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIcon") : AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIconDisabled");
