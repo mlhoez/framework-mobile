@@ -159,7 +159,7 @@ package com.ludofactory.mobile.navigation.home
 				{
 					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 100);
 					var maxLogoWidth:int = actualWidth - (padding * 2);
-					var maxLogoScaleW:Number = (GlobalConfig.isPhone ? 0.6 : 0.45);
+					var maxLogoScaleW:Number = (GlobalConfig.isPhone ? 0.6 : 0.55);
 					_logo.scaleX = _logo.scaleY = 1;
 					_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillWidth(_logo.width, maxLogoWidth);
 					if (_logo.height > (actualHeight * maxLogoScaleW))
