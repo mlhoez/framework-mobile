@@ -249,9 +249,9 @@ package com.ludofactory.mobile.core
 			_playButton.label = _("Commencer");
 			_playButton.addEventListener(starling.events.Event.TRIGGERED, onPlay);
 			addChild(_playButton);
-			_playButton.height = scaleAndRoundToDpi(118);
+			_playButton.height = scaleAndRoundToDpi(108);
 			_playButton.validate();
-			_playButton.width += scaleAndRoundToDpi(60);
+			_playButton.width += scaleAndRoundToDpi(30);
 			_playButton.x = (GlobalConfig.stageWidth - _playButton.width) * 0.5;
 			_playButton.y = (GlobalConfig.stageHeight - _playButton.height) * 0.5;
 			
