@@ -54,7 +54,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.cs.HelpScreen;
 	import com.ludofactory.mobile.navigation.cs.thread.CSThreadScreen;
 	import com.ludofactory.mobile.navigation.engine.FacebookEndScreen;
-	import com.ludofactory.mobile.navigation.engine.FreeGameEndScreen;
+	import com.ludofactory.mobile.navigation.engine.SoloEndScreen;
 	import com.ludofactory.mobile.navigation.engine.HighScoreScreen;
 	import com.ludofactory.mobile.navigation.engine.PodiumScreen;
 	import com.ludofactory.mobile.navigation.engine.TournamentEndScreen;
@@ -173,7 +173,7 @@ package com.ludofactory.mobile.core
 												{ id:ScreenIds.PSEUDO_CHOICE_SCREEN, clazz:PseudoChoiceScreen },
 												{ id:ScreenIds.FORGOT_PASSWORD_SCREEN, clazz:ForgotPasswordScreen },
 												{ id:ScreenIds.NEW_HIGH_SCORE_SCREEN, clazz:HighScoreScreen },
-												{ id:ScreenIds.SOLO_END_SCREEN, clazz:FreeGameEndScreen },
+												{ id:ScreenIds.SOLO_END_SCREEN, clazz:SoloEndScreen },
 												{ id:ScreenIds.GAME_TYPE_SELECTION_SCREEN, clazz:StakeSelectionScreen },
 												{ id:ScreenIds.TOURNAMENT_RANKING_SCREEN, clazz:TournamentRankingScreen },
 												{ id:ScreenIds.SPONSOR_REGISTER_SCREEN, clazz:SponsorScreen },

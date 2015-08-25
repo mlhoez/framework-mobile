@@ -26,7 +26,7 @@ package com.ludofactory.mobile.navigation.engine
 	import starling.utils.VAlign;
 	import starling.utils.deg2rad;
 	
-	public class FreeGameEndElement extends FeathersControl
+	public class SoloEndElement extends FeathersControl
 	{
 		/**
 		 * The background. */		
@@ -52,7 +52,7 @@ package com.ludofactory.mobile.navigation.engine
 		 * The more icon. */		
 		private var _arrow:ImageLoader;
 		
-		public function FreeGameEndElement(imageTextureName:String, message:String)
+		public function SoloEndElement(imageTextureName:String, message:String)
 		{
 			super();
 			

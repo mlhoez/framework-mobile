@@ -58,7 +58,7 @@ package com.ludofactory.mobile.navigation.engine
 	import starling.extensions.PDParticleSystem;
 	import starling.utils.deg2rad;
 	
-	public class FreeGameEndScreen extends AdvancedScreen
+	public class SoloEndScreen extends AdvancedScreen
 	{
 		/**
 		 * The logo */		
@@ -101,8 +101,8 @@ package com.ludofactory.mobile.navigation.engine
 		
 		/**
 		 * The convert elements when logged in. */		
-		private var _convertShop:FreeGameEndElement;
-		private var _convertTournament:FreeGameEndElement;
+		private var _convertShop:SoloEndElement;
+		private var _convertTournament:SoloEndElement;
 		
 		// buttons
 		
@@ -123,7 +123,7 @@ package com.ludofactory.mobile.navigation.engine
 		 * Particles */		
 		private var _particles:PDParticleSystem;
 		
-		public function FreeGameEndScreen()
+		public function SoloEndScreen()
 		{
 			super();
 			
@@ -315,13 +315,13 @@ package com.ludofactory.mobile.navigation.engine
 				{
 					// Logged in content
 					
-					_convertShop = new FreeGameEndElement("convert-shop-icon", (MemberManager.getInstance().getGiftsEnabled() ? (AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Cadeaux dans la boutique"):_("Convertir mes Points en\nCadeaux dans la boutique")) : (AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Crédits dans la boutique"):_("Convertir mes Points en\nCrédits dans la boutique"))) ) ;
+					_convertShop = new SoloEndElement("convert-shop-icon", (MemberManager.getInstance().getGiftsEnabled() ? (AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Cadeaux dans la boutique"):_("Convertir mes Points en\nCadeaux dans la boutique")) : (AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Crédits dans la boutique"):_("Convertir mes Points en\nCrédits dans la boutique"))) ) ;
 					_convertShop.alpha = 0;
 					_convertShop.visible = false;
 					_convertShop.addEventListener(TouchEvent.TOUCH, onGoShop);
 					addChild(_convertShop);
 					
-					_convertTournament = new FreeGameEndElement("convert-tournament-icon", (AbstractGameInfo.LANDSCAPE ? _("Utiliser mes Points sur le tournoi pour me classer"):_("Utiliser mes Points sur\nle tournoi pour me classer")));
+					_convertTournament = new SoloEndElement("convert-tournament-icon", (AbstractGameInfo.LANDSCAPE ? _("Utiliser mes Points sur le tournoi pour me classer"):_("Utiliser mes Points sur\nle tournoi pour me classer")));
 					_convertTournament.alpha = 0;
 					_convertTournament.visible = false;
 					_convertTournament.addEventListener(TouchEvent.TOUCH, onGoTournament);
