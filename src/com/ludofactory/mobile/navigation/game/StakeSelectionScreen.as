@@ -29,6 +29,7 @@ package com.ludofactory.mobile.navigation.game
 	import feathers.controls.Label;
 	
 	import flash.filters.DropShadowFilter;
+	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
@@ -98,10 +99,29 @@ package com.ludofactory.mobile.navigation.game
 				_withPoints.addEventListener(Event.TRIGGERED, onPlayWithPoints);
 				addChild(_withPoints);
 				
-				_tournamentRankingButton = new Button(AbstractEntryPoint.assets.getTexture("tournament-ranking-icon"));
-				_tournamentRankingButton.scaleX = _tournamentRankingButton.scaleY = GlobalConfig.dpiScale;
-				_tournamentRankingButton.addEventListener(Event.TRIGGERED, onGoTournamentRanking);
-				addChild(_tournamentRankingButton);
+				if(AbstractGameInfo.LANDSCAPE)
+				{
+					_tournamentRankingButton = new Button(AbstractEntryPoint.assets.getTexture("see-ranking-landscape-icon"));
+					_tournamentRankingButton.scaleX = _tournamentRankingButton.scaleY = GlobalConfig.dpiScale;
+					_tournamentRankingButton.addEventListener(Event.TRIGGERED, onGoTournamentRanking);
+					addChild(_tournamentRankingButton);
+				}
+				else
+				{
+					_tournamentRankingButton = new Button(AbstractEntryPoint.assets.getTexture("see-ranking-portrait-icon"), _("Voir le classement"));
+					_tournamentRankingButton.scaleX = _tournamentRankingButton.scaleY = GlobalConfig.dpiScale;
+					_tournamentRankingButton.fontName = Theme.FONT_SANSITA;
+					_tournamentRankingButton.fontSize = scaleAndRoundToDpi(80);
+					_tournamentRankingButton.scaleWhenDown = 1;
+					_tournamentRankingButton.addEventListener(Event.TRIGGERED, onGoTournamentRanking);
+					addChild(_tournamentRankingButton);
+					var bounds:Rectangle = _tournamentRankingButton.textBounds;
+					bounds.x = bounds.width * 0.1;
+					bounds.y = bounds.height * 0.35;
+					bounds.width = bounds.width - (bounds.x * 2);
+					bounds.height = bounds.height - bounds.y - (bounds.height * 0.3);
+					_tournamentRankingButton.textBounds = bounds;
+				}
 			}
 		}
 		
@@ -129,7 +149,7 @@ package com.ludofactory.mobile.navigation.game
 					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.58 : 0.45);
 					if( _withPoints ) _withPoints.width = _withTokens.width;
 					
-					_withTokens.x = _withCredits.x = ((actualWidth - _withTokens.width) * 0.5) << 0;
+					_withTokens.x = _withCredits.x = ((actualWidth - _withTokens.width - (_tournamentRankingButton ? _tournamentRankingButton.width : 0)) * 0.5) << 0;
 					if( _withPoints ) _withPoints.x = _withTokens.x;
 					
 					_withTokens.validate();
@@ -157,7 +177,13 @@ package com.ludofactory.mobile.navigation.game
 					_title.width = actualWidth;
 					_title.validate();
 					
-					maxButtonHeight = ( actualHeight - _title.height - titleGap - (padding * 2) - (_tournamentRankingButton ? _tournamentRankingButton.height : 0) - (buttonGap * (_withPoints ? 3 : 2)) ) / (_withPoints ? 3 : 2);
+					if(_tournamentRankingButton)
+					{
+						_tournamentRankingButton.x = ((actualWidth - _tournamentRankingButton.width) * 0.5);
+						_tournamentRankingButton.y = actualHeight - _tournamentRankingButton.height + scaleAndRoundToDpi(20);
+					}
+					
+					maxButtonHeight = ( (_tournamentRankingButton ? _tournamentRankingButton.y : actualHeight) - _title.height - titleGap - (padding * 2) - (buttonGap * (_withPoints ? 3 : 2)) ) / (_withPoints ? 3 : 2);
 					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150) > maxButtonHeight ? maxButtonHeight : scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150);
 					if( _withPoints ) _withPoints.height = _withTokens.height;
 					
@@ -169,19 +195,13 @@ package com.ludofactory.mobile.navigation.game
 					
 					_withTokens.validate();
 					
-					_title.y = padding + (actualHeight - _title.height - titleGap - (buttonGap * (_withPoints ? 3 : 2)) - (_tournamentRankingButton ? _tournamentRankingButton.height : 0) - (padding * 2) - (_withTokens.height * (_withPoints ? 3 : 2))) * 0.5;
+					_title.y = padding + ((_tournamentRankingButton ? _tournamentRankingButton.y : actualHeight) - _title.height - titleGap - (buttonGap * (_withPoints ? 2 : 1)) - (padding * 2) - (_withTokens.height * (_withPoints ? 3 : 2))) * 0.5;
 					
 					_withTokens.y = _title.y + _title.height + titleGap;
 					_withCredits.y = _withTokens.y + _withTokens.height + buttonGap;
 					
 					if( _withPoints )
 						_withPoints.y = _withCredits.y + _withTokens.height + buttonGap;
-					
-					if(_tournamentRankingButton)
-					{
-						_tournamentRankingButton.x = _withPoints.x + ((_withPoints.width - _tournamentRankingButton.width) * 0.5);
-						_tournamentRankingButton.y = _withPoints.y + _withPoints.height + buttonGap;
-					}
 				}
 			}
 			
