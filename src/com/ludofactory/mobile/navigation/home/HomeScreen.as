@@ -14,12 +14,12 @@ package com.ludofactory.mobile.navigation.home
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	
@@ -29,7 +29,6 @@ package com.ludofactory.mobile.navigation.home
 	import feathers.controls.Label;
 	
 	import flash.text.TextFormat;
-	
 	import flash.text.TextFormatAlign;
 	
 	import starling.display.Image;
@@ -137,7 +136,7 @@ package com.ludofactory.mobile.navigation.home
 			{
 				var padding:int;
 				var buttonHeight:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 148) : 128);
-				var gap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
+				var gap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 10 : 30) : (AbstractGameInfo.LANDSCAPE ? 30 : 60));
 				
 				// 1) scale the logo
 				if( _giftsButton )
@@ -159,13 +158,15 @@ package com.ludofactory.mobile.navigation.home
 				{
 					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 100);
 					var maxLogoWidth:int = actualWidth - (padding * 2);
-					var maxLogoScaleW:Number = (GlobalConfig.isPhone ? 0.6 : 0.55);
+					var maxLogoScaleW:Number = (GlobalConfig.isPhone ? 0.6 : 0.45); 
+					// scale the logo to fit in maxLogoWidth
 					_logo.scaleX = _logo.scaleY = 1;
 					_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillWidth(_logo.width, maxLogoWidth);
+					// if the scaled logo becomes to big (in height), we need to scale it down to the maximum height
 					if (_logo.height > (actualHeight * maxLogoScaleW))
 					{
 						_logo.scaleX = _logo.scaleY = 1;
-						_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillWidth(_logo.width, (actualWidth * maxLogoScaleW));
+						_logo.scaleX = _logo.scaleY = Utilities.getScaleToFillHeight(_logo.height, (actualHeight * maxLogoScaleW));
 					}
 				}
 				
