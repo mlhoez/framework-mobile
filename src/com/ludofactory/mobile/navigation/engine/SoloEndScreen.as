@@ -405,7 +405,7 @@ package com.ludofactory.mobile.navigation.engine
 				}
 				else
 				{
-					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.65);
+					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.6);
 					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
 					_logo.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
 					_logo.validate();
