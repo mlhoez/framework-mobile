@@ -21,6 +21,8 @@ package com.ludofactory.mobile.navigation.account
 	
 	import feathers.data.ListCollection;
 	
+	import starling.display.Quad;
+	
 	import starling.events.Event;
 	
 	public class MyAccountScreen extends AdvancedScreen
@@ -40,6 +42,10 @@ package com.ludofactory.mobile.navigation.account
 		/**
 		 * The account history container. */		
 		private var _accountHistoryContainer:AccountHistoryContainer;
+		
+		/**
+		 * White background to make it nicer while it's loading or when there is nothing to show. */
+		private var _background:Quad;
 		
 		public function MyAccountScreen()
 		{
@@ -63,6 +69,9 @@ package com.ludofactory.mobile.navigation.account
 			_menu.addEventListener(Event.CHANGE, onMenuChange);
 			addChild(_menu);
 			
+			_background = new Quad(5, 5);
+			addChild(_background);
+			
 			_personalInformationsContainer = new PersonalInformationsContainer();
 			addChild(_personalInformationsContainer);
 		}
@@ -75,9 +84,9 @@ package com.ludofactory.mobile.navigation.account
 				_menu.y = scaleAndRoundToDpi(10);
 				_menu.validate();
 				
-				_personalInformationsContainer.width = this.actualWidth;
-				_personalInformationsContainer.y = _menu.y + _menu.height;
-				_personalInformationsContainer.height = this.actualHeight - _personalInformationsContainer.y;
+				_personalInformationsContainer.width = _background.width = this.actualWidth;
+				_personalInformationsContainer.y = _background.y = _menu.y + _menu.height;
+				_personalInformationsContainer.height = _background.height = this.actualHeight - _personalInformationsContainer.y;
 				
 				_menu.selectedIndex = AbstractEntryPoint.screenNavigator.screenData.indexToDisplayInMyAccount;
 				AbstractEntryPoint.screenNavigator.screenData.indexToDisplayInMyAccount = 0;
@@ -181,6 +190,9 @@ package com.ludofactory.mobile.navigation.account
 			_menu.removeEventListener(Event.CHANGE, onMenuChange);
 			_menu.removeFromParent(true);
 			_menu = null;
+			
+			_background.removeFromParent(true);
+			_background = null;
 			
 			_personalInformationsContainer.removeFromParent(true);
 			_personalInformationsContainer = null;
