@@ -136,7 +136,7 @@ package com.ludofactory.mobile.navigation.home
 			{
 				var padding:int;
 				var buttonHeight:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 148) : 128);
-				var gap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 10 : 30) : (AbstractGameInfo.LANDSCAPE ? 30 : 60));
+				var gap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 10 : 50) : (AbstractGameInfo.LANDSCAPE ? 30 : 80));
 				
 				// 1) scale the logo
 				if( _giftsButton )
