@@ -45,11 +45,7 @@ package com.ludofactory.mobile.navigation
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	
-	//------------------------------------------------------------------------------------------------------------
-	//	TODO : Supprimer le summary container devenu useless
-	//------------------------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Application footer.
 	 */	

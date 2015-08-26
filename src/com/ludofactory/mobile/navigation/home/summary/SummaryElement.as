@@ -43,6 +43,7 @@ package com.ludofactory.mobile.navigation.home.summary
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
 	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
 	import starling.utils.VAlign;
 	import starling.utils.formatString;
 	
@@ -71,7 +72,7 @@ package com.ludofactory.mobile.navigation.home.summary
 		 * The icon texture name. */		
 		private var _iconTextureName:String;
 		
-		private var _calloutLabel:Label;
+		private var _calloutLabel:TextField;
 		
 		private var _isCalloutDisplaying:Boolean = false;
 		
@@ -96,7 +97,8 @@ package com.ludofactory.mobile.navigation.home.summary
 		{
 			super.initialize();
 			
-			_calloutLabel = new Label();
+			_calloutLabel = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY);
+			_calloutLabel.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
 			
 			switch(_stakeType)
 			{
@@ -211,9 +213,6 @@ package com.ludofactory.mobile.navigation.home.summary
 					_label.height = _background.height;
 					_label.y = ((this.actualHeight - _icon.height - scaleAndRoundToDpi(10)) - _label.height) * 0.5 + _icon.height;
 				}
-				
-				_calloutLabel.width = GlobalConfig.stageWidth * 0.9;
-				_calloutLabel.validate();
 				
 				_particles.emitterX = _particles.emitterXVariance = actualWidth * 0.5;
 				_particles.emitterY = _particles.emitterYVariance = actualHeight * 0.5;
@@ -366,7 +365,6 @@ package com.ludofactory.mobile.navigation.home.summary
 					callout.touchable = false;
 					callout.disposeContent = false;
 					callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
-					_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 					
 					if( !MemberManager.getInstance().isLoggedIn() && (_stakeType == StakeType.TOKEN || MemberManager.getInstance().getNumTokens() == 0))
 					{
