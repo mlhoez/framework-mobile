@@ -296,7 +296,7 @@ package com.ludofactory.mobile.navigation.alert
 								
 								_accessButton.text = _("S'identifier");
 								_accessButton.visible = true;
-								_message.text = formatString(_n("{0} Rubis sera comptabilisée pour le tournoi en cours dès que vous serez identifié.", "{0} Rubis seront comptabilisées pour le tournoi en cours dès que vous serez identifié.", MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions());
+								_message.text = formatString(_n("{0} Rubis sera comptabilisé pour le tournoi en cours dès que vous serez identifié.", "{0} Rubis seront comptabilisés pour le tournoi en cours dès que vous serez identifié.", MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions());
 								break;
 							}
 							case AlertType.ANONYMOUS_TROPHIES:
