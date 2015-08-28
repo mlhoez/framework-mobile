@@ -66,7 +66,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * The member's id */		
-		private var _id:int = 0;
+		private var _id:Number = 0;
 		
 		/**
 		 * The member's mail */		
@@ -174,7 +174,7 @@ package com.ludofactory.mobile.core.manager
 		 */		
 		public function parseData(memberData:Object):void
 		{
-			if( "id_membre" in memberData && memberData.id_membre != null )                     _id = int(memberData.id_membre);
+			if( "id_membre" in memberData && memberData.id_membre != null )                     _id = Number(memberData.id_membre);
 			if( "mail" in memberData && memberData.mail != null )                               _mail = String(memberData.mail);
 			if( "mdp" in memberData && memberData.mdp != null )                                 _password = String(memberData.mdp);
 			if( "pseudo" in memberData && memberData.pseudo != null )                           _pseudo = String(memberData.pseudo);
@@ -235,8 +235,8 @@ package com.ludofactory.mobile.core.manager
 		public function get numCreditsBought():int { return _numCreditsBought; }
 		public function set numCreditsBought(val:int):void { _numCreditsBought = val; }
 		
-		public function get id():int { return _id; }
-		public function set id(val:int):void { _id = val; }
+		public function get id():Number { return _id; }
+		public function set id(val:Number):void { _id = val; }
 		
 		public function get mail():String { return _mail; }
 		public function set mail(val:String):void { _mail = val; }

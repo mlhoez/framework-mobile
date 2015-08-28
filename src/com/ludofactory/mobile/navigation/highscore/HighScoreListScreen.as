@@ -469,7 +469,7 @@ package com.ludofactory.mobile.navigation.highscore
 			_selectedCountryId = _countriesList.selectedItem.id;
 			
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("HighScores", "Affichage du classement " + _countryChoiceValue, null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("HighScores", "Affichage du classement " + _countryChoiceValue, null, NaN, MemberManager.getInstance().id);
 			
 			_isInUpdateMode = false;
 			

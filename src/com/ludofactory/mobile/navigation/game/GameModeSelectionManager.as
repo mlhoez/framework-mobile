@@ -70,7 +70,7 @@ package com.ludofactory.mobile.navigation.game
 				_popup.animateIn();
 			
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Accueil", "Affichage du choix du mode de jeu", null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Accueil", "Affichage du choix du mode de jeu", null, NaN, MemberManager.getInstance().id);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

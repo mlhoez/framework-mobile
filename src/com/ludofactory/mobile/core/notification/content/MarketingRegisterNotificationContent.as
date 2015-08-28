@@ -153,7 +153,7 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			Flox.logEvent("Affichages popup marketing inscription", {Action:"Creation"});
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Popup marketing inscription", "Clic sur création de compte", null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Popup marketing inscription", "Clic sur création de compte", null, NaN, MemberManager.getInstance().id);
 			AuthenticationManager.startAuthenticationProcess(AbstractEntryPoint.screenNavigator, AbstractEntryPoint.screenNavigator.activeScreenID);
 			onClose();
 		}
@@ -162,7 +162,7 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			Flox.logEvent("Affichages popup marketing inscription", {Action:"Annulation"});
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Popup marketing inscription", "Annulation", null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Popup marketing inscription", "Annulation", null, NaN, MemberManager.getInstance().id);
 			AbstractEntryPoint.screenNavigator.showScreen( _continueScreenId );
 			onClose();
 		}
@@ -170,7 +170,7 @@ package com.ludofactory.mobile.core.notification.content
 		private function onAlreadyHaveAccount(event:Event):void
 		{
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Popup marketing inscription", "Connexion à un compte existant", null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Popup marketing inscription", "Connexion à un compte existant", null, NaN, MemberManager.getInstance().id);
 			AuthenticationManager.startAuthenticationProcess(AbstractEntryPoint.screenNavigator, AbstractEntryPoint.screenNavigator.activeScreenID);
 			onClose();
 		}

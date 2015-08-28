@@ -125,7 +125,7 @@ package com.ludofactory.mobile.core.notification.content
 			PushNotification.getInstance().registerForPushNotification(AbstractGameInfo.GCM_SENDER_ID);
 			
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Popup activation notifications push", "Activation", null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Popup activation notifications push", "Activation", null, NaN, MemberManager.getInstance().id);
 		}
 		
 		/**
@@ -157,7 +157,7 @@ package com.ludofactory.mobile.core.notification.content
 		private function onCancel(event:Event):void
 		{
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Popup activation notifications push", "Annulation", null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Popup activation notifications push", "Annulation", null, NaN, MemberManager.getInstance().id);
 			AbstractEntryPoint.screenNavigator.showScreen(_completeScreenId);
 			close();
 		}

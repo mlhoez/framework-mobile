@@ -425,7 +425,7 @@ package com.ludofactory.mobile.core
 				if( MemberManager.getInstance().isLoggedIn() )
 				{
 					var dict:Dictionary = new Dictionary();
-					dict[VidCoinController.kVCUserGameID] = MemberManager.getInstance().getId();
+					dict[VidCoinController.kVCUserGameID] = MemberManager.getInstance().id;
 					dict[VidCoinController.kVCUserBirthYear] = MemberManager.getInstance().getBirthDate().split("-")[0];
 					dict[VidCoinController.kVCUserGenderKey]= MemberManager.getInstance().getTitle() == "Mr." ? VidCoinController.kVCUserGenderMale : VidCoinController.kVCUserGenderFemale;
 					vidCoin.updateUserDictionary(dict);

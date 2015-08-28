@@ -355,9 +355,9 @@ package com.ludofactory.mobile.navigation.authentication
 					{
 						// Track subscription
 						if( GAnalytics.isSupported() )
-							GAnalytics.analytics.defaultTracker.trackEvent("Inscription", "Inscription", null, NaN, MemberManager.getInstance().getId());
+							GAnalytics.analytics.defaultTracker.trackEvent("Inscription", "Inscription", null, NaN, MemberManager.getInstance().id);
 						
-						Flox.logWarning("Nouvelle inscription Facebook du membre : (" + MemberManager.getInstance().getId() + ")");
+						Flox.logWarning("Nouvelle inscription Facebook du membre : (" + MemberManager.getInstance().id + ")");
 						Flox.logEvent("Inscriptions", { Type:"Facebook" });
 					}
 					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ((MemberManager.getInstance().getFacebookId() != 0) ? ScreenIds.HOME_SCREEN : ScreenIds.REGISTER_COMPLETE_SCREEN) ]);

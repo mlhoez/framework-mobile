@@ -107,7 +107,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 				_titleControl.selectedItem = _(_personalInformations.titre);
 			
 			_idControl = new Label();
-			_idControl.text = "" + MemberManager.getInstance().getId();
+			_idControl.text = "" + MemberManager.getInstance().id;
 			
 			_lastNameControl = new TextInput();
 			_lastNameControl.text = _personalInformations.nom;

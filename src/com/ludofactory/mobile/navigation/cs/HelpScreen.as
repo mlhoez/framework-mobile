@@ -188,7 +188,7 @@ package com.ludofactory.mobile.navigation.cs
 		{
 			Flox.logInfo("Ouverture de la popup de nouveau message au service client.");
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Ouverture formulaire Service Client", null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Ouverture formulaire Service Client", null, NaN, MemberManager.getInstance().id);
 			//NotificationManager.addNotification( new CSNewThreadNotification(), onCloseNewMessageNotification );
 			NotificationPopupManager.addNotification( new CSNewThreadNotificationContent(), onCloseNewMessageNotification );
 		}
@@ -229,7 +229,7 @@ package com.ludofactory.mobile.navigation.cs
 						_solvedMessagesContent.visible = false;
 					
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Affichage des problèmes en cours", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Affichage des problèmes en cours", null, NaN, MemberManager.getInstance().id);
 					
 					break;
 				}
@@ -248,7 +248,7 @@ package com.ludofactory.mobile.navigation.cs
 					_solvedMessagesContent.visible = true;
 					
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Affichage des problèmes résolus", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Affichage des problèmes résolus", null, NaN, MemberManager.getInstance().id);
 					
 					break;
 				}

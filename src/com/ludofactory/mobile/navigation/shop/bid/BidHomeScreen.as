@@ -150,7 +150,7 @@ package com.ludofactory.mobile.navigation.shop.bid
 						_comingSoonBidsContainer.visible = false;
 					
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Enchères en cours", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Enchères en cours", null, NaN, MemberManager.getInstance().id);
 					
 					break;
 				}
@@ -171,7 +171,7 @@ package com.ludofactory.mobile.navigation.shop.bid
 					_finishedBidsContainer.visible = true;
 					
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Enchères terminées", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Enchères terminées", null, NaN, MemberManager.getInstance().id);
 					
 					break;
 				}
@@ -192,7 +192,7 @@ package com.ludofactory.mobile.navigation.shop.bid
 					_comingSoonBidsContainer.visible = true;
 					
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Enchères à venir", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Enchères à venir", null, NaN, MemberManager.getInstance().id);
 					
 					break;
 				}
@@ -207,7 +207,7 @@ package com.ludofactory.mobile.navigation.shop.bid
 			Flox.logInfo("Affichage de l'enchère en cours <strong>{0} - {1}</strong>", PendingBidItemData(event.data).id, PendingBidItemData(event.data).name);
 			//NotificationManager.addNotification( new PendingBidDetailNotification( PendingBidItemData(event.data) ), onClosePendingBidDetailNotification, false );
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Affichage de l'enchère en cours " + PendingBidItemData(event.data).id + " - " + PendingBidItemData(event.data).name, null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Affichage de l'enchère en cours " + PendingBidItemData(event.data).id + " - " + PendingBidItemData(event.data).name, null, NaN, MemberManager.getInstance().id);
 			NotificationPopupManager.addNotification( new PendingBidDetailNotificationContent(PendingBidItemData(event.data)), onClosePendingBidDetailNotification);
 		}
 		
@@ -230,7 +230,7 @@ package com.ludofactory.mobile.navigation.shop.bid
 			Flox.logInfo("Affichage de l'enchère terminée <strong>{0} - {1}</strong>", FinishedBidItemData(event.data).name, FinishedBidItemData(event.data).winnerName);
 			//NotificationManager.addNotification( new FinishedBidDetailNotification( FinishedBidItemData(event.data) ) );
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Affichage de l'enchère terminée " + FinishedBidItemData(event.data).name + " - " + FinishedBidItemData(event.data).winnerName, null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Affichage de l'enchère terminée " + FinishedBidItemData(event.data).name + " - " + FinishedBidItemData(event.data).winnerName, null, NaN, MemberManager.getInstance().id);
 			NotificationPopupManager.addNotification( new FinishedBidDetailNotificationContent( FinishedBidItemData(event.data) ) );
 		}
 		
@@ -242,7 +242,7 @@ package com.ludofactory.mobile.navigation.shop.bid
 			Flox.logInfo("Affichage de l'enchère à venir <strong>{0}</strong>", ComingSoonBidItemData(event.data).description);
 			//NotificationManager.addNotification( new ComingSoonBidDetailNotification( ComingSoonBidItemData(event.data) ) );
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Affichage de l'enchère à venir " + ComingSoonBidItemData(event.data).description, null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Enchères", "Affichage de l'enchère à venir " + ComingSoonBidItemData(event.data).description, null, NaN, MemberManager.getInstance().id);
 			NotificationPopupManager.addNotification( new ComingSoonBidDetailNotificationContent( ComingSoonBidItemData(event.data) ) );
 		}
 		

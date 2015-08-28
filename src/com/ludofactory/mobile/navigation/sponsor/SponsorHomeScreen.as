@@ -278,7 +278,7 @@ package com.ludofactory.mobile.navigation.sponsor
 		private function onKnowMoreSelected(event:Event):void
 		{
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Accueil parrainage", "Popup de plus d'informations", null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Accueil parrainage", "Popup de plus d'informations", null, NaN, MemberManager.getInstance().id);
 			NotificationPopupManager.addNotification( new SponsorNotificationContent() );
 		}
 		

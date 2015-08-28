@@ -12,8 +12,8 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractMain;
-	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
+	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.push.PushNewCSMessage;
@@ -191,7 +191,7 @@ package com.ludofactory.mobile.core.manager
 			if( AbstractEntryPoint.vidCoin )
 			{
 				var dict:Dictionary = new Dictionary();
-				dict[VidCoinController.kVCUserGameID] = getId();
+				dict[VidCoinController.kVCUserGameID] = _member.id;
 				dict[VidCoinController.kVCUserBirthYear] = getBirthDate().split("-")[0];
 				dict[VidCoinController.kVCUserGenderKey]= getTitle() == "Mr." ? VidCoinController.kVCUserGenderMale : VidCoinController.kVCUserGenderFemale;
 				AbstractEntryPoint.vidCoin.updateUserDictionary(dict);
@@ -290,6 +290,10 @@ package com.ludofactory.mobile.core.manager
 		
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set (new)
+		
+		/**
+		 * The member id. */
+		public function get id():Number { return _member.id; }
 		
 		/**
 		 * The highscore is updated only when a push of a GameSession has failed (if there is a highscore of course),
@@ -475,8 +479,6 @@ package com.ludofactory.mobile.core.manager
 			_member.facebookTokenExpiryTimestamp = value;
 		}
 		
-		/** Returns the member's id. */		
-		public function getId():int { return _member.id; }
 		/** Returns the member's Facebook id. */		
 		public function getFacebookId():Number { return _member.facebookId; }
 		/** Returns the member's mail. */		

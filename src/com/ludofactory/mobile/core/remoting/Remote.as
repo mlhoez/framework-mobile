@@ -919,7 +919,7 @@ package com.ludofactory.mobile.core.remoting
 		private function getGenericParams():Object
 		{
 			var genericParam:Object = {};
-			genericParam.id_membre = MemberManager.getInstance().getId();
+			genericParam.id_membre = MemberManager.getInstance().id;
 			genericParam.mail = MemberManager.getInstance().getMail();
 			genericParam.mdp = MemberManager.getInstance().getPassword();
 			genericParam.langue = LanguageManager.getInstance().lang;

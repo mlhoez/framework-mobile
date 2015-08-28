@@ -43,7 +43,7 @@ package com.ludofactory.mobile.core.controls
 			
 			// track screens with Google Analytics
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackScreenView(screenID, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackScreenView(screenID, MemberManager.getInstance().id);
 			
 			// log the navigation in Flox
 			Flox.logInfo("\t<strong>&rarr; " + screenID + "</strong>");

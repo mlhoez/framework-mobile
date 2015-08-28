@@ -762,7 +762,7 @@ package com.ludofactory.mobile.navigation.engine
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				if( GAnalytics.isSupported() )
-					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Rejouer", null, NaN, MemberManager.getInstance().getId());
+					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Rejouer", null, NaN, MemberManager.getInstance().id);
 				
 				TweenMax.killAll();
 				_homeButton.isEnabled = false;
@@ -786,7 +786,7 @@ package com.ludofactory.mobile.navigation.engine
 			{
 				TweenMax.killAll();
 				if( GAnalytics.isSupported() )
-					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection boutique", null, NaN, MemberManager.getInstance().getId());
+					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection boutique", null, NaN, MemberManager.getInstance().id);
 				advancedOwner.showScreen( ScreenIds.BOUTIQUE_HOME );
 			}
 			touch = null;
@@ -802,7 +802,7 @@ package com.ludofactory.mobile.navigation.engine
 			{
 				TweenMax.killAll();
 				if( GAnalytics.isSupported() )
-					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection tournoi", null, NaN, MemberManager.getInstance().getId());
+					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection tournoi", null, NaN, MemberManager.getInstance().id);
 				advancedOwner.showScreen( ScreenIds.TOURNAMENT_RANKING_SCREEN );
 			}
 			touch = null;
@@ -816,7 +816,7 @@ package com.ludofactory.mobile.navigation.engine
 			{
 				TweenMax.killAll();
 				if( GAnalytics.isSupported() )
-					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection boutique (non connecté)", null, NaN, MemberManager.getInstance().getId());
+					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection boutique (non connecté)", null, NaN, MemberManager.getInstance().id);
 				advancedOwner.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
 			}
 			touch = null;

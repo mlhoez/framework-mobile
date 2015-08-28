@@ -234,7 +234,7 @@ package com.ludofactory.mobile.navigation.tournament
 			{
 				advancedOwner.screenData.previousTournementId = int(event.data);
 				if( GAnalytics.isSupported() )
-					GAnalytics.analytics.defaultTracker.trackEvent("Anciens tournois", "Affichage de l'ancien tournoi n°" + advancedOwner.screenData.previousTournementId, null, NaN, MemberManager.getInstance().getId());
+					GAnalytics.analytics.defaultTracker.trackEvent("Anciens tournois", "Affichage de l'ancien tournoi n°" + advancedOwner.screenData.previousTournementId, null, NaN, MemberManager.getInstance().id);
 				advancedOwner.showScreen( ScreenIds.PREVIOUS_TOURNAMENTS_DETAIL_SCREEN );
 			}
 		}

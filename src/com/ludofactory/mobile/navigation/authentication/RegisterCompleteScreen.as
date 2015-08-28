@@ -86,7 +86,7 @@ package com.ludofactory.mobile.navigation.authentication
 			
 			// Track registration
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Inscription", "Inscription", null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Inscription", "Inscription", null, NaN, MemberManager.getInstance().id);
 			
 			// Track registration
 			try
@@ -98,7 +98,7 @@ package com.ludofactory.mobile.navigation.authentication
 				
 			}
 			
-			Flox.logWarning("Nouvelle inscription du membre : (" + MemberManager.getInstance().getId() + ")");
+			Flox.logWarning("Nouvelle inscription du membre : (" + MemberManager.getInstance().id + ")");
 			Flox.logEvent("Inscriptions", { Type:"Normale" });
 		}
 		

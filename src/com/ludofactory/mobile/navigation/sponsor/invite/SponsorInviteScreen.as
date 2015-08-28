@@ -721,7 +721,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			//TweenMax.delayedCall(0.5, _singleInviteNameInput.setFocus);
 			
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Parrainage", "Ouverture invitation individuelle", null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Parrainage", "Ouverture invitation individuelle", null, NaN, MemberManager.getInstance().id);
 		}
 		
 		private function onTouchOverlay(event:TouchEvent):void
@@ -776,7 +776,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 		private function onInvite(event:Event):void
 		{
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Parrainage", "Envoi invitation individuelle", null, NaN, MemberManager.getInstance().getId());
+				GAnalytics.analytics.defaultTracker.trackEvent("Parrainage", "Envoi invitation individuelle", null, NaN, MemberManager.getInstance().id);
 			
 			if(_singleInviteNameInput.text == "")
 			{

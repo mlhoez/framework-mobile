@@ -128,7 +128,7 @@ package com.ludofactory.mobile.navigation.account
 						_paymentsHistoryContainer.visible = false;
 					
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Mon Compte", "Informations personnelles", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Mon Compte", "Informations personnelles", null, NaN, MemberManager.getInstance().id);
 					
 					break;
 				}
@@ -151,7 +151,7 @@ package com.ludofactory.mobile.navigation.account
 						_paymentsHistoryContainer.visible = true;
 					
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Mon Compte", "Historique du compte", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Mon Compte", "Historique du compte", null, NaN, MemberManager.getInstance().id);
 					
 					break;
 				}
@@ -174,7 +174,7 @@ package com.ludofactory.mobile.navigation.account
 						_accountHistoryContainer.visible = true;
 					
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Mon Compte", "Historique des paiements", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Mon Compte", "Historique des paiements", null, NaN, MemberManager.getInstance().id);
 					
 					break;
 				}

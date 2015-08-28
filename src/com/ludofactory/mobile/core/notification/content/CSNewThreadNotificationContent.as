@@ -239,7 +239,7 @@ package com.ludofactory.mobile.core.notification.content
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
 				if( GAnalytics.isSupported() )
-					GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Validation de la demande du Service Client", null, NaN, MemberManager.getInstance().getId());
+					GAnalytics.analytics.defaultTracker.trackEvent("Aide", "Validation de la demande du Service Client", null, NaN, MemberManager.getInstance().id);
 				Remote.getInstance().createNewCustomerServiceThread( CSThemeData(_themesList.selectedItem).id, (_mailInput ? _mailInput.text:null), _messageInput.text, onThreadCreateSuccess, onThreadCreateFailure, onThreadCreateFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 			}
 			else

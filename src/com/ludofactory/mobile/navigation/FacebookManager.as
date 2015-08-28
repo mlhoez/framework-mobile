@@ -271,7 +271,7 @@ package com.ludofactory.mobile.navigation
 					}
 					case MODE_ASSOCIATING:
 					{
-						Remote.getInstance().associateAccount(MemberManager.getInstance().getId(), formattedUserData.id_facebook, formattedUserData.mail, formattedUserData.prenom, formattedUserData.nom, formattedUserData.ville, formattedUserData.date_naissance, formattedUserData.titre, onFacebookAssociationSuccess, onFacebookAssociationFailure, onFacebookAssociationFailure, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+						Remote.getInstance().associateAccount(MemberManager.getInstance().id, formattedUserData.id_facebook, formattedUserData.mail, formattedUserData.prenom, formattedUserData.nom, formattedUserData.ville, formattedUserData.date_naissance, formattedUserData.titre, onFacebookAssociationSuccess, onFacebookAssociationFailure, onFacebookAssociationFailure, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
 						break;
 					}
 					case MODE_PUBLISHING:

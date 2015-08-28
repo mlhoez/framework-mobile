@@ -381,7 +381,7 @@ package com.ludofactory.mobile.navigation.news
 								// the app is installed on the device, then open it
 								request.url = _data.urlScheme;
 								if( GAnalytics.isSupported() )
-									GAnalytics.analytics.defaultTracker.trackEvent("News", "Redirection vers l'app (app déjà installée) " + _data.urlScheme, null, NaN, MemberManager.getInstance().getId());
+									GAnalytics.analytics.defaultTracker.trackEvent("News", "Redirection vers l'app (app déjà installée) " + _data.urlScheme, null, NaN, MemberManager.getInstance().id);
 							}
 							else if( _data.link != null && _data.link != "" )
 							{
@@ -398,7 +398,7 @@ package com.ludofactory.mobile.navigation.news
 									
 								}*/
 								if( GAnalytics.isSupported() )
-									GAnalytics.analytics.defaultTracker.trackEvent("News", "Redirection vers le store (app non installée) " + _data.link, null, NaN, MemberManager.getInstance().getId());
+									GAnalytics.analytics.defaultTracker.trackEvent("News", "Redirection vers le store (app non installée) " + _data.link, null, NaN, MemberManager.getInstance().id);
 								request.url = _data.link;
 							}
 						}
@@ -406,7 +406,7 @@ package com.ludofactory.mobile.navigation.news
 						{
 							// redirect to the link if defined
 							if( GAnalytics.isSupported() )
-								GAnalytics.analytics.defaultTracker.trackEvent("News", "News normale, redirection vers " + _data.link, null, NaN, MemberManager.getInstance().getId());
+								GAnalytics.analytics.defaultTracker.trackEvent("News", "News normale, redirection vers " + _data.link, null, NaN, MemberManager.getInstance().id);
 							request.url = _data.link;
 						}
 						

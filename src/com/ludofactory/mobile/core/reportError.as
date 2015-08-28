@@ -65,7 +65,7 @@ package com.ludofactory.mobile.core
 				if(Logger.textLogged != "")
 					objCall.textLogged = Logger.textLogged;
 				
-				objCall.memberId = MemberManager.getInstance().getId();
+				objCall.memberId = MemberManager.getInstance().id;
 				objCall.gameName = AbstractGameInfo.GAME_NAME;
 				objCall.plateforme = GlobalConfig.platformName;
 				objCall.deviceType = GlobalConfig.isPhone ? "smartphone":"tablette";

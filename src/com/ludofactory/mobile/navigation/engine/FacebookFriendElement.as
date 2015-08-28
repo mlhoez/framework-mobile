@@ -95,7 +95,7 @@ package com.ludofactory.mobile.navigation.engine
 			_currentScore = int(data.score);
 			_previousScore = int(data.last_score);
 			_name = data.nom;
-			_isMe = MemberManager.getInstance().getId() == int(data.id);
+			_isMe = MemberManager.getInstance().id == int(data.id);
 			_arrayPosition = arrayPosition;
 		}
 		

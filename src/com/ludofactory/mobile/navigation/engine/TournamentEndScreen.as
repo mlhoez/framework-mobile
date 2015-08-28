@@ -1022,7 +1022,7 @@ package com.ludofactory.mobile.navigation.engine
 				if( advancedOwner.screenData.gameData.displayPushAlert )
 				{
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Affichage popup notifications push", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Affichage popup notifications push", null, NaN, MemberManager.getInstance().id);
 					//NotificationManager.addNotification( new EventPushNotification(ScreenIds.HOME_SCREEN) );
 					NotificationPopupManager.addNotification( new EventPushNotificationContent(ScreenIds.HOME_SCREEN) );
 				}
@@ -1030,7 +1030,7 @@ package com.ludofactory.mobile.navigation.engine
 				{
 					TweenMax.killAll();
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Redirection accueil", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Redirection accueil", null, NaN, MemberManager.getInstance().id);
 					this.advancedOwner.showScreen( ScreenIds.HOME_SCREEN  );
 				}
 			}
@@ -1055,7 +1055,7 @@ package com.ludofactory.mobile.navigation.engine
 				if( advancedOwner.screenData.gameData.displayPushAlert )
 				{
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Affichage popup notifications push", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Affichage popup notifications push", null, NaN, MemberManager.getInstance().id);
 					//NotificationManager.addNotification( new EventPushNotification(ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
 					NotificationPopupManager.addNotification( new EventPushNotificationContent(ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
 				}
@@ -1063,7 +1063,7 @@ package com.ludofactory.mobile.navigation.engine
 				{
 					TweenMax.killAll();
 					if( GAnalytics.isSupported() )
-						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Rejouer", null, NaN, MemberManager.getInstance().getId());
+						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Rejouer", null, NaN, MemberManager.getInstance().id);
 					this.advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
 				}
 			}
