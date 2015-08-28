@@ -171,8 +171,8 @@ package com.ludofactory.mobile.navigation.game
 				else
 				{
 					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
-					buttonGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 15 : 30);
-					titleGap = scaleAndRoundToDpi(_withTokens ? 20 : 60);
+					buttonGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60);
+					titleGap = scaleAndRoundToDpi(_withTokens ? 50 : 100);
 					
 					_title.width = actualWidth;
 					_title.validate();
