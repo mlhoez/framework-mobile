@@ -544,7 +544,7 @@ package com.ludofactory.mobile.core
 			
 			// update earned values in any cases
 			if( _gameSession.gameType == GameMode.SOLO ) MemberManager.getInstance().points = ( MemberManager.getInstance().points + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
-			else MemberManager.getInstance().setCumulatedStars( MemberManager.getInstance().getCumulatedStars() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+			else MemberManager.getInstance().cumulatedRubies = ( MemberManager.getInstance().cumulatedRubies + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			
 			_nextScreenId = _gameSession.gameType == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
 			if( MemberManager.getInstance().highscore != 0 && _gameSession.score > MemberManager.getInstance().highscore )

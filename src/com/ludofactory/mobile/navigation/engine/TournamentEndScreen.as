@@ -600,10 +600,10 @@ package com.ludofactory.mobile.navigation.engine
 				_cumulatedStarsContainer.validate();
 				_scoreValueLabel.width = _scoreContainer.width - _scoreTitleLabel.width;
 				
-				_cumulatedStarsValueLabel.text = String(MemberManager.getInstance().getCumulatedStars()) + " ";
+				_cumulatedStarsValueLabel.text = String(MemberManager.getInstance().cumulatedRubies) + " ";
 				_cumulatedStarsValueLabel.validate();
 				_cumulatedStarsValueLabel.width = _cumulatedStarsValueLabel.width;
-				_cumulatedStarsValueLabel.text = "" + ( MemberManager.getInstance().getCumulatedStars() - advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+				_cumulatedStarsValueLabel.text = "" + ( MemberManager.getInstance().cumulatedRubies - advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 				
 				_scoreContainer.y = (((_logo.y + _logo.height) + (maxElementsHeight - (_scoreContainer.height + _starsContainer.height + _cumulatedStarsContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 140))) * 0.5)) << 0;
 				_starsContainer.y = _scoreContainer.y + _scoreContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 70);
@@ -816,7 +816,7 @@ package com.ludofactory.mobile.navigation.engine
 			/*_oldTweenValue =  ( MemberManager.getInstance().getCumulatedStars() - advancedOwner.screenData.gameData.numStarsOrPointsEarned < 0 ? 0:(MemberManager.getInstance().getCumulatedStars() - advancedOwner.screenData.gameData.numStarsOrPointsEarned) );
 			_targetTweenValue =  MemberManager.getInstance().getCumulatedStars();
 			TweenMax.to(this, 0.5, { delay:1.5, _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _cumulatedStarsValueLabel.text = Utility.splitThousands(_oldTweenValue); }, onComplete:onCumulatedStarsAnimationFinished, ease:Expo.easeInOut } );*/
-			TweenMax.delayedCall(1.5, function():void{ _cumulatedStarsValueLabel.text = Utilities.splitThousands( MemberManager.getInstance().getCumulatedStars()); });
+			TweenMax.delayedCall(1.5, function():void{ _cumulatedStarsValueLabel.text = Utilities.splitThousands( MemberManager.getInstance().cumulatedRubies); });
 			TweenMax.delayedCall(1.5, onCumulatedStarsAnimationFinished);
 		}
 		
@@ -841,7 +841,7 @@ package com.ludofactory.mobile.navigation.engine
 			_continueButton.isEnabled = false;
 			
 			_scoreValueLabel.text = String(advancedOwner.screenData.gameData.score);
-			_cumulatedStarsValueLabel.text = "" + MemberManager.getInstance().getCumulatedStars();
+			_cumulatedStarsValueLabel.text = "" + MemberManager.getInstance().cumulatedRubies;
 			
 			var starShadow:Image;
 			var globalPoint:Point;

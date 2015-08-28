@@ -792,7 +792,7 @@ package com.ludofactory.mobile.core.remoting
 						MemberManager.getInstance().setAnonymousGameSessionsAlreadyUsed(true);
 						MemberManager.getInstance().tokens = 0;
 						MemberManager.getInstance().points = 0;
-						MemberManager.getInstance().setCumulatedStars(0);
+						MemberManager.getInstance().cumulatedRubies = 0;
 						MemberManager.getInstance().setAnonymousGameSessions([]);
 					}
 				}

@@ -321,6 +321,17 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * The update date (when the member object have been updated for the last time). */
 		public function get lastUpdateDate():String { return _member.updateDate; }
+		/**
+		 * The member number of cumulated rubies for the current tournament. */
+		public function get cumulatedRubies():int { return _member.cumulatedStars; }
+		public function set cumulatedRubies(val:int):void
+		{
+			if( _member.cumulatedStars != val )
+			{
+				_member.cumulatedStars= val;
+				setEncryptedMember();
+			}
+		}
 		
 		/**
 		 * The member won trophies. */
@@ -407,21 +418,6 @@ package com.ludofactory.mobile.core.manager
 		
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
-		
-		
-		
-		
-		/**
-		 * Updates the number of cumulated stars.
-		 */		
-		public function setCumulatedStars(val:int):void
-		{
-			if( _member.cumulatedStars != val )
-			{
-				_member.cumulatedStars= val;
-				setEncryptedMember();
-			}
-		}
 		
 		
 		
@@ -523,18 +519,9 @@ package com.ludofactory.mobile.core.manager
 		
 		
 		
-		/** Returns the member's number of cumulated stars for the current tournament. */		
-		public function getCumulatedStars():int { return _member.cumulatedStars; }
-		
-		
-		
-		
-		
-		
 		
 		/** Returns the member's elements to push. */		
 		public function getElementsToPush():Vector.<AbstractElementToPush> { return _member.elementsToPush; }
-		
 		/** Returns the array of anonymous game sessions. */		
 		public function getAnonymousGameSessions():Array { return _member.anonymousGameSessions; }
 		/** Returns */		
