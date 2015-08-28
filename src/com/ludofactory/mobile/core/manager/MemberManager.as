@@ -319,10 +319,25 @@ package com.ludofactory.mobile.core.manager
 		 * The member number of credits bought. */
 		public function get numCreditsBought():int { return _member.numCreditsBought; }
 		/**
+		 * The update date (when the member object have been updated for the last time). */
+		public function get lastUpdateDate():String { return _member.updateDate; }
+		
+		/**
 		 * The member won trophies. */
 		public function get trophiesWon():Array { return _member.trophiesWon; }
-		/** The update date (when the member object have been updated for the last time). */
-		public function get lastUpdateDate():String { return _member.updateDate; }
+		public function set trophiesWon(val:Array):void
+		{
+			var len:int = val.length;
+			for(var i:int = 0; i < len; i++)
+			{
+				if( _member.trophiesWon.indexOf( val[i] ) == -1 )
+				{
+					_member.trophiesWon = val;
+					setEncryptedMember();
+					return;
+				}
+			}
+		}
 		
 		/**
 		 * The member number of credits. */
@@ -408,22 +423,7 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
-		/**
-		 * Updates the list of won trophies.
-		 */		
-		public function setTrophiesWon(val:Array):void
-		{
-			var len:int = val.length;
-			for(var i:int = 0; i < len; i++)
-			{
-				if( _member.trophiesWon.indexOf( val[i] ) == -1 )
-				{
-					_member.trophiesWon = val;
-					setEncryptedMember();
-					return;
-				}
-			}
-		}
+		
 		
 		/**
 		 * Updates the elements to push.

@@ -112,7 +112,7 @@ package com.ludofactory.mobile.navigation.achievements
 			MemberManager.getInstance().setLastTrophyWonId(trophyId);
 			_trophiesWon = MemberManager.getInstance().trophiesWon.concat();
 			_trophiesWon.push(trophyId);
-			MemberManager.getInstance().setTrophiesWon(_trophiesWon);
+			MemberManager.getInstance().trophiesWon = _trophiesWon;
 			
 			if( _currentGameSession )
 				_currentGameSession.trophiesWon.push( trophyId );

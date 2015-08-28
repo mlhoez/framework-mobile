@@ -813,7 +813,7 @@ package com.ludofactory.mobile.core.remoting
 					MemberManager.getInstance().highscore = int(result.highscore);
 				
 				if( MemberManager.getInstance().isLoggedIn() && "tab_trophy_win" in result )
-					MemberManager.getInstance().setTrophiesWon( result.tab_trophy_win as Array ); // TODO peut être afficher les trophées ici ? canWin... si oui => onWinTrophy...
+					MemberManager.getInstance().trophiesWon = result.tab_trophy_win as Array; // TODO peut être afficher les trophées ici ? canWin... si oui => onWinTrophy...
 				
 				if( MemberManager.getInstance().isLoggedIn() && "acces_tournoi" in result &&  queryName != "LudoMobile.useClass.ServeurJeux.pushPartie" )
 				{
