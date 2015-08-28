@@ -320,7 +320,7 @@ package com.ludofactory.mobile.core.manager
 		public function get numCreditsBought():int { return _member.numCreditsBought; }
 		/**
 		 * The member won trophies. */
-		public function getTrophiesWon():Array { return _member.trophiesWon; }
+		public function get trophiesWon():Array { return _member.trophiesWon; }
 		
 		
 		/**

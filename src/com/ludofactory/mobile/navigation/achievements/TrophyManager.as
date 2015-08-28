@@ -65,7 +65,7 @@ package com.ludofactory.mobile.navigation.achievements
 		 */		
 		public function getTrophyDataById(trophyId:int):TrophyData
 		{
-			_trophiesWon = MemberManager.getInstance().getTrophiesWon().concat();
+			_trophiesWon = MemberManager.getInstance().trophiesWon.concat();
 			for(var i:int = 0; i < _trophiesData.length; i++)
 			{
 				if( TrophyData(_trophiesData[i]).id == trophyId )
@@ -86,7 +86,7 @@ package com.ludofactory.mobile.navigation.achievements
 		 */		
 		public function canWinTrophy(trophyId:int):Boolean
 		{
-			_trophiesWon = MemberManager.getInstance().getTrophiesWon().concat();
+			_trophiesWon = MemberManager.getInstance().trophiesWon.concat();
 			for(var i:int = 0; i < _trophiesWon.length; i++)
 			{
 				if( _trophiesWon[i] == trophyId)
@@ -110,7 +110,7 @@ package com.ludofactory.mobile.navigation.achievements
 		public function onWinTrophy(trophyId:int):void
 		{
 			MemberManager.getInstance().setLastTrophyWonId(trophyId);
-			_trophiesWon = MemberManager.getInstance().getTrophiesWon().concat();
+			_trophiesWon = MemberManager.getInstance().trophiesWon.concat();
 			_trophiesWon.push(trophyId);
 			MemberManager.getInstance().setTrophiesWon(_trophiesWon);
 			
