@@ -158,7 +158,7 @@ package com.ludofactory.mobile.navigation.engine
 				_facebookButton = new Button();
 				_facebookButton.alpha = 0;
 				_facebookButton.defaultIcon = _facebookIcon;
-				_facebookButton.label = MemberManager.getInstance().getFacebookId() != 0 ? _("Publier") : _("Associer");
+				_facebookButton.label = MemberManager.getInstance().facebookId != 0 ? _("Publier") : _("Associer");
 				_facebookButton.addEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
 				addChild(_facebookButton);
 				_facebookButton.iconPosition = Button.ICON_POSITION_LEFT;
@@ -173,7 +173,7 @@ package com.ludofactory.mobile.navigation.engine
 			addChild(_confettis);
 			Starling.juggler.add(_confettis);
 			
-			if( MemberManager.getInstance().isLoggedIn() && GoViral.isSupported() && GoViral.goViral.isFacebookSupported() && MemberManager.getInstance().getFacebookId() != 0 )
+			if( MemberManager.getInstance().isLoggedIn() && GoViral.isSupported() && GoViral.goViral.isFacebookSupported() && MemberManager.getInstance().facebookId != 0 )
 				GoViral.goViral.postFacebookHighScore(advancedOwner.screenData.gameData.score);
 			
 			// FIXME A décommenter pour gérer l'orientation

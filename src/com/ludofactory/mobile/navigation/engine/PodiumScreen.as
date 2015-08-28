@@ -195,7 +195,7 @@ package com.ludofactory.mobile.navigation.engine
 				_facebookButton = new Button();
 				_facebookButton.alpha = 0;
 				_facebookButton.defaultIcon = _facebookIcon;
-				_facebookButton.label = MemberManager.getInstance().getFacebookId() != 0 ? _("Publier") : _("Associer");
+				_facebookButton.label = MemberManager.getInstance().facebookId != 0 ? _("Publier") : _("Associer");
 				_facebookButton.addEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
 				addChild(_facebookButton);
 				_facebookButton.iconPosition = Button.ICON_POSITION_LEFT;

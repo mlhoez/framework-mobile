@@ -201,7 +201,7 @@ package com.ludofactory.mobile.navigation.cs.thread
 					// small - normal - large - square
 					// FIXME Intégrer ça plutôt : "https://graph.facebook.com/" + _facebookId + "/picture?type=large&width=" + int(actualHeight * 0.8) + "&height=" + int(actualHeight * 0.8);
 					if( !_data.incoming )
-						_picture.source = MemberManager.getInstance().getFacebookId() != 0 ? ("https://graph.facebook.com/" + MemberManager.getInstance().getFacebookId() + "/picture?type=square") : Theme.customerServiceDefaultUserAvatarTexture;
+						_picture.source = MemberManager.getInstance().facebookId != 0 ? ("https://graph.facebook.com/" + MemberManager.getInstance().facebookId + "/picture?type=square") : Theme.customerServiceDefaultUserAvatarTexture;
 					else
 						_picture.source = Theme.customerServiceDefaultAvatarTexture;
 				}

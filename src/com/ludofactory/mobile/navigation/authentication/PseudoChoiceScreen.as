@@ -351,7 +351,7 @@ package com.ludofactory.mobile.navigation.authentication
 				case 1: // ok
 				{
 					AbstractEntryPoint.isSelectingPseudo = false;
-					if( MemberManager.getInstance().getFacebookId() != 0 )
+					if( MemberManager.getInstance().facebookId != 0 )
 					{
 						// Track subscription
 						if( GAnalytics.isSupported() )
@@ -360,7 +360,7 @@ package com.ludofactory.mobile.navigation.authentication
 						Flox.logWarning("Nouvelle inscription Facebook du membre : (" + MemberManager.getInstance().id + ")");
 						Flox.logEvent("Inscriptions", { Type:"Facebook" });
 					}
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ((MemberManager.getInstance().getFacebookId() != 0) ? ScreenIds.HOME_SCREEN : ScreenIds.REGISTER_COMPLETE_SCREEN) ]);
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ((MemberManager.getInstance().facebookId != 0) ? ScreenIds.HOME_SCREEN : ScreenIds.REGISTER_COMPLETE_SCREEN) ]);
 					break;
 				}
 					

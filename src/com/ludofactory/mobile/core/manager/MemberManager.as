@@ -296,6 +296,10 @@ package com.ludofactory.mobile.core.manager
 		public function get id():Number { return _member.id; }
 		
 		/**
+		 * The member Facebook id. */
+		public function get facebookId():Number { return _member.facebookId; }
+		
+		/**
 		 * The highscore is updated only when a push of a GameSession has failed (if there is a highscore of course),
 		 * and on the handler onQueryComplete of Remote.
 		 */
@@ -479,8 +483,7 @@ package com.ludofactory.mobile.core.manager
 			_member.facebookTokenExpiryTimestamp = value;
 		}
 		
-		/** Returns the member's Facebook id. */		
-		public function getFacebookId():Number { return _member.facebookId; }
+		
 		/** Returns the member's mail. */		
 		public function getMail():String { return _member.mail; }
 		/** Returns the member's password. */		

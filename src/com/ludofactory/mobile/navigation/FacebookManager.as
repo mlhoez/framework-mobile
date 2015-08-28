@@ -73,7 +73,7 @@ package com.ludofactory.mobile.navigation
 				{
 					if( MemberManager.getInstance().isLoggedIn() ) // just in case but usually this test is done before in the screen
 					{
-						if( MemberManager.getInstance().getFacebookId() != 0 )
+						if( MemberManager.getInstance().facebookId != 0 )
 						{
 							var now:Date = new Date();
 							var tokenExpiryDate:Date = new Date( MemberManager.getInstance().getFacebookTokenExpiryTimestamp() );
@@ -123,7 +123,7 @@ package com.ludofactory.mobile.navigation
 		 */		
 		public function associateForPublish():void
 		{
-			if( MemberManager.getInstance().getFacebookId() != 0 )
+			if( MemberManager.getInstance().facebookId != 0 )
 			{
 				// this account is associated to a Facebook account, in this case we need to authenticate with
 				// Facebook and then check if the Facebook id matches the user's. If there is a match, then we

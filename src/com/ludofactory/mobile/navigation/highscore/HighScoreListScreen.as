@@ -562,7 +562,7 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
-				if( MemberManager.getInstance().getFacebookId() != 0 )
+				if( MemberManager.getInstance().facebookId != 0 )
 				{
 					// check session first (if the Facebook ids are matching)
 					_retryContainer.visible = false;
