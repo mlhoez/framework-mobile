@@ -395,6 +395,15 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
+		/**
+		 * The array of anonymous game sessions. */
+		public function get anonymousGameSessions():Array { return _member.anonymousGameSessions; }
+		public function set anonymousGameSessions(val:Array):void
+		{
+			_member.anonymousGameSessions = val;
+			setEncryptedMember();
+		}
+		
 		/** 
 		 * The member total of tokens available for a day. */
 		public function get totalTokensADay():int { return _member.totalTokensADay; }
@@ -430,14 +439,7 @@ package com.ludofactory.mobile.core.manager
 			setEncryptedMember();
 		}
 		
-		/**
-		 * Updates the anonymous game sessions.
-		 */		
-		public function setAnonymousGameSessions(val:Array):void
-		{
-			_member.anonymousGameSessions = val;
-			setEncryptedMember();
-		}
+		
 		
 		/**
 		 * Updates the value of <code>anonymousGameSessionsAlreadyUsed</code>.
@@ -522,8 +524,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/** Returns the member's elements to push. */		
 		public function getElementsToPush():Vector.<AbstractElementToPush> { return _member.elementsToPush; }
-		/** Returns the array of anonymous game sessions. */		
-		public function getAnonymousGameSessions():Array { return _member.anonymousGameSessions; }
+		
 		/** Returns */		
 		public function getAnonymousGameSessionsAlreadyUsed():Boolean { return _member.anonymousGameSessionsAlreadyUsed; }
 		/** Returns */		
@@ -553,9 +554,9 @@ package com.ludofactory.mobile.core.manager
 		{
 			var count:int = 0;
 			var gameSession:GameSession;
-			for(var i:int = 0; i < getAnonymousGameSessions().length; i++)
+			for(var i:int = 0; i < anonymousGameSessions.length; i++)
 			{
-				gameSession = getAnonymousGameSessions()[i];
+				gameSession = anonymousGameSessions[i];
 				if( gameSession.gameType == GameMode.TOURNAMENT )
 					count += gameSession.numStarsOrPointsEarned;
 			}
@@ -566,9 +567,9 @@ package com.ludofactory.mobile.core.manager
 		{
 			var count:int = 0;
 			var gameSession:GameSession;
-			for(var i:int = 0; i < getAnonymousGameSessions().length; i++)
+			for(var i:int = 0; i < anonymousGameSessions.length; i++)
 			{
-				gameSession = getAnonymousGameSessions()[i];
+				gameSession = anonymousGameSessions[i];
 				if( gameSession.trophiesWon && gameSession.trophiesWon.length > 0 )
 					count += gameSession.trophiesWon.length;
 			}

@@ -793,7 +793,7 @@ package com.ludofactory.mobile.core.remoting
 						MemberManager.getInstance().tokens = 0;
 						MemberManager.getInstance().points = 0;
 						MemberManager.getInstance().cumulatedRubies = 0;
-						MemberManager.getInstance().setAnonymousGameSessions([]);
+						MemberManager.getInstance().anonymousGameSessions = [];
 					}
 				}
 				
@@ -965,10 +965,10 @@ package com.ludofactory.mobile.core.remoting
 			{
 				// we can send them
 				var gameSession:GameSession;
-				var len:int = MemberManager.getInstance().getAnonymousGameSessions().length;
+				var len:int = MemberManager.getInstance().anonymousGameSessions.length;
 				for(var i:int = 0; i < len; i++)
 				{
-					gameSession = MemberManager.getInstance().getAnonymousGameSessions()[i];
+					gameSession = MemberManager.getInstance().anonymousGameSessions[i];
 					params.parties.push( { info_client:GlobalConfig.userHardwareData, type_mise:gameSession.gamePrice, type_partie:gameSession.gameType, score:gameSession.score, date_partie:gameSession.playDate, connected:gameSession.connected, coupes:gameSession.trophiesWon, temps_ecoule:gameSession.elapsedTime, id_partie:gameSession.uniqueId } );
 				}
 				
