@@ -304,9 +304,12 @@ package com.ludofactory.mobile.core.manager
 		public function get email():String { return _member.mail; }
 		
 		/**
+		 * The member password. */
+		public function get password():String { return _member.password; }
+		
+		/**
 		 * The highscore is updated only when a push of a GameSession has failed (if there is a highscore of course),
-		 * and on the handler onQueryComplete of Remote.
-		 */
+		 * and on the handler onQueryComplete of Remote. */
 		public function get highscore():int { return _member.highscore; }
 		public function set highscore(val:int):void
 		{
@@ -489,8 +492,7 @@ package com.ludofactory.mobile.core.manager
 		
 		
 		
-		/** Returns the member's password. */		
-		public function getPassword():String { return _member.password; }
+		
 		/** Returns the member's number of credits. */		
 		public function getCredits():int { return _member.credits; }
 		/** Returns the member's number of points. */		
