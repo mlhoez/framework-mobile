@@ -321,6 +321,19 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * The update date (when the member object have been updated for the last time). */
 		public function get lastUpdateDate():String { return _member.updateDate; }
+		
+		/**
+		 * The last trophy won id. */
+		public function get lastTrophyWonId():int { return _member.lastTrophyWonId; }
+		public function set lastTrophyWonId(val:int):void
+		{
+			if( _member.lastTrophyWonId != val )
+			{
+				_member.lastTrophyWonId = val;
+				setEncryptedMember();
+			}
+		}
+		
 		/**
 		 * The member number of cumulated rubies for the current tournament. */
 		public function get cumulatedRubies():int { return _member.cumulatedStars; }
@@ -437,11 +450,6 @@ package com.ludofactory.mobile.core.manager
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
 		
-		
-		
-		
-		
-		
 		/**
 		 * Updates the value of <code>anonymousGameSessionsAlreadyUsed</code>.
 		 */		
@@ -450,18 +458,6 @@ package com.ludofactory.mobile.core.manager
 			if( _member.anonymousGameSessionsAlreadyUsed != val )
 			{
 				_member.anonymousGameSessionsAlreadyUsed = val;
-				setEncryptedMember();
-			}
-		}
-		
-		/**
-		 * Updates the last trophy won id.
-		 */		
-		public function setLastTrophyWonId(val:int):void
-		{
-			if( _member.lastTrophyWonId != val )
-			{
-				_member.lastTrophyWonId = val;
 				setEncryptedMember();
 			}
 		}
@@ -517,17 +513,9 @@ package com.ludofactory.mobile.core.manager
 			_member.facebookTokenExpiryTimestamp = value;
 		}
 		
-		
-		
-		
-		
-		
-		
-		
 		/** Returns */		
 		public function getAnonymousGameSessionsAlreadyUsed():Boolean { return _member.anonymousGameSessionsAlreadyUsed; }
-		/** Returns */		
-		public function getLastTrophyWonId():int { return _member.lastTrophyWonId; }
+		
 		/** Returns */		
 		public function getCountryId():int { return _member.countryId; }
 		/** Returns */		

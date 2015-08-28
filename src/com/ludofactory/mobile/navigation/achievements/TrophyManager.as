@@ -109,7 +109,7 @@ package com.ludofactory.mobile.navigation.achievements
 		 */		
 		public function onWinTrophy(trophyId:int):void
 		{
-			MemberManager.getInstance().setLastTrophyWonId(trophyId);
+			MemberManager.getInstance().lastTrophyWonId = trophyId;
 			_trophiesWon = MemberManager.getInstance().trophiesWon.concat();
 			_trophiesWon.push(trophyId);
 			MemberManager.getInstance().trophiesWon = _trophiesWon;

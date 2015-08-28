@@ -76,13 +76,13 @@ package com.ludofactory.mobile.navigation.achievements
 		{
 			for(var i:int = 0; i < _trophiesList.dataProvider.length; i++)
 			{
-				if( TrophyData(_trophiesList.dataProvider.getItemAt(i)).id == MemberManager.getInstance().getLastTrophyWonId() )
+				if( TrophyData(_trophiesList.dataProvider.getItemAt(i)).id == MemberManager.getInstance().lastTrophyWonId )
 				{
 					_trophiesList.scrollToDisplayIndex(i);
 					break;
 				}
 			}
-			MemberManager.getInstance().setLastTrophyWonId(-1);
+			MemberManager.getInstance().lastTrophyWonId = -1;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
