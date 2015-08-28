@@ -279,7 +279,7 @@ package com.ludofactory.mobile.core.storage
 				// FIXME This is a temporary hack in order to change the value of the number
 				// of tokens required to play in tournament when the rank is equal or greater
 				// than the rank 2 (which is : ...).
-				if( propertyName == StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE && MemberManager.getInstance().getRank() >= 2)
+				if( propertyName == StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE && MemberManager.getInstance().rank >= 2)
 					return int(_configurationSharedObject.data[propertyName]) - 10; // -10 jetons si le grade est ok
 				else
 					return _configurationSharedObject.data[propertyName];

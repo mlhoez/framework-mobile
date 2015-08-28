@@ -43,7 +43,7 @@ package com.ludofactory.mobile.core.scoring
 			for each(var level:ScoreToPointsData in tabScoreToPoints)
 			{
 				if( score >= level.inf && score <= level.sup)
-					return price == StakeType.TOKEN ? (level.pointsWithFree + ((ScoreToPointsData(tabScoreToPoints[tabScoreToPoints.length-1]) == level /* = dernier palier */ && MemberManager.getInstance().getRank() >= 6) ? 10:0)): (MemberManager.getInstance().getRank() < 5 ? level.pointsWithCreditsNormal : level.pointsWithCreditsVip);
+					return price == StakeType.TOKEN ? (level.pointsWithFree + ((ScoreToPointsData(tabScoreToPoints[tabScoreToPoints.length-1]) == level /* = dernier palier */ && MemberManager.getInstance().rank >= 6) ? 10:0)): (MemberManager.getInstance().rank < 5 ? level.pointsWithCreditsNormal : level.pointsWithCreditsVip);
 			}
 			throw new Error("[ScoreConverter] The score " + score + " could not be converted !");
 		}

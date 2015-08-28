@@ -157,7 +157,7 @@ package com.ludofactory.mobile.core.scoring
 			_creditsIcon.scaleX = _creditsIcon.scaleY = GlobalConfig.dpiScale;
 			_pointsWithCreditsGroup.addChild( _creditsIcon );
 			
-			_multiplySixIcon = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().getRank() < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
+			_multiplySixIcon = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().rank < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
 			_multiplySixIcon.scaleX = _multiplySixIcon.scaleY = Utilities.getScaleToFill(_multiplySixIcon.width, _multiplySixIcon.height, _creditsIcon.width, _creditsIcon.height);
 			_pointsWithCreditsGroup.addChild( _multiplySixIcon );
 			
@@ -174,7 +174,7 @@ package com.ludofactory.mobile.core.scoring
 			var scoreToStarsDataSup:ScoreToPointsData = scoreData[ int(scoreData.length / 2) + 1 ];
 			
 			_exampleLabel = new Label();
-			_exampleLabel.text = formatString(_("Par exemple : avec un score de {0} vous gagnez {1} Points avec un Jeton ou {2} Points avec une partie à crédit."), int(scoreToStarsDataInf.sup + (scoreToStarsDataSup.sup - scoreToStarsDataInf.sup) * 0.5), scoreToStarsDataSup.pointsWithFree, (MemberManager.getInstance().getRank() < 5 ? scoreToStarsDataSup.pointsWithCreditsNormal : scoreToStarsDataSup.pointsWithCreditsVip)) + "\n\n" + (MemberManager.getInstance().getRank() < 5 ? (_("Avantage VIP : en devenant Aventurier II, multipliez vos gains par 6 au lieu de 5 !") + "\n\n") : "");
+			_exampleLabel.text = formatString(_("Par exemple : avec un score de {0} vous gagnez {1} Points avec un Jeton ou {2} Points avec une partie à crédit."), int(scoreToStarsDataInf.sup + (scoreToStarsDataSup.sup - scoreToStarsDataInf.sup) * 0.5), scoreToStarsDataSup.pointsWithFree, (MemberManager.getInstance().rank < 5 ? scoreToStarsDataSup.pointsWithCreditsNormal : scoreToStarsDataSup.pointsWithCreditsVip)) + "\n\n" + (MemberManager.getInstance().rank < 5 ? (_("Avantage VIP : en devenant Aventurier II, multipliez vos gains par 6 au lieu de 5 !") + "\n\n") : "");
 			_mainContainer.addChild(_exampleLabel);
 			_exampleLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_LIGHT_GREY, false, true);
 		}

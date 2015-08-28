@@ -221,11 +221,11 @@ package com.ludofactory.mobile.navigation.vip
 			{
 				if( advancedOwner.screenData.vipScreenInitializedFromStore )
 				{
-					_currentIndex = _targetIndex = MemberManager.getInstance().getRank() >= 12 ? 11 : MemberManager.getInstance().getRank();
+					_currentIndex = _targetIndex = MemberManager.getInstance().rank >= 12 ? 11 : MemberManager.getInstance().rank;
 				}
 				else
 				{
-					_currentIndex = _targetIndex = (MemberManager.getInstance().getRank() - 1);
+					_currentIndex = _targetIndex = (MemberManager.getInstance().rank - 1);
 				}
 			}
 			else
@@ -698,11 +698,11 @@ package com.ludofactory.mobile.navigation.vip
 			
 			if( MemberManager.getInstance().isLoggedIn() /*&& _targetIndex != 0 && _targetIndex != 1*/)
 			{
-				if( MemberManager.getInstance().getRank() - 1 == _targetIndex )
+				if( MemberManager.getInstance().rank - 1 == _targetIndex )
 				{
 					_conditionLabel.text = _("Votre rang actuel.");
 				}
-				else if( _targetIndex < MemberManager.getInstance().getRank() - 1 )
+				else if( _targetIndex < MemberManager.getInstance().rank - 1 )
 				{
 					_conditionLabel.text = _("Vous avez déjà acquis ce rang.");
 				}

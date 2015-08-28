@@ -105,7 +105,7 @@ package com.ludofactory.mobile.navigation.vip
 			var temp:Array = JSON.parse( Storage.getInstance().getProperty( (MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS) )[LanguageManager.getInstance().lang] ) as Array;
 			for(var i:int = 0; i < temp.length; i++)
 			{
-				if( i == MemberManager.getInstance().getRank() - 1 )
+				if( i == MemberManager.getInstance().rank - 1 )
 				{
 					_playerRankData = new VipData(temp[i]);
 					break;
@@ -119,7 +119,7 @@ package com.ludofactory.mobile.navigation.vip
 			addChild( _podiumGlow );
 			
 			_rankImage = new ImageLoader();
-			_rankImage.source = AbstractEntryPoint.assets.getTexture("Rank-" + MemberManager.getInstance().getRank());
+			_rankImage.source = AbstractEntryPoint.assets.getTexture("Rank-" + MemberManager.getInstance().rank);
 			//_rankImage.textureScale = GlobalConfig.dpiScalez; // Pose un problème !
 			addChild( _rankImage );
 			

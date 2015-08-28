@@ -266,7 +266,7 @@ package com.ludofactory.mobile.navigation.engine
 			_cumulatedPointsContainer.addChild(_pointsIcon);
 			
 			_starsToAddLabel = new Label();
-			_starsToAddLabel.text = "+" + (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == StakeType.CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().getRank() < 5 ? 0 : 1]) : 1 ));
+			_starsToAddLabel.text = "+" + (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == StakeType.CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().rank < 5 ? 0 : 1]) : 1 ));
 			_starsToAddLabel.alpha = 0;
 			_starsToAddLabel.visible = false;
 			addChild(_starsToAddLabel);
@@ -380,7 +380,7 @@ package com.ludofactory.mobile.navigation.engine
 			
 			if( advancedOwner.screenData.gamePrice == StakeType.CREDIT )
 			{
-				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().getRank() < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
+				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().rank < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
 				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = GlobalConfig.dpiScale;
 				_winMorePointsImage.alignPivot();
 				_winMorePointsImage.alpha = 0;
@@ -575,7 +575,7 @@ package com.ludofactory.mobile.navigation.engine
 				return;
 			
 			_oldTweenValue = 0;
-			_targetTweenValue = (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == StakeType.CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().getRank() < 5 ? 0 : 1]) : 1 ));
+			_targetTweenValue = (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == StakeType.CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().rank < 5 ? 0 : 1]) : 1 ));
 			TweenMax.to(this, 0.25, { _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _pointsValue.text = Utilities.splitThousands(_oldTweenValue); }, onComplete:animateLabelFromPointsToCumulatedPoints, ease:Linear.easeNone } );
 		}
 		
@@ -593,7 +593,7 @@ package com.ludofactory.mobile.navigation.engine
 				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = 0;
 				TweenMax.to(_winMorePointsImage, 0.5, { delay:0.5, alpha:1, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, ease:Bounce.easeOut } );
 				
-				_step = advancedOwner.screenData.gameData.numStarsOrPointsEarned / (Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().getRank() < 5 ? 0 : 1];
+				_step = advancedOwner.screenData.gameData.numStarsOrPointsEarned / (Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().rank < 5 ? 0 : 1];
 				_pointsValue.includeInLayout = false;
 				animateBonus();
 				

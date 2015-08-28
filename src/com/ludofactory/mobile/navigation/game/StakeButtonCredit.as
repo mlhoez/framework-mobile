@@ -56,7 +56,7 @@ package com.ludofactory.mobile.navigation.game
 			
 			if( _gameType == GameMode.SOLO )
 			{
-				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().getRank() < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
+				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().rank < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
 				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = GlobalConfig.dpiScale;
 				_winMorePointsImage.alignPivot();
 				_winMorePointsImage.visible = MemberManager.getInstance().isLoggedIn();

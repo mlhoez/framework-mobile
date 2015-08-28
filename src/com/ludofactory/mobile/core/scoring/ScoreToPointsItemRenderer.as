@@ -164,8 +164,8 @@ package com.ludofactory.mobile.core.scoring
 						_level.text = Utilities.splitThousands( _data.inf ) + " " + _("à") + " " + Utilities.splitThousands( _data.sup );
 					}
 					
-					_pointsWithCredits.text = Utilities.splitThousands( (MemberManager.getInstance().getRank() < 5 ? _data.pointsWithCreditsNormal : _data.pointsWithCreditsVip) );
-					_pointsWithFree.text = Utilities.splitThousands( _data.pointsWithFree + ((_isLastItem && MemberManager.getInstance().getRank() >= 6) ? 10:0 ));
+					_pointsWithCredits.text = Utilities.splitThousands( (MemberManager.getInstance().rank < 5 ? _data.pointsWithCreditsNormal : _data.pointsWithCreditsVip) );
+					_pointsWithFree.text = Utilities.splitThousands( _data.pointsWithFree + ((_isLastItem && MemberManager.getInstance().rank >= 6) ? 10:0 ));
 				}
 				else
 				{

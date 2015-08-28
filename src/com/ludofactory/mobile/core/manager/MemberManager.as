@@ -312,6 +312,9 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * The member title. */
 		public function get title():String { return _member.title; }
+		/**
+		 * The member rank. */
+		public function get rank():int { return _member.rank; }
 		
 		/**
 		 * The member number of credits. */
@@ -522,8 +525,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/** Returns the member's won trophies. */		
 		public function getTrophiesWon():Array { return _member.trophiesWon; }
-		/** Returns the member's rank. */		
-		public function getRank():int { return _member.rank; }
+		
 		/** Returns the member's number of credits bought. */		
 		public function getNumCreditsBought():int { return _member.numCreditsBought; }
 		/** Returns the member's elements to push. */		
