@@ -192,7 +192,7 @@ package com.ludofactory.mobile.core.manager
 			{
 				var dict:Dictionary = new Dictionary();
 				dict[VidCoinController.kVCUserGameID] = _member.id;
-				dict[VidCoinController.kVCUserBirthYear] = getBirthDate().split("-")[0];
+				dict[VidCoinController.kVCUserBirthYear] = birthDate.split("-")[0];
 				dict[VidCoinController.kVCUserGenderKey]= getTitle() == "Mr." ? VidCoinController.kVCUserGenderMale : VidCoinController.kVCUserGenderFemale;
 				AbstractEntryPoint.vidCoin.updateUserDictionary(dict);
 			}
@@ -306,6 +306,9 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * The member pseudo. */
 		public function get pseudo():String { return _member.pseudo; }
+		/**
+		 * The member birth date. */
+		public function get birthDate():String { return _member.birthDate; }
 		
 		/**
 		 * The member number of credits. */
@@ -512,8 +515,7 @@ package com.ludofactory.mobile.core.manager
 		
 		
 		
-		/**  Returns the member's birth date. */
-		public function getBirthDate():String { return _member.birthDate; }
+		
 		/**  Returns the member's title. */
 		public function getTitle():String { return _member.title; }
 		/** Returns the member's won trophies. */		
