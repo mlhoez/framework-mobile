@@ -300,6 +300,10 @@ package com.ludofactory.mobile.core.manager
 		public function get facebookId():Number { return _member.facebookId; }
 		
 		/**
+		 * The member email. */
+		public function get email():String { return _member.mail; }
+		
+		/**
 		 * The highscore is updated only when a push of a GameSession has failed (if there is a highscore of course),
 		 * and on the handler onQueryComplete of Remote.
 		 */
@@ -484,8 +488,7 @@ package com.ludofactory.mobile.core.manager
 		}
 		
 		
-		/** Returns the member's mail. */		
-		public function getMail():String { return _member.mail; }
+		
 		/** Returns the member's password. */		
 		public function getPassword():String { return _member.password; }
 		/** Returns the member's number of credits. */		

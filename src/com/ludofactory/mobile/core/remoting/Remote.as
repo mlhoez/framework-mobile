@@ -920,7 +920,7 @@ package com.ludofactory.mobile.core.remoting
 		{
 			var genericParam:Object = {};
 			genericParam.id_membre = MemberManager.getInstance().id;
-			genericParam.mail = MemberManager.getInstance().getMail();
+			genericParam.mail = MemberManager.getInstance().email;
 			genericParam.mdp = MemberManager.getInstance().getPassword();
 			genericParam.langue = LanguageManager.getInstance().lang;
 			genericParam.id_jeu = AbstractGameInfo.GAME_ID;
