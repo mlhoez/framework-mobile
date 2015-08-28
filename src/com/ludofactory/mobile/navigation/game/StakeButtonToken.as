@@ -142,7 +142,7 @@ package com.ludofactory.mobile.navigation.game
 						else
 						{
 							// mettre texte normal + timer
-							_label.text = formatString(_("{0} Jetons dans "), MemberManager.getInstance().getTotalTokensADay()) + "--:--:--";
+							_label.text = formatString(_("{0} Jetons dans "), MemberManager.getInstance().totalTokensADay) + "--:--:--";
 							_label.color = 0xffffff;
 							
 							_vidCoinEnabled = false;
@@ -205,7 +205,7 @@ package com.ludofactory.mobile.navigation.game
 		
 		private function setText(val:String):void
 		{
-			_label.text = formatString(_("{0} Jetons dans "), MemberManager.getInstance().getTotalTokensADay()) + val;
+			_label.text = formatString(_("{0} Jetons dans "), MemberManager.getInstance().totalTokensADay) + val;
 		}
 		
 		private function onCalloutRemoved(event:Event):void
@@ -229,7 +229,7 @@ package com.ludofactory.mobile.navigation.game
 						if( !_calloutLabel )
 						{
 							_calloutLabel = new Label();
-							_calloutLabel.text = formatString(_("Reconnectez-vous pour récupérer vos {0} Jetons."), MemberManager.getInstance().getTotalTokensADay());
+							_calloutLabel.text = formatString(_("Reconnectez-vous pour récupérer vos {0} Jetons."), MemberManager.getInstance().totalTokensADay);
 							_calloutLabel.width = actualWidth * 0.9;
 							_calloutLabel.validate();
 						}

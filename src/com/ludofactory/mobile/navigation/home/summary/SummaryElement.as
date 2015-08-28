@@ -277,7 +277,7 @@ package com.ludofactory.mobile.navigation.home.summary
 					removeInterrogationLabels();
 				_label.text = value;
 				if( MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
-					_calloutLabel.text = formatString(_("{0} Jetons dans {1}"), MemberManager.getInstance().getTotalTokensADay(), value); 
+					_calloutLabel.text = formatString(_("{0} Jetons dans {1}"), MemberManager.getInstance().totalTokensADay, value); 
 			}
 			
 			invalidate(INVALIDATION_FLAG_SIZE);
@@ -329,12 +329,12 @@ package com.ludofactory.mobile.navigation.home.summary
 							{
 								if( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED )
 								{
-									_calloutLabel.text = formatString(_("Reconnectez-vous pour récupérer vos {0} Jetons."), MemberManager.getInstance().getTotalTokensADay());
+									_calloutLabel.text = formatString(_("Reconnectez-vous pour récupérer vos {0} Jetons."), MemberManager.getInstance().totalTokensADay);
 								}
 								else
 								{
 									// jetons - bonus (+bonus)
-									_calloutLabel.text = formatString(_("Vos Jetons ({0} quotidiens + {1} bonus)"), (MemberManager.getInstance().tokens - MemberManager.getInstance().getTotalBonusTokensADay()), MemberManager.getInstance().getTotalBonusTokensADay());
+									_calloutLabel.text = formatString(_("Vos Jetons ({0} quotidiens + {1} bonus)"), (MemberManager.getInstance().tokens - MemberManager.getInstance().totalBonusTokensADay), MemberManager.getInstance().totalBonusTokensADay);
 								}
 							}
 							else
@@ -346,7 +346,7 @@ package com.ludofactory.mobile.navigation.home.summary
 						case StakeType.CREDIT:
 						{
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
-								_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? _("Vos Crédits de jeu") : _("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getTotalTokensADay());
+								_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? _("Vos Crédits de jeu") : _("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().totalTokensADay);
 							else
 								_calloutLabel.text = _("Vos Crédits de jeu");
 							break;
@@ -354,7 +354,7 @@ package com.ludofactory.mobile.navigation.home.summary
 						case StakeType.POINT:
 						{
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
-								_calloutLabel.text = formatString(_("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().getTotalTokensADay());
+								_calloutLabel.text = formatString(_("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().totalTokensADay);
 							else
 								_calloutLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Vos Points à convertir en Cadeaux") : _("Vos Points à convertir en Crédits");
 							break;

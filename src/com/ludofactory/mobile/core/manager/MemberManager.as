@@ -352,6 +352,14 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
+		/** 
+		 * Returns the member total of tokens available for a day. */
+		public function get totalTokensADay():int { return _member.totalTokensADay; }
+		
+		/**
+		 * Returns the member total of bonus tokens for a day. */
+		public function get totalBonusTokensADay():int { return _member.totalBonusTokensADay; }
+		
 		/**
 		 * The highscore is updated only when a push of a GameSession has failed (if there is a highscore of course),
 		 * and on the handler onQueryComplete of Remote. */
@@ -501,10 +509,8 @@ package com.ludofactory.mobile.core.manager
 		/** Returns the member's number of cumulated stars for the current tournament. */		
 		public function getCumulatedStars():int { return _member.cumulatedStars; }
 		
-		/**  Returns the member's total of free game sessions. */		
-		public function getTotalTokensADay():int { return _member.totalTokensADay; }
-		/**  Returns the member's total of free game sessions. */
-		public function getTotalBonusTokensADay():int { return _member.totalBonusTokensADay; }
+		
+		
 		/**  Returns the member's pseudo. */		
 		public function getPseudo():String { return _member.pseudo; }
 		/**  Returns the member's birth date. */
