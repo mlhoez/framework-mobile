@@ -338,6 +338,21 @@ package com.ludofactory.mobile.core.manager
 		}
 		
 		/**
+		 * The member number of tokens. */
+		public function get tokens():int { return _member.numTokens; }
+		public function set tokens(val:int):void
+		{
+			if( _member.numTokens != val )
+			{
+				_member.numTokens = val;
+				setEncryptedMember();
+				
+				// the data changed, so we need to update the footer
+				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
+			}
+		}
+		
+		/**
 		 * The highscore is updated only when a push of a GameSession has failed (if there is a highscore of course),
 		 * and on the handler onQueryComplete of Remote. */
 		public function get highscore():int { return _member.highscore; }
@@ -353,20 +368,7 @@ package com.ludofactory.mobile.core.manager
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
 		
-		/**
-		 * Updates the number of free game sessions.
-		 */		
-		public function setNumFreeGameSessions(val:int):void
-		{
-			if( _member.numTokens != val )
-			{
-				_member.numTokens = val;
-				setEncryptedMember();
-				
-				// the data changed, so we need to update the footer
-				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
-			}
-		}
+		
 		
 		
 		/**
@@ -498,8 +500,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/** Returns the member's number of cumulated stars for the current tournament. */		
 		public function getCumulatedStars():int { return _member.cumulatedStars; }
-		/** Returns the member's number of free game sessions. */		
-		public function getNumTokens():int { return _member.numTokens; }
+		
 		/**  Returns the member's total of free game sessions. */		
 		public function getTotalTokensADay():int { return _member.totalTokensADay; }
 		/**  Returns the member's total of free game sessions. */

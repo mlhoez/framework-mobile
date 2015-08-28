@@ -586,7 +586,7 @@ package com.ludofactory.mobile.navigation.tournament
 				}
 				else
 				{
-					if( MemberManager.getInstance().getNumTokens() < int(Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)) )
+					if( MemberManager.getInstance().tokens < int(Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)) )
 					{
 						NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.TOURNAMENT_RANKING_SCREEN) );
 					}

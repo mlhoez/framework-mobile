@@ -369,7 +369,7 @@ package com.ludofactory.mobile.navigation.game
 			}
 			else
 			{
-				if( MemberManager.getInstance().getNumTokens() == 0 )
+				if( MemberManager.getInstance().tokens == 0 )
 				{
 					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
 				}
@@ -398,7 +398,7 @@ package com.ludofactory.mobile.navigation.game
 				}
 				else
 				{
-					if( MemberManager.getInstance().getNumTokens() < int(Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)) )
+					if( MemberManager.getInstance().tokens < int(Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)) )
 					{
 						NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
 					}

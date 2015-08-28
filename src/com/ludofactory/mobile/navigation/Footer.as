@@ -204,14 +204,14 @@ package com.ludofactory.mobile.navigation
 			GameSessionTimer.updateState();
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
-				_freeContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getNumTokens() ) );
+				_freeContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().tokens ) );
 				_pointsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().points ) );
 				_creditsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().credits ) );
 			}
 			else
 			{
 				_pointsContainer.setLabelText( MemberManager.getInstance().getAnonymousGameSessionsAlreadyUsed() ? "???" : ("" + MemberManager.getInstance().points) );
-				_creditsContainer.setLabelText( MemberManager.getInstance().getNumTokens() == 0 ? "???" : "-" );
+				_creditsContainer.setLabelText( MemberManager.getInstance().tokens == 0 ? "???" : "-" );
 			}
 		}
 		
