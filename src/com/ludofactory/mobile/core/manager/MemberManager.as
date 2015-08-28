@@ -289,16 +289,14 @@ package com.ludofactory.mobile.core.manager
 		public function isLoggedIn():Boolean { return !(_member.id == DEFAULT_MEMBER_ID); }
 		
 //------------------------------------------------------------------------------------------------------------
-//	Get - Set
+//	Get - Set (new)
 		
 		/**
-		 * The highscore is updated only when a push of a GameSession has failed
-		 * (if there is a highscore of course), and on the handler onQueryComplete
-		 * of Remote.
-		 * 
-		 * @see com.ludofactory.mobile.core.remoting.Remote#onQueryComplete
-		 */		
-		public function setHighscore(val:int):void
+		 * The highscore is updated only when a push of a GameSession has failed (if there is a highscore of course),
+		 * and on the handler onQueryComplete of Remote.
+		 */
+		public function get highscore():int { return _member.highscore; }
+		public function set highscore(val:int):void
 		{
 			if( _member.highscore < val )
 			{
@@ -306,6 +304,9 @@ package com.ludofactory.mobile.core.manager
 				setEncryptedMember();
 			}
 		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Get - Set
 		
 		/**
 		 * Updates the number of free game sessions.
@@ -476,8 +477,6 @@ package com.ludofactory.mobile.core.manager
 		
 		/** Returns the member's id. */		
 		public function getId():int { return _member.id; }
-		/** Returns the member's highscore */		
-		public function getHighscore():int { return _member.highscore; }
 		/** Returns the member's Facebook id. */		
 		public function getFacebookId():Number { return _member.facebookId; }
 		/** Returns the member's mail. */		

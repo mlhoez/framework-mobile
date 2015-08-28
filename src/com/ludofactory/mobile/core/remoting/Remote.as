@@ -42,13 +42,13 @@ package com.ludofactory.mobile.core.remoting
 		private const AMF_PATH:String = "/amfphp2/";
 		
 		// url quand on n'est pas sur le réseau local
-		//private const DEV_PORT:int = 9999;
-		//private const DEV_URL:String = "http://appmobile.ludokado.com";
+		private const DEV_PORT:int = 9999;
+		private const DEV_URL:String = "http://appmobile.ludokado.com";
 		
 		// urls et port quand on est sur le réseau local
-		private const DEV_PORT:int = 80;
+		//private const DEV_PORT:int = 80;
 		//private const DEV_URL:String = "http://www.ludokado.com";
-		private const DEV_URL:String = "http://www.ludokado.dev";
+		//private const DEV_URL:String = "http://www.ludokado.dev";
 		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokado2.pterrier.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
@@ -810,7 +810,7 @@ package com.ludofactory.mobile.core.remoting
 				}
 				
 				if( MemberManager.getInstance().isLoggedIn() && "highscore" in result )
-					MemberManager.getInstance().setHighscore( int(result.highscore) );
+					MemberManager.getInstance().highscore = int(result.highscore);
 				
 				if( MemberManager.getInstance().isLoggedIn() && "tab_trophy_win" in result )
 					MemberManager.getInstance().setTrophiesWon( result.tab_trophy_win as Array ); // TODO peut être afficher les trophées ici ? canWin... si oui => onWinTrophy...

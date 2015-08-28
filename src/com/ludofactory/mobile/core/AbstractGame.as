@@ -547,10 +547,10 @@ package com.ludofactory.mobile.core
 			else MemberManager.getInstance().setCumulatedStars( MemberManager.getInstance().getCumulatedStars() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			
 			_nextScreenId = _gameSession.gameType == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
-			if( MemberManager.getInstance().getHighscore() != 0 && _gameSession.score > MemberManager.getInstance().getHighscore() )
+			if( MemberManager.getInstance().highscore != 0 && _gameSession.score > MemberManager.getInstance().highscore )
 			{
 				// the user got a new high score
-				MemberManager.getInstance().setHighscore( _gameSession.score );
+				MemberManager.getInstance().highscore = _gameSession.score;
 				if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 				{
 					_nextScreenId = ScreenIds.NEW_HIGH_SCORE_SCREEN;
@@ -565,8 +565,8 @@ package com.ludofactory.mobile.core
 			else
 			{
 				// set up the new high score, because this is the first one
-				if( MemberManager.getInstance().getHighscore() == 0 )
-					MemberManager.getInstance().setHighscore(_gameSession.score);
+				if( MemberManager.getInstance().highscore == 0 )
+					MemberManager.getInstance().highscore = _gameSession.score;
 				
 				if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 				{
