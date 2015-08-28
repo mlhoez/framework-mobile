@@ -294,18 +294,18 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * The member id. */
 		public function get id():Number { return _member.id; }
-		
 		/**
 		 * The member Facebook id. */
 		public function get facebookId():Number { return _member.facebookId; }
-		
 		/**
 		 * The member email. */
 		public function get email():String { return _member.mail; }
-		
 		/**
 		 * The member password */
 		public function get password():String { return _member.password; }
+		/**
+		 * The member pseudo. */
+		public function get pseudo():String { return _member.pseudo; }
 		
 		/**
 		 * The member number of credits. */
@@ -353,11 +353,11 @@ package com.ludofactory.mobile.core.manager
 		}
 		
 		/** 
-		 * Returns the member total of tokens available for a day. */
+		 * The member total of tokens available for a day. */
 		public function get totalTokensADay():int { return _member.totalTokensADay; }
 		
 		/**
-		 * Returns the member total of bonus tokens for a day. */
+		 * The member total of bonus tokens for a day. */
 		public function get totalBonusTokensADay():int { return _member.totalBonusTokensADay; }
 		
 		/**
@@ -511,8 +511,7 @@ package com.ludofactory.mobile.core.manager
 		
 		
 		
-		/**  Returns the member's pseudo. */		
-		public function getPseudo():String { return _member.pseudo; }
+		
 		/**  Returns the member's birth date. */
 		public function getBirthDate():String { return _member.birthDate; }
 		/**  Returns the member's title. */

@@ -53,7 +53,7 @@ package com.ludofactory.mobile.core.manager
 		{
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
-				if( MemberManager.getInstance().getPseudo() == "" || MemberManager.getInstance().getPseudo() == null )
+				if( MemberManager.getInstance().pseudo == "" || MemberManager.getInstance().pseudo == null )
 				{
 					// user is logged in, but he may have not finished all the steps such as the validation
 					// of his pseudo, thus we need to send him to the PseudoChoiceScreen.
