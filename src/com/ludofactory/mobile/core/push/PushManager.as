@@ -102,7 +102,7 @@ package com.ludofactory.mobile.core.push
 			log("[PushManager] initializing....");
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
-				_elementsToPush = MemberManager.getInstance().getElementsToPush();
+				_elementsToPush = MemberManager.getInstance().elementsToPush;
 				
 				if( _elementsToPush.length > 0 )
 				{
@@ -179,7 +179,7 @@ package com.ludofactory.mobile.core.push
 		{
 			stop();
 			
-			_elementsToPush = MemberManager.getInstance().getElementsToPush();
+			_elementsToPush = MemberManager.getInstance().elementsToPush;
 			
 			if( _elementsToPush.length > 0 )
 			{
@@ -221,7 +221,7 @@ package com.ludofactory.mobile.core.push
 				log("[PushManager] an element was added to the list : " + elementToPush);
 				
 				_elementsToPush.push( elementToPush );
-				MemberManager.getInstance().setElementToPush( _elementsToPush );
+				MemberManager.getInstance().elementsToPush = _elementsToPush;
 				
 				// this check is done in start() but just to make sure...
 				if( !_isPushing && !_isRunning )
@@ -245,7 +245,7 @@ package com.ludofactory.mobile.core.push
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				_elementsToPush.splice( _elementsToPush.indexOf(gameSession), 1 );
-				MemberManager.getInstance().setElementToPush( _elementsToPush );
+				MemberManager.getInstance().elementsToPush = _elementsToPush;
 				dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 			}
 		}
@@ -266,7 +266,7 @@ package com.ludofactory.mobile.core.push
 			{
 				var elementToRemove:AbstractElementToPush = _elementsToPush.shift();
 				log("[PushManager] removing first element because it have been pushed : " + elementToRemove);
-				MemberManager.getInstance().setElementToPush( _elementsToPush );
+				MemberManager.getInstance().elementsToPush = _elementsToPush;
 				
 				dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 			}
@@ -304,7 +304,7 @@ package com.ludofactory.mobile.core.push
 				
 				if( change )
 				{
-					MemberManager.getInstance().setElementToPush( _elementsToPush );
+					MemberManager.getInstance().elementsToPush = _elementsToPush;
 					dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 				}
 			}
@@ -358,7 +358,7 @@ package com.ludofactory.mobile.core.push
 								// receiving the callback. In this case we can remove this element
 								// and launch a push again
 								_elementsToPush.splice(i, 1);
-								MemberManager.getInstance().setElementToPush( _elementsToPush );
+								MemberManager.getInstance().elementsToPush = _elementsToPush;
 								dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 								push();
 								return;
@@ -370,7 +370,7 @@ package com.ludofactory.mobile.core.push
 								
 								// update the state
 								elementToPush.state = PushState.PENDING;
-								MemberManager.getInstance().setElementToPush( _elementsToPush );
+								MemberManager.getInstance().elementsToPush = _elementsToPush;
 								_currentElementToPushType = elementToPush.pushType;
 								
 								// then we can push
@@ -496,7 +496,7 @@ package com.ludofactory.mobile.core.push
 					
 					// Case 1 : we don't store the returns
 					_elementsToPush.splice( i, 1);
-					MemberManager.getInstance().setElementToPush( _elementsToPush );
+					MemberManager.getInstance().elementsToPush = _elementsToPush;
 					dispatchEventWith(MobileEventTypes.UPDATE_HEADER);
 					
 					// Case 2 : we store the returns

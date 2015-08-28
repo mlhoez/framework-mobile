@@ -872,7 +872,7 @@ package com.ludofactory.mobile.core.remoting
 		{
 			// set up query name in the object
 			if( error ) error.queryName = queryName;
-			else error = { queryName:queryName }
+			else error = { queryName:queryName };
 			
 			if( callback )
 				callback( error );

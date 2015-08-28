@@ -425,19 +425,20 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
+		/**
+		 * The member elements to push. */
+		public function get elementsToPush():Vector.<AbstractElementToPush> { return _member.elementsToPush; }
+		public function set elementsToPush(val:Vector.<AbstractElementToPush>):void
+		{
+			_member.elementsToPush = val;
+			setEncryptedMember();
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
 		
 		
 		
-		/**
-		 * Updates the elements to push.
-		 */		
-		public function setElementToPush(val:Vector.<AbstractElementToPush>):void
-		{
-			_member.elementsToPush = val;
-			setEncryptedMember();
-		}
 		
 		
 		
@@ -522,8 +523,6 @@ package com.ludofactory.mobile.core.manager
 		
 		
 		
-		/** Returns the member's elements to push. */		
-		public function getElementsToPush():Vector.<AbstractElementToPush> { return _member.elementsToPush; }
 		
 		/** Returns */		
 		public function getAnonymousGameSessionsAlreadyUsed():Boolean { return _member.anonymousGameSessionsAlreadyUsed; }
