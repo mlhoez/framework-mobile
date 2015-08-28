@@ -324,8 +324,8 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * The member number of points. */
-		public function getPoints():int { return _member.points; }
-		public function setPoints(val:int):void
+		public function get points():int { return _member.points; }
+		public function set points(val:int):void
 		{
 			if( _member.points != val )
 			{

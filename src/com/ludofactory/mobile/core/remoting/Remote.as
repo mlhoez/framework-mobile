@@ -791,7 +791,7 @@ package com.ludofactory.mobile.core.remoting
 						log("[Remote] Inscription ou connexion réussie, parties anonymes retirées.");
 						MemberManager.getInstance().setAnonymousGameSessionsAlreadyUsed(true);
 						MemberManager.getInstance().setNumFreeGameSessions(0);
-						MemberManager.getInstance().setPoints(0);
+						MemberManager.getInstance().points = 0;
 						MemberManager.getInstance().setCumulatedStars(0);
 						MemberManager.getInstance().setAnonymousGameSessions([]);
 					}

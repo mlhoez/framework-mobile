@@ -123,7 +123,7 @@ package com.ludofactory.mobile.core
 				}
 				case StakeType.POINT:
 				{
-					if( MemberManager.getInstance().getPoints() < Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) )
+					if( MemberManager.getInstance().points < Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) )
 					{
 						advancedOwner.screenData.purgeData();
 						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
@@ -132,7 +132,7 @@ package com.ludofactory.mobile.core
 					else
 					{
 						// he can play with points
-						MemberManager.getInstance().setPoints( MemberManager.getInstance().getPoints() - Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) );
+						MemberManager.getInstance().points = ( MemberManager.getInstance().points - Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) );
 					}
 					break;
 				}
@@ -543,7 +543,7 @@ package com.ludofactory.mobile.core
 			return;*/
 			
 			// update earned values in any cases
-			if( _gameSession.gameType == GameMode.SOLO ) MemberManager.getInstance().setPoints( MemberManager.getInstance().getPoints() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+			if( _gameSession.gameType == GameMode.SOLO ) MemberManager.getInstance().points = ( MemberManager.getInstance().points + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			else MemberManager.getInstance().setCumulatedStars( MemberManager.getInstance().getCumulatedStars() + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			
 			_nextScreenId = _gameSession.gameType == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;

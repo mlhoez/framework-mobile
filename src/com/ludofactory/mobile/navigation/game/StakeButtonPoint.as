@@ -41,7 +41,7 @@ package com.ludofactory.mobile.navigation.game
 		
 		private function onUpdateData(event:Event = null):void
 		{
-			_isEnabled = MemberManager.getInstance().isLoggedIn() ? (MemberManager.getInstance().getPoints() >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE)) : false;
+			_isEnabled = MemberManager.getInstance().isLoggedIn() ? (MemberManager.getInstance().points >= Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE)) : false;
 			
 			_label.text = formatString( _n("{0} Points", "{0} Points", Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE)),
 				Storage.getInstance().getProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE));

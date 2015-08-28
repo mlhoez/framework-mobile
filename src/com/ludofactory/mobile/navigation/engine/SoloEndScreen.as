@@ -438,10 +438,10 @@ package com.ludofactory.mobile.navigation.engine
 				_scoreTitle.width = _scoreValue.width = _pointsTitle.width = _pointsValue.width = _scoreContainer.width = _pointsContainer.width = (_buttonsContainer.width * 0.5) - scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 				
 				// cumulated points
-				_cumulatedPointsValue.text = String(MemberManager.getInstance().getPoints()) + "  ";
+				_cumulatedPointsValue.text = String(MemberManager.getInstance().points) + "  ";
 				_cumulatedPointsValue.validate();
 				_cumulatedPointsValue.width = _cumulatedPointsValue.width;
-				_cumulatedPointsValue.text = Utilities.splitThousands( (MemberManager.getInstance().getPoints() - advancedOwner.screenData.gameData.numStarsOrPointsEarned) );
+				_cumulatedPointsValue.text = Utilities.splitThousands( (MemberManager.getInstance().points - advancedOwner.screenData.gameData.numStarsOrPointsEarned) );
 				
 				_scoreContainer.validate();
 				_pointsContainer.validate();
@@ -656,7 +656,7 @@ package com.ludofactory.mobile.navigation.engine
 			if( !_continueButton.isEnabled )
 				return;
 			
-			_cumulatedPointsValue.text = Utilities.splitThousands( MemberManager.getInstance().getPoints() );
+			_cumulatedPointsValue.text = Utilities.splitThousands( MemberManager.getInstance().points );
 			TweenMax.delayedCall(0.5, onSkipAnimation);
 		}
 		
@@ -671,7 +671,7 @@ package com.ludofactory.mobile.navigation.engine
 			// display final points
 			_scoreValue.text = Utilities.splitThousands( advancedOwner.screenData.gameData.score );
 			_pointsValue.text = Utilities.splitThousands( advancedOwner.screenData.gameData.numStarsOrPointsEarned );
-			_cumulatedPointsValue.text = Utilities.splitThousands( MemberManager.getInstance().getPoints() );
+			_cumulatedPointsValue.text = Utilities.splitThousands( MemberManager.getInstance().points );
 			
 			// hide continue button
 			TweenMax.to(_continueButton, 0.5, { width:0, autoAlpha:0 });
