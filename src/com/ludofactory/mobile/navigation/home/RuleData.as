@@ -27,7 +27,7 @@ package com.ludofactory.mobile.navigation.home
 		public function RuleData(data:Object)
 		{
 			_type = data.type;
-			_ruleText = data.originalRule;
+			_ruleText = data.rule;
 			if( data.hasOwnProperty("imageSource") && data.imageSource != null )
 				_imageSource = data.imageSource;
 			if( data.hasOwnProperty("imagePosition") && data.imagePosition != null )

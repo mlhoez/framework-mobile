@@ -46,9 +46,9 @@ package com.ludofactory.mobile.navigation.achievements
 			if( !data ) return;
 			
 			_id = data.id;
-			_title = data.originalTitle;
-			_description = data.originalDescription;
-			_reward = data.originalReward;
+			_title = data.title;
+			_description = data.description;
+			_reward = data.reward;
 			_values = data.values;
 			_textureName = data.textureName;
 		}
