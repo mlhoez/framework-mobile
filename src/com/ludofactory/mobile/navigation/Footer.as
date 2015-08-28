@@ -206,7 +206,7 @@ package com.ludofactory.mobile.navigation
 			{
 				_freeContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getNumTokens() ) );
 				_pointsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getPoints() ) );
-				_creditsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().getCredits() ) );
+				_creditsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().credits ) );
 			}
 			else
 			{

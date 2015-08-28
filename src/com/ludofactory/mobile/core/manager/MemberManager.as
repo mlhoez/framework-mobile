@@ -304,8 +304,38 @@ package com.ludofactory.mobile.core.manager
 		public function get email():String { return _member.mail; }
 		
 		/**
-		 * The member password. */
+		 * The member password */
 		public function get password():String { return _member.password; }
+		
+		/**
+		 * The member number of credits. */
+		public function get credits():int { return _member.credits; }
+		public function set credits(val:int):void
+		{
+			if( _member.credits != val )
+			{
+				_member.credits = val;
+				setEncryptedMember();
+				
+				// the data changed, so we need to update the footer
+				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
+			}
+		}
+		
+		/**
+		 * The member number of points. */
+		public function getPoints():int { return _member.points; }
+		public function setPoints(val:int):void
+		{
+			if( _member.points != val )
+			{
+				_member.points = val;
+				setEncryptedMember();
+				
+				// the data changed, so we need to update the footer
+				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
+			}
+		}
 		
 		/**
 		 * The highscore is updated only when a push of a GameSession has failed (if there is a highscore of course),
@@ -338,35 +368,6 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
-		/**
-		 * Updates the number of credits.
-		 */		
-		public function setCredits(val:int):void
-		{
-			if( _member.credits != val )
-			{
-				_member.credits = val;
-				setEncryptedMember();
-				
-				// the data changed, so we need to update the footer
-				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
-			}
-		}
-		
-		/**
-		 * Updates the number of points.
-		 */		
-		public function setPoints(val:int):void
-		{
-			if( _member.points != val )
-			{
-				_member.points = val;
-				setEncryptedMember();
-				
-				// the data changed, so we need to update the footer
-				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
-			}
-		}
 		
 		/**
 		 * Updates the number of cumulated stars.
@@ -493,10 +494,8 @@ package com.ludofactory.mobile.core.manager
 		
 		
 		
-		/** Returns the member's number of credits. */		
-		public function getCredits():int { return _member.credits; }
-		/** Returns the member's number of points. */		
-		public function getPoints():int { return _member.points; }
+		
+		
 		/** Returns the member's number of cumulated stars for the current tournament. */		
 		public function getCumulatedStars():int { return _member.cumulatedStars; }
 		/** Returns the member's number of free game sessions. */		

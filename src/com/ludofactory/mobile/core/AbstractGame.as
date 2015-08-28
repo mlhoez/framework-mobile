@@ -108,7 +108,7 @@ package com.ludofactory.mobile.core
 				}
 				case StakeType.CREDIT:
 				{
-					if( MemberManager.getInstance().getCredits() < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) )
+					if( MemberManager.getInstance().credits < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) )
 					{
 						advancedOwner.screenData.purgeData();
 						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
@@ -117,7 +117,7 @@ package com.ludofactory.mobile.core
 					else
 					{
 						// he can play with credits
-						MemberManager.getInstance().setCredits( MemberManager.getInstance().getCredits() - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
+						MemberManager.getInstance().credits = ( MemberManager.getInstance().credits - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
 					}
 					break;
 				}

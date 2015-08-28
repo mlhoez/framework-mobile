@@ -84,7 +84,7 @@ package com.ludofactory.mobile.navigation.game
 		
 		private function onUpdateData(event:Event = null):void
 		{
-			_isEnabled = MemberManager.getInstance().getCredits() >= Storage.getInstance().getProperty(  AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) ? true:false;
+			_isEnabled = MemberManager.getInstance().credits >= Storage.getInstance().getProperty(  AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) ? true:false;
 			
 			_label.text = formatString( _n("{0} Crédit", "{0} Crédits", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE )),
 				Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
