@@ -720,19 +720,19 @@ package com.ludofactory.mobile.navigation.vip
 					}
 					else
 					{
-						if( (_ranksData[ _targetIndex ] as VipData).accessValue - MemberManager.getInstance().getNumCreditsBought() <= 0 )
+						if( (_ranksData[ _targetIndex ] as VipData).accessValue - MemberManager.getInstance().numCreditsBought <= 0 )
 						{
 							// rang acquis mais mail pas validé, donc on met le texte "cliquez dans le mail..."
 							// FIXME il faudrait changer le texte pour un truc plus parlant 
 							if( _resendMailButton )
 								_resendMailButton.visible = true;
-							_conditionLabel.text = formatString(VipData(_ranksData[1]).condition, ( (_ranksData[ _targetIndex ] as VipData).accessValue - MemberManager.getInstance().getNumCreditsBought() ));
+							_conditionLabel.text = formatString(VipData(_ranksData[1]).condition, ( (_ranksData[ _targetIndex ] as VipData).accessValue - MemberManager.getInstance().numCreditsBought ));
 						}
 						else
 						{
 							if( _reloadButton )
 								_reloadButton.visible = true;
-							_conditionLabel.text = formatString(VipData(_ranksData[_targetIndex]).condition, ( (_ranksData[ _targetIndex ] as VipData).accessValue - MemberManager.getInstance().getNumCreditsBought() ));
+							_conditionLabel.text = formatString(VipData(_ranksData[_targetIndex]).condition, ( (_ranksData[ _targetIndex ] as VipData).accessValue - MemberManager.getInstance().numCreditsBought ));
 						}
 					}
 				}

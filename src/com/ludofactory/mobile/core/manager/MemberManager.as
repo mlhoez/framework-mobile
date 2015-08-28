@@ -315,6 +315,13 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * The member rank. */
 		public function get rank():int { return _member.rank; }
+		/**
+		 * The member number of credits bought. */
+		public function get numCreditsBought():int { return _member.numCreditsBought; }
+		/**
+		 * The member won trophies. */
+		public function getTrophiesWon():Array { return _member.trophiesWon; }
+		
 		
 		/**
 		 * The member number of credits. */
@@ -523,11 +530,7 @@ package com.ludofactory.mobile.core.manager
 		
 		
 		
-		/** Returns the member's won trophies. */		
-		public function getTrophiesWon():Array { return _member.trophiesWon; }
 		
-		/** Returns the member's number of credits bought. */		
-		public function getNumCreditsBought():int { return _member.numCreditsBought; }
 		/** Returns the member's elements to push. */		
 		public function getElementsToPush():Vector.<AbstractElementToPush> { return _member.elementsToPush; }
 		/** Returns the update date. */		
