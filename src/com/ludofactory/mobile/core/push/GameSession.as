@@ -59,7 +59,7 @@ package com.ludofactory.mobile.core.push
 			_gameType = gameType;
 			_gamePrice = gamePrice;
 			_score = -1;
-			_playDate = MemberManager.getInstance().getUpdateDate();
+			_playDate = MemberManager.getInstance().lastUpdateDate;
 			_trophiesWon = [];
 			_connected = false;
 			_numStarsOrPointsEarned = 0;

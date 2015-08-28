@@ -321,7 +321,8 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * The member won trophies. */
 		public function get trophiesWon():Array { return _member.trophiesWon; }
-		
+		/** The update date (when the member object have been updated for the last time). */
+		public function get lastUpdateDate():String { return _member.updateDate; }
 		
 		/**
 		 * The member number of credits. */
@@ -533,8 +534,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/** Returns the member's elements to push. */		
 		public function getElementsToPush():Vector.<AbstractElementToPush> { return _member.elementsToPush; }
-		/** Returns the update date. */		
-		public function getUpdateDate():String { return _member.updateDate; }
+		
 		/** Returns the array of anonymous game sessions. */		
 		public function getAnonymousGameSessions():Array { return _member.anonymousGameSessions; }
 		/** Returns */		
