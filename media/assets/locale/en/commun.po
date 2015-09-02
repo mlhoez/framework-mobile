@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
-"POT-Creation-Date: 2015-08-27 15:24+0100\n"
-"PO-Revision-Date: 2015-08-28 09:45+0100\n"
+"POT-Creation-Date: 2015-09-02 16:23+0100\n"
+"PO-Revision-Date: 2015-09-02 16:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -1343,12 +1343,11 @@ msgstr "You have been logged out."
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/InvalidSessionNotificationContent.as:76
 msgid ""
-"Vous avez été automatiquement déconnecté car vous avez probablement changé vos identifiants de connexion "
-"sur un autre appareil.\n"
+"Vous avez été automatiquement déconnecté.\n"
 "\n"
 "Merci de vous identifier à nouveau."
 msgstr ""
-"You have been automatically logged out. You may have changed your login information on another device.\n"
+"You have been automatically logged out.\n"
 "\n"
 "Please log in again."
 
@@ -1417,6 +1416,7 @@ msgstr "This bid has expired."
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/PendingBidDetailNotificationContent.as:152
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/PendingBidDetailNotificationContent.as:325
+#, python-brace-format
 msgid "Enchère minimum : {0}."
 msgstr "Minimum bid : {0}."
 
@@ -1432,6 +1432,7 @@ msgstr "The bid value cannot be only one figure."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/PendingBidDetailNotificationContent.as:235
+#, python-brace-format
 msgid "Votre enchère doit être supérieure à l'enchère minimum de {0}."
 msgstr "Your bid has to be greater than the minimum bid of {0}."
 
@@ -1454,6 +1455,7 @@ msgstr ""
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/notification/content/RateNotificationContent.as:86
 #: Mobile/src/com/ludofactory/mobile/navigation/RateNotification.as:85
+#, python-brace-format
 msgid "Noter {0}"
 msgstr "Give a mark {0}"
 
@@ -1642,11 +1644,13 @@ msgstr "Score"
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/scoring/ScoreToPointsContainer.as:137
 #: Mobile/src/com/ludofactory/mobile/core/scoring/ScoreToPointsContainer.as:151
+#, python-brace-format
 msgid "Mise : {0}"
 msgstr "Bet : {0}"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/scoring/ScoreToPointsContainer.as:177
+#, python-brace-format
 msgid ""
 "Par exemple : avec un score de {0} vous gagnez {1} Points avec un Jeton ou {2} Points avec une partie à "
 "crédit."
@@ -1699,6 +1703,7 @@ msgstr "Rubies"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/core/scoring/ScoreToStarsContainer.as:121
+#, python-brace-format
 msgid "Par exemple : avec un score de {0}, vous gagnez {1} Rubis."
 msgstr "For example: with a score of  {0}, you will get {1} Rubies."
 
@@ -1884,6 +1889,7 @@ msgstr "History of the day"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/account/history/HistoryHeaderItemRenderer.as:143
+#, python-brace-format
 msgid "Historique du {0}"
 msgstr "Review of {0}"
 
@@ -1895,6 +1901,7 @@ msgstr "No data."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:204
+#, python-brace-format
 msgid ""
 "Gagné à : {0}\n"
 "Gain : {1}\n"
@@ -2012,6 +2019,7 @@ msgstr "Activation"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/account/history/settings/NotificationSettingsContainer.as:73
+#, python-brace-format
 msgid ""
 "Vous ne recevez pas de notifications malgré l'option activée ?\n"
 "\n"
@@ -2054,11 +2062,13 @@ msgstr "The passwords do not match."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/account/history/settings/PersonalInformationsContainer.as:136
+#, python-brace-format
 msgid "Validez votre compte et bénéficier d'avantages VIP en cliquant sur le lien envoyé à l'adresse : {0}"
 msgstr "Confirm your account and benefit from VIP advantages by clicking on the link sent to : {0}"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/account/history/settings/PersonalInformationsContainer.as:145
+#, python-brace-format
 msgid "Validez la modification de votre email en cliquant sur le lien envoyé à l'adresse : {0}"
 msgstr "Confirm the modification of your email address by clicking on the link sent to : {0}"
 
@@ -2167,6 +2177,7 @@ msgstr "Access"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:222
+#, python-brace-format
 msgid "{0} Point sera définitivement crédité sur votre compte dès que vous serez connecté à internet."
 msgid_plural ""
 "{0} Points seront définitivement crédités sur votre compte dès que vous serez connecté à internet."
@@ -2177,6 +2188,7 @@ msgstr[1] ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:222
+#, python-brace-format
 msgid ""
 "{0} Rubis sera définitivement comptabilisée pour le tournoi en cours dès que vous serez connecté à "
 "internet."
@@ -2188,18 +2200,21 @@ msgstr[1] "{0} Rubies will be taken off for the pending Tournament as soon as co
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:235
+#, python-brace-format
 msgid "Votre coupe {0} est en attente d'envoi."
 msgstr "Your cup {0} is pending."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:245
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:255
+#, python-brace-format
 msgid "Votre message « {0} » adressé au service client sera envoyé dès que vous serez connecté à internet."
 msgstr ""
 "Your message « {0} » will be sent to the customer service as soon as you are connected to the Internet."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:264
+#, python-brace-format
 msgid "Vous avez reçu {0} message du service client."
 msgid_plural "Vous avez reçu {0} messages du service client."
 msgstr[0] "You received {0} message from the customer service."
@@ -2207,6 +2222,7 @@ msgstr[1] "You received {0} messages from the customer service."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:273
+#, python-brace-format
 msgid "Vous avez {0} filleul accepté dans votre espace parrainage."
 msgid_plural "Vous avez {0} filleuls acceptés dans votre espace parrainage."
 msgstr[0] "You have {0} accepted friend in the referring space."
@@ -2214,6 +2230,7 @@ msgstr[1] "You have {0} accepted friends in the referring space."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:282
+#, python-brace-format
 msgid "Vous avez gagné {0} récompense."
 msgid_plural "Vous avez gagné {0} récompenses."
 msgstr[0] "You have won {0} reward."
@@ -2221,6 +2238,7 @@ msgstr[1] "You have won {0} rewards."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:290
+#, python-brace-format
 msgid "Vous avez gagné {0} coupe."
 msgid_plural "Vous avez gagné {0} coupes."
 msgstr[0] "You have won {0} cup."
@@ -2236,6 +2254,7 @@ msgstr "Log in"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:299
+#, python-brace-format
 msgid "{0} Rubis sera comptabilisé pour le tournoi en cours dès que vous serez identifié."
 msgid_plural "{0} Rubis seront comptabilisés pour le tournoi en cours dès que vous serez identifié."
 msgstr[0] "{0} Ruby will be added to your current tournament once you're logged in."
@@ -2243,6 +2262,7 @@ msgstr[1] "{0} Rubies will be added to your current tournament once you're logge
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:308
+#, python-brace-format
 msgid "{0} Coupe sera définitivement validée dès que vous serez identifié."
 msgid_plural "{0} Coupes seront définitivement validées dès que vous serez identifié."
 msgstr[0] "{0} Cup will be definitely validated as soon as you log in."
@@ -2250,6 +2270,7 @@ msgstr[1] "{0} Cups will be definitely validated as soon as you log in."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/alert/AlertItemRenderer.as:321
+#, python-brace-format
 msgid "Une nouvelle langue est disponible : {0} !"
 msgid_plural "De nouvelles langues sont disponibles : {0} !"
 msgstr[0] "A new language is available : {0} !"
@@ -2466,6 +2487,7 @@ msgstr "Customer service"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/cs/HelpScreen.as:117
+#, python-brace-format
 msgid "Version de l'application : {0}"
 msgstr "Version of the application : {0}"
 
@@ -2487,6 +2509,7 @@ msgstr "There is no conversation."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/cs/thread/CSThreadScreen.as:89
+#, python-brace-format
 msgid "Problème sur {0}"
 msgstr "Problem on {0}"
 
@@ -2541,11 +2564,13 @@ msgstr "Associate"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/FacebookEndScreen.as:361
+#, python-brace-format
 msgid "{0} a dépassé {1} sur le jeu {2}"
 msgstr "{0} has beaten {1} on the game {2}"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/FacebookEndScreen.as:363
+#, python-brace-format
 msgid "Avec un score de {0}, je pense devenir rapidement le meilleur sur ce jeu."
 msgstr "With a score of {0}, I think I can quickly become the best one on this game."
 
@@ -2560,11 +2585,13 @@ msgstr "http://www.ludokado.com/"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/FacebookEndScreen.as:365
+#, python-brace-format
 msgid "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"
 msgstr "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/HighScoreScreen.as:127
+#, python-brace-format
 msgid ""
 "Nouveau High Score !\n"
 "{0}"
@@ -2574,21 +2601,25 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/HighScoreScreen.as:326
+#, python-brace-format
 msgid "Qui sera capable de me battre sur {0} ?"
 msgstr "Who can beat me on {0} ?"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/HighScoreScreen.as:328
+#, python-brace-format
 msgid "Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me prouver le contraire ;)"
 msgstr "With a score of {0}, I think I am the best player on this game. But prove me wrong ;)"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/HighScoreScreen.as:330
+#, python-brace-format
 msgid "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"
 msgstr "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/PodiumScreen.as:145
+#, python-brace-format
 msgid ""
 "Bravo !\n"
 "Vous êtes {0} du tournoi !"
@@ -2598,6 +2629,7 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/PodiumScreen.as:145
+#, python-brace-format
 msgid ""
 "Bravo !\n"
 "\n"
@@ -2611,16 +2643,19 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/PodiumScreen.as:378
+#, python-brace-format
 msgid "Je suis dans le TOP {0} sur le tournoi {1}"
 msgstr "I am in the TOP {0} on the tournament {1}"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/PodiumScreen.as:380
+#, python-brace-format
 msgid "La fin du tournoi approche ! Rejoignez moi vite et remportez vous aussi cette récompense : {0}"
 msgstr "Tournament is about to end! Hurry up, join me and get that prize : {0}"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/PodiumScreen.as:382
+#, python-brace-format
 msgid "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_top_{1}.jpg"
 msgstr "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_top_{1}.jpg"
 
@@ -2778,11 +2813,13 @@ msgstr "Tournament is over"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/TournamentEndScreen.as:999
+#, python-brace-format
 msgid "Fin du tournoi dans : {0}\"{1}'"
 msgstr "End of the tournament in : {0}\"{1}'"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/engine/TournamentEndScreen.as:1003
+#, python-brace-format
 msgid "Fin du tournoi dans : {0} jour"
 msgid_plural "Fin du tournoi dans : {0} jours"
 msgstr[0] "End of the tournament in : {0} day"
@@ -2810,6 +2847,7 @@ msgstr "To unblock games in Tournaments, you've got to play a Single-player game
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/game/StakeButtonCredit.as:89
+#, python-brace-format
 msgid "{0} Crédit"
 msgid_plural "{0} Crédits"
 msgstr[0] "{0} Credit"
@@ -2817,6 +2855,7 @@ msgstr[1] "{0} Credits"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/game/StakeButtonPoint.as:46
+#, python-brace-format
 msgid "{0} Points"
 msgid_plural "{0} Points"
 msgstr[0] "{0} Point"
@@ -2825,6 +2864,7 @@ msgstr[1] "{0} Points"
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/game/StakeButtonToken.as:110
 #: Mobile/src/com/ludofactory/mobile/navigation/game/StakeButtonToken.as:118
+#, python-brace-format
 msgid "{0} Jeton"
 msgid_plural "{0} Jetons"
 msgstr[0] "{0} Token"
@@ -2843,12 +2883,14 @@ msgstr "Watch a video to play for free."
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/game/StakeButtonToken.as:145
 #: Mobile/src/com/ludofactory/mobile/navigation/game/StakeButtonToken.as:208
+#, python-brace-format
 msgid "{0} Jetons dans "
 msgstr "{0} Tokens in "
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/game/StakeButtonToken.as:232
 #: Mobile/src/com/ludofactory/mobile/navigation/home/summary/SummaryElement.as:332
+#, python-brace-format
 msgid "Reconnectez-vous pour récupérer vos {0} Jetons."
 msgstr "Log in again to get your {0} Tokens."
 
@@ -2972,6 +3014,7 @@ msgstr "Single-player"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/home/summary/SummaryElement.as:109
+#, python-brace-format
 msgid "Vos parties gratuites ({0} par jour)"
 msgstr "Your free games ({0} each day)"
 
@@ -2990,11 +3033,13 @@ msgstr "Your points to be exchanged for Prizes"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/home/summary/SummaryElement.as:280
+#, python-brace-format
 msgid "{0} Jetons dans {1}"
 msgstr "{0} Tokens in {1}"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/home/summary/SummaryElement.as:337
+#, python-brace-format
 msgid "Vos Jetons ({0} quotidiens + {1} bonus)"
 msgstr "Your {0} daily Tokens + {1} bonus"
 
@@ -3060,6 +3105,7 @@ msgstr "Updates"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/news/NewsScreen.as:117
+#, python-brace-format
 msgid ""
 "Ludokado site de la société LudoFactory\n"
 "Copyright {0} ADThink Media"
@@ -3094,6 +3140,7 @@ msgstr "Terms and conditions"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/news/NewsScreen.as:132
+#, python-brace-format
 msgid "Version {0}"
 msgstr "Version {0}"
 
@@ -3355,6 +3402,7 @@ msgstr "Enter a phone number."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/sponsor/invite/SponsorInviteScreen.as:258
+#, python-brace-format
 msgid ""
 "L'application n'est pas autorisée à accéder à vos contacts.\n"
 "\n"
@@ -3408,11 +3456,13 @@ msgstr "This number is not valid."
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/store/StoreItemRenderer.as:112
+#, python-brace-format
 msgid "{0} crédits"
 msgstr "{0} credits"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/store/StoreItemRenderer.as:113
+#, python-brace-format
 msgid "+{0} crédit offert"
 msgid_plural "+{0} crédits offerts"
 msgstr[0] "+{0} free Credit"
@@ -3452,6 +3502,7 @@ msgstr ""
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/tournament/PreviousTournamentGiftBloc.as:146
+#, python-brace-format
 msgid ""
 "Votre gain sur ce tournoi :\n"
 "{0}"
@@ -3467,6 +3518,7 @@ msgstr "Tournament in progress"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/tournament/PreviousTournamentItemRenderer.as:168
+#, python-brace-format
 msgid "Tournoi terminé n°{0}"
 msgstr "Tournament completed no. {0}"
 
@@ -3477,6 +3529,7 @@ msgstr "List of former tournaments"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/tournament/PreviousTournementDetailScreen.as:80
+#, python-brace-format
 msgid "Tournoi n°{0}"
 msgstr "Tournament no.{0}"
 
@@ -3527,6 +3580,7 @@ msgstr "See my benefits"
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/vip/VipUpScreen.as:388
+#, python-brace-format
 msgid "{0} est maintenant {1}"
 msgstr "{0} is now {1}"
 
@@ -3537,8 +3591,19 @@ msgstr "With this new rank, I can benefit from new advantages to win even faster
 
 #: /Users/Maxime/Desktop/Dropbox/Dev/Frameworks/Framework
 #: Mobile/src/com/ludofactory/mobile/navigation/vip/VipUpScreen.as:392
+#, python-brace-format
 msgid "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_vip_{1}.jpg"
 msgstr "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_vip_{1}.jpg"
+
+#~ msgid ""
+#~ "Vous avez été automatiquement déconnecté car vous avez probablement changé vos identifiants de "
+#~ "connexion sur un autre appareil.\n"
+#~ "\n"
+#~ "Merci de vous identifier à nouveau."
+#~ msgstr ""
+#~ "You have been automatically logged out. You may have changed your login information on another device.\n"
+#~ "\n"
+#~ "Please log in again."
 
 #~ msgid "Sélectionnez le thème concerné"
 #~ msgstr "Select a topic"
