@@ -27,7 +27,7 @@ keytool -export -alias 1 -keystore "${prod_cert_path}" -storetype pkcs12 -storep
 ###########################################################
 # Sauvegarde
 
-# /!\ Lorsqu'on utilise une variable avec des espaces, il faut la stocker entre simple quote ' puis quando n l'utilise, la mettre entre double quote "
+# /!\ Lorsqu'on utilise une variable avec des espaces, il faut la stocker entre simple quote ' puis quand on l'utilise, la mettre entre double quote "
 # Dans le echo, utiliser l'argument -e pour prendre en compte les sauts de ligne "\n"
 # | permet en quelque sorte d'utiliser le résultat de la commande précédente dans la commande suivante (après le pipe donc)
 # rm fichier.extension pour supprimer un fichier

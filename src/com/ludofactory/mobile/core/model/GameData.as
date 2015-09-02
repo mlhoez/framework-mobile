@@ -7,21 +7,18 @@ Created : 30 sept. 2013
 package com.ludofactory.mobile.core.model
 {
 	/**
-	 * An object representing some variables associated
-	 * to a game session.
+	 * An object representing some variables associated to a game session.
 	 */	
 	public class GameData
 	{
 		/**
 		 * Whether the game session have been pushed.
-		 * It will determine which content should be
-		 * initialized in the tournament end screen. */		
+		 * It will determine which content should be initialized in the tournament end screen. */		
 		private var _gameSessionPushed:Boolean;
 		
 		/**
-		 * The number of stars or pointq earned in tournament or free 
-		 * mode. If the game session have been pushed, this value i
-		 *  the one from the database, otherwise, it is calculated thanks
+		 * The number of stars or pointq earned in tournament or free  mode. If the game session have been pushed,
+		 * this value is the one from the database, otherwise, it is calculated thanks
 		 * to the <code>ScoreToStarsConverter</code> class. */		
 		private var _numStarsEarned:int;
 		
@@ -66,15 +63,14 @@ package com.ludofactory.mobile.core.model
 		
 		/**
 		 * The name of the gift when the user is first in the tournament.
-		 * It is only used when we want to publish on Facebook when we
-		 * changed a Top. */		
+		 * It is only used when we want to publish on Facebook when we changed a Top. */		
 		private var _topDotationName:String;
 		
 		private var _facebookFriends:Array;
 		private var _facebookMoving:int; // how many places gained
 		private var _facebookPosition:int; // 0, 1 or 2 => where was the user (from top to bottom, so 2 = last)
 		
-		private var _displayPushAlert:Boolean = false;;
+		private var _displayPushAlert:Boolean = false;
 		
 		public function GameData()
 		{
