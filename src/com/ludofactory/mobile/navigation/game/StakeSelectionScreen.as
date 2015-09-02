@@ -279,6 +279,8 @@ package com.ludofactory.mobile.navigation.game
 				_withPoints.touchable = false;
 			_withTokens.touchable = false;
 			_canBack = false;
+			if(_tournamentRankingButton)
+				_tournamentRankingButton.touchable = false;
 			
 			if( this.advancedOwner.screenData.gameType == GameMode.SOLO && MemberManager.getInstance().canDisplayInterstitial() )
 			{

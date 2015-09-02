@@ -17,7 +17,7 @@ package com.ludofactory.mobile.core.model
 		private var _gameSessionPushed:Boolean;
 		
 		/**
-		 * The number of stars or pointq earned in tournament or free  mode. If the game session have been pushed,
+		 * The number of stars or pointq earned in tournament or free mode. If the game session have been pushed,
 		 * this value is the one from the database, otherwise, it is calculated thanks
 		 * to the <code>ScoreToStarsConverter</code> class. */		
 		private var _numStarsEarned:int;
