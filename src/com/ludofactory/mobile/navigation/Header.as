@@ -121,6 +121,7 @@ package com.ludofactory.mobile.navigation
 		public function showTitle(val:String):void
 		{
 			_title.text = val;
+			TweenMax.killTweensOf(_background);
 			if( !_isAlertDisplaying && !_isTitleDisplaying )
 			{
 				_background.visible = this.visible = true;
@@ -135,6 +136,7 @@ package com.ludofactory.mobile.navigation
 		public function hideTitle():void
 		{
 			_title.text = "";
+			TweenMax.killTweensOf(_background);
 			if( !_isAlertDisplaying && _isTitleDisplaying )
 			{
 				_background.visible = this.visible = false;
