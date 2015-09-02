@@ -60,7 +60,7 @@ package com.ludofactory.mobile.core.notification.content
 			const layout:VerticalLayout = new VerticalLayout();
 			layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
 			layout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_MIDDLE;
-			layout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? 40:60 );
+			layout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? 20:40 );
 			this.layout = layout;
 			
 			_icon = new Image( AbstractEntryPoint.assets.getTexture("icon-cross") );
@@ -73,7 +73,7 @@ package com.ludofactory.mobile.core.notification.content
 			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 44 : 60), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_message = new Label();
-			_message.text = _("Vous avez été automatiquement déconnecté car vous avez probablement changé vos identifiants de connexion sur un autre appareil.\n\nMerci de vous identifier à nouveau.");
+			_message.text = _("Vous avez été automatiquement déconnecté.\n\nMerci de vous identifier à nouveau.");
 			addChild(_message);
 			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 38), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
