@@ -11,7 +11,6 @@ package com.ludofactory.mobile.core
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.freshplanet.nativeExtensions.PushNotificationEvent;
 	import com.gamua.flox.Flox;
-	import com.hasoffers.nativeExtensions.MobileAppTracker;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
@@ -54,9 +53,9 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.cs.HelpScreen;
 	import com.ludofactory.mobile.navigation.cs.thread.CSThreadScreen;
 	import com.ludofactory.mobile.navigation.engine.FacebookEndScreen;
-	import com.ludofactory.mobile.navigation.engine.SoloEndScreen;
 	import com.ludofactory.mobile.navigation.engine.HighScoreScreen;
 	import com.ludofactory.mobile.navigation.engine.PodiumScreen;
+	import com.ludofactory.mobile.navigation.engine.SoloEndScreen;
 	import com.ludofactory.mobile.navigation.engine.TournamentEndScreen;
 	import com.ludofactory.mobile.navigation.event.EventManager;
 	import com.ludofactory.mobile.navigation.faq.FaqScreen;
@@ -441,21 +440,21 @@ package com.ludofactory.mobile.core
 			SoundManager.getInstance().addSound("new-highscore", sfxPath + "/new-highscore.mp3", "sfx");
 			SoundManager.getInstance().addSound("trophy-won", sfxPath + "/trophy-won.mp3", "sfx");
 			
-			try
-			{
-				MobileAppTracker.instance.init(AbstractGameInfo.HAS_OFFERS_ADVERTISER_ID, AbstractGameInfo.HAS_OFFERS_CONVERSION_KEY);
+			//try
+			//{
+				/*MobileAppTracker.instance.init(AbstractGameInfo.HAS_OFFERS_ADVERTISER_ID, AbstractGameInfo.HAS_OFFERS_CONVERSION_KEY);
 				
 				if( CONFIG::DEBUG )
 				{
 					MobileAppTracker.instance.setDebugMode(true);
 					MobileAppTracker.instance.setAllowDuplicates(true);
-				}
+				}*/
 				
 				//MobileAppTracker.instance.setUserId(GlobalConfig.deviceId);
 				//MobileAppTracker.instance.trackInstall(); // track install (or update)
 				//MobileAppTracker.instance.trackAction("open"); // track daily open
-			} 
-			catch(error:Error) { }
+			//} 
+			//catch(error:Error) { }
 			
 			if( GAnalytics.isSupported() )
 			{
