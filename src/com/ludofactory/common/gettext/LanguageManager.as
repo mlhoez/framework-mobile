@@ -7,6 +7,7 @@ Created : 7 mai 2014
 */
 package com.ludofactory.common.gettext
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.dispatcher;
@@ -25,7 +26,7 @@ package com.ludofactory.common.gettext
 	import flash.net.URLRequest;
 	import flash.system.Capabilities;
 	import flash.utils.ByteArray;
-
+	
 	/**
 	 * Language manager.
 	 */	
@@ -254,15 +255,27 @@ package com.ludofactory.common.gettext
 		private function enqueue(data:Object):void
 		{
 			var moFileUrlList:Array = [];
+			var poFileUrl:String;
+			var poFileFirstChar:String;
 			for(var languageIsoName:String in data)
 			{
 				if( !(data[languageIsoName] is Array) )
 					continue;
 				
 				moFileUrlList = data[languageIsoName];
-				if( languageIsoName == _currentLocale && moFileUrlList && moFileUrlList.length > 0 ) _isCurrentLanguageDeprecated = true;
 				for(var i:int = 0; i < moFileUrlList.length; i++)
+				{
+					poFileUrl = moFileUrlList[i];
+					poFileFirstChar = String(poFileUrl.split("?")[0].split("/").pop()).charAt(0);
+					// can only be a .po file, cannot be not hidden or starts with "_"
+					if(poFileFirstChar == "." || poFileFirstChar == "_" || (poFileUrl.split("?")[0].split("/").pop().split(".")[1]) != ALLOWED_EXTENSION_FILE)
+						continue;
+					
+					if( lang == _currentLocale)
+						_isCurrentLanguageDeprecated = true;
+					
 					enqueueWithName(moFileUrlList[i], languageIsoName);
+				}
 			}
 			
 			moFileUrlList.length = 0;
@@ -285,11 +298,6 @@ package com.ludofactory.common.gettext
 		 */		
 		public function enqueueWithName(fileUrl:String, lang:String):void
 		{
-			// cannot be a hidden file sent by mistake by PHP or one that starts with "_"
-			if( String(fileUrl.split("?")[0].split("/").pop()).charAt(0) == "." || 
-				String(fileUrl.split("?")[0].split("/").pop()).charAt(0) == "_") return;
-			// can only be a .po file
-			if( (fileUrl.split("?")[0].split("/").pop().split(".")[1]) != ALLOWED_EXTENSION_FILE ) return;
 			log("[LanguageManager] Enqueuing file '" + fileUrl + "' in " + lang);
 			_queue.push( new LanguageQueuedData( (fileUrl.split("?")[0].split("/").pop().split(".")[0]), 
 												 (fileUrl.split("?")[0].split("/").pop().split(".")[1]),
