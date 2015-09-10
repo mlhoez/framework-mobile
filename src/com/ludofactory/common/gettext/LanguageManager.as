@@ -450,7 +450,8 @@ package com.ludofactory.common.gettext
 				for(var j:int = 0; j < moFileList.length; j++)
 				{
 					moFile = moFileList[j];
-					output[ languageFolder.name ][ moFile.name ] = moFile.modificationDate;
+					if(!moFile.isHidden) // avoid hidden files like .DS_Store that could have been sent to the app by mistake by PHP
+						output[ languageFolder.name ][ moFile.name ] = moFile.modificationDate;
 				}
 			}
 			
