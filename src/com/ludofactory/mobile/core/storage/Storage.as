@@ -6,9 +6,9 @@ Created : 7 août 2013
 */
 package com.ludofactory.mobile.core.storage
 {
+	
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.utils.log;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -19,7 +19,6 @@ package com.ludofactory.mobile.core.storage
 	import com.ludofactory.mobile.navigation.cs.CSThemeData;
 	import com.ludofactory.mobile.navigation.faq.FaqData;
 	import com.ludofactory.mobile.navigation.faq.FaqQuestionAnswerData;
-	import com.ludofactory.mobile.navigation.home.HomeScreen;
 	import com.ludofactory.mobile.navigation.news.NewsData;
 	import com.ludofactory.mobile.navigation.settings.LanguageData;
 	import com.ludofactory.mobile.navigation.vip.VipData;
@@ -29,7 +28,7 @@ package com.ludofactory.mobile.core.storage
 	import flash.net.SharedObject;
 	import flash.net.registerClassAlias;
 	import flash.utils.Dictionary;
-
+	
 	public class Storage
 	{
 		/**

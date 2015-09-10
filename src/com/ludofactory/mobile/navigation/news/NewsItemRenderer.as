@@ -6,18 +6,15 @@ Created : 18 sept. 2013
 */
 package com.ludofactory.mobile.navigation.news
 {
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.milkmangames.nativeextensions.CoreMobile;
 	import com.milkmangames.nativeextensions.GAnalytics;
-	import com.sticksports.nativeExtensions.canOpenUrl.CanOpenUrl;
-	
-	import flash.geom.Point;
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
@@ -26,6 +23,10 @@ package com.ludofactory.mobile.navigation.news
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
 	import feathers.events.FeathersEventType;
+	
+	import flash.geom.Point;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
@@ -210,7 +211,7 @@ package com.ludofactory.mobile.navigation.news
 						_button.visible = false;
 					else
 						_button.visible = true;
-					_button.label = CanOpenUrl.canOpen(_data.urlScheme) ? _("Jouer") : _("Télécharger");
+					_button.label = (CoreMobile.isSupported() && CoreMobile.mobile.canOpenUrl(_data.urlScheme)) ? _("Jouer") : _("Télécharger");
 					
 					_title.visible = _message.visible = true;
 					_title.text = _data.title;
@@ -376,7 +377,7 @@ package com.ludofactory.mobile.navigation.news
 						if( _data.urlScheme != null && _data.urlScheme != "" )
 						{
 							// this is a game news that must trigger an app open (the target app)
-							if( CanOpenUrl.canOpen(_data.urlScheme) )
+							if( CoreMobile.isSupported() && CoreMobile.mobile.canOpenUrl(_data.urlScheme) )
 							{
 								// the app is installed on the device, then open it
 								request.url = _data.urlScheme;

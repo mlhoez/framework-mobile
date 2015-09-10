@@ -6,16 +6,17 @@ Created : 29 nov. 2013
 */
 package com.ludofactory.mobile.navigation.event
 {
+	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.sticksports.nativeExtensions.canOpenUrl.CanOpenUrl;
-	
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
+	import com.milkmangames.nativeextensions.CoreMobile;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.core.FeathersControl;
+	
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	
 	import starling.display.Button;
 	import starling.display.Quad;
@@ -95,7 +96,7 @@ package com.ludofactory.mobile.navigation.event
 				if( _data.urlScheme != null && _data.urlScheme != "" )
 				{
 					// this is a game event that must trigger an app open (the target app)
-					if( CanOpenUrl.canOpen(_data.urlScheme) )
+					if( CoreMobile.isSupported() && CoreMobile.mobile.canOpenUrl(_data.urlScheme) )
 					{
 						// the app is installed on the device, then open it
 						request.url = _data.urlScheme;
