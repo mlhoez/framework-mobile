@@ -265,8 +265,8 @@ package com.ludofactory.mobile.core
 		private static var _alertContainer:AlertManager;
 		
 		/**
-		 * Used to retrieve and display events. */		
-		private var _eventManager:EventManager;
+		 * Used to retrieve and display events. */
+		private static var _eventManager:EventManager;
 		
 		
 		public function AbstractEntryPoint()
@@ -479,10 +479,8 @@ package com.ludofactory.mobile.core
 			_pushManager.addEventListener(MobileEventTypes.UPDATE_HEADER, onPushUpdate);
 			_pushManager.addEventListener(MobileEventTypes.UPDATE_ALERT_CONTAINER_LIST, _alertContainer.updateList);
 			
-			if( CoreMobile.isSupported() )
-			{
-				CoreMobile.create(); // only supported on Android and iOS
-			}
+			// only supported on Android and iOS but we can create it here without having to check isSupported
+			CoreMobile.create();
 			
 			if( GoViral.isSupported() )
 			{
@@ -1197,6 +1195,7 @@ package com.ludofactory.mobile.core
 		public static function get numAlerts():int { return (_pushManager.numElementsToPush + _alertContainer.numAlerts); }
 		public static function get assets():AssetManager { return _assets; }
 		public static function get pushManager():PushManager { return _pushManager; }
+		public static function get eventManager():EventManager { return _eventManager; }
 		public static function get screenNavigator():AdvancedScreenNavigator { return _screenNavigator; }
 		public static function get gameTypeSelectionManager():GameModeSelectionManager { return _gameTypeSelectionManager; }
 		

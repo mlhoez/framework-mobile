@@ -44,7 +44,7 @@ package com.ludofactory.mobile.navigation.event
 			if( !_isGettingEvent && AirNetworkInfo.networkInfo.isConnected() && MemberManager.getInstance().isLoggedIn() )
 			{
 				_isGettingEvent = true;
-				Remote.getInstance().getEvent(onGetEventSuccess, onGetEventFailure, onGetEventFailure, 2);
+				Remote.getInstance().getEvent(onGetEventSuccess, onGetEventFailure, onGetEventFailure, 1);
 			}
 		}
 		
@@ -142,6 +142,14 @@ package com.ludofactory.mobile.navigation.event
 		 */		
 		private function onGetEventFailure(error:Object = null):void
 		{
+			_isGettingEvent = false;
+		}
+		
+		public function onUserLoggedOut():void
+		{
+			// just in case the user quickly switch account while we are getting the events, in this special case
+			// the boolean is never set back to false, so unless the user restarts the app, he won't be able to
+			// retrieve the events
 			_isGettingEvent = false;
 		}
 	}

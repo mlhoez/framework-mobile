@@ -272,6 +272,7 @@ package com.ludofactory.mobile.core.manager
 			loadEncryptedMember( DEFAULT_MEMBER_ID );
 			AbstractEntryPoint.pushManager.onUserLoggedOut();
 			AbstractEntryPoint.alertData.onUserLoggedOut();
+			AbstractEntryPoint.eventManager.onUserLoggedOut();
 			
 			if( !_member.tournamentUnlocked && tournamentUnlocked )
 				setTournamentUnlocked(true);
