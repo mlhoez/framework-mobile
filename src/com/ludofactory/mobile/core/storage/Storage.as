@@ -84,6 +84,8 @@ package com.ludofactory.mobile.core.storage
 				
 				log("[Storage] This is the first launch of the app.");
 				EncryptedLocalStore.reset();
+				
+				// inform the app that it's the first launch
 				setProperty(StorageConfig.PROPERTY_FIRST_LAUNCH, true);
 				
 				// /!\ Set up here all game-specific properties that need to be initialized at first launch, like cups
