@@ -7,6 +7,7 @@ Created : 7 mai 2014
 */
 package com.ludofactory.common.gettext
 {
+	
 	import flash.filesystem.File;
 	import flash.utils.Dictionary;
 	
@@ -33,7 +34,7 @@ package com.ludofactory.common.gettext
 		/**
 		 * Loads a language
 		 * @param locale
-		 * 
+		 * @param forceUpdate ?
 		 */		
 		public function loadLocale(locale:String, forceUpdate:Boolean = false):void
 		{
@@ -45,16 +46,14 @@ package com.ludofactory.common.gettext
 			// retrieve the list of all PO files in the <locale> folder
 			var filesToLoad:Array = File.applicationStorageDirectory.resolvePath("assets" + File.separator + "locale" + File.separator + locale).getDirectoryListing();
 			var poFile:File;
-			var parsedPOFile:POFile;
 			_locales[_currentLocale] = new Dictionary(false); // = domains
 			for(var i:int = 0; i < filesToLoad.length; i++)
 			{
 				// load each language file
 				poFile = filesToLoad[i] as File;
-				if( !poFile.isHidden ) // just in case for mac files
-				{
-					_locales[_currentLocale][poFile.name.split(".")[0]] = parsePOFile(poFile);
-				}
+				if(poFile.isHidden || poFile.name.charAt(0) == "." || poFile.name.charAt(0) == "_") // just in case for hidden files and files to delete : "_"
+					continue;
+				_locales[_currentLocale][poFile.name.split(".")[0]] = parsePOFile(poFile);
 			}
 		}
 		
