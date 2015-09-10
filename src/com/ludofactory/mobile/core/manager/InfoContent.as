@@ -179,6 +179,10 @@ package com.ludofactory.mobile.core.manager
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			
+			// otherwise it's never translated because when e switch language, the instance is already created with
+			// the language that was set at runtime...
+			_tapToCloseLabel.text = _("Tapotez n'importe où pour continuer...");
+			
 			icon = ICON_LOADER;
 			Starling.juggler.add(_loader);
 			_tapToCloseLabel.alpha = 1;
