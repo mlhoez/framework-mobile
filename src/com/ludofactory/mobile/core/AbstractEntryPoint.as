@@ -800,11 +800,11 @@ package com.ludofactory.mobile.core
 			else
 			{
 				
-				_appClearBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).appClearBackground ? true : false;
-				_appDarkBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).appDarkBackground ? true : false;
-				_whiteBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).whiteBackground ? true : false;
-				_blueBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).blueBackground ? true : false;
-				_howToWinGiftsBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).howToWinGiftsBackground ? true : false;
+				_appClearBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).appClearBackground;
+				_appDarkBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).appDarkBackground;
+				_whiteBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).whiteBackground;
+				_blueBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).blueBackground;
+				_howToWinGiftsBackground.visible = (_screenNavigator.activeScreen as AdvancedScreen).howToWinGiftsBackground;
 			}
 		}
 		
