@@ -459,6 +459,7 @@ package com.ludofactory.mobile.core
 			if( GAnalytics.isSupported() )
 			{
 				GAnalytics.create(AbstractGameInfo.GOOGLE_ANALYTICS_TRACKER);
+				GAnalytics.analytics.defaultTracker.setAdvertisingIdCollectionEnabled(true);
 			}
 			
 			// parse device info
