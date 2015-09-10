@@ -11,6 +11,8 @@ package com.ludofactory.mobile.navigation.achievements
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.push.GameSession;
+	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.storage.StorageConfig;
 	
 	import starling.events.Event;
 	import starling.events.EventDispatcher;
@@ -29,7 +31,7 @@ package com.ludofactory.mobile.navigation.achievements
 		private var _trophiesWon:Array;
 		
 		/**
-		 * The trophies data retreived from the configuration. */		
+		 * The trophies data retreived from the configuration. */
 		private var _trophiesData:Array;
 		
 		/**
@@ -42,7 +44,7 @@ package com.ludofactory.mobile.navigation.achievements
 		
 		public function TrophyManager(sk:SecurityKey)
 		{
-			_trophiesData = AbstractGameInfo.CUPS.concat();
+			_trophiesData = Storage.getInstance().getProperty(StorageConfig.PROPERTY_TROPHIES).concat();
 			_trophyDisplayer = new TrophyDisplayer();
 			_trophyDisplayer.addEventListener(Event.COMPLETE, onTrophyDisplayComplete);
 		}
@@ -56,7 +58,6 @@ package com.ludofactory.mobile.navigation.achievements
 		
 //------------------------------------------------------------------------------------------------------------
 //	Get
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Return a trophy data by its id.
@@ -76,7 +77,6 @@ package com.ludofactory.mobile.navigation.achievements
 		
 //------------------------------------------------------------------------------------------------------------
 //	Check and update
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Checks if the user can win the trophy whose id is given
@@ -132,14 +132,30 @@ package com.ludofactory.mobile.navigation.achievements
 			dispatchEventWith(Event.COMPLETE);
 		}
 		
+		/**
+		 * Updates the data of the trophies that are stored on the device.
+		 * 
+		 * At this time, this function is used twice : one when the init remote function is called, and another time
+		 * when the user access the TrophyScreen.
+		 * 
+		 * @param trophiesData
+		 */
+		public function updateTrophies(trophiesData:Array):void
+		{
+			var trophiesArrayToStore:Array = [];
+			for (var i:int = 0; i < trophiesData.length; i++)
+				trophiesArrayToStore.push( new TrophyData(trophiesData[i]) );
+			Storage.getInstance().setProperty(StorageConfig.PROPERTY_TROPHIES, trophiesArrayToStore);
+			_trophiesData = trophiesArrayToStore;
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Get / Set
-//------------------------------------------------------------------------------------------------------------
 		
 		public function get isTrophyMessageDisplaying():Boolean { return _trophyDisplayer.isTrophyMessageDisplaying; }
-		
-		public function get currentGameSession():GameSession { return _currentGameSession; }
 		public function set currentGameSession(val:GameSession):void { _currentGameSession = val; }
+		public function get trophiesData():Array { return _trophiesData; }
+		
 	}
 }
 

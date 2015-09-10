@@ -106,6 +106,11 @@ package com.ludofactory.mobile.core.storage
 		public static const PROPERTY_IDLE_TIME:String = "DEFAULT_IDLE_TIME";
 		public static const DEFAULT_IDLE_TIME:Number = 3600000; // 1 hour by default
 		
+		/**
+		 * The game trophies. It must be configured in the Main class with AbstractGameInfo.CUPS */
+		public static const PROPERTY_TROPHIES:String = "DEFAULT_TROPHIES";
+		public static const DEFAULT_TROPHIES:Array = []; // no trophies by default, they must be setup in the Main class with AbstractGameInfo.CUPS
+		
 	// ----------------------- 
 		
 		/**

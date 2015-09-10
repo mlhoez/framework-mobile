@@ -466,8 +466,6 @@ package com.ludofactory.mobile.core
 			
 			NativeDeviceInfo.parse();
 			
-			
-			
 			_container = new Sprite();
 			
 			initializeBackgrounds();

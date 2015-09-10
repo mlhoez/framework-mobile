@@ -6,6 +6,8 @@ Created : 31 août 2013
 */
 package com.ludofactory.mobile.navigation.achievements
 {
+	
+
 	/**
 	 * This class represent a trophy basic informations.
 	 */	
@@ -32,8 +34,17 @@ package com.ludofactory.mobile.navigation.achievements
 		private var _values:Array;
 		
 		/**
-		 * The texture name. */		
+		 * The texture name : is empty we pick up the embedeed texture ("trophyX"),
+		 * oherwise if it's an url, we replace */		
 		private var _textureName:String;
+		
+		/**
+		 * For progressive trophies, this value is used to know the progress of the player on this trophy.*/
+		private var _currentValue:Number;
+		
+		/**
+		 * Whether the trophy is progressive. */
+		private var _isProgressive:Boolean = false;
 		
 		public function TrophyData(data:Object = null)
 		{
@@ -41,16 +52,16 @@ package com.ludofactory.mobile.navigation.achievements
 			// when we retreive a SharedObject containing this custom class, the parameter
 			// of the constructor will (always ?) be null. So we need to set a default value
 			// in the constructor and then, check if this value is equal to null or not.
-			// The object will be juste fine after, like it was saved in the SharedObject, so
-			// this is weird but works juste fine.
 			if( !data ) return;
 			
-			_id = data.id;
+			_id = int(data.id);
 			_title = data.title;
 			_description = data.description;
 			_reward = data.reward;
 			_values = data.values;
-			_textureName = data.textureName;
+			_textureName = (data.textureName && textureName != "") ? data.textureName : ("trophy" + _id);
+			_currentValue = (data.currentValue != null) ? Number(data.currentValue) : 0;
+			_isProgressive = (data.isProgressive != null) ? Boolean(data.isProgressive) : false;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -74,5 +85,10 @@ package com.ludofactory.mobile.navigation.achievements
 		public function get textureName():String { return _textureName; }
 		public function set textureName(val:String):void { _textureName = val; }
 		
+		public function get currentValue():Number { return _currentValue; }
+		public function set currentValue(value:Number):void { _currentValue = value; }
+		
+		public function get isProgressive():Boolean { return _isProgressive; }
+		public function set isProgressive(value:Boolean):void { _isProgressive = value; }
 	}
 }

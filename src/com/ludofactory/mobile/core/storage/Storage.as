@@ -9,11 +9,13 @@ package com.ludofactory.mobile.core.storage
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.scoring.ScoreToPointsData;
 	import com.ludofactory.mobile.core.scoring.ScoreToStarsData;
 	import com.ludofactory.mobile.navigation.achievements.TrophyData;
+	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
 	import com.ludofactory.mobile.navigation.cs.CSThemeData;
 	import com.ludofactory.mobile.navigation.faq.FaqData;
 	import com.ludofactory.mobile.navigation.faq.FaqQuestionAnswerData;
@@ -83,6 +85,10 @@ package com.ludofactory.mobile.core.storage
 				log("[Storage] This is the first launch of the app.");
 				EncryptedLocalStore.reset();
 				setProperty(StorageConfig.PROPERTY_FIRST_LAUNCH, true);
+				
+				// /!\ Set up here all game-specific properties that need to be initialized at first launch, like cups
+				// set up trophies
+				setProperty(StorageConfig.PROPERTY_TROPHIES, AbstractGameInfo.CUPS);
 			}
 			
 			Remote.getInstance().init(onLoadConfigSuccess, onLoadConfigFailure, onLoadConfigFailure, 5);
@@ -165,6 +171,11 @@ package com.ludofactory.mobile.core.storage
 						setProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE, int(result.participation.tournoi.jetons));
 				}
 			}
+			
+			// replace the stored trophies : we must replace it and not simply update because we may need to remove
+			// some trophies at some time
+			if( result.hasOwnProperty("tab_trophies") && result.tab_trophies != null )
+				TrophyManager.getInstance().updateTrophies(result.tab_trophies as Array);
 			
 			// parse skip how to win gifts screen value
 			if( result.hasOwnProperty("param_affichage") )

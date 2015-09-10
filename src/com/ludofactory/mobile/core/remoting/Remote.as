@@ -42,16 +42,16 @@ package com.ludofactory.mobile.core.remoting
 		private const AMF_PATH:String = "/amfphp2/";
 		
 		// url quand on n'est pas sur le réseau local
-		private const DEV_PORT:int = 9999;
-		private const DEV_URL:String = "http://appmobile.ludokado.com";
+		//private const DEV_PORT:int = 9999;
+		//private const DEV_URL:String = "http://appmobile.ludokado.com";
 		
 		// urls et port quand on est sur le réseau local
-		//private const DEV_PORT:int = 80;
+		private const DEV_PORT:int = 80;
 		//private const DEV_URL:String = "http://www.ludokado.com";
 		//private const DEV_URL:String = "http://www.ludokado.dev";
 		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokado2.pterrier.ludofactory.dev";
-		//private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
+		private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado3.sravet.ludofactory.dev";
 		//private const DEV_URL:String = "http://semiprod.ludokado.com";
@@ -113,6 +113,20 @@ package com.ludofactory.mobile.core.remoting
 			var params:Object = getGenericParams();
 			params.acces_tournoi = MemberManager.getInstance().getTournamentUnlocked() == true ? 1 : 0;
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "init", params);
+		}
+		
+		/**
+		 * Retrieves the list of all trophies associated to this game, in order to dynamise them.
+		 * 
+		 * @param callbackSuccess
+		 * @param callbackFail
+		 * @param callbackMaxAttempts
+		 * @param maxAttempts
+		 * @param screenName
+		 */
+		public function getTrophies(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getTrophies", getGenericParams());
 		}
 		
 		/**
@@ -812,6 +826,8 @@ package com.ludofactory.mobile.core.remoting
 				if( MemberManager.getInstance().isLoggedIn() && "highscore" in result )
 					MemberManager.getInstance().highscore = int(result.highscore);
 				
+				// this is used to update the owned trophies, for example when a user change a device, everything
+				// is synchronized
 				if( MemberManager.getInstance().isLoggedIn() && "tab_trophy_win" in result )
 					MemberManager.getInstance().trophiesWon = result.tab_trophy_win as Array; // TODO peut être afficher les trophées ici ? canWin... si oui => onWinTrophy...
 				
