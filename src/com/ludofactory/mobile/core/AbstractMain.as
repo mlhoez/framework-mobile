@@ -84,7 +84,7 @@ package com.ludofactory.mobile.core
 			GlobalConfig.android = Capabilities.manufacturer.toLowerCase().indexOf("android") >= 0;
 			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
 			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
-			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : (GlobalConfig.android ? "android" : "android"); // FIXME Remettre "simulator" quand le modif aura été faite côté PHP
+			GlobalConfig.platformName = GlobalConfig.ios ? "ios" : (GlobalConfig.android ? "android" : "simulator");
 			AirDeviceId.getInstance().getID(null, function(deviceId:String):void{ GlobalConfig.deviceId = deviceId; });
 			showLaunchImage();
 			
