@@ -286,6 +286,8 @@ package com.ludofactory.common.gettext
 		public function enqueueWithName(fileUrl:String, lang:String):void
 		{
 			log("[LanguageManager] Enqueuing file '" + fileUrl + "' in " + lang);
+			// cannot be a hidden file sent by mistake by PHP
+			if( String(fileUrl.split("?")[0].split("/").pop()).charAt(0) == "." ) return;
 			// can only be a .po file
 			if( (fileUrl.split("?")[0].split("/").pop().split(".")[1]) != ALLOWED_EXTENSION_FILE ) return;
 			_queue.push( new LanguageQueuedData( (fileUrl.split("?")[0].split("/").pop().split(".")[0]), 
