@@ -21,6 +21,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.debug.TouchMarkerManager;
+	import com.milkmangames.nativeextensions.CoreMobile;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.system.DeviceCapabilities;
@@ -389,7 +390,7 @@ package com.ludofactory.mobile.core
 			Flox.flushLocalData();
 			
 			if( AbstractEntryPoint.pushManager )
-				PushNotification.getInstance().setBadgeNumberValue( AbstractEntryPoint.numAlerts );
+				CoreMobile.mobile.setNotificationBadgeNumber(AbstractEntryPoint.numAlerts);
 			PauseManager.pause();
 			NativeApplication.nativeApplication.addEventListener(flash.events.Event.ACTIVATE, onResume, false, 0, true);
 			
