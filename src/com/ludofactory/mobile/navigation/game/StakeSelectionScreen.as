@@ -282,7 +282,7 @@ package com.ludofactory.mobile.navigation.game
 			if(_tournamentRankingButton)
 				_tournamentRankingButton.touchable = false;
 			
-			if( this.advancedOwner.screenData.gameType == GameMode.SOLO && MemberManager.getInstance().canDisplayInterstitial() )
+			if( this.advancedOwner.screenData.gamePrice == StakeType.TOKEN && MemberManager.getInstance().canDisplayInterstitial() )
 			{
 				AdManager.showInterstitial();
 			}
