@@ -111,7 +111,8 @@ package com.ludofactory.mobile.navigation.event
 						_fullScreenEvent.alignPivot();
 						_fullScreenEvent.x = _fullScreenEvent.width * 0.5;
 						_fullScreenEvent.y = _fullScreenEvent.height * 0.5;
-						_fullScreenEvent.scaleX = _fullScreenEvent.scaleY = 0;
+						_fullScreenEvent.alpha = 0;
+						_fullScreenEvent.scaleX = _fullScreenEvent.scaleY = 1.2;
 						
 						break;
 					}
