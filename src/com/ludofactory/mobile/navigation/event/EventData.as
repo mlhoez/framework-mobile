@@ -6,6 +6,9 @@ Created : 21 oct. 2013
 */
 package com.ludofactory.mobile.navigation.event
 {
+	
+	import starling.extensions.ColorArgb;
+	
 	public class EventData
 	{
 		/**
@@ -23,7 +26,7 @@ package com.ludofactory.mobile.navigation.event
 		
 		/**
 		 * The color decoration. */		
-		private var _decorationColor:uint = 0x000000; //0xe9e9e9;
+		private var _decorationColor:ColorArgb = ColorArgb.fromArgb(0xBF000000); //0xe9e9e9;
 		
 		/**
 		 * Whether the decoration should be visible. */		
@@ -61,7 +64,7 @@ package com.ludofactory.mobile.navigation.event
 			_imageUrl = String(data.image);
 			_link = String(data.lien);
 			if( data.hasOwnProperty("couleur_deco") && data.couleur_deco )
-				_decorationColor = uint(data.couleur_deco);
+				_decorationColor = ColorArgb.fromArgb(data.couleur_deco);
 			if( data.hasOwnProperty("presence_deco") && data.presence_deco )
 				_decorationVisible = int(data.presence_deco) == 0 ? false : true;
 			
@@ -88,7 +91,7 @@ package com.ludofactory.mobile.navigation.event
 		public function get type():int { return _type; }
 		public function get imageUrl():String { return _imageUrl; }
 		public function get link():String { return _link; }
-		public function get decorationColor():uint { return _decorationColor; }
+		public function get decorationColor():ColorArgb { return _decorationColor; }
 		public function get decorationVisible():Boolean { return _decorationVisible; }
 		public function get closeWhenRedirect():Boolean { return _closeWhenRedirect; }
 		

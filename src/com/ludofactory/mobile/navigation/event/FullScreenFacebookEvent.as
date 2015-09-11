@@ -48,8 +48,8 @@ package com.ludofactory.mobile.navigation.event
 		{
 			super.initialize();
 			
-			_overlay = new Quad(50, 50, _data.decorationColor);
-			_overlay.alpha = 1;
+			_overlay = new Quad(50, 50, _data.decorationColor.toRgb());
+			_overlay.alpha = _data.decorationColor.alpha;
 			addChild(_overlay);
 			
 			_image = new ImageLoader();
