@@ -6,29 +6,28 @@ Created : 10 oct. 2013
 */
 package com.ludofactory.mobile.core.notification.content
 {
-
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.navigation.event.EventData;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	import com.ludofactory.mobile.navigation.event.EventData;
+	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
-	import feathers.layout.VerticalLayout;
-
+	
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.display.Image;
 	import starling.events.Event;
+	import starling.text.TextField;
 	import starling.utils.formatString;
-
+	
 	public class RateNotificationContent extends AbstractPopupContent
 	{
 		/**
@@ -37,7 +36,7 @@ package com.ludofactory.mobile.core.notification.content
 		
 		/**
 		 * The title. */		
-		private var _notificationTitle:Label;
+		private var _notificationTitle:TextField;
 		
 		/**
 		 * The title. */		
@@ -62,36 +61,49 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			super.initialize();
 			
-			const layout:VerticalLayout = new VerticalLayout();
+			/*const layout:VerticalLayout = new VerticalLayout();
 			layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
 			layout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_MIDDLE;
 			layout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? 40:60 );
-			this.layout = layout;
+			this.layout = layout;*/
 			
 			_icon = new Image( AbstractEntryPoint.assets.getTexture("rate-icon") );
 			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale;
 			addChild(_icon);
 			
-			_notificationTitle = new Label();
-			_notificationTitle.text = _("Donnez-nous une note !");
+			_notificationTitle = new TextField(5, scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 100), _("Donnez-nous une note !"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 44 : 60), Theme.COLOR_DARK_GREY);
+			_notificationTitle.autoScale = true;
 			addChild(_notificationTitle);
-			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_message = new Label();
 			_message.text = _("Vous aimez notre jeu ?\nAidez-nous à le faire connaître en lui donnant une note !");
 			addChild(_message);
-			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), Theme.COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
+			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 34), Theme.COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_yesButton = new Button();
 			_yesButton.label = formatString(_("Noter {0}"), AbstractGameInfo.GAME_NAME);
 			_yesButton.addEventListener(Event.TRIGGERED, onConfirm);
 			addChild(_yesButton);
+			_yesButton.validate();
+			_yesButton.width += scaleAndRoundToDpi(GlobalConfig.isPhone ? 20: 40);
 		}
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = _message.width = this.actualWidth * 0.9;
-			_yesButton.width = this.actualWidth * 0.8;
+			if(isInvalid(INVALIDATION_FLAG_SIZE))
+			{
+				_icon.y = scaleAndRoundToDpi(10);
+				_icon.x = (actualWidth - _icon.width) * 0.5;
+				
+				_notificationTitle.width = _message.width = this.actualWidth;
+				_notificationTitle.y = _icon.y + _icon.height + scaleAndRoundToDpi(5);
+				
+				_message.validate();
+				_message.y = _notificationTitle.y + _notificationTitle.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 40);
+				
+				_yesButton.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 60);
+				_yesButton.x = (actualWidth - _yesButton.width) * 0.5;
+			}
 			
 			super.draw();
 		}
