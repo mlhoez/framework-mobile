@@ -11,7 +11,9 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.common.encryption.Encryption;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.AbstractMain;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
@@ -20,6 +22,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.push.PushNewCSThread;
 	import com.ludofactory.mobile.core.push.PushTrophy;
 	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.vidcoin.extension.ane.VidCoinController;
@@ -361,6 +364,13 @@ package com.ludofactory.mobile.core.manager
 					setEncryptedMember();
 					return;
 				}
+			}
+			
+			if(GlobalConfig.ios)
+			{
+				// we need to report the achievements on iOS too
+				for (var j:int = 0; j < val.length; j++)
+					GameCenterManager.reportAchievement(AbstractGameInfo.ACHIEVEMENTS_PREFIX + "." + val[j], 100);
 			}
 		}
 		
