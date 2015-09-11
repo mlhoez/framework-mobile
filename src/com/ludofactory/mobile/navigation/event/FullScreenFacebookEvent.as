@@ -21,7 +21,7 @@ package com.ludofactory.mobile.navigation.event
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	
-	public class FullScreenFacebookEvent extends FeathersControl
+	public class FullScreenFacebookEvent extends AbstractFullScreenEvent
 	{
 		/**
 		 * The overlay. */		
@@ -56,12 +56,10 @@ package com.ludofactory.mobile.navigation.event
 			_image.source = _data.imageUrl;
 			_image.snapToPixels = true;
 			_image.addEventListener(Event.COMPLETE, onImageLoaded);
-			_image.addEventListener(TouchEvent.TOUCH, onTouch);
 			addChild(_image);
 			
 			_closeButton = new Button( AbstractEntryPoint.assets.getTexture("event-close-button") );
 			_closeButton.scaleX = _closeButton.scaleY = GlobalConfig.dpiScale;
-			_closeButton.addEventListener(Event.TRIGGERED, onClose);
 			addChild(_closeButton);
 			
 			FacebookManager.getInstance().addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
@@ -81,6 +79,16 @@ package com.ludofactory.mobile.navigation.event
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
 //------------------------------------------------------------------------------------------------------------
+		
+		/**
+		 * Use a short delay to enable the event, so that the user won't click on it to quickly without
+		 * seeing what is it about.
+		 */
+		override public function enableEvent():void
+		{
+			_closeButton.addEventListener(Event.TRIGGERED, onClose);
+			_image.addEventListener(TouchEvent.TOUCH, onTouch);
+		}
 		
 		/**
 		 * The image was touched.
