@@ -16,7 +16,6 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -25,13 +24,14 @@ package com.ludofactory.mobile.core.notification.content
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
-	import feathers.layout.VerticalLayout;
 	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
 	import starling.display.Image;
 	import starling.events.Event;
+	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
 	
 	public class EventPushNotificationContent extends AbstractPopupContent
 	{
@@ -41,7 +41,7 @@ package com.ludofactory.mobile.core.notification.content
 		
 		/**
 		 * The title. */		
-		private var _notificationTitle:Label;
+		private var _notificationTitle:TextField;
 		
 		/**
 		 * The title. */		
@@ -68,25 +68,23 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			super.initialize();
 			
-			const layout:VerticalLayout = new VerticalLayout();
+			/*const layout:VerticalLayout = new VerticalLayout();
 			layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
 			layout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_MIDDLE;
 			layout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? 30:50 );
-			this.layout = layout;
+			this.layout = layout;*/
 			
 			_icon = new Image( AbstractEntryPoint.assets.getTexture("icon-mail") );
 			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale;
 			addChild(_icon);
 			
-			_notificationTitle = new Label();
-			_notificationTitle.text = _("Soyez avertis !");
+			_notificationTitle = new TextField(5, scaleAndRoundToDpi(50), _("Soyez avertis !"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 44 : 60), Theme.COLOR_DARK_GREY);
 			addChild(_notificationTitle);
-			_notificationTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 44 : 60), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_message = new Label();
-			_message.text = _("Soyez immédiatement informé en cas de dépassement dans un tournoi en activant les notifications de cette application.\n\nVous pourrez changer ce paramètre plus tard dans la partie Mon Compte du menu.");
+			_message.text = _("Soyez immédiatement informé en cas de dépassement dans un tournoi en activant les notifications !\n\nVous pourrez changer ce paramètre plus tard dans la partie Mon Compte du menu.");
 			addChild(_message);
-			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 28 : 38), Theme.COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
+			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 34), Theme.COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_yesButton = new Button();
 			_yesButton.label = _("Activer");
@@ -102,9 +100,49 @@ package com.ludofactory.mobile.core.notification.content
 		
 		override protected function draw():void
 		{
-			_notificationTitle.width = _message.width = this.actualWidth * 0.9;
-			_yesButton.width = _cancelButton.width = this.actualWidth * 0.8;
+			_icon.y = scaleAndRoundToDpi(10);
 			
+			if(AbstractGameInfo.LANDSCAPE)
+			{
+				_notificationTitle.height = _icon.height;
+				_notificationTitle.autoScale = false;
+				_notificationTitle.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
+				_icon.x = (actualWidth - _icon.width - _notificationTitle.width - scaleAndRoundToDpi(20)) * 0.5;
+				//_notificationTitle.autoScale = true;
+				//_notificationTitle.autoSize = TextFieldAutoSize.NONE;
+				_notificationTitle.x = _icon.x + _icon.width + scaleAndRoundToDpi(20);
+				_notificationTitle.y = _icon.y + ((_icon.height - _notificationTitle.height) * 0.5);
+				
+				_message.width = actualWidth;
+				_message.validate();
+				_message.y = _icon.y + _icon.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50);
+				
+				_yesButton.validate();
+				_cancelButton.validate();
+				_yesButton.width = _cancelButton.width = actualWidth * 0.5;
+				_yesButton.y = _cancelButton.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50);
+				_yesButton.x = (actualWidth - _yesButton.width - _cancelButton.width - scaleAndRoundToDpi(5)) * 0.5;
+				_cancelButton.x = _yesButton.x + _yesButton.width + scaleAndRoundToDpi(5);
+			}
+			else
+			{
+				_notificationTitle.autoSize = TextFieldAutoSize.VERTICAL;
+				
+				_icon.x = (this.actualWidth - _icon.width) * 0.5;
+				_notificationTitle.width = _message.width = this.actualWidth;
+				_notificationTitle.y = _icon.y + _icon.height + scaleAndRoundToDpi(10);
+				
+				_message.validate();
+				_message.y = _notificationTitle.y + _notificationTitle.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				
+				_yesButton.validate();
+				_cancelButton.validate();
+				_yesButton.width = _cancelButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+				_yesButton.x = _cancelButton.x = (actualWidth +- _yesButton.width) * 0.5;
+				_yesButton.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+				_cancelButton.y = _yesButton.y + _yesButton.height + scaleAndRoundToDpi(10);
+			}
+			//hfg
 			super.draw();
 		}
 		
@@ -139,8 +177,8 @@ package com.ludofactory.mobile.core.notification.content
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
 				// no need callbacks
-				Remote.getInstance().accountUpdateNotifications({ etat:1 }, null, null, null, 2);
-				Remote.getInstance().updatePushToken(event.token, null, null, null, 2);
+				Remote.getInstance().accountUpdateNotifications({ etat:1 }, null, null, null, 1);
+				Remote.getInstance().updatePushToken(event.token, null, null, null, 1);
 			}
 			AbstractEntryPoint.screenNavigator.showScreen(_completeScreenId);
 			close();
