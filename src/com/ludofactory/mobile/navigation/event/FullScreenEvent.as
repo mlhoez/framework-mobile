@@ -121,13 +121,22 @@ package com.ludofactory.mobile.navigation.event
 				else if( _data.link != null && _data.link != "" )
 				{
 					if( _data.link.indexOf("http") != -1 || _data.link.indexOf("https") != -1 )
+					{
 						request.url = _data.link;
+					}
 					else
+					{
 						AbstractEntryPoint.screenNavigator.showScreen( _data.link );
+						dispatchEventWith(Event.CLOSE);
+					}
 				}
 				
 				if( request.url != null && request.url != "" )
+				{
+					if(_data.closeWhenRedirect)
+						dispatchEventWith(Event.CLOSE);
 					navigateToURL( request );
+				}
 			}
 			touch = null;
 		}

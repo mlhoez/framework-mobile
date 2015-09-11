@@ -51,6 +51,10 @@ package com.ludofactory.mobile.navigation.event
 		 * To define... */		
 		private var _advertiserId:String;
 		
+		/**
+		 * Whether we close the event when we redirect in an external link. */
+		private var _closeWhenRedirect:Boolean = true;
+		
 		public function EventData(data:Object)
 		{
 			_type = int(data.type);
@@ -71,6 +75,9 @@ package com.ludofactory.mobile.navigation.event
 			if( data.hasOwnProperty("id_app") && data.id_app )
 				_targetAppId = data.id_app;
 			
+			if( data.hasOwnProperty("close_when_redirect") && data.close_when_redirect )
+				_closeWhenRedirect = Boolean(data.close_when_redirect);
+			
 			if( data.hasOwnProperty("publisher_id") && data.publisher_id )
 				_publisherId = data.publisher_id;
 			
@@ -83,6 +90,7 @@ package com.ludofactory.mobile.navigation.event
 		public function get link():String { return _link; }
 		public function get decorationColor():uint { return _decorationColor; }
 		public function get decorationVisible():Boolean { return _decorationVisible; }
+		public function get closeWhenRedirect():Boolean { return _closeWhenRedirect; }
 		
 		public function get urlScheme():String { return _urlScheme; }
 		public function get targetAppId():String { return _targetAppId; }
