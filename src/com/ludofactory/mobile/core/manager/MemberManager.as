@@ -358,7 +358,7 @@ package com.ludofactory.mobile.core.manager
 			var len:int = val.length;
 			for(var i:int = 0; i < len; i++)
 			{
-				if( _member.trophiesWon.indexOf( val[i] ) == -1 )
+				if( _member.trophiesWon.indexOf( int(val[i]) ) == -1 )
 				{
 					_member.trophiesWon = val;
 					setEncryptedMember();
