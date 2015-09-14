@@ -6,16 +6,12 @@ Created : 16 avr. 2014
 */
 package com.ludofactory.mobile.core
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	
-	import flash.utils.getTimer;
-	
-	import starling.core.Starling;
-	import starling.events.Event;
-
 	/**
 	 * A global timer used to display the time before the free game sessions gets updated.
 	 */	
@@ -39,12 +35,6 @@ package com.ludofactory.mobile.core
 		 * Helper function. */		
 		private static var _helperFunction:Function;
 		
-		/**
-		 * Previous time (before the update). */		
-		private static var _previousTime:Number;
-		/**
-		 * Elapsed time. */		
-		private static var _elapsedTime:Number;
 		/**
 		 * Total time (in milliseconds). */		
 		private static var _totalTime:Number;
@@ -118,8 +108,7 @@ package com.ludofactory.mobile.core
 				// calculate the number of seconds until the end of the day
 				var nowInFrance:Date = Utilities.getLocalFrenchDate();
 				_totalTime = (NUM_SECONDS_IN_A_DAY - (nowInFrance.hours * 60 * 60) - (nowInFrance.minutes * 60) - nowInFrance.seconds) * 1000;
-				_previousTime = getTimer();
-				Starling.current.stage.addEventListener(Event.ENTER_FRAME, update);
+				HeartBeat.registerFunction(update);
 			}
 		}
 		
@@ -131,8 +120,7 @@ package com.ludofactory.mobile.core
 			if(_isRunning)
 			{
 				_isRunning = false;
-				
-				Starling.current.stage.removeEventListener(Event.ENTER_FRAME, update);
+				HeartBeat.unregisterFunction(update);
 			}
 		}
 		
@@ -142,12 +130,10 @@ package com.ludofactory.mobile.core
 		/**
 		 * Main update function.
 		 */		
-		private static function update(event:Event):void
+		private static function update(frameElapsedTime:int, totalElapsedTime:int):void
 		{
 			// calculate the elapsed time
-			_elapsedTime = getTimer() - _previousTime;
-			_previousTime = getTimer();
-			_totalTime -= _elapsedTime;
+			_totalTime -= totalElapsedTime;
 			
 			// every second
 			//if( _totalTime % 1000 == 0 )

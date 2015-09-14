@@ -228,7 +228,7 @@ package com.ludofactory.mobile.core.avatar
 		
 		private var _onTouchParticles:PDParticleSystem;
 		
-		private function updateAvatar(elapsedTime:int):void
+		private function updateAvatar(frameElapsedTime:int, totalElapsedTime:int):void
 		{
 			WorldClock.clock.advanceTime(-1);
 		}

@@ -29,16 +29,10 @@ package com.ludofactory.mobile.core.push
 	{
 		/**
 		 * The base update time (3000 = 3 sec) */		
-		private const BASE_TIME:int = 3000;
-		/**
-		 * The previous time. */		
-		private var _previousTime:Number;
+		private static const BASE_TIME:int = 3000;
 		/**
 		 * The current time */		
 		private var _currentTime:Number;
-		/**
-		 * The elapsed time. */		
-		private var _elapsedTime:Number;
 		
 		/**
 		 * Whether the push manager's timer is running. */		
@@ -143,7 +137,6 @@ package com.ludofactory.mobile.core.push
 				
 				_isRunning = true;
 				_currentTime = BASE_TIME;
-				_previousTime = getTimer();
 				HeartBeat.registerFunction(onTimerUpdate);
 			}
 		}
@@ -557,11 +550,9 @@ package com.ludofactory.mobile.core.push
 		/**
 		 * The main timer update function.
 		 */		
-		private function onTimerUpdate(elapsedTime:Number):void
+		private function onTimerUpdate(frameElapsedTime:int, totalElapsedTime:int):void
 		{
-			_elapsedTime = getTimer() - _previousTime;
-			_previousTime = getTimer();
-			_currentTime -= _elapsedTime;
+			_currentTime -= totalElapsedTime;
 			
 			if( _currentTime <= 0 )
 			{

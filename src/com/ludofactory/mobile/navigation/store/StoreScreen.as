@@ -10,17 +10,16 @@ package com.ludofactory.mobile.navigation.store
 	import com.amazon.nativeextensions.android.AmazonItemData;
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
-	import com.hasoffers.nativeExtensions.MobileAppTracker;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.purchases.Store;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.navigation.ads.store.AdStoreContainer;
@@ -583,6 +582,7 @@ package com.ludofactory.mobile.navigation.store
 				_temporaryProductsIds = null;
 			}
 			
+			TweenMax.killDelayedCallsTo(_store.initialize);
 			_store.removeEventListener(MobileEventTypes.STORE_PURCHASE_CANCELLED, onPurchaseCancelled);
 			_store.removeEventListener(MobileEventTypes.STORE_PURCHASE_FAILURE, onPurchaseFailure);
 			_store.removeEventListener(MobileEventTypes.STORE_PURCHASE_SUCCESS, onPurchaseSuccess);

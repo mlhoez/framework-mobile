@@ -56,9 +56,10 @@ package com.ludofactory.common.utils
 		/**
 		 * Shake the element.
 		 * 
-		 * @param elapsedTime
+		 * @param frameElapsedTime
+		 * @param totalElapsedTime
 		 */		
-		private static function shake(elapsedTime:int):void
+		private static function shake(frameElapsedTime:int, totalElapsedTime:int):void
 		{
 			if (_cameraShakeValue > 0 && _elementToShake != null)
 			{

@@ -56,6 +56,12 @@ package com.ludofactory.mobile.core.manager
 		private var _isRunning:Boolean = false;
 		
 		/**
+		 * Whether we need to use the total elapsed time in the update function.
+		 * Set this to true if you need to keep the timer updated even when the app is in the background. */
+		private var _useTotalElapsedTime:Boolean = false;
+		private var _helperElapsedTime:int= 0;
+		
+		/**
 		 * Creates a timer.
 		 * 
 		 * @param timeInSeconds The time in seconds (will be converted into milliseconds).
@@ -65,7 +71,7 @@ package com.ludofactory.mobile.core.manager
 		 * @param finishFunction The function called at the end.
 		 * 
 		 */		
-		public function TimerManager(timeInSeconds:int, repeatCount:int = -1, updateFunction:Function = null, tickFunction:Function = null, finishFunction:Function = null)
+		public function TimerManager(timeInSeconds:int, repeatCount:int = -1, updateFunction:Function = null, tickFunction:Function = null, finishFunction:Function = null, useTotalElapsedTime:Boolean = false)
 		{
 			// convert timeInSeconds from seconds to milliseconds to adapt
 			_baseTime = timeInSeconds * 1000;
@@ -76,6 +82,7 @@ package com.ludofactory.mobile.core.manager
 			_baseRepeatCount = repeatCount;
 			_currentRepeatCount = _baseRepeatCount;
 			_totalElapsedTime = 0;
+			_useTotalElapsedTime = useTotalElapsedTime;
 			
 			try
 			{
@@ -215,21 +222,24 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * Updates the timer.
 		 * 
-		 * @param elapsedTime The elapsed time in milliseconds.
+		 * @param frameElapsedTime The elapsed time in milliseconds.
+		 * @param totalElapsedTime
 		 */		
-		private function onTimerUpdate(elapsedTime:Number):void
+		private function onTimerUpdate(frameElapsedTime:int, totalElapsedTime:int):void
 		{
-			// if elapsedTime is negative, we don't count this
-			if( elapsedTime < 0 /*&& (elapsedTime < 0 ? (elapsedTime*-1) : elapsedTime) > BaseServerData.dateChangeTolerance.value*/) // 1000 ms = 1 sec
+			_helperElapsedTime = _useTotalElapsedTime ? totalElapsedTime : frameElapsedTime;
+			// if frameElapsedTime is negative, we don't count this
+			if( _helperElapsedTime < 0 /*&& (frameElapsedTime < 0 ? (frameElapsedTime*-1) : frameElapsedTime) > BaseServerData.dateChangeTolerance.value*/) // 1000 ms = 1 sec
 			{
 				// the date has changed
-				//CheatManager.getInstance().reportDateChange(elapsedTime, BaseServerData.dateChangeTolerance.value);
-				elapsedTime = 0;
+				//CheatManager.getInstance().reportDateChange(frameElapsedTime, BaseServerData.dateChangeTolerance.value);
+				_helperElapsedTime = 0;
 			}
-			_currentTime -= elapsedTime;
-			_totalElapsedTime += elapsedTime;
 			
-			_currentSecond -= elapsedTime;
+			_currentTime -= _helperElapsedTime;
+			_totalElapsedTime += _helperElapsedTime;
+			
+			_currentSecond -= _helperElapsedTime;
 			if( _currentSecond <= 0 )
 			{
 				_currentSecond = _baseSecond;

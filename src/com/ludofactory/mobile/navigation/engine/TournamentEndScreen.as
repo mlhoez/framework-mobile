@@ -520,7 +520,6 @@ package com.ludofactory.mobile.navigation.engine
 				_resultArrowContainer.addChild(_resultArrowStar);
 				
 				_totalTime = advancedOwner.screenData.gameData.timeUntilTournamentEnd * 1000;
-				_previousTime = getTimer();
 				HeartBeat.registerFunction(update);
 			}
 			else
@@ -964,8 +963,6 @@ package com.ludofactory.mobile.navigation.engine
 		
 		/**
 		 * Timer variables. */		
-		private var _previousTime:Number;
-		private var _elapsedTime:Number;
 		private var _totalTime:Number;
 		
 		private var _days:int;
@@ -976,11 +973,9 @@ package com.ludofactory.mobile.navigation.engine
 		/**
 		 * Updates the label indicating when the tournament will end.
 		 */		
-		private function update(elapsedTime:Number):void
+		private function update(frameElapsedTime:int, totalElapsedTime:int):void
 		{
-			_elapsedTime = getTimer() - _previousTime;
-			_previousTime = getTimer();
-			_totalTime -= _elapsedTime;
+			_totalTime -= totalElapsedTime;
 			
 			_days    = (Math.round(_totalTime / 1000) / 3600) / 24;
 			_hours   = (Math.round(_totalTime / 1000) / 3600) % 24;

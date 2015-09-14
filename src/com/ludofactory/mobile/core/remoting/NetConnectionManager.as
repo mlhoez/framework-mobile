@@ -637,9 +637,9 @@ package com.ludofactory.mobile.core.remoting
 //------------------------------------------------------------------------------------------------------------
 //	Internal update
 		
-		private function updateTimer(elapsedTime:Number):void
+		private function updateTimer(frameElapsedTime:int, totalElapsedTime:int):void
 		{
-			_timerRestart -= elapsedTime;
+			_timerRestart -= frameElapsedTime;
 			if( _timerRestart <= 0 )
 			{
 				if( AirNetworkInfo.networkInfo.isConnected() )

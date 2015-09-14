@@ -71,8 +71,6 @@ package com.ludofactory.mobile.navigation.shop.bid.pending
 		
 		/**
 		 * Timer variables. */		
-		private var _previousTime:Number;
-		private var _elapsedTime:Number;
 		private var _totalTime:Number;
 		private var _h:int;
 		private var _m:int;
@@ -136,7 +134,6 @@ package com.ludofactory.mobile.navigation.shop.bid.pending
 						_title.text = _("Terminée");
 					else
 					{
-						_previousTime = getTimer();
 						HeartBeat.registerFunction(update);
 						_totalTime = _data.timeLeft * 1000;
 						_title.text = "99999999";
@@ -371,11 +368,9 @@ package com.ludofactory.mobile.navigation.shop.bid.pending
 		/**
 		 * When the timer is updated.
 		 */		
-		private function update(elapsedTime:Number):void
+		private function update(frameElapsedTime:int, totalElapsedTime:int):void
 		{
-			_elapsedTime = getTimer() - _previousTime;
-			_previousTime = getTimer();
-			_totalTime -= _elapsedTime;
+			_totalTime -= totalElapsedTime;
 			
 			if( _totalTime <= 0 )
 			{

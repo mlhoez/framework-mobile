@@ -6,9 +6,11 @@ Created : 29 août 2012
 */
 package com.ludofactory.mobile.core
 {
+	
+	import flash.utils.getTimer;
+	
 	import starling.core.Starling;
 	import starling.events.EnterFrameEvent;
-	import starling.events.Event;
 	
 	/**
 	 * Application's main timer.
@@ -25,6 +27,13 @@ package com.ludofactory.mobile.core
 		 * The normal elapsed time. */		
 		private static var _normalElapsedTime:int;
 		
+		/**
+		 * Previous time (before the update). */
+		private static var _previousTime:int;
+		/**
+		 * Elapsed time. */
+		private static var _elapsedTime:int;
+		
 		public function HeartBeat()
 		{
 			
@@ -32,7 +41,6 @@ package com.ludofactory.mobile.core
 		
 //------------------------------------------------------------------------------------------------------------
 //	Function registering / unregistering
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Register a function to the core update.
@@ -75,35 +83,61 @@ package com.ludofactory.mobile.core
 		
 //------------------------------------------------------------------------------------------------------------
 //	Start / Stop
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Starts the HearBeat.
 		 */	
-		public static function start():void
+		private static function start():void
 		{
 			if(_isPaused && _listenersList.length != 0)
 			{
 				_isPaused = false;
-				Starling.current.stage.addEventListener(Event.ENTER_FRAME, beat);
+				_previousTime = getTimer();
+				Starling.current.stage.addEventListener(EnterFrameEvent.ENTER_FRAME, beat);
 			}
 		}
 		
 		/**
 		 * Stops the HearBeat.
 		 */	
-		public static function stop():void
+		private static function stop():void
 		{
 			if(!_isPaused)
 			{
 				_isPaused = true;
-				Starling.current.stage.removeEventListener(Event.ENTER_FRAME, beat);
+				Starling.current.stage.removeEventListener(EnterFrameEvent.ENTER_FRAME, beat);
+			}
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Pause / Resume
+		
+		/**
+		 * Resumes the HearBeat.
+		 */
+		public static function resume():void
+		{
+			if(_isPaused && _listenersList.length != 0)
+			{
+				_isPaused = false;
+				Starling.current.stage.addEventListener(EnterFrameEvent.ENTER_FRAME, beat);
+			}
+		}
+		
+		/**
+		 * Pauses the HearBeat.
+		 */
+		public static function pause():void
+		{
+			if(!_isPaused)
+			{
+				_isPaused = true;
+				Starling.current.stage.removeEventListener(EnterFrameEvent.ENTER_FRAME, beat);
 			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Core update
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * This is the core update of the HearBeat timer. This function will compute the
@@ -115,10 +149,12 @@ package com.ludofactory.mobile.core
 		public static function beat(event:EnterFrameEvent):void
 		{
 			_normalElapsedTime = int(event.passedTime * 1000);
+			
+			_elapsedTime = getTimer() - _previousTime;
+			_previousTime = getTimer();
+			
 			for each(var func:Function in _listenersList)
-				func(_normalElapsedTime);
+				func(_normalElapsedTime, _elapsedTime);
 		}
 	}
 }
-
-internal class securityKey{};

@@ -65,7 +65,7 @@ package com.ludofactory.mobile.core.pause
 				
 				_isPaused = true;
 				
-				HeartBeat.stop();
+				HeartBeat.pause();
 				TweenMax.pauseAll();
 				
 				if(_isPlaying && !_isPauseViewDisplaying)
@@ -117,7 +117,7 @@ package com.ludofactory.mobile.core.pause
 				if(!_isPlaying)
 				{
 					// otherwise we resume everything
-					HeartBeat.start();
+					HeartBeat.resume();
 					TweenMax.resumeAll();
 				}
 			}
@@ -160,7 +160,7 @@ package com.ludofactory.mobile.core.pause
 			_isPauseViewDisplaying = false;
 			_isPaused = false;
 			
-			HeartBeat.start();
+			HeartBeat.resume();
 			TweenMax.resumeAll();
 		}
 		
