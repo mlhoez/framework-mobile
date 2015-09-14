@@ -92,6 +92,7 @@ package com.ludofactory.mobile.debug
 			
 			_currentRepository = new TextField(5, scaleAndRoundToDpi(50), "Connecté à : " + Remote.getInstance().baseGatewayUrl + (Remote.getInstance().gatewayPortNumber ? (":" + Remote.getInstance().gatewayPortNumber) : ""), Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, true);
 			_currentRepository.hAlign = HAlign.LEFT;
+			_currentRepository.autoScale = true;
 			_mainContainer.addChild(_currentRepository);
 			
 			_changeRepository = new TextField(5, scaleAndRoundToDpi(50), "Changer : ", Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, true);
@@ -268,6 +269,7 @@ package com.ludofactory.mobile.debug
 		
 		private function onChangeRepo(event:Event):void
 		{
+			_currentRepository.text = "Connecté à " + String(_repoPicker.selectedItem);
 			Remote.getInstance().reconnect(String(_repoPicker.selectedItem), int(_portPicker.selectedItem));
 		}
 		
