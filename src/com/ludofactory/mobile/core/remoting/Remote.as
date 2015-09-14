@@ -18,6 +18,7 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.InvalidSessionNotificationContent;
+	import com.ludofactory.mobile.core.promo.PromoManager;
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -851,6 +852,19 @@ package com.ludofactory.mobile.core.remoting
 				if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_USE_SECURED_CALLS)) != _netConnectionManager.useSecureConnection )
 					_netConnectionManager.connect(); // reconnect if invalid
 			}
+			
+			// check if there is a promotion
+			if("promo" in result && result.promo)
+			{
+				// if no promotion is currently built, we do so
+				if(!PromoManager.getInstance().isPromoPending)
+					PromoManager.getInstance().buildPromo(result.promo);
+			}
+			//else // else, by security we need to clear it /!\ 
+			//{
+			//	if(PromoManager.getInstance().isPromoPending)
+			//		PromoManager.getInstance().clearPormo();
+			//}
 			
 			// a force download have been requested for this version
 			if( "forceDownload" in result && result.forceDownload != null && int(result.forceDownload) == 1 )

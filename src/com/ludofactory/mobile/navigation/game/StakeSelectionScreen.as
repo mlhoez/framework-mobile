@@ -12,14 +12,15 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.model.GameMode;
-	import com.ludofactory.mobile.core.model.GameMode;
-	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.model.StakeType;
+	import com.ludofactory.mobile.core.promo.PromoContent;
+	import com.ludofactory.mobile.core.promo.PromoManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -34,7 +35,6 @@ package com.ludofactory.mobile.navigation.game
 	import flash.text.TextFormatAlign;
 	
 	import starling.display.Button;
-	
 	import starling.events.Event;
 	
 	/**
@@ -63,6 +63,10 @@ package com.ludofactory.mobile.navigation.game
 		/**
 		 * In tournament mode, a button to see the ranking. */
 		private var _tournamentRankingButton:Button;
+		
+		/**
+		 * The promo content displayed when there is a promo. */
+		private var _promoContent:PromoContent;
 		
 		public function StakeSelectionScreen()
 		{
@@ -123,6 +127,12 @@ package com.ludofactory.mobile.navigation.game
 					_tournamentRankingButton.textBounds = bounds;
 				}
 			}
+			
+			if(PromoManager.getInstance().isPromoPending)
+			{
+				_promoContent = PromoManager.getInstance().getPromoContent(true);
+				addChild(_promoContent);
+			}
 		}
 		
 		override protected function draw():void
@@ -170,18 +180,24 @@ package com.ludofactory.mobile.navigation.game
 				}
 				else
 				{
+					if(_promoContent)
+					{
+						_promoContent.x = actualWidth - _promoContent.width - scaleAndRoundToDpi(10);
+						_promoContent.y = scaleAndRoundToDpi(18);
+					}
+					
 					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
-					buttonGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60);
-					titleGap = scaleAndRoundToDpi(_withTokens ? 50 : 100);
+					buttonGap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60) * ((_promoContent && _withPoints) ? 0.5 : 1);
+					titleGap = scaleAndRoundToDpi(_promoContent ? (_withPoints ? 20 : 50) : 50);
 					
 					_title.width = actualWidth;
 					_title.validate();
 					
-					maxButtonHeight = ( actualHeight - _title.height - titleGap - (padding * 2) - (_tournamentRankingButton ? _tournamentRankingButton.height : 0) - (buttonGap * (_withPoints ? 3 : 2)) ) / (_withPoints ? 3 : 2);
+					maxButtonHeight = ( actualHeight - _title.height - titleGap - (padding * 2) - (_tournamentRankingButton ? _tournamentRankingButton.height : 0) - (_promoContent ? _promoContent.height : 0) - (buttonGap * (_withPoints ? 3 : 2)) ) / (_withPoints ? 3 : 2);
 					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150) > maxButtonHeight ? maxButtonHeight : scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 150);
 					if( _withPoints ) _withPoints.height = _withTokens.height;
 					
-					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.55);
+					_withTokens.width = _withCredits.width = actualWidth * (GlobalConfig.isPhone ? 0.7 : 0.55);
 					if( _withPoints ) _withPoints.width = _withTokens.width;
 					
 					_withTokens.x = _withCredits.x = ((actualWidth - _withTokens.width) * 0.5) << 0;
@@ -189,7 +205,7 @@ package com.ludofactory.mobile.navigation.game
 					
 					_withTokens.validate();
 					
-					_title.y = padding + (actualHeight - _title.height - titleGap - (buttonGap * (_withPoints ? 3 : 2)) - (_tournamentRankingButton ? _tournamentRankingButton.height : 0) - (padding * 2) - (_withTokens.height * (_withPoints ? 3 : 2))) * 0.5;
+					_title.y = padding + ((_promoContent ? (_promoContent.y + _promoContent.height) : 0) + actualHeight - _title.height - titleGap - (buttonGap * (_withPoints ? 3 : 2)) - (_tournamentRankingButton ? _tournamentRankingButton.height : 0) - (padding * 2) - (_withTokens.height * (_withPoints ? 3 : 2))) * 0.5;
 					
 					_withTokens.y = _title.y + _title.height + titleGap;
 					_withCredits.y = _withTokens.y + _withTokens.height + buttonGap;
@@ -325,6 +341,13 @@ package com.ludofactory.mobile.navigation.game
 				_tournamentRankingButton.removeFromParent(true);
 				_tournamentRankingButton = null;
 			}
+			
+			if(_promoContent)
+			{
+				PromoManager.getInstance().removePromo(_promoContent);
+				_promoContent.removeFromParent(true);
+			}
+			_promoContent = null;
 			
 			super.dispose();
 		}

@@ -20,6 +20,8 @@ package com.ludofactory.mobile.navigation.store
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.model.StakeType;
+	import com.ludofactory.mobile.core.promo.PromoContent;
+	import com.ludofactory.mobile.core.promo.PromoManager;
 	import com.ludofactory.mobile.core.purchases.Store;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.navigation.ads.store.AdStoreContainer;
@@ -87,6 +89,10 @@ package com.ludofactory.mobile.navigation.store
 		 * in the App Store. */		
 		private var _temporaryProductsIds:Vector.<String>;
 		
+		/**
+		 * The promo content displayed when there is a promo. */
+		private var _promoContent:PromoContent;
+		
 		public function StoreScreen()
 		{
 			super();
@@ -113,6 +119,12 @@ package com.ludofactory.mobile.navigation.store
 			
 			_adContainer = new AdStoreContainer();
 			_container.addChild(_adContainer);
+			
+			if(PromoManager.getInstance().isPromoPending)
+			{
+				_promoContent = PromoManager.getInstance().getPromoContent(false);
+				_container.addChild(_promoContent);
+			}
 			
 			const listLayout:TiledRowsLayout = new  TiledRowsLayout();
 			listLayout.paging = TiledRowsLayout.PAGING_NONE;
@@ -149,7 +161,7 @@ package com.ludofactory.mobile.navigation.store
 				_retryContainer.visible = true;
 				if( AirNetworkInfo.networkInfo.isConnected() )
 				{
-					TweenMax.delayedCall(1, _store.initialize);
+					_store.initialize();
 				}
 				else
 				{
@@ -571,6 +583,13 @@ package com.ludofactory.mobile.navigation.store
 			_list.removeEventListener(MobileEventTypes.PURCHASE_ITEM, onPurchaseItem);
 			_list.removeFromParent(true);
 			_list = null;
+			
+			if(_promoContent)
+			{
+				PromoManager.getInstance().removePromo(_promoContent);
+				_promoContent.removeFromParent(true);
+			}
+			_promoContent = null;
 			
 			_container.removeEventListener(FeathersEventType.SCROLL_START, onStartScroll);
 			_container.removeFromParent(true);
