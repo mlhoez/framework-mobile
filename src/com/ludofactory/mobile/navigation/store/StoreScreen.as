@@ -376,6 +376,11 @@ package com.ludofactory.mobile.navigation.store
 				_retryContainer.visible = false;
 				_container.visible = true;
 				
+				if(_promoContent)
+				{
+					TweenMax.delayedCall(1, _promoContent.animate);
+				}
+				
 				_list.dataProvider = new ListCollection( _productsData );
 				_list.validate();
 				var len:int = (_list.viewPort as ListDataViewPort).numChildren;
@@ -586,6 +591,7 @@ package com.ludofactory.mobile.navigation.store
 			
 			if(_promoContent)
 			{
+				TweenMax.killDelayedCallsTo(_promoContent.animate);
 				PromoManager.getInstance().removePromo(_promoContent);
 				_promoContent.removeFromParent(true);
 			}

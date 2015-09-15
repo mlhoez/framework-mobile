@@ -11,6 +11,7 @@ package com.ludofactory.mobile.core.promo
 	{
 		/**
 		 * Promo percent (ex: +30%) displayed in the drop.
+		 * Ex : +30<font size='#size#'>%</font> 
 		 * Ex : <textformat leading='-6'>+30<font size='#size#'>%</font>\n<font size='#size#'>offerts</font></textformat> */
 		private var _percent:String = "";
 		
