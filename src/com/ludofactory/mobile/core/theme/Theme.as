@@ -5,6 +5,7 @@ package com.ludofactory.mobile.core.theme
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.Platform;
 	import com.ludofactory.mobile.navigation.ads.tournament.AdTournamentItemRenderer;
 	import com.ludofactory.mobile.navigation.home.RuleItemRenderer;
 	import com.ludofactory.mobile.navigation.menu.MenuItemRenderer;
@@ -130,8 +131,8 @@ package com.ludofactory.mobile.core.theme
 		 */
 		private static function getScaleFactor():Number
 		{
-			var screenResolutionX:int = Capabilities.screenResolutionX; // WARNING : this reports the computer resolution in the simulator !
-			var screenResolutionY:int = Capabilities.screenResolutionY; // WARNING : this reports the computer resolution in the simulator !
+			var screenResolutionX:int = GlobalConfig.platformName != Platform.SIMULATOR ? Capabilities.screenResolutionX : (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE)); // WARNING : this reports the computer resolution in the simulator !
+			var screenResolutionY:int = GlobalConfig.platformName != Platform.SIMULATOR ? Capabilities.screenResolutionY : (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE)); // WARNING : this reports the computer resolution in the simulator !
 			var ratioX:Number = screenResolutionX / (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE));
 			var ratioY:Number = screenResolutionY / (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE));
 			
@@ -249,10 +250,10 @@ package com.ludofactory.mobile.core.theme
 			}
 			
 			this.scaleFactor = GlobalConfig.dpiScale = scaledDPI / this._originalDPI;
-			if(GlobalConfig.deviceId != "simulator")
-			{
+			//if(GlobalConfig.deviceId != "simulator")
+			//{
 				this.scaleFactor = GlobalConfig.dpiScale = (getScaleFactor() + GlobalConfig.dpiScale) / 2; // moyenne des deux calculés (plus précis ?)
-			}
+			//}
 			//this.stageTextScale = this.scaleFactor / nativeScaleFactor; // TODO A remettre ?
 		}
 		
