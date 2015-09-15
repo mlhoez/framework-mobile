@@ -17,10 +17,12 @@ package com.ludofactory.mobile.navigation.home.summary
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameSessionTimer;
-	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.model.StakeType;
+	import com.ludofactory.mobile.core.promo.FooterPromoContent;
+	import com.ludofactory.mobile.core.promo.PromoManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Callout;
@@ -44,6 +46,7 @@ package com.ludofactory.mobile.navigation.home.summary
 	import starling.extensions.PDParticleSystem;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
+	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	import starling.utils.formatString;
 	
@@ -74,6 +77,8 @@ package com.ludofactory.mobile.navigation.home.summary
 		
 		private var _calloutLabel:TextField;
 		
+		private var _promoFooterContent:FooterPromoContent;
+		
 		private var _isCalloutDisplaying:Boolean = false;
 		
 		private var _animationLabel:Label;
@@ -99,6 +104,8 @@ package com.ludofactory.mobile.navigation.home.summary
 			
 			_calloutLabel = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY);
 			_calloutLabel.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
+			
+			_promoFooterContent = new FooterPromoContent();
 			
 			switch(_stakeType)
 			{
@@ -152,7 +159,7 @@ package com.ludofactory.mobile.navigation.home.summary
 			_particles.lifespan = 1;
 			_particles.lifespanVariance = 0.5;
 			addChild(_particles);
-			
+			 
 			_label = new TextField(5, 5, "000000", Theme.FONT_SANSITA, scaleAndRoundToDpi(30), 0xe2bf89);
 			_label.vAlign = VAlign.CENTER;
 			_label.autoScale = true;
@@ -345,10 +352,13 @@ package com.ludofactory.mobile.navigation.home.summary
 						}
 						case StakeType.CREDIT:
 						{
+							_promoFooterContent.update();
+							
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
-								_calloutLabel.text = formatString(MemberManager.getInstance().isLoggedIn() ? _("Vos Crédits de jeu") : _("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().totalTokensADay);
+								_calloutLabel.text = formatString(_("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().totalTokensADay);
 							else
-								_calloutLabel.text = _("Vos Crédits de jeu");
+								_calloutLabel.text = _("Vos Crédits de jeu\nTapotez pour recharger votre compte");
+							
 							break;
 						}
 						case StakeType.POINT:
@@ -360,8 +370,24 @@ package com.ludofactory.mobile.navigation.home.summary
 							break;
 						}
 					}
+					
+					if(_stakeType == StakeType.CREDIT && MemberManager.getInstance().isLoggedIn())
+					{
+						_calloutLabel.autoSize = TextFieldAutoSize.VERTICAL;
+						_calloutLabel.width = scaleAndRoundToDpi(500);
+						_calloutLabel.hAlign = HAlign.CENTER;
+					}
+					else
+					{
+						_calloutLabel.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
+					}
+					if(_calloutLabel.width > (GlobalConfig.stageWidth * 0.9))
+					{
+						_calloutLabel.autoSize = TextFieldAutoSize.VERTICAL;
+						_calloutLabel.width = GlobalConfig.stageWidth * 0.9;
+					}
 						
-					var callout:Callout = Callout.show(_calloutLabel, this, Callout.DIRECTION_UP, false);
+					var callout:Callout = Callout.show((MemberManager.getInstance().isLoggedIn() && _stakeType == StakeType.CREDIT && PromoManager.getInstance().isPromoPending) ? _promoFooterContent : _calloutLabel, this, Callout.DIRECTION_UP, false);
 					callout.touchable = false;
 					callout.disposeContent = false;
 					callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
@@ -370,6 +396,11 @@ package com.ludofactory.mobile.navigation.home.summary
 					{
 						callout.touchable = true;
 						callout.addEventListener(TouchEvent.TOUCH, onRegister);
+					}
+					else if(MemberManager.getInstance().isLoggedIn() && _stakeType == StakeType.CREDIT)
+					{
+						callout.touchable = true;
+						callout.addEventListener(TouchEvent.TOUCH, onGoCredits);
 					}
 				}
 			}
@@ -388,10 +419,22 @@ package com.ludofactory.mobile.navigation.home.summary
 			touch = null;
 		}
 		
+		private function onGoCredits(event:TouchEvent):void
+		{
+			var touch:Touch = event.getTouch(DisplayObject(event.target));
+			if( touch && touch.phase == TouchPhase.ENDED )
+			{
+				DisplayObject(event.target).removeFromParent();
+				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.STORE_SCREEN);
+			}
+			touch = null;
+		}
+		
 		private function onCalloutRemoved(event:Event):void
 		{
 			event.target.removeEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
 			event.target.removeEventListener(TouchEvent.TOUCH, onRegister);
+			event.target.removeEventListener(TouchEvent.TOUCH, onGoCredits);
 			_isCalloutDisplaying = false;
 		}
 		
