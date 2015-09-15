@@ -5,12 +5,15 @@ package com.ludofactory.mobile.core.promo
 {
 	
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.TimerManager;
+	
+	import starling.events.EventDispatcher;
 	
 	/**
 	 * Promo manager.
 	 */
-	public class PromoManager
+	public class PromoManager extends EventDispatcher
 	{
 		private static var _instance:PromoManager;
 		
@@ -55,15 +58,17 @@ package com.ludofactory.mobile.core.promo
 				
 				if(_timerManager)
 					_timerManager.dispose();
-				_timerManager = new TimerManager(rawPromoData.timeLeft, 1, onTimerUpdate, null, onTimerOver, true);
+				_timerManager = new TimerManager(_promoData.timeLeft, 1, onTimerUpdate, null, onTimerOver, true);
 				_timerManager.start();
 				
 				_isPromoPending = true;
+				dispatchEventWith(MobileEventTypes.PROMO_UPDATED);
 			}
 			else
 			{
 				// just in case
 				_isPromoPending = false;
+				dispatchEventWith(MobileEventTypes.PROMO_UPDATED);
 			}
 		}
 		
@@ -149,6 +154,7 @@ package com.ludofactory.mobile.core.promo
 			}
 			
 			_isPromoPending = false;
+			dispatchEventWith(MobileEventTypes.PROMO_UPDATED);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

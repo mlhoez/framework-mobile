@@ -205,6 +205,8 @@ package com.ludofactory.mobile.core.events
 		 */
 		public static const HEADER_VISIBILITY_CHANGED:String = "headerVisibilityChanged";
 		
+		public static const PROMO_UPDATED:String = "promoUpdated";
+		
 //------------------------------------------------------------------------------------------------------------
 //	Game Center
 		

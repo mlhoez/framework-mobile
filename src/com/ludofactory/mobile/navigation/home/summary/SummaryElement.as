@@ -9,7 +9,9 @@ package com.ludofactory.mobile.navigation.home.summary
 	
 	import com.greensock.TweenLite;
 	import com.greensock.TweenMax;
+	import com.greensock.easing.Back;
 	import com.greensock.easing.Linear;
+	import com.greensock.easing.Power1;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.roundUp;
@@ -18,10 +20,10 @@ package com.ludofactory.mobile.navigation.home.summary
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameSessionTimer;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.model.StakeType;
-	import com.ludofactory.mobile.core.promo.FooterPromoContent;
 	import com.ludofactory.mobile.core.promo.PromoManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -39,6 +41,7 @@ package com.ludofactory.mobile.navigation.home.summary
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
+	import starling.display.Image;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -77,8 +80,6 @@ package com.ludofactory.mobile.navigation.home.summary
 		
 		private var _calloutLabel:TextField;
 		
-		private var _promoFooterContent:FooterPromoContent;
-		
 		private var _isCalloutDisplaying:Boolean = false;
 		
 		private var _animationLabel:Label;
@@ -91,6 +92,8 @@ package com.ludofactory.mobile.navigation.home.summary
 		/**
 		 * Particles */		
 		private var _particles:PDParticleSystem;
+		
+		private var _promoNotification:Image;
 		
 		public function SummaryElement(type:int)
 		{
@@ -105,7 +108,7 @@ package com.ludofactory.mobile.navigation.home.summary
 			_calloutLabel = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY);
 			_calloutLabel.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
 			
-			_promoFooterContent = new FooterPromoContent();
+			//_promoFooterContent = new FooterPromoContent();
 			
 			switch(_stakeType)
 			{
@@ -121,6 +124,7 @@ package com.ludofactory.mobile.navigation.home.summary
 					_backgroundTextureName = "summary-yellow-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
 					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-credits" : "summary-icon-credits-hd";
 					//_calloutLabel.text = _("Vos Crédits de jeu");
+					
 					break;
 				}
 				case StakeType.POINT:
@@ -147,6 +151,17 @@ package com.ludofactory.mobile.navigation.home.summary
 			_icon.textureScale = GlobalConfig.dpiScale;
 			_icon.snapToPixels = true;
 			addChild(_icon);
+			
+			if(_stakeType == StakeType.CREDIT)
+			{
+				_promoNotification = new Image(AbstractEntryPoint.assets.getTexture("promo-notification"));
+				_promoNotification.alignPivot();
+				_promoNotification.alpha = 0;
+				_promoNotification.visible = false;
+				addChild(_promoNotification);
+				
+				PromoManager.getInstance().addEventListener(MobileEventTypes.PROMO_UPDATED, onPromoUpdated);
+			}
 			
 			_particles = new PDParticleSystem(Theme.particleSlowXml, AbstractEntryPoint.assets.getTexture(_iconTextureName));
 			_particles.touchable = false;
@@ -190,6 +205,14 @@ package com.ludofactory.mobile.navigation.home.summary
 				{
 					_icon.x = ( (this.actualWidth - _icon.width) * 0.5 ) << 0;
 					_icon.y = _icon.y << 0;
+				}
+				
+				if(_promoNotification)
+				{
+					_promoNotification.scaleX = _promoNotification.scaleY = 1;
+					_promoNotification.x = _icon.x + _icon.width + (_promoNotification.width * 0.25);
+					_promoNotification.y = _icon.y + (_icon.height * 0.25);
+					_promoNotification.scaleX = _promoNotification.scaleY = 0;
 				}
 				
 				if( AbstractGameInfo.LANDSCAPE )
@@ -326,8 +349,6 @@ package com.ludofactory.mobile.navigation.home.summary
 			{
 				if( !_isCalloutDisplaying )
 				{
-					_isCalloutDisplaying = true;
-					
 					switch(_stakeType)
 					{
 						case StakeType.TOKEN:
@@ -352,8 +373,6 @@ package com.ludofactory.mobile.navigation.home.summary
 						}
 						case StakeType.CREDIT:
 						{
-							_promoFooterContent.update();
-							
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
 								_calloutLabel.text = formatString(_("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().totalTokensADay);
 							else
@@ -386,21 +405,25 @@ package com.ludofactory.mobile.navigation.home.summary
 						_calloutLabel.autoSize = TextFieldAutoSize.VERTICAL;
 						_calloutLabel.width = GlobalConfig.stageWidth * 0.9;
 					}
-						
-					var callout:Callout = Callout.show((MemberManager.getInstance().isLoggedIn() && _stakeType == StakeType.CREDIT && PromoManager.getInstance().isPromoPending) ? _promoFooterContent : _calloutLabel, this, Callout.DIRECTION_UP, false);
-					callout.touchable = false;
-					callout.disposeContent = false;
-					callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
 					
-					if( !MemberManager.getInstance().isLoggedIn() && (_stakeType == StakeType.TOKEN || MemberManager.getInstance().tokens == 0))
+					if(PromoManager.getInstance().isPromoPending && _stakeType == StakeType.CREDIT)
 					{
-						callout.touchable = true;
-						callout.addEventListener(TouchEvent.TOUCH, onRegister);
+						AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.STORE_SCREEN);
 					}
-					else if(MemberManager.getInstance().isLoggedIn() && _stakeType == StakeType.CREDIT)
+					else
 					{
-						callout.touchable = true;
-						callout.addEventListener(TouchEvent.TOUCH, onGoCredits);
+						_isCalloutDisplaying = true;
+						
+						var callout:Callout = Callout.show(_calloutLabel, this, Callout.DIRECTION_UP, false);
+						callout.touchable = false;
+						callout.disposeContent = false;
+						callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
+						
+						if( !MemberManager.getInstance().isLoggedIn() && (_stakeType == StakeType.TOKEN || MemberManager.getInstance().tokens == 0))
+						{
+							callout.touchable = true;
+							callout.addEventListener(TouchEvent.TOUCH, onRegister);
+						}
 					}
 				}
 			}
@@ -419,22 +442,10 @@ package com.ludofactory.mobile.navigation.home.summary
 			touch = null;
 		}
 		
-		private function onGoCredits(event:TouchEvent):void
-		{
-			var touch:Touch = event.getTouch(DisplayObject(event.target));
-			if( touch && touch.phase == TouchPhase.ENDED )
-			{
-				DisplayObject(event.target).removeFromParent();
-				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.STORE_SCREEN);
-			}
-			touch = null;
-		}
-		
 		private function onCalloutRemoved(event:Event):void
 		{
 			event.target.removeEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
 			event.target.removeEventListener(TouchEvent.TOUCH, onRegister);
-			event.target.removeEventListener(TouchEvent.TOUCH, onGoCredits);
 			_isCalloutDisplaying = false;
 		}
 		
@@ -477,5 +488,35 @@ package com.ludofactory.mobile.navigation.home.summary
 			
 			_isInterrogationDisplaying = false;
 		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Promo management (only for the credit container)
+		
+		/**
+		 * When the promo manager is updated (whether because there is a promotion to display or because one has
+		 * finishe), we need to show or hide the notification icon.
+		 */
+		private function onPromoUpdated(event:Event):void
+		{
+			if(PromoManager.getInstance().isPromoPending)
+			{
+				_promoNotification.scaleX = _promoNotification.scaleY = 0;
+				TweenMax.to(_promoNotification, 0.5, { autoAlpha:1, scaleX:1, scaleY:1, ease:Back.easeOut });
+				TweenMax.delayedCall(3, moveNotification);
+			}
+			else
+			{
+				TweenMax.killDelayedCallsTo(moveNotification);
+				TweenMax.killTweensOf(_promoNotification);
+				TweenMax.to(_promoNotification, 0.5, { autoAlpha:0, scaleX:0, scaleY:0 });
+			}
+		}
+		
+		private function moveNotification():void
+		{
+			TweenMax.to(_promoNotification, 0.35, { scaleX:1.4, scaleY:1.4, ease:Power1.easeInOut, repeat:3, yoyo:true });
+			TweenMax.delayedCall(4, moveNotification);
+		}
+		
 	}
 }

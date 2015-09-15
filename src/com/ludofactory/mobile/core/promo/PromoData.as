@@ -25,7 +25,7 @@ package com.ludofactory.mobile.core.promo
 		
 		/**
 		 * The remaining time until the ned of the promotion (in seconds). */
-		private var _timeLeft:int = 44500;
+		private var _timeLeft:int = 0;
 		
 		public function PromoData(data:Object)
 		{
