@@ -182,8 +182,9 @@ package com.ludofactory.mobile.navigation.game
 				{
 					if(_promoContent)
 					{
-						_promoContent.x = actualWidth - _promoContent.width - scaleAndRoundToDpi(10);
-						_promoContent.y = scaleAndRoundToDpi(18);
+						_promoContent.x = actualWidth - _promoContent.width - scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60);
+						_promoContent.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 68);
+						_promoContent.animate();
 					}
 					
 					padding = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
