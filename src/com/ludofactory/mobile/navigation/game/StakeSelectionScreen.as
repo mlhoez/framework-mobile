@@ -309,7 +309,7 @@ package com.ludofactory.mobile.navigation.game
 		
 		private function changeScreen():void
 		{
-			TweenMax.killAll();
+			TweenMax.killDelayedCallsTo(changeScreen); // just in case
 			advancedOwner.showScreen( ScreenIds.GAME_SCREEN );
 		}
 		

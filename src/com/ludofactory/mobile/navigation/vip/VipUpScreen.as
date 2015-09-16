@@ -6,6 +6,7 @@ Created : 8 janv. 2014
 */
 package com.ludofactory.mobile.navigation.vip
 {
+	
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
@@ -18,26 +19,25 @@ package com.ludofactory.mobile.navigation.vip
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
-	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.navigation.FacebookManager;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
-	
-	import flash.filters.DropShadowFilter;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
+	
+	import flash.filters.DropShadowFilter;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -168,7 +168,7 @@ package com.ludofactory.mobile.navigation.vip
 				_facebookButton.alpha = 0;
 				_facebookButton.defaultIcon = _facebookIcon;
 				_facebookButton.label = MemberManager.getInstance().facebookId != 0 ? _("Publier") : _("Associer");
-				_facebookButton.addEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
+				_facebookButton.addEventListener(Event.TRIGGERED, onAssociateOrPublish);
 				addChild(_facebookButton);
 				_facebookButton.iconPosition = Button.ICON_POSITION_LEFT;
 				_facebookButton.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
@@ -341,9 +341,10 @@ package com.ludofactory.mobile.navigation.vip
 		
 		private function displayButtons():void
 		{
-			TweenMax.allTo([_continueButtonTrue, _moreButton], 0.75, { autoAlpha:1 });
 			if( _facebookButton )
 				TweenMax.allTo([_facebookButton, _continueButtonTrue, _moreButton], 0.75, { autoAlpha:1 });
+			else
+				TweenMax.allTo([_continueButtonTrue, _moreButton], 0.75, { autoAlpha:1 });
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -352,13 +353,11 @@ package com.ludofactory.mobile.navigation.vip
 		
 		private function onContinue(event:Event):void
 		{
-			TweenMax.killAll();
 			advancedOwner.showScreen(ScreenIds.HOME_SCREEN);
 		}
 		
 		private function onKnowMore(event:Event):void
 		{
-			TweenMax.killAll();
 			NavigationManager.resetNavigation(true);
 			advancedOwner.showScreen(ScreenIds.VIP_SCREEN);
 		}
@@ -366,12 +365,12 @@ package com.ludofactory.mobile.navigation.vip
 //------------------------------------------------------------------------------------------------------------
 //	Facebook
 		
-		private function onAssociateOrPublish(event:starling.events.Event):void
+		private function onAssociateOrPublish(event:Event):void
 		{
 			FacebookManager.getInstance().associateForPublish();
 		}
 		
-		private function onAccountAssociated(event:starling.events.Event):void
+		private function onAccountAssociated(event:Event):void
 		{
 			_facebookButton.label = _("Publier");
 		}
@@ -379,7 +378,7 @@ package com.ludofactory.mobile.navigation.vip
 		/**
 		 * Publish on Facebook.
 		 */		
-		private function onPublish(event:starling.events.Event):void
+		private function onPublish(event:Event):void
 		{
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
@@ -421,6 +420,9 @@ package com.ludofactory.mobile.navigation.vip
 		
 		override public function dispose():void
 		{
+			TweenMax.killDelayedCallsTo(animateBase);
+			TweenMax.killDelayedCallsTo(displayButtons);
+					
 			TweenMax.killTweensOf(_podiumGlow);
 			_podiumGlow.removeFromParent(true);
 			_podiumGlow = null;
@@ -460,6 +462,7 @@ package com.ludofactory.mobile.navigation.vip
 				
 				particles = element.particles;
 				delete element["particles"];
+				TweenMax.killDelayedCallsTo(particles.start);
 				Starling.juggler.remove(particles);
 				particles.stop(true);
 				particles.removeFromParent(true);
@@ -476,7 +479,8 @@ package com.ludofactory.mobile.navigation.vip
 				_facebookIcon.removeFromParent(true);
 				_facebookIcon = null;
 				
-				_facebookButton.removeEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
+				TweenMax.killTweensOf(_facebookButton);
+				_facebookButton.removeEventListener(Event.TRIGGERED, onAssociateOrPublish);
 				_facebookButton.removeFromParent(true);
 				_facebookButton = null;
 				

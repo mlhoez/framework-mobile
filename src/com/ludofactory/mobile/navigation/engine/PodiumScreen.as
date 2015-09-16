@@ -6,7 +6,7 @@ Created : 13 Aoü 2013
 */
 package com.ludofactory.mobile.navigation.engine
 {
-
+	
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
@@ -18,33 +18,33 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
-
+	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
-
+	
 	import flash.events.Event;
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.extensions.PDParticleSystem;
 	import starling.utils.deg2rad;
 	import starling.utils.formatString;
-
+	
 	public class PodiumScreen extends AdvancedScreen
 	{
 		/**
@@ -349,7 +349,6 @@ package com.ludofactory.mobile.navigation.engine
 		 */		
 		private function goToNextScreen():void
 		{
-			TweenMax.killAll();
 			advancedOwner.showScreen( ScreenIds.TOURNAMENT_END_SCREEN );
 		}
 		
@@ -433,18 +432,18 @@ package com.ludofactory.mobile.navigation.engine
 		override public function dispose():void
 		{
 			TweenMax.killTweensOf(_podiumGlow);
-			TweenMax.killTweensOf(_podiumLogo);
-			TweenMax.killTweensOf(_podiumMessage);
-			
 			_podiumGlow.removeFromParent(true);
 			_podiumGlow = null;
 			
+			TweenMax.killTweensOf(_podiumLogo);
 			_podiumLogo.removeFromParent(true);
 			_podiumLogo = null;
 			
+			TweenMax.killTweensOf(_podiumMessage);
 			_podiumMessage.removeFromParent(true);
 			_podiumMessage = null;
 			
+			TweenMax.killDelayedCallsTo(_confettis.start);
 			Starling.juggler.remove( _confettis );
 			_confettis.stop(true);
 			_confettis.removeFromParent(true);
@@ -462,6 +461,7 @@ package com.ludofactory.mobile.navigation.engine
 				
 				particles = element.particles;
 				delete element["particles"];
+				TweenMax.killDelayedCallsTo(particles.start);
 				Starling.juggler.remove(particles);
 				particles.stop(true);
 				particles.removeFromParent(true);
@@ -475,6 +475,7 @@ package com.ludofactory.mobile.navigation.engine
 				FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
 				FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
 				
+				TweenMax.killTweensOf(_continueButton);
 				_continueButton.removeEventListener(starling.events.Event.TRIGGERED, onContinue);
 				_continueButton.removeFromParent(true);
 				_continueButton = null;
@@ -482,6 +483,7 @@ package com.ludofactory.mobile.navigation.engine
 				_facebookIcon.removeFromParent(true);
 				_facebookIcon = null;
 				
+				TweenMax.killTweensOf(_facebookButton);
 				_facebookButton.removeEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
 				_facebookButton.removeFromParent(true);
 				_facebookButton = null;

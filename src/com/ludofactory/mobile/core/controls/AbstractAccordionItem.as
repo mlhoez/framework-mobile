@@ -194,9 +194,14 @@ package com.ludofactory.mobile.core.controls
 			if( _arrow )
 				_arrow.rotation = deg2rad(0);
 			
-			TweenMax.delayedCall(0.45, function():void{ _contentContainer.visible = false; } ); // bug visuel sinon
+			TweenMax.delayedCall(0.45, setContainerInvisible); // bug visuel sinon
 			
 			_isExpanded = false;
+		}
+		
+		private function setContainerInvisible():void
+		{
+			_contentContainer.visible = false;
 		}
 		
 		/**
@@ -251,6 +256,8 @@ package com.ludofactory.mobile.core.controls
 		
 		override public function dispose():void
 		{
+			TweenMax.killDelayedCallsTo(setContainerInvisible);
+			
 			_arrow.removeFromParent(true);
 			_arrow = null;
 			

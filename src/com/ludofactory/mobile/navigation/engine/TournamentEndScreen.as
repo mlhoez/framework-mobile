@@ -815,8 +815,13 @@ package com.ludofactory.mobile.navigation.engine
 			/*_oldTweenValue =  ( MemberManager.getInstance().getCumulatedStars() - advancedOwner.screenData.gameData.numStarsOrPointsEarned < 0 ? 0:(MemberManager.getInstance().getCumulatedStars() - advancedOwner.screenData.gameData.numStarsOrPointsEarned) );
 			_targetTweenValue =  MemberManager.getInstance().getCumulatedStars();
 			TweenMax.to(this, 0.5, { delay:1.5, _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _cumulatedStarsValueLabel.text = Utility.splitThousands(_oldTweenValue); }, onComplete:onCumulatedStarsAnimationFinished, ease:Expo.easeInOut } );*/
-			TweenMax.delayedCall(1.5, function():void{ _cumulatedStarsValueLabel.text = Utilities.splitThousands( MemberManager.getInstance().cumulatedRubies); });
+			TweenMax.delayedCall(1.5, updateValue);
 			TweenMax.delayedCall(1.5, onCumulatedStarsAnimationFinished);
+		}
+		
+		private function updateValue():void
+		{
+			_cumulatedStarsValueLabel.text = Utilities.splitThousands( MemberManager.getInstance().cumulatedRubies);
 		}
 		
 		/**
@@ -828,7 +833,12 @@ package com.ludofactory.mobile.navigation.engine
 			if( !_continueButton.isEnabled )
 				return;
 			
-			TweenMax.delayedCall(0.5, advancedOwner.screenData.gameData.gameSessionPushed ? transitionConnected : transitionNotConnected);
+			TweenMax.delayedCall(0.5, setTransition);
+		}
+		
+		private function setTransition():void
+		{
+			advancedOwner.screenData.gameData.gameSessionPushed ? transitionConnected() : transitionNotConnected();
 		}
 		
 		/**
@@ -1023,7 +1033,6 @@ package com.ludofactory.mobile.navigation.engine
 				}
 				else
 				{
-					TweenMax.killAll();
 					if( GAnalytics.isSupported() )
 						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Redirection accueil", null, NaN, MemberManager.getInstance().id);
 					this.advancedOwner.showScreen( ScreenIds.HOME_SCREEN  );
@@ -1056,7 +1065,6 @@ package com.ludofactory.mobile.navigation.engine
 				}
 				else
 				{
-					TweenMax.killAll();
 					if( GAnalytics.isSupported() )
 						GAnalytics.analytics.defaultTracker.trackEvent("Fin mode tournoi", "Rejouer", null, NaN, MemberManager.getInstance().id);
 					this.advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
@@ -1075,6 +1083,13 @@ package com.ludofactory.mobile.navigation.engine
 		
 		override public function dispose():void
 		{
+			TweenMax.killTweensOf(this);
+			TweenMax.killDelayedCallsTo(launchStar);
+			TweenMax.killDelayedCallsTo(animateAddStars);
+			TweenMax.killDelayedCallsTo(updateValue);
+			TweenMax.killDelayedCallsTo(onCumulatedStarsAnimationFinished);
+			TweenMax.killDelayedCallsTo(Shaker.startShaking);
+			TweenMax.killDelayedCallsTo(setTransition);
 			HeartBeat.unregisterFunction(update);
 			
 			_logo.removeFromParent(true);
@@ -1086,9 +1101,22 @@ package com.ludofactory.mobile.navigation.engine
 			_scoreTitleLabel.removeFromParent(true);
 			_scoreTitleLabel = null;
 			
+			TweenMax.killTweensOf(_scoreContainer);
 			_scoreContainer.removeFromParent(true);
 			_scoreContainer = null;
 			
+			_cumulatedStarsTitleLabel.removeFromParent(true);
+			_cumulatedStarsTitleLabel = null;
+			
+			_cumulatedStarsValueLabel.removeFromParent(true);
+			_cumulatedStarsValueLabel = null;
+			
+			_star.removeFromParent(true);
+			_star = null;
+			
+			TweenMax.killTweensOf(_cumulatedStarsContainer);
+			_cumulatedStarsContainer.removeFromParent(true);
+			_cumulatedStarsContainer = null;
 			
 			var star:Image;
 			_starsArray.fixed = false;
@@ -1112,15 +1140,18 @@ package com.ludofactory.mobile.navigation.engine
 			_starsTitleLabel.removeFromParent(true);
 			_starsTitleLabel = null;
 			
+			TweenMax.killTweensOf(_starsContainer);
 			_starsContainer.removeFromParent(true);
 			_starsContainer = null;
 			
+			TweenMax.killTweensOf(_starsOverlayContainer);
 			_starsOverlayContainer.removeFromParent(true);
 			_starsOverlayContainer = null;
 			
 			_starTexture.dispose();
 			_starTexture = null;
 			
+			TweenMax.killTweensOf(_starsToAddLabel);
 			_starsToAddLabel.removeFromParent(true);
 			_starsToAddLabel = null;
 			
@@ -1130,11 +1161,13 @@ package com.ludofactory.mobile.navigation.engine
 			_positionTitleLabel.removeFromParent(true);
 			_positionTitleLabel = null;
 			
+			TweenMax.killTweensOf(_positionContainer);
 			_positionContainer.removeFromParent(true);
 			_positionContainer = null;
 			
 			if( _currentGiftImage )
 			{
+				TweenMax.killTweensOf(_currentGiftImage);
 				_currentGiftImage.removeEventListener(starling.events.Event.COMPLETE, onCurrentGiftImageLoaded);
 				_currentGiftImage.removeEventListener(FeathersEventType.ERROR, onCurrentGiftImageNotLoaded);
 				_currentGiftImage.removeFromParent(true);
@@ -1156,12 +1189,14 @@ package com.ludofactory.mobile.navigation.engine
 			
 			if( _currentGiftContainer )
 			{
+				TweenMax.killTweensOf(_currentGiftContainer);
 				_currentGiftContainer.removeFromParent(true);
 				_currentGiftContainer = null;
 			}
 			
 			if( _nextGiftImage )
 			{
+				TweenMax.killTweensOf(_nextGiftImage);
 				_nextGiftImage.removeEventListener(starling.events.Event.COMPLETE, onNextGiftImageLoaded);
 				_nextGiftImage.removeEventListener(FeathersEventType.ERROR, onNextGiftImageNotLoaded);
 				_nextGiftImage.removeFromParent(true);
@@ -1183,6 +1218,7 @@ package com.ludofactory.mobile.navigation.engine
 			
 			if( _nextGiftContainer )
 			{
+				TweenMax.killTweensOf(_nextGiftContainer);
 				_nextGiftContainer.removeFromParent(true);
 				_nextGiftContainer = null;
 			}
@@ -1201,6 +1237,7 @@ package com.ludofactory.mobile.navigation.engine
 			
 			if( _resultArrowContainer )
 			{
+				TweenMax.killTweensOf(_resultArrowContainer);
 				_resultArrowContainer.removeFromParent(true);
 				_resultArrowContainer = null;
 			}
@@ -1219,19 +1256,23 @@ package com.ludofactory.mobile.navigation.engine
 			
 			if( _notConnectedContainer )
 			{
+				TweenMax.killTweensOf(_notConnectedContainer);
 				_notConnectedContainer.removeFromParent(true);
 				_notConnectedContainer = null;
 			}
 			
+			TweenMax.killTweensOf(_tournamentTimeLeftIcon);
 			_tournamentTimeLeftIcon.removeFromParent(true);
 			_tournamentTimeLeftIcon = null;
 			
 			_tournamentTimeLeftLabel.removeFromParent(true);
 			_tournamentTimeLeftLabel = null;
 			
+			TweenMax.killTweensOf(_tournamentTimeLeftContainer);
 			_tournamentTimeLeftContainer.removeFromParent(true);
 			_tournamentTimeLeftContainer = null;
 			
+			TweenMax.killTweensOf(_continueButton);
 			_continueButton.removeEventListener(starling.events.Event.TRIGGERED, onSkipAnimation);
 			_continueButton.removeFromParent(true);
 			_continueButton = null;
@@ -1247,11 +1288,13 @@ package com.ludofactory.mobile.navigation.engine
 			_buttonsContainer.removeFromParent(true);
 			_buttonsContainer = null;
 			
+			TweenMax.killTweensOf(_particles);
 			Starling.juggler.remove( _particles );
 			_particles.stop(true);
 			_particles.removeFromParent(true);
 			_particles = null;
 			
+			TweenMax.killTweensOf(_particlesLogo);
 			Starling.juggler.remove( _particlesLogo );
 			_particlesLogo.stop(true);
 			_particlesLogo.removeFromParent(true);

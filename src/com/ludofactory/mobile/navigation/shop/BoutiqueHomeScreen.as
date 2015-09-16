@@ -14,10 +14,9 @@ package com.ludofactory.mobile.navigation.shop
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Button;
@@ -190,7 +189,6 @@ package com.ludofactory.mobile.navigation.shop
 			{
 				createBackground();
 				
-				TweenMax.killAll();
 				const scale:Number = GlobalConfig.dpiScale + (GlobalConfig.isPhone ? (-0.3 * GlobalConfig.dpiScale) : (0.3 * GlobalConfig.dpiScale));
 				_encheresImage.scaleX = _encheresImage.scaleY = _boutiqueImage.scaleX = _boutiqueImage.scaleY = scale; // GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? ((GlobalConfig.isPhone ? 0.2 : 0) * GlobalConfig.dpiScale) : 0);
 				
@@ -372,6 +370,7 @@ package com.ludofactory.mobile.navigation.shop
 			_boutiqueImage.removeFromParent(true);
 			_boutiqueImage = null;
 			
+			TweenMax.killTweensOf(_buildings);
 			_buildings.removeFromParent(true);
 			_buildings = null;
 			

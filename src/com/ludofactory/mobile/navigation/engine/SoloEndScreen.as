@@ -89,7 +89,7 @@ package com.ludofactory.mobile.navigation.engine
 		
 		/**
 		 * COMMON : The label that moves. */		
-		private var _starsToAddLabel:Label;
+		private var _pointsToAddLabel:Label;
 		
 		/**
 		 * The convert container when not logged in */		
@@ -265,13 +265,13 @@ package com.ludofactory.mobile.navigation.engine
 			_pointsIcon.scaleX = _pointsIcon.scaleY = GlobalConfig.dpiScale;
 			_cumulatedPointsContainer.addChild(_pointsIcon);
 			
-			_starsToAddLabel = new Label();
-			_starsToAddLabel.text = "+" + (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == StakeType.CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().rank < 5 ? 0 : 1]) : 1 ));
-			_starsToAddLabel.alpha = 0;
-			_starsToAddLabel.visible = false;
-			addChild(_starsToAddLabel);
-			_starsToAddLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(80), 0xffdf00);
-			_starsToAddLabel.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
+			_pointsToAddLabel = new Label();
+			_pointsToAddLabel.text = "+" + (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == StakeType.CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().rank < 5 ? 0 : 1]) : 1 ));
+			_pointsToAddLabel.alpha = 0;
+			_pointsToAddLabel.visible = false;
+			addChild(_pointsToAddLabel);
+			_pointsToAddLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(80), 0xffdf00);
+			_pointsToAddLabel.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
 			
 			// Step 2 - Not logged in ----
 			
@@ -411,8 +411,8 @@ package com.ludofactory.mobile.navigation.engine
 					_logo.validate();
 				}
 				
-				_starsToAddLabel.validate();
-				_starsToAddLabel.alignPivot();
+				_pointsToAddLabel.validate();
+				_pointsToAddLabel.alignPivot();
 				
 				_buttonsContainer.width = _continueButton.width = _cumulatedPointsContainer.width = actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.8);
 				_buttonsContainer.validate();
@@ -561,12 +561,12 @@ package com.ludofactory.mobile.navigation.engine
 			if( !_continueButton.isEnabled )
 				return;
 			
-			_starsToAddLabel.scaleX = _starsToAddLabel.scaleY = 0;
-			_starsToAddLabel.x = _scoreContainer.x + _scoreContainer.width * 0.5;
-			_starsToAddLabel.y = _scoreContainer.y + _scoreContainer.height * 0.65;
-			TweenMax.to(_starsToAddLabel, 0.75, { autoAlpha:1, scaleX:1, scaleY:1 });
-			TweenMax.to(_starsToAddLabel, 0.75, { delay:0.75, x:(_pointsContainer.x + _pointsContainer.width * 0.5), y:(_pointsContainer.y + _pointsContainer.height * 0.65) });
-			TweenMax.to(_starsToAddLabel, 0.25, { delay:1.5, autoAlpha:0, onComplete:onAddLabelAnimatedFromScoreToPoints });
+			_pointsToAddLabel.scaleX = _pointsToAddLabel.scaleY = 0;
+			_pointsToAddLabel.x = _scoreContainer.x + _scoreContainer.width * 0.5;
+			_pointsToAddLabel.y = _scoreContainer.y + _scoreContainer.height * 0.65;
+			TweenMax.to(_pointsToAddLabel, 0.75, { autoAlpha:1, scaleX:1, scaleY:1 });
+			TweenMax.to(_pointsToAddLabel, 0.75, { delay:0.75, x:(_pointsContainer.x + _pointsContainer.width * 0.5), y:(_pointsContainer.y + _pointsContainer.height * 0.65) });
+			TweenMax.to(_pointsToAddLabel, 0.25, { delay:1.5, autoAlpha:0, onComplete:onAddLabelAnimatedFromScoreToPoints });
 		}
 		
 		private function onAddLabelAnimatedFromScoreToPoints():void
@@ -602,10 +602,9 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			else
 			{
-				//_starsToAddLabel.validate();
-				//_starsToAddLabel.alignPivot();
+				//_pointsToAddLabel.validate();
+				//_pointsToAddLabel.alignPivot();
 				test();
-				
 			}
 		}
 		
@@ -614,14 +613,14 @@ package com.ludofactory.mobile.navigation.engine
 			if( !_continueButton.isEnabled )
 				return;
 			
-			_starsToAddLabel.text = "+" + advancedOwner.screenData.gameData.numStarsOrPointsEarned;
-			_starsToAddLabel.scaleX = _starsToAddLabel.scaleY = 0;
-			_starsToAddLabel.x = _pointsContainer.x + _pointsContainer.width * 0.5;
-			_starsToAddLabel.y = _pointsContainer.y + _pointsContainer.height * 0.65;
-			TweenMax.to(_starsToAddLabel, 0.75, { autoAlpha:1, scaleX:1, scaleY:1 });
-			TweenMax.to(_starsToAddLabel, 0.75, { delay:0.75, x:(_cumulatedPointsContainer.x + _cumulatedPointsValue.x + _cumulatedPointsValue.width * 0.5), y:(_cumulatedPointsContainer.y + _cumulatedPointsContainer.height * 0.5) });
+			_pointsToAddLabel.text = "+" + advancedOwner.screenData.gameData.numStarsOrPointsEarned;
+			_pointsToAddLabel.scaleX = _pointsToAddLabel.scaleY = 0;
+			_pointsToAddLabel.x = _pointsContainer.x + _pointsContainer.width * 0.5;
+			_pointsToAddLabel.y = _pointsContainer.y + _pointsContainer.height * 0.65;
+			TweenMax.to(_pointsToAddLabel, 0.75, { autoAlpha:1, scaleX:1, scaleY:1 });
+			TweenMax.to(_pointsToAddLabel, 0.75, { delay:0.75, x:(_cumulatedPointsContainer.x + _cumulatedPointsValue.x + _cumulatedPointsValue.width * 0.5), y:(_cumulatedPointsContainer.y + _cumulatedPointsContainer.height * 0.5) });
 			
-			TweenMax.to(_starsToAddLabel, 0.25, { delay:1.5, autoAlpha:0 });
+			TweenMax.to(_pointsToAddLabel, 0.25, { delay:1.5, autoAlpha:0 });
 			TweenMax.delayedCall(1.75, onLabelAnimatedFromPointsToCumulatedPoints);
 		}
 		
@@ -661,73 +660,87 @@ package com.ludofactory.mobile.navigation.engine
 		}
 		
 		/**
-		 * The "Continue" button have been clicked, in this case we need to
-		 * skip the first part animation.
+		 * The "Continue" button have been clicked, in this case we need to skip the first part of the animation.
 		 */		
 		private function onSkipAnimation(event:starling.events.Event = null):void
 		{
-			_continueButton.isEnabled = false;
+			TweenMax.killDelayedCallsTo(onLabelAnimatedFromPointsToCumulatedPoints);
+			TweenMax.killDelayedCallsTo(animateBonus);
+			TweenMax.killDelayedCallsTo(onSkipAnimation);
+			TweenMax.killTweensOf(_winMorePointsImage);
+			TweenMax.killTweensOf(_pointsToAddLabel);
+			TweenMax.killTweensOf(_pointsValue);
+			TweenMax.killTweensOf(this);
 			
-			// display final points
+			// display the final values (score, points and cumulated points)
 			_scoreValue.text = Utilities.splitThousands( advancedOwner.screenData.gameData.score );
 			_pointsValue.text = Utilities.splitThousands( advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			_cumulatedPointsValue.text = Utilities.splitThousands( MemberManager.getInstance().points );
 			
-			// hide continue button
-			TweenMax.to(_continueButton, 0.5, { width:0, autoAlpha:0 });
-			TweenMax.allTo([_scoreContainer, _pointsContainer, _miniCoinImage, _miniLueurImage, _miniScoreImage, _starsToAddLabel], 0.5, { autoAlpha:0 });
-			if( _winMorePointsImage )
-				TweenMax.to(_winMorePointsImage, 0.5, { autoAlpha:0 });
+			// hide everything not needed for the next animation part
+			TweenMax.allTo([_scoreContainer, _pointsContainer, _miniCoinImage, _miniLueurImage, _miniScoreImage, _pointsToAddLabel], 0.5, { autoAlpha:0 });
+			if( _winMorePointsImage ) TweenMax.to(_winMorePointsImage, 0.5, { autoAlpha:0 });
+			
+			// move the cumulated points container up
 			TweenMax.to(_cumulatedPointsContainer, 0.75, { y:_cumulatedScoreContainerTargetY });
 			
 			if( MemberManager.getInstance().getTournamentAnimPending() )
 			{
-				TweenMax.to(_convertContainer, 0.5, { delay:0.5, autoAlpha:1 });
-				if( _lockImage )
-				{
-					_homeButton.removeEventListener(starling.events.Event.TRIGGERED, onGoHome);
-					
-					// TODO add glow here
-					const savedScaleX:Number = _glow.scaleX;
-					const savedScaleY:Number = _glow.scaleY;
-					_glow.scaleX = _glow.scaleY = 0;
-					TweenMax.to(_glow, 0.5, { delay:0.75, autoAlpha:1, scaleX:savedScaleX, scaleY:savedScaleY, ease:Linear.easeNone });
-					TweenMax.to(_glow, 8, { rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 });
-					TweenMax.delayedCall(2, Shaker.startShaking, [_lockImage, 12]);
-					Shaker.dispatcher.addEventListener(starling.events.Event.COMPLETE, onLockAnimComplete);
-				}
+				// the tournament have been unloacked
+				_homeButton.removeEventListener(starling.events.Event.TRIGGERED, onGoHome);
+				const savedScaleX:Number = _glow.scaleX;
+				const savedScaleY:Number = _glow.scaleY;
+				_glow.scaleX = _glow.scaleY = 0;
+				TweenMax.to(_glow, 0.5, { delay:0.75, autoAlpha:1, scaleX:savedScaleX, scaleY:savedScaleY, ease:Linear.easeNone });
+				TweenMax.to(_glow, 8, { rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 });
+				TweenMax.delayedCall(2, Shaker.startShaking, [_lockImage, 12]);
+				Shaker.dispatcher.addEventListener(starling.events.Event.COMPLETE, onLockAnimComplete);
 			}
 			else
 			{
+				// the tournament have already been unlocked, so here we just need to fade in the containers
 				if( MemberManager.getInstance().isLoggedIn() )
-				{
 					TweenMax.allTo([_convertShop, _convertTournament], 0.5, { delay:0.5, autoAlpha:1 });
-				}
-				else
-				{
-					TweenMax.to(_convertContainer, 0.5, { delay:0.5, autoAlpha:1 });
-				}
 			}
+			
+			// if not logged in or if the tournament have been unlocked, we show the convert container
+			if(!MemberManager.getInstance().isLoggedIn() || MemberManager.getInstance().getTournamentAnimPending())
+				TweenMax.to(_convertContainer, 0.5, { delay:0.5, autoAlpha:1 });
+			
+			// disable and hide the continue button
+			_continueButton.isEnabled = false;
+			TweenMax.to(_continueButton, 0.5, { width:0, autoAlpha:0 });
 		}
 		
+		/**
+		 * When the unlock animation is complete, we shake the home button and activate it once the shaking
+		 * is finished (to avoid a potential bug : shake on a null element).
+		 */
 		private function onLockAnimComplete(event:starling.events.Event):void
 		{
 			Shaker.dispatcher.removeEventListener(starling.events.Event.COMPLETE, onLockAnimComplete);
 			_lockImage.texture = AbstractEntryPoint.assets.getTexture("unlock-big");
-			TweenMax.allTo([_lockImage, _glow], 0.75, { delay:1, autoAlpha:0, onComplete:activateHome });
+			TweenMax.allTo([_lockImage, _glow], 0.75, { delay:1, autoAlpha:0, onComplete:function():void
+			{
+				// shake the home button
+				TweenMax.killTweensOf(_glow);
+				Shaker.startShaking(_homeButton, 5);
+				Shaker.dispatcher.addEventListener(starling.events.Event.COMPLETE, activateHome);
+			} });
 			_particles.start(0.25);
 		}
 		
-		private function activateHome():void
+		/**
+		 * Once the shaking on the home button has finished, we enable it.
+		 */
+		private function activateHome(event:starling.events.Event):void
 		{
-			TweenMax.killTweensOf(_glow);
-			Shaker.startShaking(_homeButton, 5);
+			Shaker.dispatcher.removeEventListener(starling.events.Event.COMPLETE, activateHome);
 			_homeButton.addEventListener(starling.events.Event.TRIGGERED, onGoHome);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Navigation handlers
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Go to home screen.
@@ -739,14 +752,12 @@ package com.ludofactory.mobile.navigation.engine
 			advancedOwner.screenData.gameData = new GameData();
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
-				TweenMax.killAll();
 				_homeButton.isEnabled = false;
 				_playAgainButton.isEnabled = false;
 				advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
 			}
 			else
 			{
-				//NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.HOME_SCREEN) );
 				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
 			}
 		}
@@ -764,27 +775,24 @@ package com.ludofactory.mobile.navigation.engine
 				if( GAnalytics.isSupported() )
 					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Rejouer", null, NaN, MemberManager.getInstance().id);
 				
-				TweenMax.killAll();
 				_homeButton.isEnabled = false;
 				_playAgainButton.isEnabled = false;
 				advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
 			}
 			else
 			{
-				//NotificationManager.addNotification( new MarketingRegisterNotification( MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN ) );
 				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(MemberManager.getInstance().tokens >= Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
 			}
 		}
 		
 		/**
 		 * Go to the shop screen.
-		 */		
+		 */
 		private function onGoShop(event:TouchEvent):void
 		{
 			var touch:Touch = event.getTouch(_convertShop);
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
-				TweenMax.killAll();
 				if( GAnalytics.isSupported() )
 					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection boutique", null, NaN, MemberManager.getInstance().id);
 				advancedOwner.showScreen( ScreenIds.BOUTIQUE_HOME );
@@ -794,13 +802,12 @@ package com.ludofactory.mobile.navigation.engine
 		
 		/**
 		 * Go to the tournament ranking screen.
-		 */		
+		 */
 		private function onGoTournament(event:TouchEvent):void
 		{
 			var touch:Touch = event.getTouch(_convertTournament);
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
-				TweenMax.killAll();
 				if( GAnalytics.isSupported() )
 					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection tournoi", null, NaN, MemberManager.getInstance().id);
 				advancedOwner.showScreen( ScreenIds.TOURNAMENT_RANKING_SCREEN );
@@ -808,13 +815,14 @@ package com.ludofactory.mobile.navigation.engine
 			touch = null;
 		}
 		
-		
+		/**
+		 * Go to the shop screen (when not logged in)
+		 */
 		private function onConvertInShop(event:TouchEvent):void
 		{
 			var touch:Touch = event.getTouch(_convertContainer);
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
-				TweenMax.killAll();
 				if( GAnalytics.isSupported() )
 					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection boutique (non connecté)", null, NaN, MemberManager.getInstance().id);
 				advancedOwner.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
@@ -824,7 +832,6 @@ package com.ludofactory.mobile.navigation.engine
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{
@@ -852,6 +859,7 @@ package com.ludofactory.mobile.navigation.engine
 			_miniCoinImage.removeFromParent(true);
 			_miniCoinImage = null;
 			
+			TweenMax.killTweensOf(_miniLueurImage);
 			_miniLueurImage.removeFromParent(true);
 			_miniLueurImage = null;
 			
@@ -923,8 +931,8 @@ package com.ludofactory.mobile.navigation.engine
 				_convertTournament = null;
 			}
 			
-			_starsToAddLabel.removeFromParent(true);
-			_starsToAddLabel = null;
+			_pointsToAddLabel.removeFromParent(true);
+			_pointsToAddLabel = null;
 			
 			_continueButton.removeEventListener(starling.events.Event.TRIGGERED, onSkipAnimation);
 			_continueButton.removeFromParent(true);

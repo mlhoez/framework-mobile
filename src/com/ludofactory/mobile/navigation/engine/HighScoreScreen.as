@@ -18,13 +18,13 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.model.GameMode;
-	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.milkmangames.nativeextensions.GoViral;
@@ -287,7 +287,6 @@ package com.ludofactory.mobile.navigation.engine
 		 */		
 		private function goToNextScreen():void
 		{
-			TweenMax.killAll();
 			if( advancedOwner.screenData.gameData.facebookFriends )
 			{
 				// animation des amis
@@ -388,11 +387,13 @@ package com.ludofactory.mobile.navigation.engine
 			_highScoreLogo.removeFromParent(true);
 			_highScoreLogo = null;
 			
+			TweenMax.killDelayedCallsTo(_particles.start);
 			Starling.juggler.remove( _particles );
 			_particles.stop(true);
 			_particles.removeFromParent(true);
 			_particles = null;
 			
+			TweenMax.killDelayedCallsTo(_confettis.start);
 			Starling.juggler.remove( _confettis );
 			_confettis.stop(true);
 			_confettis.removeFromParent(true);
@@ -403,6 +404,7 @@ package com.ludofactory.mobile.navigation.engine
 				FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
 				FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
 				
+				TweenMax.killTweensOf(_continueButton);
 				_continueButton.removeEventListener(starling.events.Event.TRIGGERED, onContinue);
 				_continueButton.removeFromParent(true);
 				_continueButton = null;
@@ -410,6 +412,7 @@ package com.ludofactory.mobile.navigation.engine
 				_facebookIcon.removeFromParent(true);
 				_facebookIcon = null;
 				
+				TweenMax.killTweensOf(_facebookButton);
 				_facebookButton.removeEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
 				_facebookButton.removeFromParent(true);
 				_facebookButton = null;

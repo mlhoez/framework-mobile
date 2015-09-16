@@ -15,7 +15,6 @@ package com.ludofactory.mobile.navigation.vip
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.controls.Accordion;
@@ -24,6 +23,7 @@ package com.ludofactory.mobile.navigation.vip
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -502,8 +502,8 @@ package com.ludofactory.mobile.navigation.vip
 					
 					if( _leftArrowButton.y == 0 )
 					{
-						_leftArrowButton.y = _topShadow.y - _leftArrowButton.height //- scaleAndRoundToDpi(5);
-						_rightArrowButton.y = _topShadow.y - _rightArrowButton.height //- scaleAndRoundToDpi(5);
+						_leftArrowButton.y = _topShadow.y - _leftArrowButton.height; //- scaleAndRoundToDpi(5);
+						_rightArrowButton.y = _topShadow.y - _rightArrowButton.height; //- scaleAndRoundToDpi(5);
 					}
 				}
 				
@@ -789,7 +789,6 @@ package com.ludofactory.mobile.navigation.vip
 		
 		override public function onBack():void
 		{
-			TweenMax.killAll();
 			super.onBack();
 		}
 		
@@ -849,6 +848,10 @@ package com.ludofactory.mobile.navigation.vip
 		
 		override public function dispose():void
 		{
+			TweenMax.killDelayedCallsTo(Remote.getInstance().getVip);
+			TweenMax.killDelayedCallsTo(onGetVipFailure);
+			TweenMax.killTweensOf(this);
+			
 			AbstractEntryPoint.screenNavigator.screenData.vipScreenInitializedFromStore = false;
 			
 			removeEventListener(Event.ENTER_FRAME, executeMotion);
@@ -882,8 +885,16 @@ package com.ludofactory.mobile.navigation.vip
 				
 				if( _previousPrivilege )
 				{
+					TweenMax.killTweensOf(_previousPrivilege);
 					_previousPrivilege.removeFromParent(true);
 					_previousPrivilege = null;
+				}
+				
+				if( _currentPrivilege )
+				{
+					TweenMax.killTweensOf(_currentPrivilege);
+					_currentPrivilege.removeFromParent(true);
+					_currentPrivilege = null;
 				}
 				
 				_touchBackground.removeEventListener(TouchEvent.TOUCH, onTouchHandler);
@@ -903,6 +914,7 @@ package com.ludofactory.mobile.navigation.vip
 				_conditionLabel.removeFromParent(true);
 				_conditionLabel = null;
 				
+				TweenMax.killTweensOf(_defaultRankInformationLabel);
 				_defaultRankInformationLabel.removeFromParent(true);
 				_defaultRankInformationLabel =  null;
 				

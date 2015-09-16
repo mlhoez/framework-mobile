@@ -6,6 +6,7 @@ Created : 12 nov. 2013
 */
 package com.ludofactory.mobile.navigation.engine
 {
+	
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.LanguageManager;
@@ -13,23 +14,22 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.model.GameMode;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.push.GameSession;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
+	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
+	
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -69,11 +69,6 @@ package com.ludofactory.mobile.navigation.engine
 		 * Whether we need to display an animation with
 		 * three friends or not. */		
 		private var _isThreePeople:Boolean;
-		
-		/**
-		 * The maximum available size used to layout the
-		 * containers. */		
-		private var _maxSize:Number;
 		
 		/**
 		 * The up arrow. */		
@@ -134,7 +129,7 @@ package com.ludofactory.mobile.navigation.engine
 			_facebookButton = new Button();
 			_facebookButton.defaultIcon = _facebookIcon;
 			_facebookButton.label = MemberManager.getInstance().facebookId != 0 ? _("Publier") : _("Associer");
-			_facebookButton.addEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
+			_facebookButton.addEventListener(Event.TRIGGERED, onAssociateOrPublish);
 			addChild(_facebookButton);
 			_facebookButton.iconPosition = Button.ICON_POSITION_LEFT;
 			_facebookButton.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
@@ -199,9 +194,6 @@ package com.ludofactory.mobile.navigation.engine
 				_lastFriend = new FacebookFriendElement( advancedOwner.screenData.gameData.facebookFriends[2], 2 );
 				addChild(_lastFriend);
 			}
-			
-			// FIXME Intégrer ça plus tard
-			// GoViral.goViral.showFacebookRequestDialog("Try out this app!","My App Title");
 			
 			_all.push(_firstFriend, _middleFriend, _lastFriend);
 		}
@@ -268,7 +260,6 @@ package com.ludofactory.mobile.navigation.engine
 		 */		
 		private function onContinue(event:Event = null):void
 		{
-			TweenMax.killAll();
 			advancedOwner.showScreen( this.advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN:ScreenIds.TOURNAMENT_END_SCREEN) );
 		}
 		
@@ -340,12 +331,12 @@ package com.ludofactory.mobile.navigation.engine
 //------------------------------------------------------------------------------------------------------------
 //	Facebook
 		
-		private function onAssociateOrPublish(event:starling.events.Event):void
+		private function onAssociateOrPublish(event:Event):void
 		{
 			FacebookManager.getInstance().associateForPublish();
 		}
 		
-		private function onAccountAssociated(event:starling.events.Event):void
+		private function onAccountAssociated(event:Event):void
 		{
 			_facebookButton.label = _("Publier");
 		}
@@ -353,7 +344,7 @@ package com.ludofactory.mobile.navigation.engine
 		/**
 		 * Publish on Facebook.
 		 */		
-		private function onPublish(event:starling.events.Event):void
+		private function onPublish(event:Event):void
 		{
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
@@ -395,11 +386,36 @@ package com.ludofactory.mobile.navigation.engine
 		
 		override public function dispose():void
 		{
+			TweenMax.killDelayedCallsTo(animate);
+			FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
+			FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
+			
 			_all = [];
 			_all = null;
 			
-			FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-			FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
+			_me = null;
+			_friendToSwitch = null;
+			
+			TweenMax.killDelayedCallsTo(_firstFriend.setScoreAndRankValue);
+			TweenMax.killTweensOf(_firstFriend);
+			_firstFriend.removeFromParent(true);
+			_firstFriend = null;
+			
+			TweenMax.killDelayedCallsTo(_middleFriend.setScoreAndRankValue);
+			TweenMax.killTweensOf(_middleFriend);
+			_middleFriend.removeFromParent(true);
+			_middleFriend = null;
+			
+			if(_lastFriend)
+			{
+				TweenMax.killDelayedCallsTo(_lastFriend.setScoreAndRankValue);
+				TweenMax.killTweensOf(_lastFriend);
+				_lastFriend.removeFromParent(true);
+				_lastFriend = null;
+			}
+			
+			_title.removeFromParent(true);
+			_title = null;
 			
 			_facebookIcon.removeFromParent(true);
 			_facebookIcon = null;
@@ -411,6 +427,30 @@ package com.ludofactory.mobile.navigation.engine
 			_continueButton.removeEventListener(Event.TRIGGERED, onContinue);
 			_continueButton.removeFromParent(true);
 			_continueButton = null;
+			
+			TweenMax.killTweensOf(_downArrow);
+			_downArrow.removeFromParent(true);
+			_downArrow = null;
+			
+			TweenMax.killTweensOf(_downValue);
+			_downValue.removeFromParent(true);
+			_downValue = null;
+			
+			TweenMax.killTweensOf(_downArrowBis);
+			_downArrowBis.removeFromParent(true);
+			_downArrowBis = null;
+			
+			TweenMax.killTweensOf(_downValueBis);
+			_downValueBis.removeFromParent(true);
+			_downValueBis = null;
+			
+			TweenMax.killTweensOf(_upArrow);
+			_upArrow.removeFromParent(true);
+			_upArrow = null;
+			
+			TweenMax.killTweensOf(_upValue);
+			_upValue.removeFromParent(true);
+			_upValue = null;
 			
 			super.dispose();
 		}
