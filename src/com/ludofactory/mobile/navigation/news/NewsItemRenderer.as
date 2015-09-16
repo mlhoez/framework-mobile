@@ -13,8 +13,8 @@ package com.ludofactory.mobile.navigation.news
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.milkmangames.nativeextensions.CoreMobile;
 	import com.milkmangames.nativeextensions.GAnalytics;
+	import com.sticksports.nativeExtensions.canOpenUrl.CanOpenUrl;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
@@ -211,7 +211,7 @@ package com.ludofactory.mobile.navigation.news
 						_button.visible = false;
 					else
 						_button.visible = true;
-					_button.label = (CoreMobile.isSupported() && CoreMobile.mobile.canOpenUrl(_data.urlScheme)) ? _("Jouer") : _("Télécharger");
+					_button.label = CanOpenUrl.canOpen(_data.urlScheme) ? _("Jouer") : _("Télécharger");
 					
 					_title.visible = _message.visible = true;
 					_title.text = _data.title;
@@ -377,7 +377,7 @@ package com.ludofactory.mobile.navigation.news
 						if( _data.urlScheme != null && _data.urlScheme != "" )
 						{
 							// this is a game news that must trigger an app open (the target app)
-							if( CoreMobile.isSupported() && CoreMobile.mobile.canOpenUrl(_data.urlScheme) )
+							if( CanOpenUrl.canOpen(_data.urlScheme) )
 							{
 								// the app is installed on the device, then open it
 								request.url = _data.urlScheme;
