@@ -20,6 +20,7 @@ package com.ludofactory.mobile.navigation.home.summary
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameSessionTimer;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
@@ -364,11 +365,16 @@ package com.ludofactory.mobile.navigation.home.summary
 		 */
 		private function onTouch(event:TouchEvent):void
 		{
+			if(!AdvancedScreen(AbstractEntryPoint.screenNavigator.activeScreen).canBack) return;
+			
 			var touch:Touch = event.getTouch(this);
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
 				if( !_isCalloutDisplaying )
 				{
+					_calloutLabel.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
+					var savedWidth:int;
+					
 					switch(_stakeType)
 					{
 						case StakeType.TOKEN:
@@ -389,32 +395,41 @@ package com.ludofactory.mobile.navigation.home.summary
 						case StakeType.CREDIT:
 						{
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
+							{
 								_calloutLabel.text = formatString(_("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().totalTokensADay);
+							}
 							else
+							{
 								_calloutLabel.text = _("Vos Crédits de jeu\nTapotez ici pour recharger votre compte");
+								
+								savedWidth = _calloutLabel.width;
+								_calloutLabel.autoSize = TextFieldAutoSize.VERTICAL;
+								_calloutLabel.width = savedWidth;
+								_calloutLabel.hAlign = HAlign.CENTER;
+							}
 							
 							break;
 						}
 						case StakeType.POINT:
 						{
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
+							{
 								_calloutLabel.text = formatString(_("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().totalTokensADay);
+							}
 							else
+							{
 								_calloutLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Vos Points à convertir en Cadeaux\nTapotez ici pour accéder à la boutique") : _("Vos Points à convertir en Crédits\nTapotez ici pour accéder à la boutique");
+								
+								savedWidth = _calloutLabel.width;
+								_calloutLabel.autoSize = TextFieldAutoSize.VERTICAL;
+								_calloutLabel.width = savedWidth;
+								_calloutLabel.hAlign = HAlign.CENTER;
+							}
 							break;
 						}
 					}
 					
-					if((_stakeType == StakeType.CREDIT && MemberManager.getInstance().isLoggedIn()) || (_stakeType == StakeType.POINT && MemberManager.getInstance().tokens != 0))
-					{
-						_calloutLabel.autoSize = TextFieldAutoSize.VERTICAL;
-						_calloutLabel.width = scaleAndRoundToDpi(500);
-						_calloutLabel.hAlign = HAlign.CENTER;
-					}
-					else
-					{
-						_calloutLabel.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
-					}
+					// in case the label is too large for the actual screen
 					if(_calloutLabel.width > (GlobalConfig.stageWidth * 0.9))
 					{
 						_calloutLabel.autoSize = TextFieldAutoSize.VERTICAL;
@@ -434,9 +449,15 @@ package com.ludofactory.mobile.navigation.home.summary
 						callout.disposeContent = false;
 						callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
 						
-						if(MemberManager.getInstance().isLoggedIn() && _stakeType == StakeType.POINT)
+						if(_stakeType == StakeType.POINT && !(!MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0))
 						{
-							AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.BOUTIQUE_HOME);
+							callout.touchable = true;
+							callout.addEventListener(TouchEvent.TOUCH, onGoShop);
+						}
+						else if(_stakeType == StakeType.CREDIT && !(!MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0))
+						{
+							callout.touchable = true;
+							callout.addEventListener(TouchEvent.TOUCH, onGoCredits);
 						}
 						else if( !MemberManager.getInstance().isLoggedIn() && (_stakeType == StakeType.TOKEN || MemberManager.getInstance().tokens == 0))
 						{
@@ -455,11 +476,45 @@ package com.ludofactory.mobile.navigation.home.summary
 		 */
 		private function onRegister(event:TouchEvent):void
 		{
+			if(!AdvancedScreen(AbstractEntryPoint.screenNavigator.activeScreen).canBack) return;
+			
 			var touch:Touch = event.getTouch(DisplayObject(event.target));
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
 				DisplayObject(event.target).removeFromParent();
 				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.AUTHENTICATION_SCREEN);
+			}
+			touch = null;
+		}
+		
+		/**
+		 * Go to the authentication screen.
+		 */
+		private function onGoShop(event:TouchEvent):void
+		{
+			if(!AdvancedScreen(AbstractEntryPoint.screenNavigator.activeScreen).canBack) return;
+			
+			var touch:Touch = event.getTouch(DisplayObject(event.target));
+			if( touch && touch.phase == TouchPhase.ENDED )
+			{
+				DisplayObject(event.target).removeFromParent();
+				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.BOUTIQUE_HOME);
+			}
+			touch = null;
+		}
+		
+		/**
+		 * Go to the authentication screen.
+		 */
+		private function onGoCredits(event:TouchEvent):void
+		{
+			if(!AdvancedScreen(AbstractEntryPoint.screenNavigator.activeScreen).canBack) return;
+			
+			var touch:Touch = event.getTouch(DisplayObject(event.target));
+			if( touch && touch.phase == TouchPhase.ENDED )
+			{
+				DisplayObject(event.target).removeFromParent();
+				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.STORE_SCREEN);
 			}
 			touch = null;
 		}
@@ -471,6 +526,8 @@ package com.ludofactory.mobile.navigation.home.summary
 		{
 			event.target.removeEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
 			event.target.removeEventListener(TouchEvent.TOUCH, onRegister);
+			event.target.removeEventListener(TouchEvent.TOUCH, onGoShop);
+			event.target.removeEventListener(TouchEvent.TOUCH, onGoCredits);
 			_isCalloutDisplaying = false;
 		}
 		
@@ -539,25 +596,25 @@ package com.ludofactory.mobile.navigation.home.summary
 		 */
 		private function onPromoUpdated(event:Event):void
 		{
-			TweenLite.killDelayedCallsTo(moveNotification);
-			TweenLite.killTweensOf(_promoNotification);
+			TweenMax.killDelayedCallsTo(moveNotification);
+			TweenMax.killTweensOf(_promoNotification);
 			if(PromoManager.getInstance().isPromoPending)
 			{
 				_promoNotification.scaleX = _promoNotification.scaleY = 0;
-				TweenLite.to(_promoNotification, 0.5, { autoAlpha:1, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, ease:Back.easeOut });
-				TweenLite.delayedCall(3, moveNotification);
+				TweenMax.to(_promoNotification, 0.5, { autoAlpha:1, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, ease:Back.easeOut });
+				TweenMax.delayedCall(3, moveNotification);
 			}
 			else
 			{
-				TweenLite.to(_promoNotification, 0.5, { autoAlpha:0, scaleX:0, scaleY:0 });
+				TweenMax.to(_promoNotification, 0.5, { autoAlpha:0, scaleX:0, scaleY:0 });
 			}
 		}
 		
 		private function moveNotification():void
 		{
 			_promoNotification.scaleX = _promoNotification.scaleY = GlobalConfig.dpiScale;
-			TweenLite.to(_promoNotification, 0.35, { scaleX:(GlobalConfig.dpiScale + (GlobalConfig.dpiScale * 0.4)), scaleY:(GlobalConfig.dpiScale + (GlobalConfig.dpiScale * 0.4)), ease:Power1.easeInOut, repeat:3, yoyo:true });
-			TweenLite.delayedCall(4, moveNotification);
+			TweenMax.to(_promoNotification, 0.35, { scaleX:(GlobalConfig.dpiScale + (GlobalConfig.dpiScale * 0.4)), scaleY:(GlobalConfig.dpiScale + (GlobalConfig.dpiScale * 0.4)), ease:Power1.easeInOut, repeat:3, yoyo:true });
+			TweenMax.delayedCall(4, moveNotification);
 		}
 		
 	}
