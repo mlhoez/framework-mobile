@@ -10,8 +10,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	
 	/**
-	 * The BackManager handles the way the navigation is done within
-	 * the application.
+	 * The BackManager handles the way the navigation is done within the application.
 	 */	
 	public class NavigationManager
 	{
