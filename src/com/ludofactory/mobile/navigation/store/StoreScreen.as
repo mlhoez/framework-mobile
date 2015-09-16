@@ -109,7 +109,8 @@ package com.ludofactory.mobile.navigation.store
 			const vlayout:VerticalLayout = new VerticalLayout();
 			vlayout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
 			vlayout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_TOP;
-			vlayout.gap = scaleAndRoundToDpi(20);
+			vlayout.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 60);
+			vlayout.paddingTop = GlobalConfig.isPhone ? 0 : scaleAndRoundToDpi(30);
 			
 			_container = new ScrollContainer();
 			_container.layout = vlayout;
@@ -378,7 +379,7 @@ package com.ludofactory.mobile.navigation.store
 				
 				if(_promoContent)
 				{
-					TweenMax.delayedCall(1, _promoContent.animate);
+					_promoContent.animate();
 				}
 				
 				_list.dataProvider = new ListCollection( _productsData );
@@ -591,7 +592,6 @@ package com.ludofactory.mobile.navigation.store
 			
 			if(_promoContent)
 			{
-				TweenMax.killDelayedCallsTo(_promoContent.animate);
 				PromoManager.getInstance().removePromo(_promoContent);
 				_promoContent.removeFromParent(true);
 			}
