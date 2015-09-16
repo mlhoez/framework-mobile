@@ -53,52 +53,79 @@ package com.ludofactory.mobile.navigation.home.summary
 	import starling.utils.VAlign;
 	import starling.utils.formatString;
 	
+	/**
+	 * Element displayed in the footer and container an stake value.
+	 */
 	public class SummaryElement extends FeathersControl
 	{
+		
+	// ---------- Common props
+		
 		/**
-		 * The background. */		
+		 * The type used to choose the correct icon and background. */
+		private var _stakeType:int;
+		
+		/**
+		 * The element background. */
 		private var _background:Scale9Image;
 		/**
-		 * The label. */		
-		private var _label:TextField;
-		private var _firstQuestionLabel:Label;
-		private var _secondQuestionLabel:Label;
-		private var _thirdQuestionLabel:Label;
-		/**
-		 * The icon. */		
+		 * The associated stake icon. */
 		private var _icon:ImageLoader;
+		/**
+		 * Stake value label. */
+		private var _stakeValueLabel:TextField;
 		
 		/**
-		 * The type used to choose the correct icon and background. */		
-		private var _stakeType:int;
-		/**
-		 * The icon background name. */		
-		private var _backgroundTextureName:String;
-		/**
-		 * The icon texture name. */		
-		private var _iconTextureName:String;
+		 * Particles */
+		private var _particles:PDParticleSystem;
 		
+		/**
+		 * Promo notification displayed beside the credit icon when a promo is available. */
+		private var _promoNotification:Image;
+		
+	// ---------- Callout
+		
+		/**
+		 * The textfield displayed in the callout. */
 		private var _calloutLabel:TextField;
-		
+		/**
+		 * Whether the callout is displaying. */
 		private var _isCalloutDisplaying:Boolean = false;
 		
-		private var _animationLabel:Label;
+	// ---------- Question marks
 		
+		/**
+		 * Whether the question marks are displaying. */
+		private var _areQuestionMarksDisplaying:Boolean = false;
+		
+		/**
+		 * First question mark textfield. */
+		private var _firstQuestionLabel:TextField;
+		/**
+		 * Second question mark textfield. */
+		private var _secondQuestionLabel:TextField;
+		/**
+		 * Third question mark textfield. */
+		private var _thirdQuestionLabel:TextField;
+		
+		/**
+		 * Question marks animation. */
+		private var _saveXFirst:int;
+		private var _saveXSecond:int;
+		private var _saveXThird:int;
+		private var _saveY:int;
+		
+	// ---------- ?
+		
+		private var _animationLabel:Label;
 		public var _oldTweenValue:int;
 		public var _targetTweenValue:int;
 		
-		private var _isInterrogationDisplaying:Boolean = false;
-		
-		/**
-		 * Particles */		
-		private var _particles:PDParticleSystem;
-		
-		private var _promoNotification:Image;
-		
-		public function SummaryElement(type:int)
+		public function SummaryElement(stakeType:int)
 		{
 			super();
-			_stakeType = type;
+			
+			_stakeType = stakeType;
 		}
 		
 		override protected function initialize():void
@@ -108,53 +135,51 @@ package com.ludofactory.mobile.navigation.home.summary
 			_calloutLabel = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY);
 			_calloutLabel.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
 			
-			//_promoFooterContent = new FooterPromoContent();
+			var backgroundTextureName:String;
+			var iconTextureName:String;
 			
 			switch(_stakeType)
 			{
 				case StakeType.TOKEN:
 				{
-					_backgroundTextureName = "summary-green-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
-					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-token" : "summary-icon-token-hd";
-					//_calloutLabel.text = formatString(_("Vos parties gratuites ({0} par jour)"), MemberManager.getInstance().getNumFreeGameSessionsTotal());
+					backgroundTextureName = "summary-green-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
+					iconTextureName = GlobalConfig.isPhone ? "summary-icon-token" : "summary-icon-token-hd";
 					break;
 				}
 				case StakeType.CREDIT:
 				{
-					_backgroundTextureName = "summary-yellow-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
-					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-credits" : "summary-icon-credits-hd";
-					//_calloutLabel.text = _("Vos Crédits de jeu");
-					
+					backgroundTextureName = "summary-yellow-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
+					iconTextureName = GlobalConfig.isPhone ? "summary-icon-credits" : "summary-icon-credits-hd";
 					break;
 				}
 				case StakeType.POINT:
 				{
-					_backgroundTextureName = "summary-blue-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
-					_iconTextureName = GlobalConfig.isPhone ? "summary-icon-points" : "summary-icon-points-hd";
-					//_calloutLabel.text = _("Vos Points à convertir en Cadeaux");
+					backgroundTextureName = "summary-blue-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
+					iconTextureName = GlobalConfig.isPhone ? "summary-icon-points" : "summary-icon-points-hd";
 					break;
 				}
 			}
 			
 			var textures:Scale9Textures;
 			if( AbstractGameInfo.LANDSCAPE )
-				textures = new Scale9Textures( AbstractEntryPoint.assets.getTexture( _backgroundTextureName ), new Rectangle(63, 16, 20, 28) );
+				textures = new Scale9Textures( AbstractEntryPoint.assets.getTexture( backgroundTextureName ), new Rectangle(63, 16, 20, 28) );
 			else
-				textures = new Scale9Textures( AbstractEntryPoint.assets.getTexture( _backgroundTextureName ), new Rectangle(18, 18, 14, 14) );
+				textures = new Scale9Textures( AbstractEntryPoint.assets.getTexture( backgroundTextureName ), new Rectangle(18, 18, 14, 14) );
 			_background = new Scale9Image( textures, GlobalConfig.dpiScale);
 			_background.useSeparateBatch = false;
 			addChild( _background );
 			textures.texture.dispose();
 			
 			_icon = new ImageLoader();
-			_icon.source = AbstractEntryPoint.assets.getTexture( _iconTextureName );
+			_icon.source = AbstractEntryPoint.assets.getTexture( iconTextureName );
 			_icon.textureScale = GlobalConfig.dpiScale;
 			_icon.snapToPixels = true;
 			addChild(_icon);
 			
 			if(_stakeType == StakeType.CREDIT)
 			{
-				_promoNotification = new Image(AbstractEntryPoint.assets.getTexture("promo-notification"));
+				_promoNotification = new Image(AbstractEntryPoint.assets.getTexture(GlobalConfig.isPhone ? "promo-notification" : "promo-notification-hd"));
+				_promoNotification.scaleX = _promoNotification.scaleY = GlobalConfig.dpiScale;
 				_promoNotification.alignPivot();
 				_promoNotification.alpha = 0;
 				_promoNotification.visible = false;
@@ -163,7 +188,7 @@ package com.ludofactory.mobile.navigation.home.summary
 				PromoManager.getInstance().addEventListener(MobileEventTypes.PROMO_UPDATED, onPromoUpdated);
 			}
 			
-			_particles = new PDParticleSystem(Theme.particleSlowXml, AbstractEntryPoint.assets.getTexture(_iconTextureName));
+			_particles = new PDParticleSystem(Theme.particleSlowXml, AbstractEntryPoint.assets.getTexture(iconTextureName));
 			_particles.touchable = false;
 			_particles.maxNumParticles = 100;
 			_particles.radialAccelerationVariance = 0;
@@ -175,10 +200,10 @@ package com.ludofactory.mobile.navigation.home.summary
 			_particles.lifespanVariance = 0.5;
 			addChild(_particles);
 			 
-			_label = new TextField(5, 5, "000000", Theme.FONT_SANSITA, scaleAndRoundToDpi(30), 0xe2bf89);
-			_label.vAlign = VAlign.CENTER;
-			_label.autoScale = true;
-			addChild(_label);
+			_stakeValueLabel = new TextField(5, 5, "000000", Theme.FONT_SANSITA, scaleAndRoundToDpi(30), 0xe2bf89);
+			_stakeValueLabel.vAlign = VAlign.CENTER;
+			_stakeValueLabel.autoScale = true;
+			addChild(_stakeValueLabel);
 			
 			_animationLabel = new Label();
 			_animationLabel.visible = false;
@@ -209,7 +234,7 @@ package com.ludofactory.mobile.navigation.home.summary
 				
 				if(_promoNotification)
 				{
-					_promoNotification.scaleX = _promoNotification.scaleY = 1;
+					_promoNotification.scaleX = _promoNotification.scaleY = GlobalConfig.dpiScale;
 					_promoNotification.x = _icon.x + _icon.width + (_promoNotification.width * 0.25);
 					_promoNotification.y = _icon.y + (_icon.height * 0.25);
 					_promoNotification.scaleX = _promoNotification.scaleY = 0;
@@ -232,16 +257,16 @@ package com.ludofactory.mobile.navigation.home.summary
 				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_label.width = _background.width - scaleAndRoundToDpi(60) - scaleAndRoundToDpi(16); // 8 + 8 padding on each side
-					_label.x = scaleAndRoundToDpi(60) + scaleAndRoundToDpi(5);
-					_label.height = _background.height;
-					_label.y = _background.y;
+					_stakeValueLabel.width = _background.width - scaleAndRoundToDpi(60) - scaleAndRoundToDpi(16); // 8 + 8 padding on each side
+					_stakeValueLabel.x = scaleAndRoundToDpi(60) + scaleAndRoundToDpi(5);
+					_stakeValueLabel.height = _background.height;
+					_stakeValueLabel.y = _background.y;
 				}
 				else
 				{
-					_label.width = _background.width;
-					_label.height = _background.height;
-					_label.y = ((this.actualHeight - _icon.height - scaleAndRoundToDpi(10)) - _label.height) * 0.5 + _icon.height;
+					_stakeValueLabel.width = _background.width;
+					_stakeValueLabel.height = _background.height;
+					_stakeValueLabel.y = ((this.actualHeight - _icon.height - scaleAndRoundToDpi(10)) - _stakeValueLabel.height) * 0.5 + _icon.height;
 				}
 				
 				_particles.emitterX = _particles.emitterXVariance = actualWidth * 0.5;
@@ -249,11 +274,9 @@ package com.ludofactory.mobile.navigation.home.summary
 				
 				_animationLabel.width = actualWidth;
 				
-				if( _isInterrogationDisplaying )
+				if( _areQuestionMarksDisplaying )
 				{
 					TweenLite.killTweensOf([_firstQuestionLabel,_secondQuestionLabel,_thirdQuestionLabel]);
-					
-					_firstQuestionLabel.validate();
 					
 					if( AbstractGameInfo.LANDSCAPE )
 					{
@@ -274,56 +297,47 @@ package com.ludofactory.mobile.navigation.home.summary
 					repeatAnimation();
 				}
 			}
-			
-			//setSizeInternal(this.actualWidth, _background.height, false);
 		}
 		
-		private function repeatAnimation():void
-		{
-			TweenLite.to(_firstQuestionLabel, 0.85, { delay:1, bezier:[{x:_saveXFirst, y:(_saveY - scaleAndRoundToDpi(8))}, {x:_saveXFirst, y:_saveY}], orientToBezier:false/*, ease:Bounce.easeOut*/});
-			TweenLite.to(_secondQuestionLabel, 0.85, { delay:1.15, bezier:[{x:_saveXSecond, y:(_saveY - scaleAndRoundToDpi(8))}, {x:_saveXSecond, y:_saveY}], orientToBezier:false/*, ease:Bounce.easeOut*/});
-			TweenLite.to(_thirdQuestionLabel, 0.85, { delay:1.3, bezier:[{x:_saveXThird, y:(_saveY - scaleAndRoundToDpi(8))}, {x:_saveXThird, y:_saveY}], orientToBezier:false/*, ease:Bounce.easeOut*/, onComplete:repeatAnimation});
-		}
-		private var _saveXFirst:int;
-		private var _saveXSecond:int;
-		private var _saveXThird:int;
-		private var _saveY:int;
+//------------------------------------------------------------------------------------------------------------
+//
 		/**
 		 * Updates the label text.
-		 */		
+		 */
 		public function setLabelText(value:String):void
 		{
 			if( value == "???" || (value == "-" && MemberManager.getInstance().tokens == 0) )
 			{
-				if( !_isInterrogationDisplaying )
+				if( !_areQuestionMarksDisplaying )
 				{
-					_label.text = "";
+					_stakeValueLabel.text = "";
 					addInterrogationLabels();
 				}
 			}
 			else
 			{
-				if( _isInterrogationDisplaying )
+				if( _areQuestionMarksDisplaying )
 					removeInterrogationLabels();
-				_label.text = value;
+				_stakeValueLabel.text = value;
 				if( MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
-					_calloutLabel.text = formatString(_("{0} Jetons dans {1}"), MemberManager.getInstance().totalTokensADay, value); 
+					_calloutLabel.text = formatString(_("{0} Jetons dans {1}"), MemberManager.getInstance().totalTokensADay, value);
 			}
 			
 			invalidate(INVALIDATION_FLAG_SIZE);
 		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Handlers
 		
 		/**
 		 * Animates a change in the element.
 		 */		
 		public function animateChange(newValue:int):void
 		{
-			//(_animationLabel.textRendererProperties.textFormat as TextFormat).color = newValue < 0 ? 0xB00909 : 0x57C40E;
-			
-			_oldTweenValue = int(_label.text.split(" ").join(""));
+			_oldTweenValue = int(_stakeValueLabel.text.split(" ").join(""));
 			_targetTweenValue = _oldTweenValue + newValue;
 			if( newValue < 0 )
-				TweenMax.to(this, 0.75, { _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _label.text = Utilities.splitThousands(_oldTweenValue); }, ease:Linear.easeNone } );
+				TweenMax.to(this, 0.75, { _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _stakeValueLabel.text = Utilities.splitThousands(_oldTweenValue); }, ease:Linear.easeNone } );
 			_animationLabel.text = (newValue < 0 ? "- " : "+ ") + Math.abs(newValue);
 			_animationLabel.visible = false;
 			_animationLabel.alpha = 0;
@@ -342,6 +356,12 @@ package com.ludofactory.mobile.navigation.home.summary
 			Starling.juggler.remove(_particles);
 		}
 		
+//------------------------------------------------------------------------------------------------------------
+//	Handlers
+		
+		/**
+		 * Touch event.
+		 */
 		private function onTouch(event:TouchEvent):void
 		{
 			var touch:Touch = event.getTouch(this);
@@ -356,14 +376,9 @@ package com.ludofactory.mobile.navigation.home.summary
 							if( MemberManager.getInstance().isLoggedIn() )
 							{
 								if( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED )
-								{
 									_calloutLabel.text = formatString(_("Reconnectez-vous pour récupérer vos {0} Jetons."), MemberManager.getInstance().totalTokensADay);
-								}
 								else
-								{
-									// jetons - bonus (+bonus)
 									_calloutLabel.text = formatString(_("Vos Jetons ({0} quotidiens + {1} bonus)"), (MemberManager.getInstance().tokens - MemberManager.getInstance().totalBonusTokensADay), MemberManager.getInstance().totalBonusTokensADay);
-								}
 							}
 							else
 							{
@@ -376,7 +391,7 @@ package com.ludofactory.mobile.navigation.home.summary
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
 								_calloutLabel.text = formatString(_("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().totalTokensADay);
 							else
-								_calloutLabel.text = _("Vos Crédits de jeu\nTapotez pour recharger votre compte");
+								_calloutLabel.text = _("Vos Crédits de jeu\nTapotez ici pour recharger votre compte");
 							
 							break;
 						}
@@ -385,12 +400,12 @@ package com.ludofactory.mobile.navigation.home.summary
 							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
 								_calloutLabel.text = formatString(_("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().totalTokensADay);
 							else
-								_calloutLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Vos Points à convertir en Cadeaux") : _("Vos Points à convertir en Crédits");
+								_calloutLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Vos Points à convertir en Cadeaux\nTapotez ici pour accéder à la boutique") : _("Vos Points à convertir en Crédits\nTapotez ici pour accéder à la boutique");
 							break;
 						}
 					}
 					
-					if(_stakeType == StakeType.CREDIT && MemberManager.getInstance().isLoggedIn())
+					if((_stakeType == StakeType.CREDIT && MemberManager.getInstance().isLoggedIn()) || (_stakeType == StakeType.POINT && MemberManager.getInstance().tokens != 0))
 					{
 						_calloutLabel.autoSize = TextFieldAutoSize.VERTICAL;
 						_calloutLabel.width = scaleAndRoundToDpi(500);
@@ -419,7 +434,11 @@ package com.ludofactory.mobile.navigation.home.summary
 						callout.disposeContent = false;
 						callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
 						
-						if( !MemberManager.getInstance().isLoggedIn() && (_stakeType == StakeType.TOKEN || MemberManager.getInstance().tokens == 0))
+						if(MemberManager.getInstance().isLoggedIn() && _stakeType == StakeType.POINT)
+						{
+							AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.BOUTIQUE_HOME);
+						}
+						else if( !MemberManager.getInstance().isLoggedIn() && (_stakeType == StakeType.TOKEN || MemberManager.getInstance().tokens == 0))
 						{
 							callout.touchable = true;
 							callout.addEventListener(TouchEvent.TOUCH, onRegister);
@@ -431,6 +450,9 @@ package com.ludofactory.mobile.navigation.home.summary
 			touch = null;
 		}
 		
+		/**
+		 * Go to the authentication screen.
+		 */
 		private function onRegister(event:TouchEvent):void
 		{
 			var touch:Touch = event.getTouch(DisplayObject(event.target));
@@ -442,6 +464,9 @@ package com.ludofactory.mobile.navigation.home.summary
 			touch = null;
 		}
 		
+		/**
+		 * When the callout is removed.
+		 */
 		private function onCalloutRemoved(event:Event):void
 		{
 			event.target.removeEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
@@ -449,29 +474,35 @@ package com.ludofactory.mobile.navigation.home.summary
 			_isCalloutDisplaying = false;
 		}
 		
+//------------------------------------------------------------------------------------------------------------
+//	Question marks
+		
+		/**
+		 * Adds all the question marks. */
 		private function addInterrogationLabels():void
 		{
-			_firstQuestionLabel = new Label();
+			_firstQuestionLabel = new TextField(5, 5, "?", Theme.FONT_SANSITA, scaleAndRoundToDpi(26), 0xe2bf89);
+			_firstQuestionLabel.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
 			_firstQuestionLabel.text = "?";
 			_firstQuestionLabel.visible = false;
 			addChild(_firstQuestionLabel);
-			_firstQuestionLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), 0xe2bf89);
 			
-			_secondQuestionLabel = new Label();
-			_secondQuestionLabel.text = "?";
+			_secondQuestionLabel = new TextField(5, 5, "?", Theme.FONT_SANSITA, scaleAndRoundToDpi(26), 0xe2bf89);
+			_secondQuestionLabel.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
 			_secondQuestionLabel.visible = false;
 			addChild(_secondQuestionLabel);
-			_secondQuestionLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), 0xe2bf89);
 			
-			_thirdQuestionLabel = new Label();
-			_thirdQuestionLabel.text = "?";
+			_thirdQuestionLabel = new TextField(5, 5, "?", Theme.FONT_SANSITA, scaleAndRoundToDpi(26), 0xe2bf89);
+			_thirdQuestionLabel.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
 			_thirdQuestionLabel.visible = false;
 			addChild(_thirdQuestionLabel);
-			_thirdQuestionLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), 0xe2bf89);
 			
-			_isInterrogationDisplaying = true;
+			_areQuestionMarksDisplaying = true;
 		}
 		
+		/**
+		 * Removes all the question marks.
+		 */
 		private function removeInterrogationLabels():void
 		{
 			TweenLite.killTweensOf(_firstQuestionLabel);
@@ -486,7 +517,17 @@ package com.ludofactory.mobile.navigation.home.summary
 			_thirdQuestionLabel.removeFromParent(true);
 			_thirdQuestionLabel = null;
 			
-			_isInterrogationDisplaying = false;
+			_areQuestionMarksDisplaying = false;
+		}
+		
+		/**
+		 * Animates the question marks.
+		 */
+		private function repeatAnimation():void
+		{
+			TweenLite.to(_firstQuestionLabel, 0.85, { delay:1, bezier:[{x:_saveXFirst, y:(_saveY - scaleAndRoundToDpi(8))}, {x:_saveXFirst, y:_saveY}], orientToBezier:false });
+			TweenLite.to(_secondQuestionLabel, 0.85, { delay:1.15, bezier:[{x:_saveXSecond, y:(_saveY - scaleAndRoundToDpi(8))}, {x:_saveXSecond, y:_saveY}], orientToBezier:false });
+			TweenLite.to(_thirdQuestionLabel, 0.85, { delay:1.3, bezier:[{x:_saveXThird, y:(_saveY - scaleAndRoundToDpi(8))}, {x:_saveXThird, y:_saveY}], orientToBezier:false, onComplete:repeatAnimation});
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -498,24 +539,25 @@ package com.ludofactory.mobile.navigation.home.summary
 		 */
 		private function onPromoUpdated(event:Event):void
 		{
+			TweenLite.killDelayedCallsTo(moveNotification);
+			TweenLite.killTweensOf(_promoNotification);
 			if(PromoManager.getInstance().isPromoPending)
 			{
 				_promoNotification.scaleX = _promoNotification.scaleY = 0;
-				TweenMax.to(_promoNotification, 0.5, { autoAlpha:1, scaleX:1, scaleY:1, ease:Back.easeOut });
-				TweenMax.delayedCall(3, moveNotification);
+				TweenLite.to(_promoNotification, 0.5, { autoAlpha:1, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, ease:Back.easeOut });
+				TweenLite.delayedCall(3, moveNotification);
 			}
 			else
 			{
-				TweenMax.killDelayedCallsTo(moveNotification);
-				TweenMax.killTweensOf(_promoNotification);
-				TweenMax.to(_promoNotification, 0.5, { autoAlpha:0, scaleX:0, scaleY:0 });
+				TweenLite.to(_promoNotification, 0.5, { autoAlpha:0, scaleX:0, scaleY:0 });
 			}
 		}
 		
 		private function moveNotification():void
 		{
-			TweenMax.to(_promoNotification, 0.35, { scaleX:1.4, scaleY:1.4, ease:Power1.easeInOut, repeat:3, yoyo:true });
-			TweenMax.delayedCall(4, moveNotification);
+			_promoNotification.scaleX = _promoNotification.scaleY = GlobalConfig.dpiScale;
+			TweenLite.to(_promoNotification, 0.35, { scaleX:(GlobalConfig.dpiScale + (GlobalConfig.dpiScale * 0.4)), scaleY:(GlobalConfig.dpiScale + (GlobalConfig.dpiScale * 0.4)), ease:Power1.easeInOut, repeat:3, yoyo:true });
+			TweenLite.delayedCall(4, moveNotification);
 		}
 		
 	}
