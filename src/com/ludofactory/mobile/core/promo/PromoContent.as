@@ -5,16 +5,24 @@ package com.ludofactory.mobile.core.promo
 {
 	
 	import com.greensock.TweenMax;
+	import com.greensock.easing.ElasticOut;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
+	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
+	import starling.extensions.PDParticleSystem;
 	import starling.text.TextField;
+	import starling.textures.TextureSmoothing;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	
@@ -52,45 +60,59 @@ package com.ludofactory.mobile.core.promo
 		/**
 		 * Which style of promo we want. */
 		private var _isCompact:Boolean;
+		private var _isSD:Boolean = false;
 		
 		private var _helpQuad:Quad;
+		
+		/**
+		 * Logo particles. */
+		private var _particles:PDParticleSystem;
 		
 		public function PromoContent(promoData:PromoData, isCompact:Boolean)
 		{
 			super();
 			
 			_isCompact = isCompact;
+			_isSD = GlobalConfig.isPhone && !_isCompact;
 			
-			_dropAnimation = new PromoDropAnimation(promoData.percent);
+			_dropAnimation = new PromoDropAnimation(_isSD, promoData.percent);
 			addChild(_dropAnimation);
 			
-			_timerContainer = new Image(AbstractEntryPoint.assets.getTexture("promo-timer-container"));
+			_timerContainer = new Image(AbstractEntryPoint.assets.getTexture(_isSD ? "promo-timer-container" : "promo-timer-container-hd"));
 			_timerContainer.scaleX = _timerContainer.scaleY = GlobalConfig.dpiScale;
 			addChild(_timerContainer);
 			
-			_timer = new TextField((_timerContainer.width - scaleAndRoundToDpi(20)), (_timerContainer.height - scaleAndRoundToDpi(5)), _("--:--"), Theme.FONT_SANSITA, scaleAndRoundToDpi(40), 0xa1a1a1);
+			_timer = new TextField((_timerContainer.width - scaleToSize(20)), (_timerContainer.height - scaleToSize(5)), _("--:--"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 50), 0xa1a1a1);
 			_timer.autoScale = true;
 			//_timer.border = true;
 			addChild(_timer);
 			
-			_titleContainer = new Image(AbstractEntryPoint.assets.getTexture("promo-title-container"));
+			_titleContainer = new Image(AbstractEntryPoint.assets.getTexture(_isSD ? "promo-title-container" : "promo-title-container-hd"));
 			_titleContainer.scaleX = _titleContainer.scaleY = GlobalConfig.dpiScale;
 			addChild(_titleContainer);
 			
 			// 8 = height of the shadow - 12 to adjust because of the design of the title background
-			_title = new TextField((_titleContainer.width - scaleAndRoundToDpi(20)), (_titleContainer.height - scaleAndRoundToDpi(8)), promoData.title, Theme.FONT_SANSITA, scaleAndRoundToDpi(36), 0xffffff);
+			_title = new TextField((_titleContainer.width - scaleToSize(20)), (_titleContainer.height - scaleToSize(8)), promoData.title, Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 36 : 46), 0xffffff);
 			_title.autoScale = true;
 			//_title.border = true;
 			addChild(_title);
 			
-			_creditIcon = new Image(AbstractEntryPoint.assets.getTexture("promo-credit-icon"));
+			_creditIcon = new Image(AbstractEntryPoint.assets.getTexture(_isSD ? "promo-credit-icon" : "promo-credit-icon-hd"));
 			_creditIcon.scaleX = _creditIcon.scaleY = GlobalConfig.dpiScale;
+			_creditIcon.smoothing = TextureSmoothing.TRILINEAR;
 			_creditIcon.alignPivot();
 			addChild(_creditIcon);
 			
 			if(!_isCompact)
 			{
-				_message = new TextField((_titleContainer.width - scaleAndRoundToDpi(16)), (_titleContainer.height * 0.75), promoData.message, Theme.FONT_SANSITA, scaleAndRoundToDpi(20), 0xe10000);
+				_particles = new PDParticleSystem(Theme.particleStarsXml, Theme.particleStarTexture);
+				_particles.touchable = false;
+				_particles.maxNumParticles = 100;
+				_particles.scaleX = _particles.scaleY = GlobalConfig.dpiScale;
+				addChildAt(_particles, this.getChildIndex(_creditIcon));
+				Starling.juggler.add(_particles);
+				
+				_message = new TextField((_titleContainer.width - scaleToSize(16)), (_titleContainer.height * 0.75), promoData.message, Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40), 0xe10000);
 				_message.isHtmlText = true;
 				_message.autoScale = true;
 				//_message.border = true;
@@ -100,43 +122,49 @@ package com.ludofactory.mobile.core.promo
 			}
 			else
 			{
-				_helpQuad = new Quad((scaleAndRoundToDpi(80) + _titleContainer.width), 50, 0x00ff00);
+				_helpQuad = new Quad((scaleToSize(80) + _titleContainer.width), 50, 0x00ff00);
 				_helpQuad.alpha = 0;
 				addChildAt(_helpQuad, 0);
+				
+				if(GlobalConfig.isPhone)
+				{
+					this.scaleX -= 0.15 * GlobalConfig.dpiScale;
+					this.scaleY -= 0.15 * GlobalConfig.dpiScale;
+				}
 			}
 			
+			addEventListener(TouchEvent.TOUCH, onTouch);
+			
 			layout();
-			animate();
 		}
 		
 		private function layout():void
 		{
-			_title.x = scaleAndRoundToDpi(8);
+			_title.x = scaleToSize(8);
 			
 			if(_isCompact)
 			{
-				_titleContainer.x = _title.x = scaleAndRoundToDpi(80);
+				_titleContainer.x = _title.x = scaleToSize(80);
 				
 				_timerContainer.y = _titleContainer.height * 0.7;
 				_timerContainer.x = _titleContainer.x + (_titleContainer.width - _timerContainer.width) * 0.5;
 				
-				_timer.x = _timerContainer.x + scaleAndRoundToDpi(20);
-				_timer.y = _timerContainer.y + scaleAndRoundToDpi(5);
+				_timer.x = _timerContainer.x + scaleToSize(20);
+				_timer.y = _timerContainer.y + scaleToSize(5);
 				
 				_creditIcon.x = _timerContainer.x;
-				_creditIcon.y = _timerContainer.y + (_timerContainer.height * 0.75);
+				_creditIcon.y = _timerContainer.y + (_timerContainer.height * (_isSD ? 0.75 : 0.8));
 				
 				_dropAnimation.x = _creditIcon.x - (_creditIcon.width * 0.5);
 				_dropAnimation.y = _creditIcon.y;
-				
 			}
 			else
 			{
 				_timerContainer.y = _titleContainer.height * 0.6;
-				_timerContainer.x = _titleContainer.width + scaleAndRoundToDpi(130);
+				_timerContainer.x = _titleContainer.width + scaleToSize(130);
 				
-				_timer.x = _timerContainer.x + scaleAndRoundToDpi(20);
-				_timer.y = _timerContainer.y + scaleAndRoundToDpi(5);
+				_timer.x = _timerContainer.x + scaleToSize(20);
+				_timer.y = _timerContainer.y + scaleToSize(5);
 				
 				_creditIcon.x = _timerContainer.x;
 				_creditIcon.y = _timerContainer.y + (_timerContainer.height * 0.5);
@@ -145,15 +173,28 @@ package com.ludofactory.mobile.core.promo
 				_dropAnimation.y = _creditIcon.y;
 				
 				_message.y = _titleContainer.height;
+				
+				_particles.x = _creditIcon.x;
+				_particles.y = _creditIcon.y;
+				_particles.emitterXVariance = _creditIcon.width * 0.5;
+				_particles.emitterYVariance = _creditIcon.height * 0.5;
 			}
 		}
 		
 		/**
 		 * Animate everything.
 		 */
-		private function animate():void
+		public function animate():void
 		{
-			TweenMax.delayedCall(0.5, _dropAnimation.animate);
+			_creditIcon.scaleX = _creditIcon.scaleY = GlobalConfig.dpiScale + (0.4 * GlobalConfig.dpiScale);
+			_creditIcon.alpha = 0;
+			
+			TweenMax.delayedCall(0.65, _dropAnimation.animate);
+			TweenMax.to(_creditIcon, 1, { delay:0.5, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, autoAlpha:1, ease:new ElasticOut(1, 0.6) });
+			if(!_isCompact)
+			{
+				TweenMax.delayedCall(0.75, _particles.start, [0.2]);
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -172,12 +213,29 @@ package com.ludofactory.mobile.core.promo
 				_message.text = _("Cette promotion est terminée.");
 		}
 		
+		private function scaleToSize(size:Number):int
+		{
+			if(!_isSD)
+				size += (size * 50) / 100;
+			return scaleAndRoundToDpi(size);
+		}
+		
+		private function onTouch(event:TouchEvent):void
+		{
+			var touch:Touch = event.getTouch(this);
+			if( touch && touch.phase == TouchPhase.ENDED )
+			{
+				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.STORE_SCREEN);
+			}
+			touch = null;
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
 		override public function dispose():void
 		{
-			TweenMax.killDelayedCallsTo(_dropAnimation.animate);
+			removeEventListener(TouchEvent.TOUCH, onTouch);
 			
 			_titleContainer.removeFromParent(true);
 			_titleContainer = null;
@@ -185,6 +243,7 @@ package com.ludofactory.mobile.core.promo
 			_title.removeFromParent(true);
 			_title = null;
 			
+			TweenMax.killTweensOf(_creditIcon);
 			_creditIcon.removeFromParent(true);
 			_creditIcon = null;
 			
@@ -194,8 +253,18 @@ package com.ludofactory.mobile.core.promo
 			_timer.removeFromParent(true);
 			_timer = null;
 			
+			TweenMax.killDelayedCallsTo(_dropAnimation.animate);
 			_dropAnimation.removeFromParent(true);
 			_dropAnimation = null;
+			
+			if(_particles)
+			{
+				TweenMax.killDelayedCallsTo(_particles.start);
+				Starling.juggler.remove( _particles );
+				_particles.stop(true);
+				_particles.removeFromParent(true);
+				_particles = null;
+			}
 			
 			if(_message)
 			{

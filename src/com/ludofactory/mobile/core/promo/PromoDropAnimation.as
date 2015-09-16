@@ -36,35 +36,40 @@ package com.ludofactory.mobile.core.promo
 		 * Percentage textfield. */
 		private var _percent:TextField;
 		
-		public function PromoDropAnimation(percentText:String)
+		private var _isSD:Boolean = false;
+		
+		public function PromoDropAnimation(isSd:Boolean, percentText:String)
 		{
 			super();
 			
-			_mainDrop = new Image(AbstractEntryPoint.assets.getTexture("promo-main-drop"));
+			_isSD = isSd;
+			
+			_mainDrop = new Image(AbstractEntryPoint.assets.getTexture(_isSD ? "promo-main-drop" : "promo-main-drop-hd"));
 			
 			_mainDrop.alignPivot();
 			addChild(_mainDrop);
 			
-			_topDrop = new Image(AbstractEntryPoint.assets.getTexture("promo-top-drop"));
+			_topDrop = new Image(AbstractEntryPoint.assets.getTexture(_isSD ? "promo-top-drop" : "promo-top-drop-hd"));
 			_topDrop.scaleX = _topDrop.scaleY = 0;
 			_topDrop.alignPivot();
 			addChild(_topDrop);
 			
-			_bottomLeftDrop = new Image(AbstractEntryPoint.assets.getTexture("promo-bottom-left-drop"));
+			_bottomLeftDrop = new Image(AbstractEntryPoint.assets.getTexture(_isSD ? "promo-bottom-left-drop" : "promo-bottom-left-drop-hd"));
 			_bottomLeftDrop.scaleX = _bottomLeftDrop.scaleY = 0;
 			_bottomLeftDrop.alignPivot();
 			addChild(_bottomLeftDrop);
 			
-			_bottomRightDrop = new Image(AbstractEntryPoint.assets.getTexture("promo-bottom-right-drop"));
+			_bottomRightDrop = new Image(AbstractEntryPoint.assets.getTexture(_isSD ? "promo-bottom-right-drop" : "promo-bottom-right-drop-hd"));
 			_bottomRightDrop.scaleX = _bottomRightDrop.scaleY = 0;
 			_bottomRightDrop.alignPivot();
 			addChild(_bottomRightDrop);
 			
-			percentText = percentText.replace(/#size#/g, scaleAndRoundToDpi(15).toString());
+			percentText = percentText.replace(/#size#/g, scaleToSize(15).toString());
 			
-			_percent = new TextField(_mainDrop.width, _mainDrop.height, percentText, Theme.FONT_SANSITA, scaleAndRoundToDpi(30), 0xe10000);
+			_percent = new TextField((_mainDrop.width - scaleToSize(10)), (_mainDrop.height - scaleToSize(10)), percentText, Theme.FONT_SANSITA, scaleToSize(30), 0xe10000);
 			_percent.isHtmlText = true;
 			_percent.autoScale = true;
+			//_percent.border = true;
 			_percent.rotation = deg2rad(18);
 			_percent.alignPivot();
 			_percent.scaleX = _percent.scaleY = 0;
@@ -77,7 +82,7 @@ package com.ludofactory.mobile.core.promo
 		
 		private function layout():void
 		{
-			_topDrop.x = scaleAndRoundToDpi(15);
+			_topDrop.x = scaleToSize(15);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -88,10 +93,18 @@ package com.ludofactory.mobile.core.promo
 		 */
 		public function animate():void
 		{
-			TweenMax.allTo([_mainDrop, _percent], 0.25, { x:scaleAndRoundToDpi(-44), y:scaleAndRoundToDpi(-28), scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale });
-			TweenMax.to(_topDrop, 0.25, { delay:0.1, x:scaleAndRoundToDpi(-12), y:scaleAndRoundToDpi(-48), scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale });
-			TweenMax.to(_bottomRightDrop, 0.25, { delay:0.15, x:scaleAndRoundToDpi(-16), y:scaleAndRoundToDpi(12), scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale });
-			TweenMax.to(_bottomLeftDrop, 0.25, { delay:0.2, x:scaleAndRoundToDpi(-40), y:scaleAndRoundToDpi(12), scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale });
+			TweenMax.to(_mainDrop, 0.25, { x:scaleToSize(-44), y:scaleToSize(-28), scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale });
+			TweenMax.to(_percent, 0.25, { x:scaleToSize(-46), y:scaleToSize(-28), scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale });
+			TweenMax.to(_topDrop, 0.25, { delay:0.1, x:scaleToSize(-12), y:scaleToSize(-48), scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale });
+			TweenMax.to(_bottomRightDrop, 0.25, { delay:0.15, x:scaleToSize(-16), y:scaleToSize(12), scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale });
+			TweenMax.to(_bottomLeftDrop, 0.25, { delay:0.2, x:scaleToSize(-40), y:scaleToSize(12), scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale });
+		}
+		
+		private function scaleToSize(size:Number):int
+		{
+			if(!_isSD)
+				size += (size * 50) / 100;
+			return scaleAndRoundToDpi(size);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
