@@ -24,6 +24,8 @@ package com.ludofactory.mobile.debug
 	import feathers.controls.ScrollContainer;
 	import feathers.controls.Scroller;
 	
+	import flash.data.EncryptedLocalStore;
+	
 	import flash.desktop.NativeApplication;
 	
 	import feathers.controls.Button;
@@ -193,6 +195,7 @@ package com.ludofactory.mobile.debug
 		private function onReset(event:Event):void
 		{
 			Storage.getInstance().clearStorage();
+			EncryptedLocalStore.reset();
 			if( GlobalConfig.ios )
 				InfoManager.show("Redémarrer l'application pour éviter tout bug.");
 			else
