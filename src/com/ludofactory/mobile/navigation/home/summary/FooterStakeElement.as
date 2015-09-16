@@ -56,7 +56,7 @@ package com.ludofactory.mobile.navigation.home.summary
 	/**
 	 * Element displayed in the footer and container an stake value.
 	 */
-	public class SummaryElement extends FeathersControl
+	public class FooterStakeElement extends FeathersControl
 	{
 		
 	// ---------- Common props
@@ -121,7 +121,7 @@ package com.ludofactory.mobile.navigation.home.summary
 		public var _oldTweenValue:int;
 		public var _targetTweenValue:int;
 		
-		public function SummaryElement(stakeType:int)
+		public function FooterStakeElement(stakeType:int)
 		{
 			super();
 			

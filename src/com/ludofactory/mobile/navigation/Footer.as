@@ -25,7 +25,7 @@ package com.ludofactory.mobile.navigation
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.navigation.home.summary.SummaryElement;
+	import com.ludofactory.mobile.navigation.home.summary.FooterStakeElement;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
@@ -85,13 +85,13 @@ package com.ludofactory.mobile.navigation
 		
 		/**
 		 * The free container. */		
-		private var _freeContainer:SummaryElement;
+		private var _freeContainer:FooterStakeElement;
 		/**
 		 * The points container. */		
-		private var _pointsContainer:SummaryElement;
+		private var _pointsContainer:FooterStakeElement;
 		/**
 		 * The credits container. */		
-		private var _creditsContainer:SummaryElement;
+		private var _creditsContainer:FooterStakeElement;
 		
 		public function Footer()
 		{
@@ -140,13 +140,13 @@ package com.ludofactory.mobile.navigation
 			_menuButton.addEventListener(Event.TRIGGERED, onMainMenuTouched);
 			addChild(_menuButton);
 			
-			_freeContainer = new SummaryElement( StakeType.TOKEN );
+			_freeContainer = new FooterStakeElement( StakeType.TOKEN );
 			addChild(_freeContainer);
 			
-			_pointsContainer = new SummaryElement( StakeType.POINT );
+			_pointsContainer = new FooterStakeElement( StakeType.POINT );
 			addChild(_pointsContainer);
 			
-			_creditsContainer = new SummaryElement( StakeType.CREDIT );
+			_creditsContainer = new FooterStakeElement( StakeType.CREDIT );
 			addChild(_creditsContainer);
 			
 			GameSessionTimer.registerFunction(_freeContainer.setLabelText);
