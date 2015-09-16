@@ -77,7 +77,7 @@ package com.ludofactory.mobile.navigation.achievements
 			Starling.juggler.add(_particles);
 			
 			_image = new ImageLoader();
-			_image.source = AbstractEntryPoint.assets.getTexture( _trophyData.textureName );
+			_image.source = _trophyData.textureName.indexOf("http") >= 0 ? _trophyData.textureName : AbstractEntryPoint.assets.getTexture(_trophyData.textureName);
 			_image.snapToPixels = true;
 			addChild(_image);
 			

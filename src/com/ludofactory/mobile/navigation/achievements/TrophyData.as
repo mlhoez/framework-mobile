@@ -34,8 +34,8 @@ package com.ludofactory.mobile.navigation.achievements
 		private var _values:Array;
 		
 		/**
-		 * The texture name : is empty we pick up the embedeed texture ("trophyX"),
-		 * oherwise if it's an url, we replace */		
+		 * The texture name : if empty we pick up the embedeed texture ("trophyX"),
+		 * oherwise if it's an url, we replace the default image. */		
 		private var _textureName:String;
 		
 		/**

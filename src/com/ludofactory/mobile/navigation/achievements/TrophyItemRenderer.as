@@ -243,7 +243,7 @@ package com.ludofactory.mobile.navigation.achievements
 					_title.text = _d(Domains.GAME, _data.title);
 					_description.text = _d(Domains.GAME, _data.description);
 					_reward.text = _d(Domains.GAME, _data.reward);
-					_trophyImage.source = AbstractEntryPoint.assets.getTexture(_data.textureName);
+					_trophyImage.source = _data.textureName.indexOf("http") >= 0 ? _data.textureName : AbstractEntryPoint.assets.getTexture(_data.textureName);
 					
 					// not owned
 					if( TrophyManager.getInstance().canWinTrophy( _data.id ) )
