@@ -165,7 +165,7 @@ package com.ludofactory.mobile.core.promo
 				_timerContainer.x = _titleContainer.width + scaleToSize(130);
 				
 				_timer.x = _timerContainer.x + scaleToSize(40);
-				_timer.y = _timerContainer.y;
+				_timer.y = _timerContainer.y + scaleToSize(2);
 				
 				_creditIcon.x = _timerContainer.x;
 				_creditIcon.y = _timerContainer.y + (_timerContainer.height * 0.5);

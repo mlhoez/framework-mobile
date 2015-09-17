@@ -64,9 +64,9 @@ package com.ludofactory.mobile.core.promo
 			_bottomRightDrop.alignPivot();
 			addChild(_bottomRightDrop);
 			
-			percentText = percentText.replace(/#size#/g, scaleToSize(15).toString());
+			percentText = percentText.replace(/#size#/g, scaleToSize(GlobalConfig.isPhone ? 15 : 25).toString());
 			
-			_percent = new TextField((_mainDrop.width - scaleToSize(10)), (_mainDrop.height - scaleToSize(10)), percentText, Theme.FONT_SANSITA, scaleToSize(30), 0xe10000);
+			_percent = new TextField((_mainDrop.width - scaleToSize(10)), (_mainDrop.height - scaleToSize(10)), percentText, Theme.FONT_SANSITA, scaleToSize(GlobalConfig.isPhone ? 30 : 50), 0xe10000);
 			_percent.isHtmlText = true;
 			_percent.autoScale = true;
 			//_percent.border = true;
