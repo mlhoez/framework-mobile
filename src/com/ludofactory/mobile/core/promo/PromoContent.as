@@ -82,7 +82,7 @@ package com.ludofactory.mobile.core.promo
 			_timerContainer.scaleX = _timerContainer.scaleY = GlobalConfig.dpiScale;
 			addChild(_timerContainer);
 			
-			_timer = new TextField((_timerContainer.width - scaleToSize(20)), (_timerContainer.height - scaleToSize(5)), _("--:--"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 50), 0xa1a1a1);
+			_timer = new TextField((_timerContainer.width - scaleToSize(_isCompact ? 35 : 45)), (_timerContainer.height - scaleToSize(_isCompact ? 5 : 0)), _("--:--"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 50), 0xa1a1a1);
 			_timer.autoScale = true;
 			//_timer.border = true;
 			addChild(_timer);
@@ -92,7 +92,7 @@ package com.ludofactory.mobile.core.promo
 			addChild(_titleContainer);
 			
 			// 8 = height of the shadow - 12 to adjust because of the design of the title background
-			_title = new TextField((_titleContainer.width - scaleToSize(20)), (_titleContainer.height - scaleToSize(8)), promoData.title, Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 36 : 46), 0xffffff);
+			_title = new TextField((_titleContainer.width - scaleToSize(30)), (_titleContainer.height - scaleToSize(8)), promoData.title, Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 36 : 46), 0xffffff);
 			_title.autoScale = true;
 			//_title.border = true;
 			addChild(_title);
@@ -140,16 +140,15 @@ package com.ludofactory.mobile.core.promo
 		
 		private function layout():void
 		{
-			_title.x = scaleToSize(8);
-			
 			if(_isCompact)
 			{
-				_titleContainer.x = _title.x = scaleToSize(80);
+				_titleContainer.x = scaleToSize(80);
+				_title.x = _titleContainer.x + scaleToSize(10);
 				
 				_timerContainer.y = _titleContainer.height * 0.7;
 				_timerContainer.x = _titleContainer.x + (_titleContainer.width - _timerContainer.width) * 0.5;
 				
-				_timer.x = _timerContainer.x + scaleToSize(20);
+				_timer.x = _timerContainer.x + scaleToSize(35);
 				_timer.y = _timerContainer.y + scaleToSize(5);
 				
 				_creditIcon.x = _timerContainer.x;
@@ -160,11 +159,13 @@ package com.ludofactory.mobile.core.promo
 			}
 			else
 			{
+				_title.x = scaleToSize(10);
+				
 				_timerContainer.y = _titleContainer.height * 0.6;
 				_timerContainer.x = _titleContainer.width + scaleToSize(130);
 				
-				_timer.x = _timerContainer.x + scaleToSize(20);
-				_timer.y = _timerContainer.y + scaleToSize(5);
+				_timer.x = _timerContainer.x + scaleToSize(40);
+				_timer.y = _timerContainer.y;
 				
 				_creditIcon.x = _timerContainer.x;
 				_creditIcon.y = _timerContainer.y + (_timerContainer.height * 0.5);
