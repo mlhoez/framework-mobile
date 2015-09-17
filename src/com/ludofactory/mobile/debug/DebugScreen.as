@@ -268,6 +268,8 @@ package com.ludofactory.mobile.debug
 			// puis, optionnellement, si on veut stocker ce JSON dans l'application comme ici, il faut rajouter APRES
 			// des \ devant toutes les apostrophes / simple quote.
 			
+			//log(className + " :\n" + JSON.stringify(contentToWrite).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
+			
 			var fileStream:FileStream = new FileStream();
 			fileStream.open(file, FileMode.UPDATE);
 			if(file.size == 0)
@@ -286,12 +288,8 @@ package com.ludofactory.mobile.debug
 		
 		private function onGetVipSuccess(result:Object):void
 		{
-			
 			if( result != null && result.hasOwnProperty("tab_vip") && result.tab_vip )
-			{
-				//log("VIP :\n" + JSON.stringify(result.tab_vip as Array).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
 				writeTo("DefaultVip", result.tab_vip);
-			}
 			
 			log("  - VIP DONE");
 			onDefaultRetrieved();
@@ -300,10 +298,7 @@ package com.ludofactory.mobile.debug
 		private function onGetFaqSuccess(result:Object):void
 		{
 			if( result != null && result.hasOwnProperty( "tabFaq" ) && result.tabFaq != null )
-			{
-				//log("FAQ :\n" + JSON.stringify(result.tabFaq as Array).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
 				writeTo("DefaultFaq", result.tabFaq);
-			}
 			
 			log("  - FAQ DONE");
 			onDefaultRetrieved();
@@ -312,10 +307,7 @@ package com.ludofactory.mobile.debug
 		private function onGetNewsSuccess(result:Object):void
 		{
 			if( result != null && result.hasOwnProperty("tab_actualites") && result.tab_actualites )
-			{
-				//log("NEWS :\n" + JSON.stringify(result.tab_actualites as Array).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
 				writeTo("DefaultNews", result.tab_actualites);
-			}
 			
 			log("  - NEWS DONE");
 			onDefaultRetrieved();
@@ -324,10 +316,7 @@ package com.ludofactory.mobile.debug
 		private function onGetTermsAndConditionsSuccess(result:Object):void
 		{
 			if( result != null && result.hasOwnProperty("reglement") && result.reglement )
-			{
-				//log("CGU :\n" + JSON.stringify(result.reglement).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
 				writeTo("DefaultTermsAndConditions", result.reglement);
-			}
 			
 			log("  - CGU DONE");
 			onDefaultRetrieved();
@@ -351,7 +340,6 @@ package com.ludofactory.mobile.debug
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{
