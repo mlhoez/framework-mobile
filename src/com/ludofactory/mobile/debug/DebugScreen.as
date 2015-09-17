@@ -344,6 +344,9 @@ package com.ludofactory.mobile.debug
 		{
 			_currentRepository.text = "Connecté à " + String(_repoPicker.selectedItem);
 			Remote.getInstance().reconnect(String(_repoPicker.selectedItem), int(_portPicker.selectedItem));
+			
+			MemberManager.getInstance().disconnect();
+			onBack();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
