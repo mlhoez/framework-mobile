@@ -109,8 +109,8 @@ package com.ludofactory.mobile.navigation.store
 			const vlayout:VerticalLayout = new VerticalLayout();
 			vlayout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
 			vlayout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_TOP;
-			vlayout.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 60);
-			vlayout.paddingTop = GlobalConfig.isPhone ? 0 : scaleAndRoundToDpi(30);
+			vlayout.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 25);
+			vlayout.paddingTop = GlobalConfig.isPhone ? scaleAndRoundToDpi(30) : scaleAndRoundToDpi(60);
 			
 			_container = new ScrollContainer();
 			_container.layout = vlayout;
@@ -120,12 +120,6 @@ package com.ludofactory.mobile.navigation.store
 			
 			_adContainer = new AdStoreContainer();
 			_container.addChild(_adContainer);
-			
-			if(PromoManager.getInstance().isPromoPending)
-			{
-				_promoContent = PromoManager.getInstance().getPromoContent(false);
-				_container.addChild(_promoContent);
-			}
 			
 			const listLayout:TiledRowsLayout = new  TiledRowsLayout();
 			listLayout.paging = TiledRowsLayout.PAGING_NONE;
@@ -212,34 +206,7 @@ package com.ludofactory.mobile.navigation.store
 		 * <p>If in app purchases are not available, we need to display a message
 		 * indicating that in app purchases are not available on this phone or
 		 * account.</p>
-		 * 
-		 * <p>Use this code to test in the simulator :</p>
-		 * 
-		 * <pre>
-		 * _loader.visible = false;
-		 * _container.visible = true;
-		 * 
-		 * _productsData = new Vector.<StoreData>();
-		 * _productsData.push( new StoreData( { store_id:1, nb_credit:999, nb_credit_promo:50, top_offre:1 } ) );
-		 * _productsData.push( new StoreData( { store_id:1, nb_credit:999, nb_credit_promo:50, choix_joueur:1 } ) );
-		 * _productsData.push( new StoreData( { store_id:1, nb_credit:999, nb_credit_promo:50 } ) );
-		 * _productsData.push( new StoreData( { store_id:1, nb_credit:999, nb_credit_promo:50 } ) );
-		 * _productsData.push( new StoreData( { store_id:1, nb_credit:999, nb_credit_promo:50 } ) );
-		 * _productsData.push( new StoreData( { store_id:1, nb_credit:999, nb_credit_promo:50 } ) );
-		 * 
-		 * _list.dataProvider = new ListCollection( _productsData );
-		 * _list.validate();
-		 * var len:int = (_list.viewPort as ListDataViewPort).numChildren;
-		 * var storeItemRenderer:StoreItemRenderer;
-		 * for(var i:int = 0; i < len; i++)
-		 * {
-		 * 		storeItemRenderer = StoreItemRenderer( (_list.viewPort as ListDataViewPort).getChildAt(i) );
-		 * 		_container.addEventListener(Event.SCROLL, storeItemRenderer.onScroll);
-		 * }
-		 * storeItemRenderer = null;
-		 * </pre>
-		 * 
-		 */		
+		 */
 		private function onStoreInitialized():void
 		{
 			_store.removeEventListener(MobileEventTypes.STORE_INITIALIZED, onStoreInitialized);
@@ -251,6 +218,41 @@ package com.ludofactory.mobile.navigation.store
 				_retryContainer.singleMessageMode = true;
 				_retryContainer.loadingMode = false;
 				_retryContainer.message = _("Impossible d'afficher le magasin car vous ne pouvez pas effectuer d'achats (contrôle parental ou autre raison).");
+				
+				if(CONFIG::DEBUG == true)
+				{
+					_retryContainer.visible = false;
+					_container.visible = true;
+					
+					if(PromoManager.getInstance().isPromoPending)
+					{
+						_promoContent = PromoManager.getInstance().getPromoContent(false);
+						_container.addChildAt(_promoContent, 1);
+						_promoContent.animate();
+					}
+					
+					_productsData = new Vector.<StoreData>();
+					_productsData.push( new StoreData( { store_id:1, nb_credit:3,   nb_credit_promo:1 } ) );
+					_productsData.push( new StoreData( { store_id:2, nb_credit:12,  nb_credit_promo:2, choix_joueur:1 } ) );
+					_productsData.push( new StoreData( { store_id:3, nb_credit:32,  nb_credit_promo:6 } ) );
+					_productsData.push( new StoreData( { store_id:4, nb_credit:64,  nb_credit_promo:12, top_offre:1} ) );
+					_productsData.push( new StoreData( { store_id:5, nb_credit:126, nb_credit_promo:25 } ) );
+					_productsData.push( new StoreData( { store_id:6, nb_credit:255, nb_credit_promo:51 } ) );
+					
+					_list.dataProvider = new ListCollection( _productsData );
+					_list.width = GlobalConfig.stageWidth * 0.9;
+					_list.validate();
+					var len:int = (_list.viewPort as ListDataViewPort).numChildren;
+					var storeItemRenderer:StoreItemRenderer;
+					for(var i:int = 0; i < len; i++)
+					{
+						storeItemRenderer = StoreItemRenderer( (_list.viewPort as ListDataViewPort).getChildAt(i) );
+						_container.addEventListener(Event.SCROLL, storeItemRenderer.onScroll);
+					}
+					storeItemRenderer = null;
+					
+					invalidate();
+				}
 			}
 			else
 			{
@@ -377,8 +379,10 @@ package com.ludofactory.mobile.navigation.store
 				_retryContainer.visible = false;
 				_container.visible = true;
 				
-				if(_promoContent)
+				if(PromoManager.getInstance().isPromoPending)
 				{
+					_promoContent = PromoManager.getInstance().getPromoContent(false);
+					_container.addChildAt(_promoContent, 1);
 					_promoContent.animate();
 				}
 				
