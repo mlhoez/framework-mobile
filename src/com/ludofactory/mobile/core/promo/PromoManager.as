@@ -132,6 +132,8 @@ package com.ludofactory.mobile.core.promo
 			
 			for (var i:int = 0; i < _promoContentList.length; i++)
 			{
+				if(_timerManager.currentDay == 0 && _timerManager.currentMin <= 30 && _timerManager.currentSec == 0 || _timerManager.currentMin <= 29)
+					_promoContentList[i].updateLabelColor();
 				_promoContentList[i].timerLabelText = _helperText;
 			}
 		}

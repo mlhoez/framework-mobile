@@ -217,7 +217,7 @@ package com.ludofactory.mobile.navigation.game
 					if(_tournamentRankingButton)
 					{
 						_tournamentRankingButton.x = _withPoints.x + ((_withPoints.width - _tournamentRankingButton.width) * 0.5);
-						_tournamentRankingButton.y = _withPoints.y + _withPoints.height + buttonGap;
+						_tournamentRankingButton.y = _withPoints.y + _withPoints.height + buttonGap + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 					}
 				}
 			}

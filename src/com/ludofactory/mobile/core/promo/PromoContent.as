@@ -205,6 +205,11 @@ package com.ludofactory.mobile.core.promo
 			_timer.text = text;
 		}
 		
+		public function updateLabelColor():void
+		{
+			_timer.color = 0xe10000;
+		}
+		
 		public function onTimerOver():void
 		{
 			_timer.text = _("--:--");
