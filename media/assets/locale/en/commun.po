@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
-"POT-Creation-Date: 2015-09-17 18:09+0200\n"
-"PO-Revision-Date: 2015-09-17 18:09+0200\n"
+"POT-Creation-Date: 2015-09-17 18:35+0200\n"
+"PO-Revision-Date: 2015-09-17 18:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -1331,30 +1331,26 @@ msgstr "Give up"
 msgid "--:--"
 msgstr ""
 
-#: mobile/core/promo/PromoContent.as:215
+#: mobile/core/promo/PromoContent.as:216
 #: mobile/navigation/shop/bid/finished/FinishedBidItemRenderer.as:124
 #: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:134
 #: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:378
 msgid "Terminée"
 msgstr "Completed"
 
-#: mobile/core/promo/PromoManager.as:118
+#: mobile/core/promo/PromoManager.as:117
 msgid "j"
 msgstr "d"
 
-#: mobile/core/promo/PromoManager.as:119 mobile/core/promo/PromoManager.as:124
+#: mobile/core/promo/PromoManager.as:118 mobile/core/promo/PromoManager.as:123
 msgid "h"
 msgstr "h"
 
-#: mobile/core/promo/PromoManager.as:125
+#: mobile/core/promo/PromoManager.as:124 mobile/core/promo/PromoManager.as:129
 msgid "'"
 msgstr ""
 
 #: mobile/core/promo/PromoManager.as:130
-msgid "m"
-msgstr "m"
-
-#: mobile/core/promo/PromoManager.as:131
 msgid "\""
 msgstr ""
 
@@ -3139,6 +3135,9 @@ msgid ""
 msgstr ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
 "publication_vip_{1}.jpg"
+
+#~ msgid "m"
+#~ msgstr "m"
 
 #~ msgid "Promotion terminée"
 #~ msgstr "Promotion over"

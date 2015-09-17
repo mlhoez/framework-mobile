@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Français)\n"
-"POT-Creation-Date: 2015-09-17 18:09+0200\n"
-"PO-Revision-Date: 2015-09-17 18:09+0200\n"
+"POT-Creation-Date: 2015-09-17 18:35+0200\n"
+"PO-Revision-Date: 2015-09-17 18:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1307,30 +1307,26 @@ msgstr ""
 msgid "--:--"
 msgstr ""
 
-#: mobile/core/promo/PromoContent.as:215
+#: mobile/core/promo/PromoContent.as:216
 #: mobile/navigation/shop/bid/finished/FinishedBidItemRenderer.as:124
 #: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:134
 #: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:378
 msgid "Terminée"
 msgstr ""
 
-#: mobile/core/promo/PromoManager.as:118
+#: mobile/core/promo/PromoManager.as:117
 msgid "j"
 msgstr ""
 
-#: mobile/core/promo/PromoManager.as:119 mobile/core/promo/PromoManager.as:124
+#: mobile/core/promo/PromoManager.as:118 mobile/core/promo/PromoManager.as:123
 msgid "h"
 msgstr ""
 
-#: mobile/core/promo/PromoManager.as:125
+#: mobile/core/promo/PromoManager.as:124 mobile/core/promo/PromoManager.as:129
 msgid "'"
 msgstr ""
 
 #: mobile/core/promo/PromoManager.as:130
-msgid "m"
-msgstr ""
-
-#: mobile/core/promo/PromoManager.as:131
 msgid "\""
 msgstr ""
 
