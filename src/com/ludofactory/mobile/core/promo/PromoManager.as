@@ -114,20 +114,20 @@ package com.ludofactory.mobile.core.promo
 			if( _timerManager.currentDay != 0 )
 			{
 				// display days and hours XXdYY (ex : 1d18)
-				_helperText = (_timerManager.currentDay < 10 ? ("0" + _timerManager.currentDay) : _timerManager.currentDay) + _("j")
-						+ (_timerManager.currentHour < 10 ? ("0" + _timerManager.currentHour) : _timerManager.currentHour);
+				_helperText = (_timerManager.currentDay < 10 ? ("0" + _timerManager.currentDay) : _timerManager.currentDay) + _("j") + " "
+						+ (_timerManager.currentHour < 10 ? ("0" + _timerManager.currentHour) : _timerManager.currentHour) + _("h");
 			}
 			else if( _timerManager.currentHour != 0 )
 			{
 				// display hours and minutes XXhYY (ex : 18h20)
-				_helperText = (_timerManager.currentHour < 10 ? ("0" + _timerManager.currentHour) : _timerManager.currentHour) + _("h")
-						+ (_timerManager.currentMin < 10 ? ("0" + _timerManager.currentMin) : _timerManager.currentMin);
+				_helperText = (_timerManager.currentHour < 10 ? ("0" + _timerManager.currentHour) : _timerManager.currentHour) + _("h") + " "
+						+ (_timerManager.currentMin < 10 ? ("0" + _timerManager.currentMin) : _timerManager.currentMin) + _("'");
 			}
 			else
 			{
 				// display minutes and seconds XXmYY (ex : 20m10)
-				_helperText = (_timerManager.currentMin < 10 ? ("0" + _timerManager.currentMin) : _timerManager.currentMin) + _("m")
-						+ (_timerManager.currentSec < 10 ? ("0" + _timerManager.currentSec) : _timerManager.currentSec);
+				_helperText = (_timerManager.currentMin < 10 ? ("0" + _timerManager.currentMin) : _timerManager.currentMin) + _("m") + " "
+						+ (_timerManager.currentSec < 10 ? ("0" + _timerManager.currentSec) : _timerManager.currentSec) + _('"');
 			}
 			
 			for (var i:int = 0; i < _promoContentList.length; i++)
@@ -186,7 +186,7 @@ package com.ludofactory.mobile.core.promo
 		
 		public function clearPromo():void
 		{
-			_timerManager.updateTime((_timerManager.currentTime -1));
+			onTimerOver();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

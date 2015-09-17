@@ -212,10 +212,7 @@ package com.ludofactory.mobile.core.promo
 		
 		public function onTimerOver():void
 		{
-			_timer.text = _("--:--");
-			_title.text = _("Promotion terminée");
-			if(_message)
-				_message.text = _("Cette promotion est terminée.");
+			_timer.text = _("Terminée");
 		}
 		
 		private function scaleToSize(size:Number):int
