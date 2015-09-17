@@ -12,6 +12,7 @@ package com.ludofactory.mobile.navigation.vip
 	import com.greensock.easing.Linear;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -212,7 +213,7 @@ package com.ludofactory.mobile.navigation.vip
 			_loader.removeFromParent(true);
 			_loader = null;
 			
-			var temp:Array = JSON.parse( Storage.getInstance().getProperty( (MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS) )[LanguageManager.getInstance().lang] ) as Array;
+			var temp:Array = JSON.parse( Storage.getInstance().getProperty(StorageConfig.PROPERTY_VIP)[LanguageManager.getInstance().lang] ) as Array;
 			_ranksData = [];
 			for(var i:int = 0; i < temp.length; i++)
 				_ranksData.push( new VipData(temp[i]) );

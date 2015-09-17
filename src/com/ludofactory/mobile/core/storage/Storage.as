@@ -217,10 +217,9 @@ package com.ludofactory.mobile.core.storage
 		 */		
 		public function updateVip(data:Object):void
 		{
-			var vip:Object = Storage.getInstance().getProperty( (MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS) );
+			var vip:Object = Storage.getInstance().getProperty(StorageConfig.PROPERTY_VIP);
 			vip[LanguageManager.getInstance().lang] = JSON.stringify(data.tab_vip as Array);
-			//setProperty(StorageConfig.PROPERTY_VIP_VERSION, int(data.version));
-			setProperty((MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS), vip);
+			setProperty(StorageConfig.PROPERTY_VIP, vip);
 		}
 		
 		/**
@@ -230,7 +229,6 @@ package com.ludofactory.mobile.core.storage
 		{
 			var news:Object = getProperty(StorageConfig.PROPERTY_NEWS);
 			news[LanguageManager.getInstance().lang] = JSON.stringify(data.tab_actualites);
-			//setProperty(StorageConfig.PROPERTY_NEWS_VERSION, int(data.version));
 			setProperty(StorageConfig.PROPERTY_NEWS, news);
 		}
 		
@@ -241,7 +239,6 @@ package com.ludofactory.mobile.core.storage
 		{
 			var termsAndConditions:Object = getProperty(StorageConfig.PROPERTY_TERMS_AND_CONDITIONS);
 			termsAndConditions[LanguageManager.getInstance().lang] = String(data.reglement);
-			//setProperty((int(data.version));
 			setProperty(StorageConfig.PROPERTY_TERMS_AND_CONDITIONS, termsAndConditions);
 		}
 		

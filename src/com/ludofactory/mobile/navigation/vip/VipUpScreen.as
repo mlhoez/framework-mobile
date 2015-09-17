@@ -102,7 +102,7 @@ package com.ludofactory.mobile.navigation.vip
 		{
 			super.initialize();
 			
-			var temp:Array = JSON.parse( Storage.getInstance().getProperty( (MemberManager.getInstance().getGiftsEnabled() ? StorageConfig.PROPERTY_VIP : StorageConfig.PROPERTY_VIP_WITHOUT_GIFTS) )[LanguageManager.getInstance().lang] ) as Array;
+			var temp:Array = JSON.parse( Storage.getInstance().getProperty(StorageConfig.PROPERTY_VIP)[LanguageManager.getInstance().lang] ) as Array;
 			for(var i:int = 0; i < temp.length; i++)
 			{
 				if( i == MemberManager.getInstance().rank - 1 )
