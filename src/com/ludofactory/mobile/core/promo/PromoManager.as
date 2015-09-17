@@ -126,7 +126,7 @@ package com.ludofactory.mobile.core.promo
 			else
 			{
 				// display minutes and seconds XXmYY (ex : 20m10)
-				_helperText = (_timerManager.currentMin < 10 ? ("0" + _timerManager.currentMin) : _timerManager.currentMin) + _("m") + " "
+				_helperText = (_timerManager.currentMin < 10 ? ("0" + _timerManager.currentMin) : _timerManager.currentMin) + _("'") + " "
 						+ (_timerManager.currentSec < 10 ? ("0" + _timerManager.currentSec) : _timerManager.currentSec) + _('"');
 			}
 			
