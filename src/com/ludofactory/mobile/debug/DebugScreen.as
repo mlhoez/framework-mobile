@@ -6,35 +6,37 @@ Created : 20 janv. 2014
 */
 package com.ludofactory.mobile.debug
 {
+	
+	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.navigation.settings.SettingItemRenderer;
+	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import feathers.controls.ScrollContainer;
-	import feathers.controls.Scroller;
-	
-	import flash.data.EncryptedLocalStore;
-	
-	import flash.desktop.NativeApplication;
+	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
+	import com.ludofactory.mobile.navigation.settings.LanguageData;
 	
 	import feathers.controls.Button;
 	import feathers.controls.List;
 	import feathers.controls.PickerList;
+	import feathers.controls.ScrollContainer;
+	import feathers.controls.Scroller;
 	import feathers.data.ListCollection;
 	import feathers.layout.VerticalLayout;
 	
-	import flash.text.TextFormatAlign;
+	import flash.data.EncryptedLocalStore;
+	import flash.desktop.NativeApplication;
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
 	
 	import starling.events.Event;
 	import starling.text.TextField;
@@ -214,60 +216,128 @@ package com.ludofactory.mobile.debug
 				TrophyManager.getInstance().onWinTrophy(i);
 		}
 		
+		/**
+		 * How many defaults to retrieve. */
+		private static const DEFAULT_COUNTER:int = 4;
+		private var _counter:int = 0;
+		private var _languagesToParse:Array = [];
+		private var _actualLangSave:String;
+		
 		private function onGetDefaultData(event:Event):void
 		{
-			Remote.getInstance().getVip(onGetVipSuccess, null, null, 1, advancedOwner.activeScreenID);
-			Remote.getInstance().getFaq(onGetFaqSuccess, null, null, 1, advancedOwner.activeScreenID);
-			Remote.getInstance().getNews(onGetNewsSuccess, null, null, 1, advancedOwner.activeScreenID);
-			Remote.getInstance().getTermsAndConditions(onGetTermsAndConditionsSuccess, null, null, 1, advancedOwner.activeScreenID);
+			// save the actual language
+			_actualLangSave = LanguageManager.getInstance().lang;
+			// retrieve all the languages
+			_languagesToParse = (Storage.getInstance().getProperty( StorageConfig.PROPERTY_AVAILABLE_LANGUAGES) as Array).concat();
+			// and fetch the default for all of them
+			fetchNext();
+		}
+		
+		private function fetchNext():void
+		{
+			if (_languagesToParse.length > 0)
+			{
+				var languageToFetchDefaultsFor:LanguageData = _languagesToParse.pop();
+				// change the language
+				LanguageManager.getInstance().lang = languageToFetchDefaultsFor.key;
+				
+				// then fetch everything
+				log("Fetching defaults for " + languageToFetchDefaultsFor.translationKey);
+				_counter = DEFAULT_COUNTER;
+				Remote.getInstance().getVip(onGetVipSuccess, null, null, 1, advancedOwner.activeScreenID);
+				Remote.getInstance().getFaq(onGetFaqSuccess, null, null, 1, advancedOwner.activeScreenID);
+				Remote.getInstance().getNews(onGetNewsSuccess, null, null, 1, advancedOwner.activeScreenID);
+				Remote.getInstance().getTermsAndConditions(onGetTermsAndConditionsSuccess, null, null, 1, advancedOwner.activeScreenID);
+			}
+			else
+			{
+				// bring back the language that was selected
+				LanguageManager.getInstance().lang = _actualLangSave;
+				log("Defaults fetch done !");
+			}
+		}
+		
+		private function writeTo(className:String, contentToWrite:Object):void
+		{
+			// write in file so that we can simply copy / paste the content in the DefaultXXX.as classes
+			var file:File = new File();
+			file = file.resolvePath("/Users/Maxime/Desktop/export-defaults/" + className + ".as");
+			
+			// Flash interprète tous les \ dans le JSON AVANT qu'il soit parsé, ce qui le fait buguer (s'il y a une
+			// citation entre "" par exemple). Il faut donc doubler tous les \ après avoir tranformé l'objet en JSON
+			// puis, optionnellement, si on veut stocker ce JSON dans l'application comme ici, il faut rajouter APRES
+			// des \ devant toutes les apostrophes / simple quote.
+			
+			var fileStream:FileStream = new FileStream();
+			fileStream.open(file, FileMode.UPDATE);
+			if(file.size == 0)
+				fileStream.writeUTFBytes("package com.ludofactory.mobile.core.storage.defaults\n{\n\n\tpublic class " + className + "\n\t{\n");
+			else
+				fileStream.position = fileStream.bytesAvailable;
+			fileStream.writeUTFBytes("\n\t\t" + "public static const " + LanguageManager.getInstance().lang.toUpperCase() + ":String = '" + JSON.stringify(contentToWrite).replace(/\\/g, "\\\\").replace(/'/g, "\\'") +"';");
+			if(_languagesToParse.length == 0)
+			{
+				// finalize file
+				fileStream.writeUTFBytes("\n\n\t}\n}");
+			}
+			fileStream.close();
+			fileStream = null;
 		}
 		
 		private function onGetVipSuccess(result:Object):void
 		{
-			// Penser à changer la version sinon on récupère rien
-			// Flash interprète tous les \ dans le JSON AVANT qu'il soit parsé, ce qui le fait
-			// buguer (s'il y a une citation entre "" par exemple). Il faut donc doubler tous les
-			// \ après avoir tranformé l'objet en JSON puis, optionnellement, si on veut stocker
-			// ce JSON dans l'application comme ici, il faut rajouter APRES des \ devant toutes les
-			// apostrophes / simple quote.
+			
 			if( result != null && result.hasOwnProperty("tab_vip") && result.tab_vip )
-				log("VIP :\n" + JSON.stringify(result.tab_vip as Array).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
+			{
+				//log("VIP :\n" + JSON.stringify(result.tab_vip as Array).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
+				writeTo("DefaultVip", result.tab_vip);
+			}
+			
+			log("  - VIP DONE");
+			onDefaultRetrieved();
 		}
 		
 		private function onGetFaqSuccess(result:Object):void
 		{
-			// Penser à changer la version sinon on récupère rien
-			// Flash interprète tous les \ dans le JSON AVANT qu'il soit parsé, ce qui le fait
-			// buguer (s'il y a une citation entre "" par exemple). Il faut donc doubler tous les
-			// \ après avoir tranformé l'objet en JSON puis, optionnellement, si on veut stocker
-			// ce JSON dans l'application comme ici, il faut rajouter APRES des \ devant toutes les
-			// apostrophes / simple quote.
 			if( result != null && result.hasOwnProperty( "tabFaq" ) && result.tabFaq != null )
-				log("FAQ :\n" + JSON.stringify(result.tabFaq as Array).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
+			{
+				//log("FAQ :\n" + JSON.stringify(result.tabFaq as Array).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
+				writeTo("DefaultFaq", result.tabFaq);
+			}
+			
+			log("  - FAQ DONE");
+			onDefaultRetrieved();
 		}
 		
 		private function onGetNewsSuccess(result:Object):void
 		{
-			// Penser à changer la version sinon on récupère rien
-			// Flash interprète tous les \ dans le JSON AVANT qu'il soit parsé, ce qui le fait
-			// buguer (s'il y a une citation entre "" par exemple). Il faut donc doubler tous les
-			// \ après avoir tranformé l'objet en JSON puis, optionnellement, si on veut stocker
-			// ce JSON dans l'application comme ici, il faut rajouter APRES des \ devant toutes les
-			// apostrophes / simple quote.
 			if( result != null && result.hasOwnProperty("tab_actualites") && result.tab_actualites )
-				log("NEWS :\n" + JSON.stringify(result.tab_actualites as Array).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
+			{
+				//log("NEWS :\n" + JSON.stringify(result.tab_actualites as Array).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
+				writeTo("DefaultNews", result.tab_actualites);
+			}
+			
+			log("  - NEWS DONE");
+			onDefaultRetrieved();
 		}
 		
 		private function onGetTermsAndConditionsSuccess(result:Object):void
 		{
-			// Penser à changer la version sinon on récupère rien
-			// Flash interprète tous les \ dans le JSON AVANT qu'il soit parsé, ce qui le fait
-			// buguer (s'il y a une citation entre "" par exemple). Il faut donc doubler tous les
-			// \ après avoir tranformé l'objet en JSON puis, optionnellement, si on veut stocker
-			// ce JSON dans l'application comme ici, il faut rajouter APRES des \ devant toutes les
-			// apostrophes / simple quote.
 			if( result != null && result.hasOwnProperty("reglement") && result.reglement )
-				log("CGU :\n" + JSON.stringify(result.reglement).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
+			{
+				//log("CGU :\n" + JSON.stringify(result.reglement).replace(/\\/g, "\\\\").replace(/'/g, "\\'"));
+				writeTo("DefaultTermsAndConditions", result.reglement);
+			}
+			
+			log("  - CGU DONE");
+			onDefaultRetrieved();
+		}
+		
+		private function onDefaultRetrieved():void
+		{
+			_counter--;
+			if(_counter <= 0)
+				fetchNext();
 		}
 		
 		private function onChangeRepo(event:Event):void
