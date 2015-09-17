@@ -540,7 +540,7 @@ package com.ludofactory.mobile.core.manager
 		/** Returns */
 		public function getCanWatchVideo():Boolean { return _member.canWatchVideo; }
 		/** Returns */
-		public function isAdmin():Boolean { return _member.isAdmin; }
+		public function isAdmin():Boolean { return (CONFIG::DEBUG == true) ? true : _member.isAdmin; }
 		/** Returns */
 		public function canDisplayInterstitial():Boolean { return _member.canDisplayInterstitial; }
 		/** Returns */
