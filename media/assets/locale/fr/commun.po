@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Français)\n"
-"POT-Creation-Date: 2015-09-17 09:22+0200\n"
-"PO-Revision-Date: 2015-09-17 09:22+0200\n"
+"POT-Creation-Date: 2015-09-17 16:33+0200\n"
+"PO-Revision-Date: 2015-09-17 16:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -937,7 +937,7 @@ msgstr ""
 #: mobile/navigation/sponsor/invite/ContactItemRenderer.as:365
 #: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:585
 #: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:822
-#: mobile/navigation/store/StoreScreen.as:459
+#: mobile/navigation/store/StoreScreen.as:455
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:257
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:388
 #: mobile/navigation/tournament/TournamentRankingScreen.as:571
@@ -973,8 +973,8 @@ msgstr ""
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:432
 #: mobile/navigation/sponsor/filleuls/FilleulsScreen.as:174
 #: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:896
-#: mobile/navigation/store/StoreScreen.as:312
-#: mobile/navigation/store/StoreScreen.as:400
+#: mobile/navigation/store/StoreScreen.as:306
+#: mobile/navigation/store/StoreScreen.as:396
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:223
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:367
 #: mobile/navigation/tournament/TournamentRankingScreen.as:547
@@ -1303,27 +1303,26 @@ msgstr ""
 msgid "Abandonner"
 msgstr ""
 
-#: mobile/core/promo/PromoContent.as:85 mobile/core/promo/PromoContent.as:210
+#: mobile/core/promo/PromoContent.as:85
 msgid "--:--"
 msgstr ""
 
-#: mobile/core/promo/PromoContent.as:211
-msgid "Promotion terminée"
+#: mobile/core/promo/PromoContent.as:215
+#: mobile/navigation/shop/bid/finished/FinishedBidItemRenderer.as:124
+#: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:134
+#: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:378
+msgid "Terminée"
 msgstr ""
 
-#: mobile/core/promo/PromoContent.as:213
-msgid "Cette promotion est terminée."
-msgstr ""
-
-#: mobile/core/promo/PromoManager.as:117
+#: mobile/core/promo/PromoManager.as:118
 msgid "j"
 msgstr ""
 
-#: mobile/core/promo/PromoManager.as:123
+#: mobile/core/promo/PromoManager.as:124
 msgid "h"
 msgstr ""
 
-#: mobile/core/promo/PromoManager.as:129
+#: mobile/core/promo/PromoManager.as:130
 msgid "m"
 msgstr ""
 
@@ -2648,12 +2647,6 @@ msgstr ""
 msgid "A venir"
 msgstr ""
 
-#: mobile/navigation/shop/bid/finished/FinishedBidItemRenderer.as:124
-#: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:134
-#: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:378
-msgid "Terminée"
-msgstr ""
-
 #: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:78
 msgid ""
 "Echangez vos Points contre\n"
@@ -2862,7 +2855,7 @@ msgstr ""
 msgid "Acheter des crédits de jeu"
 msgstr ""
 
-#: mobile/navigation/store/StoreScreen.as:253
+#: mobile/navigation/store/StoreScreen.as:247
 msgid ""
 "Impossible d'afficher le magasin car vous ne pouvez pas effectuer d'achats "
 "(contrôle parental ou autre raison)."
