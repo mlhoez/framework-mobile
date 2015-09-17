@@ -104,9 +104,12 @@ package com.ludofactory.mobile.debug
 			_changeRepository.autoSize = TextFieldAutoSize.HORIZONTAL;
 			_mainContainer.addChild(_changeRepository);
 			
+			// TODO rajouter un champ pour rentrer une url à la mano au cas ou
+			
 			_repoPicker = new PickerList();
 			_repoPicker.nameList.add(Theme.PICKER_LIST_DEBUG);
 			_repoPicker.dataProvider = new ListCollection( ["http://www.ludokado.com",
+															"http://semiprod.ludokado.com",
 															"http://appmobile.ludokado.com",
 															"http://ludokado.mlhoez.ludofactory.dev",
 															"http://ludokado2.pterrier.ludofactory.dev",
