@@ -159,6 +159,36 @@ package com.ludofactory.mobile.core.promo
 			dispatchEventWith(MobileEventTypes.PROMO_UPDATED);
 		}
 		
+		/**
+		 * Updates the time.
+		 */
+		public function updateData(rawPromoData:Object):void
+		{
+			if("timeLeft" in rawPromoData && rawPromoData.timeLeft > 0)
+			{
+				if(!_promoData)
+					_promoData = new PromoData(rawPromoData);
+				else
+					_promoData.update(rawPromoData);
+				
+				if(_timerManager)
+					_timerManager.updateTime(((_timerManager.currentTime - _promoData.timeLeft) * -1));
+				
+				// update the content
+				for (var i:int = 0; i < _promoContentList.length; i++)
+					_promoContentList[i].updateData(_promoData);
+			}
+			else
+			{
+				clearPromo();
+			}
+		}
+		
+		public function clearPromo():void
+		{
+			_timerManager.updateTime((_timerManager.currentTime -1));
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
 		

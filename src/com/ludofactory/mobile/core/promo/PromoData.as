@@ -30,6 +30,11 @@ package com.ludofactory.mobile.core.promo
 		
 		public function PromoData(data:Object)
 		{
+			update(data);
+		}
+		
+		public function update(data:Object):void
+		{
 			if("percent" in data && data.percent)
 				_percent = String(data.percent);
 			

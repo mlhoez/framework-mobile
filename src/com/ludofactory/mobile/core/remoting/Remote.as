@@ -857,12 +857,14 @@ package com.ludofactory.mobile.core.remoting
 				// if no promotion is currently built, we do so
 				if(!PromoManager.getInstance().isPromoPending)
 					PromoManager.getInstance().buildPromo(result.promo);
+				else
+					PromoManager.getInstance().updateData(result.promo); // just in case we need to update the time left
 			}
-			//else // else, by security we need to clear it /!\ 
-			//{
-			//	if(PromoManager.getInstance().isPromoPending)
-			//		PromoManager.getInstance().clearPormo();
-			//}
+			else // else, by security we need to clear it /!\ 
+			{
+				if(PromoManager.getInstance().isPromoPending)
+					PromoManager.getInstance().clearPromo();
+			}
 			
 			// a force download have been requested for this version
 			if( "forceDownload" in result && result.forceDownload != null && int(result.forceDownload) == 1 )

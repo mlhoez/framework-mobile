@@ -235,6 +235,14 @@ package com.ludofactory.mobile.core.promo
 			touch = null;
 		}
 		
+		public function updateData(promoData:PromoData):void
+		{
+			_dropAnimation.updateData(promoData.percent);
+			_title.text = promoData.title;
+			if(_message)
+				_message.text = promoData.message;
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		

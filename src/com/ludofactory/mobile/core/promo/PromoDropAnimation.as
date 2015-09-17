@@ -107,6 +107,12 @@ package com.ludofactory.mobile.core.promo
 			return scaleAndRoundToDpi(size);
 		}
 		
+		public function updateData(percentText:String):void
+		{
+			percentText = percentText.replace(/#size#/g, scaleToSize(15).toString());
+			_percent.text = percentText;
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
