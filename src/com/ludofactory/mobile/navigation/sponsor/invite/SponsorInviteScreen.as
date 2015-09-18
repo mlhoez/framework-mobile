@@ -61,20 +61,12 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 	public class SponsorInviteScreen extends AdvancedScreen
 	{
 		/**
-		 * The title. */		
-		private var _title:TextField;
-		
-		/**
 		 * The invite all button. */		
 		private var _inviteAllButton:Button;
 		
 		/**
 		 * Thel ist background. */		
 		private var _background:Quad;
-		
-		/**
-		 * The list shadow */		
-		private var _listShadow:Quad;
 		
 		/**
 		 * The list shadow */		
@@ -135,7 +127,7 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 		{
 			super.initialize();
 			
-			_headerTitle = _("Parrainer");
+			_headerTitle = advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? _("Parrainer vos amis par SMS") : _("Parrainer vos amis par email");
 			
 			_loader = new MovieClip(Theme.blackLoaderTextures);
 			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
@@ -146,12 +138,6 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			Starling.juggler.add(_loader);
 			addChild(_loader);
 			
-			_title = new TextField(5, 5, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(24), 0x636363, true);
-			_title.visible = false;
-			_title.autoScale = true;
-			_title.text = advancedOwner.screenData.sponsorType == SponsorTypes.SMS ? _("Envoyer un sms de parrainage à tous vos contacts.") : _("Envoyer un email de parrainage à tous vos contacts.");
-			addChild(_title);
-			
 			_inviteAllButton = new Button();
 			_inviteAllButton.visible = false;
 			_inviteAllButton.styleName = Theme.BUTTON_FLAT_GREEN;
@@ -161,15 +147,6 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			
 			_background = new Quad(5, 5);
 			addChild(_background);
-			 
-			_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
-			_listShadow.setVertexColor(0, 0xffffff);
-			_listShadow.setVertexAlpha(0, 0);
-			_listShadow.setVertexColor(1, 0xffffff);
-			_listShadow.setVertexAlpha(1, 0);
-			_listShadow.setVertexAlpha(2, 0.1);
-			_listShadow.setVertexAlpha(3, 0.1);
-			addChild(_listShadow);
 			
 			_listBottomShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
 			_listBottomShadow.setVertexAlpha(0, 0.1);
@@ -424,8 +401,6 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			_allContacts = [];
 			_allContacts = null;
 			
-			_title.visible = true;
-			
 			_loader.alpha = 0;
 			_loader.visible = false;
 			_loader.x = _inviteAllButton.x;
@@ -444,14 +419,6 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 				{
 					_loader.x = this.actualWidth * 0.5;
 					_loader.y = this.actualHeight * 0.5;
-					
-					_title.border = true;
-					_title.height = scaleAndRoundToDpi(60);
-					_title.width = actualWidth;
-					_title.x = roundUp((this.actualWidth - _title.width) * 0.5);
-					
-					_listShadow.width = this.actualWidth;
-					_listShadow.y = _title.y + (_title.height * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 					
 					_singleInviteGroup.validate();
 					_singleInviteGroup.y = actualHeight - _singleInviteGroup.height - scaleAndRoundToDpi(20);
@@ -475,7 +442,6 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 					_listBottomShadow.y = _singleInviteGroup.y - _listBottomShadow.height - scaleAndRoundToDpi(10);
 					
 					_background.width = _contactsList.width = actualWidth;
-					_contactsList.y = _background.y = _listShadow.y + _listShadow.height;
 					_contactsList.height = _background.height = _listBottomShadow.y - _contactsList.y;
 					
 					_retryContainer.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
@@ -489,29 +455,28 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 					_loader.x = this.actualWidth * 0.5;
 					_loader.y = this.actualHeight * 0.5;
 					
-					_inviteAllButton.width = (this.actualWidth - scaleAndRoundToDpi(40)) * 0.3;
-					_inviteAllButton.validate();
-					_inviteAllButton.height = _inviteAllButton.height;
-					_inviteAllButton.alignPivot();
-					_inviteAllButton.y = scaleAndRoundToDpi(20) + (_inviteAllButton.height * 0.5);
-					_inviteAllButton.x = this.actualWidth - scaleAndRoundToDpi(20) - (_inviteAllButton.width * 0.5);
-					
-					_title.x = scaleAndRoundToDpi(20);
-					_title.width = (this.actualWidth - scaleAndRoundToDpi(40)) * 0.7;
-					_title.y = (_inviteAllButton.height - _title.height) + scaleAndRoundToDpi(20);
-					
-					_listShadow.width = this.actualWidth;
-					_listShadow.y = _inviteAllButton.y + (_inviteAllButton.height * 0.5) + scaleAndRoundToDpi(20);
-					
 					_singleInviteGroup.validate();
-					_singleInviteGroup.y = actualHeight - _singleInviteGroup.height - scaleAndRoundToDpi(10);
-					_singleInviteGroup.x = (actualWidth - _singleInviteGroup.width) * 0.5;
+					_singleInviteGroup.y = actualHeight - _singleInviteGroup.height - scaleAndRoundToDpi(20);
+					if( _inviteAllButton.visible == false )
+					{
+						_singleInviteGroup.x = roundUp((actualWidth - _singleInviteButton.width) * 0.5) - scaleAndRoundToDpi(5);
+					}
+					else
+					{
+						_singleInviteGroup.x = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					}
+					
+					_inviteAllButton.width = scaleAndRoundToDpi(180);
+					_inviteAllButton.validate();
+					_inviteAllButton.height = scaleAndRoundToDpi(80);
+					_inviteAllButton.alignPivot();
+					_inviteAllButton.y = _singleInviteGroup.y + (_singleInviteGroup.height * 0.5);
+					_inviteAllButton.x = this.actualWidth - scaleAndRoundToDpi(20) - (_inviteAllButton.width * 0.5);
 					
 					_listBottomShadow.width = this.actualWidth;
 					_listBottomShadow.y = _singleInviteGroup.y - _listBottomShadow.height - scaleAndRoundToDpi(20);
 					
 					_background.width = _contactsList.width = actualWidth;
-					_contactsList.y = _background.y = _listShadow.y + _listShadow.height;
 					_contactsList.height = _background.height = _listBottomShadow.y - _contactsList.y;
 					
 					_retryContainer.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
@@ -911,15 +876,9 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			_loader.removeFromParent(true);
 			_loader = null;
 			
-			_title.removeFromParent(true);
-			_title = null;
-			
 			_inviteAllButton.removeEventListener(Event.TRIGGERED, onInviteAll);
 			_inviteAllButton.removeFromParent(true);
 			_inviteAllButton = null;
-			
-			_listShadow.removeFromParent(true);
-			_listShadow = null;
 			
 			if( _overlay )
 			{
