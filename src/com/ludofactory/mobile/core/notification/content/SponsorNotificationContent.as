@@ -84,7 +84,7 @@ package com.ludofactory.mobile.core.notification.content
 			}
 			else
 			{
-				dataProvider = [ new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-11", rank:_("Matelot"), bonus:_("Jusqu'à\n400 points*") } ),
+				dataProvider = [ new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-11", rank:_("Matelot"), bonus:_("Jusqu'à 400 points*") } ),
 								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-10", rank:_("Boucanier"), bonus:_("2 crédits") } ),
 								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-4",  rank:_("Pirate III"),  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? _("25 000 points"):_("10 €")) } ),
 								 new SponsorBonusData( { iconTextureName:"sponsor-bonus-icon-1",  rank:_("Capitaine"),  bonus:(Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? _("75 000 points"):_("30 €")) } ) ];

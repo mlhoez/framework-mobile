@@ -6,28 +6,25 @@ Created : 27 sept. 2013
 */
 package com.ludofactory.mobile.navigation.sponsor.info
 {
+	
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
-	
-	import feathers.skins.IStyleProvider;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.ImageLoader;
-	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
 	import feathers.display.Scale3Image;
+	import feathers.skins.IStyleProvider;
 	
 	import starling.events.Event;
+	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
+	import starling.utils.HAlign;
+	import starling.utils.VAlign;
 	
 	/**
 	 * Item renderer used to display the customer service messages.
@@ -43,12 +40,12 @@ package com.ludofactory.mobile.navigation.sponsor.info
 		
 		/**
 		 * Name of the trophy. */		
-		private var _title:Label;
+		private var _title:TextField;
 		
 		/**
 		 *  */		
-		private var _bonusLabel:Label;
-		private var _equalLabel:Label;
+		private var _bonusLabel:TextField;
+		private var _equalLabel:TextField;
 		
 		private var _image:ImageLoader;
 		
@@ -73,17 +70,30 @@ package com.ludofactory.mobile.navigation.sponsor.info
 			_backgroundSkin = new Scale3Image(Theme.sponsorBonusBackground, GlobalConfig.dpiScale);
 			addChild(_backgroundSkin);
 			
-			_title = new Label();
+			var savedHeight:int;
+			
+			_title = new TextField(5, _itemHeight, "0", Theme.FONT_SANSITA, scaleAndRoundToDpi(38), Theme.COLOR_WHITE);
+			_title.autoSize = TextFieldAutoSize.VERTICAL;
+			savedHeight = _title.height;
+			_title.hAlign = HAlign.LEFT;
+			_title.vAlign = VAlign.CENTER;
+			_title.autoSize = TextFieldAutoSize.NONE;
+			_title.autoScale = true;
+			_title.border = true;
 			addChild(_title);
-			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(38), Theme.COLOR_WHITE);
 			
-			_bonusLabel = new Label();
-			addChild(_bonusLabel);
-			
-			_equalLabel = new Label();
-			_equalLabel.text = "=";
+			_equalLabel = new TextField(5, _itemHeight, _("="), Theme.FONT_SANSITA, scaleAndRoundToDpi(38), Theme.COLOR_WHITE);
+			_equalLabel.autoSize = TextFieldAutoSize.HORIZONTAL;
+			_equalLabel.border = true;
+			_equalLabel.vAlign = VAlign.CENTER;
 			addChild(_equalLabel);
-			_equalLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(38), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
+			
+			_bonusLabel = new TextField(5, savedHeight, "0", Theme.FONT_SANSITA, scaleAndRoundToDpi(38), 0xf6ff00);
+			_bonusLabel.hAlign = HAlign.RIGHT;
+			_bonusLabel.vAlign = VAlign.CENTER;
+			_bonusLabel.border = true;
+			_bonusLabel.autoScale = true;
+			addChild(_bonusLabel);
 			
 			_image = new ImageLoader();
 			_image.textureScale = GlobalConfig.dpiScale;
@@ -94,45 +104,14 @@ package com.ludofactory.mobile.navigation.sponsor.info
 		
 		override protected function draw():void
 		{
-			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
+			var dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
 			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
 			
 			if(dataInvalid)
-			{
 				this.commitData();
-			}
 			
-			sizeInvalid = this.autoSizeIfNeeded() || sizeInvalid;
-			
-			if(dataInvalid || sizeInvalid || dataInvalid)
-			{
+			if(dataInvalid || sizeInvalid)
 				this.layout();
-			}
-		}
-		
-		protected function autoSizeIfNeeded():Boolean
-		{
-			const needsWidth:Boolean = isNaN(this.explicitWidth);
-			const needsHeight:Boolean = isNaN(this.explicitHeight);
-			if(!needsWidth && !needsHeight)
-			{
-				return false;
-			}
-			_title.width = NaN;
-			_title.height = NaN;
-			_title.validate();
-			var newWidth:Number = this.explicitWidth;
-			if(needsWidth)
-			{
-				newWidth = _title.width;
-			}
-			var newHeight:Number = this.explicitHeight;
-			if(needsHeight)
-			{
-				newHeight = _title.height;
-			}
-			return this.setSizeInternal(newWidth, newHeight, false);
 		}
 		
 		protected function commitData():void
@@ -142,24 +121,9 @@ package com.ludofactory.mobile.navigation.sponsor.info
 				if( _data )
 				{
 					_title.visible = true;
-					
 					_title.text = _data.rank;
-					
 					_image.source = AbstractEntryPoint.assets.getTexture( _data.iconTextureName );
-					
 					_bonusLabel.text = _data.bonus;
-					
-					if( _index < 2 )
-					{
-						if( _index == 0 && !MemberManager.getInstance().isLoggedIn() )
-							_bonusLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), 0xf6ff00, false, false, null, null, null, TextFormatAlign.RIGHT);
-						else
-							_bonusLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(38), 0xf6ff00, false, false, null, null, null, TextFormatAlign.RIGHT);
-					}
-					else
-					{ 
-						_bonusLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi( (Storage.getInstance().getProperty(StorageConfig.PROPERTY_SPONSOR_REWARD_TYPE) == 1 ? 32 : 72) ), 0xf6ff00, false, false, null, null, null, TextFormatAlign.RIGHT);
-					}
 				}
 				else
 				{
@@ -181,18 +145,15 @@ package com.ludofactory.mobile.navigation.sponsor.info
 			_backgroundSkin.width = this.owner.width - _backgroundSkin.x;
 			_backgroundSkin.y = int( (_itemHeight - _backgroundSkin.height) * 0.5 );
 			
-			_title.x = _image.width + scaleAndRoundToDpi(20);
-			_title.width = this.owner.width - _image.width - scaleAndRoundToDpi(20);
-			_title.validate();
+			// center the "="
+			_equalLabel.x = _image.width + ((this.owner.width - _image.width) - _equalLabel.width) * 0.5;
+			
+			_title.x = _image.width + scaleAndRoundToDpi(10);
+			_title.width = _equalLabel.x - _title.x;
 			_title.y = (_itemHeight - _title.height) * 0.5;
 			
-			_equalLabel.x = _image.width + scaleAndRoundToDpi(20);
-			_equalLabel.width = this.owner.width - _image.width - scaleAndRoundToDpi(20);
-			_equalLabel.validate();
-			_equalLabel.y = (_itemHeight - _equalLabel.height) * 0.5;
-			
-			_bonusLabel.width = this.owner.width * 0.98;
-			_bonusLabel.validate();
+			_bonusLabel.x = _equalLabel.x + _equalLabel.width;
+			_bonusLabel.width = this.owner.width - _bonusLabel.x - scaleAndRoundToDpi(10);
 			_bonusLabel.y = (_itemHeight - _bonusLabel.height) * 0.5;
 		}
 		
