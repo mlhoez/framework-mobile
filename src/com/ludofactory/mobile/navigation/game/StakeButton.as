@@ -76,6 +76,11 @@ package com.ludofactory.mobile.navigation.game
 		{
 			super.initialize();
 			
+			// FIXME once a new version a Pyramid have been released, we can remove this
+			// _n("Utiliser {0} Crédit", "Utiliser {0} Crédits", 1); 
+			// _n("Utiliser {0} Jeton", "Utiliser {0} Jetons", 1); 
+			// _n("Utiliser {0} Point", "Utiliser {0} Points", 1); 
+			
 			_container = new LayoutGroup();
 			addChild(_container);
 			
