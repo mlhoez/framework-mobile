@@ -368,14 +368,15 @@ package com.ludofactory.common.utils
 			// /!\ Cette fonction a été codée en heure d'hiver, il faudra donc
 			// vérifier qu'elle fonctionne toujours bien en heure d'été !!
 			// En heure d'hiver : timezoneOffset = -60
+			// En heure d'été : timezoneOffset = -120
 			
 			// create local Date
 			var now:Date = new Date();
 			// convert the Date to UTC by adding or subtracting the time zone offset in milliseconds
 			// because the timezoneOffset is in minutes, we do *60 (seconds) * 1000 (milliseconds)
-			now.setTime(now.getTime() + (now.getTimezoneOffset() * 60 * 1000));
+			//now.setTime(now.getTime() + (now.getTimezoneOffset() * 60 * 1000));
 			// France is GMT-1, so we need to add one hour to the UTC date
-			now.setTime(now.getTime() + (60 * 60 * 1000));
+			//now.setTime(now.getTime() + (60 * 60 * 1000));
 			return now;
 		}
 		
