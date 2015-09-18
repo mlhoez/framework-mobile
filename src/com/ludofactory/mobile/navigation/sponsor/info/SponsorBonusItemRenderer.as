@@ -79,19 +79,19 @@ package com.ludofactory.mobile.navigation.sponsor.info
 			_title.vAlign = VAlign.CENTER;
 			_title.autoSize = TextFieldAutoSize.NONE;
 			_title.autoScale = true;
-			_title.border = true;
+			//_title.border = true;
 			addChild(_title);
 			
 			_equalLabel = new TextField(5, _itemHeight, _("="), Theme.FONT_SANSITA, scaleAndRoundToDpi(38), Theme.COLOR_WHITE);
 			_equalLabel.autoSize = TextFieldAutoSize.HORIZONTAL;
-			_equalLabel.border = true;
+			//_equalLabel.border = true;
 			_equalLabel.vAlign = VAlign.CENTER;
 			addChild(_equalLabel);
 			
 			_bonusLabel = new TextField(5, savedHeight, "0", Theme.FONT_SANSITA, scaleAndRoundToDpi(38), 0xf6ff00);
 			_bonusLabel.hAlign = HAlign.RIGHT;
 			_bonusLabel.vAlign = VAlign.CENTER;
-			_bonusLabel.border = true;
+			//_bonusLabel.border = true;
 			_bonusLabel.autoScale = true;
 			addChild(_bonusLabel);
 			
