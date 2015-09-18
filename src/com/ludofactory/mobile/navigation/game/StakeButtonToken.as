@@ -37,8 +37,6 @@ package com.ludofactory.mobile.navigation.game
 	
 	public class StakeButtonToken extends StakeButton
 	{
-		public static var IS_TIMER_OVER_AND_REQUEST_FAILED:Boolean = false;
-		
 		/**
 		 * The clock icon. */		
 		private var _iconClock:Image;
@@ -96,7 +94,9 @@ package com.ludofactory.mobile.navigation.game
 		 */		
 		private function onUpdateData(event:Event = null):void
 		{
-			_isEnabled = MemberManager.getInstance().tokens >= Storage.getInstance().getProperty(AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE : StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE);
+			var numTokensRequiredToPlay:int = Storage.getInstance().getProperty(_gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE);
+			
+			_isEnabled = MemberManager.getInstance().tokens >= numTokensRequiredToPlay;
 			
 			_iconClock.visible = false;
 
@@ -107,16 +107,14 @@ package com.ludofactory.mobile.navigation.game
 			
 			if( _isEnabled )
 			{
-				_label.text = formatString( _n("{0} Jeton", "{0} Jetons", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)),
-					Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE ));
+				_label.text = formatString(_n("{0} Jeton", "{0} Jetons", numTokensRequiredToPlay), numTokensRequiredToPlay);
 				_label.color = 0x0d2701;
 			}
 			else
 			{
-				if( MemberManager.getInstance().tokens != 0 || !MemberManager.getInstance().isLoggedIn() )
+				if( MemberManager.getInstance().tokens >= numTokensRequiredToPlay || !MemberManager.getInstance().isLoggedIn() )
 				{
-					_label.text = formatString( _n("{0} Jeton", "{0} Jetons", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)),
-						Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE ));
+					_label.text = formatString(_n("{0} Jeton", "{0} Jetons", numTokensRequiredToPlay), numTokensRequiredToPlay);
 					_label.color = 0x2d2d2d;
 				}
 				else
@@ -132,7 +130,7 @@ package com.ludofactory.mobile.navigation.game
 								AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO )
 						{
 							_label.text = formatString(_("Regarder une vidéo pour jouer gratuitement."));
-							//_label.color = 0xffffff;
+							_label.color = 0x2d2d2d;
 
 							_vidCoinEnabled = true;
 
@@ -141,13 +139,21 @@ package com.ludofactory.mobile.navigation.game
 						}
 						else
 						{
-							// mettre texte normal + timer
-							_label.text = formatString(_("{0} Jetons dans "), MemberManager.getInstance().totalTokensADay) + "--:--:--";
-							_label.color = 0xffffff;
-							
-							_vidCoinEnabled = false;
-
-							GameSessionTimer.registerFunction(setText);
+							if(MemberManager.getInstance().tokens == 0)
+							{
+								// mettre texte normal + timer
+								_label.text = formatString(_("{0} Jetons dans "), MemberManager.getInstance().totalTokensADay) + "--:--:--";
+								_label.color = 0xffffff;
+								
+								_vidCoinEnabled = false;
+	
+								GameSessionTimer.registerFunction(setText);
+							}
+							else
+							{
+								_label.text = formatString(_n("{0} Jeton", "{0} Jetons", numTokensRequiredToPlay), numTokensRequiredToPlay);
+								_label.color = 0x2d2d2d;
+							}
 						}
 					}
 					_iconClock.visible = true;
