@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
-"POT-Creation-Date: 2015-09-18 17:00+0200\n"
-"PO-Revision-Date: 2015-09-18 17:00+0200\n"
+"POT-Creation-Date: 2015-09-18 17:04+0200\n"
+"PO-Revision-Date: 2015-09-18 17:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -1206,19 +1206,15 @@ msgid "Noter {0}"
 msgstr "Give a mark {0}"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:71
-#: mobile/navigation/sponsor/info/SponsorNotification.as:69
 msgid "Gagnez ces récompenses quand vos filleuls changent de rang."
 msgstr "Win these rewards when your friends change their rank."
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:80
 #: mobile/core/notification/content/SponsorNotificationContent.as:87
-#: mobile/navigation/sponsor/info/SponsorNotification.as:78
-#: mobile/navigation/sponsor/info/SponsorNotification.as:85
 msgid "Matelot"
 msgstr "Seaman"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:80
-#: mobile/navigation/sponsor/info/SponsorNotification.as:78
 msgid "400 points"
 msgstr "400 Points"
 
@@ -1228,72 +1224,53 @@ msgstr "200 Points*"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:81
 #: mobile/core/notification/content/SponsorNotificationContent.as:88
-#: mobile/navigation/sponsor/info/SponsorNotification.as:79
-#: mobile/navigation/sponsor/info/SponsorNotification.as:86
 msgid "Boucanier"
 msgstr "Buccaneer"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:81
 #: mobile/core/notification/content/SponsorNotificationContent.as:88
-#: mobile/navigation/sponsor/info/SponsorNotification.as:79
-#: mobile/navigation/sponsor/info/SponsorNotification.as:86
 msgid "2 crédits"
 msgstr "2 Credits"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:82
 #: mobile/core/notification/content/SponsorNotificationContent.as:83
 #: mobile/core/notification/content/SponsorNotificationContent.as:89
-#: mobile/navigation/sponsor/info/SponsorNotification.as:80
-#: mobile/navigation/sponsor/info/SponsorNotification.as:81
-#: mobile/navigation/sponsor/info/SponsorNotification.as:87
 msgid "Pirate III"
 msgstr "Pirate III"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:82
 #: mobile/core/notification/content/SponsorNotificationContent.as:89
-#: mobile/navigation/sponsor/info/SponsorNotification.as:80
-#: mobile/navigation/sponsor/info/SponsorNotification.as:87
 msgid "25 000 points"
 msgstr "25,000 Points"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:82
 #: mobile/core/notification/content/SponsorNotificationContent.as:89
-#: mobile/navigation/sponsor/info/SponsorNotification.as:80
-#: mobile/navigation/sponsor/info/SponsorNotification.as:87
 msgid "10 €"
 msgstr "10 €"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:83
 #: mobile/core/notification/content/SponsorNotificationContent.as:90
-#: mobile/navigation/sponsor/info/SponsorNotification.as:81
-#: mobile/navigation/sponsor/info/SponsorNotification.as:88
 msgid "75 000 points"
 msgstr "75,000 Points"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:83
 #: mobile/core/notification/content/SponsorNotificationContent.as:90
-#: mobile/navigation/sponsor/info/SponsorNotification.as:81
-#: mobile/navigation/sponsor/info/SponsorNotification.as:88
 msgid "30 €"
 msgstr "30 €"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:87
-#: mobile/navigation/sponsor/info/SponsorNotification.as:85
 msgid "Jusqu'à 400 points*"
 msgstr "Up to 400 Points*"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:90
-#: mobile/navigation/sponsor/info/SponsorNotification.as:88
 msgid "Capitaine"
 msgstr "Captain"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:114
-#: mobile/navigation/sponsor/info/SponsorNotification.as:112
 msgid "BONUS !"
 msgstr "BONUS !"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:120
-#: mobile/navigation/sponsor/info/SponsorNotification.as:118
 #, python-format
 msgid ""
 "Gagnez 5% des points\n"
@@ -1303,7 +1280,6 @@ msgstr ""
 "won by your friends !"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:127
-#: mobile/navigation/sponsor/info/SponsorNotification.as:125
 msgid ""
 "*400 Points offerts à chaque parrainage si votre rang est supérieur ou égal "
 "à Aventurier I sinon vous gagnez 200 Points."
@@ -2945,10 +2921,6 @@ msgstr "You do not have friends yet."
 msgid "="
 msgstr ""
 
-#: mobile/navigation/sponsor/info/SponsorNotification.as:78
-msgid "200 points"
-msgstr "200 Points"
-
 #: mobile/navigation/sponsor/invite/ContactItemRenderer.as:411
 msgid "Echec"
 msgstr "Failure"
@@ -3155,6 +3127,9 @@ msgid ""
 msgstr ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
 "publication_vip_{1}.jpg"
+
+#~ msgid "200 points"
+#~ msgstr "200 Points"
 
 #~ msgid ""
 #~ "Jusqu'à\n"
