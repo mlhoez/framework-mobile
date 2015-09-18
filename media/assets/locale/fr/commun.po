@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Français)\n"
-"POT-Creation-Date: 2015-09-17 18:35+0200\n"
-"PO-Revision-Date: 2015-09-17 18:35+0200\n"
+"POT-Creation-Date: 2015-09-18 17:00+0200\n"
+"PO-Revision-Date: 2015-09-18 17:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -902,7 +902,7 @@ msgstr ""
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:353
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:455
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:480
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:812
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:777
 msgid "Chargement..."
 msgstr ""
 
@@ -935,9 +935,9 @@ msgstr ""
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:498
 #: mobile/navigation/sponsor/filleuls/FilleulsScreen.as:193
 #: mobile/navigation/sponsor/invite/ContactItemRenderer.as:365
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:585
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:822
-#: mobile/navigation/store/StoreScreen.as:490
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:550
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:787
+#: mobile/navigation/store/StoreScreen.as:463
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:257
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:388
 #: mobile/navigation/tournament/TournamentRankingScreen.as:571
@@ -972,9 +972,9 @@ msgstr ""
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:331
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:432
 #: mobile/navigation/sponsor/filleuls/FilleulsScreen.as:174
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:896
-#: mobile/navigation/store/StoreScreen.as:341
-#: mobile/navigation/store/StoreScreen.as:431
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:861
+#: mobile/navigation/store/StoreScreen.as:314
+#: mobile/navigation/store/StoreScreen.as:404
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:223
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:367
 #: mobile/navigation/tournament/TournamentRankingScreen.as:547
@@ -1015,7 +1015,7 @@ msgstr ""
 #: mobile/navigation/authentication/ForgotPasswordScreen.as:159
 #: mobile/navigation/authentication/LoginScreen.as:191
 #: mobile/navigation/authentication/RegisterScreen.as:203
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:793
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:758
 msgid "Email invalide."
 msgstr ""
 
@@ -1034,7 +1034,7 @@ msgid "Voulez-vous vous déconnecter ?"
 msgstr ""
 
 #: mobile/core/notification/content/DisconnectNotificationContent.as:65
-#: mobile/debug/DebugScreen.as:142
+#: mobile/debug/DebugScreen.as:145
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:57
 #: mobile/navigation/settings/SettingsScreen.as:109
 #: mobile/navigation/settings/SettingsScreen.as:119
@@ -1261,9 +1261,7 @@ msgstr ""
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:87
 #: mobile/navigation/sponsor/info/SponsorNotification.as:85
-msgid ""
-"Jusqu'à\n"
-"400 points*"
+msgid "Jusqu'à 400 points*"
 msgstr ""
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:90
@@ -1450,7 +1448,7 @@ msgstr ""
 msgid "Anglais"
 msgstr ""
 
-#: mobile/debug/DebugScreen.as:143
+#: mobile/debug/DebugScreen.as:146
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:58
 #: mobile/navigation/settings/SettingsScreen.as:110
 #: mobile/navigation/settings/SettingsScreen.as:120
@@ -1587,7 +1585,7 @@ msgstr ""
 #: mobile/navigation/authentication/PseudoChoiceScreen.as:143
 #: mobile/navigation/authentication/RegisterScreen.as:118
 #: mobile/navigation/authentication/SponsorScreen.as:95
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:713
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:678
 msgid "Confirmer"
 msgstr ""
 
@@ -2354,6 +2352,27 @@ msgid ""
 "Solo !"
 msgstr ""
 
+#: mobile/navigation/game/StakeButton.as:80
+#, python-brace-format
+msgid "Utiliser {0} Crédit"
+msgid_plural "Utiliser {0} Crédits"
+msgstr[0] ""
+msgstr[1] ""
+
+#: mobile/navigation/game/StakeButton.as:81
+#, python-brace-format
+msgid "Utiliser {0} Jeton"
+msgid_plural "Utiliser {0} Jetons"
+msgstr[0] ""
+msgstr[1] ""
+
+#: mobile/navigation/game/StakeButton.as:82
+#, python-brace-format
+msgid "Utiliser {0} Point"
+msgid_plural "Utiliser {0} Points"
+msgstr[0] ""
+msgstr[1] ""
+
 #: mobile/navigation/game/StakeButtonCredit.as:89
 #, python-brace-format
 msgid "{0} Crédit"
@@ -2369,28 +2388,29 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: mobile/navigation/game/StakeButtonToken.as:110
-#: mobile/navigation/game/StakeButtonToken.as:118
+#: mobile/navigation/game/StakeButtonToken.as:117
+#: mobile/navigation/game/StakeButtonToken.as:154
 #, python-brace-format
 msgid "{0} Jeton"
 msgid_plural "{0} Jetons"
 msgstr[0] ""
 msgstr[1] ""
 
-#: mobile/navigation/game/StakeButtonToken.as:126
+#: mobile/navigation/game/StakeButtonToken.as:124
 msgid "???"
 msgstr ""
 
-#: mobile/navigation/game/StakeButtonToken.as:134
+#: mobile/navigation/game/StakeButtonToken.as:132
 msgid "Regarder une vidéo pour jouer gratuitement."
 msgstr ""
 
 #: mobile/navigation/game/StakeButtonToken.as:145
-#: mobile/navigation/game/StakeButtonToken.as:208
+#: mobile/navigation/game/StakeButtonToken.as:214
 #, python-brace-format
 msgid "{0} Jetons dans "
 msgstr ""
 
-#: mobile/navigation/game/StakeButtonToken.as:232
+#: mobile/navigation/game/StakeButtonToken.as:238
 #: mobile/navigation/home/summary/FooterStakeElement.as:385
 #, python-brace-format
 msgid "Reconnectez-vous pour récupérer vos {0} Jetons."
@@ -2746,6 +2766,10 @@ msgstr ""
 msgid "Vous n'avez encore aucun filleul."
 msgstr ""
 
+#: mobile/navigation/sponsor/info/SponsorBonusItemRenderer.as:85
+msgid "="
+msgstr ""
+
 #: mobile/navigation/sponsor/info/SponsorNotification.as:78
 msgid "200 points"
 msgstr ""
@@ -2758,37 +2782,33 @@ msgstr ""
 msgid "Envoyé"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:138
-msgid "Parrainer"
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:130
+msgid "Parrainer vos amis par SMS"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:152
-msgid "Envoyer un sms de parrainage à tous vos contacts."
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:130
+msgid "Parrainer vos amis par email"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:152
-msgid "Envoyer un email de parrainage à tous vos contacts."
-msgstr ""
-
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:158
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:144
 msgid "Inviter tous"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:158
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:144
 msgid ""
 "Inviter\n"
 "tous"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:218
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:195
 msgid "Entrer un email."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:218
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:195
 msgid "Entrer un numéro de téléphone."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:258
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:235
 #, python-brace-format
 msgid ""
 "L'application n'est pas autorisée à accéder à vos contacts.\n"
@@ -2797,37 +2817,37 @@ msgid ""
 "Confidentialité », sélectionnez « Contacts » et autorisez {0}."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:314
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:413
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:291
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:390
 msgid "Aucun contact à afficher."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:336
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:313
 msgid "Impossible d'accéder à vos contacts."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:580
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:649
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:545
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:614
 msgid "Envoyés"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:693
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:658
 msgid "Nom du filleul..."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:703
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:668
 msgid "Saisissez son email..."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:703
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:668
 msgid "Saisissez son numéro de téléphone"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:783
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:748
 msgid "Nom du filleul invalide"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:803
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:768
 msgid "Ce numéro est invalide."
 msgstr ""
 
@@ -2859,7 +2879,7 @@ msgstr ""
 msgid "Acheter des crédits de jeu"
 msgstr ""
 
-#: mobile/navigation/store/StoreScreen.as:247
+#: mobile/navigation/store/StoreScreen.as:220
 msgid ""
 "Impossible d'afficher le magasin car vous ne pouvez pas effectuer d'achats "
 "(contrôle parental ou autre raison)."

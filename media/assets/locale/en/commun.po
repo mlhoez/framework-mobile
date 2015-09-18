@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
-"POT-Creation-Date: 2015-09-17 18:35+0200\n"
-"PO-Revision-Date: 2015-09-17 18:35+0200\n"
+"POT-Creation-Date: 2015-09-18 17:00+0200\n"
+"PO-Revision-Date: 2015-09-18 17:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -904,7 +904,7 @@ msgstr "Order"
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:353
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:455
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:480
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:812
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:777
 msgid "Chargement..."
 msgstr "Loading..."
 
@@ -937,9 +937,9 @@ msgstr "Loading..."
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:498
 #: mobile/navigation/sponsor/filleuls/FilleulsScreen.as:193
 #: mobile/navigation/sponsor/invite/ContactItemRenderer.as:365
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:585
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:822
-#: mobile/navigation/store/StoreScreen.as:490
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:550
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:787
+#: mobile/navigation/store/StoreScreen.as:463
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:257
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:388
 #: mobile/navigation/tournament/TournamentRankingScreen.as:571
@@ -974,9 +974,9 @@ msgstr "No Internet connection."
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:331
 #: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:432
 #: mobile/navigation/sponsor/filleuls/FilleulsScreen.as:174
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:896
-#: mobile/navigation/store/StoreScreen.as:341
-#: mobile/navigation/store/StoreScreen.as:431
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:861
+#: mobile/navigation/store/StoreScreen.as:314
+#: mobile/navigation/store/StoreScreen.as:404
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:223
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:367
 #: mobile/navigation/tournament/TournamentRankingScreen.as:547
@@ -1017,9 +1017,9 @@ msgstr "The message cannot be blank."
 #: mobile/navigation/authentication/ForgotPasswordScreen.as:159
 #: mobile/navigation/authentication/LoginScreen.as:191
 #: mobile/navigation/authentication/RegisterScreen.as:203
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:793
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:758
 msgid "Email invalide."
-msgstr "Email not valid"
+msgstr "Email not valid."
 
 #: mobile/core/notification/content/CSNewThreadNotificationContent.as:251
 msgid ""
@@ -1038,7 +1038,7 @@ msgid "Voulez-vous vous déconnecter ?"
 msgstr "Are you sure you want to log out ?"
 
 #: mobile/core/notification/content/DisconnectNotificationContent.as:65
-#: mobile/debug/DebugScreen.as:142
+#: mobile/debug/DebugScreen.as:145
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:57
 #: mobile/navigation/settings/SettingsScreen.as:109
 #: mobile/navigation/settings/SettingsScreen.as:119
@@ -1057,7 +1057,7 @@ msgstr "Cancel"
 
 #: mobile/core/notification/content/EventPushNotificationContent.as:81
 msgid "Soyez avertis !"
-msgstr "Be informed!"
+msgstr "Be informed !"
 
 #: mobile/core/notification/content/EventPushNotificationContent.as:85
 msgid ""
@@ -1068,7 +1068,7 @@ msgid ""
 "menu."
 msgstr ""
 "Be immediately informed if someone beats you in a tournament by activating "
-"the notifications.\n"
+"the notifications !\n"
 "\n"
 "You can change this setting later in the section My Account of the main menu."
 
@@ -1129,7 +1129,7 @@ msgid ""
 "et un crédit bonus en créant votre compte !"
 msgstr ""
 "Get 50 free Tokens\n"
-"and a bonus Credit when creating your account!"
+"and a bonus Credit when creating your account !"
 
 #: mobile/core/notification/content/MarketingRegisterNotificationContent.as:80
 msgid "Créer"
@@ -1147,7 +1147,7 @@ msgstr "Bid"
 msgid ""
 "Information : vos Points seront débités uniquement si vous remportez "
 "l'enchère."
-msgstr "Information : your Coins will be debited only if you win the bid."
+msgstr "Information : your Points will be debited only if you win the bid."
 
 #: mobile/core/notification/content/PendingBidDetailNotificationContent.as:146
 msgid "Vous devez être identifié pour pouvoir enchérir."
@@ -1220,11 +1220,11 @@ msgstr "Seaman"
 #: mobile/core/notification/content/SponsorNotificationContent.as:80
 #: mobile/navigation/sponsor/info/SponsorNotification.as:78
 msgid "400 points"
-msgstr "400 Coins"
+msgstr "400 Points"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:80
 msgid "200 points*"
-msgstr "200 Coins*"
+msgstr "200 Points*"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:81
 #: mobile/core/notification/content/SponsorNotificationContent.as:88
@@ -1238,7 +1238,7 @@ msgstr "Buccaneer"
 #: mobile/navigation/sponsor/info/SponsorNotification.as:79
 #: mobile/navigation/sponsor/info/SponsorNotification.as:86
 msgid "2 crédits"
-msgstr "2 credits"
+msgstr "2 Credits"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:82
 #: mobile/core/notification/content/SponsorNotificationContent.as:83
@@ -1254,7 +1254,7 @@ msgstr "Pirate III"
 #: mobile/navigation/sponsor/info/SponsorNotification.as:80
 #: mobile/navigation/sponsor/info/SponsorNotification.as:87
 msgid "25 000 points"
-msgstr "25,000 Coins"
+msgstr "25,000 Points"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:82
 #: mobile/core/notification/content/SponsorNotificationContent.as:89
@@ -1268,7 +1268,7 @@ msgstr "10 €"
 #: mobile/navigation/sponsor/info/SponsorNotification.as:81
 #: mobile/navigation/sponsor/info/SponsorNotification.as:88
 msgid "75 000 points"
-msgstr "75,000 Coins"
+msgstr "75,000 Points"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:83
 #: mobile/core/notification/content/SponsorNotificationContent.as:90
@@ -1279,12 +1279,8 @@ msgstr "30 €"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:87
 #: mobile/navigation/sponsor/info/SponsorNotification.as:85
-msgid ""
-"Jusqu'à\n"
-"400 points*"
-msgstr ""
-"Up to\n"
-"400 Coins*"
+msgid "Jusqu'à 400 points*"
+msgstr "Up to 400 Points*"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:90
 #: mobile/navigation/sponsor/info/SponsorNotification.as:88
@@ -1303,7 +1299,7 @@ msgid ""
 "Gagnez 5% des points\n"
 "gagnés par vos filleuls !"
 msgstr ""
-"Win 5 % of the Coins\n"
+"Win 5 % of the Points\n"
 "won by your friends !"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:127
@@ -1312,8 +1308,8 @@ msgid ""
 "*400 Points offerts à chaque parrainage si votre rang est supérieur ou égal "
 "à Aventurier I sinon vous gagnez 200 Points."
 msgstr ""
-"*400 free Coins for each friend you refer if you are Explorer I and higher, "
-"otherwise you win 200 Coins."
+"*400 free Points for each friend you refer if you are Explorer I and higher, "
+"otherwise you win 200 Points."
 
 #: mobile/core/pause/PauseView.as:76
 msgid "Jeu en pause"
@@ -1370,10 +1366,11 @@ msgid ""
 "Une partie vous rapporte + ou - de Points en fonction de votre score et de "
 "votre mise."
 msgstr ""
-"Coins collected in single-player games can either be turned into Prizes or "
+"Points collected in single-player games can either be turned into Prizes or "
 "used in Tournaments.\n"
 "\n"
-"The number of Coins collected is related to both the score and the bet value."
+"The number of Points collected is related to both the score and the bet "
+"value."
 
 #: mobile/core/scoring/ScoreToPointsContainer.as:116
 msgid ""
@@ -1383,10 +1380,11 @@ msgid ""
 "Une partie vous rapporte + ou - de Points en fonction de votre score et de "
 "votre mise."
 msgstr ""
-"Coins collected in single-player games can either be turned into game "
+"Points collected in single-player games can either be turned into game "
 "Credits or used in Tournaments.\n"
 "\n"
-"The number of Coins collected is related to both the score and the bet value."
+"The number of Points collected is related to both the score and the bet "
+"value."
 
 #: mobile/core/scoring/ScoreToPointsContainer.as:124
 #: mobile/core/scoring/ScoreToStarsContainer.as:99
@@ -1407,8 +1405,8 @@ msgid ""
 "Par exemple : avec un score de {0} vous gagnez {1} Points avec un Jeton ou "
 "{2} Points avec une partie à crédit."
 msgstr ""
-"For example: with a score of {0} you will get {1} Coins if you play with "
-"Tokens or {2} Coins if you play with Credits."
+"For example: with a score of {0} you will get {1} Points if you play with "
+"Tokens or {2} Points if you play with Credits."
 
 #: mobile/core/scoring/ScoreToPointsContainer.as:177
 msgid ""
@@ -1496,7 +1494,7 @@ msgstr "French"
 msgid "Anglais"
 msgstr "English"
 
-#: mobile/debug/DebugScreen.as:143
+#: mobile/debug/DebugScreen.as:146
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:58
 #: mobile/navigation/settings/SettingsScreen.as:110
 #: mobile/navigation/settings/SettingsScreen.as:120
@@ -1564,7 +1562,7 @@ msgid ""
 "Points en Crédits de jeu"
 msgstr ""
 "Trade your\n"
-"Coins for game Credits"
+"Points for game Credits"
 
 #: mobile/navigation/HowToWinGiftsScreen.as:119
 msgid "Boutique"
@@ -1654,13 +1652,13 @@ msgstr "Are you sure you want to exchange this prize for a cheque ?"
 #: mobile/navigation/authentication/PseudoChoiceScreen.as:143
 #: mobile/navigation/authentication/RegisterScreen.as:118
 #: mobile/navigation/authentication/SponsorScreen.as:95
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:713
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:678
 msgid "Confirmer"
 msgstr "Confirm"
 
 #: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:402
 msgid "Voulez-vous vraiment échanger ce lot contre des points ?"
-msgstr "Are you sure you want to exchange this prize for points ?"
+msgstr "Are you sure you want to exchange this prize for Points ?"
 
 #: mobile/navigation/account/history/gifts/MyGiftsScreen.as:72
 #: mobile/navigation/menu/Menu.as:82
@@ -2343,7 +2341,7 @@ msgstr "Points"
 
 #: mobile/navigation/engine/SoloEndScreen.as:253
 msgid "Points cumulés : "
-msgstr "Coins collected:"
+msgstr "Points collected : "
 
 #: mobile/navigation/engine/SoloEndScreen.as:290
 msgid "Tournoi débloqué !"
@@ -2351,7 +2349,7 @@ msgstr "Tournament unlocked!"
 
 #: mobile/navigation/engine/SoloEndScreen.as:318
 msgid "Convertir mes Points en Cadeaux dans la boutique"
-msgstr "Turn my Coins into Prizes in the store"
+msgstr "Turn my Points into Prizes in the store"
 
 #: mobile/navigation/engine/SoloEndScreen.as:318
 msgid ""
@@ -2363,14 +2361,14 @@ msgstr ""
 
 #: mobile/navigation/engine/SoloEndScreen.as:318
 msgid "Convertir mes Points en Crédits dans la boutique"
-msgstr "Turn my Coins into Credits in the store"
+msgstr "Turn my Points into Credits in the store"
 
 #: mobile/navigation/engine/SoloEndScreen.as:318
 msgid ""
 "Convertir mes Points en\n"
 "Crédits dans la boutique"
 msgstr ""
-"Turn my Coins into\n"
+"Turn my Points into\n"
 "Credits in the store"
 
 #: mobile/navigation/engine/SoloEndScreen.as:324
@@ -2391,7 +2389,7 @@ msgid ""
 "vos Points en Cadeaux !"
 msgstr ""
 "Create your account and turn\n"
-"your Coins in Prizes"
+"your Points in Prizes"
 
 #: mobile/navigation/engine/SoloEndScreen.as:348
 msgid ""
@@ -2399,7 +2397,7 @@ msgid ""
 "vos Points en Crédits !"
 msgstr ""
 "Create your account and turn\n"
-"your Coins in Credits"
+"your Points in Credits !"
 
 #: mobile/navigation/engine/SoloEndScreen.as:372
 #: mobile/navigation/engine/TournamentEndScreen.as:412
@@ -2496,6 +2494,27 @@ msgstr ""
 "To unblock games in Tournaments, you've got to play a Single-player game "
 "first!"
 
+#: mobile/navigation/game/StakeButton.as:80
+#, python-brace-format
+msgid "Utiliser {0} Crédit"
+msgid_plural "Utiliser {0} Crédits"
+msgstr[0] "Use {0} Credit"
+msgstr[1] "Use {0} Credits"
+
+#: mobile/navigation/game/StakeButton.as:81
+#, python-brace-format
+msgid "Utiliser {0} Jeton"
+msgid_plural "Utiliser {0} Jetons"
+msgstr[0] "Use {0} Token"
+msgstr[1] "Use {0} Tokens"
+
+#: mobile/navigation/game/StakeButton.as:82
+#, python-brace-format
+msgid "Utiliser {0} Point"
+msgid_plural "Utiliser {0} Points"
+msgstr[0] "Use {0} Point"
+msgstr[1] "use {0} Points"
+
 #: mobile/navigation/game/StakeButtonCredit.as:89
 #, python-brace-format
 msgid "{0} Crédit"
@@ -2511,28 +2530,29 @@ msgstr[0] "{0} Point"
 msgstr[1] "{0} Points"
 
 #: mobile/navigation/game/StakeButtonToken.as:110
-#: mobile/navigation/game/StakeButtonToken.as:118
+#: mobile/navigation/game/StakeButtonToken.as:117
+#: mobile/navigation/game/StakeButtonToken.as:154
 #, python-brace-format
 msgid "{0} Jeton"
 msgid_plural "{0} Jetons"
 msgstr[0] "{0} Token"
 msgstr[1] "{0} Tokens"
 
-#: mobile/navigation/game/StakeButtonToken.as:126
+#: mobile/navigation/game/StakeButtonToken.as:124
 msgid "???"
 msgstr "???"
 
-#: mobile/navigation/game/StakeButtonToken.as:134
+#: mobile/navigation/game/StakeButtonToken.as:132
 msgid "Regarder une vidéo pour jouer gratuitement."
 msgstr "Watch a video to play for free."
 
 #: mobile/navigation/game/StakeButtonToken.as:145
-#: mobile/navigation/game/StakeButtonToken.as:208
+#: mobile/navigation/game/StakeButtonToken.as:214
 #, python-brace-format
 msgid "{0} Jetons dans "
 msgstr "{0} Tokens in "
 
-#: mobile/navigation/game/StakeButtonToken.as:232
+#: mobile/navigation/game/StakeButtonToken.as:238
 #: mobile/navigation/home/summary/FooterStakeElement.as:385
 #, python-brace-format
 msgid "Reconnectez-vous pour récupérer vos {0} Jetons."
@@ -2670,7 +2690,7 @@ msgid ""
 "Vos Points à convertir en Cadeaux\n"
 "Tapotez ici pour accéder à la boutique"
 msgstr ""
-"Your points to be exchanged for Prizes\n"
+"Your Points to be exchanged for Prizes\n"
 "Tap here to access the shop"
 
 #: mobile/navigation/home/summary/FooterStakeElement.as:421
@@ -2678,7 +2698,7 @@ msgid ""
 "Vos Points à convertir en Crédits\n"
 "Tapotez ici pour accéder à la boutique"
 msgstr ""
-"Your Coins to turn into Credits\n"
+"Your Points to turn into Credits\n"
 "Tap here to access the shop"
 
 #: mobile/navigation/menu/Menu.as:77
@@ -2827,8 +2847,8 @@ msgid ""
 "Echangez vos Points contre\n"
 "des Crédits de jeu !"
 msgstr ""
-"Trade your Coins\n"
-"for game Credits!"
+"Trade your Points\n"
+"for game Credits !"
 
 #: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:122
 #: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:141
@@ -2921,9 +2941,13 @@ msgstr "Track my friends"
 msgid "Vous n'avez encore aucun filleul."
 msgstr "You do not have friends yet."
 
+#: mobile/navigation/sponsor/info/SponsorBonusItemRenderer.as:85
+msgid "="
+msgstr ""
+
 #: mobile/navigation/sponsor/info/SponsorNotification.as:78
 msgid "200 points"
-msgstr "200 Coins"
+msgstr "200 Points"
 
 #: mobile/navigation/sponsor/invite/ContactItemRenderer.as:411
 msgid "Echec"
@@ -2933,23 +2957,19 @@ msgstr "Failure"
 msgid "Envoyé"
 msgstr "Sent"
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:138
-msgid "Parrainer"
-msgstr "To refer"
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:130
+msgid "Parrainer vos amis par SMS"
+msgstr "Refer your friends by text message"
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:152
-msgid "Envoyer un sms de parrainage à tous vos contacts."
-msgstr "Send a referring text message to all your contacts."
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:130
+msgid "Parrainer vos amis par email"
+msgstr "Refer your friends by email"
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:152
-msgid "Envoyer un email de parrainage à tous vos contacts."
-msgstr "Send a referring email to all your contacts."
-
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:158
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:144
 msgid "Inviter tous"
 msgstr "Invite all"
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:158
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:144
 msgid ""
 "Inviter\n"
 "tous"
@@ -2957,15 +2977,15 @@ msgstr ""
 "Invite\n"
 "all"
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:218
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:195
 msgid "Entrer un email."
 msgstr "Enter an email."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:218
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:195
 msgid "Entrer un numéro de téléphone."
 msgstr "Enter a phone number."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:258
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:235
 #, python-brace-format
 msgid ""
 "L'application n'est pas autorisée à accéder à vos contacts.\n"
@@ -2976,44 +2996,44 @@ msgstr ""
 "The application cannot access your contacts. To do so, go to « Settings », "
 "then to « Privacy », select « Contacts » and authorize {0}."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:314
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:413
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:291
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:390
 msgid "Aucun contact à afficher."
 msgstr "No contact to display."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:336
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:313
 msgid "Impossible d'accéder à vos contacts."
 msgstr "Impossible to access your contacts."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:580
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:649
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:545
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:614
 msgid "Envoyés"
 msgstr "Sent"
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:693
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:658
 msgid "Nom du filleul..."
 msgstr "Friend's name..."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:703
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:668
 msgid "Saisissez son email..."
 msgstr "Enter his/her email..."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:703
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:668
 msgid "Saisissez son numéro de téléphone"
 msgstr "Enter his/her phone number."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:783
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:748
 msgid "Nom du filleul invalide"
 msgstr "Friend's name invalid"
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:803
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:768
 msgid "Ce numéro est invalide."
 msgstr "This number is not valid."
 
 #: mobile/navigation/store/StoreItemRenderer.as:112
 #, python-brace-format
 msgid "{0} crédits"
-msgstr "{0} credits"
+msgstr "{0} Credits"
 
 #: mobile/navigation/store/StoreItemRenderer.as:113
 #, python-brace-format
@@ -3042,7 +3062,7 @@ msgstr ""
 msgid "Acheter des crédits de jeu"
 msgstr "Buy game Credits"
 
-#: mobile/navigation/store/StoreScreen.as:247
+#: mobile/navigation/store/StoreScreen.as:220
 msgid ""
 "Impossible d'afficher le magasin car vous ne pouvez pas effectuer d'achats "
 "(contrôle parental ou autre raison)."
@@ -3067,7 +3087,7 @@ msgstr "Tournament in progress"
 #: mobile/navigation/tournament/PreviousTournamentItemRenderer.as:168
 #, python-brace-format
 msgid "Tournoi terminé n°{0}"
-msgstr "Tournament completed no. {0}"
+msgstr "Tournament completed no.{0}"
 
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:66
 msgid "Liste des anciens tournois"
@@ -3085,11 +3105,11 @@ msgstr "There is no player ranked yet !"
 
 #: mobile/navigation/tournament/TournamentRankingScreen.as:142
 msgid "Participer"
-msgstr "Take part"
+msgstr "Participate"
 
 #: mobile/navigation/vip/VipScreen.as:264
 msgid "Recharger"
-msgstr "Reload"
+msgstr "Top Up"
 
 #: mobile/navigation/vip/VipScreen.as:273
 msgid "Renvoyer un email"
@@ -3136,6 +3156,27 @@ msgstr ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
 "publication_vip_{1}.jpg"
 
+#~ msgid ""
+#~ "Jusqu'à\n"
+#~ "400 points*"
+#~ msgstr ""
+#~ "Up to\n"
+#~ "400 Points*"
+
+#~ msgid "Parrainer"
+#~ msgstr "To refer"
+
+#~ msgid "Envoyer un sms de parrainage à tous vos contacts."
+#~ msgstr "Send a referring text message to all your contacts."
+
+#~ msgid "Envoyer un email de parrainage à tous vos contacts."
+#~ msgstr "Send a referring email to all your contacts."
+
+#~ msgid "Utiliser {0} Points"
+#~ msgid_plural "Utiliser {0} Points"
+#~ msgstr[0] "Use {0} Point"
+#~ msgstr[1] "Use {0} Points"
+
 #~ msgid "m"
 #~ msgstr "m"
 
@@ -3152,10 +3193,10 @@ msgstr ""
 #~ msgstr "Your game Credits"
 
 #~ msgid "Vos Points à convertir en Cadeaux"
-#~ msgstr "Your points to be exchanged for Prizes"
+#~ msgstr "Your Points to be exchanged for Prizes"
 
 #~ msgid "Vos Points à convertir en Crédits"
-#~ msgstr "Your Coins to turn into Credits"
+#~ msgstr "Your Points to turn into Credits"
 
 #~ msgid ""
 #~ "Soyez immédiatement informé en cas de dépassement dans un tournoi en "
@@ -3204,21 +3245,6 @@ msgstr ""
 #~ "{0} Rubies will be taken off for the pending Tournament as soon as you "
 #~ "log in."
 
-#~ msgid "Utiliser {0} Crédit"
-#~ msgid_plural "Utiliser {0} Crédits"
-#~ msgstr[0] "Use {0} Credit"
-#~ msgstr[1] "Use {0} Credits"
-
-#~ msgid "Utiliser {0} Points"
-#~ msgid_plural "Utiliser {0} Points"
-#~ msgstr[0] "Use {0} Coin"
-#~ msgstr[1] "Use {0} Coins"
-
-#~ msgid "Utiliser {0} Jeton"
-#~ msgid_plural "Utiliser {0} Jetons"
-#~ msgstr[0] "Use {0} Token"
-#~ msgstr[1] "Use {0} Tokens"
-
 #~ msgid "Par Email"
 #~ msgstr "By email"
 
@@ -3252,13 +3278,13 @@ msgstr ""
 #~ msgstr "• Get 50 extra Tokens"
 
 #~ msgid "• Convertir vos Points en Cadeaux"
-#~ msgstr "• Exchange your Coins for Prizes"
+#~ msgstr "• Exchange your Points for Prizes"
 
 #~ msgid "• Convertir vos Points"
-#~ msgstr "• Exchange your Coins"
+#~ msgstr "• Exchange your Points"
 
 #~ msgid "• Gagner 200 Points en bonus"
-#~ msgstr "• Win 200 extra Coins"
+#~ msgstr "• Win 200 extra Points"
 
 #~ msgid "• Obtenir 1 Crédit gratuit"
 #~ msgstr "• Get 1 free Credit"
@@ -3273,10 +3299,10 @@ msgstr ""
 #~ "Une partie vous rapporte + ou - de Points en fonction de votre score et "
 #~ "de votre mise."
 #~ msgstr ""
-#~ "Coins collected in single-player games can either be turned into Credits "
+#~ "Points collected in single-player games can either be turned into Credits "
 #~ "or used in Tournaments.\n"
 #~ "\n"
-#~ "The number of Coins collected is related to both the score and the bet "
+#~ "The number of Points collected is related to both the score and the bet "
 #~ "value."
 
 #~ msgid ""
@@ -3298,7 +3324,7 @@ msgstr ""
 #~ "Points en Cadeaux"
 #~ msgstr ""
 #~ "Exchange your\n"
-#~ "Coins for Prizes!"
+#~ "Points for Prizes"
 
 #~ msgid "• Obtenir 10 parties par jour"
 #~ msgstr "• Get 10 games each day"
@@ -3324,7 +3350,7 @@ msgstr ""
 #~ "Echangez vos Points contre\n"
 #~ "les cadeaux de vos rêves !"
 #~ msgstr ""
-#~ "Exchange your Coins for\n"
+#~ "Exchange your Points for\n"
 #~ "the prizes of your dreams !"
 
 #~ msgid ""
@@ -3345,7 +3371,7 @@ msgstr ""
 #~ "Une partie vous rapporte + ou - de Points en fonction de votre score et "
 #~ "de votre mise."
 #~ msgstr ""
-#~ "Classic games enable you to collect points that you can exchange for "
+#~ "Classic games enable you to collect Points that you can exchange for "
 #~ "prizes or use to play Tournaments.\n"
 #~ "\n"
 #~ "A game gives you Points according to your score and your stake."
@@ -3371,13 +3397,13 @@ msgstr ""
 
 #~ msgid "{0} crédit"
 #~ msgid_plural "{0} crédits"
-#~ msgstr[0] "{0} credit"
-#~ msgstr[1] "{0} credits"
+#~ msgstr[0] "{0} Credit"
+#~ msgstr[1] "{0} Credits"
 
 #~ msgid "{0} point"
 #~ msgid_plural "{0} points"
-#~ msgstr[0] "{0} point"
-#~ msgstr[1] "{0} points"
+#~ msgstr[0] "{0} Point"
+#~ msgstr[1] "{0} Points"
 
 #~ msgid "{0} parties dans "
 #~ msgstr "{0} games in "
