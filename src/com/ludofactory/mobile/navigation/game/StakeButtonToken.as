@@ -126,8 +126,7 @@ package com.ludofactory.mobile.navigation.game
 					}
 					else
 					{
-						if( MemberManager.getInstance().getCanWatchVideo() && AbstractEntryPoint.vidCoin.videoIsAvailableForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID) && 
-								AbstractEntryPoint.screenNavigator.screenData.gameType == GameMode.SOLO )
+						if( MemberManager.getInstance().getCanWatchVideo() && AbstractEntryPoint.vidCoin.videoIsAvailableForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID) )
 						{
 							_label.text = formatString(_("Regarder une vidéo pour jouer gratuitement."));
 							_label.color = 0x2d2d2d;
@@ -163,49 +162,63 @@ package com.ludofactory.mobile.navigation.game
 
 		public function handleVidCoinEvent(event:VidCoinEvents):void
 		{
-			if(event.code == "vidcoinViewWillAppear")
+			var eventCode:String = event.code;
+			switch (eventCode)
 			{
-				// the video appears, here we need to insert a line in the database, stop sounds, etc.
-				Remote.getInstance().logVidCoin(null, null, null, 2);
-			}
-			else if(event.code == "vidcoinViewDidDisappearWithInformation")
-			{
-				// the video left the screen, here we can resume audio and refresh the stakes
-				// depending on the state 
-				if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeSuccess)
+				case "vidcoinViewWillAppear":
+				case "vidCoinViewWillAppear":
 				{
-					Remote.getInstance().updateMises(null, null, null, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+					// the video appears, here we need to insert a line in the database, stop sounds, etc.
+					Remote.getInstance().logVidCoin(null, null, null, 2);
+					break;
 				}
-				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeError)
+				case "vidcoinViewDidDisappearWithInformation":
+				case "vidCoinViewDidDisappearWithViewInformation":
 				{
+					// the video left the screen, here we can resume audio and refresh the stakes if necessary
+					if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeSuccess)
+					{
+						Remote.getInstance().updateMises(null, null, null, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+					}
+					else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeError)
+					{
+						
+					}
+					else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeCancel)
+					{
+						
+					}
+					break;
+				}
 					
-				}
-				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeCancel)
+				case "vidcoinDidValidateView":
+				case "vidCoinDidValidateView":
 				{
+					// always called after the delegate method "vidcoinViewDidDisappearWithInformation"
+					if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeSuccess)
+					{
+						
+						Flox.logEvent("Affichages d'une vidéo VidCoin", {Visionnage:"Validé"});
+					}
+					else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeError)
+					{
+						Flox.logEvent("Affichages d'une vidéo VidCoin", {Visionnage:"Erreur"});
+					}
+					else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeCancel)
+					{
+						Flox.logEvent("Affichages d'une vidéo VidCoin", {Visionnage:"Annulée"});
+					}
 					
+					break;
 				}
-			}
-			else if(event.code == "vidcoinDidValidateView")
-			{
-				// always called after the delegate method "vidcoinViewDidDisappearWithInformation"
-				if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeSuccess)
+				case "vidcoinCampaignsUpdate":
+				case "vidCoinCampaignsUpdate":
 				{
+					// maybe a new video available
+					onUpdateData();
 					
-					Flox.logEvent("Affichages d'une vidéo VidCoin", {Visionnage:"Validé"});
+					break;
 				}
-				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeError)
-				{
-					Flox.logEvent("Affichages d'une vidéo VidCoin", {Visionnage:"Erreur"});
-				}
-				else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeCancel)
-				{
-					Flox.logEvent("Affichages d'une vidéo VidCoin", {Visionnage:"Annulée"});
-				}
-			}
-			else if(event.code == "vidcoinCampaignsUpdate")
-			{
-				// maybe a new video available
-				onUpdateData();
 			}
 		}
 		
