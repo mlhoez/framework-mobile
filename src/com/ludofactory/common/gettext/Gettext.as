@@ -85,7 +85,8 @@ package com.ludofactory.common.gettext
 		 */		
 		public function dgettext(domain:String, key:String):String
 		{
-			if( _currentLocale )
+			_helperTrad = "";
+			if(_currentLocale && domain in _locales[_currentLocale])
 			{
 				// domain contains a POFile
 				_helperTrad = _locales[_currentLocale][domain].translations[ key.replace(/\n/g, "\\n") ]; // fixes a bug with multine strings like this : "blabla \n blabla"
@@ -132,6 +133,7 @@ package com.ludofactory.common.gettext
 			*/
 			
 			// domain contains a POFile
+			_helperTradTab = [];
 			if( _currentLocale )
 			{
 				_helperTradTab =  _locales[_currentLocale][domain].translations[keySingular.replace(/\n/g, "\\n")];
