@@ -15,15 +15,11 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.model.GameMode;
-	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.TimerManager;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
-	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
+	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Button;
@@ -165,7 +161,7 @@ package com.ludofactory.mobile.navigation.game
 			addChild(_tiledBackground);
 			
 			_soloButton = new Button();
-			//_classicGamebutton.addEventListener(Event.TRIGGERED, onPlayClassic);
+			//_classicGamebutton.addEventListener(Event.TRIGGERED, onPlaySolo);
 			_soloButton.label = _("Partie Solo");
 			addChild(_soloButton);
 			
@@ -358,27 +354,13 @@ package com.ludofactory.mobile.navigation.game
 		/**
 		 * Play classic mode.
 		 */		
-		private function onPlayClassic(event:Event):void
+		private function onPlaySolo(event:Event):void
 		{
 			AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
 			
-			if( MemberManager.getInstance().isLoggedIn() )
-			{
-				AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.SOLO;
-				AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
-			}
-			else
-			{
-				if( MemberManager.getInstance().tokens == 0 )
-				{
-					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
-				}
-				else
-				{
-					AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.SOLO;
-					AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
-				}
-			}
+			AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.SOLO;
+			AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
+			
 			dispatchEventWith(Event.CLOSE);
 		}
 		
@@ -391,24 +373,9 @@ package com.ludofactory.mobile.navigation.game
 			{
 				AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
 				
-				if( MemberManager.getInstance().isLoggedIn() )
-				{
-					AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.TOURNAMENT;
-					AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
-				}
-				else
-				{
-					if( MemberManager.getInstance().tokens < int(Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)) )
-					{
-						NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
-					}
-					else
-					{
-						AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.TOURNAMENT;
-						AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
-					}
-				}
-				
+				AbstractEntryPoint.screenNavigator.screenData.gameType = GameMode.TOURNAMENT;
+				AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
+					
 				dispatchEventWith(Event.CLOSE);
 			}
 			else
@@ -590,7 +557,7 @@ package com.ludofactory.mobile.navigation.game
 		{
 			_tournamentButton.addEventListener(Event.TRIGGERED, onPlayTournament);
 			_rulesButton.addEventListener(Event.TRIGGERED, onShowRules);
-			_soloButton.addEventListener(Event.TRIGGERED, onPlayClassic);
+			_soloButton.addEventListener(Event.TRIGGERED, onPlaySolo);
 		}
 		
 		private function disableListeners():void
@@ -598,7 +565,7 @@ package com.ludofactory.mobile.navigation.game
 			_timer.stop();
 			_tournamentButton.removeEventListener(Event.TRIGGERED, onPlayTournament);
 			_rulesButton.removeEventListener(Event.TRIGGERED, onShowRules);
-			_soloButton.removeEventListener(Event.TRIGGERED, onPlayClassic);
+			_soloButton.removeEventListener(Event.TRIGGERED, onPlaySolo);
 		}
 		
 		public function animateOut():void

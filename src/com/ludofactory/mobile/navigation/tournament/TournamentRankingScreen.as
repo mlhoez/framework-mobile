@@ -579,23 +579,8 @@ package com.ludofactory.mobile.navigation.tournament
 		{
 			if( MemberManager.getInstance().getTournamentUnlocked() == true )
 			{
-				if( MemberManager.getInstance().isLoggedIn() )
-				{
-					advancedOwner.screenData.gameType = GameMode.TOURNAMENT;
-					advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
-				}
-				else
-				{
-					if( MemberManager.getInstance().tokens < int(Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE)) )
-					{
-						NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.TOURNAMENT_RANKING_SCREEN) );
-					}
-					else
-					{
-						advancedOwner.screenData.gameType = GameMode.TOURNAMENT;
-						advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
-					}
-				}
+				advancedOwner.screenData.gameType = GameMode.TOURNAMENT;
+				advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 			}
 			else
 			{

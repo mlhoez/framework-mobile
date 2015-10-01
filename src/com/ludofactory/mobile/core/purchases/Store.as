@@ -204,7 +204,13 @@ package com.ludofactory.mobile.core.purchases
 				case 1:
 				{
 					log("[Store] Request created for " + _currentProductData.generatedId);
-					_currentRequest = result.demande;
+					_currentRequest = result.demande; // id demande
+					// store the transaction id when non logged
+					if(!MemberManager.getInstance().isLoggedIn())
+					{
+						MemberManager.getInstance().transactionIds.push( result.demande.id );
+						MemberManager.getInstance().transactionIds = MemberManager.getInstance().transactionIds;
+					}
 					purchaseItem(_currentProductData.generatedId);
 					break;
 				}
@@ -330,6 +336,13 @@ package com.ludofactory.mobile.core.purchases
 			
 			Flox.logWarning("Item " + itemId + " successfully purchased, giving " + numCreditsBought + " Game Credits.");
 			logPurchaseEvent(itemId, PURCHASE_TYPE_SUCCEED);
+			
+			if(!MemberManager.getInstance().isLoggedIn())
+			{
+				// if the user is not logged in, we won't have an object 'obj_membre_mobile", thus we can't show and store
+				// how much credits he bought
+				MemberManager.getInstance().credits = MemberManager.getInstance().credits + numCreditsBought;
+			}
 			
 			dispatchEventWith(MobileEventTypes.STORE_PURCHASE_SUCCESS, false, { value:numCreditsBought, id:itemId, txt:textValue, newRank:newRank });
 		}

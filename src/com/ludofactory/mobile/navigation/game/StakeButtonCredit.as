@@ -45,9 +45,9 @@ package com.ludofactory.mobile.navigation.game
 		{
 			super.initialize();
 			
-			_backgroundSkin.textures = MemberManager.getInstance().isLoggedIn() ? Theme.buttonYellowSkinTextures : Theme.buttonDisabledSkinTextures;
+			_backgroundSkin.textures = Theme.buttonYellowSkinTextures;
 
-			_label.color = MemberManager.getInstance().isLoggedIn() ? 0x401800 : 0x2d2d2d;
+			_label.color = 0x401800;
 			
 			_addIcon = new Image( AbstractEntryPoint.assets.getTexture("GameTypeSelectionAddIcon") );
 			_addIcon.scaleX = _addIcon.scaleY = GlobalConfig.dpiScale;
@@ -59,7 +59,6 @@ package com.ludofactory.mobile.navigation.game
 				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().rank < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
 				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = GlobalConfig.dpiScale;
 				_winMorePointsImage.alignPivot();
-				_winMorePointsImage.visible = MemberManager.getInstance().isLoggedIn();
 				_container.addChild( _winMorePointsImage );
 			}
 			
@@ -89,17 +88,12 @@ package com.ludofactory.mobile.navigation.game
 			_label.text = formatString( _n("{0} Crédit", "{0} Crédits", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE )),
 				Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
 			
-			_icon.texture = MemberManager.getInstance().isLoggedIn() ? AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIcon") : AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIconDisabled");
-			_addIcon.visible = MemberManager.getInstance().isLoggedIn() ? !_isEnabled : false;
+			_icon.texture = AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIcon");
+			_addIcon.visible = !_isEnabled;
 		}
 		
 		override protected function triggerButton():void
 		{
-			// if the user is not logged in and the button is disabled, we won't redirect
-			// to the store screen
-			if( !MemberManager.getInstance().isLoggedIn() && !_isEnabled )
-				return;
-			
 			dispatchEventWith(Event.TRIGGERED);
 		}
 		

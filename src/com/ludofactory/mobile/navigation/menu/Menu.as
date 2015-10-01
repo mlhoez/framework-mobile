@@ -261,7 +261,6 @@ package com.ludofactory.mobile.navigation.menu
 					{
 						if( !MemberManager.getInstance().isLoggedIn() &&
 							( String(event.data) == ScreenIds.MY_ACCOUNT_SCREEN ||
-							  String(event.data) == ScreenIds.STORE_SCREEN ||
 							  String(event.data) == ScreenIds.MY_GIFTS_SCREEN ))
 						{
 							if( _screenNavigator.activeScreenID != ScreenIds.AUTHENTICATION_SCREEN )

@@ -48,7 +48,7 @@ package com.ludofactory.mobile.navigation.event
 		 */		
 		public function getEvent():void
 		{
-			if( !_isFetchingEvent && AirNetworkInfo.networkInfo.isConnected() && MemberManager.getInstance().isLoggedIn() )
+			if( !_isFetchingEvent && AirNetworkInfo.networkInfo.isConnected() )
 			{
 				_isFetchingEvent = true;
 				Remote.getInstance().getEvent(onGetEventSuccess, onGetEventFailure, onGetEventFailure, 1);

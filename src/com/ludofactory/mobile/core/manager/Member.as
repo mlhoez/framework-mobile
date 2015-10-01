@@ -59,6 +59,11 @@ package com.ludofactory.mobile.core.manager
 		private var _anonymousGameSessionsAlreadyUsed:Boolean = false;
 		
 		/**
+		 * Apple does not allow us to require to be logged in in order to make a purchase. Because of that, we
+		 * need to store all the transcation ids here and send them when the user sign in/up. */
+		private var _transactionIds:Array = [];
+		
+		/**
 		 * The id of the last trophy won. */		
 		private var _lastTrophyWonId:int = -1;
 		
@@ -297,5 +302,9 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get facebookTokenExpiryTimestamp():Number { return _facebookTokenExpiryTimestamp; }
 		public function set facebookTokenExpiryTimestamp(val:Number):void { _facebookTokenExpiryTimestamp = val; }
+		
+		public function get transactionIds():Array { return _transactionIds; }
+		public function set transactionIds(value:Array):void { _transactionIds = value; }
+		
 	}
 }

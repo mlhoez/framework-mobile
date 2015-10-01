@@ -53,9 +53,9 @@ package com.ludofactory.mobile.core.remoting
 		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokado2.pterrier.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
-		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
+		private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado3.sravet.ludofactory.dev";
-		private const DEV_URL:String = "http://semiprod.ludokado.com";
+		//private const DEV_URL:String = "http://semiprod.ludokado.com";
 		
 		/**
 		 * Production PORT. Automatically used when the GlobalConfig.DEBUG variable
@@ -158,6 +158,7 @@ package com.ludofactory.mobile.core.remoting
 			var params:Object = getGenericParams();
 			params.mail = login;
 			params.mdp = password;
+			params.transactionIds = MemberManager.getInstance().transactionIds;
 			params = addAnonymousGameSessionsIfNeeded( params );
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Identification", "logIn", params);
 		}
@@ -195,6 +196,7 @@ package com.ludofactory.mobile.core.remoting
 		{
 			userData = addAnonymousGameSessionsIfNeeded( userData );
 			userData = mergeWithGenericParams(userData);
+			userData.transactionIds = MemberManager.getInstance().transactionIds;
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "nouveauJoueur", userData);
 		}
 		
@@ -209,6 +211,7 @@ package com.ludofactory.mobile.core.remoting
 		{
 			userData = addAnonymousGameSessionsIfNeeded( userData );
 			userData = mergeWithGenericParams(userData);
+			userData.transactionIds = MemberManager.getInstance().transactionIds;
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "nouveauJoueur", userData);
 		}
 		
@@ -797,6 +800,7 @@ package com.ludofactory.mobile.core.remoting
 			{
 				result.queryName = queryName;
 				
+				// do it before the member is loaded
 				if( queryName == "LudoMobile.useClass.Identification.logIn" || queryName == "LudoMobile.useClass.Inscription.nouveauJoueur" )
 				{
 					if( result.code == 1 || result.code == 6 || result.code == 7 || result.code == 8 || result.code == 9 || result.code == 11 || result.code == 12 && !MemberManager.getInstance().getAnonymousGameSessionsAlreadyUsed() )
@@ -807,6 +811,10 @@ package com.ludofactory.mobile.core.remoting
 						MemberManager.getInstance().points = 0;
 						MemberManager.getInstance().cumulatedRubies = 0;
 						MemberManager.getInstance().anonymousGameSessions = [];
+						// empty the transaction ids
+						MemberManager.getInstance().transactionIds = [];
+						// because the sign in/up is ok, we need to clear the credits he potentially bought
+						MemberManager.getInstance().credits = 0;
 					}
 				}
 				

@@ -14,14 +14,12 @@ package com.ludofactory.mobile.navigation
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameSessionTimer;
-	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -45,7 +43,7 @@ package com.ludofactory.mobile.navigation
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-
+	
 	/**
 	 * Application footer.
 	 */	
@@ -210,8 +208,11 @@ package com.ludofactory.mobile.navigation
 			}
 			else
 			{
-				_pointsContainer.setLabelText( MemberManager.getInstance().getAnonymousGameSessionsAlreadyUsed() ? "???" : ("" + MemberManager.getInstance().points) );
-				_creditsContainer.setLabelText( MemberManager.getInstance().tokens == 0 ? "???" : "-" );
+				// gestion avant le fait de pouvoir autoriser les achats sans être connecté à son compte
+				//_creditsContainer.setLabelText( MemberManager.getInstance().tokens == 0 ? "???" : "-" );
+				//_pointsContainer.setLabelText( MemberManager.getInstance().getAnonymousGameSessionsAlreadyUsed() ? "???" : ("" + MemberManager.getInstance().points) );
+				_pointsContainer.setLabelText( "" + Utilities.splitThousands(MemberManager.getInstance().points) );
+				_creditsContainer.setLabelText( "" + Utilities.splitThousands(MemberManager.getInstance().credits) );
 			}
 		}
 		

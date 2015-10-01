@@ -151,8 +151,10 @@ package com.ludofactory.mobile.navigation.store
 			_store = new Store();
 			_store.addEventListener(MobileEventTypes.STORE_INITIALIZED, onStoreInitialized);
 			
-			if( MemberManager.getInstance().isLoggedIn() )
-			{
+			// les commentaires permettent d'autoriser un joueur non connecté à effectuer des achats
+			// cf le rejet d'Apple pour Zeven
+			/*if( MemberManager.getInstance().isLoggedIn() )
+			{*/
 				_retryContainer.visible = true;
 				if( AirNetworkInfo.networkInfo.isConnected() )
 				{
@@ -162,11 +164,11 @@ package com.ludofactory.mobile.navigation.store
 				{
 					_retryContainer.loadingMode = false;
 				}
-			}
+			/*}
 			else
 			{
 				_authenticationContainer.visible = true;
-			}
+			}*/
 		}
 		
 		override protected function draw():void

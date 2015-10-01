@@ -428,6 +428,15 @@ package com.ludofactory.mobile.core.manager
 			setEncryptedMember();
 		}
 		
+		/**
+		 * The array of transaction ids. */
+		public function get transactionIds():Array { return _member.transactionIds; }
+		public function set transactionIds(val:Array):void
+		{
+			_member.transactionIds = val;
+			setEncryptedMember();
+		}
+		
 		/** 
 		 * The member total of tokens available for a day. */
 		public function get totalTokensADay():int { return _member.totalTokensADay; }

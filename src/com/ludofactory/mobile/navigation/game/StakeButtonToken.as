@@ -18,6 +18,9 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -100,8 +103,8 @@ package com.ludofactory.mobile.navigation.game
 			
 			_iconClock.visible = false;
 
-			_icon.texture = AbstractEntryPoint.assets.getTexture( _isEnabled ? "GameTypeSelectionFreeIcon" : "GameTypeSelectionFreeIconDisabled" );
-			_backgroundSkin.textures = _isEnabled ? Theme.buttonGreenSkinTextures : Theme.buttonDisabledSkinTextures;
+			_icon.texture = AbstractEntryPoint.assets.getTexture( (_isEnabled || !MemberManager.getInstance().isLoggedIn()) ? "GameTypeSelectionFreeIcon" : "GameTypeSelectionFreeIconDisabled" );
+			_backgroundSkin.textures = (_isEnabled || !MemberManager.getInstance().isLoggedIn()) ? Theme.buttonGreenSkinTextures : Theme.buttonDisabledSkinTextures;
 
 			GameSessionTimer.unregisterFunction(setText);
 			
@@ -265,6 +268,11 @@ package com.ludofactory.mobile.navigation.game
 					Flox.logEvent("Affichages d'une vidéo VidCoin", {Total:"Total"});
 					AbstractEntryPoint.vidCoin.addEventListener(VidCoinEvents.VIDCOIN, handleVidCoinEvent);
 					AbstractEntryPoint.vidCoin.playAdForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID);
+				}
+				else
+				{
+					if(!MemberManager.getInstance().isLoggedIn())
+						NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
 				}
 			}
 		}
