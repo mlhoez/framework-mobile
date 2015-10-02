@@ -313,7 +313,14 @@ package com.ludofactory.mobile.core.purchases
 				}
 			}
 			
-			onPurchaseSuccess( _currentProductData.generatedId, result.nb_credits_ajouter, result.txt, int(result.changement_rang) == 1 );
+			if(result.code == 1)
+			{
+				onPurchaseSuccess( _currentProductData.generatedId, result.nb_credits_ajouter, result.txt, int(result.changement_rang) == 1 );
+			}
+			else
+			{
+				onValidatePurchaseFailure();
+			}
 		}
 		
 		/**
