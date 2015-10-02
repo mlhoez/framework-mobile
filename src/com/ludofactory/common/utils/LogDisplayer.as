@@ -110,12 +110,11 @@ package com.ludofactory.common.utils
 		 */
 	    public function addLog(log:String):void
 	    {
-		    _logText += "\n" + log;
+		    _logText = log + "\n" + _logText;
 		    if( _logText.length > 10000 )
 			    _logText = _logText.slice(_logText.length * 0.25);
 		    if( _logs) _logs.text = _logText;
 	    }
-		
 		
 		public static function getInstance():LogDisplayer
 		{
