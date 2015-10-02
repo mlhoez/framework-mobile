@@ -54,11 +54,6 @@ package com.ludofactory.mobile.core.manager
 		private var _anonymousGameSessions:Array = [];
 		
 		/**
-		 * If the anonymous game sessions can be sent when
-		 * the user creates an account et simply log in. */		
-		private var _anonymousGameSessionsAlreadyUsed:Boolean = false;
-		
-		/**
 		 * Apple does not allow us to require to be logged in in order to make a purchase. Because of that, we
 		 * need to store all the transcation ids here and send them when the user sign in/up. */
 		private var _transactionIds:Array = [];
@@ -266,9 +261,6 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get anonymousGameSessions():Array { return _anonymousGameSessions; }
 		public function set anonymousGameSessions(val:Array):void { _anonymousGameSessions = val; }
-		
-		public function get anonymousGameSessionsAlreadyUsed():Boolean { return _anonymousGameSessionsAlreadyUsed; }
-		public function set anonymousGameSessionsAlreadyUsed(val:Boolean):void { _anonymousGameSessionsAlreadyUsed = val; }
 		
 		public function get lastTrophyWonId():int { return _lastTrophyWonId; }
 		public function set lastTrophyWonId(val:int):void { _lastTrophyWonId = val; }

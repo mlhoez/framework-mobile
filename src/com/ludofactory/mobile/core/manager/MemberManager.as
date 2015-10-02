@@ -471,18 +471,6 @@ package com.ludofactory.mobile.core.manager
 //	Get - Set
 		
 		/**
-		 * Updates the value of <code>anonymousGameSessionsAlreadyUsed</code>.
-		 */		
-		public function setAnonymousGameSessionsAlreadyUsed(val:Boolean):void
-		{
-			if( _member.anonymousGameSessionsAlreadyUsed != val )
-			{
-				_member.anonymousGameSessionsAlreadyUsed = val;
-				setEncryptedMember();
-			}
-		}
-		
-		/**
 		 * Updates the value of <code>displayTutorial</code>.
 		 */		
 		public function setDisplayTutorial(val:Boolean):void
@@ -532,9 +520,6 @@ package com.ludofactory.mobile.core.manager
 		{
 			_member.facebookTokenExpiryTimestamp = value;
 		}
-		
-		/** Returns */		
-		public function getAnonymousGameSessionsAlreadyUsed():Boolean { return _member.anonymousGameSessionsAlreadyUsed; }
 		
 		/** Returns */		
 		public function getCountryId():int { return _member.countryId; }

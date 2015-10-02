@@ -792,7 +792,6 @@ package com.ludofactory.mobile.core.remoting
 			{
 				log("[Remote] onQueryComplete : The user could not be reconnected on the server side (error 999).");
 				MemberManager.getInstance().disconnect();
-				//NotificationManager.addNotification(new InvalidSessionNotification());
 				NotificationPopupManager.addNotification(new InvalidSessionNotificationContent());
 				InfoManager.hide("", InfoContent.ICON_NOTHING, 0); // just in case
 			}
@@ -803,10 +802,9 @@ package com.ludofactory.mobile.core.remoting
 				// do it before the member is loaded
 				if( queryName == "LudoMobile.useClass.Identification.logIn" || queryName == "LudoMobile.useClass.Inscription.nouveauJoueur" )
 				{
-					if( result.code == 1 || result.code == 6 || result.code == 7 || result.code == 8 || result.code == 9 || result.code == 11 || result.code == 12 && !MemberManager.getInstance().getAnonymousGameSessionsAlreadyUsed() )
+					if( result.code == 1 || result.code == 6 || result.code == 7 || result.code == 8 || result.code == 9 || result.code == 11 || result.code == 12 )
 					{
 						log("[Remote] Inscription ou connexion réussie, parties anonymes retirées.");
-						MemberManager.getInstance().setAnonymousGameSessionsAlreadyUsed(true);
 						MemberManager.getInstance().tokens = 0;
 						MemberManager.getInstance().points = 0;
 						MemberManager.getInstance().cumulatedRubies = 0;
@@ -999,19 +997,18 @@ package com.ludofactory.mobile.core.remoting
 		{
 			params.parties = [];
 			params.acces_tournoi = MemberManager.getInstance().getTournamentUnlocked() == true ? 1 : 0;
-			if( !MemberManager.getInstance().getAnonymousGameSessionsAlreadyUsed() )
+			
+			// we can send them
+			var gameSession:GameSession;
+			var len:int = MemberManager.getInstance().anonymousGameSessions.length;
+			for(var i:int = 0; i < len; i++)
 			{
-				// we can send them
-				var gameSession:GameSession;
-				var len:int = MemberManager.getInstance().anonymousGameSessions.length;
-				for(var i:int = 0; i < len; i++)
-				{
-					gameSession = MemberManager.getInstance().anonymousGameSessions[i];
-					params.parties.push( { info_client:GlobalConfig.userHardwareData, type_mise:gameSession.gamePrice, type_partie:gameSession.gameType, score:gameSession.score, date_partie:gameSession.playDate, connected:gameSession.connected, coupes:gameSession.trophiesWon, temps_ecoule:gameSession.elapsedTime, id_partie:gameSession.uniqueId } );
-				}
-				
-				Flox.logEvent("Nombre de parties jouées avant authentification", { Nombre:len });
+				gameSession = MemberManager.getInstance().anonymousGameSessions[i];
+				params.parties.push( { info_client:GlobalConfig.userHardwareData, type_mise:gameSession.gamePrice, type_partie:gameSession.gameType, score:gameSession.score, date_partie:gameSession.playDate, connected:gameSession.connected, coupes:gameSession.trophiesWon, temps_ecoule:gameSession.elapsedTime, id_partie:gameSession.uniqueId } );
 			}
+			
+			Flox.logEvent("Nombre de parties jouées avant authentification", { Nombre:len });
+			
 			return params;
 		}
 		
