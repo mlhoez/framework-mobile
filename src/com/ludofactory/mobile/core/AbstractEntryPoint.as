@@ -778,8 +778,11 @@ package com.ludofactory.mobile.core
 			if( _drawer.isRightDrawerOpen )
 				_drawer.toggleRightDrawer();
 			
-			// update the badges and events
-			if( _screenNavigator.activeScreenID == ScreenIds.HOME_SCREEN )
+			// update the badges and events on home screen and boutique screen (because after a game session, we can
+			// directly access the boutique screen, and in this case, it's not updated and the header is bugged
+			if( _screenNavigator.activeScreenID == ScreenIds.HOME_SCREEN || _screenNavigator.activeScreenID == ScreenIds.BOUTIQUE_HOME
+				|| _screenNavigator.activeScreenID == ScreenIds.AUTHENTICATION_SCREEN || _screenNavigator.activeScreenID == ScreenIds.GAME_TYPE_SELECTION_SCREEN
+				|| _screenNavigator.activeScreenID == ScreenIds.TOURNAMENT_RANKING_SCREEN )
 			{
 				_alertContainer.fetchAlerts();
 				_eventManager.getEvent();
