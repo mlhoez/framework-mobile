@@ -112,7 +112,7 @@ package com.ludofactory.common.utils
 	    {
 		    _logText = log + "\n" + _logText;
 		    if( _logText.length > 10000 )
-			    _logText = _logText.slice(_logText.length * 0.25);
+			    _logText = _logText.slice(_logText.length * 0.5);
 		    if( _logs) _logs.text = _logText;
 	    }
 		
