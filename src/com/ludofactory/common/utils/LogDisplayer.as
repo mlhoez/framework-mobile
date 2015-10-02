@@ -112,7 +112,7 @@ package com.ludofactory.common.utils
 	    {
 		    _logText = log + "\n" + _logText;
 		    if( _logText.length > 10000 )
-			    _logText = _logText.slice(_logText.length * 0.5);
+			    _logText = _logText.slice(0, _logText.length * 0.25); // suppression du quart le plus ancien des logs
 		    if( _logs) _logs.text = _logText;
 	    }
 		
