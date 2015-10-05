@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
 "POT-Creation-Date: 2015-09-18 17:04+0200\n"
-"PO-Revision-Date: 2015-09-18 17:04+0200\n"
+"PO-Revision-Date: 2015-09-30 15:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -1186,11 +1186,11 @@ msgstr "The bid value cannot be only one figure."
 #: mobile/core/notification/content/PendingBidDetailNotificationContent.as:235
 #, python-brace-format
 msgid "Votre enchère doit être supérieure à l'enchère minimum de {0}."
-msgstr "Your bid has to be greater than the minimum bid of {0}."
+msgstr "Your bid is greater than the minimum bid of {0}."
 
 #: mobile/core/notification/content/RateNotificationContent.as:74
 msgid "Donnez-nous une note !"
-msgstr "Give us a rating !"
+msgstr "Rate us !"
 
 #: mobile/core/notification/content/RateNotificationContent.as:79
 msgid ""
@@ -1198,7 +1198,7 @@ msgid ""
 "Aidez-nous à le faire connaître en lui donnant une note !"
 msgstr ""
 "You like our game ?\n"
-"Help us make it known by giving a rating !"
+"Help us make it popular by rating it !"
 
 #: mobile/core/notification/content/RateNotificationContent.as:84
 #, python-brace-format
@@ -1207,7 +1207,7 @@ msgstr "Give a mark {0}"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:71
 msgid "Gagnez ces récompenses quand vos filleuls changent de rang."
-msgstr "Win these rewards when your friends change their rank."
+msgstr "Win these prizes when your friends change their rank."
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:80
 #: mobile/core/notification/content/SponsorNotificationContent.as:87
@@ -1285,7 +1285,7 @@ msgid ""
 "à Aventurier I sinon vous gagnez 200 Points."
 msgstr ""
 "*400 free Points for each friend you refer if you are Explorer I and higher, "
-"otherwise you win 200 Points."
+"otherwise you get 200 Points."
 
 #: mobile/core/pause/PauseView.as:76
 msgid "Jeu en pause"
@@ -1435,7 +1435,7 @@ msgstr "Rubies"
 #: mobile/core/scoring/ScoreToStarsContainer.as:121
 #, python-brace-format
 msgid "Par exemple : avec un score de {0}, vous gagnez {1} Rubis."
-msgstr "For example: with a score of  {0}, you will get {1} Rubies."
+msgstr "For example: with a score of {0}, you will get {1} Rubies."
 
 #: mobile/core/storage/StorageConfig.as:182
 #: mobile/navigation/home/RulesAndScoresScreen.as:80
@@ -1565,7 +1565,7 @@ msgid ""
 msgstr ""
 "A new version of the application is now available !\n"
 "\n"
-"Please download it to ensure its good functioning."
+"Please download it to ensure that your app is working correctly."
 
 #: mobile/navigation/UpdateScreen.as:77
 #: mobile/navigation/news/NewsItemRenderer.as:214
@@ -1795,7 +1795,7 @@ msgstr "Mrs."
 
 #: mobile/navigation/account/history/settings/PersonalSettingsContainer.as:152
 msgid "Code joueur"
-msgstr "Player code"
+msgstr "Player ID"
 
 #: mobile/navigation/account/history/settings/PersonalSettingsContainer.as:153
 msgid "Titre"
@@ -1805,7 +1805,7 @@ msgstr "Title"
 #: mobile/navigation/highscore/HighScoreListHeader.as:73
 #: mobile/navigation/tournament/listing/TournamentListHeader.as:72
 msgid "Nom"
-msgstr "Last Name"
+msgstr "Player"
 
 #: mobile/navigation/account/history/settings/PersonalSettingsContainer.as:155
 msgid "Prénom"
@@ -1869,8 +1869,8 @@ msgid_plural ""
 "{0} Rubis seront définitivement comptabilisées pour le tournoi en cours dès "
 "que vous serez connecté à internet."
 msgstr[0] ""
-"{0} Ruby will be taken off for the pending Tournament as soon as connect to "
-"the Internet."
+"{0} Ruby will be taken off for the pending Tournament as soon as you connect "
+"to the Internet."
 msgstr[1] ""
 "{0} Rubies will be taken off for the pending Tournament as soon as connect "
 "to the Internet."
@@ -1908,14 +1908,14 @@ msgstr[1] "You have {0} accepted friends in the referring space."
 #, python-brace-format
 msgid "Vous avez gagné {0} récompense."
 msgid_plural "Vous avez gagné {0} récompenses."
-msgstr[0] "You have won {0} reward."
+msgstr[0] "You won {0} reward."
 msgstr[1] "You have won {0} rewards."
 
 #: mobile/navigation/alert/AlertItemRenderer.as:290
 #, python-brace-format
 msgid "Vous avez gagné {0} coupe."
 msgid_plural "Vous avez gagné {0} coupes."
-msgstr[0] "You have won {0} cup."
+msgstr[0] "You won {0} cup."
 msgstr[1] "You have won {0} cups."
 
 #: mobile/navigation/alert/AlertItemRenderer.as:297
@@ -1923,7 +1923,7 @@ msgstr[1] "You have won {0} cups."
 #: mobile/navigation/authentication/AuthenticationScreen.as:83
 #: mobile/navigation/authentication/NotLoggedInContainer.as:52
 msgid "S'identifier"
-msgstr "Log in"
+msgstr "Sign in"
 
 #: mobile/navigation/alert/AlertItemRenderer.as:299
 #, python-brace-format
@@ -1968,7 +1968,7 @@ msgid ""
 "Connectez-vous ou créez\n"
 "un compte LudoKado.com"
 msgstr ""
-"Log in or create\n"
+"Login or create\n"
 "a LudoKado.com account"
 
 #: mobile/navigation/authentication/AuthenticationScreen.as:109
@@ -1985,7 +1985,7 @@ msgstr "Facebook"
 
 #: mobile/navigation/authentication/ForgotPasswordScreen.as:71
 msgid "Mot de passe oublié"
-msgstr "Forgotten password"
+msgstr "Forgot your password"
 
 #: mobile/navigation/authentication/ForgotPasswordScreen.as:83
 msgid ""
@@ -2014,7 +2014,7 @@ msgstr "Password..."
 
 #: mobile/navigation/authentication/LoginScreen.as:110
 msgid "J'ai oublié mon mot de passe..."
-msgstr "I have forgotten my password..."
+msgstr "I forgot my password..."
 
 #: mobile/navigation/authentication/LoginScreen.as:198
 msgid "Mot de passe invalide."
@@ -2025,7 +2025,7 @@ msgid ""
 "Vous devez être identifié\n"
 "pour accéder à cet écran."
 msgstr ""
-"You need to log in\n"
+"You need to Sign in\n"
 "to access this screen."
 
 #: mobile/navigation/authentication/PseudoChoiceScreen.as:94
@@ -2133,7 +2133,7 @@ msgstr "The referring code is not valid"
 #: mobile/navigation/cs/HelpScreen.as:88 mobile/navigation/cs/HelpScreen.as:100
 #: mobile/navigation/faq/FaqScreen.as:68
 msgid "Aide générale"
-msgstr "General support"
+msgstr "FAQ"
 
 #: mobile/navigation/cs/HelpScreen.as:113
 msgid "Service client"
@@ -2147,15 +2147,15 @@ msgstr "Version of the application : {0}"
 #: mobile/navigation/cs/HelpScreen.as:122
 #: mobile/navigation/shop/bid/BidHomeScreen.as:83
 msgid "En cours"
-msgstr "Processing"
+msgstr "Your opened requests"
 
 #: mobile/navigation/cs/HelpScreen.as:123
 msgid "Résolus"
-msgstr "Resolved"
+msgstr "Solved and Closed Requests"
 
 #: mobile/navigation/cs/display/CSMessagesContainer.as:153
 msgid "Aucune conversation à afficher."
-msgstr "There is no conversation."
+msgstr "There is no contact history."
 
 #: mobile/navigation/cs/thread/CSThreadScreen.as:89
 #, python-brace-format
@@ -2300,7 +2300,8 @@ msgstr "I am in the TOP {0} on the tournament {1}"
 msgid ""
 "La fin du tournoi approche ! Rejoignez moi vite et remportez vous aussi "
 "cette récompense : {0}"
-msgstr "Tournament is about to end! Hurry up, join me and get that prize : {0}"
+msgstr ""
+"The Tournament is about to end! Hurry up, join me and get the prize : {0}"
 
 #: mobile/navigation/engine/PodiumScreen.as:381
 #, python-brace-format
@@ -2325,7 +2326,7 @@ msgstr "Tournament unlocked!"
 
 #: mobile/navigation/engine/SoloEndScreen.as:318
 msgid "Convertir mes Points en Cadeaux dans la boutique"
-msgstr "Turn my Points into Prizes in the store"
+msgstr "Turn my Points into Prizes in the Shop"
 
 #: mobile/navigation/engine/SoloEndScreen.as:318
 msgid ""
@@ -2333,11 +2334,11 @@ msgid ""
 "Cadeaux dans la boutique"
 msgstr ""
 "Turn my Points into\n"
-"Prizes in the shop"
+"Prizes in the Shop"
 
 #: mobile/navigation/engine/SoloEndScreen.as:318
 msgid "Convertir mes Points en Crédits dans la boutique"
-msgstr "Turn my Points into Credits in the store"
+msgstr "Turn my Points into Credits in the Shop"
 
 #: mobile/navigation/engine/SoloEndScreen.as:318
 msgid ""
@@ -2345,7 +2346,7 @@ msgid ""
 "Crédits dans la boutique"
 msgstr ""
 "Turn my Points into\n"
-"Credits in the store"
+"Credits in the Shop"
 
 #: mobile/navigation/engine/SoloEndScreen.as:324
 msgid "Utiliser mes Points sur le tournoi pour me classer"
@@ -2365,7 +2366,7 @@ msgid ""
 "vos Points en Cadeaux !"
 msgstr ""
 "Create your account and turn\n"
-"your Points in Prizes"
+"your Points into Prizes"
 
 #: mobile/navigation/engine/SoloEndScreen.as:348
 msgid ""
@@ -2373,7 +2374,7 @@ msgid ""
 "vos Points en Crédits !"
 msgstr ""
 "Create your account and turn\n"
-"your Points in Credits !"
+"your Points into Credits !"
 
 #: mobile/navigation/engine/SoloEndScreen.as:372
 #: mobile/navigation/engine/TournamentEndScreen.as:412
@@ -2431,7 +2432,7 @@ msgstr "The information provided is for informational purposes only."
 
 #: mobile/navigation/engine/TournamentEndScreen.as:548
 msgid "Connectez vous à votre compte."
-msgstr "Log in to your account."
+msgstr "Log into your account."
 
 #: mobile/navigation/engine/TournamentEndScreen.as:998
 msgid "Tournoi terminé"
@@ -2532,7 +2533,7 @@ msgstr "{0} Tokens in "
 #: mobile/navigation/home/summary/FooterStakeElement.as:385
 #, python-brace-format
 msgid "Reconnectez-vous pour récupérer vos {0} Jetons."
-msgstr "Log in again to get your {0} Tokens."
+msgstr "Sign in again to get your {0} Tokens."
 
 #: mobile/navigation/game/StakeSelectionScreen.as:84
 msgid "Choisissez votre mise"
@@ -2552,8 +2553,8 @@ msgid ""
 "Serez-vous le meilleur\n"
 "des meilleurs ?"
 msgstr ""
-"Will you be the best\n"
-"of best ?"
+"Are you ready to be\n"
+"the very best?"
 
 #: mobile/navigation/highscore/HighScoreHomeScreen.as:152
 msgid "National"
@@ -2587,8 +2588,8 @@ msgid ""
 "Vous devez associer votre compte à Facebook pour voir la progression de vos "
 "amis !"
 msgstr ""
-"You need to link your account with Facebook to follow the progression of "
-"your friends !"
+"You need to link your account with Facebook to track the scores of your "
+"friends !"
 
 #: mobile/navigation/highscore/HighScoreListScreen.as:326
 msgid ""
@@ -2606,7 +2607,7 @@ msgstr "Link my account with Facebook"
 #: mobile/navigation/highscore/HighScoreListScreen.as:575
 #: mobile/navigation/highscore/HighScoreListScreen.as:603
 msgid "Connectez-vous avec Facebook pour voir la progression de vos amis !"
-msgstr "Log in with Facebook to follow the progression of your friends !"
+msgstr "Login with Facebook to follow and track the scores of your friends !"
 
 #: mobile/navigation/home/HomeScreen.as:85
 msgid "JOUER"
@@ -2627,7 +2628,7 @@ msgid ""
 "Center."
 msgstr ""
 "Game Center is disabled.\n"
-"To enable it, log in in the Game Center app"
+"To enable it, log into the Game Center app"
 
 #: mobile/navigation/home/RulesAndScoresScreen.as:78
 msgid "Règles"
@@ -2659,15 +2660,15 @@ msgid ""
 "Tapotez ici pour recharger votre compte"
 msgstr ""
 "Your game Credits\n"
-"Tap here to recharge your account"
+"Tap here to top-up your account"
 
 #: mobile/navigation/home/summary/FooterStakeElement.as:421
 msgid ""
 "Vos Points à convertir en Cadeaux\n"
 "Tapotez ici pour accéder à la boutique"
 msgstr ""
-"Your Points to be exchanged for Prizes\n"
-"Tap here to access the shop"
+"Your Points to be turned into Prizes\n"
+"Tap here to go to the shop"
 
 #: mobile/navigation/home/summary/FooterStakeElement.as:421
 msgid ""
@@ -2675,7 +2676,7 @@ msgid ""
 "Tapotez ici pour accéder à la boutique"
 msgstr ""
 "Your Points to turn into Credits\n"
-"Tap here to access the shop"
+"Tap here to go to the shop"
 
 #: mobile/navigation/menu/Menu.as:77
 msgid "Parrainage"
@@ -2705,11 +2706,11 @@ msgstr "Settings"
 
 #: mobile/navigation/menu/Menu.as:215
 msgid "Déconnexion"
-msgstr "Log out"
+msgstr "Sign Out "
 
 #: mobile/navigation/news/NewsItemRenderer.as:214
 msgid "Jouer"
-msgstr "Jouer"
+msgstr "Play"
 
 #: mobile/navigation/news/NewsScreen.as:82
 msgid "Nouveautés"
@@ -2731,10 +2732,11 @@ msgid ""
 "n'est ni partenaire, ni sponsor, ni impliquée dans l'organisation de ces "
 "jeux. Pour plus d'informations, voir le règlement complet dans l'application."
 msgstr ""
-"All free games with no obligation to purchase available in this application "
-"are organized by LudoFactory company. Apple Inc. is not a sponsor, nor a "
-"partner, nor implied in the organization of these games. For more "
-"information, please read the complete Terms of use in the application."
+"All the games available in this application are free with no obligation to "
+"purchase and they are organized by the company LudoFactory. Apple Inc. is "
+"not a sponsor, nor a partner, nor implied in the organization of these "
+"games. For more information, please read the complete Terms of use in the "
+"application."
 
 #: mobile/navigation/news/NewsScreen.as:119
 msgid ""
@@ -2742,9 +2744,9 @@ msgid ""
 "application sont organisés par la société LudoFactory. Pour plus "
 "d'informations, voir le règlement complet dans l'application."
 msgstr ""
-"All free games with no obligation to purchase available in this application "
-"are organized by LudoFactory company. For more information, please see the "
-"full Terms of use in the application."
+"ll the games available in this application are free with no obligation to "
+"purchase and they are organized by the company LudoFactory. For more "
+"information, please see the full Terms of use in the application."
 
 #: mobile/navigation/news/NewsScreen.as:124
 msgid "CGU"
@@ -2781,7 +2783,7 @@ msgid ""
 "Accessible à tous\n"
 "les rangs Vip"
 msgstr ""
-"Accessible to all\n"
+"Available for all\n"
 "VIP levels"
 
 #: mobile/navigation/shop/BoutiqueHomeScreen.as:134
@@ -2965,8 +2967,8 @@ msgid ""
 "Pour cela, allez sur l'application « Réglages » puis dans « "
 "Confidentialité », sélectionnez « Contacts » et autorisez {0}."
 msgstr ""
-"The application cannot access your contacts. To do so, go to « Settings », "
-"then to « Privacy », select « Contacts » and authorize {0}."
+"The application cannot access your contacts. Go to « Settings », then to "
+"« Privacy », select « Contacts » and authorize {0}."
 
 #: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:291
 #: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:390
@@ -2975,7 +2977,7 @@ msgstr "No contact to display."
 
 #: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:313
 msgid "Impossible d'accéder à vos contacts."
-msgstr "Impossible to access your contacts."
+msgstr "Unable to access your contacts."
 
 #: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:545
 #: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:614
@@ -3019,8 +3021,8 @@ msgid ""
 "Top\n"
 "OFFRE"
 msgstr ""
-"Top\n"
-"OFFER"
+"BEST\n"
+"CHOICE"
 
 #: mobile/navigation/store/StoreItemRenderer.as:130
 msgid ""
@@ -3039,8 +3041,8 @@ msgid ""
 "Impossible d'afficher le magasin car vous ne pouvez pas effectuer d'achats "
 "(contrôle parental ou autre raison)."
 msgstr ""
-"Impossible to display the shop because you are not allowed to make any "
-"purchase (parental control or other)."
+"Unable to display the shop because you are not allowed to make any purchase "
+"(parental control or other)."
 
 #: mobile/navigation/tournament/PreviousTournamentGiftBloc.as:146
 #, python-brace-format
@@ -3054,16 +3056,16 @@ msgstr ""
 #: mobile/navigation/tournament/PreviousTournamentItemRenderer.as:163
 #: mobile/navigation/tournament/TournamentRankingScreen.as:121
 msgid "Tournoi en cours"
-msgstr "Tournament in progress"
+msgstr "Current Tournament"
 
 #: mobile/navigation/tournament/PreviousTournamentItemRenderer.as:168
 #, python-brace-format
 msgid "Tournoi terminé n°{0}"
-msgstr "Tournament completed no.{0}"
+msgstr "Recently completed Tournament, no.{0}"
 
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:66
 msgid "Liste des anciens tournois"
-msgstr "List of former tournaments"
+msgstr "List of previous tournaments"
 
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:80
 #, python-brace-format
