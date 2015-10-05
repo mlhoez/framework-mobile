@@ -122,11 +122,11 @@ package com.ludofactory.mobile.navigation
 		{
 			_title.text = val;
 			TweenMax.killTweensOf(_background);
-			if( !_isAlertDisplaying && !_isTitleDisplaying )
-			{
+			//if( !_isAlertDisplaying && !_isTitleDisplaying )
+			//{
 				_background.visible = this.visible = true;
 				_background.alpha = 1;
-			}
+			//}
 			_isTitleDisplaying = true;
 		}
 		
