@@ -179,7 +179,6 @@ package com.ludofactory.mobile.debug
 				_repoPicker.width = _portPicker.x - _changeRepository.width - scaleAndRoundToDpi(20);
 				_repoPicker.x = _changeRepository.width + scaleAndRoundToDpi(10);
 				
-				_connectButton.validate();
 				_connectButton.y = _portPicker.y + _portPicker.height;
 				_connectButton.x = actualWidth - _connectButton.width - scaleAndRoundToDpi(10);
 				
