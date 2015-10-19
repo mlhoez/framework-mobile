@@ -6,36 +6,33 @@ Created : 22 août 2013
 */
 package com.ludofactory.mobile.navigation.shop.vip
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-import com.ludofactory.mobile.core.manager.MemberManager;
-import com.ludofactory.mobile.navigation.authentication.RetryContainer;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.desktop.NativeApplication;
-	import flash.events.Event;
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
+	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	
 	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.data.ListCollection;
 	import feathers.display.TiledImage;
 	import feathers.layout.TiledRowsLayout;
+	
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.display.Quad;
 	import starling.events.Event;
@@ -105,7 +102,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 			addChild(_list);
 			
 			_retryContainer = new RetryContainer();
-			_retryContainer.addEventListener(starling.events.Event.TRIGGERED, onRetry);
+			_retryContainer.addEventListener(Event.TRIGGERED, onRetry);
 			_retryContainer.visible = false;
 			addChild(_retryContainer);
 			
@@ -126,9 +123,10 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 			else
 			{
 				// default category
-				_retryContainer.visible = false;
-				NativeApplication.nativeApplication.addEventListener(flash.events.Event.ACTIVATE, onActivate, false, 0, true);
-                if( MemberManager.getInstance().getGiftsEnabled() )
+				_retryContainer.visible = true;
+				_retryContainer.loadingMode = false;
+				//NativeApplication.nativeApplication.addEventListener(flash.events.Event.ACTIVATE, onActivate, false, 0, true);
+                /*if( MemberManager.getInstance().getGiftsEnabled() )
                 {
                     _list.dataProvider = new ListCollection(
                             [
@@ -147,7 +145,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
                             [
                                 new BoutiqueCategoryData( 28, _("Ludokado"), "BoutiqueLudokadoIcon" )
                             ]);
-                }
+                }*/
 
 			}
 		}
@@ -179,7 +177,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 //	Handlers
 //------------------------------------------------------------------------------------------------------------
 		
-		private function onActivate(event:flash.events.Event):void
+		/*private function onActivate(event:flash.events.Event):void
 		{
 			if( !_connectedContentInitialized && AirNetworkInfo.networkInfo.isConnected() )
 			{
@@ -187,7 +185,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 				_retryContainer.visible = true;
 				Remote.getInstance().getBoutiqueCategories(onGetCategoriesSuccess, onGetCategoriesFailure, onGetCategoriesFailure, 2, advancedOwner.activeScreenID);
 			}
-		}
+		}*/
 		
 		private function onGetCategoriesSuccess(result:Object):void
 		{
@@ -212,7 +210,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 		 * we need to show a retry button so that he doesn't need to leave and
 		 * come back to the view to load the messages.
 		 */		
-		private function onRetry(event:starling.events.Event):void
+		private function onRetry(event:Event):void
 		{
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
@@ -228,7 +226,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 		/**
 		 * A category was touched.
 		 */		
-		private function onCategorySelected(event:starling.events.Event):void
+		private function onCategorySelected(event:Event):void
 		{
 			if( AirNetworkInfo.networkInfo.isConnected())
 			{
@@ -257,7 +255,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 		 * If the shop is not available, we need to redirect the user to
 		 * the onine shop of Ludokado / Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/.
 		 */		
-		private function onGoOnlineShop(event:starling.events.Event):void
+		private function onGoOnlineShop(event:Event):void
 		{
 			navigateToURL(new URLRequest(_("http://www.ludokado.com/")));
 		}
@@ -268,7 +266,7 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 		
 		override public function dispose():void
 		{
-			NativeApplication.nativeApplication.removeEventListener(flash.events.Event.ACTIVATE, onActivate);
+			//NativeApplication.nativeApplication.removeEventListener(flash.events.Event.ACTIVATE, onActivate);
 			
 			if( _listShadow )
 			{
@@ -289,8 +287,8 @@ import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 				_list = null;
 			}
 			
-			_retryContainer.removeEventListener(starling.events.Event.TRIGGERED, onRetry);
-			_retryContainer.removeEventListener(starling.events.Event.TRIGGERED, onGoOnlineShop);
+			_retryContainer.removeEventListener(Event.TRIGGERED, onRetry);
+			_retryContainer.removeEventListener(Event.TRIGGERED, onGoOnlineShop);
 			_retryContainer.removeFromParent(true);
 			_retryContainer = null;
 			
