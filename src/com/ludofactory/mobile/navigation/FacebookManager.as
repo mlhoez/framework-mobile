@@ -32,8 +32,13 @@ package com.ludofactory.mobile.navigation
 	public class FacebookManager extends EventDispatcher
 	{
 		/**
+		 * 
+		 */
+		private static var _instance:FacebookManager;
+		
+		/**
 		 * Registering mode. */		
-		private static const MODE_REGISTER:String = "register";
+		private static const MODE_REGISTER:String = "register"; 
 		/**
 		 * Associating mode. */		
 		private static const MODE_ASSOCIATING:String = "associating";
@@ -53,8 +58,6 @@ package com.ludofactory.mobile.navigation
 		
 		private static var _mode:String;
 		
-		private static var _instance:FacebookManager;
-		
 		public function FacebookManager(sk:SecurityKey)
 		{
 			if(sk == null)
@@ -71,25 +74,18 @@ package com.ludofactory.mobile.navigation
 			{
 				if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
 				{
-					if( MemberManager.getInstance().isLoggedIn() ) // just in case but usually this test is done before in the screen
+					if( MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().facebookId != 0 ) // just in case but usually this test is done before in the screen
 					{
-						if( MemberManager.getInstance().facebookId != 0 )
+						var now:Date = new Date();
+						var tokenExpiryDate:Date = new Date( MemberManager.getInstance().getFacebookTokenExpiryTimestamp() );
+						if( now < tokenExpiryDate )
 						{
-							var now:Date = new Date();
-							var tokenExpiryDate:Date = new Date( MemberManager.getInstance().getFacebookTokenExpiryTimestamp() );
-							if( now < tokenExpiryDate )
-							{
-								// the token is still valid, then we don't need to do something special
-								requestMe();
-							}
-							else
-							{
-								// the token has expired, we need to authenticate again
-								authenticate();
-							}
+							// the token is still valid, then we don't need to do something special
+							requestMe();
 						}
 						else
 						{
+							// the token has expired, we need to authenticate again
 							authenticate();
 						}
 					}
