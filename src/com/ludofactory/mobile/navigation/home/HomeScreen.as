@@ -203,7 +203,6 @@ package com.ludofactory.mobile.navigation.home
 				
 				if (_debugButton)
 				{
-					_debugButton.validate();
 					_debugButton.x = actualWidth - _debugButton.width - scaleAndRoundToDpi(5);
 					_debugButton.y = actualHeight - _debugButton.height;
 				}

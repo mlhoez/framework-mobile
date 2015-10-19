@@ -21,6 +21,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManager;
+	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
 	
@@ -118,8 +119,7 @@ package com.ludofactory.mobile.navigation.engine
 			addChild(_title);
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 48 : 50), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			
-			FacebookManager.getInstance().addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-			FacebookManager.getInstance().addEventListener(FacebookManager.AUTHENTICATED, onPublish);
+			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onPublish);
 			
 			_facebookIcon = new ImageLoader();
 			_facebookIcon.source = AbstractEntryPoint.assets.getTexture( GlobalConfig.isPhone ? "facebook-icon" : "facebook-icon-hd");
@@ -336,16 +336,13 @@ package com.ludofactory.mobile.navigation.engine
 			FacebookManager.getInstance().associateForPublish();
 		}
 		
-		private function onAccountAssociated(event:Event):void
-		{
-			_facebookButton.label = _("Publier");
-		}
-		
 		/**
 		 * Publish on Facebook.
 		 */		
 		private function onPublish(event:Event):void
 		{
+			_facebookButton.label = _("Publier");
+			
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
@@ -387,8 +384,7 @@ package com.ludofactory.mobile.navigation.engine
 		override public function dispose():void
 		{
 			TweenMax.killDelayedCallsTo(animate);
-			FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-			FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
+			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onPublish);
 			
 			_all = [];
 			_all = null;

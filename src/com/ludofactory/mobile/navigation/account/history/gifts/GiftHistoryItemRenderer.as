@@ -254,9 +254,6 @@ package com.ludofactory.mobile.navigation.account.history.gifts
 			_title.width = this.actualWidth - _backgroundBorder.width - _padding * 2;
 			_title.validate();
 			
-			_exchangeWithPointsButton.validate();
-			_exchangeWithChequeButton.validate();
-			
 			_background.height = _backgroundBorder.height = _leftStripe.height = Math.max( _itemHeight, (_title.height + scaleAndRoundToDpi(20) + (_data.exchangeableWithPoints ? _exchangeWithPointsButton.height : 0) + (_data.exchangeableWithCheque ? _exchangeWithChequeButton.height : 0)) );
 			
 			_title.y = _data.exchangeableWithPoints ? scaleAndRoundToDpi(10) : ((actualHeight - _title.height) * 0.5);

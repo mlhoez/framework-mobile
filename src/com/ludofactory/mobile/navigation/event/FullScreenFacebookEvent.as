@@ -10,6 +10,7 @@ package com.ludofactory.mobile.navigation.event
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.core.FeathersControl;
@@ -62,7 +63,7 @@ package com.ludofactory.mobile.navigation.event
 			_closeButton.scaleX = _closeButton.scaleY = GlobalConfig.dpiScale;
 			addChild(_closeButton);
 			
-			FacebookManager.getInstance().addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
+			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onAccountAssociated);
 		}
 		
 		override protected function draw():void
@@ -125,6 +126,8 @@ package com.ludofactory.mobile.navigation.event
 		
 		override public function dispose():void
 		{
+			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onAccountAssociated);
+			
 			_overlay.removeFromParent(true);
 			_overlay = null;
 			
@@ -136,8 +139,6 @@ package com.ludofactory.mobile.navigation.event
 			_closeButton.removeEventListener(Event.TRIGGERED, onClose);
 			_closeButton.removeFromParent(true);
 			_closeButton = null;
-			
-			FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
 			
 			super.dispose();
 		}

@@ -26,6 +26,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManager;
+	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
 	
@@ -175,8 +176,7 @@ package com.ludofactory.mobile.navigation.engine
 			
 			if( MemberManager.getInstance().isLoggedIn() && GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
 			{
-				FacebookManager.getInstance().addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-				FacebookManager.getInstance().addEventListener(FacebookManager.AUTHENTICATED, onPublish);
+				FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onPublish);
 				
 				_continueButton = new Button();
 				_continueButton.alpha = 0;
@@ -360,16 +360,13 @@ package com.ludofactory.mobile.navigation.engine
 			FacebookManager.getInstance().associateForPublish();
 		}
 		
-		private function onAccountAssociated(event:starling.events.Event):void
-		{
-			_facebookButton.label = _("Publier");
-		}
-		
 		/**
 		 * Publish on Facebook.
 		 */		
 		private function onPublish(event:starling.events.Event):void
 		{
+			_facebookButton.label = _("Publier");
+			
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
@@ -411,7 +408,7 @@ package com.ludofactory.mobile.navigation.engine
 		/**
 		 * Continue.
 		 */		
-		private function onContinue():void
+		private function onContinue(event:starling.events.Event):void
 		{
 			if( _facebookButton )
 				TweenMax.allTo([_facebookButton, _continueButton], 0.5, { alpha:0 } );
@@ -472,8 +469,7 @@ package com.ludofactory.mobile.navigation.engine
 			
 			if( _facebookButton )
 			{
-				FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-				FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
+				FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onPublish);
 				
 				TweenMax.killTweensOf(_continueButton);
 				_continueButton.removeEventListener(starling.events.Event.TRIGGERED, onContinue);

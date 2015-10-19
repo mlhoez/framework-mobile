@@ -64,7 +64,6 @@ package com.ludofactory.mobile.navigation.authentication
 				_message.validate();
 				_message.y = (actualHeight * 0.5) - _message.height - scaleAndRoundToDpi(10);
 				
-				_loginGroup.validate();
 				_loginGroup.x = (actualWidth - _loginGroup.width) * 0.5;
 				_loginGroup.y = actualHeight * 0.5 + scaleAndRoundToDpi(10);
 			}

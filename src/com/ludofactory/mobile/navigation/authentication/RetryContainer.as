@@ -83,9 +83,8 @@ package com.ludofactory.mobile.navigation.authentication
 				_message.validate();
 				_message.x = (actualWidth - _message.width) * 0.5;
 				
-				_retryButton.validate();
-				if( _retryButton.width > actualWidth )
-					_retryButton.width = actualWidth * 0.8;
+				//if( _retryButton.width > actualWidth )
+				//	_retryButton.width = actualWidth * 0.8;
 				_retryButton.x = (actualWidth - _retryButton.width) * 0.5;
 				
 				_message.y = ((actualHeight - (_message.height + _retryButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20))) * 0.5) << 0;
@@ -94,10 +93,10 @@ package com.ludofactory.mobile.navigation.authentication
 				_loader.x = actualWidth * 0.5;
 				_loader.y = actualHeight * 0.5;
 				
-				_message.visible = _loadingMode ? false : true;
-				_retryButton.visible = _loadingMode ? false : ( _singleMessageMode ? false : true );
+				_message.visible = !_loadingMode;
+				_retryButton.visible = _loadingMode ? false : !_singleMessageMode;
 				
-				_loader.visible = _loadingMode ? true : false;
+				_loader.visible = _loadingMode;
 			}
 		}
 		
@@ -118,15 +117,14 @@ package com.ludofactory.mobile.navigation.authentication
 		public function set message(val:String):void
 		{
 			_message.text = val;
+			loadingMode = false;
 			invalidate( INVALIDATION_FLAG_SIZE );
 		}
 		
 		public function set loadingMode(val:Boolean):void
 		{
 			if( _loadingMode == val )
-			{
 				return;
-			}
 			_loadingMode = val;
 			invalidate( INVALIDATION_FLAG_SIZE );
 		}
@@ -134,16 +132,16 @@ package com.ludofactory.mobile.navigation.authentication
 		public function set singleMessageMode(val:Boolean):void
 		{
 			if( _singleMessageMode == val )
-			{
 				return;
-			}
 			_singleMessageMode = val;
+			loadingMode = false;
 			invalidate( INVALIDATION_FLAG_SIZE );
 		}
 		
 		public function set retryButtonMessage(val:String):void
 		{
 			_retryButton.label = val;
+			loadingMode = false;
 			invalidate( INVALIDATION_FLAG_SIZE );
 		}
 		

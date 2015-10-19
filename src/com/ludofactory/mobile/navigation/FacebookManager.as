@@ -13,10 +13,10 @@ package com.ludofactory.mobile.navigation
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.navigation.authentication.RegisterType;
 	import com.milkmangames.nativeextensions.GVFacebookFriend;
@@ -26,14 +26,15 @@ package com.ludofactory.mobile.navigation
 	import starling.events.EventDispatcher;
 	
 	/**
+	 * FacebookManager
+	 * 
 	 * Il est possible de récupérer le photo de profile de cette façon :
 	 * https://graph.facebook.com/100003577159732/picture?type=[small|normal|large|square]
 	 */	
 	public class FacebookManager extends EventDispatcher
 	{
 		/**
-		 * 
-		 */
+		 * Singleton instance. */
 		private static var _instance:FacebookManager;
 		
 		/**
@@ -50,12 +51,7 @@ package com.ludofactory.mobile.navigation
 		private static const MODE_TOKEN:String = "token";
 		
 		/**
-		 * Account have been associated with Facebook. */		
-		public static const ACCOUNT_ASSOCIATED:String = "account-associated";
-		/**
-		 * Authenticated. */		
-		public static const AUTHENTICATED:String = "authenticated";
-		
+		 * Current mode (see above). */
 		private static var _mode:String;
 		
 		public function FacebookManager(sk:SecurityKey)
@@ -91,6 +87,7 @@ package com.ludofactory.mobile.navigation
 					}
 					else
 					{
+						// not logged in or no Facebook account associated
 						authenticate();
 					}
 				}
@@ -137,9 +134,7 @@ package com.ludofactory.mobile.navigation
 		}
 		
 		/**
-		 * Association function used in the Facebook full screen event.
-		 * 
-		 * @see com.ludofactory.mobile.navigation.event.FullScreenFacebookEvent
+		 * Association function.
 		 */		
 		public function associate():void
 		{
@@ -174,8 +169,6 @@ package com.ludofactory.mobile.navigation
 		private function authenticate():void
 		{
 			InfoManager.show(_("Chargement..."));
-			
-			log(GoViral.goViral.getFbAccessToken());
 			
 			if( GoViral.goViral.isFacebookAuthenticated() )
 			{
@@ -262,44 +255,36 @@ package com.ludofactory.mobile.navigation
 							return;
 						}
 						
+						// we got all we want, we can connect the user or create an account
 						Remote.getInstance().registerUserViaFacebook(formattedUserData, onFacebookAuthenticationSuccess, onFacebookAuthenticationFailure, onFacebookAuthenticationFailure, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+						
 						break;
 					}
 					case MODE_ASSOCIATING:
 					{
+						// we got a Facebook session, now we can try to associate this account
 						Remote.getInstance().associateAccount(MemberManager.getInstance().id, formattedUserData.id_facebook, formattedUserData.mail, formattedUserData.prenom, formattedUserData.nom, formattedUserData.ville, formattedUserData.date_naissance, formattedUserData.titre, onFacebookAssociationSuccess, onFacebookAssociationFailure, onFacebookAssociationFailure, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+						
 						break;
 					}
 					case MODE_PUBLISHING:
 					{
-						/*if( me.properties.id  == MemberManager.getInstance().getFacebookId() )
-						{*/
-							// there is a match, then the user is allowed to publish
-							InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-							dispatchEventWith(AUTHENTICATED, false, formattedUserData);
-						/*}
-						else
-						{
-							// no match, we display an error and clear the token
-							GoViral.goViral.logoutFacebook();
-							InfoManager.hide(_("Ce compte Facebook ne correspond pas à celui associé à votre compte Ludokado.\n\nMerci de vous connecter avec le bon compte Facebook pour continuer."), InfoContent.ICON_CROSS, 5);
-						}*/
+						// we don't need to check if me.properties.id equals to MemberManager.getInstance().getFacebookId()
+						// because we don't care if the associated Facebook account matches the current session on the phone
+						// we only want the user to publish
+						InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, false, formattedUserData);
 						
 						break;
 					}
 					case MODE_TOKEN:
 					{
-						/*if( me.properties.id == MemberManager.getInstance().getFacebookId() )
-						{*/
-							InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-							dispatchEventWith(AUTHENTICATED);
-						/*}
-						else
-						{
-							// no match, we display an error and clear the token
-							GoViral.goViral.logoutFacebook();
-							InfoManager.hide(_("Ce compte Facebook ne correspond pas à celui associé à votre compte Ludokado.\n\nMerci de vous connecter avec le bon compte Facebook pour continuer."), InfoContent.ICON_CROSS, 5);
-						}*/
+						// we don't need to check if me.properties.id equals to MemberManager.getInstance().getFacebookId()
+						// because we don't care if the associated Facebook account matches the current session on the phone
+						// we only want a token here to finish all the actions
+						InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED);
+						
 						break;
 					}
 				}
@@ -343,7 +328,7 @@ package com.ludofactory.mobile.navigation
 					// association success
 					
 					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, 3);
-					dispatchEventWith(ACCOUNT_ASSOCIATED);
+					dispatchEventWith(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED);
 					break;
 				}
 					
@@ -383,7 +368,7 @@ package com.ludofactory.mobile.navigation
 				case 10: // impossible de creer compte avec fb car pas autoriser a récuperer les informations persos.
 				case 11: // inscription standard compte existant mdp correspond LOGIN OK PSEUDO OK
 				case 12: // inscription standard compte existant email mdp OK LOGIN OK PSEUDO PAS OK
-				{
+				{ 
 					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, 4);
 					break;
 				}
@@ -391,7 +376,7 @@ package com.ludofactory.mobile.navigation
 				{
 					// The user have successfully logged in with his Facebook account
 					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.HIGH_SCORE_LIST_SCREEN ] );
-					dispatchEventWith(AUTHENTICATED);
+					dispatchEventWith(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED);
 					break;
 				}
 				case 7:
@@ -426,6 +411,50 @@ package com.ludofactory.mobile.navigation
 		private function onFacebookAuthenticationFailure(error:Object = null):void
 		{
 			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS);
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Permissions
+		
+		/**
+		 * Requests a new Facebook permission
+		 * 
+		 * @param newPermission Name of the new permission to request.
+		 */
+		public function requestNewReadPermission(newPermission:String):void
+		{
+			log("[FacebookManager] Requesting new permission : " + newPermission);
+			if(GoViral.goViral.isFacebookPermissionGranted(newPermission))
+			{
+				// already granted
+				dispatchEventWith(FacebookManagerEventType.PERMISSION_GRANTED);
+			}
+			else
+			{
+				// request the new permission
+				GoViral.goViral.addEventListener(GVFacebookEvent.FB_READ_PERMISSIONS_UPDATED, onPermissionGranted);
+				GoViral.goViral.addEventListener(GVFacebookEvent.FB_READ_PERMISSIONS_FAILED, onPermissionNotGranted);
+				GoViral.goViral.requestNewFacebookReadPermissions(newPermission);
+			}
+		}
+		
+		/**
+		 * Then ew permission have been granted.
+		 */
+		private function onPermissionGranted(event:GVFacebookEvent):void
+		{
+			log("[FacebookManager] Permission granted.");
+			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_READ_PERMISSIONS_UPDATED, onPermissionGranted);
+			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_READ_PERMISSIONS_FAILED, onPermissionNotGranted);
+			dispatchEventWith(FacebookManagerEventType.PERMISSION_GRANTED);
+		}
+		
+		private function onPermissionNotGranted(event:GVFacebookEvent):void
+		{
+			log("[FacebookManager] Permission NOT granted.");
+			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_READ_PERMISSIONS_UPDATED, onPermissionGranted);
+			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_READ_PERMISSIONS_FAILED, onPermissionNotGranted);
+			dispatchEventWith(FacebookManagerEventType.PERMISSION_NOT_GRANTED);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -28,6 +28,7 @@ package com.ludofactory.mobile.navigation.vip
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManager;
+	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
 	
@@ -156,8 +157,7 @@ package com.ludofactory.mobile.navigation.vip
 			
 			if( MemberManager.getInstance().isLoggedIn() && GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
 			{
-				FacebookManager.getInstance().addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-				FacebookManager.getInstance().addEventListener(FacebookManager.AUTHENTICATED, onPublish);
+				FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onPublish);
 				
 				_facebookIcon = new ImageLoader();
 				_facebookIcon.source = AbstractEntryPoint.assets.getTexture( GlobalConfig.isPhone ? "facebook-icon" : "facebook-icon-hd");
@@ -198,7 +198,6 @@ package com.ludofactory.mobile.navigation.vip
 					_moreButton.x = (actualWidth - _moreButton.width - (_facebookButton ? _facebookButton.width : 0) - scaleAndRoundToDpi(_facebookButton ? 10 : 0)) * 0.5;
 					_moreButton.validate();
 					
-					_continueButtonTrue.validate();
 					_continueButtonTrue.x = (actualWidth - _continueButtonTrue.width) * 0.5;
 					_continueButtonTrue.y = actualHeight - _continueButtonTrue.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
 					_moreButton.y = _continueButtonTrue.y - _moreButton.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
@@ -236,7 +235,6 @@ package com.ludofactory.mobile.navigation.vip
 					_moreButton.width = actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.7);
 					_moreButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.7))) * 0.5;
 					_moreButton.validate();
-					_continueButtonTrue.validate();
 					_continueButtonTrue.x = (actualWidth - _continueButtonTrue.width) * 0.5;
 					
 					_continueButtonTrue.y = actualHeight - _continueButtonTrue.height - scaleAndRoundToDpi( GlobalConfig.isPhone ? 10 : 20 );
@@ -370,16 +368,13 @@ package com.ludofactory.mobile.navigation.vip
 			FacebookManager.getInstance().associateForPublish();
 		}
 		
-		private function onAccountAssociated(event:Event):void
-		{
-			_facebookButton.label = _("Publier");
-		}
-		
 		/**
 		 * Publish on Facebook.
 		 */		
 		private function onPublish(event:Event):void
 		{
+			_facebookButton.label = _("Publier");
+			
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
@@ -473,8 +468,7 @@ package com.ludofactory.mobile.navigation.vip
 			
 			if( _facebookButton )
 			{
-				FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, onAccountAssociated);
-				FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, onPublish);
+				FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onPublish);
 				
 				_facebookIcon.removeFromParent(true);
 				_facebookIcon = null;

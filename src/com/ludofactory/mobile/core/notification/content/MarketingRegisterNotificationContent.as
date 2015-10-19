@@ -109,7 +109,6 @@ package com.ludofactory.mobile.core.notification.content
 					_createButton.validate();
 					_createButton.x = _laterButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _createButton.width) * 0.5;
 					
-					_alreadyButton.validate();
 					_alreadyButton.x = actualWidth * (GlobalConfig.isPhone ? 0.45 : 0.5)  + ((actualWidth * 0.5) - _alreadyButton.width) * 0.5;
 					
 					_title.y = roundUp((_image.height - (_title.height + _createButton.height + _laterButton.height + _alreadyButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ?  20 : 80))) * 0.5);
@@ -133,7 +132,6 @@ package com.ludofactory.mobile.core.notification.content
 					_createButton.x = (actualWidth - (_createButton.width + _laterButton.width)) * 0.5;
 					_laterButton.x = _createButton.x + _createButton.width;
 					
-					_alreadyButton.validate();
 					_alreadyButton.x = roundUp((actualWidth - _alreadyButton.width) * 0.5);
 					
 					_title.y = _image.height + scaleAndRoundToDpi(20);

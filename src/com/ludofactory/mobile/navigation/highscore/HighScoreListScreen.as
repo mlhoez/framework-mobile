@@ -6,27 +6,29 @@ Created : 13 sept. 2013
 */
 package com.ludofactory.mobile.navigation.highscore
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.controls.AutoRefreshableList;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.navigation.FacebookManager;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.FacebookManager;
+	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
+	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.milkmangames.nativeextensions.GAnalytics;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
+	import com.milkmangames.nativeextensions.GoViral;
 	
 	import feathers.controls.GroupedList;
 	import feathers.controls.Label;
@@ -37,14 +39,18 @@ package com.ludofactory.mobile.navigation.highscore
 	import feathers.data.ListCollection;
 	import feathers.layout.VerticalLayout;
 	
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
+	
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.QuadBatch;
-	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
 	
 	public class HighScoreListScreen extends AdvancedScreen
 	{
@@ -52,14 +58,11 @@ package com.ludofactory.mobile.navigation.highscore
 		 * Country choice background */		
 		private var _countryChoiceBackground:QuadBatch;
 		/**
-		 * Country choice container */		
-		private var _countryChoiceContainer:Sprite;
-		/**
 		 * Country choice title */		
-		private var _countryChoiceTitle:Label;
+		private var _countryChoiceTitle:TextField;
 		/**
 		 * Country choice value */		
-		private var _countryChoiceValue:Label;
+		private var _countryChoiceValue:TextField;
 		/**
 		 * The down arrow */		
 		private var _arrowDown:Image;
@@ -92,7 +95,6 @@ package com.ludofactory.mobile.navigation.highscore
 		/**
 		 * Whether the user is in update mode. */		
 		private var _isInUpdateMode:Boolean = false;
-		
 		
 		/**
 		 * Associate label. */		
@@ -149,21 +151,14 @@ package com.ludofactory.mobile.navigation.highscore
 			_countryChoiceBackground.addQuad(qd);
 			addChild(_countryChoiceBackground);
 			
-			_countryChoiceContainer = new Sprite();
-			_countryChoiceContainer.touchable = false;
-			addChild(_countryChoiceContainer);
+			_countryChoiceTitle = new TextField(5, _countryChoiceBackground.height, _("Pays : "), Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_DARK_GREY, true);
+			_countryChoiceTitle.autoSize = TextFieldAutoSize.HORIZONTAL;
+			addChild( _countryChoiceTitle );
 			
-			_countryChoiceTitle = new Label();
-			_countryChoiceTitle.text = _("Pays : ");
-			_countryChoiceContainer.addChild( _countryChoiceTitle );
-			_countryChoiceTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.RIGHT);
-			_countryChoiceTitle.textRendererProperties.wordWrap = false;
-			
-			_countryChoiceValue = new Label();
+			_countryChoiceValue = new TextField(5, _countryChoiceBackground.height, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_LIGHT_GREY, true);
 			_countryChoiceValue.text = arr[advancedOwner.screenData.highscoreRankingType == -1 ? (arr.length-1) : advancedOwner.screenData.highscoreRankingType];
-			_countryChoiceContainer.addChild( _countryChoiceValue );
-			_countryChoiceValue.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_LIGHT_GREY, true);
-			_countryChoiceValue.textRendererProperties.wordWrap = false;
+			_countryChoiceValue.autoSize = TextFieldAutoSize.HORIZONTAL;
+			addChild( _countryChoiceValue );
 			
 			_arrowDown = new Image( AbstractEntryPoint.assets.getTexture("arrow_down") );
 			_arrowDown.scaleX = _arrowDown.scaleY = GlobalConfig.dpiScale;
@@ -205,8 +200,7 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			_selectedCountryId = advancedOwner.screenData.highscoreRankingType;
 			
-			FacebookManager.getInstance().addEventListener(FacebookManager.ACCOUNT_ASSOCIATED, launchRequestAfterSuccessLoginFacebook);
-			FacebookManager.getInstance().addEventListener(FacebookManager.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
+			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, launchRequestAfterSuccessLoginFacebook);
 			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
@@ -227,16 +221,11 @@ package com.ludofactory.mobile.navigation.highscore
 			{
 				_countryChoiceBackground.width = this.actualWidth;
 				
-				_countryChoiceTitle.validate();
-				_countryChoiceValue.validate();
-				_countryChoiceValue.x = _countryChoiceTitle.width;
-				_countryChoiceContainer.y = (_countryChoiceBackground.height - _countryChoiceContainer.height) * 0.5;
-				_countryChoiceContainer.x = (this.actualWidth - _countryChoiceContainer.width) * 0.5;
+				_countryChoiceTitle.x = roundUp((actualWidth - _countryChoiceTitle.width - _countryChoiceValue.width - scaleAndRoundToDpi(3)) * 0.5);
+				_countryChoiceValue.x = _countryChoiceTitle.x + _countryChoiceTitle.width + scaleAndRoundToDpi(3);
+				
 				_arrowDown.x = this.actualWidth - _arrowDown.width - scaleAndRoundToDpi(30);
 				_arrowDown.y = _countryChoiceBackground.y + (_countryChoiceBackground.height - _arrowDown.height) * 0.5;
-				
-				_countryChoiceValue.validate();
-				_countryChoiceContainer.x = (this.actualWidth - _countryChoiceContainer.width) * 0.5;
 				
 				_listShadow.width = this.actualWidth;
 				_listShadow.y = _countryChoiceBackground.height;
@@ -255,7 +244,6 @@ package com.ludofactory.mobile.navigation.highscore
 				_retryContainer.height = actualHeight - _listHeader.y;
 				_retryContainer.y = _listHeader.y;
 				
-				_associateButton.validate();
 				_associateButton.x = (actualWidth - _associateButton.width) * 0.5;
 				_associateButton.y = ((actualHeight - _list.y) - _associateButton.height) * 0.5 + _list.y + scaleAndRoundToDpi(10);
 				
@@ -270,7 +258,6 @@ package com.ludofactory.mobile.navigation.highscore
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * When the sub categories could be retreived.
@@ -425,22 +412,6 @@ package com.ludofactory.mobile.navigation.highscore
 			}
 		}
 		
-		private function launchRequestAfterSuccessLoginFacebook(event:Event):void
-		{
-			if( AirNetworkInfo.networkInfo.isConnected() )
-			{
-				_associateButton.visible = false;
-				_associateLabel.visible = false;
-				_retryContainer.visible = true;
-				_retryContainer.loadingMode = true;
-				Remote.getInstance().getHighScoreRanking(_selectedCountryId, onGetHighScoreRankingSuccess, onGetHighScoreRankingFailure, onGetHighScoreRankingFailure, 2, advancedOwner.activeScreenID);
-			}
-			else
-			{
-				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
-			}
-		}
-		
 		/**
 		 * Show all the available countries.
 		 */		
@@ -453,8 +424,7 @@ package com.ludofactory.mobile.navigation.highscore
 		}
 		
 		/**
-		 * When a country is selected, we launch a request the get the
-		 * global ranking for this contry.
+		 * When a country is selected, we launch a request the get the global ranking for this contry.
 		 */		
 		private function onCountrySelected(event:Event):void
 		{
@@ -474,10 +444,15 @@ package com.ludofactory.mobile.navigation.highscore
 			_isInUpdateMode = false;
 			
 			Remote.getInstance().clearAllRespondersOfScreen(advancedOwner.activeScreenID);
+			
 			_associateButton.visible = false;
 			_associateLabel.visible = false;
 			_associateButton.removeEventListener(Event.TRIGGERED, onAuthenticateFacebook);
-			_associateButton.removeEventListener(Event.TRIGGERED, onAssociateAccount);
+			
+			_retryContainer.removeEventListener(Event.TRIGGERED, requestPermission);
+			_retryContainer.removeEventListener(Event.TRIGGERED, onRetry);
+			_retryContainer.addEventListener(Event.TRIGGERED, onRetry);
+			
 			if( _selectedCountryId == -1 )
 			{
 				connectFacebook();
@@ -499,7 +474,6 @@ package com.ludofactory.mobile.navigation.highscore
 		
 //------------------------------------------------------------------------------------------------------------
 //	Auto update handlers
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * The user scrolled until the end of the list. In this case
@@ -537,73 +511,117 @@ package com.ludofactory.mobile.navigation.highscore
 //------------------------------------------------------------------------------------------------------------
 //	Facebook
 		
-		private function getToken(event:Event):void
-		{
-			FacebookManager.getInstance().getToken();
-		}
-		
-		private function onAuthenticateFacebook(event:Event):void
-		{
-			FacebookManager.getInstance().register();
-		}
-		
-		private function onAssociateAccount(event:Event):void
-		{
-			FacebookManager.getInstance().associate();
-		}
-		
 		/**
-		 * Publish on Facebook wall.
+		 * Called when the screen wants to display the friends scores.
 		 */		
 		private function connectFacebook():void
 		{
-			_retryContainer.message = _("Vous ne pouvez pas afficher le contenu de cette page car vous n'êtes pas connecté à Internet.");
-			_retryContainer.singleMessageMode = false;
-			
-			if( MemberManager.getInstance().isLoggedIn() )
+			if(AirNetworkInfo.networkInfo.isConnected())
 			{
-				if( MemberManager.getInstance().facebookId != 0 )
+				if( MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().facebookId != 0)
 				{
 					// check session first (if the Facebook ids are matching)
-					_retryContainer.visible = false;
-					_associateButton.visible = true;
-					_associateLabel.visible = true;
-					
-					_associateButton.addEventListener(Event.TRIGGERED, getToken);
-					
-					_associateButton.label = _("Se connecter avec Facebook");
-					_associateLabel.text = _("Connectez-vous avec Facebook pour voir la progression de vos amis !");
-					
-					invalidate(INVALIDATION_FLAG_SIZE);
-					
+					_retryContainer.visible = true;
+					_associateButton.visible = false;
+					_associateLabel.visible = false;
 					FacebookManager.getInstance().getToken();
 				}
 				else
 				{
-					// association
+					// register or associate account
 					_retryContainer.visible = false;
 					_associateButton.visible = true;
 					_associateLabel.visible = true;
 					
-					_associateButton.label = _("Associer mon compte à Facebook");
-					_associateLabel.text = _("Vous devez associer votre compte à Facebook pour voir la progression de vos amis !");
-					_associateButton.addEventListener(Event.TRIGGERED, onAssociateAccount);
+					_associateButton.label = MemberManager.getInstance().isLoggedIn() ? _("Associer mon compte à Facebook") : _("Se connecter avec Facebook");
+					_associateLabel.text = MemberManager.getInstance().isLoggedIn() ? _("Vous devez associer votre compte à Facebook pour voir la progression de vos amis !") : _("Connectez-vous avec Facebook pour voir la progression de vos amis !");
+				}
+				
+				_associateButton.addEventListener(Event.TRIGGERED, onAuthenticateFacebook);
+				
+				invalidate(INVALIDATION_FLAG_SIZE);
+			}
+			else
+			{
+				_retryContainer.message = _("Vous ne pouvez pas afficher le contenu de cette page car vous n'êtes pas connecté à Internet.");
+				_retryContainer.singleMessageMode = false;
+			}
+		}
+		
+		/**
+		 * Called after the token have been retrieved or when the account is associated / created via Facebook.
+		 */
+		private function launchRequestAfterSuccessLoginFacebook(event:Event = null):void
+		{
+			if( AirNetworkInfo.networkInfo.isConnected() )
+			{
+				if(GoViral.goViral.isFacebookPermissionGranted("user_friends"))
+				{
+					log("Permission user_friends granted");
 					
-					invalidate(INVALIDATION_FLAG_SIZE);
+					_associateButton.visible = false;
+					_associateLabel.visible = false;
+					
+					_retryContainer.visible = true;
+					_retryContainer.loadingMode = true;
+					
+					Remote.getInstance().getHighScoreRanking(_selectedCountryId, onGetHighScoreRankingSuccess, onGetHighScoreRankingFailure, onGetHighScoreRankingFailure, 1, advancedOwner.activeScreenID);
+				}
+				else
+				{
+					_associateButton.visible = false;
+					_associateLabel.visible = false;
+					
+					_retryContainer.visible = true;
+					
+					_retryContainer.message = _("Impossible d'afficher le classement de vos amis car nous n'avons pas accès à votre liste d'amis.");
+					_retryContainer.retryButtonMessage = _("Toucher pour donner la permission.");
+					_retryContainer.loadingMode = false;
+					_retryContainer.addEventListener(Event.TRIGGERED, requestPermission);
+					requestPermission();
 				}
 			}
 			else
 			{
-				// login or register
-				_retryContainer.visible = false;
-				_associateButton.visible = true;
-				_associateLabel.visible = true;
-				
-				_associateButton.label = _("Se connecter avec Facebook");
-				_associateLabel.text = _("Connectez-vous avec Facebook pour voir la progression de vos amis !");
-				_associateButton.addEventListener(Event.TRIGGERED, onAuthenticateFacebook);
-				
-				invalidate(INVALIDATION_FLAG_SIZE);
+				InfoManager.showTimed(_("Aucune connexion Internet."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+			}
+		}
+		
+		private function requestPermission(event:Event = null):void
+		{
+			FacebookManager.getInstance().requestNewReadPermission("user_friends");
+			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.PERMISSION_GRANTED, onPermissionGranted);
+		}
+		
+		/**
+		 * Permission have been granted.
+		 */
+		private function onPermissionGranted(event:Event):void
+		{
+			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PERMISSION_GRANTED, onPermissionGranted);
+			_retryContainer.removeEventListener(Event.TRIGGERED, requestPermission);
+			launchRequestAfterSuccessLoginFacebook();
+		}
+		
+		/**
+		 * Called when the user wants to associate its account with Facebook
+		 */
+		private function onAuthenticateFacebook(event:Event):void
+		{
+			if(MemberManager.getInstance().isLoggedIn())
+			{
+				if(MemberManager.getInstance().facebookId != 0)
+				{
+					FacebookManager.getInstance().getToken();
+				}
+				else
+				{
+					FacebookManager.getInstance().associate();
+				}
+			}
+			else
+			{
+				FacebookManager.getInstance().register();
 			}
 		}
 		
@@ -612,12 +630,10 @@ package com.ludofactory.mobile.navigation.highscore
 		
 		override public function dispose():void
 		{
-			FacebookManager.getInstance().removeEventListener(FacebookManager.ACCOUNT_ASSOCIATED, launchRequestAfterSuccessLoginFacebook);
-			FacebookManager.getInstance().removeEventListener(FacebookManager.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
+			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, launchRequestAfterSuccessLoginFacebook);
+			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PERMISSION_GRANTED, onPermissionGranted);
 			
 			_associateButton.removeEventListener(Event.TRIGGERED, onAuthenticateFacebook);
-			_associateButton.removeEventListener(Event.TRIGGERED, onAssociateAccount);
-			_associateButton.removeEventListener(Event.TRIGGERED, getToken);
 			_associateButton.removeFromParent(true);
 			_associateButton = null;
 			
@@ -631,9 +647,6 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			_countryChoiceValue.removeFromParent(true);
 			_countryChoiceValue = null;
-			
-			_countryChoiceContainer.removeFromParent(true);
-			_countryChoiceContainer = null;
 			
 			_arrowDown.removeFromParent(true);
 			_arrowDown = null;
@@ -653,6 +666,9 @@ package com.ludofactory.mobile.navigation.highscore
 			_popUpContentManager.close();
 			_popUpContentManager.dispose();
 			_popUpContentManager = null;
+			
+			_retryContainer.removeEventListener(Event.TRIGGERED, requestPermission);
+			_retryContainer.removeEventListener(Event.TRIGGERED, onRetry);
 			
 			_listShadow.removeFromParent(true);
 			_listShadow = null;

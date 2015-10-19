@@ -423,13 +423,11 @@ package com.ludofactory.mobile.navigation.vip
 				
 				if( _reloadButton )
 				{
-					_reloadButton.validate();
 					_reloadButton.x = (actualWidth * (AbstractGameInfo.LANDSCAPE ? 0.5 : 1) - _reloadButton.width) * 0.5;
 				}
 				
 				if( _resendMailButton )
 				{
-					_resendMailButton.validate();
 					_resendMailButton.x = (actualWidth * (AbstractGameInfo.LANDSCAPE ? 0.5 : 1) - _resendMailButton.width) * 0.5;
 				}
 				
