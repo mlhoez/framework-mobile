@@ -52,8 +52,9 @@ package com.ludofactory.mobile.core.remoting
 		//private const DEV_URL:String = "http://www.ludokado.dev";
 		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokado2.pterrier.ludofactory.dev";
-		//private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
-		private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
+		private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
+		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
+		//private const DEV_URL:String = "http://ludokado.tadiasse.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado3.sravet.ludofactory.dev";
 		//private const DEV_URL:String = "http://semiprod.ludokado.com";
 		
@@ -247,7 +248,7 @@ package com.ludofactory.mobile.core.remoting
 		 * @param facebookId The facebook id
 		 * @param password The password
 		 */		
-		public function associateAccount(memberId:int, facebookId:Number, email:String, prenom:String, nom:String, ville:String, dateNaissance:String, title:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		public function associateAccount(memberId:int, facebookId:String, email:String, prenom:String, nom:String, ville:String, dateNaissance:String, title:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = mergeWithGenericParams( { id_membre:memberId, id_facebook:facebookId, mail_facebook:email, prenom:prenom, nom:nom, ville:ville, date_naissance:dateNaissance, titre:title } );
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "associationCompteLK", params);

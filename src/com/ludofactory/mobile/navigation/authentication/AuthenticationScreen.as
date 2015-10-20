@@ -303,7 +303,7 @@ package com.ludofactory.mobile.navigation.authentication
 				
 				var me:GVFacebookFriend = event.friends[0];
 				var formattedUserData:Object = {};
-				if( me.properties.hasOwnProperty("id") )         formattedUserData.id_facebook = me.properties.id;
+				if( me.properties.hasOwnProperty("id") )         formattedUserData.id_facebook = "" + me.properties.id; // issue with bigint in php if we give a number
 				if( me.properties.hasOwnProperty("email") )      formattedUserData.mail = me.properties.email;
 				if( me.properties.hasOwnProperty("last_name") )  formattedUserData.nom = me.properties.last_name;
 				if( me.properties.hasOwnProperty("first_name") ) formattedUserData.prenom = me.properties.first_name;

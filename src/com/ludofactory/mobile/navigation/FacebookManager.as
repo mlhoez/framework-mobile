@@ -228,7 +228,7 @@ package com.ludofactory.mobile.navigation
 				
 				var me:GVFacebookFriend = event.friends[0];
 				var formattedUserData:Object = {};
-				if( me.properties.hasOwnProperty("id") )         formattedUserData.id_facebook = me.properties.id;
+				if( me.properties.hasOwnProperty("id") )         formattedUserData.id_facebook = "" + me.properties.id; // issue with bigint in php if we give a number
 				if( me.properties.hasOwnProperty("email") )      formattedUserData.mail = me.properties.email;
 				if( me.properties.hasOwnProperty("last_name") )  formattedUserData.nom = me.properties.last_name;
 				if( me.properties.hasOwnProperty("first_name") ) formattedUserData.prenom = me.properties.first_name;
@@ -238,11 +238,11 @@ package com.ludofactory.mobile.navigation
 				formattedUserData.id_parrain = -1;
 				formattedUserData.type_inscription = RegisterType.FACEBOOK;
 				formattedUserData.langue = LanguageManager.getInstance().lang;
-				
+				 
 				// also update the token and its expiration date here
 				MemberManager.getInstance().setFacebookToken(GoViral.goViral.getFbAccessToken());
 				MemberManager.getInstance().setFacebookTokenExpiryTimestamp(GoViral.goViral.getFbAccessExpiry());
-				
+				 
 				switch(_mode)
 				{
 					case MODE_REGISTER:
