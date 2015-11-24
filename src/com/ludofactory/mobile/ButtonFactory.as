@@ -86,7 +86,7 @@ package com.ludofactory.mobile
 				
 				case RED:
 				{
-					buttonToReturn = new MobileButton(Theme.buttonYellowSkinTextures, text);
+					buttonToReturn = new MobileButton(Theme.buttonRedSkinTextures, text);
 					buttonToReturn.fontColor = 0xffffff;
 					buttonToReturn.nativeFilters = [ new GlowFilter(0x8a0000, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
 						new DropShadowFilter(2, 75, 0x8a0000, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
