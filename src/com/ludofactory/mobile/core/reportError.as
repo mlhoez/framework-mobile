@@ -36,62 +36,44 @@ package com.ludofactory.mobile.core
 		
 		//AbstractServer.timerBeforeRecallErrorLogFunction.start();
 		
-		try
-		{
-			var location:String ="";
-			location += AbstractGameInfo.GAME_NAME + " (v" + AbstractGameInfo.GAME_VERSION + " build " + AbstractGameInfo.GAME_BUILD_VERSION + ")";
-		}
-		catch(err:Error)
-		{
-			log(err,"[reportError] error get Location ");
-			location = "undefined" ;
-		}
+		var objCall:Object = {};
+		objCall.game = AbstractGameInfo.GAME_NAME + " (v" + AbstractGameInfo.GAME_VERSION + " build " + AbstractGameInfo.GAME_BUILD_VERSION + ")";
 		
 		try
-		{			
-			var objCall:Object = new Object();
-			
+		{
 			if(args.length == 1)
 			{
 				var arg:* = args[0];
 
 				if(arg is Object && !(arg is Error))
-				{
-					objCall = arg
-				}
-				objCall.location = location;
+					objCall = arg;
 				
 
 				if(Logger.textLogged != "")
 					objCall.textLogged = Logger.textLogged;
 				
-				objCall.memberId = MemberManager.getInstance().id;
-				objCall.gameName = AbstractGameInfo.GAME_NAME;
-				objCall.plateforme = GlobalConfig.platformName;
-				objCall.deviceType = GlobalConfig.isPhone ? "smartphone":"tablette";
-				objCall.deviceId = GlobalConfig.deviceId;
+				objCall.member = MemberManager.getInstance().id + " - Device id : " + GlobalConfig.deviceId;
+				objCall.device = (GlobalConfig.isPhone ? "Smartphone":"Tablette") + " " + GlobalConfig.platformName;
 				objCall.currentScreen = AbstractEntryPoint.screenNavigator ? AbstractEntryPoint.screenNavigator.activeScreenID : "";
 				
 				if(arg is String)
 				{
 					objCall.message = arg;
-					log(arg,"reportError (String) in "+location);
+					log(arg,"reportError (String) in "+ objCall.game);
 				}
 				else if(arg is Error)
 				{
-					objCall.errorID = (arg as Error).errorID;
 					objCall.stackTrace = (arg as Error).getStackTrace();
-					log((arg as Error).getStackTrace(),"reportError (Error) in " + location);
+					log((arg as Error).getStackTrace(),"reportError (Error) in " + objCall.game);
 				}
 				else if(arg is Object)
 				{
-					log(arg,"reportError (Object) in "+location);
+					log(arg,"reportError (Object) in "+ objCall.game);
 				}
 			}
 			else
 			{
 				objCall.reportError = args;
-				objCall.location = location;
 				log(args,"reportError args.length > 1 ");
 			}
 			
