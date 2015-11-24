@@ -178,7 +178,8 @@ package com.ludofactory.mobile.navigation.engine
 			
 			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
 			
-			if( !MemberManager.getInstance().isTournamentUnlocked )
+			// FIXME MODIF TOURNOI : j'ai rajouté isLoggedIn
+			if( MemberManager.getInstance().isLoggedIn() && !MemberManager.getInstance().isTournamentUnlocked )
 			{
 				MemberManager.getInstance().isTournamentUnlocked = true;
 				MemberManager.getInstance().isTournamentAnimPending = true;
@@ -346,7 +347,9 @@ package com.ludofactory.mobile.navigation.engine
 					_convertContainer.addChild(_convertIcon);
 					
 					_convertLabel = new Label();
-					_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte et convertissez\nvos Points en Cadeaux !") : _("Créez votre compte et convertissez\nvos Points en Crédits !");
+					// FIXME MODIF TOURNOI texte à remettre
+					//_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte et convertissez\nvos Points en Cadeaux !") : _("Créez votre compte et convertissez\nvos Points en Crédits !");
+					_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte pour continuer à cumuler des Points à convertir en Cadeaux !") : _("Créez votre compte pour continuer à cumuler des Points à convertir en Crédits !");
 					_convertContainer.addChild(_convertLabel);
 					_convertLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 38), Theme.COLOR_WHITE, true, false, null, null, null, TextFormatAlign.CENTER);
 				}
@@ -757,7 +760,17 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			else
 			{
-				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
+				// FIXME MODIF TOURNOI conditions à retirer pour remettre comme avant
+				if(MemberManager.getInstance().tokens == 0)
+				{
+					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
+				}
+				else
+				{
+					_homeButton.isEnabled = false;
+					_playAgainButton.isEnabled = false;
+					advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
+				}
 			}
 		}
 		
@@ -780,7 +793,17 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			else
 			{
-				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(MemberManager.getInstance().tokens >= Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
+				// FIXME MODIF TOURNOI conditions à retirer pour remettre comme avant
+				if(MemberManager.getInstance().tokens == 0)
+				{
+					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(MemberManager.getInstance().tokens >= Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
+				}
+				else
+				{
+					_homeButton.isEnabled = false;
+					_playAgainButton.isEnabled = false;
+					advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
+				}
 			}
 		}
 		

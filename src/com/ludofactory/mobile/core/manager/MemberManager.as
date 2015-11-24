@@ -471,9 +471,10 @@ package com.ludofactory.mobile.core.manager
 		/** Updates the value of <code>tournamentUnlocked</code>. */
 		public function get isTournamentUnlocked():Boolean
 		{
-			// FIXME le retour du getteur a été modifié le temps du test demandé par thibaut,
+			// FIXME MODIF TOURNOI le retour du getteur a été modifié le temps du test demandé par thibaut,
 			// à savoir de bloquer le tournoi pour les joueurs non identifiés, et de le débloquer
-			// automatiquement pour les personnes identifiées
+			// automatiquement pour les personnes identifiées. Pour remettre comme avant, simplement
+			// décommenter le code et virer ce qu'il y a avant
 			return isLoggedIn(); // _member.tournamentUnlocked;
 		}
 		public function set isTournamentUnlocked(val:Boolean):void
