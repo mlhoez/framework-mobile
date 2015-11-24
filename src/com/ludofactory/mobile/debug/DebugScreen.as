@@ -144,7 +144,7 @@ package com.ludofactory.mobile.debug
 			_tournamentToggleSwitch.offText = "";
 			_tournamentToggleSwitch.onThumbText = _("Oui");
 			_tournamentToggleSwitch.offThumbText = _("Non");
-			_tournamentToggleSwitch.isSelected = MemberManager.getInstance().getTournamentUnlocked();
+			_tournamentToggleSwitch.isSelected = MemberManager.getInstance().isTournamentUnlocked;
 			_tournamentToggleSwitch.addEventListener(Event.CHANGE, onSwitchTournament);
 			
 			const vlayout:VerticalLayout = new VerticalLayout();
@@ -208,7 +208,7 @@ package com.ludofactory.mobile.debug
 		
 		private function onSwitchTournament(event:Event):void
 		{
-			MemberManager.getInstance().setTournamentUnlocked(_tournamentToggleSwitch.isSelected);
+			MemberManager.getInstance().isTournamentUnlocked = _tournamentToggleSwitch.isSelected;
 			MemberManager.getInstance().setTournamentAnimPending(_tournamentToggleSwitch.isSelected);
 		}
 		
