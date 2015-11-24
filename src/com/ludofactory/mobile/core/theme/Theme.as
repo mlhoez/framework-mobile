@@ -268,8 +268,6 @@ package com.ludofactory.mobile.core.theme
 			// Button
 			buttonTextFormat                      = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(42), COLOR_BROWN);
 			buttonBlueTextFormat                  = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(42), COLOR_WHITE);
-			buttonSpecialTextFormat               = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(42), COLOR_BROWN); // TODO A voir une couleur spéciale plutôt
-			buttonSpecialBiggerTextFormat         = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(60), COLOR_BROWN); // TODO A voir une couleur spéciale plutôt
 			buttonNewsTextFormat                  = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(28), COLOR_BROWN);
 			buttonFlatGreenTextFormat             = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_WHITE, true);
 			buttonFlatGreenDisabledTextFormat     = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(26), COLOR_GREEN, true);
@@ -437,17 +435,16 @@ package com.ludofactory.mobile.core.theme
 			textinputLastBackgroundSkinTextures   = new Scale9Textures(AbstractEntryPoint.assets.getTexture("textinput-last-background-skin"), TEXTINPUT_LAST_GRID);
 			textinputMiddleBackgroundSkinTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("textinput-middle-background-skin"), TEXTINPUT_MIDDLE_GRID);
 			
-			// Button
-			buttonYellowSkinTextures                  = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-yellow"), BUTTON_GRID);
-			buttonYellowSquaredLeftUpSkinTextures     = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-yellow-squared-left"), BUTTON_GRID);
-			buttonYellowSquaredRightUpSkinTextures    = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-yellow-squared-right"), BUTTON_GRID);
+			// Buttons
+			
+			// new
 			buttonSpecialSkinTextures                 = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-special"), BUTTON_GRID);
-			buttonSpecialSquaredLeftUpSkinTextures    = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-special-squared-left"), BUTTON_GRID);
-			buttonSpecialSquaredRightUpSkinTextures   = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-special-squared-right"), BUTTON_GRID);
+			buttonYellowSkinTextures                  = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-yellow"), BUTTON_GRID);
 			buttonBlueSkinTextures                    = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-blue"), BUTTON_GRID);
-			buttonBlueSquaredRightUpSkinTextures      = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-blue-squared-right"), BUTTON_GRID);
 			buttonRedSkinTextures                     = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-red"), BUTTON_GRID);
 			buttonGreenSkinTextures                   = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-green"), BUTTON_GRID);
+			
+			// old
 			buttonDisabledSkinTextures                = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-grey"), BUTTON_GRID);
 			buttonNewsUpSkinTextures                  = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-news-up-skin"), BUTTON_AD_GRID);
 			buttonFlatGreenSkinTextures               = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-sponsor"), BUTTON_FLAT_GREEN_GRID);
@@ -599,16 +596,7 @@ package com.ludofactory.mobile.core.theme
 			
 			// Button
 			getStyleProviderForClass(Button).defaultStyleFunction = buttonInitializer;
-			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_YELLOW_SQUARED_LEFT, buttonYellowSquaredLeftInitializer);
-			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_YELLOW_SQUARED_RIGHT, buttonYellowSquaredRightInitializer);
-			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_SPECIAL_BIGGER, buttonSpecialBiggerInitializer);
-			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_SPECIAL, buttonSpecialInitializer);
-			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_SPECIAL_SQUARED_LEFT, buttonSpecialSquaredLeftInitializer);
-			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_SPECIAL_SQUARED_RIGHT, buttonSpecialSquaredRightInitializer);
-			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER, buttonSpecialSquaredRightBiggerInitializer);
 			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_BLUE, buttonBlueInitializer);
-			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_BLUE_SQUARED_RIGHT, buttonBlueSquaredRightInitializer);
-			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_RED, buttonRedInitializer);
 			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_GREEN, buttonGreenInitializer);
 			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_NEWS, buttonNewsInitializer);
 			getStyleProviderForClass(Button).setFunctionForStyleName(BUTTON_FLAT_GREEN, buttonFlatGreenInitializer);
@@ -938,6 +926,13 @@ package com.ludofactory.mobile.core.theme
 //	Yellow (common style)
 		
 		/**
+		 * Yellow button. */
+		public static var buttonYellowSkinTextures:Scale9Textures;
+		/**
+		 * Special button. */
+		public static var buttonSpecialSkinTextures:Scale9Textures;
+		
+		/**
 		 * Common element format. */		
 		protected var buttonTextFormat:TextFormat;
 		
@@ -963,19 +958,7 @@ package com.ludofactory.mobile.core.theme
 		 * Disabled / Grey button */		
 		public static var buttonDisabledSkinTextures:Scale9Textures;
 		
-		/**
-		 * Yellow button */	
-		public static var buttonYellowSkinTextures:Scale9Textures;
 		
-		/**
-		 * Yellow button squared on the left */		
-		public static const BUTTON_YELLOW_SQUARED_LEFT:String = "button-yellow-squared-left";
-		protected var buttonYellowSquaredLeftUpSkinTextures:Scale9Textures;
-		
-		/**
-		 * Yellow button squared on the right */		
-		public static const BUTTON_YELLOW_SQUARED_RIGHT:String = "button-yellow-squared-right";
-		protected var buttonYellowSquaredRightUpSkinTextures:Scale9Textures;
 		
 		/**
 		 * Common yellow button.
@@ -994,165 +977,6 @@ package com.ludofactory.mobile.core.theme
 			this.baseButtonInitializer(button);
 		}
 		
-		/**
-		 * Yellow button with left side squared
-		 */		
-		protected function buttonYellowSquaredLeftInitializer(button:Button):void
-		{
-			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonYellowSquaredLeftUpSkinTextures;
-			skinSelector.displayObjectProperties =
-				{
-					width: 114 * this.scaleFactor,
-						height: (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor,
-						textureScale: this.scaleFactor
-				};
-			button.stateToSkinFunction = skinSelector.updateValue;
-			this.baseButtonInitializer(button);
-		}
-		
-		/**
-		 * Yellow button with right side squared
-		 */		
-		protected function buttonYellowSquaredRightInitializer(button:Button):void
-		{
-			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonYellowSquaredRightUpSkinTextures;
-			skinSelector.displayObjectProperties =
-				{
-					width: 114 * this.scaleFactor,
-						height: (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor,
-						textureScale: this.scaleFactor
-				};
-			button.stateToSkinFunction = skinSelector.updateValue;
-			this.baseButtonInitializer(button);
-		}
-		
-//------------------------------------------------------------------------------------------------------------
-//	Special (different for each game)
-		
-		protected var buttonSpecialBiggerTextFormat:TextFormat;
-		protected var buttonSpecialTextFormat:TextFormat;
-		
-		/**
-		 * Special button */	
-		public static const BUTTON_SPECIAL_BIGGER:String = "button-special-bigger";
-		public static const BUTTON_SPECIAL:String = "button-special";
-		protected var buttonSpecialSkinTextures:Scale9Textures;
-		
-		/**
-		 * Special button squared on the left */		
-		public static const BUTTON_SPECIAL_SQUARED_LEFT:String = "button-special-squared-left";
-		protected var buttonSpecialSquaredLeftUpSkinTextures:Scale9Textures;
-		
-		/**
-		 * Special button squared on the right */		
-		public static const BUTTON_SPECIAL_SQUARED_RIGHT_BIGGER:String = "button-special-squared-right-bigger";
-		public static const BUTTON_SPECIAL_SQUARED_RIGHT:String = "button-special-squared-right";
-		protected var buttonSpecialSquaredRightUpSkinTextures:Scale9Textures;
-		
-		/**
-		 * Base button special initializer.
-		 */		
-		protected function baseButtonSpecialInitializer(button:Button, bigger:Boolean = false):void
-		{
-			button.defaultLabelProperties.textFormat = bigger ? this.buttonSpecialBiggerTextFormat : this.buttonSpecialTextFormat;
-			
-			//button.scaleWhenDown = true;
-			button.paddingTop = button.paddingBottom = 10 * this.scaleFactor;
-			button.paddingLeft = button.paddingRight = 32 * this.scaleFactor;
-			button.gap = 12 * this.scaleFactor;
-			button.minWidth = 114 * this.scaleFactor;
-			button.minHeight = (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor;
-			button.minTouchWidth = button.minTouchHeight = 114 * this.scaleFactor;
-		}
-		
-		/**
-		 * Special button.
-		 */		
-		protected function buttonSpecialInitializer(button:Button):void
-		{
-			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonSpecialSkinTextures;
-			skinSelector.displayObjectProperties =
-				{
-					width: 114 * this.scaleFactor,
-						height: (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor,
-						textureScale: this.scaleFactor
-				};
-			button.stateToSkinFunction = skinSelector.updateValue;
-			//button.defaultLabelProperties.filters = [ new GlowFilter(0x2a5c02, 1, 12, 12, 10) ];
-			this.baseButtonSpecialInitializer(button);
-		}
-		
-		/**
-		 * Special button.
-		 */		
-		protected function buttonSpecialBiggerInitializer(button:Button):void
-		{
-			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonSpecialSkinTextures;
-			skinSelector.displayObjectProperties =
-				{
-					width: 114 * this.scaleFactor,
-						height: (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor,
-						textureScale: this.scaleFactor
-				};
-			button.stateToSkinFunction = skinSelector.updateValue;
-			//button.defaultLabelProperties.filters = [ new GlowFilter(0x2a5c02, 1, 12, 12, 10) ];
-			this.baseButtonSpecialInitializer(button, true);
-		}
-		
-		/**
-		 * Special button with left side squared
-		 */		
-		protected function buttonSpecialSquaredLeftInitializer(button:Button):void
-		{
-			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonSpecialSquaredLeftUpSkinTextures;
-			skinSelector.displayObjectProperties =
-				{
-					width: 114 * this.scaleFactor,
-						height: (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor,
-						textureScale: this.scaleFactor
-				};
-			button.stateToSkinFunction = skinSelector.updateValue;
-			this.baseButtonSpecialInitializer(button);
-		}
-		
-		/**
-		 * Special button with right side squared
-		 */		
-		protected function buttonSpecialSquaredRightInitializer(button:Button):void
-		{
-			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonSpecialSquaredRightUpSkinTextures;
-			skinSelector.displayObjectProperties =
-				{
-					width: 114 * this.scaleFactor,
-						height: (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor,
-						textureScale: this.scaleFactor
-				};
-			button.stateToSkinFunction = skinSelector.updateValue;
-			this.baseButtonSpecialInitializer(button);
-		}
-		/**
-		 * Special button with right side squared
-		 */		
-		protected function buttonSpecialSquaredRightBiggerInitializer(button:Button):void
-		{
-			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonSpecialSquaredRightUpSkinTextures;
-			skinSelector.displayObjectProperties =
-				{
-					width: 114 * this.scaleFactor,
-						height: (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor,
-						textureScale: this.scaleFactor
-				};
-			button.stateToSkinFunction = skinSelector.updateValue;
-			this.baseButtonSpecialInitializer(button, true);
-		}
-		
 //------------------------------------------------------------------------------------------------------------
 //	Blue
 		
@@ -1162,11 +986,6 @@ package com.ludofactory.mobile.core.theme
 		 * Blue button */		
 		public static const BUTTON_BLUE:String = "button-blue";
 		public static var buttonBlueSkinTextures:Scale9Textures;
-		
-		/**
-		 * Blue button squared on the right */		
-		public static const BUTTON_BLUE_SQUARED_RIGHT:String = "button-blue-squared-right";
-		protected var buttonBlueSquaredRightUpSkinTextures:Scale9Textures;
 		
 		/**
 		 * Base button blue initializer.
@@ -1201,47 +1020,10 @@ package com.ludofactory.mobile.core.theme
 			this.baseButtonBlueInitializer(button);
 		}
 		
-		/**
-		 * Blue button with right side squared
-		 */		
-		protected function buttonBlueSquaredRightInitializer(button:Button):void
-		{
-			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonBlueSquaredRightUpSkinTextures;
-			skinSelector.displayObjectProperties =
-				{
-					width: 114 * this.scaleFactor,
-						height: (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor,
-						textureScale: this.scaleFactor
-				};
-			button.stateToSkinFunction = skinSelector.updateValue;
-			this.baseButtonBlueInitializer(button);
-		}
-		
 //------------------------------------------------------------------------------------------------------------
 //	Red
 		
-		/**
-		 * Red button */		
-		public static const BUTTON_RED:String = "button-red";
-		protected var buttonRedSkinTextures:Scale9Textures;
-		
-		/**
-		 * Red button.
-		 */		
-		protected function buttonRedInitializer(button:Button):void
-		{
-			const skinSelector:SmartDisplayObjectStateValueSelector = new SmartDisplayObjectStateValueSelector();
-			skinSelector.defaultValue = this.buttonRedSkinTextures;
-			skinSelector.displayObjectProperties =
-				{
-					width: 114 * this.scaleFactor,
-						height: (GlobalConfig.isPhone ? 98 : 108) * this.scaleFactor,
-						textureScale: this.scaleFactor
-				};
-			button.stateToSkinFunction = skinSelector.updateValue;
-			this.baseButtonBlueInitializer(button);
-		}
+		public static var buttonRedSkinTextures:Scale9Textures;
 		
 //------------------------------------------------------------------------------------------------------------
 //	Green
