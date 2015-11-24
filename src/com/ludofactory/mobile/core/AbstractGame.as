@@ -6,21 +6,26 @@ Created : 31 août 2013
 */
 package com.ludofactory.mobile.core
 {
-
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.log;
-	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.MobileButton;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.model.StakeType;
+	import com.ludofactory.mobile.core.pause.PauseManager;
+	import com.ludofactory.mobile.core.push.GameSession;
+	import com.ludofactory.mobile.core.push.PushType;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.scoring.ScoreConverter;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -28,23 +33,16 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.pause.PauseManager;
-	import com.ludofactory.mobile.core.push.GameSession;
-	import com.ludofactory.mobile.core.push.PushType;
-	import com.ludofactory.mobile.core.theme.Theme;
 	import com.milkmangames.nativeextensions.ios.IAdBannerAlignment;
-
-	import feathers.controls.Button;
-
+	
 	import flash.events.Event;
 	import flash.filesystem.File;
-
+	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.events.Event;
-
+	
 	/**
 	 * AbstractGame
 	 */	
@@ -62,7 +60,7 @@ package com.ludofactory.mobile.core
 		protected var _playOverlay:Image;
 		/**
 		 * The play button displayed at the begining of a game session. */		
-		protected var _playButton:Button;
+		protected var _playButton:MobileButton;
 		
 		/**
 		 * Whether the player gave up this game session. */		
@@ -244,14 +242,9 @@ package com.ludofactory.mobile.core
 			_playOverlay.height = GlobalConfig.stageHeight;
 			addChild(_playOverlay);
 			
-			_playButton = new Button();
-			_playButton.styleName = Theme.BUTTON_SPECIAL_BIGGER;
-			_playButton.label = _("Commencer");
+			_playButton = ButtonFactory.getButton(_("Commencer"), ButtonFactory.SPECIAL);
 			_playButton.addEventListener(starling.events.Event.TRIGGERED, onPlay);
 			addChild(_playButton);
-			_playButton.height = scaleAndRoundToDpi(108);
-			_playButton.validate();
-			_playButton.width += scaleAndRoundToDpi(30);
 			_playButton.x = (GlobalConfig.stageWidth - _playButton.width) * 0.5;
 			_playButton.y = (GlobalConfig.stageHeight - _playButton.height) * 0.5;
 			
