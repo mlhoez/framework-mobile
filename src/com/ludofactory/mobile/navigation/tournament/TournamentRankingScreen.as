@@ -142,7 +142,7 @@ package com.ludofactory.mobile.navigation.tournament
 			_playButton.label = _("Participer");
 			addChild(_playButton);
 			
-			if( MemberManager.getInstance().getTournamentUnlocked() == false )
+			if( !MemberManager.getInstance().isTournamentUnlocked )
 			{
 				_leftLock = new Image( AbstractEntryPoint.assets.getTexture("lock-left") );
 				_leftLock.scaleX = _leftLock.scaleY = GlobalConfig.dpiScale;
@@ -286,7 +286,7 @@ package com.ludofactory.mobile.navigation.tournament
 					_retryContainer.y = _ranksList.y;
 					_retryContainer.height = _playButton.y - _ranksList.y;
 					
-					if( MemberManager.getInstance().getTournamentUnlocked() == false )
+					if( !MemberManager.getInstance().isTournamentUnlocked )
 					{
 						_leftLock.alignPivot();
 						_leftLock.y = int(_playButton.y + (_playButton.height * 0.5) + scaleAndRoundToDpi(3));
@@ -326,7 +326,7 @@ package com.ludofactory.mobile.navigation.tournament
 					_retryContainer.y = _ranksList.y;
 					_retryContainer.height = _playButton.y - _ranksList.y;
 					
-					if( MemberManager.getInstance().getTournamentUnlocked() == false )
+					if( !MemberManager.getInstance().isTournamentUnlocked )
 					{
 						_leftLock.alignPivot();
 						_leftLock.y = int(_playButton.y + (_playButton.height * 0.5) + scaleAndRoundToDpi(3));
@@ -577,7 +577,7 @@ package com.ludofactory.mobile.navigation.tournament
 		 */		
 		private function onPlay(event:Event):void
 		{
-			if( MemberManager.getInstance().getTournamentUnlocked() == true )
+			if( MemberManager.getInstance().isTournamentUnlocked )
 			{
 				advancedOwner.screenData.gameType = GameMode.TOURNAMENT;
 				advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );

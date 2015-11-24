@@ -277,8 +277,9 @@ package com.ludofactory.mobile.core.manager
 			AbstractEntryPoint.alertData.onUserLoggedOut();
 			AbstractEntryPoint.eventManager.onUserLoggedOut();
 			
+			// if the
 			if( !_member.tournamentUnlocked && tournamentUnlocked )
-				setTournamentUnlocked(true);
+				isTournamentUnlocked = true;
 			
 			// clear Facebook session
 			if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
@@ -467,6 +468,16 @@ package com.ludofactory.mobile.core.manager
 			setEncryptedMember();
 		}
 		
+		/** Updates the value of <code>tournamentUnlocked</code>. */
+		public function get isTournamentUnlocked():Boolean { return _member.tournamentUnlocked; }
+		public function set isTournamentUnlocked(val:Boolean):void
+		{
+			if( _member.tournamentUnlocked != val )
+			{
+				_member.tournamentUnlocked = val;
+				setEncryptedMember();
+			}
+		}
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
 		
@@ -494,17 +505,7 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
-		/**
-		 * Updates the value of <code>tournamentUnlocked</code>.
-		 */		
-		public function setTournamentUnlocked(val:Boolean):void
-		{
-			if( _member.tournamentUnlocked != val )
-			{
-				_member.tournamentUnlocked = val;
-				setEncryptedMember();
-			}
-		}
+		
 		
 		public function setGetGiftsEnabled(value:Boolean):void
 		{
@@ -527,8 +528,7 @@ package com.ludofactory.mobile.core.manager
 		public function getDisplayTutorial():Boolean { return _member.displayTutorial; }
 		/** Returns */		
 		public function getTournamentAnimPending():Boolean { return _member.tournamentAnimPending; }
-		/** Returns */		
-		public function getTournamentUnlocked():Boolean { return _member.tournamentUnlocked; }
+		
         /** Returns */
         public function getGiftsEnabled():Boolean { return _member.giftsEnabled; }
 		/** Returns */

@@ -177,9 +177,10 @@ package com.ludofactory.mobile.navigation.engine
 			NavigationManager.resetNavigation(false);
 			
 			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-			if( MemberManager.getInstance().getTournamentUnlocked() == false )
+			
+			if( !MemberManager.getInstance().isTournamentUnlocked )
 			{
-				MemberManager.getInstance().setTournamentUnlocked(true);
+				MemberManager.getInstance().isTournamentUnlocked = true;
 				MemberManager.getInstance().setTournamentAnimPending(true);
 			}
 			
@@ -390,8 +391,6 @@ package com.ludofactory.mobile.navigation.engine
 			// FIXME A décommenter pour gérer l'orientation
 			//invalidate(INVALIDATION_FLAG_SIZE);
 		}
-		
-		
 		
 		override protected function draw():void
 		{

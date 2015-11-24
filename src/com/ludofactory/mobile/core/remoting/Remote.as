@@ -113,7 +113,7 @@ package com.ludofactory.mobile.core.remoting
 		public function init(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = getGenericParams();
-			params.acces_tournoi = MemberManager.getInstance().getTournamentUnlocked() == true ? 1 : 0;
+			params.acces_tournoi = MemberManager.getInstance().isTournamentUnlocked ? 1 : 0;
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "init", params);
 		}
 		
@@ -837,9 +837,9 @@ package com.ludofactory.mobile.core.remoting
 				if( MemberManager.getInstance().isLoggedIn() && "tab_trophy_win" in result )
 					MemberManager.getInstance().trophiesWon = result.tab_trophy_win as Array; // TODO peut être afficher les trophées ici ? canWin... si oui => onWinTrophy...
 				
-				if( MemberManager.getInstance().isLoggedIn() && "acces_tournoi" in result &&  queryName != "LudoMobile.useClass.ServeurJeux.pushPartie" )
+				if( MemberManager.getInstance().isLoggedIn() && "acces_tournoi" in result && queryName != "LudoMobile.useClass.ServeurJeux.pushPartie" )
 				{
-					MemberManager.getInstance().setTournamentUnlocked( int(result.acces_tournoi) );
+					MemberManager.getInstance().isTournamentUnlocked = int(result.acces_tournoi);
 					//MemberManager.getInstance().setTournamentAnimPending( false ); // sinon pas d'anim quand partie classique => popup marketing => inscription => acccueil
 					MemberManager.getInstance().setDisplayTutorial( int(result.acces_tournoi) != 1 );
 				}
@@ -965,7 +965,7 @@ package com.ludofactory.mobile.core.remoting
 			genericParam.type_appareil = GlobalConfig.isPhone ? "smartphone":"tablette";
 			genericParam.plateforme = GlobalConfig.platformName;
 			genericParam.id_appareil = GlobalConfig.deviceId;
-			genericParam.version_jeu = AbstractGameInfo.GAME_VERSION;
+			genericParam.version_jeu = AbstractGameInfo.GAME_VERSION; // TODO concaténer le n° de build pour plus de précision
 			genericParam.screen_orientation = AbstractGameInfo.LANDSCAPE ? "paysage" : "portrait";
 			genericParam.store = GlobalConfig.ios ? "applestore" : (GlobalConfig.amazon ? "amazon" : "googleplay");
 			try
@@ -997,7 +997,7 @@ package com.ludofactory.mobile.core.remoting
 		private function addAnonymousGameSessionsIfNeeded( params:Object ):Object
 		{
 			params.parties = [];
-			params.acces_tournoi = MemberManager.getInstance().getTournamentUnlocked() == true ? 1 : 0;
+			params.acces_tournoi = MemberManager.getInstance().isTournamentUnlocked ? 1 : 0;
 			
 			// we can send them
 			var gameSession:GameSession;

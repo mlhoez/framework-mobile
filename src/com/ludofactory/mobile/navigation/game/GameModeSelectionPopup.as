@@ -369,7 +369,7 @@ package com.ludofactory.mobile.navigation.game
 		 */		
 		private function onPlayTournament(event:Event):void
 		{
-			if( MemberManager.getInstance().getTournamentUnlocked() == true )
+			if( MemberManager.getInstance().isTournamentUnlocked )
 			{
 				AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
 				
@@ -427,8 +427,8 @@ package com.ludofactory.mobile.navigation.game
 			_tournamentButton.label = _("Partie en Tournoi");
 			_rulesButton.label = _("Règles du jeu");
 			
-			_leftLock.visible = _lock.visible = _rightLock.visible = !MemberManager.getInstance().getTournamentUnlocked();
-			_leftLock.alpha = _lock.alpha = _rightLock.alpha = MemberManager.getInstance().getTournamentUnlocked() ? 0 : 1;
+			_leftLock.visible = _lock.visible = _rightLock.visible = !MemberManager.getInstance().isTournamentUnlocked;
+			_leftLock.alpha = _lock.alpha = _rightLock.alpha = MemberManager.getInstance().isTournamentUnlocked ? 0 : 1;
 			
 			_canBeClosed = true;
 			
@@ -457,7 +457,7 @@ package com.ludofactory.mobile.navigation.game
 			_rulesButton.scaleX = _rulesButton.scaleY = _rulesButton.alpha = 1;
 			_soloButton.visible = _tournamentButtonContainer.visible = _rulesButton.visible = true;
 			
-			if( MemberManager.getInstance().getTournamentUnlocked() && MemberManager.getInstance().getTournamentAnimPending() )
+			if( MemberManager.getInstance().isTournamentUnlocked && MemberManager.getInstance().getTournamentAnimPending() )
 			{
 				// si le tournoi est débloqué
 				_canBeClosed = false;
@@ -484,8 +484,8 @@ package com.ludofactory.mobile.navigation.game
 			_tournamentButton.label = _("Partie en Tournoi");
 			_rulesButton.label = _("Règles du jeu");
 			
-			_leftLock.visible = _lock.visible = _rightLock.visible = (MemberManager.getInstance().getTournamentUnlocked() && !MemberManager.getInstance().getTournamentAnimPending()) ? false : true;
-			_leftLock.alpha = _lock.alpha = _rightLock.alpha = (MemberManager.getInstance().getTournamentUnlocked() && !MemberManager.getInstance().getTournamentAnimPending()) ? 0 : 1;
+			_leftLock.visible = _lock.visible = _rightLock.visible = (MemberManager.getInstance().isTournamentUnlocked && !MemberManager.getInstance().getTournamentAnimPending()) ? false : true;
+			_leftLock.alpha = _lock.alpha = _rightLock.alpha = (MemberManager.getInstance().isTournamentUnlocked && !MemberManager.getInstance().getTournamentAnimPending()) ? 0 : 1;
 			
 			/*if( !_isOpening )
 			{
@@ -506,7 +506,7 @@ package com.ludofactory.mobile.navigation.game
 				TweenMax.allTo([_soloButton, _tournamentButtonContainer, _rulesButton], 0.5, { autoAlpha:1, scaleX:1, scaleY:1, ease:Back.easeOut });
 			//}
 			
-			if( MemberManager.getInstance().getTournamentUnlocked() && MemberManager.getInstance().getTournamentAnimPending() )
+			if( MemberManager.getInstance().isTournamentUnlocked && MemberManager.getInstance().getTournamentAnimPending() )
 			{
 				// si le tournoi est débloqué
 				_canBeClosed = false;
