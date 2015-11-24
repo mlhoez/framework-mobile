@@ -12,9 +12,10 @@ package com.ludofactory.mobile.core.pause
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.MobileButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -22,7 +23,6 @@ package com.ludofactory.mobile.core.pause
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
 	
-	import feathers.controls.Button;
 	import feathers.core.FeathersControl;
 	
 	import starling.display.Button;
@@ -44,16 +44,16 @@ package com.ludofactory.mobile.core.pause
 		private var _title:TextField;
 		/**
 		 * Resume button */		
-		private var _resumeButton:feathers.controls.Button;
+		private var _resumeButton:MobileButton;
 		/**
 		 * Exit button */		
-		private var _exitButton:feathers.controls.Button;
+		private var _exitButton:MobileButton;
 		/**
 		 * Sound effects button. */		
-		private var _fxButton:starling.display.Button;
+		private var _fxButton:Button;
 		/**
 		 * Music button. */		
-		private var _musicButton:starling.display.Button;
+		private var _musicButton:Button;
 		
 		public function PauseView()
 		{
@@ -76,25 +76,21 @@ package com.ludofactory.mobile.core.pause
 			_title.text = _("Jeu en pause");
 			addChild(_title);
 			
-			_resumeButton = new feathers.controls.Button();
-			_resumeButton.alpha = 0;
+			_resumeButton = ButtonFactory.getButton(_("Reprendre"), ButtonFactory.SPECIAL);
 			_resumeButton.visible = false;
-			_resumeButton.label = _("Reprendre");
-			_resumeButton.styleName = Theme.BUTTON_SPECIAL;
+			_resumeButton.alpha = 0;
 			addChild(_resumeButton);
 			
-			_exitButton = new feathers.controls.Button();
+			_exitButton = ButtonFactory.getButton(_("Abandonner"), ButtonFactory.RED);
 			_exitButton.alpha = 0;
 			_exitButton.visible = false;
-			_exitButton.styleName = Theme.BUTTON_RED;
-			_exitButton.label = _("Abandonner");
 			addChild(_exitButton);
 			
-			_fxButton = new starling.display.Button( AbstractEntryPoint.assets.getTexture("fx-button") );
+			_fxButton = new Button( AbstractEntryPoint.assets.getTexture("fx-button") );
 			_fxButton.scaleX = _fxButton.scaleY = GlobalConfig.dpiScale;
 			addChild(_fxButton);
 			
-			_musicButton = new starling.display.Button( AbstractEntryPoint.assets.getTexture("music-button") );
+			_musicButton = new Button( AbstractEntryPoint.assets.getTexture("music-button") );
 			_musicButton.scaleX = _musicButton.scaleY = GlobalConfig.dpiScale;
 			addChild(_musicButton);
 		}
@@ -108,8 +104,6 @@ package com.ludofactory.mobile.core.pause
 				//var rect:Rectangle = AdMobAdType.getPixelSize( AdMobAdType.IAB_MRECT );
 				
 				_resumeButton.width = _exitButton.width = GlobalConfig.stageWidth * (AbstractGameInfo.LANDSCAPE ? 0.5 : (GlobalConfig.isPhone ? 0.6 : 0.5));
-				_resumeButton.validate();
-				_exitButton.validate();
 				
 				_resumeButton.x = _exitButton.x = (GlobalConfig.stageWidth - _resumeButton.width) * 0.5;
 				_resumeButton.y = (GlobalConfig.stageHeight * 0.5) - _resumeButton.height - scaleAndRoundToDpi(10);
