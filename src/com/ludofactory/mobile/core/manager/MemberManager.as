@@ -267,7 +267,7 @@ package com.ludofactory.mobile.core.manager
 			// before the user log off, we save the state of the tournament and
 			// we set the the animation pending to false for the current user
 			var tournamentUnlocked:Boolean = _member.tournamentUnlocked;
-			setTournamentAnimPending(false);
+			isTournamentAnimPending = false;
 			
 			AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = false;
 			AbstractEntryPoint.isSelectingPseudo = false;
@@ -484,6 +484,18 @@ package com.ludofactory.mobile.core.manager
 				setEncryptedMember();
 			}
 		}
+		
+		/** Updates the value of <code>tournamentAnimPending</code>. */
+		public function get isTournamentAnimPending():Boolean { return _member.tournamentAnimPending; }
+		public function set isTournamentAnimPending(val:Boolean):void
+		{
+			if( _member.tournamentAnimPending != val )
+			{
+				_member.tournamentAnimPending = val;
+				setEncryptedMember();
+			}
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
 		
@@ -499,17 +511,7 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
-		/**
-		 * Updates the value of <code>tournamentAnimPending</code>.
-		 */		
-		public function setTournamentAnimPending(val:Boolean):void
-		{
-			if( _member.tournamentAnimPending != val )
-			{
-				_member.tournamentAnimPending = val;
-				setEncryptedMember();
-			}
-		}
+		
 		
 		
 		
@@ -532,8 +534,7 @@ package com.ludofactory.mobile.core.manager
 		public function getCountryId():int { return _member.countryId; }
 		/** Returns */		
 		public function getDisplayTutorial():Boolean { return _member.displayTutorial; }
-		/** Returns */		
-		public function getTournamentAnimPending():Boolean { return _member.tournamentAnimPending; }
+		
 		
         /** Returns */
         public function getGiftsEnabled():Boolean { return _member.giftsEnabled; }

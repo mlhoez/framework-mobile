@@ -209,7 +209,7 @@ package com.ludofactory.mobile.debug
 		private function onSwitchTournament(event:Event):void
 		{
 			MemberManager.getInstance().isTournamentUnlocked = _tournamentToggleSwitch.isSelected;
-			MemberManager.getInstance().setTournamentAnimPending(_tournamentToggleSwitch.isSelected);
+			MemberManager.getInstance().isTournamentAnimPending = _tournamentToggleSwitch.isSelected;
 		}
 		
 		private function onTestTrophies(event:Event):void

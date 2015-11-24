@@ -457,11 +457,11 @@ package com.ludofactory.mobile.navigation.game
 			_rulesButton.scaleX = _rulesButton.scaleY = _rulesButton.alpha = 1;
 			_soloButton.visible = _tournamentButtonContainer.visible = _rulesButton.visible = true;
 			
-			if( MemberManager.getInstance().isTournamentUnlocked && MemberManager.getInstance().getTournamentAnimPending() )
+			if( MemberManager.getInstance().isTournamentUnlocked && MemberManager.getInstance().isTournamentAnimPending )
 			{
 				// si le tournoi est débloqué
 				_canBeClosed = false;
-				MemberManager.getInstance().setTournamentAnimPending(false);
+				MemberManager.getInstance().isTournamentAnimPending = false;
 				Shaker.dispatcher.addEventListener(Event.COMPLETE, onUnlockComplete);
 				TweenMax.to(_glow, 1.25, { delay:1.5, scaleX:(GlobalConfig.dpiScale + 1.5), scaleY:(GlobalConfig.dpiScale + 1.5), ease:Elastic.easeOut });
 				TweenMax.to(_glow, 0.75, { delay:1.5, autoAlpha:1 });
@@ -484,8 +484,8 @@ package com.ludofactory.mobile.navigation.game
 			_tournamentButton.label = _("Partie en Tournoi");
 			_rulesButton.label = _("Règles du jeu");
 			
-			_leftLock.visible = _lock.visible = _rightLock.visible = (MemberManager.getInstance().isTournamentUnlocked && !MemberManager.getInstance().getTournamentAnimPending()) ? false : true;
-			_leftLock.alpha = _lock.alpha = _rightLock.alpha = (MemberManager.getInstance().isTournamentUnlocked && !MemberManager.getInstance().getTournamentAnimPending()) ? 0 : 1;
+			_leftLock.visible = _lock.visible = _rightLock.visible = (MemberManager.getInstance().isTournamentUnlocked && !MemberManager.getInstance().isTournamentAnimPending) ? false : true;
+			_leftLock.alpha = _lock.alpha = _rightLock.alpha = (MemberManager.getInstance().isTournamentUnlocked && !MemberManager.getInstance().isTournamentAnimPending) ? 0 : 1;
 			
 			/*if( !_isOpening )
 			{
@@ -506,11 +506,11 @@ package com.ludofactory.mobile.navigation.game
 				TweenMax.allTo([_soloButton, _tournamentButtonContainer, _rulesButton], 0.5, { autoAlpha:1, scaleX:1, scaleY:1, ease:Back.easeOut });
 			//}
 			
-			if( MemberManager.getInstance().isTournamentUnlocked && MemberManager.getInstance().getTournamentAnimPending() )
+			if( MemberManager.getInstance().isTournamentUnlocked && MemberManager.getInstance().isTournamentAnimPending )
 			{
 				// si le tournoi est débloqué
 				_canBeClosed = false;
-				MemberManager.getInstance().setTournamentAnimPending(false);
+				MemberManager.getInstance().isTournamentAnimPending = false;
 				Shaker.dispatcher.addEventListener(Event.COMPLETE, onUnlockComplete);
 				TweenMax.to(_glow, 0.5, { delay:1.5, autoAlpha:1, scaleX:(GlobalConfig.dpiScale + 1.5), scaleY:(GlobalConfig.dpiScale + 1.5), ease:Linear.easeNone });
 				TweenMax.to(_glow, 0.75, { delay:1.5, autoAlpha:1 });

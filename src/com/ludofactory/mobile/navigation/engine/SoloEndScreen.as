@@ -181,7 +181,7 @@ package com.ludofactory.mobile.navigation.engine
 			if( !MemberManager.getInstance().isTournamentUnlocked )
 			{
 				MemberManager.getInstance().isTournamentUnlocked = true;
-				MemberManager.getInstance().setTournamentAnimPending(true);
+				MemberManager.getInstance().isTournamentAnimPending = true;
 			}
 			
 			_logo = new ImageLoader();
@@ -276,7 +276,7 @@ package com.ludofactory.mobile.navigation.engine
 			
 			// Step 2 - Not logged in ----
 			
-			if( MemberManager.getInstance().getTournamentAnimPending() )
+			if( MemberManager.getInstance().isTournamentAnimPending )
 			{
 				_convertContainer = new ScrollContainer();
 				_convertContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
@@ -418,7 +418,7 @@ package com.ludofactory.mobile.navigation.engine
 				_buttonsContainer.x = (actualWidth - _buttonsContainer.width) * 0.5;
 				_buttonsContainer.y = actualHeight - _buttonsContainer.height - scaleAndRoundToDpi(40);
 				
-				if( MemberManager.getInstance().getTournamentAnimPending() )
+				if( MemberManager.getInstance().isTournamentAnimPending )
 				{
 					_homeButton.width = _buttonsContainer.width;
 					_playAgainButton.width = 0;
@@ -476,7 +476,7 @@ package com.ludofactory.mobile.navigation.engine
 				
 			// Step 2 --------------------------------------------------
 				
-				if( MemberManager.getInstance().getTournamentAnimPending() )
+				if( MemberManager.getInstance().isTournamentAnimPending )
 				{
 					_convertContainer.width = _buttonsContainer.width;
 					_convertContainer.x = (actualWidth - _convertContainer.width) * 0.5;
@@ -683,7 +683,7 @@ package com.ludofactory.mobile.navigation.engine
 			// move the cumulated points container up
 			TweenMax.to(_cumulatedPointsContainer, 0.75, { y:_cumulatedScoreContainerTargetY });
 			
-			if( MemberManager.getInstance().getTournamentAnimPending() )
+			if( MemberManager.getInstance().isTournamentAnimPending )
 			{
 				// the tournament have been unloacked
 				_homeButton.removeEventListener(starling.events.Event.TRIGGERED, onGoHome);
@@ -703,7 +703,7 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			
 			// if not logged in or if the tournament have been unlocked, we show the convert container
-			if(!MemberManager.getInstance().isLoggedIn() || MemberManager.getInstance().getTournamentAnimPending())
+			if(!MemberManager.getInstance().isLoggedIn() || MemberManager.getInstance().isTournamentAnimPending)
 				TweenMax.to(_convertContainer, 0.5, { delay:0.5, autoAlpha:1 });
 			
 			// disable and hide the continue button
