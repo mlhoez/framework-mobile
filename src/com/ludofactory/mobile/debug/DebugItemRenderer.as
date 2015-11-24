@@ -18,6 +18,10 @@ package com.ludofactory.mobile.debug
 	import feathers.controls.PickerList;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
+	import feathers.core.FeathersControl;
+	import feathers.core.FeathersControl;
+	
+	import starling.display.DisplayObject;
 	
 	import starling.display.Quad;
 	import starling.events.Event;
@@ -67,7 +71,7 @@ package com.ludofactory.mobile.debug
 		
 		/**
 		 * The control to display. */		
-		private var _control:FeathersControl;
+		private var _control:DisplayObject;
 		
 		/**
 		 * The background border width. */		
@@ -206,25 +210,26 @@ package com.ludofactory.mobile.debug
 				if( _control is CustomToggleSwitch )
 				{
 					_control.width = scaleAndRoundToDpi(200);
-					_control.validate();
+					if(_control is FeathersControl) FeathersControl(_control).validate();
 				}
 				else
 				{
 					//_control.width = (actualWidth - _title.x) * (GlobalConfig.isPhone ? 0.35 : 0.25);
 					if( _control is ArrowGroup )
 					{
-						_control.validate();
+						if(_control is FeathersControl) FeathersControl(_control).validate();
 					}
 					else if( _control is PickerList )
 					{
-						_control.validate();
+						if(_control is FeathersControl) FeathersControl(_control).validate();
 						_control.width += scaleAndRoundToDpi(20);
 					}
 					else
 					{
 						_control.width = scaleAndRoundToDpi(200);
 					}
-					_control.height = actualHeight * 0.75;
+					if(_control is FeathersControl)
+						_control.height = actualHeight * 0.75;
 				}
 				
 				_control.x = actualWidth - _control.width - _padding;
