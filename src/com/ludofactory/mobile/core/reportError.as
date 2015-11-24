@@ -70,6 +70,7 @@ package com.ludofactory.mobile.core
 				objCall.plateforme = GlobalConfig.platformName;
 				objCall.deviceType = GlobalConfig.isPhone ? "smartphone":"tablette";
 				objCall.deviceId = GlobalConfig.deviceId;
+				objCall.currentScreen = AbstractEntryPoint.screenNavigator ? AbstractEntryPoint.screenNavigator.activeScreenID : "";
 				
 				if(arg is String)
 				{
