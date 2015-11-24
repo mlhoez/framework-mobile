@@ -110,6 +110,8 @@ package com.ludofactory.mobile.navigation.highscore
 			_whiteBackground = true;
 			_appClearBackground = false;
 			_fullScreen = false;
+			
+			// TODO intégrer ici le code de la home avec info bule et authentification au Game Center
 		}
 		
 		override protected function initialize():void

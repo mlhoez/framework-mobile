@@ -356,7 +356,7 @@ package com.ludofactory.mobile.navigation.engine
 		/**
 		 * Continue.
 		 */		
-		private function onContinue(event:starling.events.Event):void
+		private function onContinue(event:starling.events.Event = null):void
 		{
 			if( _facebookButton )
 				TweenMax.allTo([_facebookButton, _continueButton], 0.5, { alpha:0 } );
