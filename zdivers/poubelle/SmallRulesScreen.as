@@ -154,7 +154,7 @@ package com.ludofactory.mobile.navigation.engine
 		override public function onBack():void
 		{
 			// give the credits / free games / points back in case on back
-			advancedOwner.dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
+			advancedOwner.dispatchEventWith(MobileEventTypes.MEMBER_UPDATED);
 			super.onBack();
 		}
 		

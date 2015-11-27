@@ -11,11 +11,13 @@ package com.ludofactory.mobile.core
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.freshplanet.nativeExtensions.PushNotificationEvent;
 	import com.gamua.flox.Flox;
+	import com.ludofactory.ane.DeviceUtils;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.LogDisplayer;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -533,8 +535,7 @@ package com.ludofactory.mobile.core
 			_shadow.setVertexColor(3, 0xffffff);
 			_container.addChild(_shadow);
 			
-			MemberManager.getInstance().addEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateSummary);
-			Remote.getInstance().addEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateSummary);
+			MemberManager.getInstance().addEventListener(MobileEventTypes.MEMBER_UPDATED, onUpdateSummary);
 			
 			dispatcher.addEventListener(MobileEventTypes.ALERT_COUNT_UPDATED, onPushUpdate);
 			LanguageManager.getInstance().checkForUpdate(false);
@@ -636,8 +637,7 @@ package com.ludofactory.mobile.core
 			_screenNavigator.addEventListener(MobileEventTypes.UPDATE_HEADER_TITLE, onUpdateHeaderTitle);
 			_screenNavigator.addEventListener(MobileEventTypes.SHOW_MAIN_MENU, onMenuButtonTouched);
 			_screenNavigator.addEventListener(MobileEventTypes.HIDE_MAIN_MENU, hideMenu);
-			_screenNavigator.addEventListener(MobileEventTypes.ANIMATE_SUMMARY, onAnimateSummary);
-			_screenNavigator.addEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateSummary);
+			_screenNavigator.addEventListener(MobileEventTypes.ANIMATE_FOOTER, onAnimateSummary);
 			//_screenNavigator.clipContent = true;
 			_container.addChild(_screenNavigator);
 		}
@@ -1065,7 +1065,7 @@ package com.ludofactory.mobile.core
 		 */		
 		private function onUpdateSummary(event:Event):void
 		{
-			_footer.updateSummary();
+			_footer.updateData();
 			
 			if( !MemberManager.getInstance().isLoggedIn() )
 			{

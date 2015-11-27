@@ -168,16 +168,16 @@ package com.ludofactory.mobile.core.events
 		 */
 		public static const UPDATE_ALERT_CONTAINER_LIST:String = "updateAlertContainerList";
 		
+		
+		
+		
+		
+		
 		/**
 		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
 		 * the AccordionElement class when a panel has fully collapsed.
 		 */
-		public static const UPDATE_SUMMARY:String = "updateSummary";
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
-		public static const ANIMATE_SUMMARY:String = "animateSummary";
+		public static const ANIMATE_FOOTER:String = "animate-footer";
 		
 		
 		
@@ -206,6 +206,19 @@ package com.ludofactory.mobile.core.events
 		public static const HEADER_VISIBILITY_CHANGED:String = "headerVisibilityChanged";
 		
 		public static const PROMO_UPDATED:String = "promoUpdated";
+		
+		
+//------------------------------------------------------------------------------------------------------------
+//
+		
+		/**
+		 * The <code>MobileEventType.MEMBER_UPDATED</code> event type is dispatched by the MemberManager
+		 * instance whenever the member object is parsed.
+		 */
+		public static const MEMBER_UPDATED:String = "update-member";
+		
+		
+		
 		
 //------------------------------------------------------------------------------------------------------------
 //	Game Center

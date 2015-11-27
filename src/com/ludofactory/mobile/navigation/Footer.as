@@ -147,10 +147,7 @@ package com.ludofactory.mobile.navigation
 			_creditsContainer = new FooterStakeElement( StakeType.CREDIT );
 			addChild(_creditsContainer);
 			
-			GameSessionTimer.registerFunction(_freeContainer.setLabelText);
-			
-			
-			updateSummary();
+			updateData();
 		}
 		
 		override protected function draw():void
@@ -194,26 +191,14 @@ package com.ludofactory.mobile.navigation
 		/**
 		 * Updates the labels in the summary elements.
 		 * 
-		 * <p>This is called whenever the number of free game sessions,
-		 * points or credits have changed.</p>
+		 * <p>This is called whenever the number of tokens, points or credits have changed. In other words,
+		 * whenever the MemberManager instance dispatches the UPDATE_FOOTER event.</p>
 		 */		
-		public function updateSummary():void
+		public function updateData():void
 		{
-			GameSessionTimer.updateState();
-			if( MemberManager.getInstance().isLoggedIn() )
-			{
-				_freeContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().tokens ) );
-				_pointsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().points ) );
-				_creditsContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().credits ) );
-			}
-			else
-			{
-				// gestion avant le fait de pouvoir autoriser les achats sans être connecté à son compte
-				//_creditsContainer.setLabelText( MemberManager.getInstance().tokens == 0 ? "???" : "-" );
-				//_pointsContainer.setLabelText( MemberManager.getInstance().getAnonymousGameSessionsAlreadyUsed() ? "???" : ("" + MemberManager.getInstance().points) );
-				_pointsContainer.setLabelText( "" + Utilities.splitThousands(MemberManager.getInstance().points) );
-				_creditsContainer.setLabelText( "" + Utilities.splitThousands(MemberManager.getInstance().credits) );
-			}
+			_freeContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().tokens) );
+			_pointsContainer.setLabelText( "" + Utilities.splitThousands(MemberManager.getInstance().points) );
+			_creditsContainer.setLabelText( "" + Utilities.splitThousands(MemberManager.getInstance().credits) );
 		}
 		
 		/**
@@ -223,21 +208,9 @@ package com.ludofactory.mobile.navigation
 		{
 			switch(data.type)
 			{
-				case StakeType.TOKEN:
-				{
-					_freeContainer.animateChange( data.value );
-					break;
-				}
-				case StakeType.CREDIT:
-				{
-					_creditsContainer.animateChange( data.value );
-					break;
-				}
-				case StakeType.POINT:
-				{
-					_pointsContainer.animateChange( data.value );
-					break;
-				}
+				case StakeType.TOKEN: { _freeContainer.animateChange( data.value ); break; }
+				case StakeType.CREDIT: { _creditsContainer.animateChange( data.value ); break; }
+				case StakeType.POINT: { _pointsContainer.animateChange( data.value ); break; }
 			}
 		}
 		
@@ -261,7 +234,7 @@ package com.ludofactory.mobile.navigation
 		}
 		
 		/**
-		 * The new button was touched.
+		 * The news button was touched.
 		 */		
 		private function onNewsButtonTouched(event:Event):void
 		{

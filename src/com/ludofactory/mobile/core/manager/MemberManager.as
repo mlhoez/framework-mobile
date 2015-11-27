@@ -51,16 +51,16 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * The default member id (0). */		
-		private const DEFAULT_MEMBER_ID:int = 0;
+		private static const DEFAULT_MEMBER_ID:Number = 0;
 		
 		/**
 		 * The name used to retreive the last logged in member id (0 for the default member). */		
-		private const LAST_LOGGED_IN_MEMBER_ID:String = "LoggedinMemberId";
+		private static const LAST_LOGGED_IN_MEMBER_ID:String = "LoggedinMemberId";
 		
 		/**
 		 * The base name used to retreive a member in the EncryptedLocalStore. This
 		 * value will be suffixed by a member id in order to retrieve a specific member. */		
-		private const MEMBER_ACCESS_PREFIX:String = "Member_";
+		private static const MEMBER_ACCESS_PREFIX:String = "Member_";
 		
 		/**
 		 * The current member data. */		
@@ -75,6 +75,7 @@ package com.ludofactory.mobile.core.manager
 			if( sk == null)
 				throw new Error("[MemberManager] You must call MamberManager.getInstance instead of new.");
 			
+			// register all custom classes that will be stored in the member object
 			registerClassAlias("AbstractElementToPushClass", AbstractElementToPush);
 			registerClassAlias("GameSessionClass", GameSession);
 			registerClassAlias("PushTrophyClass", PushTrophy);
@@ -92,8 +93,34 @@ package com.ludofactory.mobile.core.manager
 			// means that no one have logged in already (probably because it is the first
 			// launch of the application) or the ELS have been cleared for some reason.
 			// Otherwise we simply read the member id and we load it.
-			HELPER_BYTE_ARRAY = EncryptedLocalStore.getItem( LAST_LOGGED_IN_MEMBER_ID );	
-			loadEncryptedMember( HELPER_BYTE_ARRAY == null ? DEFAULT_MEMBER_ID : HELPER_BYTE_ARRAY.readInt(), false );
+			HELPER_BYTE_ARRAY = EncryptedLocalStore.getItem( LAST_LOGGED_IN_MEMBER_ID );
+			
+			// /!\ Important :
+			// I changed the type of the member id value (from int to Number), thus for backward compatibility, I need
+			// to check if first I can retrieve the value as a number (double), if not, it means it's an account made
+			// before this change, so I needto retrieve an int instead
+			// This changed was made on november 27 2015, much later we can remove this verification and bring back
+			// this line : loadEncryptedMember( HELPER_BYTE_ARRAY == null ? DEFAULT_MEMBER_ID : HELPER_BYTE_ARRAY.readDouble(), false );
+			var memberIdValue:Number;
+			if(HELPER_BYTE_ARRAY == null)
+			{
+				memberIdValue = DEFAULT_MEMBER_ID;
+			}
+			else
+			{
+				try
+				{
+					memberIdValue = HELPER_BYTE_ARRAY.readDouble();
+				}
+				catch(err:Error)
+				{
+					memberIdValue = HELPER_BYTE_ARRAY.readInt();
+				}
+			}
+			
+			// before :
+			//loadEncryptedMember( HELPER_BYTE_ARRAY == null ? DEFAULT_MEMBER_ID : HELPER_BYTE_ARRAY.readDouble(), false );
+			loadEncryptedMember(memberIdValue, false);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -108,14 +135,17 @@ package com.ludofactory.mobile.core.manager
 		{
 			// if the id is different from the actual one, we need load the new one so that we don't affect someone's
 			// data to someone else (this should not happen actually, but leave it by security)
-			if( "id_membre" in memberData && int(memberData.id_membre) != _member.id )
-				loadEncryptedMember( int(memberData.id_membre) );
+			if( "id_membre" in memberData && Number(memberData.id_membre) != _member.id )
+				loadEncryptedMember( Number(memberData.id_membre) );
 			
 			_member.parseData(memberData);
 			setEncryptedMember();
 			
 			// check if we can enable logs
 			AbstractMain.checkToEnableLogs();
+			
+			if( !("id_membre" in memberData) || ("id_membre" in memberData && Number(memberData.id_membre) == _member.id) )
+				dispatchEventWith(MobileEventTypes.MEMBER_UPDATED);
 		}
 		
 		/**
@@ -131,7 +161,7 @@ package com.ludofactory.mobile.core.manager
 		 * 
 		 * @see com.ludofactory.common.encryption.Encryption
 		 */		
-		private function loadEncryptedMember(memberId:int, checkForAdminParameters:Boolean = true):void
+		private function loadEncryptedMember(memberId:Number, checkForAdminParameters:Boolean = true):void
 		{
 			// clear all actual responders for security reasons
 			Remote.getInstance().clearAllResponders();
@@ -139,7 +169,7 @@ package com.ludofactory.mobile.core.manager
 			// update the current (and last) logged in member id in the ELS
 			if( HELPER_BYTE_ARRAY == null ) HELPER_BYTE_ARRAY = new ByteArray();
 			HELPER_BYTE_ARRAY.clear();
-			HELPER_BYTE_ARRAY.writeInt( memberId );
+			HELPER_BYTE_ARRAY.writeDouble( memberId );
 			EncryptedLocalStore.setItem(LAST_LOGGED_IN_MEMBER_ID, HELPER_BYTE_ARRAY);
 			
 			// then retreive the associated member from the ELS
@@ -183,7 +213,7 @@ package com.ludofactory.mobile.core.manager
 			}
 			
 			// update the values of the footer
-			dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
+			dispatchEventWith(MobileEventTypes.MEMBER_UPDATED);
 			
 			if( checkForAdminParameters ) // not done the first time
 				AbstractMain.checkToEnableLogs();
@@ -386,7 +416,7 @@ package com.ludofactory.mobile.core.manager
 				setEncryptedMember();
 				
 				// the data changed, so we need to update the footer
-				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
+				dispatchEventWith(MobileEventTypes.MEMBER_UPDATED);
 			}
 		}
 		
@@ -401,7 +431,7 @@ package com.ludofactory.mobile.core.manager
 				setEncryptedMember();
 				
 				// the data changed, so we need to update the footer
-				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
+				dispatchEventWith(MobileEventTypes.MEMBER_UPDATED);
 			}
 		}
 		
@@ -416,7 +446,7 @@ package com.ludofactory.mobile.core.manager
 				setEncryptedMember();
 				
 				// the data changed, so we need to update the footer
-				dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
+				dispatchEventWith(MobileEventTypes.MEMBER_UPDATED);
 			}
 		}
 		

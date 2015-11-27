@@ -75,8 +75,7 @@ package com.ludofactory.mobile.navigation.game
 			_container.addChild(_iconClock);
 			
 			onUpdateData();
-			MemberManager.getInstance().addEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateData);
-			Remote.getInstance().addEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateData);
+			MemberManager.getInstance().addEventListener(MobileEventTypes.MEMBER_UPDATED, onUpdateData);
 		}
 		
 		override protected function draw():void
@@ -282,11 +281,10 @@ package com.ludofactory.mobile.navigation.game
 		
 		override public function dispose():void
 		{
-			MemberManager.getInstance().removeEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateData);
+			MemberManager.getInstance().removeEventListener(MobileEventTypes.MEMBER_UPDATED, onUpdateData);
 			GameSessionTimer.unregisterFunction(setText);
 
 			AbstractEntryPoint.vidCoin.removeEventListener(VidCoinEvents.VIDCOIN, handleVidCoinEvent);
-			Remote.getInstance().removeEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateData);
 			
 			if( _iconClock )
 			{

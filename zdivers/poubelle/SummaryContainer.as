@@ -143,7 +143,7 @@ package com.ludofactory.mobile.navigation.home.summary
 				IS_TIMER_OVER_AND_REQUEST_FAILED = true;
 			else
 				IS_TIMER_OVER_AND_REQUEST_FAILED = false;
-			MemberManager.getInstance().dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
+			MemberManager.getInstance().dispatchEventWith(MobileEventTypes.MEMBER_UPDATED);
 		}
 		
 		/*private function onUpdateFreeTimer(min:int, sec:int, formattedTime:String):void

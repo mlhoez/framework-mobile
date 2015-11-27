@@ -6,6 +6,7 @@ Created : 15 oct. 2012
 */
 package com.ludofactory.mobile.core.pause
 {
+	
 	import com.greensock.TweenMax;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.HeartBeat;
@@ -199,4 +200,4 @@ package com.ludofactory.mobile.core.pause
 	}
 }
 
-internal class securityKey{};
+internal class securityKey{}

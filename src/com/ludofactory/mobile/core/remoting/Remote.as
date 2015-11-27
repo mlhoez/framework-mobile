@@ -818,10 +818,7 @@ package com.ludofactory.mobile.core.remoting
 				}
 				
 				if( "obj_membre_mobile" in result && result.obj_membre_mobile)
-				{
 					MemberManager.getInstance().parseData(result.obj_membre_mobile);
-					dispatchEventWith(MobileEventTypes.UPDATE_SUMMARY);
-				}
 				
 				if( "afficher_cadeau" in result && result.afficher_cadeau != null )
 				{

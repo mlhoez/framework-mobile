@@ -33,7 +33,7 @@ package com.ludofactory.mobile.navigation.game
 			super.initialize();
 			
 			onUpdateData();
-			MemberManager.getInstance().addEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateData);
+			MemberManager.getInstance().addEventListener(MobileEventTypes.MEMBER_UPDATED, onUpdateData);
 		}
 		
 		override protected function draw():void
@@ -73,7 +73,7 @@ package com.ludofactory.mobile.navigation.game
 		
 		override public function dispose():void
 		{
-			MemberManager.getInstance().removeEventListener(MobileEventTypes.UPDATE_SUMMARY, onUpdateData);
+			MemberManager.getInstance().removeEventListener(MobileEventTypes.MEMBER_UPDATED, onUpdateData);
 			
 			
 			

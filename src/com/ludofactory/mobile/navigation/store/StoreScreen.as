@@ -496,7 +496,7 @@ package com.ludofactory.mobile.navigation.store
 		private function onAlertClosed(value:int, newRank:Boolean):void
 		{
 			// FIXME Utiliser useFrames pour TweenMax partout dans l'application ?
-			advancedOwner.dispatchEventWith(MobileEventTypes.ANIMATE_SUMMARY, false, { type:StakeType.CREDIT, value:value } );
+			advancedOwner.dispatchEventWith(MobileEventTypes.ANIMATE_FOOTER, false, { type:StakeType.CREDIT, value:value } );
 			
 			if( newRank == true )
 			{
