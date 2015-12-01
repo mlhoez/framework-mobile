@@ -12,6 +12,7 @@ package com.ludofactory.mobile.navigation.game
 	import com.greensock.easing.Elastic;
 	import com.greensock.easing.Linear;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
@@ -41,6 +42,7 @@ package com.ludofactory.mobile.navigation.game
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.utils.deg2rad;
+	import starling.utils.formatString;
 	
 	/**
 	 * The pop up used to select a game type.
@@ -391,7 +393,7 @@ package com.ludofactory.mobile.navigation.game
 					if( !_calloutLabel )
 					{
 						_calloutLabel = new Label();
-						_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de terminer 2 parties Solo !");
+						_calloutLabel.text = formatString(_n("Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !" , "Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !", MemberManager.getInstance().tournamentUnlockCounter), MemberManager.getInstance().tournamentUnlockCounter);
 						_calloutLabel.width = _tournamentButton.width * 0.9;
 						_calloutLabel.textRendererProperties.isHTML = true;
 						_calloutLabel.validate();

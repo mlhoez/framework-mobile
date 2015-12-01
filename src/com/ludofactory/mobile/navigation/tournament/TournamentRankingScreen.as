@@ -9,6 +9,7 @@ package com.ludofactory.mobile.navigation.tournament
 	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
@@ -41,14 +42,11 @@ package com.ludofactory.mobile.navigation.tournament
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
-	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.events.Event;
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
 	import starling.filters.BlurFilter;
+	import starling.utils.formatString;
 	
 	public class TournamentRankingScreen extends AdvancedScreen
 	{
@@ -595,9 +593,7 @@ package com.ludofactory.mobile.navigation.tournament
 					if( !_calloutLabel )
 					{
 						_calloutLabel = new Label();
-						// FIXME MODIF TOURNOI texte à remettre
-						//_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de terminer une partie Solo !");
-						_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de vous <u>inscrire ou de vous connecter</u>.");
+						_calloutLabel.text = formatString(_n("Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !" , "Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !", MemberManager.getInstance().tournamentUnlockCounter), MemberManager.getInstance().tournamentUnlockCounter);
 						_calloutLabel.width = GlobalConfig.stageWidth * 0.9;
 						_calloutLabel.textRendererProperties.isHTML = true;
 						_calloutLabel.validate();
@@ -605,9 +601,8 @@ package com.ludofactory.mobile.navigation.tournament
 					_isCalloutDisplaying = true;
 					var callout:Callout = Callout.show(_calloutLabel, _playButton, Callout.DIRECTION_UP, false);
 					callout.disposeContent = false;
-					callout.touchable = true; // FIXME MODIF TOURNOI avant false - maintenant true pour le clic
+					callout.touchable = false;
 					callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
-					callout.addEventListener(TouchEvent.TOUCH, onRegister);  // FIXME MODIF TOURNOI rajouté
 					_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 				}
 			}
@@ -616,20 +611,7 @@ package com.ludofactory.mobile.navigation.tournament
 		private function onCalloutRemoved(event:Event):void
 		{
 			event.target.removeEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
-			event.target.removeEventListener(TouchEvent.TOUCH, onRegister);  // FIXME MODIF TOURNOI rajouté
 			_isCalloutDisplaying = false;
-		}
-		
-		// FIXME MODIF TOURNOI rajoutée
-		private function onRegister(event:TouchEvent):void
-		{
-			var touch:Touch = event.getTouch(DisplayObject(event.target));
-			if( touch && touch.phase == TouchPhase.ENDED )
-			{
-				DisplayObject(event.target).removeFromParent();
-				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.AUTHENTICATION_SCREEN);
-			}
-			touch = null;
 		}
 		
 		private function onShake():void
