@@ -1040,8 +1040,16 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			else
 			{
-				//NotificationManager.addNotification( new MarketingRegisterNotification(ScreenIds.HOME_SCREEN) );
-				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
+				if(MemberManager.getInstance().tokens == 0)
+				{
+					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
+				}
+				else
+				{
+					_homeButton.isEnabled = false;
+					_playAgainButton.isEnabled = false;
+					advancedOwner.showScreen( ScreenIds.HOME_SCREEN  );
+				}
 			}
 		}
 		
@@ -1072,8 +1080,16 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			else
 			{
-				//NotificationManager.addNotification( new MarketingRegisterNotification(MemberManager.getInstance().getNumFreeGameSessions() >= Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
-				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(MemberManager.getInstance().tokens >= Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
+				if(MemberManager.getInstance().tokens == 0)
+				{
+					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(MemberManager.getInstance().tokens >= Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
+				}
+				else
+				{
+					_homeButton.isEnabled = false;
+					_playAgainButton.isEnabled = false;
+					advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
+				}
 			}
 		}
 		

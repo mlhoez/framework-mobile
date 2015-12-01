@@ -173,6 +173,11 @@ package com.ludofactory.mobile.core.manager
 		private var _bootTime:Number;
 		private var _tokenDate:Date;
 		
+		/**
+		 * How many times we grant 50 tokens to the player after 20 min.
+		 * When this value is below 0, the user has to wait 40 min. */
+		private var _numRecreditations:int = 5;
+		
 		public function Member() { }
 		
 		/**
@@ -314,6 +319,9 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get tournamentUnlockCounter():int { return _tournamentUnlockCounter; }
 		public function set tournamentUnlockCounter(value:int):void { _tournamentUnlockCounter = value; }
+		
+		public function get numRecreditations():int { return _numRecreditations; }
+		public function set numRecreditations(value:int):void { _numRecreditations = value; }
 		
 	}
 }

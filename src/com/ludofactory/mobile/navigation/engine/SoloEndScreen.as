@@ -768,7 +768,6 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			else
 			{
-				// FIXME MODIF TOURNOI conditions à retirer pour remettre comme avant
 				if(MemberManager.getInstance().tokens == 0)
 				{
 					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
@@ -801,7 +800,6 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			else
 			{
-				// FIXME MODIF TOURNOI conditions à retirer pour remettre comme avant
 				if(MemberManager.getInstance().tokens == 0)
 				{
 					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(MemberManager.getInstance().tokens >= Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );

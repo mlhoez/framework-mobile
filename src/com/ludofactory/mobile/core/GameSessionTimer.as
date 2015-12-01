@@ -21,10 +21,11 @@ package com.ludofactory.mobile.core
 	{
 		/**
 		 * Time in seconds for new tokens when not authenticated. */
-		private static const TIME_FOR_NEW_TOKENS_NOT_AUTHENTICATED:int = 60; // 300 seconds / 5 minutes
+		private static const TIME_FOR_NEW_TOKENS_NOT_AUTHENTICATED_STEP_1:int = 1200; // 1200 - 20 min
+		private static const TIME_FOR_NEW_TOKENS_NOT_AUTHENTICATED_STEP_2:int = 2400; // 2400 - 40 min
 		/**
 		 * How many tokens to give when the timer is over. */
-		public static const NUM_TOKENS_ADDED_WHEN_TIMER_OVER:int = 5;
+		public static const NUM_TOKENS_ADDED_WHEN_TIMER_OVER:int = 50;
 		
 		/**
 		 * Number of seconds in a day. */		
@@ -162,8 +163,10 @@ package com.ludofactory.mobile.core
 							elapsedTimeInSeconds = DeviceUtils.getInstance().getBootTime() - MemberManager.getInstance().bootTime;
 						}
 						
+						var timeToWait:int = (MemberManager.getInstance().numRecreditations <= 0 ? TIME_FOR_NEW_TOKENS_NOT_AUTHENTICATED_STEP_2 : TIME_FOR_NEW_TOKENS_NOT_AUTHENTICATED_STEP_1);
+						
 						// now we calculate how many tokens can be granted according to the elapsed time
-						var numTokensToGrant:int = ((elapsedTimeInSeconds / TIME_FOR_NEW_TOKENS_NOT_AUTHENTICATED) << 0) * NUM_TOKENS_ADDED_WHEN_TIMER_OVER;
+						var numTokensToGrant:int = ((elapsedTimeInSeconds / timeToWait) << 0) * NUM_TOKENS_ADDED_WHEN_TIMER_OVER;
 						
 						log("[GameSessionTimer] " + elapsedTimeInSeconds + " elapsed since the last launch, now granting " + numTokensToGrant + " tokens.");
 						
@@ -173,6 +176,8 @@ package com.ludofactory.mobile.core
 							if((MemberManager.getInstance().tokens + numTokensToGrant) > 50 )
 								numTokensToGrant = 50 - MemberManager.getInstance().tokens; // don't give more than 50
 							
+							MemberManager.getInstance().numRecreditations--;
+							log("Nombre de recréditations : " + MemberManager.getInstance().numRecreditations);
 							MemberManager.getInstance().tokens += numTokensToGrant;
 							valueToDisplay = "" + MemberManager.getInstance().tokens;
 							log("[GameSessionTimer] " + numTokensToGrant + " have been granted.");
@@ -183,7 +188,7 @@ package com.ludofactory.mobile.core
 							// not enough passed time to grant the tokens, here we need to calculate the time needed
 							// to grant the tokens
 							_totalTime = ONE_SECOND;
-							_realTime = (1 - (elapsedTimeInSeconds / TIME_FOR_NEW_TOKENS_NOT_AUTHENTICATED)) * TIME_FOR_NEW_TOKENS_NOT_AUTHENTICATED;
+							_realTime = (1 - (elapsedTimeInSeconds / timeToWait)) * timeToWait;
 							log("[GameSessionTimer] Real time is : " + _realTime + ". Now launching the timer...");
 							_previousBootTime = DeviceUtils.getInstance().getBootTime();
 							HeartBeat.registerFunction(updateWhenNotAuthenticated);
@@ -283,7 +288,8 @@ package com.ludofactory.mobile.core
 					// timer is over, stop everything, request stakes, and then update the fields
 					stop();
 					
-					//MemberManager.getInstance().timerTriggeredDate = null;
+					MemberManager.getInstance().numRecreditations--;
+					log("Nombre de recréditations : " + MemberManager.getInstance().numRecreditations);
 					MemberManager.getInstance().tokens += NUM_TOKENS_ADDED_WHEN_TIMER_OVER;
 					
 					valueToDisplay = "" + MemberManager.getInstance().tokens;

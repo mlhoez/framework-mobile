@@ -448,7 +448,7 @@ package com.ludofactory.mobile.core.manager
 			{
 				_member.numTokens = val;
 				
-				if( ((isLoggedIn() && _member.numTokens <= 0) || (!isLoggedIn() && _member.numTokens < 50)) )
+				if( ((isLoggedIn() && _member.numTokens <= 0) || (!isLoggedIn() && _member.numTokens <= 0)) ) // avant < 50 pour !isLoggedIn
 				{
 					// check isNan to knwo if already set or not
 					if( isNaN(_member.bootTime) )
@@ -457,7 +457,7 @@ package com.ludofactory.mobile.core.manager
 						_member.tokenDate = new Date();
 					}
 				}
-				else if( ((isLoggedIn() && _member.numTokens > 0) || (!isLoggedIn() && _member.numTokens >= 50)) )
+				else if( ((isLoggedIn() && _member.numTokens > 0) || (!isLoggedIn() && _member.numTokens > 0)) ) // avant >= 50 pour !isLoggedIn
 				{
 					// we have neough tokens
 					_member.bootTime = NaN;
@@ -562,6 +562,14 @@ package com.ludofactory.mobile.core.manager
 		public function set tournamentUnlockCounter(val:int):void
 		{
 			_member.tournamentUnlockCounter = val;
+			setEncryptedMember();
+		}
+		
+		/** Updates the value of <code>numRecreditations</code>. */
+		public function get numRecreditations():int { return _member.numRecreditations; }
+		public function set numRecreditations(val:int):void
+		{
+			_member.numRecreditations = val;
 			setEncryptedMember();
 		}
 		

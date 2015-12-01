@@ -273,7 +273,7 @@ package com.ludofactory.mobile.navigation.home.summary
 			else
 			{
 				if(valueToDisplay.indexOf(":") > -1) // moche mais bon
-					_stakeValueLabel.text = Utilities.splitThousands(MemberManager.getInstance().tokens) + "\n" + valueToDisplay;
+					_stakeValueLabel.text = /*Utilities.splitThousands(MemberManager.getInstance().tokens) + "\n" +*/ valueToDisplay;
 				else
 					_stakeValueLabel.text = Utilities.splitThousands(MemberManager.getInstance().tokens);
 			}
