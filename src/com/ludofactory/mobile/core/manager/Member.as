@@ -95,8 +95,8 @@ package com.ludofactory.mobile.core.manager
 		private var _credits:int = 0;
 		
 		/**
-		 * The member's number of tokens (default is 50 for an anonymous member) */		
-		private var _numTokens:int = 50;
+		 * The member's number of tokens (default is 100 for an anonymous member) */		
+		private var _numTokens:int = 100;
 		
 		/**
 		 * The total of tokens available each day (50 by default with a common rank). (this is static unlike _numTokens
@@ -164,6 +164,11 @@ package com.ludofactory.mobile.core.manager
 		 * Facebook token expiry date (time in ms).
 		 * use new Date(tokenExpiryDate) to get the full date to compare. */
 		private var _facebookTokenExpiryTimestamp:Number = 0;
+		
+		/**
+		 * The boot time. */
+		private var _bootTime:Number;
+		private var _tokenDate:Date;
 		
 		public function Member() { }
 		
@@ -297,6 +302,12 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get transactionIds():Array { return _transactionIds; }
 		public function set transactionIds(value:Array):void { _transactionIds = value; }
+		
+		public function get bootTime():Number { return _bootTime; }
+		public function set bootTime(value:Number):void { _bootTime = value; }
+		
+		public function get tokenDate():Date { return _tokenDate; }
+		public function set tokenDate(value:Date):void { _tokenDate = value; }
 		
 	}
 }
