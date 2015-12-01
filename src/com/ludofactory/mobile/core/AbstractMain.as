@@ -7,15 +7,14 @@ Created : 29 Mars 2013
 package com.ludofactory.mobile.core
 {
 	
-	import com.freshplanet.ane.AirDeviceId;
-	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.gamua.flox.Flox;
+	import com.ludofactory.ane.DeviceUtils;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.Platform;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.pause.PauseManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -87,7 +86,7 @@ package com.ludofactory.mobile.core
 			GlobalConfig.ios = Capabilities.manufacturer.indexOf("iOS") >= 0;
 			GlobalConfig.userHardwareData = { os:Capabilities.os, version:Capabilities.version, resolution:(Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY) };
 			GlobalConfig.platformName = GlobalConfig.ios ? Platform.IOS : (GlobalConfig.android ? Platform.ANDROID : Platform.SIMULATOR);
-			AirDeviceId.getInstance().getID(null, function(deviceId:String):void{ GlobalConfig.deviceId = deviceId; });
+			DeviceUtils.getInstance().getID(null, function(deviceId:String):void{ GlobalConfig.deviceId = deviceId; });
 			showLaunchImage();
 			
 			if(stage)
