@@ -8,6 +8,7 @@ package com.ludofactory.mobile.core.manager
 {
 	
 	import com.gamua.flox.Flox;
+	import com.ludofactory.ane.DeviceUtils;
 	import com.ludofactory.common.encryption.Encryption;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
@@ -15,6 +16,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.AbstractMain;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.push.GameSession;
@@ -443,6 +445,23 @@ package com.ludofactory.mobile.core.manager
 			if( _member.numTokens != val )
 			{
 				_member.numTokens = val;
+				
+				if( ((isLoggedIn() && _member.numTokens <= 0) || (!isLoggedIn() && _member.numTokens < 50)) )
+				{
+					// check isNan to knwo if already set or not
+					if( isNaN(_member.bootTime) )
+					{
+						_member.bootTime = DeviceUtils.getInstance().getBootTime();
+						_member.tokenDate = new Date();
+					}
+				}
+				else if( ((isLoggedIn() && _member.numTokens > 0) || (!isLoggedIn() && _member.numTokens >= 50)) )
+				{
+					// we have neough tokens
+					_member.bootTime = NaN;
+					_member.tokenDate = null;
+				}
+				
 				setEncryptedMember();
 				
 				// the data changed, so we need to update the footer
@@ -499,14 +518,7 @@ package com.ludofactory.mobile.core.manager
 		}
 		
 		/** Updates the value of <code>tournamentUnlocked</code>. */
-		public function get isTournamentUnlocked():Boolean
-		{
-			// FIXME MODIF TOURNOI le retour du getteur a été modifié le temps du test demandé par thibaut,
-			// à savoir de bloquer le tournoi pour les joueurs non identifiés, et de le débloquer
-			// automatiquement pour les personnes identifiées. Pour remettre comme avant, simplement
-			// décommenter le code et virer ce qu'il y a avant
-			return isLoggedIn(); // _member.tournamentUnlocked;
-		}
+		public function get isTournamentUnlocked():Boolean { return _member.tournamentUnlocked; }
 		public function set isTournamentUnlocked(val:Boolean):void
 		{
 			if( _member.tournamentUnlocked != val )
@@ -525,6 +537,30 @@ package com.ludofactory.mobile.core.manager
 				_member.tournamentAnimPending = val;
 				setEncryptedMember();
 			}
+		}
+		
+		/** Updates the value of <code>bootTime</code>. */
+		public function get bootTime():Number { return _member.bootTime; }
+		public function set bootTime(val:Number):void
+		{
+			_member.bootTime = val;
+			setEncryptedMember();
+		}
+		
+		/** Updates the value of <code>bootTime</code>. */
+		public function get tokenDate():Date { return _member.tokenDate; }
+		public function set tokenDate(val:Date):void
+		{
+			_member.tokenDate = val;
+			setEncryptedMember();
+		}
+		
+		/** Updates the value of <code>bootTime</code>. */
+		public function get tournamentUnlockCounter():int { return _member.tournamentUnlockCounter; }
+		public function set tournamentUnlockCounter(val:int):void
+		{
+			_member.tournamentUnlockCounter = val;
+			setEncryptedMember();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

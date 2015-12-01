@@ -33,6 +33,9 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * Whether we need to display the tutorial the first time. */		
 		private var _tournamentUnlocked:Boolean = false;
+		/**
+		 * How many game sessions in solo mode to play in order to unlock the tournament mode. */
+		private var _tournamentUnlockCounter:int = 2;
 		
 		/**
 		 * The member's highscore */		
@@ -308,6 +311,9 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get tokenDate():Date { return _tokenDate; }
 		public function set tokenDate(value:Date):void { _tokenDate = value; }
+		
+		public function get tournamentUnlockCounter():int { return _tournamentUnlockCounter; }
+		public function set tournamentUnlockCounter(value:int):void { _tournamentUnlockCounter = value; }
 		
 	}
 }
