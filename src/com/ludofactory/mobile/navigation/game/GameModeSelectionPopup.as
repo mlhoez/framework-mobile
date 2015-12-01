@@ -34,7 +34,6 @@ package com.ludofactory.mobile.navigation.game
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
-	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.events.Event;
@@ -392,9 +391,7 @@ package com.ludofactory.mobile.navigation.game
 					if( !_calloutLabel )
 					{
 						_calloutLabel = new Label();
-						// FIXME MODIF TOURNOI
-						//_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de terminer une partie Solo !");
-						_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de vous <u>inscrire ou de vous connecter</u>.");
+						_calloutLabel.text = _("Pour débloquer les parties en Tournoi, il suffit de terminer 2 parties Solo !");
 						_calloutLabel.width = _tournamentButton.width * 0.9;
 						_calloutLabel.textRendererProperties.isHTML = true;
 						_calloutLabel.validate();
@@ -402,9 +399,8 @@ package com.ludofactory.mobile.navigation.game
 					_isCalloutDisplaying = true;
 					var callout:Callout = Callout.show(_calloutLabel, _tournamentButton, Callout.DIRECTION_DOWN, false);
 					callout.disposeContent = false;
-					callout.touchable = true; // FIXME MODIF TOURNOI avant false - maintenant true pour le clic
+					callout.touchable = false;
 					callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
-					callout.addEventListener(TouchEvent.TOUCH, onRegister);  // FIXME MODIF TOURNOI rajouté
 					_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 				}
 			}
@@ -413,22 +409,7 @@ package com.ludofactory.mobile.navigation.game
 		private function onCalloutRemoved(event:Event):void
 		{
 			event.target.removeEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
-			event.target.removeEventListener(TouchEvent.TOUCH, onRegister);  // FIXME MODIF TOURNOI rajouté
 			_isCalloutDisplaying = false;
-		}
-		
-		// FIXME MODIF TOURNOI rajoutée
-		private function onRegister(event:TouchEvent):void
-		{
-			var touch:Touch = event.getTouch(DisplayObject(event.target));
-			if( touch && touch.phase == TouchPhase.ENDED )
-			{
-				DisplayObject(event.target).removeFromParent();
-				AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = true;
-				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.AUTHENTICATION_SCREEN);
-				dispatchEventWith(Event.CLOSE);
-			}
-			touch = null;
 		}
 		
 		/**
