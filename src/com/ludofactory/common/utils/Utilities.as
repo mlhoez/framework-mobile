@@ -11,6 +11,7 @@ package com.ludofactory.common.utils
 	import com.ludofactory.common.gettext.aliases._;
 	
 	import flash.desktop.NativeApplication;
+	import flash.globalization.DateTimeFormatter;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 	
@@ -406,7 +407,17 @@ package com.ludofactory.common.utils
 			return dst
 		}*/
 		
-		
+		/**
+		 * Format date to : 
+		 * @param d
+		 * @return
+		 */
+		public static function formatDateUS(d:Date):String
+		{
+			var dtf:DateTimeFormatter = new DateTimeFormatter("en-US");
+			dtf.setDateTimePattern("yyyy-MM-dd hh:mm:ssa");
+			return dtf.format(d);
+		}
 		
 		
 		

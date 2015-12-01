@@ -1,7 +1,9 @@
 package com.ludofactory.mobile.core.push
 {
+	
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-
+	
 	public class GameSession extends AbstractElementToPush
 	{
 		/**
@@ -59,7 +61,7 @@ package com.ludofactory.mobile.core.push
 			_gameType = gameType;
 			_gamePrice = gamePrice;
 			_score = -1;
-			_playDate = MemberManager.getInstance().lastUpdateDate;
+			_playDate = MemberManager.getInstance().lastUpdateDate ? MemberManager.getInstance().lastUpdateDate : Utilities.formatDateUS(new Date());
 			_trophiesWon = [];
 			_connected = false;
 			_numStarsOrPointsEarned = 0;
