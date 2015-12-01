@@ -11,13 +11,11 @@ package com.ludofactory.mobile.core
 	import com.freshplanet.nativeExtensions.PushNotification;
 	import com.freshplanet.nativeExtensions.PushNotificationEvent;
 	import com.gamua.flox.Flox;
-	import com.ludofactory.ane.DeviceUtils;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.LogDisplayer;
 	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -45,7 +43,6 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.achievements.TrophyScreen;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
 	import com.ludofactory.mobile.navigation.alert.AlertManager;
-	import com.ludofactory.mobile.navigation.authentication.AuthenticationScreen;
 	import com.ludofactory.mobile.navigation.authentication.ForgotPasswordScreen;
 	import com.ludofactory.mobile.navigation.authentication.LoginScreen;
 	import com.ludofactory.mobile.navigation.authentication.PseudoChoiceScreen;
@@ -203,7 +200,6 @@ package com.ludofactory.mobile.core
 												{ id:ScreenIds.SETTINGS_SCREEN, clazz:SettingsScreen },
 												{ id:ScreenIds.SPONSOR_FRIENDS_SCREEN, clazz:FilleulsScreen },
 												{ id:ScreenIds.HIGH_SCORE_HOME_SCREEN, clazz:HighScoreHomeScreen },
-												{ id:ScreenIds.AUTHENTICATION_SCREEN, clazz:AuthenticationScreen },
 												{ id:ScreenIds.FACEBOOK_END_SCREEN, clazz:FacebookEndScreen },
 												{ id:ScreenIds.UPDATE_SCREEN, clazz:UpdateScreen },
 												{ id:ScreenIds.VIP_UP_SCREEN, clazz:VipUpScreen },
@@ -781,7 +777,7 @@ package com.ludofactory.mobile.core
 			// update the badges and events on home screen and boutique screen (because after a game session, we can
 			// directly access the boutique screen, and in this case, it's not updated and the header is bugged
 			if( _screenNavigator.activeScreenID == ScreenIds.HOME_SCREEN || _screenNavigator.activeScreenID == ScreenIds.BOUTIQUE_HOME
-				|| _screenNavigator.activeScreenID == ScreenIds.AUTHENTICATION_SCREEN || _screenNavigator.activeScreenID == ScreenIds.GAME_TYPE_SELECTION_SCREEN
+				|| _screenNavigator.activeScreenID == ScreenIds.REGISTER_SCREEN || _screenNavigator.activeScreenID == ScreenIds.GAME_TYPE_SELECTION_SCREEN
 				|| _screenNavigator.activeScreenID == ScreenIds.TOURNAMENT_RANKING_SCREEN )
 			{
 				_alertContainer.fetchAlerts();

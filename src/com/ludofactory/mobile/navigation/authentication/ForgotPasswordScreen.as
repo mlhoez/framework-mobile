@@ -192,7 +192,7 @@ package com.ludofactory.mobile.navigation.authentication
 				}
 				case 1:
 				{
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, 2, this.advancedOwner.showScreen, [ ScreenIds.AUTHENTICATION_SCREEN ]);
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, 2, this.advancedOwner.showScreen, [ ScreenIds.LOGIN_SCREEN ]);
 					break;
 				}
 					

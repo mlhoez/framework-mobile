@@ -450,7 +450,7 @@ package com.ludofactory.mobile.navigation.home.summary
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
 				DisplayObject(event.target).removeFromParent();
-				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.AUTHENTICATION_SCREEN);
+				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.REGISTER_SCREEN);
 			}
 			touch = null;
 		}

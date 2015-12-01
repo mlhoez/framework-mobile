@@ -275,9 +275,8 @@ package com.ludofactory.mobile.navigation
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.NEW_HIGH_SCORE_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.PSEUDO_CHOICE_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.REGISTER_COMPLETE_SCREEN &&
-					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.AUTHENTICATION_SCREEN &&
-					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.LOGIN_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.REGISTER_SCREEN &&
+					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.LOGIN_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.FORGOT_PASSWORD_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.SPONSOR_REGISTER_SCREEN &&
 					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.UPDATE_SCREEN &&

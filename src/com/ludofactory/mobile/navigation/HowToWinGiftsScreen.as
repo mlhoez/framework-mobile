@@ -260,7 +260,7 @@ package com.ludofactory.mobile.navigation
 			}
 			else
 			{
-				advancedOwner.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
+				advancedOwner.showScreen( ScreenIds.REGISTER_SCREEN );
 			}
 		}
 		

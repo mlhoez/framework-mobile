@@ -853,7 +853,7 @@ package com.ludofactory.mobile.navigation.engine
 			{
 				if( GAnalytics.isSupported() )
 					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Redirection boutique (non connecté)", null, NaN, MemberManager.getInstance().id);
-				advancedOwner.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
+				advancedOwner.showScreen( ScreenIds.REGISTER_SCREEN );
 			}
 			touch = null;
 		}

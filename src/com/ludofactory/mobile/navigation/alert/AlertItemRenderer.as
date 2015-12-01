@@ -531,7 +531,7 @@ package com.ludofactory.mobile.navigation.alert
 							case AlertType.ANONYMOUS_GAME_SESSION:
 							case AlertType.ANONYMOUS_TROPHIES:
 							{
-								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
+								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.REGISTER_SCREEN );
 								break;
 							}
 							case AlertType.NEW_LANGAUGES:

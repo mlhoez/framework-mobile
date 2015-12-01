@@ -506,7 +506,7 @@ package com.ludofactory.mobile.navigation.shop.vip
 		
 		override public function dispose():void
 		{
-			if( AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.AUTHENTICATION_SCREEN )
+			if( AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.REGISTER_SCREEN )
 			{
 				AbstractEntryPoint.screenNavigator.screenData.idSubCategory = -1;
 				AbstractEntryPoint.screenNavigator.screenData.selectedItemData = null;

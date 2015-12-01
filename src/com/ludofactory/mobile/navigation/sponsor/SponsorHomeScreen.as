@@ -246,7 +246,7 @@ package com.ludofactory.mobile.navigation.sponsor
 			}
 			else
 			{
-				advancedOwner.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
+				advancedOwner.showScreen( ScreenIds.REGISTER_SCREEN );
 			}
 		}
 		
@@ -259,7 +259,7 @@ package com.ludofactory.mobile.navigation.sponsor
 			}
 			else
 			{
-				advancedOwner.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
+				advancedOwner.showScreen( ScreenIds.REGISTER_SCREEN );
 			}
 		}
 		
@@ -271,7 +271,7 @@ package com.ludofactory.mobile.navigation.sponsor
 			}
 			else
 			{
-				advancedOwner.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
+				advancedOwner.showScreen( ScreenIds.REGISTER_SCREEN );
 			}
 		}
 		

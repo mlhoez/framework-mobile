@@ -240,7 +240,7 @@ package com.ludofactory.mobile.navigation.menu
 					// log in
 					Remote.getInstance().clearAllRespondersOfScreen("Menu");
 					NavigationManager.resetNavigation();
-					if( _screenNavigator.activeScreenID != ScreenIds.AUTHENTICATION_SCREEN )
+					if( _screenNavigator.activeScreenID != ScreenIds.REGISTER_SCREEN )
 						AuthenticationManager.startAuthenticationProcess(_screenNavigator, _screenNavigator.activeScreenID);
 					else
 						dispatchEventWith(MobileEventTypes.HIDE_MAIN_MENU);
@@ -263,8 +263,8 @@ package com.ludofactory.mobile.navigation.menu
 							( String(event.data) == ScreenIds.MY_ACCOUNT_SCREEN ||
 							  String(event.data) == ScreenIds.MY_GIFTS_SCREEN ))
 						{
-							if( _screenNavigator.activeScreenID != ScreenIds.AUTHENTICATION_SCREEN )
-								_screenNavigator.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
+							if( _screenNavigator.activeScreenID != ScreenIds.REGISTER_SCREEN )
+								_screenNavigator.showScreen( ScreenIds.REGISTER_SCREEN );
 							else
 								dispatchEventWith(MobileEventTypes.HIDE_MAIN_MENU);
 						}

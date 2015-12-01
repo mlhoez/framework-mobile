@@ -59,8 +59,6 @@ package com.ludofactory.mobile.core.model
 //------------------------------------------------------------------------------------------------------------
 //	Authentification
 		
-		/** Ecran d'accueil d'authentification. */		
-		public static const AUTHENTICATION_SCREEN:String = "Authentification - Accueil";
 		/** Ecran de connexion. */		
 		public static const LOGIN_SCREEN:String = "Authentification - Connexion";
 		/** Ecran d'inscription. */		

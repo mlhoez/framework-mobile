@@ -69,7 +69,7 @@ package com.ludofactory.mobile.core.manager
 			else
 			{
 				log("[AuthenticationManager] User is not logged in, start authentication...");
-				advancedScreenNavigator.showScreen( ScreenIds.AUTHENTICATION_SCREEN );
+				advancedScreenNavigator.showScreen( ScreenIds.REGISTER_SCREEN );
 			}
 		}
 	}
