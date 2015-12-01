@@ -196,9 +196,9 @@ package com.ludofactory.mobile.navigation
 		 */		
 		public function updateData():void
 		{
-			_freeContainer.setLabelText( "" + Utilities.splitThousands( MemberManager.getInstance().tokens) );
-			_pointsContainer.setLabelText( "" + Utilities.splitThousands(MemberManager.getInstance().points) );
-			_creditsContainer.setLabelText( "" + Utilities.splitThousands(MemberManager.getInstance().credits) );
+			_freeContainer.setLabelText();
+			_pointsContainer.setLabelText();
+			_creditsContainer.setLabelText();
 		}
 		
 		/**
