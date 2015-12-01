@@ -93,6 +93,10 @@ package com.ludofactory.mobile.core.storage
 		public static const PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE:String = "DEFAULT_NUM_CREDITS_IN_TOURNAMENT_MODE";
  		public static const DEFAULT_NUM_CREDITS_IN_TOURNAMENT_MODE:int = 5;
 		
+		/**
+		 * The number of token allowed to use and that will allow the user to cumulate points when not authenticated. */
+ 		public static const DEFAULT_NUM_TOKENS_ALLOWED_TO_COUNT_POINTS:int = 100;
+		
 	// ----------------------- LANGUAGE
 		
 		/**

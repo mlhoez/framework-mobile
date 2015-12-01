@@ -17,11 +17,10 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -29,6 +28,8 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.GameData;
+	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -178,11 +179,14 @@ package com.ludofactory.mobile.navigation.engine
 			
 			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
 			
-			// FIXME MODIF TOURNOI : j'ai rajouté isLoggedIn
-			if( MemberManager.getInstance().isLoggedIn() && !MemberManager.getInstance().isTournamentUnlocked )
+			if( !MemberManager.getInstance().isTournamentUnlocked )
 			{
-				MemberManager.getInstance().isTournamentUnlocked = true;
-				MemberManager.getInstance().isTournamentAnimPending = true;
+				MemberManager.getInstance().tournamentUnlockCounter--;
+				if(MemberManager.getInstance().tournamentUnlockCounter <= 0)
+				{
+					MemberManager.getInstance().isTournamentUnlocked = true;
+					MemberManager.getInstance().isTournamentAnimPending = true;
+				}
 			}
 			
 			_logo = new ImageLoader();
@@ -347,9 +351,13 @@ package com.ludofactory.mobile.navigation.engine
 					_convertContainer.addChild(_convertIcon);
 					
 					_convertLabel = new Label();
-					// FIXME MODIF TOURNOI texte à remettre
-					//_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte et convertissez\nvos Points en Cadeaux !") : _("Créez votre compte et convertissez\nvos Points en Crédits !");
-					_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte pour continuer à cumuler des Points à convertir en Cadeaux !") : _("Créez votre compte pour continuer à cumuler des Points à convertir en Crédits !");
+					
+					log("Number of anonymous game sessions : " + MemberManager.getInstance().getNumTokenUsedInAnonymousGameSessions());
+					
+					if(MemberManager.getInstance().getNumTokenUsedInAnonymousGameSessions() > StorageConfig.DEFAULT_NUM_TOKENS_ALLOWED_TO_COUNT_POINTS)
+						_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte pour continuer à cumuler des Points à convertir en Cadeaux !") : _("Créez votre compte pour continuer à cumuler des Points à convertir en Crédits !");
+					else
+						_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte et convertissez\nvos Points en Cadeaux !") : _("Créez votre compte et convertissez\nvos Points en Crédits !");
 					_convertContainer.addChild(_convertLabel);
 					_convertLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 38), Theme.COLOR_WHITE, true, false, null, null, null, TextFormatAlign.CENTER);
 				}

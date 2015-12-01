@@ -24,6 +24,8 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.push.PushNewCSThread;
 	import com.ludofactory.mobile.core.push.PushTrophy;
 	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.GoViral;
@@ -642,6 +644,19 @@ package com.ludofactory.mobile.core.manager
 			return count;
 		}
 		
+		public function getNumTokenUsedInAnonymousGameSessions():int
+		{
+			var count:int = 0;
+			var gameSession:GameSession;
+			for(var i:int = 0; i < anonymousGameSessions.length; i++)
+			{
+				gameSession = anonymousGameSessions[i];
+				count += gameSession.gameType == GameMode.TOURNAMENT ? Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE) : Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE);
+			}
+			return count;
+		}
+		
+		
 		/**
 		 * Return the MemberManager instance.
 		 */		
@@ -654,4 +669,4 @@ package com.ludofactory.mobile.core.manager
 	}
 }
 
-internal class SecurityKey{};
+internal class SecurityKey{}

@@ -536,8 +536,15 @@ package com.ludofactory.mobile.core
 			return;*/
 			
 			// update earned values in any cases
-			if( _gameSession.gameType == GameMode.SOLO ) MemberManager.getInstance().points = ( MemberManager.getInstance().points + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
-			else MemberManager.getInstance().cumulatedRubies = ( MemberManager.getInstance().cumulatedRubies + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+			if( _gameSession.gameType == GameMode.SOLO )
+			{
+				if( MemberManager.getInstance().isLoggedIn() || (!MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumTokenUsedInAnonymousGameSessions() <= StorageConfig.DEFAULT_NUM_TOKENS_ALLOWED_TO_COUNT_POINTS) )
+					MemberManager.getInstance().points = ( MemberManager.getInstance().points + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+			}
+			else
+			{
+				MemberManager.getInstance().cumulatedRubies = ( MemberManager.getInstance().cumulatedRubies + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+			}
 			
 			_nextScreenId = _gameSession.gameType == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
 			if( MemberManager.getInstance().highscore != 0 && _gameSession.score > MemberManager.getInstance().highscore )
