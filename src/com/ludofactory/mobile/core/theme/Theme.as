@@ -5,6 +5,7 @@ package com.ludofactory.mobile.core.theme
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.Platform;
 	import com.ludofactory.mobile.navigation.ads.tournament.AdTournamentItemRenderer;
 	import com.ludofactory.mobile.navigation.home.RuleItemRenderer;
@@ -263,7 +264,8 @@ package com.ludofactory.mobile.core.theme
 			offsetTabBarTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 24 : 28), COLOR_BLACK, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			// TextInput
-			textInputTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(30), COLOR_LIGHT_GREY, true);
+			textInputTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(25), COLOR_LIGHT_GREY, true);
+			textInputPromptTextFormat = new TextFormat(FONT_ARIAL, scaleAndRoundToDpi(25), 0xcbcbcb, true, true);
 			
 			// Button
 			buttonTextFormat                      = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(42), COLOR_BROWN);
@@ -440,6 +442,8 @@ package com.ludofactory.mobile.core.theme
 			// new
 			buttonSpecialSkinTextures                 = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-special"), BUTTON_GRID);
 			buttonYellowSkinTextures                  = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-yellow"), BUTTON_GRID);
+			buttonWhiteSkinTextures                   = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-white"), BUTTON_GRID);
+			facebookButtonSkinTextures                = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-facebook"), BUTTON_GRID);
 			buttonBlueSkinTextures                    = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-blue"), BUTTON_GRID);
 			buttonRedSkinTextures                     = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-red"), BUTTON_GRID);
 			buttonGreenSkinTextures                   = new Scale9Textures(AbstractEntryPoint.assets.getTexture("button-green"), BUTTON_GRID);
@@ -841,6 +845,7 @@ package com.ludofactory.mobile.core.theme
 //
 //------------------------------------------------------------------------------------------------------------
 		
+		protected var textInputPromptTextFormat:TextFormat;
 		protected var textInputTextFormat:TextFormat;
 		protected static const TEXTINPUT_GRID:Rectangle = new Rectangle(15, 15, 2, 2);
 		protected var textinputBackgroundSkinTextures:Scale9Textures;
@@ -870,10 +875,10 @@ package com.ludofactory.mobile.core.theme
 		{
 			const backgroundSkin:Scale9Image = new Scale9Image(backgroundSkinTextures, scaleFactor);
 			backgroundSkin.width = 264 * scaleFactor;
-			backgroundSkin.height = 80 * scaleFactor;
+			backgroundSkin.height = (GlobalConfig.isPhone ? 70 : 80) * scaleFactor;
 			input.backgroundSkin = backgroundSkin;
 			
-			input.minWidth = input.minHeight = 80 * scaleFactor;
+			input.minWidth = input.minHeight = (GlobalConfig.isPhone ? 70 : 80) * scaleFactor;
 			input.minTouchWidth = input.minTouchHeight = 108 * scaleFactor;
 			input.paddingTop = 16 * scaleFactor;
 			input.paddingBottom = 10 * scaleFactor;
@@ -882,7 +887,7 @@ package com.ludofactory.mobile.core.theme
 			input.textEditorProperties.fontSize = 32 * this.scaleFactor;
 			input.textEditorProperties.color = COLOR_LIGHT_GREY;
 			
-			input.promptProperties.textFormat = textInputTextFormat;
+			input.promptProperties.textFormat = textInputPromptTextFormat;
 		}
 		/**
 		 * Common TextInput used a s a single line.
@@ -924,6 +929,9 @@ package com.ludofactory.mobile.core.theme
 		
 //------------------------------------------------------------------------------------------------------------
 //	Yellow (common style)
+		
+		public static var buttonWhiteSkinTextures:Scale9Textures;
+		public static var facebookButtonSkinTextures:Scale9Textures;
 		
 		/**
 		 * Yellow button. */
