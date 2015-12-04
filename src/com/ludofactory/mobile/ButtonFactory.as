@@ -4,9 +4,11 @@
 package com.ludofactory.mobile
 {
 	
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
+	import com.ludofactory.mobile.navigation.FacebookPublicationData;
+
 	import flash.filters.BitmapFilterQuality;
 	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
@@ -19,6 +21,10 @@ package com.ludofactory.mobile
 	 */
 	public class ButtonFactory
 	{
+		public static const FACEBOOK_TYPE_SHARE:String = "facebook-type-share";
+		public static const FACEBOOK_TYPE_CONNECT:String = "facebook-type-connect";
+		public static const FACEBOOK_TYPE_NORMAL:String = "facebook-type-normal";
+		
 		/**
 		 * Yellow button. */
 		public static const YELLOW:String = "yellow";
@@ -34,6 +40,9 @@ package com.ludofactory.mobile
 		/**
 		 * Blue button. */
 		public static const BLUE:String = "blue";
+		/**
+		 * White button. */
+		public static const WHITE:String = "white";
 		
 		public static var SPECIAL_FONT_COLOR:uint = 0xffffff;
 		public static var SPECIAL_FILTER_COLOR:uint = 0xffffff;
@@ -101,11 +110,59 @@ package com.ludofactory.mobile
 						new DropShadowFilter(2, 75, 0x0170a9, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
 					break;
 				}
+
+				case WHITE:
+				{
+					buttonToReturn = new MobileButton(Theme.buttonWhiteSkinTextures, text);
+					buttonToReturn.fontColor = 0xffffff;
+					buttonToReturn.nativeFilters = [ /*new GlowFilter(0x000000, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),*/
+						new DropShadowFilter(2, 75, 0x000000, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
+					break;
+				}
 			}
 			
 			buttonToReturn.fontName = Theme.FONT_SANSITA;
 			buttonToReturn.textPadding = scaleAndRoundToDpi(20);
 			buttonToReturn.initialize();
+			
+			return buttonToReturn;
+		}
+		
+		/**
+		 * Creates a Faacebook button that will have different behaviors depending on the button type.
+		 * 
+		 * If we have a connect button, it will automatically display the Facebook popup in order to connect or
+		 * associate the account with Facebook. Once done and if the connection / association was a success, the
+		 * button will dispatch an event of type : FacebookManagerEventType.AUTHENTICATED.
+		 * 
+		 * If we have a share button, it will automatically publish on the user's wall of the player is logged in
+		 * with Facebook (and retrieve a token first if necessary). Otherwise it will display the Facebook connect
+		 * popup so that the player can authenticate before publishing. If the Facebook connect as a success, we will
+		 * then automatically publish on the user's wall. Once done, the button will dispatch an event of type :
+		 * FacebookManagerEventType.PUBLISHED.
+		 * 
+		 * @param buttonText
+		 * @param buttonType
+		 * @param title Title of the publication
+		 * @param caption Caption
+		 * @param description Description of the publication
+		 * @param linkUrl The redirect link
+		 * @param imageUrl url of the image
+		 * @param extraParams Some extra params
+		 * 
+		 * @return The button
+		 */
+		public static function getFacebookButton(buttonText:String, buttonType:String = FACEBOOK_TYPE_CONNECT, title:String = null, caption:String = null, description:String = null, linkUrl:String = null, imageUrl:String = null, extraParams:Object = null):FacebookButton
+		{
+			// TODO Gérer l'incentive en fonction de l'état du joueur
+			
+			var publicationData:FacebookPublicationData = new FacebookPublicationData(title, caption, description, linkUrl, imageUrl, extraParams);
+			
+			var buttonToReturn:FacebookButton = new FacebookButton(Theme.facebookButtonSkinTextures, buttonText, null, null, null, buttonType, publicationData);
+			buttonToReturn.fontColor = 0xffffff;
+			buttonToReturn.fontName = Theme.FONT_ARIAL;
+			buttonToReturn.textPadding = scaleAndRoundToDpi(20);
+			buttonToReturn.validate();
 			
 			return buttonToReturn;
 		}
