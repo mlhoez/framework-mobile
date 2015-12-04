@@ -551,9 +551,9 @@ package com.ludofactory.mobile.core
 			{
 				// the user got a new high score
 				MemberManager.getInstance().highscore = _gameSession.score;
+				_nextScreenId = ScreenIds.NEW_HIGH_SCORE_SCREEN;
 				if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 				{
-					_nextScreenId = ScreenIds.NEW_HIGH_SCORE_SCREEN;
 					TrophyManager.getInstance().addEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
 				}
 				else
