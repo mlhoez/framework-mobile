@@ -8,6 +8,8 @@ package com.ludofactory.mobile.core.notification
 {
 	
 	import com.greensock.TweenMax;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
@@ -51,7 +53,7 @@ package com.ludofactory.mobile.core.notification
 			{
 				_currentNotification = new NotificationPopup();
 				
-				_currentNotification.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? 0.95 : 0.8);
+				_currentNotification.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 0.8 : 0.95) :  (AbstractGameInfo.LANDSCAPE ? 0.65 : 0.8));
 				_currentNotification.height = GlobalConfig.stageHeight * (GlobalConfig.isPhone ? 0.95 : 0.95);
 				_currentNotification.alignPivot();
 				_currentNotification.x = GlobalConfig.stageWidth * 0.5;
