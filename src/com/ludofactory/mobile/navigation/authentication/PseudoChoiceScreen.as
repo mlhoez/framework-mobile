@@ -12,6 +12,8 @@ package com.ludofactory.mobile.navigation.authentication
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.MobileButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.model.ScreenIds;
@@ -78,7 +80,7 @@ package com.ludofactory.mobile.navigation.authentication
 		
 		/**
 		 * Validate button */		
-		private var _validateButton:Button;
+		private var _validateButton:MobileButton;
 		
 		public function PseudoChoiceScreen()
 		{
@@ -127,7 +129,7 @@ package com.ludofactory.mobile.navigation.authentication
 			addChild(_customChoiceContainer);
 			
 			_customChoiceInput = new TextInput();
-			_customChoiceInput.prompt = _("Votre pseudo...");
+			_customChoiceInput.prompt = _("Ou choisissez votre pseudo...");
 			_customChoiceInput.textEditorProperties.returnKeyLabel = ReturnKeyLabel.GO;
 			_customChoiceInput.addEventListener(FeathersEventType.ENTER, onValidate);
 			_customChoiceInput.addEventListener(FeathersEventType.FOCUS_IN, onFocusIn);
@@ -139,8 +141,7 @@ package com.ludofactory.mobile.navigation.authentication
 			_customChoiceContainer.addChild(_customChoiceRadio);
 			_customChoiceRadio.addEventListener(Event.CHANGE, onChange);
 			
-			_validateButton = new Button();
-			_validateButton.label = _("Confirmer");
+			_validateButton = ButtonFactory.getButton(_("Confirmer"), ButtonFactory.YELLOW);
 			_validateButton.addEventListener(Event.TRIGGERED, onValidate);
 			addChild( _validateButton );
 			
@@ -171,22 +172,21 @@ package com.ludofactory.mobile.navigation.authentication
 					if( _defaultChoiceContainer )
 						_defaultChoiceContainer.validate();
 					_customChoiceContainer.validate();
-					_validateButton.validate();
 					
 					_message.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
 					_message.validate();
 					_message.x = roundUp((actualWidth - _message.width) * 0.5);
-					_message.y = /*scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) +*/ ( (actualHeight - ((_defaultChoiceContainer ? _defaultChoiceContainer.height : 0) + _message.height + _customChoiceContainer.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 60))) * 0.5) << 0;
+					_message.y = /*scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) +*/ ( (actualHeight - ((_defaultChoiceContainer ? _defaultChoiceContainer.height : 0) + _message.height + _customChoiceContainer.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80))) * 0.5) << 0;
 					
 					if( _defaultChoiceContainer )
 					{
 						_customChoiceContainer.validate();
 						_defaultChoiceContainer.validate();
-						_validateButton.validate();
 						
-						_defaultChoiceContainer.width = _customChoiceContainer.width = _customChoiceInput.width = _defaultChoiceLabel.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-						_defaultChoiceContainer.x = _customChoiceContainer.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-						_defaultChoiceContainer.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+						_defaultChoiceContainer.width = _customChoiceContainer.width = _customChoiceInput.width = _defaultChoiceLabel.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5);
+						_validateButton.x = roundUp((actualWidth - _validateButton.width) * 0.5);
+						_defaultChoiceContainer.x = _customChoiceContainer.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5))) * 0.5;
+						_defaultChoiceContainer.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
 						
 						_customChoiceContainer.y = _defaultChoiceContainer.y + _defaultChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 						_validateButton.y = _customChoiceContainer.y + _customChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
@@ -204,11 +204,13 @@ package com.ludofactory.mobile.navigation.authentication
 					else
 					{
 						_customChoiceContainer.validate();
-						_validateButton.validate();
 						
-						_customChoiceContainer.width = _customChoiceInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-						_customChoiceContainer.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-						_customChoiceContainer.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+						_customChoiceInput.prompt = _("Choisissez votre pseudo...");
+						
+						_customChoiceContainer.width = _customChoiceInput.width = actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5);
+						_validateButton.x = roundUp((actualWidth - _validateButton.width) * 0.5);
+						_customChoiceContainer.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.6 : 0.5))) * 0.5;
+						_customChoiceContainer.y = _message.y + _message.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
 						
 						//_customChoiceContainer.y = _defaultChoiceContainer.y + _defaultChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 						_validateButton.y = _customChoiceContainer.y + _customChoiceContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
@@ -226,7 +228,6 @@ package com.ludofactory.mobile.navigation.authentication
 						_message.validate();
 						_customChoiceContainer.validate();
 						_defaultChoiceContainer.validate();
-						_validateButton.validate();
 						
 						_message.width = actualWidth;
 						_defaultChoiceContainer.width = _customChoiceContainer.width = _customChoiceInput.width = _defaultChoiceLabel.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
@@ -251,7 +252,8 @@ package com.ludofactory.mobile.navigation.authentication
 					{
 						_message.validate();
 						_customChoiceContainer.validate();
-						_validateButton.validate();
+						
+						_customChoiceInput.prompt = _("Choisissez votre pseudo...");
 						
 						_message.width = _customChoiceContainer.width = _customChoiceInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
 						_message.x = _customChoiceContainer.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;

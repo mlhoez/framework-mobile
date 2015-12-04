@@ -6,34 +6,44 @@ Created : 7 Juin 2013
 */
 package com.ludofactory.mobile.navigation.authentication
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.FacebookButton;
+	import com.ludofactory.mobile.MobileButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.FaqNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
+	import com.ludofactory.mobile.navigation.faq.FaqQuestionAnswerData;
 	
-	import flash.text.ReturnKeyLabel;
-	import flash.text.SoftKeyboardType;
-	
-	import feathers.controls.Button;
-	import feathers.controls.ImageLoader;
 	import feathers.controls.ScrollContainer;
 	import feathers.controls.Scroller;
 	import feathers.controls.TextInput;
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalLayout;
 	
-	import starling.core.Starling;
+	import flash.text.ReturnKeyLabel;
+	import flash.text.SoftKeyboardType;
 	
+	import starling.core.Starling;
+	import starling.display.Button;
 	import starling.events.Event;
+	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
 	
 	/**
 	 * This is the screen where the user can register a new account.
@@ -41,28 +51,38 @@ package com.ludofactory.mobile.navigation.authentication
 	public class RegisterScreen extends AdvancedScreen
 	{
 		/**
-		 * The logo */		
-		private var _logo:ImageLoader;
-		
+		 * Facebook connect button. */
+		private var _facebookButton:FacebookButton;
 		/**
-		 * TextInputs container with no gap */		
-		private var _textInputsContainer:ScrollContainer;
+		 * Warning message displayed below the Facebook button. */
+		private var _warningLabel:TextField;
 		
 		/**
 		 * The mail input */		
 		private var _mailInput:TextInput;
-		
 		/**
 		 * The password input */		
 		private var _passwordInput:TextInput;
-		
 		/**
-		 * The sponsor input */		
+		 * TextInputs container with no gap */
+		private var _textInputsContainer:ScrollContainer;
+		/**
+		 * The sponsor input */
 		private var _sponsorInput:TextInput;
+		/**
+		 * The sponsor information button. */
+		private var _infoButton:Button;
 		
 		/**
 		 * Validate button */		
-		private var _validateButton:Button;
+		private var _validateButton:MobileButton;
+		
+		/**
+		 * Link for already registered members. */
+		private var _alreadRegisteredLabel:ArrowGroup;
+		/**
+		 * Separator. */
+		private var _orContainer:OrContainer;
 		
 		public function RegisterScreen()
 		{
@@ -77,14 +97,15 @@ package com.ludofactory.mobile.navigation.authentication
 			
 			_headerTitle = _("Inscription");
 			
-			_logo = new ImageLoader();
-			_logo.source = Theme.ludokadoLogoTexture;
-			_logo.textureScale = GlobalConfig.dpiScale;
-			_logo.snapToPixels = true;
-			_logo.touchable = false;
-			addChild( _logo );
+			_facebookButton = ButtonFactory.getFacebookButton(_("Facebook"), ButtonFactory.FACEBOOK_TYPE_CONNECT);
+			_facebookButton.addEventListener(FacebookManagerEventType.AUTHENTICATED, onFacebookAuthenticated);
+			addChild(_facebookButton);
 			
-			_textInputsContainer = new ScrollContainer();
+			_warningLabel = new TextField(5, 5, _("Nous ne publierons jamais sur votre mur sans votre accord"), Theme.FONT_ARIAL, scaleAndRoundToDpi(25), 0x6d6d6d, true);
+			_warningLabel.autoSize = TextFieldAutoSize.VERTICAL;
+			addChild(_warningLabel);
+			
+			_textInputsContainer = new ScrollContainer(); // TODO layout group
 			_textInputsContainer.layout = new VerticalLayout();
 			_textInputsContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_textInputsContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
@@ -114,10 +135,21 @@ package com.ludofactory.mobile.navigation.authentication
 			_sponsorInput.addEventListener(FeathersEventType.ENTER, onEnterKeyPressed);
 			addChild(_sponsorInput);
 			
-			_validateButton = new Button();
-			_validateButton.label = _("Confirmer");
+			_infoButton = new Button(AbstractEntryPoint.assets.getTexture("info-icon"));
+			_infoButton.scaleX = _infoButton.scaleY = GlobalConfig.dpiScale;
+			_infoButton.addEventListener(Event.TRIGGERED, onInfoTouched);
+			addChild(_infoButton);
+			
+			_validateButton = ButtonFactory.getButton(_("Confirmer"), ButtonFactory.YELLOW);
 			_validateButton.addEventListener(Event.TRIGGERED, onValidate);
 			addChild( _validateButton );
+			
+			_alreadRegisteredLabel = new ArrowGroup(_("Déjà un compte ? Identifiez-vous"));
+			_alreadRegisteredLabel.addEventListener(Event.TRIGGERED, onLogin);
+			addChild(_alreadRegisteredLabel);
+			
+			_orContainer = new OrContainer();
+			addChild(_orContainer);
 		}
 		
 		override protected function draw():void
@@ -126,35 +158,41 @@ package com.ludofactory.mobile.navigation.authentication
 			{
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_logo.visible = false;
-					_logo.y = 0;
-					_logo.height = 0;
-					
 					_textInputsContainer.validate();
 					_sponsorInput.validate();
-					_validateButton.validate();
 					
-					_textInputsContainer.width = _mailInput.width = _passwordInput.width = _sponsorInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-					_textInputsContainer.x = _sponsorInput.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-					_textInputsContainer.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.y - _logo.height) - (_textInputsContainer.height + _sponsorInput.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80))) * 0.5) << 0;
+					_alreadRegisteredLabel.x = roundUp((actualWidth - _alreadRegisteredLabel.width) * 0.5);
+					_alreadRegisteredLabel.y = actualHeight - _alreadRegisteredLabel.height - scaleAndRoundToDpi(5);
+					
+					_textInputsContainer.width = _mailInput.width = _passwordInput.width = _sponsorInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.4 : 0.4);
+					_textInputsContainer.x = _sponsorInput.x = _validateButton.x = actualWidth * 0.5 + actualWidth * (GlobalConfig.isPhone ? 0.05 : 0.05);
+					_textInputsContainer.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( (_alreadRegisteredLabel.y - (_textInputsContainer.height + _sponsorInput.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80))) * 0.5) << 0;
 					
 					_sponsorInput.y = _textInputsContainer.y + _textInputsContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
 					_validateButton.y = _sponsorInput.y + _sponsorInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
+					
+					_infoButton.x = _sponsorInput.x + _sponsorInput.width - _infoButton.width;
+					_infoButton.y = _sponsorInput.y + (_sponsorInput.height - _infoButton.height) * 0.5;
+					
+					_orContainer.validate();
+					_orContainer.y = _textInputsContainer.y;
+					_orContainer.x = roundUp((actualWidth - _orContainer.width) * 0.5);
+					_orContainer.height = (_validateButton.y + _validateButton.height) - _orContainer.y;
+					
+					_facebookButton.width = _warningLabel.width = actualWidth * (GlobalConfig.isPhone ? 0.425 : 0.425);
+					_facebookButton.height += scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 10);
+					_facebookButton.y = roundUp((_alreadRegisteredLabel.y - _facebookButton.height - _warningLabel.height - scaleAndRoundToDpi(5)) * 0.5);
+					_warningLabel.y = _facebookButton.y + _facebookButton.height + scaleAndRoundToDpi(5);
+					_facebookButton.x = _warningLabel.x = actualWidth * (GlobalConfig.isPhone ? 0.0375 : 0.0375);
 				}
 				else
 				{
-					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.65 : 0.75);
-					_logo.validate();
-					_logo.y = scaleAndRoundToDpi( GlobalConfig.isPhone ? 15 : 30 );
-					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
-					
 					_textInputsContainer.validate();
 					_sponsorInput.validate();
-					_validateButton.validate();
 					
 					_textInputsContainer.width = _mailInput.width = _passwordInput.width = _sponsorInput.width = _validateButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
 					_textInputsContainer.x = _sponsorInput.x = _validateButton.x = (actualWidth - (actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6))) * 0.5;
-					_textInputsContainer.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.y - _logo.height) - (_textInputsContainer.height + _sponsorInput.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 100))) * 0.5) << 0;
+					//_textInputsContainer.y = (_logo.y + _logo.height) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20) + ( ((actualHeight - _logo.y - _logo.height) - (_textInputsContainer.height + _sponsorInput.height + _validateButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 100))) * 0.5) << 0;
 					
 					_sponsorInput.y = _textInputsContainer.y + _textInputsContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
 					_validateButton.y = _sponsorInput.y + _sponsorInput.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
@@ -333,9 +371,26 @@ package com.ludofactory.mobile.navigation.authentication
 		 * The user touched the "I already have an account" link. He is redirected
 		 * the the LoginScreen.
 		 */		
-		private function onLogIn(event:Event):void
+		private function onLogin(event:Event):void
 		{
 			this.advancedOwner.showScreen( ScreenIds.LOGIN_SCREEN );
+		}
+		
+		/**
+		 * The user touched the "I already have an account" link. He is redirected
+		 * the the LoginScreen.
+		 */
+		private function onInfoTouched(event:Event):void
+		{
+			NotificationPopupManager.addNotification( new FaqNotificationContent(new FaqQuestionAnswerData({question:_("Qu'est-ce que le code parrain ?"), reponse:_("Le code parrain est un numéro correspondant à l'identifiant d'un joueur sur l'application.\n\nLorsqu'un joueur ou un ami souhaite vous parrainer, il vous envoie son code joueur que vous pouvez saisir dans ce champ.")})));
+		}
+		
+		/**
+		 * Facebook authentication.
+		 */
+		private function onFacebookAuthenticated(event:Event):void
+		{
+			advancedOwner.showScreen(ScreenIds.HOME_SCREEN);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -345,8 +400,12 @@ package com.ludofactory.mobile.navigation.authentication
 		{
 			AbstractEntryPoint.screenNavigator.screenData.tempFacebookData = {};
 			
-			_logo.removeFromParent(true);
-			_logo = null;
+			_facebookButton.removeEventListener(FacebookManagerEventType.AUTHENTICATED, onFacebookAuthenticated);
+			_facebookButton.removeFromParent(true);
+			_facebookButton = null;
+			
+			_warningLabel.removeFromParent(true);
+			_warningLabel = null;
 			
 			_mailInput.removeEventListener(FeathersEventType.ENTER, onEnterKeyPressed);
 			_mailInput.removeFromParent(true);
@@ -356,16 +415,27 @@ package com.ludofactory.mobile.navigation.authentication
 			_passwordInput.removeFromParent(true);
 			_passwordInput = null;
 			
+			_textInputsContainer.removeFromParent(true);
+			_textInputsContainer = null;
+			
 			_sponsorInput.removeEventListener(FeathersEventType.ENTER, onEnterKeyPressed);
 			_sponsorInput.removeFromParent(true);
 			_sponsorInput = null;
 			
-			_textInputsContainer.removeFromParent(true);
-			_textInputsContainer = null;
+			_infoButton.removeEventListener(Event.TRIGGERED, onInfoTouched);
+			_infoButton.removeFromParent(true);
+			_infoButton = null;
 			
 			_validateButton.removeEventListener(Event.TRIGGERED, onValidate);
 			_validateButton.removeFromParent(true);
 			_validateButton = null;
+			
+			_alreadRegisteredLabel.removeEventListener(Event.TRIGGERED, onLogin);
+			_alreadRegisteredLabel.removeFromParent(true);
+			_alreadRegisteredLabel = null;
+			
+			_orContainer.removeFromParent(true);
+			_orContainer = null;
 			
 			super.dispose();
 		}

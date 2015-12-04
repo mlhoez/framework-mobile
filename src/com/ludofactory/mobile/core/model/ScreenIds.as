@@ -65,8 +65,6 @@ package com.ludofactory.mobile.core.model
 		public static const REGISTER_SCREEN:String = "Authentification - Inscription";
 		/** Ecran de fin d'inscription. */		
 		public static const REGISTER_COMPLETE_SCREEN:String = "Authentification - Fin d'inscription";
-		/** Ecran d'oubli de mot de passe. */		
-		public static const FORGOT_PASSWORD_SCREEN:String = "Authentification - Mot de passe oublié";
 		/** Ecran de choix du pseudo. */		
 		public static const PSEUDO_CHOICE_SCREEN:String = "Authentification - Choix du pseudo";
 		/** Ecran de renseignement de l'id parrain (après une inscription Facebook). */		
