@@ -43,13 +43,14 @@ package com.ludofactory.mobile.core.controls
 			_labelName = labelName;
 			touchGroup = true;
 			
-			_arrow = new Image( AbstractEntryPoint.assets.getTexture("arrow-right-dark"));
+			_arrow = new Image( AbstractEntryPoint.assets.getTexture("arrow-right"));
+			_arrow.color = 0x6d6d6d;
 			_arrow.scaleX = _arrow.scaleY = GlobalConfig.dpiScale;
 			addChild(_arrow);
 			
-			_label = new TextField(5, 5, _labelName, Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 38), Theme.COLOR_DARK_GREY, true);
+			_label = new TextField(5, scaleAndRoundToDpi(50), _labelName, Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 25 : 33), 0x6d6d6d, true);
 			_label.text = _labelName;
-			_label.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
+			_label.autoSize = TextFieldAutoSize.HORIZONTAL;
 			_label.x = _arrow.x + _arrow.width + scaleAndRoundToDpi(3);
 			addChild(_label);
 			
