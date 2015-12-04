@@ -8,6 +8,7 @@ package com.ludofactory.mobile.navigation.game
 {
 	
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -24,6 +25,7 @@ package com.ludofactory.mobile.navigation.game
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
 	
 	public class StakeButton extends FeathersControl
 	{
@@ -76,22 +78,22 @@ package com.ludofactory.mobile.navigation.game
 		{
 			super.initialize();
 			
-			// FIXME once a new version a Pyramid have been released, we can remove this
-			// _n("Utiliser {0} Crédit", "Utiliser {0} Crédits", 1); 
-			// _n("Utiliser {0} Jeton", "Utiliser {0} Jetons", 1); 
-			// _n("Utiliser {0} Point", "Utiliser {0} Points", 1); 
-			
 			_container = new LayoutGroup();
 			addChild(_container);
 			
 			_backgroundSkin = new Scale9Image(Theme.buttonDisabledSkinTextures, GlobalConfig.dpiScale);
 			_container.addChild(_backgroundSkin);
 			
-			_icon = new Image( AbstractEntryPoint.assets.getTexture("GameTypeSelectionPointsIcon") );
+			_icon = new Image( AbstractEntryPoint.assets.getTexture("stake-choice-token-icon") );
 			_container.addChild(_icon);
 
-			_label = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 42 : 60), 0x002432);
-			_label.autoScale = true;
+			_label = new TextField(5, 5, "AA", Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 42 : 60), 0x002432);
+			_label.autoSize = TextFieldAutoSize.VERTICAL;
+			_label.autoScale = false;
+			_label.redraw();
+			/*_label.autoSize = TextFieldAutoSize.NONE;
+			_label.autoScale = true;*/
+			_label.wordWrap = false;
 			_container.addChild(_label);
 			
 			addEventListener(TouchEvent.TOUCH, button_touchHandler);
@@ -100,18 +102,16 @@ package com.ludofactory.mobile.navigation.game
 		override protected function draw():void
 		{
 			super.draw();
-			
 			_backgroundSkin.width = this.actualWidth;
 			_backgroundSkin.height = this.actualHeight;
 
-			_icon.scaleX = _icon.scaleY = Utilities.getScaleToFillHeight(_icon.height, actualHeight * 0.8);
-			_icon.x = scaleAndRoundToDpi(40);
-			_icon.y = (this.actualHeight - _icon.height) * 0.5;
+			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale;
+			_icon.x = roundUp((actualWidth - _icon.width) * 0.5) + scaleAndRoundToDpi(25);
+			_icon.y = _icon.height * -0.15;
 
-			_label.width = actualWidth - _icon.x - _icon.width - _shadowThickness - scaleAndRoundToDpi(20);
-			_label.height = this.actualHeight - (_shadowThickness * 2);
-			_label.x = _icon.x + _icon.width + scaleAndRoundToDpi(10);
-			_label.y = (actualHeight - _label.height) * 0.5;
+			_label.width = actualWidth - (_shadowThickness * 2);
+			_label.x = _shadowThickness;
+			_label.y = actualHeight - _shadowThickness - _label.height;
 		}
 		
 		public function set backgroundSkin(val:Scale9Image):void

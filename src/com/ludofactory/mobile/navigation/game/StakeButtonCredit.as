@@ -9,6 +9,7 @@ package com.ludofactory.mobile.navigation.game
 	
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._n;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
@@ -17,16 +18,17 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
+
+	import flash.filters.BitmapFilterQuality;
+	import flash.filters.DropShadowFilter;
+	import flash.filters.GlowFilter;
+
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.utils.formatString;
 	
 	public class StakeButtonCredit extends StakeButton
 	{
-		/**
-		 * The add more credits icon. */		
-		private var _addIcon:Image;
 		/**
 		 * The win more points image */
 		private var _winMorePointsImage:Image;
@@ -47,12 +49,9 @@ package com.ludofactory.mobile.navigation.game
 			
 			_backgroundSkin.textures = Theme.buttonYellowSkinTextures;
 
-			_label.color = 0x401800;
-			
-			_addIcon = new Image( AbstractEntryPoint.assets.getTexture("GameTypeSelectionAddIcon") );
-			_addIcon.scaleX = _addIcon.scaleY = GlobalConfig.dpiScale;
-			_addIcon.alignPivot();
-			_container.addChild(_addIcon);
+			_label.color = 0x622100;
+			_label.nativeFilters = [ new GlowFilter(0xffe400, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
+				new DropShadowFilter(2, 75, 0xffe400, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
 			
 			if( _gameType == GameMode.SOLO )
 			{
@@ -70,10 +69,6 @@ package com.ludofactory.mobile.navigation.game
 		{
 			super.draw();
 			
-			_addIcon.x = _shadowThickness;
-			_addIcon.y = this.actualHeight - _shadowThickness;
-			
-			
 			if( _winMorePointsImage )
 			{
 				_winMorePointsImage.y = -int(_shadowThickness * 0.5) + (_winMorePointsImage.height * 0.5);
@@ -88,8 +83,7 @@ package com.ludofactory.mobile.navigation.game
 			_label.text = formatString( _n("{0} Crédit", "{0} Crédits", Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE )),
 				Storage.getInstance().getProperty( _gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
 			
-			_icon.texture = AbstractEntryPoint.assets.getTexture("GameTypeSelectionCreditsIcon");
-			_addIcon.visible = !_isEnabled;
+			_icon.texture = AbstractEntryPoint.assets.getTexture("stake-choice-credit-icon");
 		}
 		
 		override protected function triggerButton():void
@@ -104,9 +98,6 @@ package com.ludofactory.mobile.navigation.game
 		override public function dispose():void
 		{
 			MemberManager.getInstance().removeEventListener(MobileEventTypes.MEMBER_UPDATED, onUpdateData);
-			
-			_addIcon.removeFromParent(true);
-			_addIcon = null;
 			
 			if( _winMorePointsImage )
 			{

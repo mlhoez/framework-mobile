@@ -6,7 +6,7 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.navigation.game
 {
-	
+
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.gettext.aliases._n;
@@ -27,17 +27,20 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.vidcoin.extension.ane.VidCoinController;
 	import com.vidcoin.extension.ane.events.VidCoinEvents;
-	
+
 	import feathers.controls.Callout;
 	import feathers.controls.Label;
-	
+
+	import flash.filters.BitmapFilterQuality;
+	import flash.filters.DropShadowFilter;
+	import flash.filters.GlowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-	
+
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.utils.formatString;
-	
+
 	public class StakeButtonToken extends StakeButton
 	{
 		/**
@@ -68,6 +71,10 @@ package com.ludofactory.mobile.navigation.game
 		override protected function initialize():void
 		{
 			super.initialize();
+
+			_label.color = 0xffffff;
+			_label.nativeFilters = [ new GlowFilter(0x1a7602, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
+				new DropShadowFilter(2, 75, 0x1a7602, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
 			
 			_iconClock = new Image( AbstractEntryPoint.assets.getTexture("GameTypeSelectionClockIcon") );
 			_iconClock.scaleX = _iconClock.scaleY = GlobalConfig.dpiScale;
@@ -87,8 +94,6 @@ package com.ludofactory.mobile.navigation.game
 				_iconClock.x = _shadowThickness;
 				_iconClock.y = this.actualHeight - _shadowThickness;
 			}
-			
-			
 		}
 		
 		/**
@@ -102,7 +107,7 @@ package com.ludofactory.mobile.navigation.game
 			
 			_iconClock.visible = false;
 
-			_icon.texture = AbstractEntryPoint.assets.getTexture( (_isEnabled || !MemberManager.getInstance().isLoggedIn()) ? "GameTypeSelectionFreeIcon" : "GameTypeSelectionFreeIconDisabled" );
+			_icon.texture = AbstractEntryPoint.assets.getTexture( (_isEnabled || !MemberManager.getInstance().isLoggedIn()) ? "stake-choice-token-icon" : "stake-choice-token-icon-disabled" );
 			_backgroundSkin.textures = (_isEnabled || !MemberManager.getInstance().isLoggedIn()) ? Theme.buttonGreenSkinTextures : Theme.buttonDisabledSkinTextures;
 
 			GameSessionTimer.unregisterFunction(setText);
@@ -110,32 +115,28 @@ package com.ludofactory.mobile.navigation.game
 			if( _isEnabled )
 			{
 				_label.text = formatString(_n("{0} Jeton", "{0} Jetons", numTokensRequiredToPlay), numTokensRequiredToPlay);
-				_label.color = 0x0d2701;
 			}
 			else
 			{
 				if( MemberManager.getInstance().tokens >= numTokensRequiredToPlay || !MemberManager.getInstance().isLoggedIn() )
 				{
 					_label.text = formatString(_n("{0} Jeton", "{0} Jetons", numTokensRequiredToPlay), numTokensRequiredToPlay);
-					_label.color = 0x2d2d2d;
 				}
 				else
 				{
 					if( GameSessionTimer.IS_TIMER_OVER_AND_REQUEST_FAILED )
 					{
 						_label.text = _("???");
-						_label.color = 0xffffff;
 					}
 					else
 					{
 						if( MemberManager.getInstance().getCanWatchVideo() && AbstractEntryPoint.vidCoin.videoIsAvailableForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID) )
 						{
 							_label.text = formatString(_("Regarder une vidéo pour jouer gratuitement."));
-							_label.color = 0x2d2d2d;
 
 							_vidCoinEnabled = true;
 
-							_icon.texture = AbstractEntryPoint.assets.getTexture("GameTypeSelectionFreeIcon");
+							_icon.texture = AbstractEntryPoint.assets.getTexture("stake-choice-token-icon");
 							_backgroundSkin.textures = Theme.buttonGreenSkinTextures;
 						}
 						else
@@ -144,7 +145,6 @@ package com.ludofactory.mobile.navigation.game
 							{
 								// mettre texte normal + timer
 								_label.text = formatString(_("{0} Jetons dans "), MemberManager.getInstance().totalTokensADay) + "--:--:--";
-								_label.color = 0xffffff;
 								
 								_vidCoinEnabled = false;
 	
@@ -153,7 +153,6 @@ package com.ludofactory.mobile.navigation.game
 							else
 							{
 								_label.text = formatString(_n("{0} Jeton", "{0} Jetons", numTokensRequiredToPlay), numTokensRequiredToPlay);
-								_label.color = 0x2d2d2d;
 							}
 						}
 					}
