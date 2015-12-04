@@ -122,7 +122,8 @@ package com.ludofactory.mobile.navigation.faq
 			addChild(_title);
 			_title.textRendererProperties.textFormat = Theme.faqIRTextFormat;
 			
-			_arrow = new Image(AbstractEntryPoint.assets.getTexture("arrow-right-dark"));
+			_arrow = new Image(AbstractEntryPoint.assets.getTexture("arrow-right"));
+			_arrow.color = 0x333333;
 			_arrow.scaleX = _arrow.scaleY = GlobalConfig.dpiScale;
 			addChild(_arrow);
 		}
