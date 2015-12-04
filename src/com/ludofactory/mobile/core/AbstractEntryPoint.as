@@ -43,7 +43,6 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.achievements.TrophyScreen;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
 	import com.ludofactory.mobile.navigation.alert.AlertManager;
-	import com.ludofactory.mobile.navigation.authentication.ForgotPasswordScreen;
 	import com.ludofactory.mobile.navigation.authentication.LoginScreen;
 	import com.ludofactory.mobile.navigation.authentication.PseudoChoiceScreen;
 	import com.ludofactory.mobile.navigation.authentication.RegisterCompleteScreen;
@@ -169,7 +168,6 @@ package com.ludofactory.mobile.core
 												{ id:ScreenIds.REGISTER_SCREEN, clazz:RegisterScreen },
 												{ id:ScreenIds.REGISTER_COMPLETE_SCREEN, clazz:RegisterCompleteScreen },
 												{ id:ScreenIds.PSEUDO_CHOICE_SCREEN, clazz:PseudoChoiceScreen },
-												{ id:ScreenIds.FORGOT_PASSWORD_SCREEN, clazz:ForgotPasswordScreen },
 												{ id:ScreenIds.NEW_HIGH_SCORE_SCREEN, clazz:HighScoreScreen },
 												{ id:ScreenIds.SOLO_END_SCREEN, clazz:SoloEndScreen },
 												{ id:ScreenIds.GAME_TYPE_SELECTION_SCREEN, clazz:StakeSelectionScreen },
