@@ -124,7 +124,8 @@ package com.ludofactory.mobile.navigation.shop.vip
 			_previousSubCatButton.visible = false;
 			
 			_arrowRight = new ImageLoader();
-			_arrowRight.source = AbstractEntryPoint.assets.getTexture("arrow-right-dark");
+			_arrowRight.source = AbstractEntryPoint.assets.getTexture("arrow-right");
+			_arrowRight.color = 0x333333;
 			_arrowRight.scaleX = _arrowRight.scaleY = GlobalConfig.dpiScale;
 			_arrowRight.snapToPixels = true;
 			
