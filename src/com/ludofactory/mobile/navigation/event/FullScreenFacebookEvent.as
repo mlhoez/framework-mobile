@@ -63,7 +63,7 @@ package com.ludofactory.mobile.navigation.event
 			_closeButton.scaleX = _closeButton.scaleY = GlobalConfig.dpiScale;
 			addChild(_closeButton);
 			
-			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onAccountAssociated);
+			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED, onAccountAssociated);
 		}
 		
 		override protected function draw():void
@@ -100,7 +100,7 @@ package com.ludofactory.mobile.navigation.event
 			if( touch && touch.phase == TouchPhase.BEGAN )
 			{
 				// Association Facebook
-				FacebookManager.getInstance().associate();
+				FacebookManager.getInstance().connect();
 			}
 			touch = null;
 		}
@@ -126,7 +126,7 @@ package com.ludofactory.mobile.navigation.event
 		
 		override public function dispose():void
 		{
-			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onAccountAssociated);
+			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED, onAccountAssociated);
 			
 			_overlay.removeFromParent(true);
 			_overlay = null;

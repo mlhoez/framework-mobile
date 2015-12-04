@@ -103,6 +103,7 @@ package com.ludofactory.mobile.navigation.tournament
 			
 			_arrow = new ImageLoader();
 			_arrow.source = AbstractEntryPoint.assets.getTexture("arrow-right");
+			_arrow.color = 0x333333;
 			_arrow.scaleX = _arrow.scaleY = GlobalConfig.dpiScale;
 			_arrow.snapToPixels = true;
 			addChild(_arrow);

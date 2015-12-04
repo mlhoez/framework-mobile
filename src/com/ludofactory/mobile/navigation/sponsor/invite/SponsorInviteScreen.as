@@ -185,8 +185,11 @@ package com.ludofactory.mobile.navigation.sponsor.invite
 			_singleInviteGroup.layout = hlayout;
 			addChild(_singleInviteGroup);
 			
-			_singleInviteArrow = new Image( AbstractEntryPoint.assets.getTexture("arrow-right-dark"));
+			
+			// FIXME Faireu n arrowGroup ici plutôt
+			_singleInviteArrow = new Image( AbstractEntryPoint.assets.getTexture("arrow-right"));
 			_singleInviteArrow.scaleX = _singleInviteArrow.scaleY = GlobalConfig.dpiScale;
+			_singleInviteArrow.color = 0x333333;
 			_singleInviteGroup.addChild(_singleInviteArrow);
 			
 			_singleInviteButton = new Button();
