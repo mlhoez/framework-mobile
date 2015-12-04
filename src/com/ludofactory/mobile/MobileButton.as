@@ -98,11 +98,12 @@ package com.ludofactory.mobile
 			mAlphaWhenDisabled = disabledState ? 1.0: 0.5;
 			
 			//scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 148) : 128)
-			mTextField = new TextField(5, 5, text, Theme.FONT_SANSITA, 50);
+			mTextField = new TextField(5, 5, text, Theme.FONT_SANSITA, scaleAndRoundToDpi(50));
 			mTextField.vAlign = VAlign.CENTER;
 			mTextField.hAlign = HAlign.CENTER;
 			mTextField.touchable = false;
 			mTextField.batchable = true;
+			mTextField.wordWrap = false;
 			
 			mContents = new Sprite();
 			mContents.addChild(mBody);
