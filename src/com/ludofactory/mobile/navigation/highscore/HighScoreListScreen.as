@@ -13,10 +13,11 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.FacebookButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.controls.AutoRefreshableList;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -26,10 +27,12 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
+	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.GoViral;
 	
+	import feathers.controls.Callout;
 	import feathers.controls.GroupedList;
 	import feathers.controls.Label;
 	import feathers.controls.Scroller;
@@ -42,6 +45,7 @@ package com.ludofactory.mobile.navigation.highscore
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
+	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.QuadBatch;
@@ -58,9 +62,6 @@ package com.ludofactory.mobile.navigation.highscore
 		 * Country choice background */		
 		private var _countryChoiceBackground:QuadBatch;
 		/**
-		 * Country choice title */		
-		private var _countryChoiceTitle:TextField;
-		/**
 		 * Country choice value */		
 		private var _countryChoiceValue:TextField;
 		/**
@@ -69,6 +70,9 @@ package com.ludofactory.mobile.navigation.highscore
 		/**
 		 * The list shadow */		
 		private var _listShadow:Quad;
+		
+		private var _leftTrophyIcon:Image;
+		private var _rightTrophyIcon:Image;
 		
 		/**
 		 * The list header. */		
@@ -101,7 +105,9 @@ package com.ludofactory.mobile.navigation.highscore
 		private var _associateLabel:Label;
 		/**
 		 * Associate button. */		
-		private var _associateButton:ArrowGroup;
+		private var _associateButton:FacebookButton;
+		
+		private var _socialGameButton:Button;
 		
 		public function HighScoreListScreen()
 		{
@@ -110,8 +116,6 @@ package com.ludofactory.mobile.navigation.highscore
 			_whiteBackground = true;
 			_appClearBackground = false;
 			_fullScreen = false;
-			
-			// TODO intégrer ici le code de la home avec info bule et authentification au Game Center
 		}
 		
 		override protected function initialize():void
@@ -124,9 +128,15 @@ package com.ludofactory.mobile.navigation.highscore
 			_listHeader.visible = false;
 			addChild(_listHeader);
 			
+			const layout:VerticalLayout = new VerticalLayout();
+			layout.hasVariableItemDimensions = true;
+			layout.manageVisibility = true;
+			layout.useVirtualLayout = true;
+			
 			_list = new AutoRefreshableList();
 			_list.isSelectable = false;
 			_list.visible = false;
+			_list.layout = layout;
 			_list.itemRendererType = HighScoreItemRenderer;
 			_list.addEventListener(MobileEventTypes.LIST_BOTTOM_UPDATE, onBottomUpdate);
 			_list.addEventListener(MobileEventTypes.LIST_TOP_UPDATE, onTopUpdate);
@@ -145,25 +155,35 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			_countryChoiceBackground = new QuadBatch();
 			_countryChoiceBackground.addEventListener(TouchEvent.TOUCH, onShowCountries);
-			const qd:Quad = new Quad(50, scaleAndRoundToDpi(74), 0xfbfbfb);
+			const qd:Quad = new Quad(50, scaleAndRoundToDpi(100), 0xfbfbfb);
 			_countryChoiceBackground.addQuad(qd);
 			qd.height = scaleAndRoundToDpi(4);
 			qd.color = 0xe6e6e6;
-			qd.y = scaleAndRoundToDpi(74);
+			qd.y = scaleAndRoundToDpi(100);
 			_countryChoiceBackground.addQuad(qd);
 			addChild(_countryChoiceBackground);
 			
-			_countryChoiceTitle = new TextField(5, _countryChoiceBackground.height, _("Pays : "), Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_DARK_GREY, true);
-			_countryChoiceTitle.autoSize = TextFieldAutoSize.HORIZONTAL;
-			addChild( _countryChoiceTitle );
+			_leftTrophyIcon = new Image(AbstractEntryPoint.assets.getTexture("high-score-list-trophy-icon"));
+			_leftTrophyIcon.scaleX = _leftTrophyIcon.scaleY = GlobalConfig.dpiScale;
+			_leftTrophyIcon.touchable = false;
+			addChild(_leftTrophyIcon);
 			
-			_countryChoiceValue = new TextField(5, _countryChoiceBackground.height, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_LIGHT_GREY, true);
+			_rightTrophyIcon = new Image(AbstractEntryPoint.assets.getTexture("high-score-list-trophy-icon"));
+			_rightTrophyIcon.scaleX = _rightTrophyIcon.scaleY = GlobalConfig.dpiScale;
+			_rightTrophyIcon.scaleX *= -1;
+			_rightTrophyIcon.touchable = false;
+			addChild(_rightTrophyIcon);
+			
+			_countryChoiceValue = new TextField(5, _countryChoiceBackground.height, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(28), 0x401800, true);
 			_countryChoiceValue.text = arr[advancedOwner.screenData.highscoreRankingType == -1 ? (arr.length-1) : advancedOwner.screenData.highscoreRankingType];
 			_countryChoiceValue.autoSize = TextFieldAutoSize.HORIZONTAL;
+			_countryChoiceValue.touchable = false;
 			addChild( _countryChoiceValue );
 			
 			_arrowDown = new Image( AbstractEntryPoint.assets.getTexture("arrow_down") );
+			_arrowDown.color = 0x401800;
 			_arrowDown.scaleX = _arrowDown.scaleY = GlobalConfig.dpiScale;
+			_arrowDown.touchable = false;
 			addChild(_arrowDown);
 			
 			_listShadow = new Quad(50, scaleAndRoundToDpi(12), 0x000000);
@@ -190,7 +210,7 @@ package com.ludofactory.mobile.navigation.highscore
 			_retryContainer.addEventListener(Event.TRIGGERED, onRetry);
 			addChild(_retryContainer);
 			
-			_associateButton = new ArrowGroup( _("Associer mon compte à Facebook") );
+			_associateButton = ButtonFactory.getFacebookButton(_("Facebook"), ButtonFactory.FACEBOOK_TYPE_CONNECT);
 			_associateButton.visible = false;
 			addChild(_associateButton);
 			
@@ -202,7 +222,16 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			_selectedCountryId = advancedOwner.screenData.highscoreRankingType;
 			
-			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, launchRequestAfterSuccessLoginFacebook);
+			// FIXME mettre la bonne icone 70x70 en fonction de l'os
+			if(GlobalConfig.ios) // TODO rajouter android ici lors de l'intégration de Google Play Games
+			{
+				_socialGameButton = new Button(AbstractEntryPoint.assets.getTexture("game-center-icon"));
+				_socialGameButton.scaleX = _socialGameButton.scaleY = GlobalConfig.dpiScale;
+				_socialGameButton.addEventListener(Event.TRIGGERED, onShowGameAchievements);
+				addChild(_socialGameButton);
+			}
+			
+			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
 			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
@@ -223,11 +252,18 @@ package com.ludofactory.mobile.navigation.highscore
 			{
 				_countryChoiceBackground.width = this.actualWidth;
 				
-				_countryChoiceTitle.x = roundUp((actualWidth - _countryChoiceTitle.width - _countryChoiceValue.width - scaleAndRoundToDpi(3)) * 0.5);
-				_countryChoiceValue.x = _countryChoiceTitle.x + _countryChoiceTitle.width + scaleAndRoundToDpi(3);
-				
-				_arrowDown.x = this.actualWidth - _arrowDown.width - scaleAndRoundToDpi(30);
 				_arrowDown.y = _countryChoiceBackground.y + (_countryChoiceBackground.height - _arrowDown.height) * 0.5;
+				
+				_countryChoiceValue.x = roundUp((actualWidth - _countryChoiceValue.width - _arrowDown.width - scaleAndRoundToDpi(5)) * 0.5);
+				_arrowDown.x = roundUp(_countryChoiceValue.x + +_countryChoiceValue.width + scaleAndRoundToDpi(5));
+				_leftTrophyIcon.x = _countryChoiceValue.x - _leftTrophyIcon.width - scaleAndRoundToDpi(15);
+				_rightTrophyIcon.x = _arrowDown.x + _arrowDown.width + _rightTrophyIcon.width + scaleAndRoundToDpi(15);
+				
+				if(_socialGameButton)
+				{
+					_socialGameButton.x = actualWidth - _socialGameButton.width - scaleAndRoundToDpi(10);
+					_socialGameButton.y = roundUp((scaleAndRoundToDpi(100) - _socialGameButton.height) * 0.5);
+				}
 				
 				_listShadow.width = this.actualWidth;
 				_listShadow.y = _countryChoiceBackground.height;
@@ -440,6 +476,11 @@ package com.ludofactory.mobile.navigation.highscore
 			_countryChoiceValue.text = _countriesList.selectedItem.toString();
 			_selectedCountryId = _countriesList.selectedItem.id;
 			
+			_countryChoiceValue.x = roundUp((actualWidth - _countryChoiceValue.width - _arrowDown.width - scaleAndRoundToDpi(5)) * 0.5);
+			_arrowDown.x = roundUp(_countryChoiceValue.x + +_countryChoiceValue.width + scaleAndRoundToDpi(5));
+			_leftTrophyIcon.x = _countryChoiceValue.x - _leftTrophyIcon.width - scaleAndRoundToDpi(15);
+			_rightTrophyIcon.x = _arrowDown.x + _arrowDown.width + _rightTrophyIcon.width + scaleAndRoundToDpi(15);
+			
 			if( GAnalytics.isSupported() )
 				GAnalytics.analytics.defaultTracker.trackEvent("HighScores", "Affichage du classement " + _countryChoiceValue, null, NaN, MemberManager.getInstance().id);
 			
@@ -449,7 +490,6 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			_associateButton.visible = false;
 			_associateLabel.visible = false;
-			_associateButton.removeEventListener(Event.TRIGGERED, onAuthenticateFacebook);
 			
 			_retryContainer.removeEventListener(Event.TRIGGERED, requestPermission);
 			_retryContainer.removeEventListener(Event.TRIGGERED, onRetry);
@@ -526,7 +566,7 @@ package com.ludofactory.mobile.navigation.highscore
 					_retryContainer.visible = true;
 					_associateButton.visible = false;
 					_associateLabel.visible = false;
-					FacebookManager.getInstance().getToken();
+					FacebookManager.getInstance().connect();
 				}
 				else
 				{
@@ -535,11 +575,9 @@ package com.ludofactory.mobile.navigation.highscore
 					_associateButton.visible = true;
 					_associateLabel.visible = true;
 					
-					_associateButton.label = MemberManager.getInstance().isLoggedIn() ? _("Associer mon compte à Facebook") : _("Se connecter avec Facebook");
+					_associateButton.text = MemberManager.getInstance().isLoggedIn() ? _("Associer mon compte à Facebook") : _("Se connecter avec Facebook");
 					_associateLabel.text = MemberManager.getInstance().isLoggedIn() ? _("Vous devez associer votre compte à Facebook pour voir la progression de vos amis !") : _("Connectez-vous avec Facebook pour voir la progression de vos amis !");
 				}
-				
-				_associateButton.addEventListener(Event.TRIGGERED, onAuthenticateFacebook);
 				
 				invalidate(INVALIDATION_FLAG_SIZE);
 			}
@@ -604,38 +642,91 @@ package com.ludofactory.mobile.navigation.highscore
 			_retryContainer.removeEventListener(Event.TRIGGERED, requestPermission);
 			launchRequestAfterSuccessLoginFacebook();
 		}
-		
+
+//------------------------------------------------------------------------------------------------------------
+//	Game center
+
 		/**
-		 * Called when the user wants to associate its account with Facebook
+		 * Shows the Game Center achievements.
 		 */
-		private function onAuthenticateFacebook(event:Event):void
+		private function onShowGameAchievements(event:Event):void
 		{
-			if(MemberManager.getInstance().isLoggedIn())
+			if(GlobalConfig.ios)
 			{
-				if(MemberManager.getInstance().facebookId != 0)
+				if( GameCenterManager.available )
 				{
-					FacebookManager.getInstance().getToken();
-				}
-				else
-				{
-					FacebookManager.getInstance().associate();
+					GameCenterManager.dispatcher.addEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
+					GameCenterManager.dispatcher.addEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
+					GameCenterManager.authenticateUser();
 				}
 			}
-			else
+			else if(GlobalConfig.android)
 			{
-				FacebookManager.getInstance().register();
+				// TODO integrate Google Play Games here
 			}
 		}
+
+		/**
+		 * Authentication ok, we can show the achievements.
+		 */
+		private function onGameCenterAuthenticationFinished(event:Event):void
+		{
+			GameCenterManager.dispatcher.removeEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
+			GameCenterManager.dispatcher.removeEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
+			GameCenterManager.showAchievements();
+		}
+
+		/**
+		 * Fail
+		 */
+		private function onGameCenterAuthenticationFailed(event:Event):void
+		{
+			GameCenterManager.dispatcher.removeEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_SUCCESS, onGameCenterAuthenticationFinished);
+			GameCenterManager.dispatcher.removeEventListener(MobileEventTypes.GAME_CENTER_AUTHENTICATION_FAILURE, onGameCenterAuthenticationFailed);
+			// TODO show tooltip
+
+			_isCalloutDisplaying = true;
+
+			_calloutLabel = new Label();
+			_calloutLabel.width = GlobalConfig.stageWidth * 0.6;
+			_calloutLabel.text = _("Le Game Center est désactivé.\nPour le réactiver, connectez-vous directement à partir de l'application Game Center.");
+			_calloutLabel.validate();
+
+			var callout:Callout = Callout.show(_calloutLabel, _socialGameButton, Callout.DIRECTION_UP, false);
+			callout.touchable = false;
+			callout.disposeContent = false;
+			callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
+			_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
+		}
+
+		private function onCalloutRemoved(event:Event):void
+		{
+			try
+			{
+				event.target.removeEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
+				(event.target as Callout).dispose();
+				_calloutLabel.removeFromParent(true);
+				_calloutLabel = null;
+			}
+			catch(error:Error)
+			{
+				// -
+			}
+
+			_isCalloutDisplaying = false;
+		}
+
+		private var _calloutLabel:Label;
+		private var _isCalloutDisplaying:Boolean = false;
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
 		override public function dispose():void
 		{
-			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, launchRequestAfterSuccessLoginFacebook);
+			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
 			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PERMISSION_GRANTED, onPermissionGranted);
 			
-			_associateButton.removeEventListener(Event.TRIGGERED, onAuthenticateFacebook);
 			_associateButton.removeFromParent(true);
 			_associateButton = null;
 			
@@ -643,9 +734,6 @@ package com.ludofactory.mobile.navigation.highscore
 			_countryChoiceBackground.reset();
 			_countryChoiceBackground.removeFromParent(true);
 			_countryChoiceBackground = null;
-			
-			_countryChoiceTitle.removeFromParent(true);
-			_countryChoiceTitle = null;
 			
 			_countryChoiceValue.removeFromParent(true);
 			_countryChoiceValue = null;
@@ -674,6 +762,19 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			_listShadow.removeFromParent(true);
 			_listShadow = null;
+			
+			_leftTrophyIcon.removeFromParent(true);
+			_leftTrophyIcon = null;
+			
+			_rightTrophyIcon.removeFromParent(true);
+			_rightTrophyIcon = null;
+			
+			if(_socialGameButton)
+			{
+				_socialGameButton.removeEventListener(Event.TRIGGERED, onShowGameAchievements);
+				_socialGameButton.removeFromParent(true);
+				_socialGameButton = null;
+			}
 			
 			super.dispose();
 		}
