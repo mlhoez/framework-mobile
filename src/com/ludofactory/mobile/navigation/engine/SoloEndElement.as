@@ -22,6 +22,7 @@ package com.ludofactory.mobile.navigation.engine
 	import feathers.textures.Scale9Textures;
 	
 	import starling.display.Image;
+	import starling.text.TextField;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	import starling.utils.deg2rad;
@@ -38,7 +39,7 @@ package com.ludofactory.mobile.navigation.engine
 		
 		/**
 		 * The message. */		
-		private var _messageLabel:Label;
+		private var _messageLabel:TextField;
 		
 		/**
 		 *  */		
@@ -50,7 +51,7 @@ package com.ludofactory.mobile.navigation.engine
 		
 		/**
 		 * The more icon. */		
-		private var _arrow:ImageLoader;
+		private var _arrow:Image;
 		
 		public function SoloEndElement(imageTextureName:String, message:String)
 		{
@@ -68,19 +69,17 @@ package com.ludofactory.mobile.navigation.engine
 			addChild(_background);
 			
 			_icon = new Image( AbstractEntryPoint.assets.getTexture(_imageTextureName) );
-			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale;
+			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale * 0.6;
 			_icon.alignPivot(HAlign.LEFT, VAlign.CENTER);
 			addChild( _icon );
 			
-			_messageLabel =  new Label();
-			_messageLabel.text = _message;
+			_messageLabel =  new TextField(5, 5, _message, Theme.FONT_ARIAL, scaleAndRoundToDpi(36), 0xffffff, true);
+			_messageLabel.autoScale = true;
 			addChild(_messageLabel);
-			_messageLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 36), Theme.COLOR_WHITE, true, false, null, null, null, TextFormatAlign.CENTER);
 			
-			_arrow = new ImageLoader();
-			_arrow.source = AbstractEntryPoint.assets.getTexture("arrow_down");
+			_arrow = new Image(AbstractEntryPoint.assets.getTexture("arrow_down"));
 			_arrow.scaleX = _arrow.scaleY = GlobalConfig.dpiScale;
-			_arrow.snapToPixels = true;
+			_arrow.alignPivot();
 			addChild(_arrow);
 		}
 		
@@ -88,23 +87,20 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super.draw();
 			
-			_arrow.validate();
-			_arrow.alignPivot();
+			_background.width = this.actualWidth;
+			_background.height = scaleAndRoundToDpi(70);
+			
 			_arrow.rotation = deg2rad(-90);
 			_arrow.x = actualWidth - scaleAndRoundToDpi(10) - (_arrow.width * 0.5);
 			
 			_messageLabel.x = _icon.x + _icon.width + scaleAndRoundToDpi(5);
-			_messageLabel.width = _arrow.x - _messageLabel.x;
-			_messageLabel.validate();
-			
-			_background.width = this.actualWidth;
-			_background.height = _messageLabel.height + scaleAndRoundToDpi(40);
+			_messageLabel.y = scaleAndRoundToDpi(5);
+			_messageLabel.width = _arrow.x - _messageLabel.x - scaleAndRoundToDpi(10);
+			_messageLabel.height = _background.height - scaleAndRoundToDpi(10);
 			
 			_icon.x = scaleAndRoundToDpi(10);
 			_icon.y = _background.height * 0.5;
 			
-			//_background.y = (_icon.height * 0.95) - _background.height;
-			_messageLabel.y = /*(_icon.height * 0.95) - _message.height -*/ scaleAndRoundToDpi(20);
 			_arrow.y = _background.y + (_background.height * 0.5);
 			
 			setSizeInternal(this.actualWidth, Math.max((_icon.y + (_icon.height * 0.5)), _background.height), false);

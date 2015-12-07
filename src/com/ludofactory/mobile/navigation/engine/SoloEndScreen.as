@@ -1,9 +1,9 @@
 /*
-Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
-Framework mobile
-Author  : Maxime Lhoez
-Created : 20 juin 2013
-*/
+ Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
+ Framework mobile
+ Author  : Maxime Lhoez
+ Created : 2 déc. 2013
+ */
 package com.ludofactory.mobile.navigation.engine
 {
 	
@@ -17,8 +17,10 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.FacebookButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -37,92 +39,117 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
-	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
-	import feathers.controls.Label;
-	import feathers.controls.LayoutGroup;
 	import feathers.controls.ScrollContainer;
 	import feathers.controls.Scroller;
-	import feathers.layout.HorizontalLayout;
+	import feathers.display.Scale3Image;
+	import feathers.textures.Scale3Textures;
 	
-	import flash.events.Event;
+	import flash.filters.BitmapFilterQuality;
 	import flash.filters.DropShadowFilter;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
+	import flash.filters.GlowFilter;
 	
 	import starling.core.Starling;
+	import starling.display.Button;
 	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
+	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
 	import starling.utils.deg2rad;
+	import starling.utils.formatString;
 	
+	/**
+	 * The pop up used to display a popup content.
+	 */
 	public class SoloEndScreen extends AdvancedScreen
 	{
-		/**
-		 * The logo */		
-		private var _logo:ImageLoader;
+		
+	// ---------- Layout and animation properties
 		
 		/**
-		 * COMMON : The game score. */		
-		private var _scoreContainer:ScrollContainer;
-		private var _scoreTitle:Label;
-		private var _scoreValue:Label;
-		private var _miniCoinImage:Image;
-		private var _miniLueurImage:Image;
+		 * Padding top used to layout the container's content. */
+		private var PADDING_TOP:Number;
+		/**
+		 * Padding bottom used to layout the container's content. */
+		private var PADDING_BOTTOM:Number;
 		
 		/**
-		 * COMMON : The earned points. */		
-		private var _pointsContainer:ScrollContainer;
-		private var _pointsTitle:Label;
-		private var _pointsValue:Label;
-		private var _miniScoreImage:Image;
-		private var _winMorePointsImage:Image; // only when played with credits
+		 * Saved scale for the flag. */
+		private var _savedScale:Number;
+		/**
+		 * Container saved final height used to tween it. */
+		private var _containerSavedHeight:Number;
 		
 		/**
-		 * COMMON : Cumulated points container. */		
-		private var _cumulatedPointsContainer:LayoutGroup;
-		private var _cumulatedPointsTitle:Label;
-		private var _cumulatedPointsValue:Label;
-		private var _pointsIcon:Image;
-		
-		/**
-		 * COMMON : The label that moves. */		
-		private var _pointsToAddLabel:Label;
-		
-		/**
-		 * The convert container when not logged in */		
-		private var _convertContainer:ScrollContainer;
-		private var _convertIcon:Image;
-		private var _convertLabel:Label;
-		private var _lockImage:Image; // when the tournament have been unlocked
-		private var _lockLabel:Label; // when the tournament have been unlocked
-		
-		/**
-		 * The convert elements when logged in. */		
-		private var _convertShop:SoloEndElement;
-		private var _convertTournament:SoloEndElement;
-		
-		// buttons
-		
-		/**
-		 * Buttons container. */		
-		private var _buttonsContainer:LayoutGroup;
-		private var _continueButton:Button;	
-		private var _homeButton:Button;
-		private var _playAgainButton:Button;
-		
+		 * Values used to tween the score. */
 		public var _oldTweenValue:int;
 		public var _targetTweenValue:int;
-		private var _elementsPositioned:Boolean = false;
 		
-		private var _glow:ImageLoader;
+	// ---------- Common
 		
 		/**
-		 * Particles */		
-		private var _particles:PDParticleSystem;
+		 * Black overlay. */
+		private var _overlay:Quad;
+		/**
+		 * The flag. */
+		private var _flag:Scale3Image;
+		/**
+		 * Title above the flag. */
+		private var _title:TextField;
+		/**
+		 * The main container. */
+		private var _container:EndScreenContainer;
+		
+	// ---------- Content
+		
+		/**
+		 * Score label. */
+		private var _scoreLabel:TextField;
+		/**
+		 * Points container. */
+		private var _pointContainer:Image;
+		/**
+		 * Earned points label. */
+		private var _earnedPointsLabel:TextField;
+		/**
+		 * Stamp displayed when the user played with credits. */
+		private var _winMorePointsImage:Image;
+		/**
+		 * Points particles. */
+		private var _pointsParticles:PDParticleSystem;
+		
+		/**
+		 * The convert elements when logged in. */
+		private var _convertShop:SoloEndElement;
+		private var _convertTournament:SoloEndElement;
+		/**
+		 * This one when not loggd in.*/
+		private var _convertShopNotLoggedIn:SoloEndElement;
+		
+		/**
+		 * When the tournament have been unlocked. */
+		private var _tournamentUnlockedContainer:ScrollContainer;
+		private var _lockImage:Image;
+		private var _lockLabel:TextField;
+		private var _glow:ImageLoader;
+		private var _lockerParticles:PDParticleSystem;
+		
+	// ---------- Buttons
+		
+		/**
+		 * Home button. */
+		private var _homeButton:Button;
+		/**
+		 * Replay button. */
+		private var _replayButton:Button;
+		/**
+		 * Facebook button. */
+		private var _facebookButton:FacebookButton;
 		
 		public function SoloEndScreen()
 		{
@@ -132,51 +159,20 @@ package com.ludofactory.mobile.navigation.engine
 			_appDarkBackground = true;
 			_canBack = false;
 			
+			PADDING_TOP = scaleAndRoundToDpi(110);
+			PADDING_BOTTOM = scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 70);
+
 			SoundManager.getInstance().stopPlaylist("music", 3);
 		}
-		
+
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-			// FIXME A décommenter pour gérer l'orientation
-			/*if( GlobalConfig.stageWidth > GlobalConfig.stageHeight )
-			{
-				Starling.current.nativeStage.addEventListener(flash.events.Event.RESIZE, onResize, false, int.MAX_VALUE, true);
-				Starling.current.nativeStage.setAspectRatio(StageAspectRatio.PORTRAIT);
-			}
-			else
-			{
-				onResize();
-			}*/
+			//advancedOwner.screenData.gameData.score = 0;
+			//MemberManager.getInstance().isTournamentAnimPending = true;
 			
-			initContent();
-		}
-		
-		/**
-		 * The application has finished resizing.
-		 */		
-		private function onResize(event:flash.events.Event = null):void
-		{
-			if( event )
-			{
-				Starling.current.nativeStage.removeEventListener(flash.events.Event.RESIZE, onResize, false);
-				InfoManager.show( _("Chargement...") );
-				TweenMax.delayedCall(GlobalConfig.android ? 6:1, initContent);
-			}
-			else
-			{
-				initContent();
-			}
-		}
-		
-		/**
-		 * Initializes the screen content
-		 */		
-		private function initContent():void
-		{
 			NavigationManager.resetNavigation(false);
-			
 			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
 			
 			if( !MemberManager.getInstance().isTournamentUnlocked )
@@ -189,137 +185,104 @@ package com.ludofactory.mobile.navigation.engine
 				}
 			}
 			
-			_logo = new ImageLoader();
-			_logo.source = Theme.gameLogoTexture;
-			_logo.textureScale = GlobalConfig.dpiScale;
-			_logo.snapToPixels = true;
-			addChild(_logo);
+			_overlay = new Quad(5, 5, 0x000000);
+			_overlay.alpha = 0.75;
+			addChild(_overlay);
+
+			_container = new EndScreenContainer();
+			_container.alpha = 0;
+			addChild(_container);
 			
-		// score
+			_flag = new Scale3Image(new Scale3Textures(AbstractEntryPoint.assets.getTexture("end-game-flag"), 10, 10), GlobalConfig.dpiScale);
+			_flag.useSeparateBatch = false;
+			addChild(_flag);
+			_flag.alignPivot();
+			_flag.validate();
+			_savedScale = _flag.scaleX;
 			
-			_scoreContainer = new ScrollContainer();
-			_scoreContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_scoreContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_scoreContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_RIGHT;
-			addChild(_scoreContainer);
+			_title = new TextField(_flag.width - (scaleAndRoundToDpi(132*2)), _flag.height, _("FIN DE PARTIE"), Theme.FONT_SANSITA, scaleAndRoundToDpi(40), 0xffffff);
+			_title.alignPivot();
+			_title.autoScale = true;
+			_title.nativeFilters = [ new GlowFilter(0x7e0600, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
+				new DropShadowFilter(2, 75, 0x7e0600, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
+			addChild(_title);
 			
-			_scoreTitle = new Label();
-			_scoreTitle.text = _("Score");
-			_scoreContainer.addChild(_scoreTitle);
-			_scoreTitle.textRendererProperties.textFormat = Theme.freeGameEndScreenContainerTitleTextFormat;
+			_pointContainer = new Image(AbstractEntryPoint.assets.getTexture("point-container"));
+			_pointContainer.alpha = 0;
+			_pointContainer.scaleX = _pointContainer.scaleY = GlobalConfig.dpiScale;
+			addChild(_pointContainer);
 			
-			_scoreValue = new Label();
-			_scoreValue.text = "0";
-			_scoreContainer.addChild(_scoreValue);
-			_scoreValue.textRendererProperties.textFormat = Theme.freeGameEndScreenContainerTitleTextFormat;
+			_earnedPointsLabel = new TextField(scaleAndRoundToDpi(129), _pointContainer.height, "+0", Theme.FONT_SANSITA, scaleAndRoundToDpi(50), 0xffffff);
+			_earnedPointsLabel.autoScale = true;
+			_earnedPointsLabel.alpha = 0;
+			addChild(_earnedPointsLabel);
 			
-			_miniLueurImage = new Image( AbstractEntryPoint.assets.getTexture("MiniLueur") );
-			_miniLueurImage.scaleX = _miniLueurImage.scaleY = GlobalConfig.dpiScale + 0.2;
-			addChild( _miniLueurImage );
+			_scoreLabel = new TextField((_flag.width * 0.5), scaleAndRoundToDpi(50), formatString(_("Score final : {0}"), Utilities.splitThousands(advancedOwner.screenData.gameData.score)), Theme.FONT_SANSITA, scaleAndRoundToDpi(40), 0x27220d);
+			_scoreLabel.alpha = 0;
+			_scoreLabel.autoSize = TextFieldAutoSize.HORIZONTAL;
+			addChild(_scoreLabel);
 			
-			_miniScoreImage = new Image( AbstractEntryPoint.assets.getTexture("MiniScore") );
-			_miniScoreImage.scaleX = _miniScoreImage.scaleY = GlobalConfig.dpiScale;
-			addChild(_miniScoreImage);
+			_pointsParticles = new PDParticleSystem(Theme.particleVortexXml, AbstractEntryPoint.assets.getTexture("particle-sparkle-end"));
+			_pointsParticles.touchable = false;
+			_pointsParticles.maxNumParticles = 250;
+			//_pointsParticles.blendFactorSource = Context3DBlendFactor.DESTINATION_ALPHA;
+			//_pointsParticles.blendFactorDestination = Context3DBlendFactor.ONE_MINUS_SOURCE_ALPHA;
+			addChild(_pointsParticles);
+			Starling.juggler.add(_pointsParticles);
 			
-		// points
+			_homeButton = new Button(AbstractEntryPoint.assets.getTexture("home-button"));
+			_homeButton.alpha = 0;
+			_homeButton.scaleX = _homeButton.scaleY = GlobalConfig.dpiScale;
+			addChild(_homeButton);
 			
-			_pointsContainer = new ScrollContainer();
-			_pointsContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_pointsContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_pointsContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_LIGHT_CORNER_BOTTOM_LEFT;
-			addChild(_pointsContainer);
-			
-			_pointsTitle = new Label();
-			_pointsTitle.text = _("Points");
-			_pointsContainer.addChild(_pointsTitle);
-			_pointsTitle.textRendererProperties.textFormat = Theme.freeGameEndScreenContainerTitleTextFormat;
-			
-			_pointsValue = new Label();
-			_pointsValue.text = "0"; //Utility.splitThousands( this.advancedOwner.screenData.gameData.numStarsOrPointsEarned );
-			_pointsContainer.addChild(_pointsValue);
-			_pointsValue.textRendererProperties.textFormat = Theme.freeGameEndScreenContainerTitleTextFormat;
-			
-			_miniCoinImage = new Image( AbstractEntryPoint.assets.getTexture("MiniCoin") );
-			_miniCoinImage.scaleX = _miniCoinImage.scaleY = GlobalConfig.dpiScale;
-			addChild(_miniCoinImage);
-			
-		// cumulated points
-			
-			const hlayoutBase:HorizontalLayout = new HorizontalLayout();
-			hlayoutBase.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_LEFT;
-			hlayoutBase.verticalAlign = HorizontalLayout.VERTICAL_ALIGN_MIDDLE;
-			hlayoutBase.paddingTop = hlayoutBase.paddingBottom = scaleAndRoundToDpi(5);
-			hlayoutBase.gap = scaleAndRoundToDpi(5);
-			
-			_cumulatedPointsContainer = new LayoutGroup();
-			_cumulatedPointsContainer.layout = hlayoutBase;
-			addChild(_cumulatedPointsContainer);
-			
-			_cumulatedPointsTitle = new Label();
-			_cumulatedPointsTitle.text = _("Points cumulés : ");
-			_cumulatedPointsContainer.addChild(_cumulatedPointsTitle);
-			_cumulatedPointsTitle.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 54), Theme.COLOR_WHITE);
-			_cumulatedPointsTitle.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
-			
-			_cumulatedPointsValue = new Label();
-			_cumulatedPointsContainer.addChild(_cumulatedPointsValue);
-			_cumulatedPointsValue.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 38 : 54), 0xffdf00);
-			_cumulatedPointsValue.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
-			_cumulatedPointsValue.textRendererProperties.wordWrap = false;
-			
-			_pointsIcon = new Image( AbstractEntryPoint.assets.getTexture("MiniCoin") );
-			_pointsIcon.scaleX = _pointsIcon.scaleY = GlobalConfig.dpiScale;
-			_cumulatedPointsContainer.addChild(_pointsIcon);
-			
-			_pointsToAddLabel = new Label();
-			_pointsToAddLabel.text = "+" + (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == StakeType.CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().rank < 5 ? 0 : 1]) : 1 ));
-			_pointsToAddLabel.alpha = 0;
-			_pointsToAddLabel.visible = false;
-			addChild(_pointsToAddLabel);
-			_pointsToAddLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(80), 0xffdf00);
-			_pointsToAddLabel.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
-			
-			// Step 2 - Not logged in ----
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE); // TODO
+			_facebookButton.alpha = 0;
+			addChild(_facebookButton);
 			
 			if( MemberManager.getInstance().isTournamentAnimPending )
 			{
-				_convertContainer = new ScrollContainer();
-				_convertContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-				_convertContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-				_convertContainer.alpha = 0;
-				_convertContainer.visible = false;
-				_convertContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_GREY;
-				addChild(_convertContainer);
-				_convertContainer.padding = 0;
+				// the tournement was unlocked, we need to animate it
 				
-				_lockLabel = new Label();
-				_lockLabel.text = _("Tournoi débloqué !");
-				_convertContainer.addChild( _lockLabel );
-				_lockLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 72), Theme.COLOR_WHITE);
-				_lockLabel.textRendererProperties.wordWrap = false;
+				_tournamentUnlockedContainer = new ScrollContainer();
+				_tournamentUnlockedContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
+				_tournamentUnlockedContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
+				_tournamentUnlockedContainer.alpha = 0;
+				_tournamentUnlockedContainer.visible = false;
+				_tournamentUnlockedContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_GREY;
+				addChild(_tournamentUnlockedContainer);
+				_tournamentUnlockedContainer.padding = 0;
+				
+				_lockLabel = new TextField(5, 5, _("Tournoi débloqué !"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 72), Theme.COLOR_WHITE);
+				_lockLabel.autoScale = true;
+				_tournamentUnlockedContainer.addChild( _lockLabel );
 				
 				_glow = new ImageLoader();
 				_glow.source = AbstractEntryPoint.assets.getTexture("HighScoreGlow");
-				_glow.textureScale = GlobalConfig.dpiScale;
+				_glow.textureScale = GlobalConfig.dpiScale * 0.5;
 				_glow.includeInLayout = false;
-				_convertContainer.addChild(_glow);
+				_tournamentUnlockedContainer.addChild(_glow);
 				
 				_lockImage = new Image( AbstractEntryPoint.assets.getTexture("lock-big") );
-				_lockImage.scaleX = _lockImage.scaleY = GlobalConfig.dpiScale;
-				_convertContainer.addChild(_lockImage);
+				_lockImage.scaleX = _lockImage.scaleY = GlobalConfig.dpiScale * 0.75;
+				_tournamentUnlockedContainer.addChild(_lockImage);
 				
-				_particles = new PDParticleSystem(Theme.particleSparklesXml, Theme.particleSparklesTexture);
-				_particles.touchable = false;
-				_particles.maxNumParticles = 250;
-				//_particles.scaleX = _particles.scaleY = GlobalConfig.dpiScalez;
-				addChild(_particles);
-				Starling.juggler.add(_particles);
+				_lockerParticles = new PDParticleSystem(Theme.particleSparklesXml, Theme.particleSparklesTexture);
+				_lockerParticles.touchable = false;
+				_lockerParticles.maxNumParticles = 250;
+				addChild(_lockerParticles);
+				Starling.juggler.add(_lockerParticles);
 			}
 			else
 			{
+				_replayButton = new Button(AbstractEntryPoint.assets.getTexture("replay-button"));
+				_replayButton.alpha = 0;
+				_replayButton.scaleX = _replayButton.scaleY = GlobalConfig.dpiScale;
+				_replayButton.addEventListener(Event.TRIGGERED, onPlayAgain);
+				addChild(_replayButton);
+				
 				if( MemberManager.getInstance().isLoggedIn() )
 				{
-					// Logged in content
+					// logged in content
 					
 					_convertShop = new SoloEndElement("convert-shop-icon", (MemberManager.getInstance().getGiftsEnabled() ? (AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Cadeaux dans la boutique"):_("Convertir mes Points en\nCadeaux dans la boutique")) : (AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Crédits dans la boutique"):_("Convertir mes Points en\nCrédits dans la boutique"))) ) ;
 					_convertShop.alpha = 0;
@@ -335,60 +298,182 @@ package com.ludofactory.mobile.navigation.engine
 				}
 				else
 				{
-					// NOT logged in content
+					// not logged in content
 					
-					_convertContainer = new ScrollContainer();
-					_convertContainer.addEventListener(TouchEvent.TOUCH, onConvertInShop);
-					_convertContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-					_convertContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-					_convertContainer.alpha = 0;
-					_convertContainer.visible = false;
-					_convertContainer.styleName = Theme.SCROLL_CONTAINER_RESULT_GREY;
-					addChild(_convertContainer);
-					
-					_convertIcon = new Image( AbstractEntryPoint.assets.getTexture("points-to-gift-icon") );
-					_convertIcon.scaleX = _convertIcon.scaleY = GlobalConfig.dpiScale;
-					_convertContainer.addChild(_convertIcon);
-					
-					_convertLabel = new Label();
-					
-					log("Number of anonymous game sessions : " + MemberManager.getInstance().getNumTokenUsedInAnonymousGameSessions());
-					
+					var msg:String;
 					if(MemberManager.getInstance().getNumTokenUsedInAnonymousGameSessions() > StorageConfig.DEFAULT_NUM_TOKENS_ALLOWED_TO_COUNT_POINTS)
-						_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte pour continuer à cumuler des Points à convertir en Cadeaux !") : _("Créez votre compte pour continuer à cumuler des Points à convertir en Crédits !");
+						msg = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte pour continuer à cumuler des Points à convertir en Cadeaux !") : _("Créez votre compte pour continuer à cumuler des Points à convertir en Crédits !");
 					else
-						_convertLabel.text = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte et convertissez\nvos Points en Cadeaux !") : _("Créez votre compte et convertissez\nvos Points en Crédits !");
-					_convertContainer.addChild(_convertLabel);
-					_convertLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 38), Theme.COLOR_WHITE, true, false, null, null, null, TextFormatAlign.CENTER);
+						msg = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte et convertissez\nvos Points en Cadeaux !") : _("Créez votre compte et convertissez\nvos Points en Crédits !");
+					
+					_convertShopNotLoggedIn = new SoloEndElement("points-to-gift-icon", msg);
+					_convertShopNotLoggedIn.alpha = 0;
+					_convertShopNotLoggedIn.visible = false;
+					_convertShopNotLoggedIn.addEventListener(TouchEvent.TOUCH, onConvertInShop);
+					addChild(_convertShopNotLoggedIn);
 				}
 			}
+		}
+		
+		override protected function draw():void
+		{
+			if(isInvalid(INVALIDATION_FLAG_SIZE))
+			{
+				_overlay.width = actualWidth;
+				_overlay.height = actualHeight;
+				
+				_container.width = _flag.width + scaleAndRoundToDpi(20);
+				_container.x = (actualWidth - _container.width) * 0.5;
+				
+				_flag.scaleX = 0;
+				_title.x = _flag.x = actualWidth * 0.5;
+				_title.y = actualHeight * 0.49;
+				_flag.y = actualHeight * 0.5 + _flag.height * 0.15;
+
+				_pointContainer.x = roundUp((actualWidth - _pointContainer.width) * 0.5);
+				_earnedPointsLabel.x = _pointContainer.x;
+				
+				_container.height = PADDING_TOP + PADDING_BOTTOM;
+				if( MemberManager.getInstance().isTournamentAnimPending )
+				{
+					_tournamentUnlockedContainer.width = _container.width * 0.8;
+					_tournamentUnlockedContainer.x = (actualWidth - _tournamentUnlockedContainer.width) * 0.5;
+					_tournamentUnlockedContainer.validate();
+					_tournamentUnlockedContainer.height = _tournamentUnlockedContainer.height;
+					_tournamentUnlockedContainer.layout = null;
+					
+					_lockImage.x = (_tournamentUnlockedContainer.width - _lockImage.width) * 0.5;
+					_lockImage.y = (_tournamentUnlockedContainer.height - _lockImage.height) * 0.5;
+					
+					_lockLabel.width = _tournamentUnlockedContainer.width;
+					_lockLabel.height = _tournamentUnlockedContainer.height;
+					_lockLabel.x = (_tournamentUnlockedContainer.width - _lockLabel.width) * 0.5;
+					_lockLabel.y = (_tournamentUnlockedContainer.height - _lockLabel.height) * 0.5;
+					
+					_glow.width = _tournamentUnlockedContainer.width;
+					_glow.height = _tournamentUnlockedContainer.height;
+					_glow.alignPivot();
+					_glow.x = _tournamentUnlockedContainer.width * 0.5;
+					_glow.y = _tournamentUnlockedContainer.height * 0.5;
+					
+					_lockerParticles.emitterXVariance = _lockImage.width * 0.5;
+					_lockerParticles.emitterYVariance = _lockImage.height * 0.5;
+					
+					_tournamentUnlockedContainer.validate();
+					_container.height += _scoreLabel.height + scaleAndRoundToDpi(5) + _pointContainer.height + scaleAndRoundToDpi(10) + _tournamentUnlockedContainer.height;
+				}
+				else
+				{
+					if( MemberManager.getInstance().isLoggedIn() )
+					{
+						_convertShop.width = _convertTournament.width = _container.width * 0.8;
+						_convertShop.x = _convertTournament.x = (actualWidth - _convertShop.width) * 0.5;
+						_convertShop.validate();
+						
+						_container.height += _scoreLabel.height + scaleAndRoundToDpi(5) + _pointContainer.height + scaleAndRoundToDpi(10) + _convertShop.height * 2 + scaleAndRoundToDpi(5);
+					}
+					else
+					{
+						_convertShopNotLoggedIn.width = _container.width * 0.8;
+						_convertShopNotLoggedIn.x = (actualWidth - _convertShopNotLoggedIn.width) * 0.5;
+						_convertShopNotLoggedIn.validate();
+						
+						_container.height += _scoreLabel.height + scaleAndRoundToDpi(5) + _pointContainer.height + scaleAndRoundToDpi(10) + _convertShopNotLoggedIn.height;
+					}
+				}
+				
+				_containerSavedHeight = _container.height;
+				_container.y = roundUp((actualHeight - _container.height) * 0.5);
+				_container.height = 0;
+				
+				// start to animate
+				TweenMax.to(_flag, 0.5, { delay:0.75, scaleX:_savedScale, onComplete:animateFlag });
+			}
+
+			super.draw();
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Animation
+		
+		/**
+		 * Animates the flag, title and container.
+		 */
+		private function animateFlag():void
+		{
+			TweenMax.to(_flag, 0.5, { y:(_container.y + _flag.height * 0.15) } );
+			TweenMax.to(_title, 0.5, { y:(_container.y) } );
+			TweenMax.to(_container, 0.5, { delay:0.5, height:_containerSavedHeight, alpha:1, onComplete:displayContent });
+		}
+		
+		/**
+		 * Adds the content and animate it
+		 */
+		private function displayContent():void
+		{
+			// buttons
+			_homeButton.x = (actualWidth - _homeButton.width - (_replayButton ? _replayButton.width : 0) - _facebookButton.width) * 0.5;
+			if(_replayButton) _replayButton.x = _homeButton.x + _homeButton.width;
+			_facebookButton.x = (_replayButton ? _replayButton.x : _homeButton.x) + (_replayButton ? _replayButton.width : _homeButton.width);
+			_homeButton.y = _container.y + _containerSavedHeight - (_homeButton.height * 0.55);
+			if(_replayButton) _replayButton.y = _homeButton.y;
+			_facebookButton.y = _container.y + _containerSavedHeight - (_facebookButton.height * 0.6);
+			TweenMax.allTo([_homeButton, _facebookButton], 0.5, { alpha:1 });
+			if(_replayButton) TweenMax.to(_replayButton, 0.5, { alpha:1 });
 			
-			// Common part : buttons
+			// common elements (score and earned points
+			_scoreLabel.x = roundUp((actualWidth - _scoreLabel.width) * 0.5);
+			_scoreLabel.y = _flag.y + scaleAndRoundToDpi(55);
+			_pointContainer.y = _scoreLabel.y + _scoreLabel.height + scaleAndRoundToDpi(5);
+			_earnedPointsLabel.y = _pointContainer.y;
+			TweenMax.allTo([_pointContainer, _earnedPointsLabel, _scoreLabel], 0.5, { alpha:1 });
 			
-			const buttonsLayout:HorizontalLayout = new HorizontalLayout();
-			buttonsLayout.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_LEFT;
-			buttonsLayout.verticalAlign = HorizontalLayout.VERTICAL_ALIGN_MIDDLE;
+			// specific content
+			if( MemberManager.getInstance().isTournamentAnimPending )
+			{
+				_tournamentUnlockedContainer.y = _pointContainer.y + _pointContainer.height + scaleAndRoundToDpi(10);
+				_glow.alpha = 0;
+				TweenMax.to(_tournamentUnlockedContainer, 0.5, { autoAlpha:1 });
+			}
+			else
+			{
+				if (MemberManager.getInstance().isLoggedIn())
+				{
+					_convertShop.y = _pointContainer.y + _pointContainer.height + scaleAndRoundToDpi(10);
+					_convertTournament.y = _convertShop.y + _convertShop.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 10);
+					TweenMax.allTo([_convertShop, _convertTournament], 0.5, { autoAlpha:1 });
+				}
+				else
+				{
+					_convertShopNotLoggedIn.y = _pointContainer.y + _pointContainer.height + scaleAndRoundToDpi(10);
+					TweenMax.to(_convertShopNotLoggedIn, 0.5, { autoAlpha:1 });
+				}
+				_homeButton.addEventListener(Event.TRIGGERED, onGoHome);
+			}
 			
-			_buttonsContainer = new LayoutGroup();
-			_buttonsContainer.clipContent = true;
-			_buttonsContainer.layout = buttonsLayout;
-			addChild(_buttonsContainer);
+			// everything is in place, we animate the score now
+			_scoreLabel.text = formatString(_("Score final : {0}"), 0);
+			_oldTweenValue = 0;
+			_targetTweenValue = advancedOwner.screenData.gameData.score;
+			if( _targetTweenValue == 0 )
+				Starling.juggler.delayCall(animateLabelFromScoreToPoints, 1);
+			else
+				TweenMax.to(this, _targetTweenValue < 500 ? 1 : 2, { delay:0.5, _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _scoreLabel.text = formatString(_("Score final : {0}"), Utilities.splitThousands(_oldTweenValue)); }, onComplete:animateLabelFromScoreToPoints, ease:Expo.easeInOut } );
+		}
+		
+		/**
+		 * The score have been animated, now we show the rewards
+		 */
+		private function animateLabelFromScoreToPoints():void
+		{
+			if(!_earnedPointsLabel) // if the screen changed after the starling juggler delayed call
+				return;
 			
-			_continueButton = new Button();
-			_continueButton.label = _("Continuer");
-			_continueButton.addEventListener(starling.events.Event.TRIGGERED, onSkipAnimation);
-			_buttonsContainer.addChild(_continueButton);
+			_earnedPointsLabel.text = formatString(_("+{0}"), ((advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == StakeType.CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().rank < 5 ? 0 : 1]) : 1 ))));
 			
-			_homeButton = new Button();
-			_homeButton.styleName = Theme.BUTTON_BLUE;
-			_homeButton.label = _("Accueil");
-			_homeButton.addEventListener(starling.events.Event.TRIGGERED, onGoHome);
-			_buttonsContainer.addChild(_homeButton);
-			
-			_playAgainButton = new Button();
-			_playAgainButton.label = _("Rejouer");
-			_playAgainButton.addEventListener(starling.events.Event.TRIGGERED, onPlayAgain);
-			_buttonsContainer.addChild(_playAgainButton);
+			_pointsParticles.start(0.25);
+			_pointsParticles.emitterX = _earnedPointsLabel.x + _earnedPointsLabel.width * 0.5;
+			_pointsParticles.emitterY = _earnedPointsLabel.y + _earnedPointsLabel.height * 0.5;
 			
 			if( advancedOwner.screenData.gamePrice == StakeType.CREDIT )
 			{
@@ -396,357 +481,68 @@ package com.ludofactory.mobile.navigation.engine
 				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = GlobalConfig.dpiScale;
 				_winMorePointsImage.alignPivot();
 				_winMorePointsImage.alpha = 0;
+				_winMorePointsImage.x = _pointContainer.x + _pointContainer.width + scaleAndRoundToDpi(5) + (_winMorePointsImage.width * 0.5);
+				_winMorePointsImage.y = _pointContainer.y + (_pointContainer.height * 0.5);
 				addChild( _winMorePointsImage );
-			}
-			
-			// FIXME A décommenter pour gérer l'orientation
-			//invalidate(INVALIDATION_FLAG_SIZE);
-		}
-		
-		override protected function draw():void
-		{
-			// FIXME A décommenter pour gérer l'orientation
-			if( isInvalid(INVALIDATION_FLAG_SIZE) /* && _logo */)
-			{
-				if( AbstractGameInfo.LANDSCAPE )
-				{
-					_logo.visible = false;
-					_logo.x = _logo.y = _logo.width = _logo.height = 0;
-				}
-				else
-				{
-					_logo.width = actualWidth * (GlobalConfig.isPhone ? 0.75 : 0.6);
-					_logo.x = ((actualWidth - _logo.width) * 0.5) << 0;
-					_logo.y = scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40);
-					_logo.validate();
-				}
-				
-				_pointsToAddLabel.validate();
-				_pointsToAddLabel.alignPivot();
-				
-				_buttonsContainer.width = _continueButton.width = _cumulatedPointsContainer.width = actualWidth * (GlobalConfig.isPhone ? 0.9 : 0.8);
-				_buttonsContainer.validate();
-				_buttonsContainer.x = (actualWidth - _buttonsContainer.width) * 0.5;
-				_buttonsContainer.y = actualHeight - _buttonsContainer.height - scaleAndRoundToDpi(40);
-				
-				if( MemberManager.getInstance().isTournamentAnimPending )
-				{
-					_homeButton.width = _buttonsContainer.width;
-					_playAgainButton.width = 0;
-				}
-				else
-				{
-					_homeButton.width = _playAgainButton.width = (_buttonsContainer.width * 0.5);
-				}
-				
-				// calculate the maximum available height
-				const maxElementsHeight:int = _buttonsContainer.y - _logo.y - _logo.height;
-				
-			// Step 1 --------------------------------------------------
-				
-				// score and poitns earned
-				_scoreTitle.width = _scoreValue.width = _pointsTitle.width = _pointsValue.width = _scoreContainer.width = _pointsContainer.width = (_buttonsContainer.width * 0.5) - scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
-				
-				// cumulated points
-				_cumulatedPointsValue.text = String(MemberManager.getInstance().points) + "  ";
-				_cumulatedPointsValue.validate();
-				_cumulatedPointsValue.width = _cumulatedPointsValue.width;
-				_cumulatedPointsValue.text = Utilities.splitThousands( (MemberManager.getInstance().points - advancedOwner.screenData.gameData.numStarsOrPointsEarned) );
-				
-				_scoreContainer.validate();
-				_pointsContainer.validate();
-				_pointsContainer.layout = null;
-				_pointsContainer.height = _scoreContainer.height;
-				_cumulatedPointsContainer.validate();
-				
-				_scoreContainer.x = (actualWidth * 0.5) - _scoreContainer.width - scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 10);
-				_pointsContainer.x = (actualWidth * 0.5) + scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 10);
-				_scoreContainer.y = _pointsContainer.y = (((_logo.y + _logo.height) + (maxElementsHeight - (_scoreContainer.height + _cumulatedPointsContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80))) * 0.5)) << 0;
-				
-				if( _pointsValue.pivotX == 0 )
-				{
-					_pointsValue.validate();
-					_pointsValue.alignPivot();
-					_pointsValue.x = _pointsValue.width * 0.5;
-					_pointsValue.y += _pointsValue.height * 0.5;
-				}
-				
-				_cumulatedPointsContainer.x = (actualWidth - _cumulatedPointsContainer.width) * 0.5;
-				_cumulatedPointsContainer.y = _scoreContainer.y + _scoreContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80);
-				
-				_miniCoinImage.alignPivot();
-				_miniCoinImage.x = _pointsContainer.x + _pointsContainer.width - scaleAndRoundToDpi(10);
-				_miniCoinImage.y = _pointsContainer.y;
-				
-				_miniScoreImage.alignPivot();
-				_miniLueurImage.alignPivot();
-				_miniScoreImage.x = _scoreContainer.x + scaleAndRoundToDpi(5);
-				_miniScoreImage.y = _scoreContainer.y;
-				_miniLueurImage.x = _scoreContainer.x + scaleAndRoundToDpi(10);
-				_miniLueurImage.y = _scoreContainer.y + scaleAndRoundToDpi(15);
-				
-			// Step 2 --------------------------------------------------
-				
-				if( MemberManager.getInstance().isTournamentAnimPending )
-				{
-					_convertContainer.width = _buttonsContainer.width;
-					_convertContainer.x = (actualWidth - _convertContainer.width) * 0.5;
-					_convertContainer.validate();
-					_convertContainer.height = _convertContainer.height;
-					_convertContainer.layout = null;
-					
-					_lockImage.x = (_convertContainer.width - _lockImage.width) * 0.5;
-					_lockImage.y = (_convertContainer.height - _lockImage.height) * 0.5;
-					
-					_lockLabel.validate();
-					_lockLabel.x = (_convertContainer.width - _lockLabel.width) * 0.5;
-					_lockLabel.y = (_convertContainer.height - _lockLabel.height) * 0.5;
-					
-					_glow.width = _convertContainer.width;
-					_glow.height = _convertContainer.height;
-					_glow.alignPivot();
-					_glow.x = _convertContainer.width * 0.5;
-					_glow.y = _convertContainer.height * 0.5 + scaleAndRoundToDpi(15);
-					
-					_cumulatedScoreContainerTargetY = (((_logo.y + _logo.height) + (maxElementsHeight - (_cumulatedPointsContainer.height + _convertContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80))) * 0.5)) << 0;
-					_convertContainer.y = _cumulatedScoreContainerTargetY + _cumulatedPointsContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80);
-					
-					_particles.emitterX = _convertContainer.x + (_convertContainer.width * 0.5);
-					_particles.emitterY = _convertContainer.y + (_convertContainer.height * 0.5);
-					_particles.emitterXVariance = _lockImage.width * 0.5;
-					_particles.emitterYVariance = _lockImage.height * 0.5;
-				}
-				else
-				{
-					if( MemberManager.getInstance().isLoggedIn() )
-					{
-						_convertShop.width = _convertTournament.width = _buttonsContainer.width;
-						_convertShop.x = _convertTournament.x = (actualWidth - _buttonsContainer.width) * 0.5;
-						_convertShop.validate();
-						
-						_cumulatedScoreContainerTargetY = (((_logo.y + _logo.height) + (maxElementsHeight - (_cumulatedPointsContainer.height + _convertShop.height + _convertShop.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 60 : 140))) * 0.5)) << 0;
-						_convertShop.y = _cumulatedScoreContainerTargetY + _cumulatedPointsContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 70);
-						_convertTournament.y = _convertShop.y + _convertShop.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 70);
-					}
-					else
-					{
-						_convertContainer.width = _convertLabel.width = _buttonsContainer.width;
-						_convertContainer.x = (actualWidth - _convertContainer.width) * 0.5;
-						_convertContainer.validate();
-						
-						_cumulatedScoreContainerTargetY = (((_logo.y + _logo.height) + (maxElementsHeight - (_cumulatedPointsContainer.height + _convertContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80))) * 0.5)) << 0;
-						_convertContainer.y = _cumulatedScoreContainerTargetY + _cumulatedPointsContainer.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 80);
-					}
-				}
-				
-				if( !_elementsPositioned )
-				{
-					_oldTweenValue = 0;
-					_targetTweenValue = advancedOwner.screenData.gameData.score;
-					if( _targetTweenValue == 0 )
-						Starling.juggler.delayCall(animateLabelFromScoreToPoints, 1);
-					else
-						TweenMax.to(this, _targetTweenValue < 500 ? 1 : 2, { delay:0.5, _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _scoreValue.text = Utilities.splitThousands(_oldTweenValue); }, onComplete:animateLabelFromScoreToPoints, ease:Expo.easeInOut } );
-					TweenMax.to(_miniLueurImage, 10, { rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 } );
-				}
-				
-				_elementsPositioned = true;
-			}
-			
-			super.draw();
-		}
-		
-		private var _cumulatedScoreContainerTargetY:int;
-		
-//------------------------------------------------------------------------------------------------------------
-//	Handlers
-//------------------------------------------------------------------------------------------------------------
-		
-		/**
-		 * When the score is displayed, we need to animate a label from the score to
-		 * the number of points earned.
-		 */		
-		private function animateLabelFromScoreToPoints():void
-		{
-			if( !_continueButton.isEnabled )
-				return;
-			
-			_pointsToAddLabel.scaleX = _pointsToAddLabel.scaleY = 0;
-			_pointsToAddLabel.x = _scoreContainer.x + _scoreContainer.width * 0.5;
-			_pointsToAddLabel.y = _scoreContainer.y + _scoreContainer.height * 0.65;
-			TweenMax.to(_pointsToAddLabel, 0.75, { autoAlpha:1, scaleX:1, scaleY:1 });
-			TweenMax.to(_pointsToAddLabel, 0.75, { delay:0.75, x:(_pointsContainer.x + _pointsContainer.width * 0.5), y:(_pointsContainer.y + _pointsContainer.height * 0.65) });
-			TweenMax.to(_pointsToAddLabel, 0.25, { delay:1.5, autoAlpha:0, onComplete:onAddLabelAnimatedFromScoreToPoints });
-		}
-		
-		private function onAddLabelAnimatedFromScoreToPoints():void
-		{
-			if( _continueButton && !_continueButton.isEnabled )
-				return;
-			
-			_oldTweenValue = 0;
-			_targetTweenValue = (advancedOwner.screenData.gameData.numStarsOrPointsEarned / ( advancedOwner.screenData.gamePrice == StakeType.CREDIT ? ((Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().rank < 5 ? 0 : 1]) : 1 ));
-			TweenMax.to(this, 0.25, { _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _pointsValue.text = Utilities.splitThousands(_oldTweenValue); }, onComplete:animateLabelFromPointsToCumulatedPoints, ease:Linear.easeNone } );
-		}
-		
-		private var _step:int;
-		
-		private function animateLabelFromPointsToCumulatedPoints():void
-		{
-			if( !_continueButton.isEnabled )
-				return;
-			
-			if( advancedOwner.screenData.gamePrice == StakeType.CREDIT )
-			{
-				_winMorePointsImage.x = _scoreContainer.x + _pointsContainer.x + _pointsContainer.width * 0.75;
-				_winMorePointsImage.y = _scoreContainer.y;
 				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = 0;
-				TweenMax.to(_winMorePointsImage, 0.5, { delay:0.5, alpha:1, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, ease:Bounce.easeOut } );
-				
-				_step = advancedOwner.screenData.gameData.numStarsOrPointsEarned / (Storage.getInstance().getProperty(StorageConfig.PROPERTY_COEF) as Array)[MemberManager.getInstance().rank < 5 ? 0 : 1];
-				_pointsValue.includeInLayout = false;
-				animateBonus();
-				
-				// recup tab correspondance point
-				// animer étape par étape puis passer à l'anim normale du else quand terminé
+				TweenMax.to(_winMorePointsImage, 0.5, { delay:0.5, alpha:1, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, ease:Bounce.easeOut, onComplete:multiplyReward } );
 			}
 			else
 			{
-				//_pointsToAddLabel.validate();
-				//_pointsToAddLabel.alignPivot();
-				test();
+				if( MemberManager.getInstance().isTournamentAnimPending )
+					unlockTournament();
 			}
 		}
 		
-		private function test():void
+		private function unlockTournament():void
 		{
-			if( !_continueButton.isEnabled )
-				return;
+			// the tournament have been unloacked
+			const savedScaleX:Number = _glow.scaleX;
+			const savedScaleY:Number = _glow.scaleY;
+			_glow.scaleX = _glow.scaleY = 0;
+			_glow.alpha = 1;
+			TweenMax.to(_glow, 0.5, { delay:0.75, autoAlpha:1, scaleX:savedScaleX, scaleY:savedScaleY, ease:Linear.easeNone });
+			TweenMax.to(_glow, 8, { rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 });
+			TweenMax.delayedCall(2, Shaker.startShaking, [_lockImage, 12]);
+			Shaker.dispatcher.addEventListener(Event.COMPLETE, onLockAnimComplete);
 			
-			_pointsToAddLabel.text = "+" + advancedOwner.screenData.gameData.numStarsOrPointsEarned;
-			_pointsToAddLabel.scaleX = _pointsToAddLabel.scaleY = 0;
-			_pointsToAddLabel.x = _pointsContainer.x + _pointsContainer.width * 0.5;
-			_pointsToAddLabel.y = _pointsContainer.y + _pointsContainer.height * 0.65;
-			TweenMax.to(_pointsToAddLabel, 0.75, { autoAlpha:1, scaleX:1, scaleY:1 });
-			TweenMax.to(_pointsToAddLabel, 0.75, { delay:0.75, x:(_cumulatedPointsContainer.x + _cumulatedPointsValue.x + _cumulatedPointsValue.width * 0.5), y:(_cumulatedPointsContainer.y + _cumulatedPointsContainer.height * 0.5) });
-			
-			TweenMax.to(_pointsToAddLabel, 0.25, { delay:1.5, autoAlpha:0 });
-			TweenMax.delayedCall(1.75, onLabelAnimatedFromPointsToCumulatedPoints);
-		}
-		
-		/**
-		 * 
-		 */		
-		private function animateBonus():void
-		{
-			if( !_continueButton.isEnabled )
-				return;
-			
-			var value:int = int(_pointsValue.text.split(" ").join(""));
-			if( value == advancedOwner.screenData.gameData.numStarsOrPointsEarned )
-			{
-				test();
-			}
-			else
-			{
-				value += _step;
-				_pointsValue.text = Utilities.splitThousands( value );
-				TweenMax.to(_pointsValue, 0.25, { scaleX:(GlobalConfig.dpiScale + 0.2), scaleY:(GlobalConfig.dpiScale + 0.2), yoyo:true, repeat:1 } );
-				TweenMax.delayedCall(0.5, animateBonus);
-			}
-		}
-		
-		/**
-		 * When the earned points are displayed, we need to animate a label that
-		 * will fly to the cumulated score label.
-		 */		
-		private function onLabelAnimatedFromPointsToCumulatedPoints():void
-		{
-			if( !_continueButton.isEnabled )
-				return;
-			
-			_cumulatedPointsValue.text = Utilities.splitThousands( MemberManager.getInstance().points );
-			TweenMax.delayedCall(0.5, onSkipAnimation);
-		}
-		
-		/**
-		 * The "Continue" button have been clicked, in this case we need to skip the first part of the animation.
-		 */		
-		private function onSkipAnimation(event:starling.events.Event = null):void
-		{
-			TweenMax.killDelayedCallsTo(onLabelAnimatedFromPointsToCumulatedPoints);
-			TweenMax.killDelayedCallsTo(animateBonus);
-			TweenMax.killDelayedCallsTo(onSkipAnimation);
-			TweenMax.killTweensOf(_winMorePointsImage);
-			TweenMax.killTweensOf(_pointsToAddLabel);
-			TweenMax.killTweensOf(_pointsValue);
-			TweenMax.killTweensOf(this);
-			
-			// display the final values (score, points and cumulated points)
-			_scoreValue.text = Utilities.splitThousands( advancedOwner.screenData.gameData.score );
-			_pointsValue.text = Utilities.splitThousands( advancedOwner.screenData.gameData.numStarsOrPointsEarned );
-			_cumulatedPointsValue.text = Utilities.splitThousands( MemberManager.getInstance().points );
-			
-			// hide everything not needed for the next animation part
-			TweenMax.allTo([_scoreContainer, _pointsContainer, _miniCoinImage, _miniLueurImage, _miniScoreImage, _pointsToAddLabel], 0.5, { autoAlpha:0 });
-			if( _winMorePointsImage ) TweenMax.to(_winMorePointsImage, 0.5, { autoAlpha:0 });
-			
-			// move the cumulated points container up
-			TweenMax.to(_cumulatedPointsContainer, 0.75, { y:_cumulatedScoreContainerTargetY });
-			
-			if( MemberManager.getInstance().isTournamentAnimPending )
-			{
-				// the tournament have been unloacked
-				_homeButton.removeEventListener(starling.events.Event.TRIGGERED, onGoHome);
-				const savedScaleX:Number = _glow.scaleX;
-				const savedScaleY:Number = _glow.scaleY;
-				_glow.scaleX = _glow.scaleY = 0;
-				TweenMax.to(_glow, 0.5, { delay:0.75, autoAlpha:1, scaleX:savedScaleX, scaleY:savedScaleY, ease:Linear.easeNone });
-				TweenMax.to(_glow, 8, { rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 });
-				TweenMax.delayedCall(2, Shaker.startShaking, [_lockImage, 12]);
-				Shaker.dispatcher.addEventListener(starling.events.Event.COMPLETE, onLockAnimComplete);
-			}
-			else
-			{
-				// the tournament have already been unlocked, so here we just need to fade in the containers
-				if( MemberManager.getInstance().isLoggedIn() )
-					TweenMax.allTo([_convertShop, _convertTournament], 0.5, { delay:0.5, autoAlpha:1 });
-			}
-			
-			// if not logged in or if the tournament have been unlocked, we show the convert container
-			if(!MemberManager.getInstance().isLoggedIn() || MemberManager.getInstance().isTournamentAnimPending)
-				TweenMax.to(_convertContainer, 0.5, { delay:0.5, autoAlpha:1 });
-			
-			// disable and hide the continue button
-			_continueButton.isEnabled = false;
-			TweenMax.to(_continueButton, 0.5, { width:0, autoAlpha:0 });
+			_lockerParticles.emitterX = _tournamentUnlockedContainer.x + (_tournamentUnlockedContainer.width * 0.5);
+			_lockerParticles.emitterY = _tournamentUnlockedContainer.y + (_tournamentUnlockedContainer.height * 0.5);
 		}
 		
 		/**
 		 * When the unlock animation is complete, we shake the home button and activate it once the shaking
 		 * is finished (to avoid a potential bug : shake on a null element).
 		 */
-		private function onLockAnimComplete(event:starling.events.Event):void
+		private function onLockAnimComplete(event:Event):void
 		{
-			Shaker.dispatcher.removeEventListener(starling.events.Event.COMPLETE, onLockAnimComplete);
+			Shaker.dispatcher.removeEventListener(Event.COMPLETE, onLockAnimComplete);
 			_lockImage.texture = AbstractEntryPoint.assets.getTexture("unlock-big");
 			TweenMax.allTo([_lockImage, _glow], 0.75, { delay:1, autoAlpha:0, onComplete:function():void
 			{
 				// shake the home button
 				TweenMax.killTweensOf(_glow);
 				Shaker.startShaking(_homeButton, 5);
-				Shaker.dispatcher.addEventListener(starling.events.Event.COMPLETE, activateHome);
+				Shaker.dispatcher.addEventListener(Event.COMPLETE, activateHome);
 			} });
-			_particles.start(0.25);
+			_lockerParticles.start(0.25);
 		}
 		
 		/**
 		 * Once the shaking on the home button has finished, we enable it.
 		 */
-		private function activateHome(event:starling.events.Event):void
+		private function activateHome(event:Event):void
 		{
-			Shaker.dispatcher.removeEventListener(starling.events.Event.COMPLETE, activateHome);
-			_homeButton.addEventListener(starling.events.Event.TRIGGERED, onGoHome);
+			Shaker.dispatcher.removeEventListener(Event.COMPLETE, activateHome);
+			_homeButton.addEventListener(Event.TRIGGERED, onGoHome);
+		}
+		
+		private function multiplyReward():void
+		{
+			_earnedPointsLabel.text = formatString(_("+{0}"), advancedOwner.screenData.gameData.numStarsOrPointsEarned);
+			_pointsParticles.start(0.25);
+			if( MemberManager.getInstance().isTournamentAnimPending )
+				unlockTournament();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -754,16 +550,17 @@ package com.ludofactory.mobile.navigation.engine
 		
 		/**
 		 * Go to home screen.
-		 */		
-		private function onGoHome(event:starling.events.Event):void
+		 */
+		private function onGoHome(event:Event):void
 		{
 			Flox.logEvent("Choix en fin de jeu solo", { Choix:"Accueil"} );
 			
 			advancedOwner.screenData.gameData = new GameData();
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
-				_homeButton.isEnabled = false;
-				_playAgainButton.isEnabled = false;
+				_homeButton.enabled = false;
+				if(_replayButton) _replayButton.enabled = false;
+				_facebookButton.enabled = false;
 				advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
 			}
 			else
@@ -774,8 +571,9 @@ package com.ludofactory.mobile.navigation.engine
 				}
 				else
 				{
-					_homeButton.isEnabled = false;
-					_playAgainButton.isEnabled = false;
+					_homeButton.enabled = false;
+					if(_replayButton) _replayButton.enabled = false;
+					_facebookButton.enabled = false;
 					advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
 				}
 			}
@@ -783,8 +581,8 @@ package com.ludofactory.mobile.navigation.engine
 		
 		/**
 		 * Play again.
-		 */		
-		private function onPlayAgain(event:starling.events.Event):void
+		 */
+		private function onPlayAgain(event:Event):void
 		{
 			Flox.logEvent("Choix en fin de jeu solo", { Choix:"Rejouer"} );
 			
@@ -794,8 +592,9 @@ package com.ludofactory.mobile.navigation.engine
 				if( GAnalytics.isSupported() )
 					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Rejouer", null, NaN, MemberManager.getInstance().id);
 				
-				_homeButton.isEnabled = false;
-				_playAgainButton.isEnabled = false;
+				_homeButton.enabled = false;
+				if(_replayButton) _replayButton.enabled = false;
+				_facebookButton.enabled = false;
 				advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
 			}
 			else
@@ -806,8 +605,9 @@ package com.ludofactory.mobile.navigation.engine
 				}
 				else
 				{
-					_homeButton.isEnabled = false;
-					_playAgainButton.isEnabled = false;
+					_homeButton.enabled = false;
+					if(_replayButton) _replayButton.enabled = false;
+					_facebookButton.enabled = false;
 					advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
 				}
 			}
@@ -848,7 +648,7 @@ package com.ludofactory.mobile.navigation.engine
 		 */
 		private function onConvertInShop(event:TouchEvent):void
 		{
-			var touch:Touch = event.getTouch(_convertContainer);
+			var touch:Touch = event.getTouch(_convertShopNotLoggedIn);
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
 				if( GAnalytics.isSupported() )
@@ -860,124 +660,112 @@ package com.ludofactory.mobile.navigation.engine
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-		
+
 		override public function dispose():void
 		{
-			_logo.removeFromParent(true);
-			_logo = null;
+			TweenMax.killTweensOf(this);
 			
-			_scoreValue.removeFromParent(true);
-			_scoreValue = null;
+			_overlay.removeFromParent(true);
+			_overlay = null;
 			
-			_scoreTitle.removeFromParent(true);
-			_scoreTitle = null;
+			_flag.removeFromParent(true);
+			_flag = null;
 			
-			_scoreContainer.removeFromParent(true);
-			_scoreContainer = null;
+			_title.removeFromParent(true);
+			_title = null;
 			
-			_pointsValue.removeFromParent(true);
-			_pointsValue = null;
+			_container.removeFromParent(true);
+			_container = null;
 			
-			_pointsTitle.removeFromParent(true);
-			_pointsTitle = null;
+			TweenMax.killTweensOf(_scoreLabel);
+			_scoreLabel.removeFromParent(true);
+			_scoreLabel = null;
 			
-			_pointsContainer.removeFromParent(true);
-			_pointsContainer = null;
+			TweenMax.killTweensOf(_pointContainer);
+			_pointContainer.removeFromParent(true);
+			_pointContainer = null;
 			
-			_miniCoinImage.removeFromParent(true);
-			_miniCoinImage = null;
+			TweenMax.killTweensOf(_earnedPointsLabel);
+			_earnedPointsLabel.removeFromParent(true);
+			_earnedPointsLabel = null;
 			
-			TweenMax.killTweensOf(_miniLueurImage);
-			_miniLueurImage.removeFromParent(true);
-			_miniLueurImage = null;
-			
-			_miniScoreImage.removeFromParent(true);
-			_miniScoreImage = null;
-			
-			_pointsIcon.removeFromParent(true);
-			_pointsIcon = null;
-			
-			_cumulatedPointsTitle.removeFromParent(true);
-			_cumulatedPointsTitle = null;
-			
-			_cumulatedPointsValue.removeFromParent(true);
-			_cumulatedPointsValue = null;
-			
-			_cumulatedPointsContainer.removeFromParent(true);
-			_cumulatedPointsContainer = null;
-			
-			if( _lockImage )
+			if(_winMorePointsImage)
 			{
+				TweenMax.killTweensOf(_winMorePointsImage);
+				_winMorePointsImage.removeFromParent(true);
+				_winMorePointsImage = null;
+			}
+			
+			Starling.juggler.remove(_pointsParticles);
+			_pointsParticles.stop(true);
+			_pointsParticles.removeFromParent(true);
+			_pointsParticles = null;
+			
+			if(_tournamentUnlockedContainer)
+			{
+				TweenMax.killTweensOf(_tournamentUnlockedContainer);
+				_tournamentUnlockedContainer.removeFromParent(true);
+				_tournamentUnlockedContainer = null;
+				
+				TweenMax.killTweensOf(_lockImage);
 				_lockImage.removeFromParent(true);
 				_lockImage = null;
-			}
-			
-			if( _convertIcon )
-			{
-				_convertIcon.removeFromParent(true);
-				_convertIcon = null;
-			}
-			
-			if( _convertLabel )
-			{
-				_convertLabel.removeFromParent(true);
-				_convertLabel = null;
-			}
-			
-			if( _glow )
-			{
+				
+				TweenMax.killTweensOf(_lockLabel);
+				_lockLabel.removeFromParent(true);
+				_lockLabel = null;
+				
+				TweenMax.killTweensOf(_glow);
 				_glow.removeFromParent(true);
-				_glow = null;
+				
+				Starling.juggler.remove(_lockerParticles);
+				_lockerParticles.stop(true);
+				_lockerParticles.removeFromParent(true);
+				_lockerParticles = null;
 			}
 			
-			if( _particles )
+			if(_convertShop)
 			{
-				Starling.juggler.remove( _particles );
-				_particles.stop(true);
-				_particles.removeFromParent(true);
-				_particles = null;
-			}
-			
-			if( _convertContainer )
-			{
-				_convertContainer.removeEventListener(TouchEvent.TOUCH, onConvertInShop);
-				_convertContainer.removeFromParent(true);
-				_convertContainer = null;
-			}
-			
-			if( _convertShop )
-			{
-				_convertShop.removeEventListener(starling.events.Event.TRIGGERED, onGoShop);
+				TweenMax.killTweensOf(_convertShop);
+				_convertShop.removeEventListener(TouchEvent.TOUCH, onGoShop);
 				_convertShop.removeFromParent(true);
 				_convertShop = null;
 			}
 			
-			if( _convertTournament )
+			if(_convertTournament)
 			{
-				_convertTournament.removeEventListener(starling.events.Event.TRIGGERED, onGoTournament);
+				TweenMax.killTweensOf(_convertTournament);
+				_convertTournament.removeEventListener(TouchEvent.TOUCH, onGoTournament);
 				_convertTournament.removeFromParent(true);
 				_convertTournament = null;
 			}
 			
-			_pointsToAddLabel.removeFromParent(true);
-			_pointsToAddLabel = null;
+			if(_convertShopNotLoggedIn)
+			{
+				TweenMax.killTweensOf(_convertShopNotLoggedIn);
+				_convertShopNotLoggedIn.removeEventListener(TouchEvent.TOUCH, onConvertInShop);
+				_convertShopNotLoggedIn.removeFromParent(true);
+				_convertShopNotLoggedIn = null;
+			}
 			
-			_continueButton.removeEventListener(starling.events.Event.TRIGGERED, onSkipAnimation);
-			_continueButton.removeFromParent(true);
-			_continueButton = null;
-			
-			_homeButton.removeEventListener(starling.events.Event.TRIGGERED, onGoHome);
+			TweenMax.killTweensOf(_homeButton);
+			_homeButton.removeEventListener(Event.TRIGGERED, onGoHome);
 			_homeButton.removeFromParent(true);
 			_homeButton = null;
 			
-			_playAgainButton.removeEventListener(starling.events.Event.TRIGGERED, onPlayAgain);
-			_playAgainButton.removeFromParent(true);
-			_playAgainButton = null;
+			TweenMax.killTweensOf(_facebookButton);
+			_facebookButton.removeFromParent(true);
+			_facebookButton = null;
 			
-			_buttonsContainer.removeFromParent(true);
-			_buttonsContainer = null;
-			
+			if(_replayButton)
+			{
+				_replayButton.removeEventListener(Event.TRIGGERED, onPlayAgain);
+				_replayButton.removeFromParent(true);
+				_replayButton = null;
+			}
+
 			super.dispose();
 		}
+
 	}
 }

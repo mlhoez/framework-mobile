@@ -129,7 +129,7 @@ package com.ludofactory.mobile
 			mTextField.touchable = false;
 			mTextField.batchable = true;
 			mTextField.wordWrap = false;
-			mTextField.border = true;
+			mTextField.border = false;
 			
 			_icon = new Image(AbstractEntryPoint.assets.getTexture("facebook-icon"));
 			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale;

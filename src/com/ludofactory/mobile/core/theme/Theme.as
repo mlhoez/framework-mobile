@@ -200,6 +200,7 @@ package com.ludofactory.mobile.core.theme
 		public static var particleSparklesXml:XML;
 		public static var particleSlowXml:XML;
 		public static var particleStarsXml:XML;
+		public static var particleVortexXml:XML;
 		public static var particleStarsLogoXml:XML;
 		
 //------------------------------------------------------------------------------------------------------------
@@ -558,6 +559,9 @@ package com.ludofactory.mobile.core.theme
 			
 			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_stars.pex" ), FileMode.READ );
 			particleStarsXml = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
+			
+			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles-vortex.pex" ), FileMode.READ );
+			particleVortexXml = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
 			
 			fileStream.open( File.applicationDirectory.resolvePath( "assets/particles/particles_stars_logo.pex" ), FileMode.READ );
 			particleStarsLogoXml = XML(fileStream.readUTFBytes(fileStream.bytesAvailable));
