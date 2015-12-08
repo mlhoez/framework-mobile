@@ -18,6 +18,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.push.PushNewCSMessage;
@@ -27,6 +28,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
+	import com.ludofactory.mobile.navigation.home.HomeScreen;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.vidcoin.extension.ane.VidCoinController;
@@ -310,6 +312,8 @@ package com.ludofactory.mobile.core.manager
 			AbstractEntryPoint.pushManager.onUserLoggedOut();
 			AbstractEntryPoint.alertData.onUserLoggedOut();
 			AbstractEntryPoint.eventManager.onUserLoggedOut();
+			if(AbstractEntryPoint.screenNavigator && AbstractEntryPoint.screenNavigator.activeScreenID == ScreenIds.HOME_SCREEN)
+				HomeScreen(AbstractEntryPoint.screenNavigator.activeScreen).onUserDisconnected(); // re-add the Facebook button if disconnected while the home screen is showing
 			
 			// if the
 			if( !_member.tournamentUnlocked && tournamentUnlocked )

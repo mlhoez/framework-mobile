@@ -6,13 +6,14 @@ Created : 11 Avril 2013
 */
 package com.ludofactory.mobile.navigation.home
 {
-	
+
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.FacebookButton;
 	import com.ludofactory.mobile.MobileButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -22,10 +23,12 @@ package com.ludofactory.mobile.navigation.home
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
+	import com.ludofactory.mobile.navigation.FacebookManager;
+	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
+
 	import starling.display.Image;
 	import starling.events.Event;
-	
+
 	/**
 	 * The application's home screen.
 	 */	
@@ -38,6 +41,9 @@ package com.ludofactory.mobile.navigation.home
 		/**
 		 * Play button */		
 		private var _playButton:MobileButton;
+		/**
+		 * Facebookconnect button. */
+		private var _facebookButton:FacebookButton;
 		
 		/**
 		 * Temporary debug button. */		
@@ -63,6 +69,13 @@ package com.ludofactory.mobile.navigation.home
 			_playButton = ButtonFactory.getButton(_("JOUER"), ButtonFactory.SPECIAL);
 			_playButton.addEventListener(Event.TRIGGERED, onPlay);
 			addChild(_playButton);
+			
+			if(FacebookManager.getInstance().canDisplayFacebookConnectButton())
+			{
+				_facebookButton = ButtonFactory.getFacebookButton(_("Facebook"), ButtonFactory.FACEBOOK_TYPE_CONNECT);
+				_facebookButton.addEventListener(FacebookManagerEventType.AUTHENTICATED, onAuthenticatedWithFacebook);
+				addChild(_facebookButton);
+			}
 			
 			if( advancedOwner.screenData.displayPopupOnHome || (MemberManager.getInstance().isTournamentUnlocked && MemberManager.getInstance().isTournamentAnimPending) )
 			{
@@ -90,7 +103,7 @@ package com.ludofactory.mobile.navigation.home
 			if (isInvalid(INVALIDATION_FLAG_SIZE))
 			{
 				var padding:int;
-				var buttonHeight:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 148) : 128);
+				var buttonHeight:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 138) : 128);
 				var gap:int = scaleAndRoundToDpi(GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 10 : 50) : (AbstractGameInfo.LANDSCAPE ? 30 : 80));
 				
 				// 1) scale the logo
@@ -128,15 +141,28 @@ package com.ludofactory.mobile.navigation.home
 				_logo.y = padding + (actualHeight - (padding * 2) - buttonHeight - _logo.height - (gap * 2)) * 0.5;
 				
 				var buttonWidth:int = 0;
-				var minWidth:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 450 : 800) : (GlobalConfig.isPhone ? 450 : 800));
+				var minWidth:int = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 375 : 800) : (GlobalConfig.isPhone ? 375 : 800));
 				if(minWidth > _logo.width * (GlobalConfig.isPhone ? 0.9:0.8))
 					buttonWidth = (_logo.width * (GlobalConfig.isPhone ? 0.9:0.8));
 				else
-					buttonWidth = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 450 : 800) : (GlobalConfig.isPhone ? 450 : 800));
+					buttonWidth = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 375 : 800) : (GlobalConfig.isPhone ? 375 : 800));
+
+				if(_facebookButton)
+				{
+					_facebookButton.height = buttonHeight;
+					_facebookButton.width = buttonWidth;
+				}
+				
 				_playButton.width = buttonWidth;
-				_playButton.x = roundUp((actualWidth - _playButton.width) * 0.5);
+				_playButton.x = roundUp((actualWidth - _playButton.width - (_facebookButton ? _facebookButton.width : 0)) * 0.5);
 				_playButton.y = _logo.y + _logo.height + gap;
 				_playButton.height = buttonHeight;
+				
+				if(_facebookButton)
+				{
+					_facebookButton.x = _playButton.x + _playButton.width + scaleAndRoundToDpi(20);
+					_facebookButton.y = _logo.y + _logo.height + gap;
+				}
 				
 				if (_debugButton)
 				{
@@ -150,7 +176,6 @@ package com.ludofactory.mobile.navigation.home
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Play. Displays the game mode selection popup.
@@ -166,6 +191,29 @@ package com.ludofactory.mobile.navigation.home
 			advancedOwner.showScreen(ScreenIds.DEBUG_SCREEN);
 		}
 		
+		/**
+		 * Facebook authentication.
+		 */
+		private function onAuthenticatedWithFacebook(event:Event):void
+		{
+			_facebookButton.removeEventListener(FacebookManagerEventType.AUTHENTICATED, onAuthenticatedWithFacebook);
+			_facebookButton.removeFromParent(true);
+			_facebookButton = null;
+			
+			// layout again
+			invalidate(INVALIDATION_FLAG_SIZE);
+		}
+		
+		public function onUserDisconnected():void
+		{
+			_facebookButton = ButtonFactory.getFacebookButton(_("Facebook"), ButtonFactory.FACEBOOK_TYPE_CONNECT);
+			_facebookButton.addEventListener(FacebookManagerEventType.AUTHENTICATED, onAuthenticatedWithFacebook);
+			addChild(_facebookButton);
+
+			// layout again
+			invalidate(INVALIDATION_FLAG_SIZE);
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
@@ -177,6 +225,13 @@ package com.ludofactory.mobile.navigation.home
 			_playButton.removeEventListener(Event.TRIGGERED, onPlay);
 			_playButton.removeFromParent(true);
 			_playButton = null;
+			
+			if(_facebookButton)
+			{
+				_facebookButton.removeEventListener(FacebookManagerEventType.AUTHENTICATED, onAuthenticatedWithFacebook);
+				_facebookButton.removeFromParent(true);
+				_facebookButton = null;
+			}
 			
 			if( _debugButton )
 			{
