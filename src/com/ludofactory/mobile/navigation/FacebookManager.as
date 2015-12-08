@@ -54,41 +54,75 @@ package com.ludofactory.mobile.navigation
 		 * Current mode (see above). */
 		private static var _mode:String;
 		
+		private static var _publicationData:FacebookPublicationData;
+		
 		public function FacebookManager(sk:SecurityKey)
 		{
 			if(sk == null)
 				throw new Error("Erreur : Echec de l'instanciation : Utiliser FacebookManager.getInstance() au lieu de new.");
 		}
 		
+//------------------------------------------------------------------------------------------------------------
+//	Public API
+		
 		/**
-		 * Checks if the Facebook token is still valid, if so, we don't need to do anything special, otherwise,
-		 * we authenticate the user to retrieve a new one.
+		 * This function must be used whenever we want to authenticate the user within the app.
 		 */
-		public function checkTokenValidity():void
+		public function connect():void
 		{
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
 				if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
 				{
-					if( MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().facebookId != 0 ) // just in case but usually this test is done before in the screen
+					if( MemberManager.getInstance().isLoggedIn() )
 					{
+						// the user is logged in
+						if(MemberManager.getInstance().facebookId != 0)
+						{
+							// already linked with a Facebook account
+							_mode = MODE_TOKEN;
+						}
+						else
+						{
+							// not associated with Facebook, then we
+							_mode = MODE_ASSOCIATING;
+						}
+					}
+					else
+					{
+						// not logged in, then we launch a classic Facebook Connect
+						_mode = MODE_REGISTER;
+					}
+
+					InfoManager.show(_("Chargement..."));
+
+					if( GoViral.goViral.isFacebookAuthenticated() )
+					{
+						// check if the token is still valid
 						var now:Date = new Date();
 						var tokenExpiryDate:Date = new Date( MemberManager.getInstance().getFacebookTokenExpiryTimestamp() );
 						if( now < tokenExpiryDate )
 						{
 							// the token is still valid, then we don't need to do something special
+							//onMeReturned();
 							requestMe();
 						}
 						else
 						{
-							// the token has expired, we need to authenticate again
-							authenticate();
+							// the token has expired, we need to get a new one
+							// the user is already authenticated (so we already have a token stored in the application),
+							// then we directly request his profile.
+							requestMe();
 						}
 					}
 					else
 					{
-						// not logged in or no Facebook account associated
-						authenticate();
+						// the user is not authenticated, then we need to log in with Facebook before in order to get a token,
+						// and then request his profile
+						GoViral.goViral.addEventListener(GVFacebookEvent.FB_LOGGED_IN, requestMe);
+						GoViral.goViral.addEventListener(GVFacebookEvent.FB_LOGIN_CANCELED, onAuthenticationCancelledOrFailed);
+						GoViral.goViral.addEventListener(GVFacebookEvent.FB_LOGIN_FAILED, onAuthenticationCancelledOrFailed);
+						GoViral.goViral.authenticateWithFacebook( AbstractGameInfo.FACEBOOK_PERMISSIONS );
 					}
 				}
 				else
@@ -104,88 +138,26 @@ package com.ludofactory.mobile.navigation
 		}
 		
 		/**
-		 * Use this funtion when we want to publish a news on the user's wall.
+		 * This function is used whenever we want to publish on the user's wall.
 		 * 
-		 * <p>If the user is not connected to Internet or if Facebook is not supported on the device, we first return
-		 * an error.</p>
+		 * It will first check the user's state (logged in or not, associated with Facebook or not, etc.).
 		 * 
-		 * <p>If everything is ok, we check if the user have already associated his account with Facebook, if yes, we
-		 * check if the current Facebook session is the good one (by checking the user's Facebook id and the one returned
-		 * by the current Facebook session), otherwise, we ask the user to log in and on ce the account is associated,
-		 * we launch the publication.</p>
-		 */		
-		public function associateForPublish():void
-		{
-			if( MemberManager.getInstance().facebookId != 0 )
-			{
-				// this account is associated to a Facebook account, in this case we need to authenticate with
-				// Facebook and then check if the Facebook id matches the user's. If there is a match, then we
-				// can directly publish the stream on the user's wall, otherwise, we need to tell the user that
-				// the current Facebook session is not the good one.
-				_mode = MODE_PUBLISHING;
-			}
-			else
-			{
-				// this account is not associated to a Facebook account, in this case we need to associate the
-				// current Facebook session to this account, and then launch the publication.
-				_mode = MODE_ASSOCIATING;
-			}
-			checkTokenValidity();
-		}
-		
-		/**
-		 * Association function.
-		 */		
-		public function associate():void
-		{
-			_mode = MODE_ASSOCIATING;
-			checkTokenValidity();
-		}
-		
-		/**
-		 * Register or connect the user with Facebook.
-		 */		
-		public function register():void
-		{
-			_mode = MODE_REGISTER;
-			checkTokenValidity();
-		}
-		
-		/**
-		 * Register or connect the user with Facebook.
+		 * @param publicationData The publication data
+		 * @param doConnect The publication data
 		 */
-		public function getToken():void
+		public function publishOnWall(publicationData:FacebookPublicationData, doConnect:Boolean = true):void
 		{
-			_mode = MODE_TOKEN;
-			checkTokenValidity();
+			// save the publication data, in case we need to associate or connect the player before
+			_publicationData = publicationData;
+			// tell the manager we are in public mode
+			_mode = MODE_PUBLISHING;
+			// then connect / associate or retrieve a token
+			if(doConnect) connect();
+			else publish();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Common authentication
-		
-		/**
-		 * Authenticate the user with Facebook.
-		 */		
-		private function authenticate():void
-		{
-			InfoManager.show(_("Chargement..."));
-			
-			if( GoViral.goViral.isFacebookAuthenticated() )
-			{
-				// the user is already authenticated (so we already have a token stored in the application),
-				// then we directly request his profile.
-				requestMe();
-			}
-			else
-			{
-				// the user is not authenticated, then we need to log in with Facebook before in order to get a token,
-				// and then request his profile
-				GoViral.goViral.addEventListener(GVFacebookEvent.FB_LOGGED_IN, requestMe);
-				GoViral.goViral.addEventListener(GVFacebookEvent.FB_LOGIN_CANCELED, onAuthenticationCancelledOrFailed);
-				GoViral.goViral.addEventListener(GVFacebookEvent.FB_LOGIN_FAILED, onAuthenticationCancelledOrFailed);
-				GoViral.goViral.authenticateWithFacebook( AbstractGameInfo.FACEBOOK_PERMISSIONS );
-			}
-		}
 		
 		/**
 		 * Authentication was cancelled or failed.
@@ -195,6 +167,9 @@ package com.ludofactory.mobile.navigation
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_LOGGED_IN, requestMe);
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_LOGIN_CANCELED, onAuthenticationCancelledOrFailed);
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_LOGIN_FAILED, onAuthenticationCancelledOrFailed);
+
+			_publicationData = null;
+			
 			InfoManager.hide(event.errorMessage, InfoContent.ICON_CROSS, 3);
 		}
 		
@@ -251,7 +226,7 @@ package com.ludofactory.mobile.navigation
 						if( !formattedUserData.hasOwnProperty("mail") || formattedUserData.mail == null || formattedUserData.mail == "" )
 						{
 							AbstractEntryPoint.screenNavigator.screenData.tempFacebookData = formattedUserData;
-							InfoManager.hide(_("Nous n'avons pas pu récupéré votre email via Facebook. Merci de compléter l'inscription normalement."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.REGISTER_SCREEN ]);
+							InfoManager.hide(_("Nous n'avons pas pu récupérer votre email via Facebook. Merci de compléter l'inscription normalement."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.REGISTER_SCREEN ]);
 							return;
 						}
 						
@@ -273,7 +248,8 @@ package com.ludofactory.mobile.navigation
 						// because we don't care if the associated Facebook account matches the current session on the phone
 						// we only want the user to publish
 						InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, false, formattedUserData);
+						
+						publish();
 						
 						break;
 					}
@@ -283,7 +259,11 @@ package com.ludofactory.mobile.navigation
 						// because we don't care if the associated Facebook account matches the current session on the phone
 						// we only want a token here to finish all the actions
 						InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED);
+						
+						if(_publicationData)
+							publish();
+						
+						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
 						
 						break;
 					}
@@ -305,7 +285,51 @@ package com.ludofactory.mobile.navigation
 			// clear the token for security reason
 			GoViral.goViral.logoutFacebook();
 			
+			_publicationData = null;
+			
 			InfoManager.hide(event.errorMessage, InfoContent.ICON_CROSS, 3);
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Publish
+		
+		/**
+		 * Publish on Facebook.
+		 */
+		private function publish():void
+		{
+			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
+			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
+			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
+			GoViral.goViral.showFacebookShareDialog( _publicationData.title, _publicationData.caption, _publicationData.description, _publicationData.linkUrl, _publicationData.imageUrl, _publicationData.extraParams);
+		}
+		
+		/**
+		 * Publication cancelled or failed.
+		 */
+		private function onPublishCancelledOrFailed(event:GVFacebookEvent):void
+		{
+			//Flox.logEvent("Publications Facebook", {Etat:"Annulee"});
+			_publicationData = null;
+			
+			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
+			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
+			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
+		}
+		
+		/**
+		 * Publication posted.
+		 */
+		private function onPublishOver(event:GVFacebookEvent):void
+		{
+			//Flox.logEvent("Publications Facebook", {Etat:"Validee"});
+			_publicationData = null;
+			
+			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
+			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
+			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
+			
+			dispatchEventWith(FacebookManagerEventType.PUBLISHED)
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -328,7 +352,12 @@ package com.ludofactory.mobile.navigation
 					// association success
 					
 					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, 3);
-					dispatchEventWith(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED);
+					
+					if(_publicationData)
+					{
+						publish();
+					}
+					dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
 					break;
 				}
 					
@@ -374,26 +403,63 @@ package com.ludofactory.mobile.navigation
 				}
 				case 6:
 				{
-					// The user have successfully logged in with his Facebook account
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.HIGH_SCORE_LIST_SCREEN ] );
-					dispatchEventWith(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED);
+					// FIXME rajouter les gains ici, savoir s'il a été crédité ou pas
+
+					if(_publicationData)
+					{
+						publish();
+					}
+					else
+					{
+						// The user have successfully logged in with his Facebook account
+						// we dispatch an event to tell the app the result
+						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME);
+						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
+					}
 					break;
 				}
-				case 7:
+				case 7: // logged in but no pseudo
 				{
-					// The user have successfully logged in with his Facebook account but the pseudo field
-					// is missing, thus we redirect the user to the pseudo choice screen
-					AbstractEntryPoint.screenNavigator.screenData.defaultPseudo = result.pseudo_defaut;
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
+					// FIXME : assigner automatiquement un pseudo lors d'une inscription Facebook (à modifier côté PHP)
+					// FIXME Il faut par contre dire à l'appli qu'il peut changer son pseudo dans son compte
+					// On redirige que dans certains cas = pas lorsqu'on doit publier
+					
+					if(_publicationData)
+					{
+						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, publish);
+					}
+					else
+					{
+						// The user have successfully logged in with his Facebook account but the pseudo field
+						// is missing, thus we redirect the user to the pseudo choice screen
+						// TODO ça c'est à modifier (pas de redirection)
+						AbstractEntryPoint.screenNavigator.screenData.defaultPseudo = result.pseudo_defaut;
+						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
+
+						//dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
+					}
+					
 					break;
 				}
-				case 9:
+				case 9: // account created but no pseudo and no sponsor
 				{
-					// The user have successfully created an account with his Facebook data.
-					// in this case, we need to redirect him to the sponsor screen, and then the
-					// pseudo choice screen
-					AbstractEntryPoint.screenNavigator.screenData.defaultPseudo = result.pseudo_defaut;
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.SPONSOR_REGISTER_SCREEN ]);
+					// FIXME comme pour le cas 7, assigner le pseudo automatiquement et voir comment faire pour le
+					// FIXME code parrain
+
+					if(_publicationData)
+					{
+						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, publish);
+					}
+					else
+					{
+						// The user have successfully created an account with his Facebook data.
+						// in this case, we need to redirect him to the sponsor screen, and then the pseudo choice screen
+						// TODO ça c'est à modifier (pas de redirection)
+						AbstractEntryPoint.screenNavigator.screenData.defaultPseudo = result.pseudo_defaut;
+						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.SPONSOR_REGISTER_SCREEN ]);
+
+						//dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
+					}
 					break;
 				}
 				
@@ -455,6 +521,14 @@ package com.ludofactory.mobile.navigation
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_READ_PERMISSIONS_UPDATED, onPermissionGranted);
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_READ_PERMISSIONS_FAILED, onPermissionNotGranted);
 			dispatchEventWith(FacebookManagerEventType.PERMISSION_NOT_GRANTED);
+		}
+
+//------------------------------------------------------------------------------------------------------------
+//	Help
+		
+		public function canDisplayFacebookConnectButton():Boolean
+		{
+			return (!MemberManager.getInstance().isLoggedIn() || (MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().facebookId == 0));
 		}
 		
 //------------------------------------------------------------------------------------------------------------

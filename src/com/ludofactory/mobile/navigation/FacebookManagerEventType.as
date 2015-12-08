@@ -11,7 +11,7 @@ package com.ludofactory.mobile.navigation
 	{
 		/**
 		 * Authenticated. */
-		public static const AUTHENTICATED_OR_ASSOCIATED:String = "authenticated-or-associated";
+		public static const AUTHENTICATED:String = "authenticated";
 		
 		/**
 		 * Permission granted. */
@@ -20,5 +20,9 @@ package com.ludofactory.mobile.navigation
 		/**
 		 * Permission not granted. */
 		public static const PERMISSION_NOT_GRANTED:String = "permission-not-granted";
+		
+		/**
+		 *  */
+		public static const PUBLISHED:String = "published";
 	}
 }
