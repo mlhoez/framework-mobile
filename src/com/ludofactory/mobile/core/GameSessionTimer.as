@@ -100,7 +100,7 @@ package com.ludofactory.mobile.core
 			else
 			{
 				// no more free game session then start the timer
-				if( MemberManager.getInstance().tokens < 50 )
+				if( !MemberManager.getInstance().anonymousGameSessionsAlreadyUsed && MemberManager.getInstance().tokens < 50 )
 				{
 					start();
 				}

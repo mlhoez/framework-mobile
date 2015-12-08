@@ -183,6 +183,11 @@ package com.ludofactory.mobile.core.manager
 		 * True by default so that a non authenticated user will see it. */
 		private var _canHaveRewardAfterPublish:Boolean = true;
 		
+		/**
+		 * If the anonymous game sessions can be sent when
+		 * the user creates an account et simply log in. */
+		private var _anonymousGameSessionsAlreadyUsed:Boolean = false;
+		
 		public function Member() { }
 		
 		/**
@@ -331,6 +336,9 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get canHaveRewardAfterPublish():Boolean { return _canHaveRewardAfterPublish; }
 		public function set canHaveRewardAfterPublish(value:Boolean):void { _canHaveRewardAfterPublish = value; }
+		
+		public function get anonymousGameSessionsAlreadyUsed():Boolean { return _anonymousGameSessionsAlreadyUsed; }
+		public function set anonymousGameSessionsAlreadyUsed(val:Boolean):void { _anonymousGameSessionsAlreadyUsed = val; }
 		
 	}
 }

@@ -279,7 +279,12 @@ package com.ludofactory.mobile.navigation.home.summary
 			}
 			
 			if( _stakeType == StakeType.TOKEN)
-				GameSessionTimer.updateState();
+			{
+				if(!MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().anonymousGameSessionsAlreadyUsed)
+					valueToDisplay = Utilities.splitThousands(MemberManager.getInstance().tokens);
+				else
+					GameSessionTimer.updateState();
+			}
 			
 			// this value is provided only for tokens stakes
 			if( valueToDisplay != "" && valueToDisplay.indexOf(":") > -1 )

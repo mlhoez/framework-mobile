@@ -584,6 +584,18 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
+		/**
+		 * Updates the value of <code>anonymousGameSessionsAlreadyUsed</code>. */
+		public function get anonymousGameSessionsAlreadyUsed():Boolean { return _member.anonymousGameSessionsAlreadyUsed; }
+		public function set anonymousGameSessionsAlreadyUsed(val:Boolean):void
+		{
+			if( _member.anonymousGameSessionsAlreadyUsed != val )
+			{
+				_member.anonymousGameSessionsAlreadyUsed = val;
+				setEncryptedMember();
+			}
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
 		

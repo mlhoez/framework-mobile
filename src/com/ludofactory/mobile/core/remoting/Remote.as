@@ -814,14 +814,15 @@ package com.ludofactory.mobile.core.remoting
 					if( result.code == 1 || result.code == 6 || result.code == 7 || result.code == 8 || result.code == 9 || result.code == 11 || result.code == 12 )
 					{
 						log("[Remote] Inscription ou connexion réussie, parties anonymes retirées.");
+						// because the sign in/up is ok, we need to clear the credits he potentially bought
+						MemberManager.getInstance().anonymousGameSessionsAlreadyUsed = true;
+						MemberManager.getInstance().credits = 0;
 						MemberManager.getInstance().tokens = 0;
 						MemberManager.getInstance().points = 0;
 						MemberManager.getInstance().cumulatedRubies = 0;
 						MemberManager.getInstance().anonymousGameSessions = [];
 						// empty the transaction ids
 						MemberManager.getInstance().transactionIds = [];
-						// because the sign in/up is ok, we need to clear the credits he potentially bought
-						MemberManager.getInstance().credits = 0;
 					}
 				}
 				
