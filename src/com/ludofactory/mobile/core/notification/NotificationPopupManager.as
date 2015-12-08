@@ -53,7 +53,7 @@ package com.ludofactory.mobile.core.notification
 			{
 				_currentNotification = new NotificationPopup();
 				
-				_currentNotification.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 0.8 : 0.95) :  (AbstractGameInfo.LANDSCAPE ? 0.65 : 0.8));
+				_currentNotification.width = GlobalConfig.stageWidth * (GlobalConfig.isPhone ? (AbstractGameInfo.LANDSCAPE ? 0.85 : 0.95) :  (AbstractGameInfo.LANDSCAPE ? 0.65 : 0.8));
 				_currentNotification.height = GlobalConfig.stageHeight * (GlobalConfig.isPhone ? 0.95 : 0.95);
 				_currentNotification.alignPivot();
 				_currentNotification.x = GlobalConfig.stageWidth * 0.5;
