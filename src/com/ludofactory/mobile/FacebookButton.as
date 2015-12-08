@@ -11,15 +11,23 @@
 package com.ludofactory.mobile
 {
 	
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.ButtonFactory;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.InfoContent;
+	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
 	import com.ludofactory.mobile.core.notification.content.FacebookNotificationContent;
+	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
@@ -45,6 +53,7 @@ package com.ludofactory.mobile
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
+	import starling.textures.Texture;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	
@@ -136,27 +145,78 @@ package com.ludofactory.mobile
 			
 			switch (buttonType)
 			{
-				case ButtonFactory.FACEBOOK_TYPE_CONNECT: { _incentive = new Image(AbstractEntryPoint.assets.getTexture("facebook-credit-incentive")); break; }
-				case ButtonFactory.FACEBOOK_TYPE_SHARE: { _incentive = new Image(AbstractEntryPoint.assets.getTexture("facebook-credit-incentive")); break; } // TODO A modifier
-				case ButtonFactory.FACEBOOK_TYPE_NORMAL: { _incentive = new Image(AbstractEntryPoint.assets.getTexture("facebook-credit-incentive")); break; } // TODO A modifier
+				case ButtonFactory.FACEBOOK_TYPE_NORMAL:
+				{
+					// nothing
+					
+					break;
+				}
+				case ButtonFactory.FACEBOOK_TYPE_CONNECT:
+				{
+					// show the incentive no matter what
+					createIncentiveImage(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_CONNECT_REWARD).rewardType,
+							Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_CONNECT_REWARD).rewardValue);
+					break;
+				}
+				
+				case ButtonFactory.FACEBOOK_TYPE_SHARE:
+				{
+					if(MemberManager.getInstance().canHaveRewardAfterPublish)
+					{
+						// only show the incentive if the player did not already get it
+						createIncentiveImage(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_SHARE_REWARD).rewardType,
+								Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_SHARE_REWARD).rewardValue);
+					}
+					
+					break;
+				}
 			}
-			_incentive.scaleX = _incentive.scaleY = GlobalConfig.dpiScale;
-			
-			_incentiveLabel = new TextField(scaleAndRoundToDpi(48), scaleAndRoundToDpi(34), "+50", Theme.FONT_SANSITA, scaleAndRoundToDpi(22), 0xffffff);
-			_incentiveLabel.autoScale = true;
-			_incentiveLabel.nativeFilters = [ new GlowFilter(0xa00000, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
-				new DropShadowFilter(2, 75, 0xa00000, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
 			
 			mContents = new Sprite();
 			mContents.addChild(mBody);
 			mContents.addChild(_icon);
-			mContents.addChild(_incentive);
-			mContents.addChild(_incentiveLabel);
+			if(_incentive)
+			{
+				mContents.addChild(_incentive);
+				mContents.addChild(_incentiveLabel);
+			}
 			mContents.addChild(mTextField);
 			addChild(mContents);
 			addEventListener(TouchEvent.TOUCH, onTouch);
 			
 			this.touchGroup = true;
+		}
+		
+		private function createIncentiveImage(stakeType:int, stakeValue:int):void
+		{
+			switch(stakeType)
+			{
+				case StakeType.CREDIT:
+				{
+					_incentive = new Image(AbstractEntryPoint.assets.getTexture("facebook-credit-incentive"));
+					break;
+				}
+				case StakeType.TOKEN:
+				{
+					_incentive = new Image(AbstractEntryPoint.assets.getTexture("facebook-token-incentive"));
+					break;
+				}
+				case StakeType.POINT:
+				{
+					_incentive = new Image(AbstractEntryPoint.assets.getTexture("facebook-point-incentive"));
+					break;
+				}
+			}
+			
+			if(_incentive)
+			{
+				_incentive.scaleX = _incentive.scaleY = GlobalConfig.dpiScale;
+				
+				_incentiveLabel = new TextField(scaleAndRoundToDpi(48), scaleAndRoundToDpi(34), ("" + stakeValue), Theme.FONT_SANSITA, scaleAndRoundToDpi(22), 0xffffff);
+				_incentiveLabel.autoScale = true;
+				_incentiveLabel.nativeFilters = [ new GlowFilter(0xa00000, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
+					new DropShadowFilter(2, 75, 0xa00000, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
+			}
 		}
 		
 		override protected function initialize():void
@@ -170,26 +230,29 @@ package com.ludofactory.mobile
 			_icon.x = _padding;
 			_icon.y = roundUp(((mTextField.height + (_padding * 2)) - _icon.height) * 0.5);
 			
-			log("zob = " + mTextField.width + " - " + _padding)
+			//log("zob = " + mTextField.width + " - " + _padding)
 			mBody.validate();
-			mBody.width = _icon.width + mTextField.width + (_incentive.width * 0.5) + (_padding * 3);
+			mBody.width = _icon.width + mTextField.width + (_incentive ? (_incentive.width * 0.5) : 0) + (_padding * 3);
 			mBody.height = mTextField.height + (_padding * 2);
 			
 			mBody.validate();
-			_incentive.x = mBody.width - _incentive.width;
-			_incentiveLabel.x = _incentive.x + scaleAndRoundToDpi(40);
-			_incentiveLabel.y = _incentive.y + scaleAndRoundToDpi(55);
+			if(_incentive)
+			{
+				_incentive.x = mBody.width - _incentive.width;
+				_incentiveLabel.x = _incentive.x + scaleAndRoundToDpi(40);
+				_incentiveLabel.y = _incentive.y + scaleAndRoundToDpi(55);
+			}
 			
 			mTextField.autoSize =  TextFieldAutoSize.NONE;
 			//mTextField.width = mBody.width - (_padding * 2) - _icon.x - _icon.width;
-			mTextField.width = _incentive.x - (_padding * 2) - _icon.x - _icon.width;
+			mTextField.width = (_incentive ? _incentive.x : mBody.width) - (_padding * 2) - _icon.x - _icon.width;
 			mTextField.height = mBody.height - (_padding * 2);
 			mTextField.x = _icon.x + _icon.width + _padding;
 			mTextField.y = mBody.y + _padding;
 			mTextField.autoScale = true;
 			mTextField.redraw();
 
-			mBody.width = mBody.width - (_incentive.width * 0.2);
+			mBody.width = mBody.width - (_incentive ? (_incentive.width * 0.2) : 0);
 		}
 		
 		private function onTouch(event:TouchEvent):void
@@ -316,17 +379,53 @@ package com.ludofactory.mobile
 		private function onPublished(event:Event):void
 		{
 			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			Remote.getInstance().addRewardAfterSharing(onRewarded, onNotRewarded, onNotRewarded, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+			
+			
 			// inform the parent
 			dispatchEventWith(FacebookManagerEventType.PUBLISHED);
+		}
+		
+		private function onRewarded(result:Object):void
+		{
+			switch(result.code)
+			{
+				case 0: // problem
+				{
+					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+					break;
+				}
+				case 1: // the user have been rewarded
+				{
+					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+					removeIncentive();
+					break;
+				}
+				case 2: // the user have already been rewarded
+				{
+					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+					removeIncentive();
+					break;
+				}
+			}
+			
+			removeIncentive();
+		}
+		
+		private function onNotRewarded(error:Object):void
+		{
+			InfoManager.hide(_("Une erreur est survenue lors de l'ajout de votre récompense, veuillez réessayer."), InfoContent.ICON_CROSS);
 		}
 		
 		public function removeIncentive():void
 		{
 			// TODO if the bonus was granted
+			_incentiveLabel.removeFromParent(true);
+			_incentiveLabel = null;
 			
+			_incentive.removeFromParent(true);
+			_incentive = null;
 		}
-		
-		
 		
 		/** The current state of the button. The corresponding strings are found
 		 *  in the ButtonState class. */
@@ -413,15 +512,18 @@ package com.ludofactory.mobile
 		
 		override public function set width(value:Number):void
 		{
-			mBody.width = value - (_incentive.width * 0.2);
+			mBody.width = value - (_incentive ? (_incentive.width * 0.2) : 0);
 			
-			_incentive.x = value - _incentive.width;
-			_incentiveLabel.x = _incentive.x + scaleAndRoundToDpi(40);
-			_incentiveLabel.y = _incentive.y + scaleAndRoundToDpi(55);
+			if(_incentive)
+			{
+				_incentive.x = value - _incentive.width;
+				_incentiveLabel.x = _incentive.x + scaleAndRoundToDpi(40);
+				_incentiveLabel.y = _incentive.y + scaleAndRoundToDpi(55);
+			}
 			
 			if(mTextField)
 			{
-				mTextField.width = _incentive.x - (_padding * 2) - _icon.x - _icon.width;
+				mTextField.width = (_incentive ? _incentive.x : mBody.width) - (_padding * 2) - _icon.x - _icon.width;
 			}
 			
 			super.width = value;
@@ -575,12 +677,25 @@ package com.ludofactory.mobile
 		{
 			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 			
-			// text field might be disconnected from parent, so we have to dispose it manually
-			if (mTextField)
+			_icon.removeFromParent(true);
+			_icon = null;
+			
+			if(_incentive)
 			{
-				mTextField.nativeFilters = [];
-				mTextField.dispose();
+				_incentive.removeFromParent(true);
+				_incentive = null;
 			}
+			
+			if(_incentiveLabel)
+			{
+				_incentiveLabel.removeFromParent(true);
+				_incentiveLabel = null;
+			}
+			
+			mTextField.removeFromParent(true);
+			mTextField = null;
+			
+			_publicationData = null;
 			
 			super.dispose();
 		}

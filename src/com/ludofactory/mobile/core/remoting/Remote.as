@@ -755,6 +755,14 @@ package com.ludofactory.mobile.core.remoting
 		}
 		
 		/**
+		 * Insert a line in the database whenever a video starts to display (VidCoin).
+		 */
+		public function addRewardAfterSharing(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "addRewardAfterSharing", getGenericParams());
+		}
+		
+		/**
 		 * Generic test function (must return a string, not an object because of the addslash)
 		 */		
 		public function test(token:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void

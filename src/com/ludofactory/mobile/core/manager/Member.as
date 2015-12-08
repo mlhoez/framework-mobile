@@ -178,6 +178,11 @@ package com.ludofactory.mobile.core.manager
 		 * When this value is below 0, the user has to wait 40 min. */
 		private var _numRecreditations:int = 5;
 		
+		/**
+		 * Whether the player can have the reward after its first publish.
+		 * True by default so that a non authenticated user will see it. */
+		private var _canHaveRewardAfterPublish:Boolean = true;
+		
 		public function Member() { }
 		
 		/**
@@ -207,6 +212,7 @@ package com.ludofactory.mobile.core.manager
 			if( "video_disponible" in memberData && memberData.video_disponible != null )       _canWatchVideo = Boolean(memberData.video_disponible);
 			if( "isAdmin" in memberData && memberData.isAdmin != null )                         _isAdmin = Boolean(memberData.isAdmin);
 			if( "displayInterstitial" in memberData && memberData.displayInterstitial != null ) _canDisplayInterstitial = Boolean(memberData.displayInterstitial);
+			if( "canHaveRewardAfterPublish" in memberData && memberData.canHaveRewardAfterPublish != null ) _canHaveRewardAfterPublish = Boolean(memberData.canHaveRewardAfterPublish);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
 		
@@ -322,6 +328,9 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get numRecreditations():int { return _numRecreditations; }
 		public function set numRecreditations(value:int):void { _numRecreditations = value; }
+		
+		public function get canHaveRewardAfterPublish():Boolean { return _canHaveRewardAfterPublish; }
+		public function set canHaveRewardAfterPublish(value:Boolean):void { _canHaveRewardAfterPublish = value; }
 		
 	}
 }

@@ -56,6 +56,9 @@ package com.ludofactory.mobile.navigation
 		
 		private static var _publicationData:FacebookPublicationData;
 		
+		private static var _sponsorId:String = "-1";
+		private static var _isFacebookRewarded:Boolean = false;
+		
 		public function FacebookManager(sk:SecurityKey)
 		{
 			if(sk == null)
@@ -168,7 +171,7 @@ package com.ludofactory.mobile.navigation
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_LOGIN_CANCELED, onAuthenticationCancelledOrFailed);
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_LOGIN_FAILED, onAuthenticationCancelledOrFailed);
 
-			_publicationData = null;
+			resetData();
 			
 			InfoManager.hide(event.errorMessage, InfoContent.ICON_CROSS, 3);
 		}
@@ -210,7 +213,8 @@ package com.ludofactory.mobile.navigation
 				if( me.properties.hasOwnProperty("gender") )     formattedUserData.titre = me.properties.gender == "male" ? 1:2;
 				if( me.properties.hasOwnProperty("location") )   formattedUserData.ville = me.locationName;
 				if( me.properties.hasOwnProperty("birthday") )   formattedUserData.date_naissance = me.properties.birthday;
-				formattedUserData.id_parrain = -1;
+				formattedUserData.id_parrain = _sponsorId;
+				formattedUserData.isPublishing = _publicationData ? true : false;
 				formattedUserData.type_inscription = RegisterType.FACEBOOK;
 				formattedUserData.langue = LanguageManager.getInstance().lang;
 				 
@@ -285,7 +289,7 @@ package com.ludofactory.mobile.navigation
 			// clear the token for security reason
 			GoViral.goViral.logoutFacebook();
 			
-			_publicationData = null;
+			resetData();
 			
 			InfoManager.hide(event.errorMessage, InfoContent.ICON_CROSS, 3);
 		}
@@ -310,7 +314,7 @@ package com.ludofactory.mobile.navigation
 		private function onPublishCancelledOrFailed(event:GVFacebookEvent):void
 		{
 			//Flox.logEvent("Publications Facebook", {Etat:"Annulee"});
-			_publicationData = null;
+			resetData();
 			
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
@@ -323,7 +327,7 @@ package com.ludofactory.mobile.navigation
 		private function onPublishOver(event:GVFacebookEvent):void
 		{
 			//Flox.logEvent("Publications Facebook", {Etat:"Validee"});
-			_publicationData = null;
+			resetData();
 			
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
@@ -352,11 +356,12 @@ package com.ludofactory.mobile.navigation
 					// association success
 					
 					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, 3);
+					if("facebookRewarded" in result && result.facebookRewarded != null) _isFacebookRewarded = result.facebookRewarded;
 					
 					if(_publicationData)
-					{
 						publish();
-					}
+					
+					// so that the popup can be closed
 					dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
 					break;
 				}
@@ -374,6 +379,9 @@ package com.ludofactory.mobile.navigation
 		 */		
 		private function onFacebookAssociationFailure(error:Object = null):void
 		{
+			// reset the data by security
+			resetData();
+			
 			InfoManager.hide(error ? error.txt : _("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, 4);
 		}
 		
@@ -403,7 +411,7 @@ package com.ludofactory.mobile.navigation
 				}
 				case 6:
 				{
-					// FIXME rajouter les gains ici, savoir s'il a été crédité ou pas
+					if("facebookRewarded" in result && result.facebookRewarded != null) _isFacebookRewarded = result.facebookRewarded;
 
 					if(_publicationData)
 					{
@@ -418,11 +426,9 @@ package com.ludofactory.mobile.navigation
 					}
 					break;
 				}
-				case 7: // logged in but no pseudo
+				case 7: // logged in but no pseudo, if we were publishing, a pseudo is automatically given
 				{
-					// FIXME : assigner automatiquement un pseudo lors d'une inscription Facebook (à modifier côté PHP)
-					// FIXME Il faut par contre dire à l'appli qu'il peut changer son pseudo dans son compte
-					// On redirige que dans certains cas = pas lorsqu'on doit publier
+					if("facebookRewarded" in result && result.facebookRewarded != null) _isFacebookRewarded = result.facebookRewarded;
 					
 					if(_publicationData)
 					{
@@ -432,34 +438,12 @@ package com.ludofactory.mobile.navigation
 					{
 						// The user have successfully logged in with his Facebook account but the pseudo field
 						// is missing, thus we redirect the user to the pseudo choice screen
-						// TODO ça c'est à modifier (pas de redirection)
 						AbstractEntryPoint.screenNavigator.screenData.defaultPseudo = result.pseudo_defaut;
 						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
 
-						//dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
+						//dispatchEventWith(FacebookManagerEventType.AUTHENTICATED); // TODO ?
 					}
 					
-					break;
-				}
-				case 9: // account created but no pseudo and no sponsor
-				{
-					// FIXME comme pour le cas 7, assigner le pseudo automatiquement et voir comment faire pour le
-					// FIXME code parrain
-
-					if(_publicationData)
-					{
-						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, publish);
-					}
-					else
-					{
-						// The user have successfully created an account with his Facebook data.
-						// in this case, we need to redirect him to the sponsor screen, and then the pseudo choice screen
-						// TODO ça c'est à modifier (pas de redirection)
-						AbstractEntryPoint.screenNavigator.screenData.defaultPseudo = result.pseudo_defaut;
-						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.SPONSOR_REGISTER_SCREEN ]);
-
-						//dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
-					}
 					break;
 				}
 				
@@ -476,6 +460,8 @@ package com.ludofactory.mobile.navigation
 		 */		
 		private function onFacebookAuthenticationFailure(error:Object = null):void
 		{
+			resetData();
+			
 			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS);
 		}
 		
@@ -530,6 +516,21 @@ package com.ludofactory.mobile.navigation
 		{
 			return (!MemberManager.getInstance().isLoggedIn() || (MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().facebookId == 0));
 		}
+		
+		/**
+		 * resets the data.
+		 */
+		private function resetData():void
+		{
+			_publicationData = null;
+			_sponsorId = "-1";
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Get - Set
+		
+		public static function get sponsorId():String { return _sponsorId; }
+		public static function set sponsorId(value:String):void { _sponsorId = value; }
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose

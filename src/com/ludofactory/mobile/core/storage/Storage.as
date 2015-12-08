@@ -185,6 +185,19 @@ package com.ludofactory.mobile.core.storage
 					setProperty(StorageConfig.PROPERTY_DISPLAY_ADS, int(result.param_affichage.afficher_publicite) == 1);
 			}
 			
+			// social
+			if("facebookConnectReward" in result)
+			{
+				// retrieve and update the facebook connect reward
+				setProperty(StorageConfig.PROPERTY_FACEBOOK_CONNECT_REWARD, result.facebookConnectReward);
+			}
+			
+			if("facebookPublishReward" in result)
+			{
+				// retrieve and update the facebook publish reward
+				setProperty(StorageConfig.PROPERTY_FACEBOOK_SHARE_REWARD, result.facebookPublishReward);
+			}
+			
 			log("[Storage] Server configuration have been successfully loaded.");
 			
 			/*if( AbstractEntryPoint.screenNavigator && AbstractEntryPoint.screenNavigator.activeScreen is HomeScreen )

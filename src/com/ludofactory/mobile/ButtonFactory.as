@@ -4,11 +4,11 @@
 package com.ludofactory.mobile
 {
 	
-	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookPublicationData;
-
+	
 	import flash.filters.BitmapFilterQuality;
 	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
@@ -154,16 +154,15 @@ package com.ludofactory.mobile
 		 */
 		public static function getFacebookButton(buttonText:String, buttonType:String = FACEBOOK_TYPE_CONNECT, title:String = null, caption:String = null, description:String = null, linkUrl:String = null, imageUrl:String = null, extraParams:Object = null):FacebookButton
 		{
-			// TODO Gérer l'incentive en fonction de l'état du joueur
-			
+			// build the publication data
 			var publicationData:FacebookPublicationData = new FacebookPublicationData(title, caption, description, linkUrl, imageUrl, extraParams);
 			
+			// then build the button
 			var buttonToReturn:FacebookButton = new FacebookButton(Theme.facebookButtonSkinTextures, buttonText, null, null, null, buttonType, publicationData);
 			buttonToReturn.fontColor = 0xffffff;
 			buttonToReturn.fontName = Theme.FONT_ARIAL;
 			buttonToReturn.textPadding = scaleAndRoundToDpi(20);
 			buttonToReturn.validate();
-			
 			return buttonToReturn;
 		}
 		

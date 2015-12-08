@@ -573,6 +573,17 @@ package com.ludofactory.mobile.core.manager
 			setEncryptedMember();
 		}
 		
+		/** Updates the value of <code>numRecreditations</code>. */
+		public function get canHaveRewardAfterPublish():Boolean { return _member.canHaveRewardAfterPublish; }
+		public function set canHaveRewardAfterPublish(val:Boolean):void
+		{
+			if(_member.canHaveRewardAfterPublish != val)
+			{
+				_member.canHaveRewardAfterPublish = val;
+				setEncryptedMember();
+			}
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
 		

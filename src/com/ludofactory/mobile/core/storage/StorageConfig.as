@@ -6,6 +6,8 @@ Created : 7 août 2013
 */
 package com.ludofactory.mobile.core.storage
 {
+	
+	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.scoring.ScoreToPointsData;
 	import com.ludofactory.mobile.core.scoring.ScoreToStarsData;
 	import com.ludofactory.mobile.core.storage.defaults.DefaultFaq;
@@ -115,6 +117,15 @@ package com.ludofactory.mobile.core.storage
 		 * The game trophies. It must be configured in the Main class with AbstractGameInfo.CUPS */
 		public static const PROPERTY_TROPHIES:String = "DEFAULT_TROPHIES";
 		public static const DEFAULT_TROPHIES:Array = []; // no trophies by default, they must be setup in the Main class with AbstractGameInfo.CUPS
+		
+	// ----------------------- Facebook incentives
+		
+		public static const PROPERTY_FACEBOOK_CONNECT_REWARD:String = "DEFAULT_FACEBOOK_CONNECT_REWARD";
+		public static const DEFAULT_FACEBOOK_CONNECT_REWARD:Object = { rewardType:StakeType.CREDIT, rewardValue:1 }; // default 1 credit
+		
+		public static const PROPERTY_FACEBOOK_SHARE_REWARD:String = "DEFAULT_FACEBOOK_SHARE_REWARD";
+		public static const DEFAULT_FACEBOOK_SHARE_REWARD:Object = { rewardType:StakeType.TOKEN, rewardValue:5 }; // default 5 tokens
+		
 		
 	// ----------------------- Defaults
 		

@@ -85,6 +85,9 @@ package com.ludofactory.mobile.core.notification.content
 		 */
 		private function onConnectFacebook(event:Event):void
 		{
+			// FIXME A terminer !
+			//FacebookManager.sponsorId = textInput.text == "" ? "0" ; textInput.text;
+			
 			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED, onConnectedWithFacebook);
 			FacebookManager.getInstance().connect();
 		}
