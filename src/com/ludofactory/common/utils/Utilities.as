@@ -252,9 +252,17 @@ package com.ludofactory.common.utils
 		public static function splitThousands(value:Number):String
 		{
 			var base:String = value.toString();
-			base = base.split("").reverse().join("");
-			base = base.replace(/\d{3}(?=\d)/g, "$& ");
-			return base.split("").reverse().join("");
+			if(base.length > 1)
+			{
+				base = base.split("").reverse().join("");
+				base = base.replace(/\d{3}(?=\d)/g, "$& ");
+				return base.split("").reverse().join("");
+			}
+			else
+			{
+				// no need to do anything
+				return base;
+			}
 		}
 		
 		public static function replaceCurrency(value:String):String
