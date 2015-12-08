@@ -595,6 +595,30 @@ package com.ludofactory.mobile.core.manager
 				setEncryptedMember();
 			}
 		}
+
+		/**
+		 * Updates the value of <code>facebookToken</code>. */
+		public function get facebookToken():String { return _member.facebookToken; }
+		public function set facebookToken(value:String):void
+		{
+			if(_member.facebookToken != value)
+			{
+				_member.facebookToken = value;
+				setEncryptedMember();
+			}
+		}
+		
+		/**
+		 * Updates the value of <code>facebookTokenExpiryTimestamp</code>. Pour tester : 1454770693916 */
+		public function get facebookTokenExpiryTimestamp():Number { return _member.facebookTokenExpiryTimestamp; }
+		public function set facebookTokenExpiryTimestamp(value:Number):void
+		{
+			if(_member.facebookTokenExpiryTimestamp)
+			{
+				_member.facebookTokenExpiryTimestamp = value;
+				setEncryptedMember();
+			}
+		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
@@ -620,15 +644,7 @@ package com.ludofactory.mobile.core.manager
 			_member.giftsEnabled = value;
 		}
 		
-		public function setFacebookToken(value:String):void
-		{
-			_member.facebookToken = value;
-		}
 		
-		public function setFacebookTokenExpiryTimestamp(value:Number):void
-		{
-			_member.facebookTokenExpiryTimestamp = value;
-		}
 		
 		/** Returns */		
 		public function getCountryId():int { return _member.countryId; }
@@ -643,10 +659,6 @@ package com.ludofactory.mobile.core.manager
 		public function isAdmin():Boolean { return (CONFIG::DEBUG == true) ? true : _member.isAdmin; }
 		/** Returns */
 		public function canDisplayInterstitial():Boolean { return _member.canDisplayInterstitial; }
-		/** Returns */
-		public function getFacebookToken():String { return _member.facebookToken; }
-		/** Returns */
-		public function getFacebookTokenExpiryTimestamp():Number { return _member.facebookTokenExpiryTimestamp; }
 		
 		public function getNumStarsEarnedInAnonymousGameSessions():int
 		{

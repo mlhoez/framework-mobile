@@ -318,7 +318,7 @@ package com.ludofactory.mobile
 				case ButtonFactory.FACEBOOK_TYPE_SHARE:
 				{
 					var now:Date = new Date();
-					var tokenExpiryDate:Date = new Date( MemberManager.getInstance().getFacebookTokenExpiryTimestamp() );
+					var tokenExpiryDate:Date = new Date( MemberManager.getInstance().facebookTokenExpiryTimestamp );
 					if( (MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().facebookId != 0 && now > tokenExpiryDate) ||
 							(MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().facebookId == 0) || !MemberManager.getInstance().isLoggedIn())
 					{

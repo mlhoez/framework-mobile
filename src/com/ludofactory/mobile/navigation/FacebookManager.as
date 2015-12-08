@@ -103,12 +103,16 @@ package com.ludofactory.mobile.navigation
 					{
 						// check if the token is still valid
 						var now:Date = new Date();
-						var tokenExpiryDate:Date = new Date( MemberManager.getInstance().getFacebookTokenExpiryTimestamp() );
+						var tokenExpiryDate:Date = new Date( MemberManager.getInstance().facebookTokenExpiryTimestamp );
 						if( now < tokenExpiryDate )
 						{
 							// the token is still valid, then we don't need to do something special
 							//onMeReturned();
-							requestMe();
+							//requestMe();
+							if(_publicationData)
+								publish();
+
+							//dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
 						}
 						else
 						{
@@ -219,8 +223,8 @@ package com.ludofactory.mobile.navigation
 				formattedUserData.langue = LanguageManager.getInstance().lang;
 				 
 				// also update the token and its expiration date here
-				MemberManager.getInstance().setFacebookToken(GoViral.goViral.getFbAccessToken());
-				MemberManager.getInstance().setFacebookTokenExpiryTimestamp(GoViral.goViral.getFbAccessExpiry());
+				MemberManager.getInstance().facebookToken = GoViral.goViral.getFbAccessToken();
+				MemberManager.getInstance().facebookTokenExpiryTimestamp = GoViral.goViral.getFbAccessExpiry();
 				 
 				switch(_mode)
 				{
@@ -441,7 +445,7 @@ package com.ludofactory.mobile.navigation
 						AbstractEntryPoint.screenNavigator.screenData.defaultPseudo = result.pseudo_defaut;
 						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
 
-						//dispatchEventWith(FacebookManagerEventType.AUTHENTICATED); // TODO ?
+						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
 					}
 					
 					break;
