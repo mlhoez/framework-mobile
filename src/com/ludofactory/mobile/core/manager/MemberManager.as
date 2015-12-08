@@ -612,7 +612,6 @@ package com.ludofactory.mobile.core.manager
 		/** Returns */		
 		public function getDisplayTutorial():Boolean { return _member.displayTutorial; }
 		
-		
         /** Returns */
         public function getGiftsEnabled():Boolean { return _member.giftsEnabled; }
 		/** Returns */
