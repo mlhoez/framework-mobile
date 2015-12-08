@@ -70,9 +70,6 @@ package com.ludofactory.mobile.navigation.shop
 		 * The boutique vip glow */		
 		private var _glow:Image;
 		/**
-		 * The boutique vip buildings */		
-		private var _buildings:Image;
-		/**
 		 * Boutique vip message*/		
 		private var _boutiqueMessage:Label;
 		
@@ -134,13 +131,6 @@ package com.ludofactory.mobile.navigation.shop
 			_boutiqueMessage.text = _("A partir du\nrang Aventurier I");
 			addChild( _boutiqueMessage );
 			_boutiqueMessage.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 32 : 40), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
-			
-			_buildings = new Image( AbstractEntryPoint.assets.getTexture("Buildings") );
-			_buildings.touchable = false;
-			_buildings.scaleX = _encheresImage.scaleY = GlobalConfig.dpiScale;
-			_buildings.alignPivot(HAlign.CENTER, VAlign.TOP);
-			_buildings.alpha = 0;
-			addChild(_buildings);
 			
 			_boutiqueImage = new Image( AbstractEntryPoint.assets.getTexture("BoutiqueImage") );
 			_boutiqueImage.touchable = false;
@@ -205,8 +195,8 @@ package com.ludofactory.mobile.navigation.shop
 					
 					_encheresImage.x = actualWidth * 0.25;
 					_encheresImage.y = _boutiqueImage.y = _vipInfo.y * (GlobalConfig.isPhone ? 0.35 : 0.45);
-					_glow.y = _buildings.y = _vipInfo.y * (GlobalConfig.isPhone ? 0.25 : 0.35);
-					_boutiqueImage.x = _glow.x = _buildings.x = actualWidth * 0.75;
+					_glow.y = _vipInfo.y * (GlobalConfig.isPhone ? 0.25 : 0.35);
+					_boutiqueImage.x = _glow.x = actualWidth * 0.75;
 					
 					_encheresAccessButton.height = _boutiqueAccessButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 100 : 140);
 					_encheresAccessButton.width = _boutiqueAccessButton.width = actualWidth * 0.35;
@@ -230,8 +220,8 @@ package com.ludofactory.mobile.navigation.shop
 					_boutiqueTitle.x = actualWidth * 0.5;*/
 					
 					_encheresImage.x = actualWidth * 0.25;
-					_encheresImage.y = _boutiqueImage.y = _glow.y = _buildings.y = this.actualHeight * 0.4;
-					_boutiqueImage.x = _glow.x = _buildings.x = actualWidth * 0.75;
+					_encheresImage.y = _boutiqueImage.y = _glow.y = this.actualHeight * 0.4;
+					_boutiqueImage.x = _glow.x = actualWidth * 0.75;
 					
 					_encheresAccessButton.width = _boutiqueAccessButton.width = actualWidth * 0.4;
 					_encheresAccessButton.y =_boutiqueAccessButton.y =  _encheresImage.y + _encheresImage.height * 0.25;
@@ -258,7 +248,7 @@ package com.ludofactory.mobile.navigation.shop
 				TweenMax.to(_encheresParticles, 1, { alpha:1 });
 				TweenMax.allTo([_encheresImage, _boutiqueImage], 1.75, { delay:0.25, scaleX:scale, scaleY:scale, alpha:1, rotation:deg2rad(0), ease:Elastic.easeOut });
 				TweenMax.to([_encheresAccessButton, _boutiqueAccessButton], 0.5, { delay:0.5,  alpha:1 });
-				TweenMax.to([_glow, _buildings], 1.5, { delay:1, alpha:0.75 });
+				TweenMax.to([_glow], 1.5, { delay:1, alpha:0.75 });
 				TweenMax.to(_glow, 20, { delay:0.5, rotation:deg2rad(360), repeat:-1, ease:Linear.easeNone });
 			}
 			
@@ -369,10 +359,6 @@ package com.ludofactory.mobile.navigation.shop
 			TweenMax.killTweensOf(_boutiqueImage);
 			_boutiqueImage.removeFromParent(true);
 			_boutiqueImage = null;
-			
-			TweenMax.killTweensOf(_buildings);
-			_buildings.removeFromParent(true);
-			_buildings = null;
 			
 			TweenMax.killTweensOf(_glow);
 			_glow.removeFromParent(true);
