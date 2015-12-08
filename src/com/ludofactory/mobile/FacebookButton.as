@@ -212,7 +212,7 @@ package com.ludofactory.mobile
 			{
 				_incentive.scaleX = _incentive.scaleY = GlobalConfig.dpiScale;
 				
-				_incentiveLabel = new TextField(scaleAndRoundToDpi(48), scaleAndRoundToDpi(34), ("" + stakeValue), Theme.FONT_SANSITA, scaleAndRoundToDpi(22), 0xffffff);
+				_incentiveLabel = new TextField(scaleAndRoundToDpi(48), scaleAndRoundToDpi(34), ("+" + stakeValue), Theme.FONT_SANSITA, scaleAndRoundToDpi(22), 0xffffff);
 				_incentiveLabel.autoScale = true;
 				_incentiveLabel.nativeFilters = [ new GlowFilter(0xa00000, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
 					new DropShadowFilter(2, 75, 0xa00000, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
