@@ -7,7 +7,6 @@ Created : 19 juin 2013
 package com.ludofactory.mobile.navigation.engine
 {
 	
-	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Linear;
@@ -16,6 +15,8 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.FacebookButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -32,7 +33,6 @@ package com.ludofactory.mobile.navigation.engine
 	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
 	
 	import feathers.controls.Button;
-	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	
 	import flash.events.Event;
@@ -66,11 +66,8 @@ package com.ludofactory.mobile.navigation.engine
 		private var _particles:PDParticleSystem;
 		
 		/**
-		 * Facebook icon for the button. */		
-		private var _facebookIcon:ImageLoader;
-		/**
 		 * Facebook button that will associate the account or directly publish, depending on the actual state. */		
-		private var _facebookButton:Button;
+		private var _facebookButton:FacebookButton;
 		/**
 		 * The continue button. */		
 		private var _continueButton:Button;
@@ -137,33 +134,23 @@ package com.ludofactory.mobile.navigation.engine
 			addChild(_particles);
 			Starling.juggler.add(_particles);
 			
-			if( MemberManager.getInstance().isLoggedIn() && GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
-			{
-				FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onPublish);
-					
-				_continueButton = new Button();
-				_continueButton.alpha = 0;
-				_continueButton.addEventListener(starling.events.Event.TRIGGERED, onContinue);
-				_continueButton.styleName = Theme.BUTTON_EMPTY;
-				_continueButton.label = _("Continuer");
-				addChild(_continueButton);
-				_continueButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, true, true, null, null, null, TextFormatAlign.CENTER);
-				_continueButton.height = _continueButton.minHeight = scaleAndRoundToDpi(60);
-				
-				_facebookIcon = new ImageLoader();
-				_facebookIcon.source = AbstractEntryPoint.assets.getTexture( GlobalConfig.isPhone ? "facebook-icon" : "facebook-icon-hd");
-				_facebookIcon.textureScale = GlobalConfig.dpiScale;
-				_facebookIcon.snapToPixels = true;
-				
-				_facebookButton = new Button();
-				_facebookButton.alpha = 0;
-				_facebookButton.defaultIcon = _facebookIcon;
-				_facebookButton.label = MemberManager.getInstance().facebookId != 0 ? _("Publier") : _("Associer");
-				_facebookButton.addEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
-				addChild(_facebookButton);
-				_facebookButton.iconPosition = Button.ICON_POSITION_LEFT;
-				_facebookButton.gap = scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
-			}
+			_continueButton = new Button();
+			_continueButton.alpha = 0;
+			_continueButton.addEventListener(starling.events.Event.TRIGGERED, onContinue);
+			_continueButton.styleName = Theme.BUTTON_EMPTY;
+			_continueButton.label = _("Continuer");
+			addChild(_continueButton);
+			_continueButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, true, true, null, null, null, TextFormatAlign.CENTER);
+			_continueButton.height = _continueButton.minHeight = scaleAndRoundToDpi(60);
+			
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("Qui sera capable de me battre sur {0} ?"), AbstractGameInfo.GAME_NAME),
+					"",
+					formatString(_("Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me prouver le contraire ;)"), advancedOwner.screenData.gameData.score),
+					_("http://www.ludokado.com/"),
+					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
+			_facebookButton.alpha = 0;
+			_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			addChild(_facebookButton);
 			
 			_confettis = new PDParticleSystem(Theme.particleConfettiXml, Theme.particleConfettiTexture);
 			_confettis.touchable = false;
@@ -195,20 +182,17 @@ package com.ludofactory.mobile.navigation.engine
 					TweenMax.to(_highScoreGlow, 0.75, { delay:0.75, alpha:1 } );
 					TweenMax.to(_highScoreGlow, 10, { delay:0.75, rotation:deg2rad(360), ease:Linear.easeNone, repeat:-1 } );
 					
-					if( _facebookButton )
-					{
-						_continueButton.validate();
-						_continueButton.x = (actualWidth - _continueButton.width) * 0.5;
-						_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(10);
-						
-						_facebookButton.width = actualWidth * 0.5;
-						_facebookButton.validate();
-						_facebookButton.y = _continueButton.y - _facebookButton.height - scaleAndRoundToDpi(10);
-						_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
-						
-						TweenMax.to(_facebookButton, 0.75, { delay:2, alpha:1 });
-						TweenMax.to(_continueButton, 0.75, { delay:2.5, alpha:1 });
-					}
+					_continueButton.validate();
+					_continueButton.x = (actualWidth - _continueButton.width) * 0.5;
+					_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(10);
+					
+					_facebookButton.width = actualWidth * 0.5;
+					_facebookButton.validate();
+					_facebookButton.y = _continueButton.y - _facebookButton.height - scaleAndRoundToDpi(10);
+					_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
+					
+					TweenMax.to(_facebookButton, 0.75, { delay:2, alpha:1 });
+					TweenMax.to(_continueButton, 0.75, { delay:2.5, alpha:1 });
 					
 					_highScoreLabel.width = this.actualWidth;
 					_highScoreLabel.validate();
@@ -228,27 +212,21 @@ package com.ludofactory.mobile.navigation.engine
 					_highScoreLogo.x = this.actualWidth * 0.5;
 					_highScoreLogo.y = this.actualHeight * (_facebookButton ? 0.3 : 0.4);
 					
-					if( _facebookButton )
-					{
-						_continueButton.validate();
-						_continueButton.x = (actualWidth - _continueButton.width) * 0.5;
-						_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(20);
-						
-						_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
-						_facebookButton.validate();
-						_facebookButton.y = _continueButton.y - _facebookButton.height - scaleAndRoundToDpi(10);
-						_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
-						
-						TweenMax.to(_facebookButton, 0.75, { delay:2, alpha:1 });
-						TweenMax.to(_continueButton, 0.75, { delay:2.5, alpha:1 });
-					}
+					_continueButton.validate();
+					_continueButton.x = (actualWidth - _continueButton.width) * 0.5;
+					_continueButton.y = actualHeight - _continueButton.height - scaleAndRoundToDpi(20);
+					
+					_facebookButton.width = actualWidth * (GlobalConfig.isPhone ? 0.8 : 0.6);
+					_facebookButton.validate();
+					_facebookButton.y = _continueButton.y - _facebookButton.height - scaleAndRoundToDpi(10);
+					_facebookButton.x = (actualWidth - _facebookButton.width) * 0.5;
+					
+					TweenMax.to(_facebookButton, 0.75, { delay:2, alpha:1 });
+					TweenMax.to(_continueButton, 0.75, { delay:2.5, alpha:1 });
 					
 					_highScoreLabel.width = this.actualWidth;
 					_highScoreLabel.validate();
-					if( _facebookButton )
-						_highScoreLabel.y = (_highScoreLogo.y + _highScoreLogo.height * 0.5) + ( ((_facebookButton.y - (_highScoreLogo.y + _highScoreLogo.height * 0.5)) - _highScoreLabel.height ) * 0.5 )
-					else
-						_highScoreLabel.y = (( (this.actualHeight - (_highScoreLogo.y + _highScoreLogo.height * 0.5)) - _highScoreLabel.height ) * 0.5) + _highScoreLogo.y + _highScoreLogo.height * 0.5;
+					_highScoreLabel.y = (_highScoreLogo.y + _highScoreLogo.height * 0.5) + ( ((_facebookButton.y - (_highScoreLogo.y + _highScoreLogo.height * 0.5)) - _highScoreLabel.height ) * 0.5 );
 					TweenMax.to(_highScoreLabel, 0.75, { delay:1.5, alpha:1 } );
 				}
 				
@@ -270,9 +248,6 @@ package com.ludofactory.mobile.navigation.engine
 				TweenMax.to(_highScoreLogo, 0.75, { delay:0.5, scaleX:GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? (0.1 * GlobalConfig.dpiScale) : 0), scaleY:GlobalConfig.dpiScale - (AbstractGameInfo.LANDSCAPE ? (0.1 * GlobalConfig.dpiScale) : 0), ease:Back.easeOut } );
 				
 				SoundManager.getInstance().playSound("new-highscore", "sfx");
-				
-				if( !_facebookButton )
-					Starling.juggler.delayCall(onContinue, 5);
 			}
 			
 			super.draw();
@@ -301,51 +276,12 @@ package com.ludofactory.mobile.navigation.engine
 //------------------------------------------------------------------------------------------------------------
 //	Facebook
 		
-		private function onAssociateOrPublish(event:starling.events.Event):void
-		{
-			FacebookManager.getInstance().associateForPublish();
-		}
-		
-		/**
-		 * Publish on Facebook.
-		 */		
-		private function onPublish(event:starling.events.Event):void
-		{
-			_facebookButton.label = _("Publier");
-			
-			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
-			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
-			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
-
-			GoViral.goViral.postFacebookHighScore(advancedOwner.screenData.gameData.score);
-			
-			GoViral.goViral.showFacebookShareDialog( formatString(_("Qui sera capable de me battre sur {0} ?"), AbstractGameInfo.GAME_NAME),
-				"",
-				formatString(_("Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me prouver le contraire ;)"), advancedOwner.screenData.gameData.score),
-				_("http://www.ludokado.com/"),
-				formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
-		}
-		
-		/**
-		 * Publication cancelled or failed.
-		 */		
-		private function onPublishCancelledOrFailed(event:GVFacebookEvent):void
-		{
-			Flox.logEvent("Publications Facebook", {Etat:"Annulee"});
-			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
-			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
-			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
-		}
-		
 		/**
 		 * Publication posted.
 		 */		
-		private function onPublishOver(event:GVFacebookEvent):void
+		private function onPublished(event:GVFacebookEvent):void
 		{
-			Flox.logEvent("Publications Facebook", {Etat:"Validee"});
-			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
-			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
-			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
+			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 			Starling.juggler.delayCall(onContinue, 1);
 			touchable = false;
 		}
@@ -358,8 +294,7 @@ package com.ludofactory.mobile.navigation.engine
 		 */		
 		private function onContinue(event:starling.events.Event = null):void
 		{
-			if( _facebookButton )
-				TweenMax.allTo([_facebookButton, _continueButton], 0.5, { alpha:0 } );
+			TweenMax.allTo([_facebookButton, _continueButton], 0.5, { alpha:0 } );
 			
 			TweenMax.to(_confettis, 0.25, { alpha:0 } );
 			TweenMax.allTo([_highScoreGlow, _highScoreLabel], 0.5, { alpha:0 } );
@@ -396,28 +331,15 @@ package com.ludofactory.mobile.navigation.engine
 			_confettis.removeFromParent(true);
 			_confettis = null;
 			
-			if( _facebookButton )
-			{
-				FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED_OR_ASSOCIATED, onPublish);
-				
-				TweenMax.killTweensOf(_continueButton);
-				_continueButton.removeEventListener(starling.events.Event.TRIGGERED, onContinue);
-				_continueButton.removeFromParent(true);
-				_continueButton = null;
-				
-				_facebookIcon.removeFromParent(true);
-				_facebookIcon = null;
-				
-				TweenMax.killTweensOf(_facebookButton);
-				_facebookButton.removeEventListener(starling.events.Event.TRIGGERED, onAssociateOrPublish);
-				_facebookButton.removeFromParent(true);
-				_facebookButton = null;
-				
-				// just in case
-				GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
-				GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
-				GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
-			}
+			TweenMax.killTweensOf(_continueButton);
+			_continueButton.removeEventListener(starling.events.Event.TRIGGERED, onContinue);
+			_continueButton.removeFromParent(true);
+			_continueButton = null;
+			
+			TweenMax.killTweensOf(_facebookButton);
+			_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			_facebookButton.removeFromParent(true);
+			_facebookButton = null;
 			
 			super.dispose();
 		}
