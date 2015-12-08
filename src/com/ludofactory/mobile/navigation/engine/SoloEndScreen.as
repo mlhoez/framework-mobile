@@ -202,10 +202,16 @@ package com.ludofactory.mobile.navigation.engine
 			
 			_title = new TextField(_flag.width - (scaleAndRoundToDpi(132*2)), _flag.height, _("FIN DE PARTIE"), Theme.FONT_SANSITA, scaleAndRoundToDpi(40), 0xffffff);
 			_title.alignPivot();
+			_title.alpha = 0;
 			_title.autoScale = true;
 			_title.nativeFilters = [ new GlowFilter(0x7e0600, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
 				new DropShadowFilter(2, 75, 0x7e0600, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
 			addChild(_title);
+			
+			_scoreLabel = new TextField((_flag.width * 0.5), scaleAndRoundToDpi(50), formatString(_("Score final : {0}"), Utilities.splitThousands(advancedOwner.screenData.gameData.score)), Theme.FONT_SANSITA, scaleAndRoundToDpi(40), 0x27220d);
+			_scoreLabel.alpha = 0;
+			_scoreLabel.autoSize = TextFieldAutoSize.HORIZONTAL;
+			addChild(_scoreLabel);
 			
 			_pointContainer = new Image(AbstractEntryPoint.assets.getTexture("point-container"));
 			_pointContainer.alpha = 0;
@@ -217,11 +223,6 @@ package com.ludofactory.mobile.navigation.engine
 			_earnedPointsLabel.alpha = 0;
 			addChild(_earnedPointsLabel);
 			
-			_scoreLabel = new TextField((_flag.width * 0.5), scaleAndRoundToDpi(50), formatString(_("Score final : {0}"), Utilities.splitThousands(advancedOwner.screenData.gameData.score)), Theme.FONT_SANSITA, scaleAndRoundToDpi(40), 0x27220d);
-			_scoreLabel.alpha = 0;
-			_scoreLabel.autoSize = TextFieldAutoSize.HORIZONTAL;
-			addChild(_scoreLabel);
-			
 			_pointsParticles = new PDParticleSystem(Theme.particleVortexXml, AbstractEntryPoint.assets.getTexture("particle-sparkle-end"));
 			_pointsParticles.touchable = false;
 			_pointsParticles.maxNumParticles = 250;
@@ -229,6 +230,11 @@ package com.ludofactory.mobile.navigation.engine
 			//_pointsParticles.blendFactorDestination = Context3DBlendFactor.ONE_MINUS_SOURCE_ALPHA;
 			addChild(_pointsParticles);
 			Starling.juggler.add(_pointsParticles);
+			
+			_replayButton = new Button(AbstractEntryPoint.assets.getTexture("replay-button"));
+			_replayButton.alpha = 0;
+			_replayButton.scaleX = _replayButton.scaleY = GlobalConfig.dpiScale;
+			addChild(_replayButton);
 			
 			_homeButton = new Button(AbstractEntryPoint.assets.getTexture("home-button"));
 			_homeButton.alpha = 0;
@@ -274,12 +280,6 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			else
 			{
-				_replayButton = new Button(AbstractEntryPoint.assets.getTexture("replay-button"));
-				_replayButton.alpha = 0;
-				_replayButton.scaleX = _replayButton.scaleY = GlobalConfig.dpiScale;
-				_replayButton.addEventListener(Event.TRIGGERED, onPlayAgain);
-				addChild(_replayButton);
-				
 				if( MemberManager.getInstance().isLoggedIn() )
 				{
 					// logged in content
@@ -322,7 +322,7 @@ package com.ludofactory.mobile.navigation.engine
 				_overlay.width = actualWidth;
 				_overlay.height = actualHeight;
 				
-				_container.width = _flag.width + scaleAndRoundToDpi(20);
+				_container.width = _flag.width + scaleAndRoundToDpi(40);
 				_container.x = (actualWidth - _container.width) * 0.5;
 				
 				_flag.scaleX = 0;
@@ -333,7 +333,7 @@ package com.ludofactory.mobile.navigation.engine
 				_pointContainer.x = roundUp((actualWidth - _pointContainer.width) * 0.5);
 				_earnedPointsLabel.x = _pointContainer.x;
 				
-				_container.height = PADDING_TOP + PADDING_BOTTOM;
+				_container.height = PADDING_TOP + PADDING_BOTTOM + _scoreLabel.height + scaleAndRoundToDpi(5) + _pointContainer.height + scaleAndRoundToDpi(10);
 				if( MemberManager.getInstance().isTournamentAnimPending )
 				{
 					_tournamentUnlockedContainer.width = _container.width * 0.8;
@@ -360,7 +360,7 @@ package com.ludofactory.mobile.navigation.engine
 					_lockerParticles.emitterYVariance = _lockImage.height * 0.5;
 					
 					_tournamentUnlockedContainer.validate();
-					_container.height += _scoreLabel.height + scaleAndRoundToDpi(5) + _pointContainer.height + scaleAndRoundToDpi(10) + _tournamentUnlockedContainer.height;
+					_container.height += _tournamentUnlockedContainer.height;
 				}
 				else
 				{
@@ -370,7 +370,7 @@ package com.ludofactory.mobile.navigation.engine
 						_convertShop.x = _convertTournament.x = (actualWidth - _convertShop.width) * 0.5;
 						_convertShop.validate();
 						
-						_container.height += _scoreLabel.height + scaleAndRoundToDpi(5) + _pointContainer.height + scaleAndRoundToDpi(10) + _convertShop.height * 2 + scaleAndRoundToDpi(5);
+						_container.height += _convertShop.height * 2 + scaleAndRoundToDpi(5);
 					}
 					else
 					{
@@ -378,7 +378,7 @@ package com.ludofactory.mobile.navigation.engine
 						_convertShopNotLoggedIn.x = (actualWidth - _convertShopNotLoggedIn.width) * 0.5;
 						_convertShopNotLoggedIn.validate();
 						
-						_container.height += _scoreLabel.height + scaleAndRoundToDpi(5) + _pointContainer.height + scaleAndRoundToDpi(10) + _convertShopNotLoggedIn.height;
+						_container.height += _convertShopNotLoggedIn.height;
 					}
 				}
 				
@@ -387,6 +387,7 @@ package com.ludofactory.mobile.navigation.engine
 				_container.height = 0;
 				
 				// start to animate
+				TweenMax.to(_title, 0.5, { delay:0.75, autoAlpha:1 });
 				TweenMax.to(_flag, 0.5, { delay:0.75, scaleX:_savedScale, onComplete:animateFlag });
 			}
 
@@ -412,14 +413,14 @@ package com.ludofactory.mobile.navigation.engine
 		private function displayContent():void
 		{
 			// buttons
-			_homeButton.x = (actualWidth - _homeButton.width - (_replayButton ? _replayButton.width : 0) - _facebookButton.width) * 0.5;
-			if(_replayButton) _replayButton.x = _homeButton.x + _homeButton.width;
-			_facebookButton.x = (_replayButton ? _replayButton.x : _homeButton.x) + (_replayButton ? _replayButton.width : _homeButton.width);
-			_homeButton.y = _container.y + _containerSavedHeight - (_homeButton.height * 0.55);
-			if(_replayButton) _replayButton.y = _homeButton.y;
-			_facebookButton.y = _container.y + _containerSavedHeight - (_facebookButton.height * 0.6);
-			TweenMax.allTo([_homeButton, _facebookButton], 0.5, { alpha:1 });
-			if(_replayButton) TweenMax.to(_replayButton, 0.5, { alpha:1 });
+			_homeButton.x = _container.x + _container.width - _homeButton.width * 0.75;
+			_homeButton.y = _container.y - _homeButton.height * 0.25;
+			
+			_replayButton.x = roundUp((actualWidth - _replayButton.width - _facebookButton.width) * 0.5);
+			_facebookButton.x = roundUp(_replayButton.x + _replayButton.width);
+			_replayButton.y = _container.y + _containerSavedHeight - (_replayButton.height * 0.5);
+			_facebookButton.y = _container.y + _containerSavedHeight - (_facebookButton.height * 0.5);
+			TweenMax.allTo([_replayButton, _facebookButton], 0.5, { alpha:1 });
 			
 			// common elements (score and earned points
 			_scoreLabel.x = roundUp((actualWidth - _scoreLabel.width) * 0.5);
@@ -448,6 +449,7 @@ package com.ludofactory.mobile.navigation.engine
 					_convertShopNotLoggedIn.y = _pointContainer.y + _pointContainer.height + scaleAndRoundToDpi(10);
 					TweenMax.to(_convertShopNotLoggedIn, 0.5, { autoAlpha:1 });
 				}
+				_replayButton.addEventListener(Event.TRIGGERED, onPlayAgain);
 				_homeButton.addEventListener(Event.TRIGGERED, onGoHome);
 			}
 			
@@ -522,7 +524,7 @@ package com.ludofactory.mobile.navigation.engine
 			{
 				// shake the home button
 				TweenMax.killTweensOf(_glow);
-				Shaker.startShaking(_homeButton, 5);
+				Shaker.startShaking(_replayButton, 5);
 				Shaker.dispatcher.addEventListener(Event.COMPLETE, activateHome);
 			} });
 			_lockerParticles.start(0.25);
@@ -534,6 +536,7 @@ package com.ludofactory.mobile.navigation.engine
 		private function activateHome(event:Event):void
 		{
 			Shaker.dispatcher.removeEventListener(Event.COMPLETE, activateHome);
+			_replayButton.addEventListener(Event.TRIGGERED, onGoHome);
 			_homeButton.addEventListener(Event.TRIGGERED, onGoHome);
 		}
 		
@@ -559,7 +562,7 @@ package com.ludofactory.mobile.navigation.engine
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				_homeButton.enabled = false;
-				if(_replayButton) _replayButton.enabled = false;
+				_replayButton.enabled = false;
 				_facebookButton.enabled = false;
 				advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
 			}
@@ -572,7 +575,7 @@ package com.ludofactory.mobile.navigation.engine
 				else
 				{
 					_homeButton.enabled = false;
-					if(_replayButton) _replayButton.enabled = false;
+					_replayButton.enabled = false;
 					_facebookButton.enabled = false;
 					advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
 				}
@@ -593,7 +596,7 @@ package com.ludofactory.mobile.navigation.engine
 					GAnalytics.analytics.defaultTracker.trackEvent("Fin mode solo", "Rejouer", null, NaN, MemberManager.getInstance().id);
 				
 				_homeButton.enabled = false;
-				if(_replayButton) _replayButton.enabled = false;
+				_replayButton.enabled = false;
 				_facebookButton.enabled = false;
 				advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
 			}
@@ -606,7 +609,7 @@ package com.ludofactory.mobile.navigation.engine
 				else
 				{
 					_homeButton.enabled = false;
-					if(_replayButton) _replayButton.enabled = false;
+					_replayButton.enabled = false;
 					_facebookButton.enabled = false;
 					advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
 				}
@@ -748,6 +751,12 @@ package com.ludofactory.mobile.navigation.engine
 				_convertShopNotLoggedIn = null;
 			}
 			
+			TweenMax.killTweensOf(_replayButton);
+			_replayButton.removeEventListener(Event.TRIGGERED, onGoHome);
+			_replayButton.removeEventListener(Event.TRIGGERED, onPlayAgain);
+			_replayButton.removeFromParent(true);
+			_replayButton = null;
+			
 			TweenMax.killTweensOf(_homeButton);
 			_homeButton.removeEventListener(Event.TRIGGERED, onGoHome);
 			_homeButton.removeFromParent(true);
@@ -756,13 +765,6 @@ package com.ludofactory.mobile.navigation.engine
 			TweenMax.killTweensOf(_facebookButton);
 			_facebookButton.removeFromParent(true);
 			_facebookButton = null;
-			
-			if(_replayButton)
-			{
-				_replayButton.removeEventListener(Event.TRIGGERED, onPlayAgain);
-				_replayButton.removeFromParent(true);
-				_replayButton = null;
-			}
 
 			super.dispose();
 		}
