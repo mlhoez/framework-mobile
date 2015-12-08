@@ -497,6 +497,8 @@ package com.ludofactory.mobile.core.theme
 			
 			// Parrainage
 			sponsorBonusBackground = new Scale3Textures(AbstractEntryPoint.assets.getTexture("sponsor-bonus-background"), SPONSOR_BONUS_REGION1, SPONSOR_BONUS_REGION2, Scale3Textures.DIRECTION_HORIZONTAL);
+
+			facebookBonusBackground = new Scale3Textures(AbstractEntryPoint.assets.getTexture("facebook-popup-single-container"), 28, 10, Scale3Textures.DIRECTION_HORIZONTAL);
 			
 			// GameTypeSelection
 			gameModeSelectionFrontTextures = new Scale9Textures(AbstractEntryPoint.assets.getTexture("game-type-selection-front-skin"), GAME_TYPE_SELECTION_POPUP_FRONT_GRID);
@@ -1757,6 +1759,8 @@ package com.ludofactory.mobile.core.theme
 		public static var sponsorBonusBackground:Scale3Textures;
 		protected static const SPONSOR_BONUS_REGION1:int = 5; // the x position westart to slice
 		protected static const SPONSOR_BONUS_REGION2:int = 20; // the width after the x position
+
+		public static var facebookBonusBackground:Scale3Textures;
 		
 //------------------------------------------------------------------------------------------------------------
 //
