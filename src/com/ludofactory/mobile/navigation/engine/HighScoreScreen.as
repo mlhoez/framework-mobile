@@ -145,7 +145,7 @@ package com.ludofactory.mobile.navigation.engine
 			
 			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("Qui sera capable de me battre sur {0} ?"), AbstractGameInfo.GAME_NAME),
 					"",
-					formatString(_("Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me prouver le contraire ;)"), advancedOwner.screenData.gameData.score),
+					formatString(_("Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me prouver le contraire !"), advancedOwner.screenData.gameData.score),
 					_("http://www.ludokado.com/"),
 					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
 			_facebookButton.alpha = 0;
@@ -279,7 +279,7 @@ package com.ludofactory.mobile.navigation.engine
 		/**
 		 * Publication posted.
 		 */		
-		private function onPublished(event:GVFacebookEvent):void
+		private function onPublished(event:starling.events.Event):void
 		{
 			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 			Starling.juggler.delayCall(onContinue, 1);

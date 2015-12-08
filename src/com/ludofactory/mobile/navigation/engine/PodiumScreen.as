@@ -327,7 +327,7 @@ package com.ludofactory.mobile.navigation.engine
 		/**
 		 * Publication posted.
 		 */
-		private function onPublished(event:GVFacebookEvent):void
+		private function onPublished(event:starling.events.Event):void
 		{
 			_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 			Starling.juggler.delayCall(onContinue, 1);
