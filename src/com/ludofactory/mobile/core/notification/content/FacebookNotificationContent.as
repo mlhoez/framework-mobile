@@ -289,8 +289,11 @@ package com.ludofactory.mobile.core.notification.content
 			_warningLabel.removeFromParent(true);
 			_warningLabel = null;
 			
-			_calloutLabel.removeFromParent(true);
-			_calloutLabel = null;
+			if(_calloutLabel)
+			{
+				_calloutLabel.removeFromParent(true);
+				_calloutLabel = null;
+			}
 			
 			super.dispose();
 		}
