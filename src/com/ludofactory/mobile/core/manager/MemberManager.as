@@ -617,7 +617,7 @@ package com.ludofactory.mobile.core.manager
 		public function get facebookTokenExpiryTimestamp():Number { return _member.facebookTokenExpiryTimestamp; }
 		public function set facebookTokenExpiryTimestamp(value:Number):void
 		{
-			if(_member.facebookTokenExpiryTimestamp)
+			if(_member.facebookTokenExpiryTimestamp != value)
 			{
 				_member.facebookTokenExpiryTimestamp = value;
 				setEncryptedMember();

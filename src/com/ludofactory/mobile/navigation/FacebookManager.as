@@ -222,10 +222,6 @@ package com.ludofactory.mobile.navigation
 				formattedUserData.type_inscription = RegisterType.FACEBOOK;
 				formattedUserData.langue = LanguageManager.getInstance().lang;
 				 
-				// also update the token and its expiration date here
-				MemberManager.getInstance().facebookToken = GoViral.goViral.getFbAccessToken();
-				MemberManager.getInstance().facebookTokenExpiryTimestamp = GoViral.goViral.getFbAccessExpiry();
-				 
 				switch(_mode)
 				{
 					case MODE_REGISTER:
@@ -360,6 +356,11 @@ package com.ludofactory.mobile.navigation
 					// association success
 					
 					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, 3);
+					
+					// also update the token and its expiration date here
+					MemberManager.getInstance().facebookToken = GoViral.goViral.getFbAccessToken();
+					MemberManager.getInstance().facebookTokenExpiryTimestamp = GoViral.goViral.getFbAccessExpiry();
+					
 					if("facebookRewarded" in result && result.facebookRewarded != null) _isFacebookRewarded = result.facebookRewarded;
 					
 					if(_publicationData)
@@ -415,6 +416,10 @@ package com.ludofactory.mobile.navigation
 				}
 				case 6:
 				{
+					// also update the token and its expiration date here
+					MemberManager.getInstance().facebookToken = GoViral.goViral.getFbAccessToken();
+					MemberManager.getInstance().facebookTokenExpiryTimestamp = GoViral.goViral.getFbAccessExpiry();
+					
 					if("facebookRewarded" in result && result.facebookRewarded != null) _isFacebookRewarded = result.facebookRewarded;
 
 					if(_publicationData)
@@ -432,6 +437,10 @@ package com.ludofactory.mobile.navigation
 				}
 				case 7: // logged in but no pseudo, if we were publishing, a pseudo is automatically given
 				{
+					// also update the token and its expiration date here
+					MemberManager.getInstance().facebookToken = GoViral.goViral.getFbAccessToken();
+					MemberManager.getInstance().facebookTokenExpiryTimestamp = GoViral.goViral.getFbAccessExpiry();
+					
 					if("facebookRewarded" in result && result.facebookRewarded != null) _isFacebookRewarded = result.facebookRewarded;
 					
 					if(_publicationData)
