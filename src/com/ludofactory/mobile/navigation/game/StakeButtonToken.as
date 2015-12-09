@@ -92,7 +92,7 @@ package com.ludofactory.mobile.navigation.game
 			if( _iconClock )
 			{
 				_iconClock.x = _shadowThickness;
-				_iconClock.y = this.actualHeight - _shadowThickness;
+				_iconClock.y = _shadowThickness;
 			}
 		}
 		
