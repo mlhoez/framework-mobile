@@ -144,7 +144,7 @@ package com.ludofactory.mobile.navigation.game
 							if(MemberManager.getInstance().tokens == 0)
 							{
 								// mettre texte normal + timer
-								_label.text = formatString(_("{0} Jetons dans "), MemberManager.getInstance().totalTokensADay) + "--:--:--";
+								_label.text = formatString(_("{0} Jetons dans \n"), MemberManager.getInstance().totalTokensADay) + "--:--:--";
 								
 								_vidCoinEnabled = false;
 	
@@ -225,7 +225,7 @@ package com.ludofactory.mobile.navigation.game
 		
 		private function setText(val:String):void
 		{
-			_label.text = formatString(_("{0} Jetons dans "), MemberManager.getInstance().totalTokensADay) + val;
+			_label.text = formatString(_("{0} Jetons dans \n"), MemberManager.getInstance().totalTokensADay) + val;
 		}
 		
 		private function onCalloutRemoved(event:Event):void
