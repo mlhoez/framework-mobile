@@ -143,9 +143,9 @@ package com.ludofactory.mobile.navigation.engine
 			_continueButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, true, true, null, null, null, TextFormatAlign.CENTER);
 			_continueButton.height = _continueButton.minHeight = scaleAndRoundToDpi(60);
 			
-			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("Qui sera capable de me battre sur {0} ?"), AbstractGameInfo.GAME_NAME),
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager mon exploit !"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("Nouveau meilleur score : {0} !"), advancedOwner.screenData.gameData.score),
 					"",
-					formatString(_("Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me prouver le contraire !"), advancedOwner.screenData.gameData.score),
+					formatString(_("Venez me défier et tenter de battre mon score de {0} sur {1} !"), advancedOwner.screenData.gameData.score, AbstractGameInfo.GAME_NAME),
 					_("http://www.ludokado.com/"),
 					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
 			_facebookButton.alpha = 0;
