@@ -302,6 +302,8 @@ package com.ludofactory.mobile.navigation
 		 */
 		private function publish():void
 		{
+			InfoManager.show(_("Chargement..."));
+			
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_FAILED, onPublishCancelledOrFailed);
 			GoViral.goViral.addEventListener(GVFacebookEvent.FB_DIALOG_CANCELED, onPublishCancelledOrFailed);
@@ -314,6 +316,8 @@ package com.ludofactory.mobile.navigation
 		private function onPublishCancelledOrFailed(event:GVFacebookEvent):void
 		{
 			//Flox.logEvent("Publications Facebook", {Etat:"Annulee"});
+			InfoManager.hide(_("Publication annulée"), InfoContent.ICON_CHECK, 4);
+			
 			resetData();
 			
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);
@@ -327,6 +331,7 @@ package com.ludofactory.mobile.navigation
 		private function onPublishOver(event:GVFacebookEvent):void
 		{
 			//Flox.logEvent("Publications Facebook", {Etat:"Validee"});
+			
 			resetData();
 			
 			GoViral.goViral.removeEventListener(GVFacebookEvent.FB_DIALOG_FINISHED, onPublishOver);

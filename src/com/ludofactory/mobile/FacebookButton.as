@@ -13,10 +13,8 @@ package com.ludofactory.mobile
 	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.ButtonFactory;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -32,7 +30,7 @@ package com.ludofactory.mobile
 	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	import com.ludofactory.mobile.navigation.FacebookPublicationData;
-
+	
 	import feathers.controls.LayoutGroup;
 	import feathers.core.FeathersControl;
 	import feathers.display.Scale9Image;
@@ -41,7 +39,6 @@ package com.ludofactory.mobile
 	import flash.filters.BitmapFilterQuality;
 	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
-	
 	import flash.geom.Rectangle;
 	
 	import starling.display.ButtonState;
@@ -53,7 +50,6 @@ package com.ludofactory.mobile
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
-	import starling.textures.Texture;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	
@@ -319,6 +315,12 @@ package com.ludofactory.mobile
 				{
 					var now:Date = new Date();
 					var tokenExpiryDate:Date = new Date( MemberManager.getInstance().facebookTokenExpiryTimestamp );
+					
+					/*log("Facebook id : " + MemberManager.getInstance().facebookId);
+					log("Token time stamp : " + MemberManager.getInstance().facebookTokenExpiryTimestamp);
+					log("Now = " + now.toString());
+					log("Expiry date = " + tokenExpiryDate.toString());*/
+					
 					if( (MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().facebookId != 0 && now > tokenExpiryDate) ||
 							(MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().facebookId == 0) || !MemberManager.getInstance().isLoggedIn())
 					{
@@ -378,9 +380,11 @@ package com.ludofactory.mobile
 		 */
 		private function onPublished(event:Event):void
 		{
-			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
-			Remote.getInstance().addRewardAfterSharing(onRewarded, onNotRewarded, onNotRewarded, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+			InfoManager.show(_("Chargement..."));
 			
+			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			
+			Remote.getInstance().addRewardAfterSharing(onRewarded, onNotRewarded, onNotRewarded, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
 			
 			// inform the parent
 			dispatchEventWith(FacebookManagerEventType.PUBLISHED);
@@ -392,24 +396,22 @@ package com.ludofactory.mobile
 			{
 				case 0: // problem
 				{
-					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, 8);
 					break;
 				}
 				case 1: // the user have been rewarded
 				{
-					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, 8);
 					removeIncentive();
 					break;
 				}
 				case 2: // the user have already been rewarded
 				{
-					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
+					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, 8);
 					removeIncentive();
 					break;
 				}
 			}
-			
-			removeIncentive();
 		}
 		
 		private function onNotRewarded(error:Object):void
@@ -419,12 +421,17 @@ package com.ludofactory.mobile
 		
 		public function removeIncentive():void
 		{
-			// TODO if the bonus was granted
-			_incentiveLabel.removeFromParent(true);
-			_incentiveLabel = null;
+			if(_incentiveLabel)
+			{
+				_incentiveLabel.removeFromParent(true);
+				_incentiveLabel = null;
+			}
 			
-			_incentive.removeFromParent(true);
-			_incentive = null;
+			if(_incentive)
+			{
+				_incentive.removeFromParent(true);
+				_incentive = null;
+			}
 		}
 		
 		/** The current state of the button. The corresponding strings are found
