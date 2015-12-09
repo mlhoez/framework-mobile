@@ -24,6 +24,8 @@ package com.ludofactory.mobile.navigation.home.summary
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.model.StakeType;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.CreditsNotificationContent;
 	import com.ludofactory.mobile.core.promo.PromoManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -373,7 +375,9 @@ package com.ludofactory.mobile.navigation.home.summary
 						}
 						case StakeType.CREDIT:
 						{
-							if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
+							NotificationPopupManager.addNotification( new CreditsNotificationContent() );
+							
+							/*if( !MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0 )
 							{
 								_calloutLabel.text = formatString(_("Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"), MemberManager.getInstance().totalTokensADay);
 							}
@@ -385,7 +389,7 @@ package com.ludofactory.mobile.navigation.home.summary
 								_calloutLabel.autoSize = TextFieldAutoSize.VERTICAL;
 								_calloutLabel.width = savedWidth;
 								_calloutLabel.hAlign = HAlign.CENTER;
-							}
+							}*/
 							
 							break;
 						}
@@ -415,11 +419,7 @@ package com.ludofactory.mobile.navigation.home.summary
 						_calloutLabel.width = GlobalConfig.stageWidth * 0.9;
 					}
 					
-					if(PromoManager.getInstance().isPromoPending && _stakeType == StakeType.CREDIT)
-					{
-						AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.STORE_SCREEN);
-					}
-					else
+					if(_stakeType != StakeType.CREDIT)
 					{
 						_isCalloutDisplaying = true;
 						
