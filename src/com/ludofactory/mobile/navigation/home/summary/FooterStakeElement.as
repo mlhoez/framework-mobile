@@ -121,7 +121,8 @@ package com.ludofactory.mobile.navigation.home.summary
 				{
 					backgroundTextureName = "summary-green-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
 					iconTextureName = GlobalConfig.isPhone ? "summary-icon-token" : "summary-icon-token-hd";
-					GameSessionTimer.labelUpdateFunction = setLabelText;
+					//GameSessionTimer.labelUpdateFunction = setLabelText;
+					GameSessionTimer.registerFunction(setLabelText);
 					break;
 				}
 				case StakeType.CREDIT:

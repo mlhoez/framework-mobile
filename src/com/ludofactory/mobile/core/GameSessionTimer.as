@@ -335,9 +335,9 @@ package com.ludofactory.mobile.core
 		public static function set valueToDisplay(val:String):void
 		{
 			_valueToDisplay = val;
-			//for each(_helperFunction in _listenersList)
-			//	_helperFunction(_valueToDisplay);
-			_labelUpdateFunction(_valueToDisplay);
+			for each(_helperFunction in _listenersList)
+				_helperFunction(_valueToDisplay);
+			//_labelUpdateFunction(_valueToDisplay);
 		}
 		
 		
