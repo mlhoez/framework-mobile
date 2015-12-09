@@ -361,10 +361,18 @@ package com.ludofactory.mobile
 			if(data)
 			{
 				// the user authenticated successfully
+				
 				if(_buttonType == ButtonFactory.FACEBOOK_TYPE_SHARE)
 				{
+					// TODO a améliorer peut être
+					if(_incentive && !MemberManager.getInstance().canHaveRewardAfterPublish)
+						removeIncentive();
+					
 					// we first need to refresh the data :
-					dispatchEventWith(FacebookManagerEventType.REFRESH_PUBLICAION_DATA);
+					if(this.hasEventListener(FacebookManagerEventType.REFRESH_PUBLICAION_DATA))
+						dispatchEventWith(FacebookManagerEventType.REFRESH_PUBLICAION_DATA);
+					else // no need to refresh the data, we can directly publish
+						publish();
 				}
 				else
 				{
