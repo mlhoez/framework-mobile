@@ -365,6 +365,9 @@ package com.ludofactory.mobile.core
 				}
 				else
 				{
+					if(AirNetworkInfo.networkInfo.isConnected()) // if not logged in but has network, we sent the game sessions for stats
+						Remote.getInstance().pushGame(_gameSession, null, null, null, 1);
+					
 					onGamePushFailure();
 				}
 			}
