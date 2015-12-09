@@ -73,6 +73,7 @@ package com.ludofactory.mobile.debug
 		/**
 		 * Retreive default data. */		
 		private var _getdefaultData:Button;
+		private var _giveTokensButton:Button;
 		
 		private var _mainContainer:ScrollContainer;
 		
@@ -139,6 +140,11 @@ package com.ludofactory.mobile.debug
 			_getdefaultData.addEventListener(Event.TRIGGERED, onGetDefaultData);
 			_getdefaultData.styleName = Theme.BUTTON_TRANSPARENT_BLUE_DARKER;
 			
+			_giveTokensButton = new Button();
+			_giveTokensButton.label = "Donner";
+			_giveTokensButton.addEventListener(Event.TRIGGERED, giveTokens);
+			_giveTokensButton.styleName = Theme.BUTTON_TRANSPARENT_BLUE_DARKER;
+			
 			_tournamentToggleSwitch = new CustomToggleSwitch();
 			_tournamentToggleSwitch.onText = "";
 			_tournamentToggleSwitch.offText = "";
@@ -158,7 +164,8 @@ package com.ludofactory.mobile.debug
 			_list.dataProvider = new ListCollection( [ { title:"Reset données", value:"", accessory:_resetButton },
 													   { title:"Tournoi débloqué", value:"", accessory:_tournamentToggleSwitch },
 													   { title:"Gagner toutes les coupes", value:"", accessory:_winAllTrophiesButton },
-													   { title:"Get données par défaut", value:"", accessory:_getdefaultData }
+													   { title:"Get données par défaut", value:"", accessory:_getdefaultData },
+													   { title:"Donner 5 jetons", value:"", accessory:_giveTokensButton }
 													 ] );
 			_mainContainer.addChild(_list);
 		}
@@ -340,6 +347,11 @@ package com.ludofactory.mobile.debug
 			onBack();
 		}
 		
+		private function giveTokens(event:Event):void
+		{
+			MemberManager.getInstance().tokens += 5;
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
@@ -376,6 +388,10 @@ package com.ludofactory.mobile.debug
 			_getdefaultData.removeEventListener(Event.TRIGGERED, onGetDefaultData);
 			_getdefaultData.removeFromParent(true);
 			_getdefaultData = null;
+			
+			_giveTokensButton.removeEventListener(Event.TRIGGERED, giveTokens);
+			_giveTokensButton.removeFromParent(true);
+			_giveTokensButton = null;
 			
 			_list.removeFromParent(true);
 			_list = null;
