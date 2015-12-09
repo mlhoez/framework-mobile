@@ -59,6 +59,8 @@ package com.ludofactory.mobile.navigation
 		private static var _sponsorId:String = "-1";
 		private static var _isFacebookRewarded:Boolean = false;
 		
+		private static var _isPublishing:Boolean = false;
+		
 		public function FacebookManager(sk:SecurityKey)
 		{
 			if(sk == null)
@@ -71,12 +73,13 @@ package com.ludofactory.mobile.navigation
 		/**
 		 * This function must be used whenever we want to authenticate the user within the app.
 		 */
-		public function connect():void
+		public function connect(isPublishing:Boolean = false):void
 		{
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
 				if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
 				{
+					_isPublishing = isPublishing;
 					if( MemberManager.getInstance().isLoggedIn() )
 					{
 						// the user is logged in
@@ -222,7 +225,7 @@ package com.ludofactory.mobile.navigation
 				if( me.properties.hasOwnProperty("location") )   formattedUserData.ville = me.locationName;
 				if( me.properties.hasOwnProperty("birthday") )   formattedUserData.date_naissance = me.properties.birthday;
 				formattedUserData.id_parrain = _sponsorId;
-				formattedUserData.isPublishing = _publicationData ? true : false;
+				formattedUserData.isPublishing = (_publicationData || _isPublishing) ? true : false;
 				formattedUserData.type_inscription = RegisterType.FACEBOOK;
 				formattedUserData.langue = LanguageManager.getInstance().lang;
 				 
@@ -545,6 +548,7 @@ package com.ludofactory.mobile.navigation
 		private function resetData():void
 		{
 			_publicationData = null;
+			_isPublishing = false;
 			_sponsorId = "-1";
 		}
 		

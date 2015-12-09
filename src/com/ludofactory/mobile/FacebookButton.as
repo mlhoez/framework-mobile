@@ -330,7 +330,7 @@ package com.ludofactory.mobile
 						// the popup. When the user closes the popup or is authenticated with Facebook, the callback
 						// onFacebookPopupClosed will be called. If the data of the callback is true, it means that the
 						// user is authenticated and that we can automatically launch the publication.
-						NotificationPopupManager.addNotification(new FacebookNotificationContent(), onFacebookPopupClosed);
+						NotificationPopupManager.addNotification(new FacebookNotificationContent(_publicationData), onFacebookPopupClosed);
 					}
 					else
 					{

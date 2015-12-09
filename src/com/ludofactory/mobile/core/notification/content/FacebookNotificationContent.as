@@ -71,9 +71,13 @@ package com.ludofactory.mobile.core.notification.content
 		 * The callout label. */
 		private var _calloutLabel:TextField;
 		
-		public function FacebookNotificationContent()
+		private var _isPublishing:Boolean = false;
+		
+		public function FacebookNotificationContent(isPublishing:Boolean = false)
 		{
 			super();
+			
+			_isPublishing = isPublishing;
 		}
 		
 		override protected function initialize():void
@@ -207,7 +211,7 @@ package com.ludofactory.mobile.core.notification.content
 			}
 			
 			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED, onConnectedWithFacebook);
-			FacebookManager.getInstance().connect();
+			FacebookManager.getInstance().connect(_isPublishing);
 		}
 		
 		/**
