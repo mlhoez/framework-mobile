@@ -148,15 +148,15 @@ package com.ludofactory.mobile.navigation.store
 			
 			_promoLabel.width = actualWidth;
 			_promoLabel.validate();
-			_promoLabel.y = actualHeight - _paddingBottom - _promoLabel.height - scaleAndRoundToDpi(10);
+			_promoLabel.y = _headerHeight + scaleAndRoundToDpi(10) //actualHeight - _paddingBottom - _promoLabel.height - scaleAndRoundToDpi(10);
 			
-			_icon.y = _headerHeight + scaleAndRoundToDpi(10);
+			_icon.y = _data.promo > 0 ? (_promoLabel.y + _promoLabel.height + scaleAndRoundToDpi(10)) : (_headerHeight + scaleAndRoundToDpi(10));
 			_icon.x = (actualWidth - _icon.width) * 0.5;
 			
 			if( _specialOfferLabel.visible )
 			{
 				_specialOfferLabel.validate();
-				_specialOfferLabel.y = _headerHeight + scaleAndRoundToDpi(5);
+				_specialOfferLabel.y = _icon.y - scaleAndRoundToDpi(5);
 				_specialOfferLabel.x = actualWidth - _specialOfferLabel.width - scaleAndRoundToDpi(10);
 				
 				if( _data.isTopOffer )
@@ -176,7 +176,8 @@ package com.ludofactory.mobile.navigation.store
 			_priceButton.width = actualWidth * 0.8;
 			_priceButton.height = scaleAndRoundToDpi(76);
 			_priceButton.x = (actualWidth - _priceButton.width) * 0.5;
-			_priceButton.y = _icon.y + _icon.height + ((_promoLabel.y - _icon.y - _icon.height) - _priceButton.height) * 0.5;
+			_priceButton.validate();
+			_priceButton.y = actualHeight - _paddingBottom - _priceButton.height - scaleAndRoundToDpi(8)//_icon.y + _icon.height + ((_promoLabel.y - _icon.y - _icon.height) - _priceButton.height) * 0.5;
 		}
 		
 		protected var _data:StoreData;
