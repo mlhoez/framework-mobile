@@ -91,7 +91,7 @@ package com.ludofactory.mobile.core.notification.content
 			addChild(_notificationTitle);
 
 			var dataProvider:Array;
-			dataProvider = [ new FacebookBonusData( { iconTextureName:"facebook-bonus-credit-icon", title:_("5 Crédits OFFERTS") } ),
+			dataProvider = [ new FacebookBonusData( { iconTextureName:"facebook-bonus-credit-icon", title:_("1 Crédit OFFERT") } ),
 							 new FacebookBonusData( { iconTextureName:"facebook-bonus-friends-icon", title:_("Dépassez vos amis !") } ),
 							 new FacebookBonusData( { iconTextureName:"facebook-bonus-devices-icon",  title:_("Jouez sur plusieurs appareils !") } ) ];
 			
