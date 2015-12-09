@@ -156,7 +156,7 @@ package com.ludofactory.mobile.navigation.highscore
 			_nationalButton.iconOffsetX = scaleAndRoundToDpi(20);
 			
 			_facebookIcon = new ImageLoader();
-			_facebookIcon.source = AbstractEntryPoint.assets.getTexture("facebook-icon");
+			_facebookIcon.source = AbstractEntryPoint.assets.getTexture("facebook-icon-normal");
 			_facebookIcon.snapToPixels = true;
 			_facebookIcon.textureScale = GlobalConfig.dpiScale;
 			
