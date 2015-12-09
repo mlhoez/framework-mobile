@@ -144,7 +144,7 @@ package com.ludofactory.mobile.navigation.game
 						
 					_title.width = actualWidth;
 					
-					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 160 : 180);
+					_withTokens.height = _withCredits.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 180 : 200);
 					if( _withPoints ) _withPoints.height = _withTokens.height;
 					
 					maxButtonWidth = (actualWidth - buttonGap * (_withPoints ? 2 : 1) - scaleAndRoundToDpi(20)) / (_withPoints ? 3.25 : 3);
