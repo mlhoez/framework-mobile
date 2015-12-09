@@ -241,7 +241,11 @@ package com.ludofactory.mobile.navigation.engine
 			_homeButton.scaleX = _homeButton.scaleY = GlobalConfig.dpiScale;
 			addChild(_homeButton);
 			
-			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE); // TODO
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("J'ai obtenu {0} Points sur {1} !"), Utilities.splitThousands(advancedOwner.screenData.gameData.numStarsOrPointsEarned), AbstractGameInfo.GAME_NAME),
+					"",
+					_("Je peux maintenant obtenir des tas de bonus en les convertissant dans la Boutique !"),
+					_("http://www.ludokado.com/"),
+					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
 			_facebookButton.alpha = 0;
 			addChild(_facebookButton);
 			
