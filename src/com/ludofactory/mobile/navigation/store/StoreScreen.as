@@ -209,7 +209,7 @@ package com.ludofactory.mobile.navigation.store
 		 * indicating that in app purchases are not available on this phone or
 		 * account.</p>
 		 */
-		private function onStoreInitialized():void
+		private function onStoreInitialized(event:Event):void
 		{
 			_store.removeEventListener(MobileEventTypes.STORE_INITIALIZED, onStoreInitialized);
 			
