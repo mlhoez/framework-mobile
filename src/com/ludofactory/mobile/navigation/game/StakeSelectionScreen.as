@@ -123,6 +123,7 @@ package com.ludofactory.mobile.navigation.game
 			if(PromoManager.getInstance().isPromoPending)
 			{
 				_promoContent = PromoManager.getInstance().getPromoContent(true);
+				_promoContent.visible = !AbstractGameInfo.LANDSCAPE;
 				addChild(_promoContent);
 			}
 		}
