@@ -85,6 +85,10 @@ package com.ludofactory.mobile.core.notification.content
 		 * The promo content displayed when there is a promo. */
 		private var _promoContent:PromoContent;
 		
+		/**
+		 * If we need to resize the notification */
+		private var _needResize:Boolean = false;
+		
 		public function CreditsNotificationContent()
 		{
 			super();
@@ -168,6 +172,7 @@ package com.ludofactory.mobile.core.notification.content
 			{
 				_list.validate();
 				_container.width = _retryContainer.width = actualWidth;
+				_retryContainer.y = _notificationTitle.y + _notificationTitle.height + scaleAndRoundToDpi(30);
 				_container.y = _notificationTitle.y + _notificationTitle.height + scaleAndRoundToDpi(5);
 				
 				//_container.height = _retryContainer.height = actualHeight;
@@ -184,6 +189,12 @@ package com.ludofactory.mobile.core.notification.content
 			}
 			
 			super.draw();
+			
+			if( _needResize )
+			{
+				_needResize = false;
+				NotificationPopupManager.adjustCurrentNotification();
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -245,8 +256,6 @@ package com.ludofactory.mobile.core.notification.content
 					storeItemRenderer = null;
 					
 					invalidate();
-					
-					NotificationPopupManager.adjustCurrentNotification();
 				}
 			}
 			else
@@ -364,7 +373,7 @@ package com.ludofactory.mobile.core.notification.content
 				if(PromoManager.getInstance().isPromoPending)
 				{
 					_promoContent = PromoManager.getInstance().getPromoContent(false);
-					_container.addChildAt(_promoContent, 1);
+					_container.addChildAt(_promoContent, 0);
 					_promoContent.animate();
 				}
 				
@@ -386,6 +395,9 @@ package com.ludofactory.mobile.core.notification.content
 				_retryContainer.message = _("Une erreur est survenue, veuillez réessayer.");
 				_retryContainer.loadingMode = false;
 			}
+			
+			_needResize = true;
+			invalidate(INVALIDATION_FLAG_SIZE);
 		}
 		
 		private function onProductsDetailsNotLoaded(event:Event):void
