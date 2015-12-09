@@ -6,28 +6,39 @@ Created : 18 sept. 2013
 */
 package com.ludofactory.mobile.navigation.highscore
 {
+
+	import com.ludofactory.common.gettext.LanguageManager;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.FacebookButton;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.geom.Point;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
+	import com.ludofactory.mobile.navigation.FacebookManager;
+	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
+
 	import feathers.controls.Callout;
 	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
-	
+
+	import flash.geom.Point;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
+
 	import starling.display.Quad;
 	import starling.display.QuadBatch;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	
+	import starling.utils.formatString;
+
 	public class HighScoreItemRenderer extends FeathersControl implements IListItemRenderer
 	{
 		private static const HELPER_POINT:Point = new Point();
@@ -82,6 +93,10 @@ package com.ludofactory.mobile.navigation.highscore
 		/**
 		 * The number of stars label. */		
 		private var _numStarsLabel:Label;
+
+		/**
+		 * Facebook button that will associate the account or directly publish, depending on the actual state. */
+		private var _facebookButton:FacebookButton;
 		
 		public function HighScoreItemRenderer()
 		{
@@ -103,7 +118,7 @@ package com.ludofactory.mobile.navigation.highscore
 			this.height = _itemHeight;
 			
 			if( !_selectedTextFormat )
-				_selectedTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0xffdd00, false, false, null, null, null, TextFormatAlign.CENTER);
+				_selectedTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0x401800, false, false, null, null, null, TextFormatAlign.CENTER);
 			if( !_normalTextFormat )
 				_normalTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0x353535, false, false, null, null, null, TextFormatAlign.CENTER);
 			
@@ -126,12 +141,12 @@ package com.ludofactory.mobile.navigation.highscore
 			// selected
 			_selectedBackground = new QuadBatch();
 			background.y = 0;
-			background.color = 0x401800;
+			background.color = 0xffd800;
 			background.height = _itemHeight;
 			_selectedBackground.addQuad( background );
 			background.x = _sideWidth;
 			background.width = _middleWidth;
-			background.color = 0x3e1600;
+			background.color = 0xffb400;
 			_selectedBackground.addQuad( background );
 			addChild( _selectedBackground );
 			
@@ -211,7 +226,7 @@ package com.ludofactory.mobile.navigation.highscore
 						_nameLabel.text = _data.truncatedPseudo + " (" + _data.countryCode + ")";
 					_numStarsLabel.text =  Utilities.splitThousands( _data.score );
 					
-					_selectedBackground.visible = _data.isMe ? true : false;
+					_selectedBackground.visible = _data.isMe;
 					_idleBackground.visible = !_selectedBackground.visible;
 				}
 				else
@@ -241,6 +256,37 @@ package com.ludofactory.mobile.navigation.highscore
 				_rankLabel.y = _numStarsLabel.y = _nameLabel.y =  (_itemHeight - _rankLabel.height) * 0.5;
 				
 				_elementsPositioned = true;
+			}
+
+			if(_data.isMe)
+			{
+				if(!_facebookButton)
+				{
+					_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("Qui sera capable de me battre sur {0} ?"), AbstractGameInfo.GAME_NAME),
+							"",
+							formatString(_("Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me prouver le contraire !"), MemberManager.getInstance().highscore),
+							_("http://www.ludokado.com/"),
+							formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
+					_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+					_facebookButton.y = _itemHeight;
+					_facebookButton.x = roundUp((this.owner.width - _facebookButton.width) * 0.5);
+					addChild(_facebookButton);
+				}
+				
+				_selectedBackground.height = _idleBackground.height = _itemHeight + _facebookButton.height + scaleAndRoundToDpi(10);
+				setSize(this.actualWidth, (_itemHeight + _facebookButton.height + scaleAndRoundToDpi(10)));
+			}
+			else
+			{
+				if(_facebookButton)
+				{
+					_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+					_facebookButton.removeFromParent(true);
+					_facebookButton = null;
+				}
+				
+				_selectedBackground.height = _idleBackground.height = _itemHeight;
+				setSize(this.actualWidth, _itemHeight);
 			}
 		}
 		
@@ -478,6 +524,17 @@ package com.ludofactory.mobile.navigation.highscore
 				_callout = null;
 			}
 		}
+
+//------------------------------------------------------------------------------------------------------------
+//	Facebook
+
+		/**
+		 * Publication posted.
+		 */
+		private function onPublished(event:Event):void
+		{
+			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
@@ -519,6 +576,13 @@ package com.ludofactory.mobile.navigation.highscore
 			{
 				_callout.removeFromParent(true);
 				_callout = null;
+			}
+			
+			if(_facebookButton)
+			{
+				_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+				_facebookButton.removeFromParent(true);
+				_facebookButton = null;
 			}
 			
 			super.dispose();
