@@ -88,12 +88,8 @@ package com.ludofactory.mobile.navigation.game
 			_container.addChild(_icon);
 
 			_label = new TextField(5, 5, "AA", Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 42 : 60), 0x002432);
-			_label.autoSize = TextFieldAutoSize.VERTICAL;
-			_label.autoScale = false;
-			_label.redraw();
-			/*_label.autoSize = TextFieldAutoSize.NONE;
-			_label.autoScale = true;*/
-			_label.wordWrap = false;
+			_label.autoScale = true;
+			_label.wordWrap = true;
 			_container.addChild(_label);
 			
 			addEventListener(TouchEvent.TOUCH, button_touchHandler);
@@ -110,8 +106,9 @@ package com.ludofactory.mobile.navigation.game
 			_icon.y = _icon.height * -0.15;
 
 			_label.width = actualWidth - (_shadowThickness * 2);
+			_label.height = actualHeight - _shadowThickness - _icon.y - _icon.height;
 			_label.x = _shadowThickness;
-			_label.y = actualHeight - _shadowThickness - _label.height;
+			_label.y = _icon.y + _icon.height;
 		}
 		
 		public function set backgroundSkin(val:Scale9Image):void
