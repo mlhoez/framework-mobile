@@ -85,6 +85,10 @@ package com.ludofactory.mobile.navigation.home.summary
 		 * Promo notification displayed beside the credit icon when a promo is available. */
 		private var _promoNotification:Image;
 		
+		/**
+		 * Add icon. */
+		private var _addIcon:Image;
+		
 	// ---------- Callout
 		
 		/**
@@ -131,6 +135,11 @@ package com.ludofactory.mobile.navigation.home.summary
 				{
 					backgroundTextureName = "summary-yellow-container" + (AbstractGameInfo.LANDSCAPE ? "-landscape" : "");
 					iconTextureName = GlobalConfig.isPhone ? "summary-icon-credits" : "summary-icon-credits-hd";
+					
+					_addIcon = new Image(AbstractEntryPoint.assets.getTexture("add-credits-icon"));
+					_addIcon.scaleX = _addIcon.scaleY = GlobalConfig.dpiScale;
+					addChild(_addIcon);
+					
 					break;
 				}
 				case StakeType.POINT:
@@ -217,7 +226,7 @@ package com.ludofactory.mobile.navigation.home.summary
 				{
 					_promoNotification.scaleX = _promoNotification.scaleY = GlobalConfig.dpiScale;
 					_promoNotification.x = _icon.x + _icon.width + (_promoNotification.width * 0.25);
-					_promoNotification.y = _icon.y + (_icon.height * 0.25);
+					_promoNotification.y = _icon.y - (_icon.height * 0.15);
 					_promoNotification.scaleX = _promoNotification.scaleY = 0;
 				}
 				
@@ -238,7 +247,13 @@ package com.ludofactory.mobile.navigation.home.summary
 				
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_stakeValueLabel.width = _background.width - scaleAndRoundToDpi(60) - scaleAndRoundToDpi(16); // 8 + 8 padding on each side
+					if(_addIcon)
+					{
+						_addIcon.x = actualWidth - _addIcon.width - scaleAndRoundToDpi(3);
+						_addIcon.y = roundUp((actualHeight - _addIcon.height) * 0.5);
+					}
+					
+					_stakeValueLabel.width = _background.width - scaleAndRoundToDpi(60) - (_addIcon ? (_addIcon.width + scaleAndRoundToDpi(3)) : scaleAndRoundToDpi(16)); // 8 + 8 padding on each side
 					_stakeValueLabel.x = scaleAndRoundToDpi(60) + scaleAndRoundToDpi(5);
 					_stakeValueLabel.height = _background.height;
 					_stakeValueLabel.y = _background.y;

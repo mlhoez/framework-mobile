@@ -173,8 +173,8 @@ package com.ludofactory.mobile.navigation
 				
 				_freeContainer.height = _pointsContainer.height = _creditsContainer.height = _containerHeight;
 				
-				_freeContainer.width = _creditsContainer.width = containersMaxWidth * 0.3 - scaleAndRoundToDpi(10);
-				_pointsContainer.width = containersMaxWidth * 0.4 - scaleAndRoundToDpi(10) * 2;
+				_freeContainer.width = _creditsContainer.width = containersMaxWidth * 0.33 - scaleAndRoundToDpi(10);
+				_pointsContainer.width = containersMaxWidth * 0.33 - scaleAndRoundToDpi(10) * 2;
 				
 				_freeContainer.x = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 175 : 110);
 				_pointsContainer.x = (_freeContainer.x + _freeContainer.width + scaleAndRoundToDpi(10)) << 0;
