@@ -1126,7 +1126,7 @@ package com.ludofactory.mobile.core
 		{
 			PushNotification.getInstance().removeEventListener(PushNotificationEvent.PERMISSION_GIVEN_WITH_TOKEN_EVENT, onPermissionGiven);
 			if( AirNetworkInfo.networkInfo.isConnected() )
-				Remote.getInstance().updatePushToken(event.token, null, null, null, 5);
+				Remote.getInstance().updatePushToken(event.token, null, null, null, 2);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
