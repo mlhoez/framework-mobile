@@ -417,7 +417,8 @@ package com.ludofactory.mobile.navigation.vip
 					_rightArrowButton.x = actualWidth * 0.5 - _rightArrowButton.width - scaleAndRoundToDpi(12);
 					_rightArrowButton.y = actualHeight - _rightArrowButton.height - scaleAndRoundToDpi(10);
 
-					_facebookButton.width = _rightArrowButton.x - _leftArrowButton.x - _leftArrowButton.width - scaleAndRoundToDpi(10);
+					if(_facebookButton.width > (_rightArrowButton.x - _leftArrowButton.x - _leftArrowButton.width - scaleAndRoundToDpi(10)))
+						_facebookButton.width = _rightArrowButton.x - _leftArrowButton.x - _leftArrowButton.width - scaleAndRoundToDpi(10);
 					//_facebookButton.height = _leftArrowButton.height;
 					_facebookButton.x = roundUp(((actualWidth * 0.5) - _facebookButton.width) * 0.5);
 					_facebookButton.y = _leftArrowButton.y - scaleAndRoundToDpi(10);
