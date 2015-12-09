@@ -169,9 +169,9 @@ package com.ludofactory.mobile.navigation.menu
 			i++;
 			_list.dataProvider.updateItemAt(i);
 			
-			// Store
-			i++;
-			_list.dataProvider.updateItemAt(i);
+			// Store => removed
+			//i++;
+			//_list.dataProvider.updateItemAt(i);
 			
 			// Vip
 			i++;
