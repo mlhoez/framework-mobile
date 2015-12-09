@@ -75,7 +75,6 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.sponsor.SponsorHomeScreen;
 	import com.ludofactory.mobile.navigation.sponsor.filleuls.FilleulsScreen;
 	import com.ludofactory.mobile.navigation.sponsor.invite.SponsorInviteScreen;
-	import com.ludofactory.mobile.navigation.store.StoreScreen;
 	import com.ludofactory.mobile.navigation.tournament.PreviousTournamentsScreen;
 	import com.ludofactory.mobile.navigation.tournament.PreviousTournementDetailScreen;
 	import com.ludofactory.mobile.navigation.tournament.TournamentRankingScreen;
@@ -193,7 +192,6 @@ package com.ludofactory.mobile.core
 												{ id:ScreenIds.MY_GIFTS_SCREEN, clazz:MyGiftsScreen },
 												{ id:ScreenIds.HIGH_SCORE_LIST_SCREEN, clazz:HighScoreListScreen },
 												{ id:ScreenIds.NEWS_SCREEN, clazz:NewsScreen },
-												{ id:ScreenIds.STORE_SCREEN, clazz:StoreScreen },
 												{ id:ScreenIds.HOW_TO_WIN_GIFTS_SCREEN, clazz:HowToWinGiftsScreen },
 												{ id:ScreenIds.SETTINGS_SCREEN, clazz:SettingsScreen },
 												{ id:ScreenIds.SPONSOR_FRIENDS_SCREEN, clazz:FilleulsScreen },

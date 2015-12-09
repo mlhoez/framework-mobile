@@ -19,6 +19,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
@@ -31,6 +32,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.navigation.store.StoreData;
 	import com.ludofactory.mobile.navigation.store.StoreItemRenderer;
 	import com.ludofactory.mobile.navigation.store.StoreSuccessAnimationComponenent;
+	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.android.AndroidItemDetails;
 	import com.milkmangames.nativeextensions.ios.StoreKitProduct;
 	
@@ -39,7 +41,6 @@ package com.ludofactory.mobile.core.notification.content
 	import feathers.controls.Scroller;
 	import feathers.controls.supportClasses.ListDataViewPort;
 	import feathers.data.ListCollection;
-	import feathers.events.FeathersEventType;
 	import feathers.layout.TiledRowsLayout;
 	import feathers.layout.VerticalLayout;
 	
@@ -87,6 +88,10 @@ package com.ludofactory.mobile.core.notification.content
 		public function CreditsNotificationContent()
 		{
 			super();
+			
+			// track screens with Google Analytics
+			if( GAnalytics.isSupported() )
+				GAnalytics.analytics.defaultTracker.trackScreenView(ScreenIds.POPUP_IAP, MemberManager.getInstance().id);
 		}
 		
 		override protected function initialize():void
@@ -95,7 +100,7 @@ package com.ludofactory.mobile.core.notification.content
 			
 			data = false;
 			
-			_notificationTitle = new TextField(5, 5, _("Connexion Facebook"), Theme.FONT_SANSITA, scaleAndRoundToDpi(34), Theme.COLOR_DARK_GREY);
+			_notificationTitle = new TextField(5, 5, _("Boutique de Crédits"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 34 : 44), Theme.COLOR_DARK_GREY);
 			_notificationTitle.autoSize = TextFieldAutoSize.VERTICAL;
 			addChild(_notificationTitle);
 			
@@ -164,7 +169,6 @@ package com.ludofactory.mobile.core.notification.content
 				_list.validate();
 				_container.width = _retryContainer.width = actualWidth;
 				_container.y = _notificationTitle.y + _notificationTitle.height + scaleAndRoundToDpi(5);
-				
 				
 				//_container.height = _retryContainer.height = actualHeight;
 				

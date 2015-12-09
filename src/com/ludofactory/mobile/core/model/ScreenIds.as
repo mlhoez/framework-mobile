@@ -41,7 +41,7 @@ package com.ludofactory.mobile.core.model
 		
 		/**
 		 * Ecran d'achat de crédits */		
-		public static const STORE_SCREEN:String = "Achats intégrés";
+		public static const POPUP_IAP:String = "Popup des achats intégrés";
 		
 //------------------------------------------------------------------------------------------------------------
 //	Boutique
@@ -175,5 +175,7 @@ package com.ludofactory.mobile.core.model
 		// not used as a screen, just a reference in the menu
 		public static const LOG_IN_OUT:String = "log_in_out";
 		public static const SHOW_MENU:String = "show-menu";
+		
+		
 	}
 }

@@ -22,6 +22,8 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.model.StakeType;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.CreditsNotificationContent;
 	import com.ludofactory.mobile.core.promo.PromoContent;
 	import com.ludofactory.mobile.core.promo.PromoManager;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -270,7 +272,7 @@ package com.ludofactory.mobile.navigation.game
 			}
 			else
 			{
-				this.advancedOwner.showScreen( ScreenIds.STORE_SCREEN );
+				NotificationPopupManager.addNotification( new CreditsNotificationContent() );
 			}
 		}
 		

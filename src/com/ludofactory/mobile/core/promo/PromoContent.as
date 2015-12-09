@@ -11,6 +11,8 @@ package com.ludofactory.mobile.core.promo
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.CreditsNotificationContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import starling.core.Starling;
@@ -228,7 +230,8 @@ package com.ludofactory.mobile.core.promo
 			var touch:Touch = event.getTouch(this);
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
-				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.STORE_SCREEN);
+				if(_isCompact) // else it's full size in the credits popup
+					NotificationPopupManager.addNotification( new CreditsNotificationContent() );
 			}
 			touch = null;
 		}

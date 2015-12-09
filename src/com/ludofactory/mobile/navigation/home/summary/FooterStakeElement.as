@@ -433,11 +433,11 @@ package com.ludofactory.mobile.navigation.home.summary
 							callout.touchable = true;
 							callout.addEventListener(TouchEvent.TOUCH, onGoShop);
 						}
-						else if(_stakeType == StakeType.CREDIT && !(!MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0))
+						/*else if(_stakeType == StakeType.CREDIT && !(!MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().tokens == 0))
 						{
 							callout.touchable = true;
 							callout.addEventListener(TouchEvent.TOUCH, onGoCredits);
-						}
+						}*/
 						else if( !MemberManager.getInstance().isLoggedIn() && (_stakeType == StakeType.TOKEN || MemberManager.getInstance().tokens == 0))
 						{
 							callout.touchable = true;
@@ -485,7 +485,7 @@ package com.ludofactory.mobile.navigation.home.summary
 		/**
 		 * Go to the authentication screen.
 		 */
-		private function onGoCredits(event:TouchEvent):void
+		/*private function onGoCredits(event:TouchEvent):void
 		{
 			if(!AdvancedScreen(AbstractEntryPoint.screenNavigator.activeScreen).canBack) return;
 			
@@ -496,7 +496,7 @@ package com.ludofactory.mobile.navigation.home.summary
 				AbstractEntryPoint.screenNavigator.showScreen(ScreenIds.STORE_SCREEN);
 			}
 			touch = null;
-		}
+		}*/
 		
 		/**
 		 * When the callout is removed.
@@ -506,7 +506,7 @@ package com.ludofactory.mobile.navigation.home.summary
 			event.target.removeEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
 			event.target.removeEventListener(TouchEvent.TOUCH, onRegister);
 			event.target.removeEventListener(TouchEvent.TOUCH, onGoShop);
-			event.target.removeEventListener(TouchEvent.TOUCH, onGoCredits);
+			//event.target.removeEventListener(TouchEvent.TOUCH, onGoCredits);
 			_isCalloutDisplaying = false;
 		}
 		

@@ -28,6 +28,8 @@ package com.ludofactory.mobile.navigation.vip
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.CreditsNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -562,7 +564,7 @@ package com.ludofactory.mobile.navigation.vip
 		 */		
 		private function onReload(event:Event):void
 		{
-			advancedOwner.showScreen( ScreenIds.STORE_SCREEN );
+			NotificationPopupManager.addNotification( new CreditsNotificationContent() );
 		}
 		
 //------------------------------------------------------------------------------------------------------------
