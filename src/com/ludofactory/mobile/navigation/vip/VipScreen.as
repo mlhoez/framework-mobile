@@ -10,10 +10,13 @@ package com.ludofactory.mobile.navigation.vip
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
+	import com.ludofactory.common.Ranks;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.FacebookButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -29,6 +32,7 @@ package com.ludofactory.mobile.navigation.vip
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	
 	import feathers.controls.Label;
 	
@@ -176,6 +180,9 @@ package com.ludofactory.mobile.navigation.vip
 		private var _leftArrowButton:Button;
 		private var _rightArrowButton:Button;
 
+		/**
+		 * Facebook button that will associate the account or directly publish, depending on the actual state. */
+		private var _facebookButton:FacebookButton;
 		
 		public function VipScreen()
 		{
@@ -365,6 +372,14 @@ package com.ludofactory.mobile.navigation.vip
 			_rightArrowButton.scaleX = _rightArrowButton.scaleY = GlobalConfig.dpiScale;
 			_rightArrowButton.addEventListener(Event.TRIGGERED, onTouchForward);
 			addChild(_rightArrowButton);
+
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("Je suis {0} sur {1}"), Ranks.getRankName(MemberManager.getInstance().rank), AbstractGameInfo.GAME_NAME),
+					"",
+					_("Avec ce rang, je bénéficie nombreux avantages pour gagner encore plus vite !"),
+					_("http://www.ludokado.com/"),
+					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_vip_{1}.jpg"), LanguageManager.getInstance().lang, MemberManager.getInstance().rank));
+			_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			addChild(_facebookButton);
 			
 			invalidate( INVALIDATION_FLAG_SIZE );
 			invalidate( INVALIDATION_FLAG_RANK );
@@ -382,7 +397,7 @@ package com.ludofactory.mobile.navigation.vip
 			{
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					_iconsYPosition = actualHeight * 0.45;
+					_iconsYPosition = actualHeight * 0.4;
 					
 					_rankTitleLabel.y = (((_iconsYPosition - _iconHeight * 0.5) - scaleAndRoundToDpi(50)) * 0.5) << 0;
 					_rankTitleLabel.width = actualWidth * 0.5;
@@ -397,10 +412,15 @@ package com.ludofactory.mobile.navigation.vip
 					_topShadow.x = actualWidth * 0.5 - _topShadow.width;
 
 					_leftArrowButton.x = scaleAndRoundToDpi(12);
-					_leftArrowButton.y = actualHeight - _leftArrowButton.height - scaleAndRoundToDpi(5);
+					_leftArrowButton.y = actualHeight - _leftArrowButton.height - scaleAndRoundToDpi(10);
 
 					_rightArrowButton.x = actualWidth * 0.5 - _rightArrowButton.width - scaleAndRoundToDpi(12);
-					_rightArrowButton.y = actualHeight - _rightArrowButton.height - scaleAndRoundToDpi(5);
+					_rightArrowButton.y = actualHeight - _rightArrowButton.height - scaleAndRoundToDpi(10);
+
+					_facebookButton.width = _rightArrowButton.x - _leftArrowButton.x - _leftArrowButton.width - scaleAndRoundToDpi(10);
+					//_facebookButton.height = _leftArrowButton.height;
+					_facebookButton.x = roundUp(((actualWidth * 0.5) - _facebookButton.width) * 0.5);
+					_facebookButton.y = _leftArrowButton.y - scaleAndRoundToDpi(10);
 				}
 				else
 				{
@@ -842,8 +862,18 @@ package com.ludofactory.mobile.navigation.vip
 		}
 		
 //------------------------------------------------------------------------------------------------------------
-//	Dispose
+//	Facebook
+
+		/**
+		 * Publication posted.
+		 */
+		private function onPublished(event:Event):void
+		{
+			_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+		}
+		
 //------------------------------------------------------------------------------------------------------------
+//	Dispose
 		
 		override public function dispose():void
 		{
@@ -942,6 +972,10 @@ package com.ludofactory.mobile.navigation.vip
 				_rightArrowButton.removeFromParent(true);
 				_rightArrowButton = null;
 			}
+			
+			_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			_facebookButton.removeFromParent(true);
+			_facebookButton = null;
 			
 			super.dispose();
 		}
