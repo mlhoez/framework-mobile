@@ -13,6 +13,7 @@ package com.ludofactory.mobile
 	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.log;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
@@ -316,10 +317,11 @@ package com.ludofactory.mobile
 					var now:Date = new Date();
 					var tokenExpiryDate:Date = new Date( MemberManager.getInstance().facebookTokenExpiryTimestamp );
 					
-					/*log("Facebook id : " + MemberManager.getInstance().facebookId);
+					log("logué : " + MemberManager.getInstance().isLoggedIn());
+					log("Facebook id : " + MemberManager.getInstance().facebookId);
 					log("Token time stamp : " + MemberManager.getInstance().facebookTokenExpiryTimestamp);
 					log("Now = " + now.toString());
-					log("Expiry date = " + tokenExpiryDate.toString());*/
+					log("Expiry date = " + tokenExpiryDate.toString());
 					
 					if( (MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().facebookId != 0 && now > tokenExpiryDate) ||
 							(MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().facebookId == 0) || !MemberManager.getInstance().isLoggedIn())
@@ -361,9 +363,8 @@ package com.ludofactory.mobile
 				// the user authenticated successfully
 				if(_buttonType == ButtonFactory.FACEBOOK_TYPE_SHARE)
 				{
-					// if we are in share mode, it means that in this callback we have to launch the publication
-					FacebookManager.getInstance().addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
-					FacebookManager.getInstance().publishOnWall(_publicationData, false);
+					// we first need to refresh the data :
+					dispatchEventWith(FacebookManagerEventType.REFRESH_PUBLICAION_DATA);
 				}
 				else
 				{
@@ -371,6 +372,19 @@ package com.ludofactory.mobile
 					dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
 				}
 			}
+		}
+		
+		public function refreshPublicationData(title:String = null, caption:String = null, description:String = null, linkUrl:String = null, imageUrl:String = null, extraParams:Object = null):void
+		{
+			// build the publication data
+			_publicationData = new FacebookPublicationData(title, caption, description, linkUrl, imageUrl, extraParams);
+		}
+		
+		public function publish():void
+		{
+			// if we are in share mode, it means that in this callback we have to launch the publication
+			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			FacebookManager.getInstance().publishOnWall(_publicationData, false);
 		}
 
 		/**
@@ -401,13 +415,13 @@ package com.ludofactory.mobile
 				}
 				case 1: // the user have been rewarded
 				{
-					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, 8);
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, 8);
 					removeIncentive();
 					break;
 				}
 				case 2: // the user have already been rewarded
 				{
-					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, 8);
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, 8);
 					removeIncentive();
 					break;
 				}

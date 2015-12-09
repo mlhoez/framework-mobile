@@ -267,7 +267,6 @@ package com.ludofactory.mobile.navigation.highscore
 							formatString(_("Venez me défiez et tenter de battre mon meilleur score de {0} !"), MemberManager.getInstance().highscore),
 							_("http://www.ludokado.com/"),
 							formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
-					_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 					_facebookButton.y = _itemHeight;
 					_facebookButton.x = roundUp((this.owner.width - _facebookButton.width) * 0.5);
 					addChild(_facebookButton);
@@ -280,7 +279,6 @@ package com.ludofactory.mobile.navigation.highscore
 			{
 				if(_facebookButton)
 				{
-					_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 					_facebookButton.removeFromParent(true);
 					_facebookButton = null;
 				}
@@ -524,21 +522,9 @@ package com.ludofactory.mobile.navigation.highscore
 				_callout = null;
 			}
 		}
-
-//------------------------------------------------------------------------------------------------------------
-//	Facebook
-
-		/**
-		 * Publication posted.
-		 */
-		private function onPublished(event:Event):void
-		{
-			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
-		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{
@@ -580,7 +566,6 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			if(_facebookButton)
 			{
-				_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 				_facebookButton.removeFromParent(true);
 				_facebookButton = null;
 			}

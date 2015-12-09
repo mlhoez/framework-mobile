@@ -109,9 +109,13 @@ package com.ludofactory.mobile.navigation
 							// the token is still valid, then we don't need to do something special
 							//onMeReturned();
 							//requestMe();
+							
 							if(_publicationData)
 								publish();
-
+							
+							// else : ne doit pas arriver, ça bug si on me renvoie pas l'id facebook correctement,
+							// cardu coup on passe ici, y'a pas de publication et on reste coincé
+							// mais sinon il faudrait faire InfoManager.hide et dispatcher l'event ci-dessous
 							//dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
 						}
 						else

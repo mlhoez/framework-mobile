@@ -281,7 +281,7 @@ package com.ludofactory.mobile.navigation.engine
 		 */		
 		private function onPublished(event:starling.events.Event):void
 		{
-			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 			Starling.juggler.delayCall(onContinue, 1);
 			touchable = false;
 		}

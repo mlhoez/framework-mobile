@@ -10,6 +10,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.gamua.flox.Flox;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Expo;
+	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.common.sound.SoundManager;
@@ -19,11 +20,13 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.ButtonFactory;
 	import com.ludofactory.mobile.FacebookButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.HeartBeat;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.GameData;
@@ -34,6 +37,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.controls.ImageLoader;
@@ -335,10 +339,10 @@ package com.ludofactory.mobile.navigation.engine
 			{
 				// pas pushé
 				
-				_notConnectedLabel = new TextField(5, 5, _("Impossible de déterminer votre classement et vos gains provisoires car vous n'êtes pas connecté à Internet."), Theme.FONT_ARIAL, scaleAndRoundToDpi(24), 0x666666, true);
+				_notConnectedLabel = new TextField(5, 5, (MemberManager.getInstance().isLoggedIn() ? _("Impossible de déterminer votre classement et vos gains provisoires car vous n'êtes pas connecté à Internet.") :
+						_("Impossible de déterminer votre classement et vos gains provisoires car vous n'êtes pas identifié.")), Theme.FONT_ARIAL, scaleAndRoundToDpi(24), 0x666666, true);
 				_notConnectedLabel.autoSize = TextFieldAutoSize.VERTICAL;
 				_notConnectedLabel.alpha = 0;
-				_notConnectedLabel.border = true;
 				addChild(_notConnectedLabel);
 			}
 			
@@ -356,9 +360,28 @@ package com.ludofactory.mobile.navigation.engine
 			_replayButton.addEventListener(Event.TRIGGERED, onPlayAgain);
 			addChild(_replayButton);
 			
-			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE); // TODO
-			_facebookButton.alpha = 0;
-			addChild(_facebookButton);
+			if(advancedOwner.screenData.gameData.gameSessionPushed)
+			{
+				_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_n("J'ai obtenu {0} Rubis au tournoi sur {1} !", "J'ai obtenu {0} Rubis au tournoi sur {1} !", advancedOwner.screenData.gameData.numStarsOrPointsEarned), Utilities.splitThousands(advancedOwner.screenData.gameData.numStarsOrPointsEarned), AbstractGameInfo.GAME_NAME),
+						"",
+						formatString(_("Je suis maintenant {0} au classement du tournoi avec {1} Rubis !\nVenez jouer au tournoi pour tenter de remporter {2}"), formatString( Utilities.translatePosition(advancedOwner.screenData.gameData.position), advancedOwner.screenData.gameData.position), MemberManager.getInstance().cumulatedRubies, advancedOwner.screenData.gameData.topDotationName),
+						_("http://www.ludokado.com/"),
+						formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
+				_facebookButton.addEventListener(FacebookManagerEventType.REFRESH_PUBLICAION_DATA, onRefreshPublicationData);
+				_facebookButton.alpha = 0;
+				addChild(_facebookButton);
+			}
+			else
+			{
+				_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_n("J'ai obtenu {0} Rubis au tournoi sur {1} !", "J'ai obtenu {0} Rubis au tournoi sur {1} !", advancedOwner.screenData.gameData.numStarsOrPointsEarned), Utilities.splitThousands(advancedOwner.screenData.gameData.numStarsOrPointsEarned), AbstractGameInfo.GAME_NAME),
+						"",
+						formatString(_("Je cumule maintenant {1} Rubis pour le tournoi en cours!\nVenez participer au tournoi pour tenter de remporter de nombreux gains !"), formatString( Utilities.translatePosition(advancedOwner.screenData.gameData.position), advancedOwner.screenData.gameData.position), MemberManager.getInstance().cumulatedRubies, advancedOwner.screenData.gameData.topDotationName),
+						_("http://www.ludokado.com/"),
+						formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
+				_facebookButton.addEventListener(FacebookManagerEventType.REFRESH_PUBLICAION_DATA, onRefreshPublicationData);
+				_facebookButton.alpha = 0;
+				addChild(_facebookButton);
+			}
 			
 		}
 		
@@ -671,6 +694,33 @@ package com.ludofactory.mobile.navigation.engine
 		
 		private var _isReplaced:Boolean = false;
 		
+		private function onRefreshPublicationData(event:Event):void
+		{
+			// no need to listen again
+			_facebookButton.removeEventListener(FacebookManagerEventType.REFRESH_PUBLICAION_DATA, onRefreshPublicationData);
+			
+			if(advancedOwner.screenData.gameData.gameSessionPushed)
+			{
+				_facebookButton.refreshPublicationData(formatString(_n("J'ai obtenu {0} Rubis au tournoi sur {1} !", "J'ai obtenu {0} Rubis au tournoi sur {1} !", advancedOwner.screenData.gameData.numStarsOrPointsEarned), Utilities.splitThousands(advancedOwner.screenData.gameData.numStarsOrPointsEarned), AbstractGameInfo.GAME_NAME),
+						"",
+						formatString(_("Je suis maintenant {0} au classement du tournoi avec {1} Rubis !\nVenez jouer au tournoi pour tenter de remporter {2}"), formatString( Utilities.translatePosition(advancedOwner.screenData.gameData.position), advancedOwner.screenData.gameData.position), MemberManager.getInstance().cumulatedRubies, advancedOwner.screenData.gameData.topDotationName),
+						_("http://www.ludokado.com/"),
+						formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
+			}
+			else
+			{
+				_facebookButton.refreshPublicationData(formatString(_n("J'ai obtenu {0} Rubis au tournoi sur {1} !", "J'ai obtenu {0} Rubis au tournoi sur {1} !", advancedOwner.screenData.gameData.numStarsOrPointsEarned), Utilities.splitThousands(advancedOwner.screenData.gameData.numStarsOrPointsEarned), AbstractGameInfo.GAME_NAME),
+						"",
+						formatString(_("Je cumule maintenant {1} Rubis pour le tournoi en cours!\nVenez participer au tournoi pour tenter de remporter de nombreux gains !"), formatString( Utilities.translatePosition(advancedOwner.screenData.gameData.position), advancedOwner.screenData.gameData.position), MemberManager.getInstance().cumulatedRubies, advancedOwner.screenData.gameData.topDotationName),
+						_("http://www.ludokado.com/"),
+						formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
+			}
+			
+			_cumulatedRubiesLabel.text = formatString(_("({0} au total)"), Utilities.splitThousands(MemberManager.getInstance().cumulatedRubies));
+			
+			_facebookButton.publish();
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Image loading
 		
@@ -856,6 +906,7 @@ package com.ludofactory.mobile.navigation.engine
 			_homeButton = null;
 			
 			TweenMax.killTweensOf(_facebookButton);
+			_facebookButton.removeEventListener(FacebookManagerEventType.REFRESH_PUBLICAION_DATA, onRefreshPublicationData);
 			_facebookButton.removeFromParent(true);
 			_facebookButton = null;
 			

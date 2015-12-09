@@ -156,7 +156,6 @@ package com.ludofactory.mobile.navigation.vip
 					_("http://www.ludokado.com/"),
 					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_vip_{1}.jpg"), LanguageManager.getInstance().lang, _playerRankData.id));
 			_facebookButton.alpha = 0;
-			_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 			addChild(_facebookButton);
 			
 			TweenMax.delayedCall(1, animateBase);
@@ -336,17 +335,6 @@ package com.ludofactory.mobile.navigation.vip
 		}
 		
 //------------------------------------------------------------------------------------------------------------
-//	Facebook
-		
-		/**
-		 * Publication posted.
-		 */
-		private function onPublished(event:Event):void
-		{
-			_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
-		}
-		
-//------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
 		override public function dispose():void
@@ -403,7 +391,6 @@ package com.ludofactory.mobile.navigation.vip
 			_animArray = null;
 			
 			TweenMax.killTweensOf(_facebookButton);
-			_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 			_facebookButton.removeFromParent(true);
 			_facebookButton = null;
 			

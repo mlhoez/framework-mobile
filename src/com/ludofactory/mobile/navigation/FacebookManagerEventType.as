@@ -12,6 +12,7 @@ package com.ludofactory.mobile.navigation
 		/**
 		 * Authenticated. */
 		public static const AUTHENTICATED:String = "authenticated";
+		public static const REFRESH_PUBLICAION_DATA:String = "refresh-publication-data";
 		
 		/**
 		 * Permission granted. */

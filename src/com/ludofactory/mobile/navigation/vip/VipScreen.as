@@ -378,7 +378,7 @@ package com.ludofactory.mobile.navigation.vip
 					_("Avec ce rang, je bénéficie nombreux avantages pour gagner encore plus vite !"),
 					_("http://www.ludokado.com/"),
 					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_vip_{1}.jpg"), LanguageManager.getInstance().lang, MemberManager.getInstance().rank));
-			_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			_facebookButton.addEventListener(FacebookManagerEventType.REFRESH_PUBLICAION_DATA, onRefreshPublicationData);
 			addChild(_facebookButton);
 			
 			invalidate( INVALIDATION_FLAG_SIZE );
@@ -863,13 +863,18 @@ package com.ludofactory.mobile.navigation.vip
 		
 //------------------------------------------------------------------------------------------------------------
 //	Facebook
-
-		/**
-		 * Publication posted.
-		 */
-		private function onPublished(event:Event):void
+		
+		private function onRefreshPublicationData(event:Event):void
 		{
-			_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			// no need to listen again
+			_facebookButton.removeEventListener(FacebookManagerEventType.REFRESH_PUBLICAION_DATA, onRefreshPublicationData);
+			
+			_facebookButton.refreshPublicationData(formatString(_("Je suis {0} sur {1}"), Ranks.getRankName(MemberManager.getInstance().rank), AbstractGameInfo.GAME_NAME),
+					"",
+					_("Avec ce rang, je bénéficie nombreux avantages pour gagner encore plus vite !"),
+					_("http://www.ludokado.com/"),
+					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_vip_{1}.jpg"), LanguageManager.getInstance().lang, MemberManager.getInstance().rank));
+			_facebookButton.publish();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -973,7 +978,7 @@ package com.ludofactory.mobile.navigation.vip
 				_rightArrowButton = null;
 			}
 			
-			_facebookButton.removeEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			_facebookButton.removeEventListener(FacebookManagerEventType.REFRESH_PUBLICAION_DATA, onRefreshPublicationData);
 			_facebookButton.removeFromParent(true);
 			_facebookButton = null;
 			
