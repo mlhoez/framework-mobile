@@ -291,7 +291,8 @@ package com.ludofactory.mobile.navigation.authentication
 		 */
 		private function onFacebookAuthenticated(event:Event):void
 		{
-			advancedOwner.showScreen(ScreenIds.HOME_SCREEN);
+			if(event.data)
+				advancedOwner.showScreen(ScreenIds.HOME_SCREEN);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
