@@ -161,8 +161,7 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			if( !MemberManager.getInstance().isLoggedIn() )
 			{
-				//NotificationManager.addNotification( new MarketingRegisterNotification(AbstractEntryPoint.screenNavigator.activeScreenID) );
-				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(AbstractEntryPoint.screenNavigator.activeScreenID) );
+				NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(_("Vous devez être identifié pour pourvoir commander."), AbstractEntryPoint.screenNavigator.activeScreenID) );
 			}
 			else
 			{

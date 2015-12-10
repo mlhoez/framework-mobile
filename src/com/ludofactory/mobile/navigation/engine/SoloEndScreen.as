@@ -574,7 +574,7 @@ package com.ludofactory.mobile.navigation.engine
 			{
 				if(MemberManager.getInstance().tokens == 0)
 				{
-					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.HOME_SCREEN) );
+					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(_("Vous n'avez plus assez de Jetons pour rejouer ?"), ScreenIds.HOME_SCREEN) );
 				}
 				else
 				{
@@ -608,7 +608,7 @@ package com.ludofactory.mobile.navigation.engine
 			{
 				if(MemberManager.getInstance().tokens == 0)
 				{
-					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(MemberManager.getInstance().tokens >= Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE) ? ScreenIds.GAME_TYPE_SELECTION_SCREEN : ScreenIds.HOME_SCREEN) );
+					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(_("Vous n'avez plus assez de Jetons pour rejouer ?"), ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
 				}
 				else
 				{

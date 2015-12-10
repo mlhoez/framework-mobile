@@ -297,6 +297,12 @@ package com.ludofactory.mobile.core.notification
 			return _content.height > _maxContentHeight ? 0 : ((_maxContentHeight - _content.height) * 0.5);
 		}
 		
+		
+		public function get maxContentHeight():Number
+		{
+			return _maxContentHeight;
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		

@@ -6,7 +6,8 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.navigation.game
 {
-
+	
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
@@ -70,7 +71,7 @@ package com.ludofactory.mobile.navigation.game
 			else
 			{
 				if(!MemberManager.getInstance().isLoggedIn())
-					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
+					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(_("Vous n'avez pas assez de Points."), ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
 			}
 		}
 		
