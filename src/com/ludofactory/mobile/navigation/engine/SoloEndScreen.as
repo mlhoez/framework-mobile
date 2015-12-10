@@ -572,17 +572,17 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			else
 			{
-				if(MemberManager.getInstance().tokens == 0)
+				/*if(MemberManager.getInstance().tokens == 0)
 				{
 					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(_("Vous n'avez plus assez de Jetons pour rejouer ?"), ScreenIds.HOME_SCREEN) );
 				}
 				else
-				{
+				{*/
 					_homeButton.enabled = false;
 					_replayButton.enabled = false;
 					_facebookButton.enabled = false;
 					advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
-				}
+				//}
 			}
 		}
 		
