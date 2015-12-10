@@ -120,7 +120,7 @@ package com.ludofactory.mobile.navigation
 							// cardu coup on passe ici, y'a pas de publication et on reste coincé
 							// mais sinon il faudrait faire InfoManager.hide et dispatcher l'event ci-dessous
 							
-							dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
+							dispatchEventWith(FacebookManagerEventType.AUTHENTICATED, false, true);
 						}
 						else
 						{
@@ -275,7 +275,7 @@ package com.ludofactory.mobile.navigation
 						if(_publicationData)
 							publish();
 						
-						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
+						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED, false, true);
 						
 						break;
 					}
@@ -380,7 +380,7 @@ package com.ludofactory.mobile.navigation
 						publish();
 					
 					// so that the popup can be closed
-					dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
+					dispatchEventWith(FacebookManagerEventType.AUTHENTICATED, false, true);
 					break;
 				}
 					
@@ -444,7 +444,7 @@ package com.ludofactory.mobile.navigation
 						// The user have successfully logged in with his Facebook account
 						// we dispatch an event to tell the app the result
 						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME);
-						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
+						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED, false, true);
 					}
 					break;
 				}
@@ -470,7 +470,7 @@ package com.ludofactory.mobile.navigation
 						// no event dispatched here because we redirect to the pseudo choixe screen already
 						// if we dispatch an event, the popup will close, redirect to the pseudo choixe screen and
 						// then to the home screen
-						//dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
+						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED, false, false);
 					}
 					
 					break;

@@ -220,7 +220,7 @@ package com.ludofactory.mobile.core.notification.content
 		private function onConnectedWithFacebook(event:Event):void
 		{
 			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED, onConnectedWithFacebook);
-			data = true;
+			data = event.data;
 			
 			// TODO if event.data.bonusAdded ...
 			// it will mean that we need to animate the bonus
