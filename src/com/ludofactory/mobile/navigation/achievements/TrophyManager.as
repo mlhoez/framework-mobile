@@ -72,7 +72,17 @@ package com.ludofactory.mobile.navigation.achievements
 				if( TrophyData(_trophiesData[i]).id == trophyId )
 					return TrophyData(_trophiesData[i]);
 			}
-			throw new Error("[TrophyManager] The trophy " + trophyId + " doesn't exists.");
+			
+			if(CONFIG::DEBUG)
+			{
+				// an error in debug mode so that we can debug that
+				throw new Error("[TrophyManager] The trophy " + trophyId + " doesn't exists.");
+			}
+			else
+			{
+				// otherwise we return nothing
+				return null;
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -86,6 +96,11 @@ package com.ludofactory.mobile.navigation.achievements
 		 */		
 		public function canWinTrophy(trophyId:int):Boolean
 		{
+			// first check if the trophy id is in the list of known trophies (of not, we return false)
+			if(!getTrophyDataById(trophyId))
+				return false;
+			
+			// get the ids of the won trophies
 			_trophiesWon = MemberManager.getInstance().trophiesWon.concat();
 			for(var i:int = 0; i < _trophiesWon.length; i++)
 			{
