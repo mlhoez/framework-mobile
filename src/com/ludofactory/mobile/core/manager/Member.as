@@ -170,7 +170,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * The boot time. */
-		private var _bootTime:Number;
+		private var _bootTime:Number = NaN;
 		private var _tokenDate:Date;
 		
 		/**
