@@ -377,7 +377,7 @@ package com.ludofactory.mobile
 				else
 				{
 					// tell the parent that the user authenticated, so that it can refresh / layout again
-					dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
+					dispatchEventWith(FacebookManagerEventType.AUTHENTICATED, false, data);
 				}
 			}
 		}
