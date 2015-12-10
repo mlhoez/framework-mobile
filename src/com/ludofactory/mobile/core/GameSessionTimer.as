@@ -100,7 +100,7 @@ package com.ludofactory.mobile.core
 			else
 			{
 				// no more free game session then start the timer
-				if( !MemberManager.getInstance().anonymousGameSessionsAlreadyUsed && MemberManager.getInstance().tokens < 50 )
+				if( !MemberManager.getInstance().anonymousGameSessionsAlreadyUsed && MemberManager.getInstance().tokens <= 0 )
 				{
 					start();
 				}
@@ -206,10 +206,10 @@ package com.ludofactory.mobile.core
 			if(_isRunning)
 			{
 				_isRunning = false;
-				HeartBeat.unregisterFunction(update);
-				HeartBeat.unregisterFunction(updateWhenNotAuthenticated);
 				MemberManager.getInstance().bootTime = NaN;
 				MemberManager.getInstance().tokenDate = null;
+				HeartBeat.unregisterFunction(update);
+				HeartBeat.unregisterFunction(updateWhenNotAuthenticated);
 			}
 		}
 		
