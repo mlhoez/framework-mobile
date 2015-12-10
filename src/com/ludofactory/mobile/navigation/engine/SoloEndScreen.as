@@ -675,12 +675,15 @@ package com.ludofactory.mobile.navigation.engine
 			_overlay.removeFromParent(true);
 			_overlay = null;
 			
+			TweenMax.killTweensOf(_flag);
 			_flag.removeFromParent(true);
 			_flag = null;
 			
+			TweenMax.killTweensOf(_title);
 			_title.removeFromParent(true);
 			_title = null;
 			
+			TweenMax.killTweensOf(_container);
 			_container.removeFromParent(true);
 			_container = null;
 			
