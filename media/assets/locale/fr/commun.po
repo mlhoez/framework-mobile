@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Français)\n"
-"POT-Creation-Date: 2015-09-18 17:04+0200\n"
-"PO-Revision-Date: 2015-09-18 17:04+0200\n"
+"POT-Creation-Date: 2015-12-10 11:52+0100\n"
+"PO-Revision-Date: 2015-12-10 18:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,6 +16,66 @@ msgstr ""
 "dngettext:2,3;_f;_df:2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
+
+#: common/Ranks.as:51
+msgid "Moussaillon"
+msgstr ""
+
+#: common/Ranks.as:52
+#: mobile/core/notification/content/SponsorNotificationContent.as:80
+#: mobile/core/notification/content/SponsorNotificationContent.as:87
+msgid "Matelot"
+msgstr ""
+
+#: common/Ranks.as:53
+#: mobile/core/notification/content/SponsorNotificationContent.as:81
+#: mobile/core/notification/content/SponsorNotificationContent.as:88
+msgid "Boucanier"
+msgstr ""
+
+#: common/Ranks.as:54
+msgid "Aventurier I"
+msgstr ""
+
+#: common/Ranks.as:55
+msgid "Aventurier II"
+msgstr ""
+
+#: common/Ranks.as:56
+msgid "Aventurier III"
+msgstr ""
+
+#: common/Ranks.as:57
+msgid "Pirate I"
+msgstr ""
+
+#: common/Ranks.as:58
+msgid "Pirate II"
+msgstr ""
+
+#: common/Ranks.as:59
+#: mobile/core/notification/content/SponsorNotificationContent.as:82
+#: mobile/core/notification/content/SponsorNotificationContent.as:83
+#: mobile/core/notification/content/SponsorNotificationContent.as:89
+msgid "Pirate III"
+msgstr ""
+
+#: common/Ranks.as:60
+msgid "Premier Maître"
+msgstr ""
+
+#: common/Ranks.as:61
+msgid "Second Maître"
+msgstr ""
+
+#: common/Ranks.as:62
+#: mobile/core/notification/content/SponsorNotificationContent.as:90
+msgid "Capitaine"
+msgstr ""
+
+#: common/Ranks.as:63
+msgid "Inconnu"
+msgstr ""
 
 #: common/gettext/ISO_639_1.as:46
 msgid "Afar."
@@ -737,36 +797,69 @@ msgstr ""
 msgid "Zulu"
 msgstr ""
 
-#: common/utils/Utilities.as:180 common/utils/Utilities.as:187
+#: common/utils/Utilities.as:181 common/utils/Utilities.as:188
 msgid "TOURNAMENT_END.POSITION_SECOND"
 msgstr "{0} ème"
 
-#: common/utils/Utilities.as:186
+#: common/utils/Utilities.as:187
 msgid "TOURNAMENT_END.POSITION_FIRST"
 msgstr "{0} er"
 
-#: common/utils/Utilities.as:188
+#: common/utils/Utilities.as:189
 msgid "TOURNAMENT_END.POSITION_THIRD"
 msgstr "{0} ème"
 
-#: common/utils/Utilities.as:189
+#: common/utils/Utilities.as:190
 msgid "TOURNAMENT_END.POSITION_FOURTH"
 msgstr "{0} ème"
 
-#: mobile/core/AbstractEntryPoint.as:1147
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:273
+#: mobile/FacebookButton.as:405
+#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:171
+#: mobile/core/notification/content/CSNewThreadNotificationContent.as:238
+#: mobile/core/notification/content/PendingBidDetailNotificationContent.as:241
+#: mobile/core/notification/content/PendingBidDetailNotificationContent.as:289
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:149
+#: mobile/core/purchases/Store.as:185 mobile/navigation/FacebookManager.as:103
+#: mobile/navigation/FacebookManager.as:313
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:379
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:411
+#: mobile/navigation/authentication/LoginScreen.as:225
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:154
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:303
+#: mobile/navigation/authentication/RegisterScreen.as:257
+#: mobile/navigation/authentication/SponsorScreen.as:173
+#: mobile/navigation/cs/thread/CSThreadScreen.as:145
+#: mobile/navigation/cs/thread/CSThreadScreen.as:255
+#: mobile/navigation/engine/HighScoreScreen.as:104
+#: mobile/navigation/engine/PodiumScreen.as:114
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:184
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:354
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:456
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:481
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:780
+msgid "Chargement..."
+msgstr ""
+
+#: mobile/FacebookButton.as:441
+msgid ""
+"Une erreur est survenue lors de l'ajout de votre récompense, veuillez "
+"réessayer."
+msgstr ""
+
+#: mobile/core/AbstractEntryPoint.as:1142
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:275
 msgid "Vous devez choisir un pseudo !"
 msgstr ""
 
-#: mobile/core/AbstractEntryPoint.as:1147
+#: mobile/core/AbstractEntryPoint.as:1142
 msgid "Merci d'entrer un code parrain ou passez cette étape pour continuer."
 msgstr ""
 
-#: mobile/core/AbstractGame.as:249
+#: mobile/core/AbstractGame.as:245
 msgid "Commencer"
 msgstr ""
 
-#: mobile/core/AbstractGame.as:322
+#: mobile/core/AbstractGame.as:315
 msgid ""
 "Validation de votre partie en cours.\n"
 "Merci de patienter quelques secondes..."
@@ -878,107 +971,81 @@ msgstr ""
 msgid "Commander"
 msgstr ""
 
-#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:172
-#: mobile/core/notification/content/CSNewThreadNotificationContent.as:238
-#: mobile/core/notification/content/PendingBidDetailNotificationContent.as:241
-#: mobile/core/notification/content/PendingBidDetailNotificationContent.as:289
-#: mobile/core/purchases/Store.as:185 mobile/navigation/FacebookManager.as:180
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:382
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:414
-#: mobile/navigation/authentication/AuthenticationScreen.as:232
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:167
-#: mobile/navigation/authentication/LoginScreen.as:206
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:153
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:301
-#: mobile/navigation/authentication/RegisterScreen.as:219
-#: mobile/navigation/authentication/SponsorScreen.as:173
-#: mobile/navigation/cs/thread/CSThreadScreen.as:145
-#: mobile/navigation/cs/thread/CSThreadScreen.as:255
-#: mobile/navigation/engine/HighScoreScreen.as:106
-#: mobile/navigation/engine/PodiumScreen.as:119
-#: mobile/navigation/engine/SoloEndScreen.as:163
-#: mobile/navigation/engine/TournamentEndScreen.as:196
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:183
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:353
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:455
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:480
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:777
-msgid "Chargement..."
+#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:164
+msgid "Vous devez être identifié pour pourvoir commander."
 msgstr ""
 
-#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:177
+#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:176
 #: mobile/core/notification/content/CSNewThreadNotificationContent.as:255
+#: mobile/core/notification/content/CreditsNotificationContent.as:443
 #: mobile/core/notification/content/PendingBidDetailNotificationContent.as:315
-#: mobile/navigation/FacebookManager.as:109
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:156
+#: mobile/navigation/FacebookManager.as:151
 #: mobile/navigation/account/history/account/AccountHistoryContainer.as:271
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:387
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:419
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:384
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:416
 #: mobile/navigation/account/history/gifts/MyGiftsScreen.as:330
 #: mobile/navigation/account/history/payments/PaymentsHistoryContainer.as:200
 #: mobile/navigation/account/history/settings/AccountItemRenderer.as:395
 #: mobile/navigation/account/history/settings/PersonalInformationsContainer.as:202
-#: mobile/navigation/authentication/AuthenticationScreen.as:254
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:174
-#: mobile/navigation/authentication/LoginScreen.as:214
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:308
-#: mobile/navigation/authentication/RegisterScreen.as:240
+#: mobile/navigation/authentication/LoginScreen.as:233
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:310
+#: mobile/navigation/authentication/RegisterScreen.as:278
 #: mobile/navigation/cs/display/CSMessagesContainer.as:216
-#: mobile/navigation/highscore/HighScoreListScreen.as:424
-#: mobile/navigation/highscore/HighScoreListScreen.as:440
+#: mobile/navigation/highscore/HighScoreListScreen.as:449
+#: mobile/navigation/highscore/HighScoreListScreen.as:626
 #: mobile/navigation/shop/bid/comingsoon/ComingSoonBidContainer.as:100
 #: mobile/navigation/shop/bid/finished/FinishedBidContainer.as:100
 #: mobile/navigation/shop/bid/pending/PendingBidContainer.as:100
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:224
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:315
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:364
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:473
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:498
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:222
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:316
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:365
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:474
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:499
 #: mobile/navigation/sponsor/filleuls/FilleulsScreen.as:193
 #: mobile/navigation/sponsor/invite/ContactItemRenderer.as:365
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:550
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:787
-#: mobile/navigation/store/StoreScreen.as:463
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:553
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:790
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:257
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:388
-#: mobile/navigation/tournament/TournamentRankingScreen.as:571
-#: mobile/navigation/vip/VipScreen.as:801
+#: mobile/navigation/tournament/TournamentRankingScreen.as:569
+#: mobile/navigation/vip/VipScreen.as:822
 msgid "Aucune connexion Internet."
 msgstr ""
 
-#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:230
+#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:229
 #: mobile/core/notification/content/CSNewThreadNotificationContent.as:298
+#: mobile/core/notification/content/CreditsNotificationContent.as:292
+#: mobile/core/notification/content/CreditsNotificationContent.as:382
 #: mobile/core/notification/content/PendingBidDetailNotificationContent.as:280
 #: mobile/core/notification/content/PendingBidDetailNotificationContent.as:345
-#: mobile/core/purchases/Store.as:222 mobile/navigation/FacebookManager.as:367
-#: mobile/navigation/FacebookManager.as:432
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:195
+#: mobile/core/purchases/Store.as:228 mobile/navigation/FacebookManager.as:403
+#: mobile/navigation/FacebookManager.as:494
 #: mobile/navigation/account/history/account/AccountHistoryContainer.as:251
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:458
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:455
 #: mobile/navigation/account/history/gifts/MyGiftsScreen.as:310
 #: mobile/navigation/account/history/payments/PaymentsHistoryContainer.as:181
 #: mobile/navigation/account/history/settings/PersonalInformationsContainer.as:183
-#: mobile/navigation/authentication/AuthenticationScreen.as:408
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:213
-#: mobile/navigation/authentication/LoginScreen.as:249
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:381
-#: mobile/navigation/authentication/RegisterScreen.as:329
+#: mobile/navigation/authentication/LoginScreen.as:268
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:383
+#: mobile/navigation/authentication/RegisterScreen.as:367
 #: mobile/navigation/authentication/SponsorScreen.as:210
 #: mobile/navigation/cs/display/CSMessagesContainer.as:197
 #: mobile/navigation/cs/thread/CSThreadScreen.as:247
-#: mobile/navigation/highscore/HighScoreListScreen.as:399
+#: mobile/navigation/highscore/HighScoreListScreen.as:424
 #: mobile/navigation/shop/bid/comingsoon/ComingSoonBidContainer.as:157
 #: mobile/navigation/shop/bid/finished/FinishedBidContainer.as:157
 #: mobile/navigation/shop/bid/pending/PendingBidContainer.as:157
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:205
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:331
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:432
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:203
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:332
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:433
 #: mobile/navigation/sponsor/filleuls/FilleulsScreen.as:174
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:861
-#: mobile/navigation/store/StoreScreen.as:314
-#: mobile/navigation/store/StoreScreen.as:404
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:864
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:223
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:367
-#: mobile/navigation/tournament/TournamentRankingScreen.as:547
-#: mobile/navigation/vip/VipScreen.as:811
+#: mobile/navigation/tournament/TournamentRankingScreen.as:545
+#: mobile/navigation/vip/VipScreen.as:832
 msgid "Une erreur est survenue, veuillez réessayer."
 msgstr ""
 
@@ -987,10 +1054,10 @@ msgid "Nouveau message"
 msgstr ""
 
 #: mobile/core/notification/content/CSNewThreadNotificationContent.as:115
-#: mobile/core/storage/StorageConfig.as:181
-#: mobile/navigation/game/GameModeSelectionPopup.as:169
-#: mobile/navigation/game/GameModeSelectionPopup.as:459
-#: mobile/navigation/game/GameModeSelectionPopup.as:516
+#: mobile/core/storage/StorageConfig.as:196
+#: mobile/navigation/game/GameModeSelectionPopup.as:167
+#: mobile/navigation/game/GameModeSelectionPopup.as:429
+#: mobile/navigation/game/GameModeSelectionPopup.as:486
 msgid "Partie Solo"
 msgstr ""
 
@@ -1003,6 +1070,7 @@ msgid "Saisissez ici votre question..."
 msgstr ""
 
 #: mobile/core/notification/content/CSNewThreadNotificationContent.as:146
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:84
 msgid "Envoyer"
 msgstr ""
 
@@ -1011,11 +1079,11 @@ msgid "Le message ne peut être vide."
 msgstr ""
 
 #: mobile/core/notification/content/CSNewThreadNotificationContent.as:233
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:141
 #: mobile/navigation/account/history/settings/EmailSettingsContainer.as:86
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:159
-#: mobile/navigation/authentication/LoginScreen.as:191
-#: mobile/navigation/authentication/RegisterScreen.as:203
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:758
+#: mobile/navigation/authentication/LoginScreen.as:210
+#: mobile/navigation/authentication/RegisterScreen.as:241
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:761
 msgid "Email invalide."
 msgstr ""
 
@@ -1029,12 +1097,22 @@ msgstr ""
 msgid "Prochainement..."
 msgstr ""
 
+#: mobile/core/notification/content/CreditsNotificationContent.as:107
+msgid "Boutique de Crédits"
+msgstr ""
+
+#: mobile/core/notification/content/CreditsNotificationContent.as:211
+msgid ""
+"Impossible d'afficher le magasin car vous ne pouvez pas effectuer d'achats "
+"(contrôle parental ou autre raison)."
+msgstr ""
+
 #: mobile/core/notification/content/DisconnectNotificationContent.as:59
 msgid "Voulez-vous vous déconnecter ?"
 msgstr ""
 
 #: mobile/core/notification/content/DisconnectNotificationContent.as:65
-#: mobile/debug/DebugScreen.as:145
+#: mobile/debug/DebugScreen.as:151
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:57
 #: mobile/navigation/settings/SettingsScreen.as:109
 #: mobile/navigation/settings/SettingsScreen.as:119
@@ -1046,8 +1124,8 @@ msgid "Oui"
 msgstr ""
 
 #: mobile/core/notification/content/DisconnectNotificationContent.as:70
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:370
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:402
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:367
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:399
 msgid "Annuler"
 msgstr ""
 
@@ -1069,8 +1147,56 @@ msgid "Activer"
 msgstr ""
 
 #: mobile/core/notification/content/EventPushNotificationContent.as:95
-#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:74
+#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:87
 msgid "Plus tard"
+msgstr ""
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:89
+msgid "Connexion Facebook"
+msgstr ""
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:94
+msgid "1 Crédit OFFERT"
+msgstr ""
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:95
+msgid "Dépassez vos amis !"
+msgstr ""
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:96
+msgid "Jouez sur plusieurs appareils !"
+msgstr ""
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:113
+#: mobile/navigation/authentication/RegisterScreen.as:131
+msgid "Code parrain... (facultatif)"
+msgstr ""
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:126
+#: mobile/navigation/authentication/LoginScreen.as:95
+#: mobile/navigation/menu/Menu.as:213
+msgid "Connexion"
+msgstr ""
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:130
+#: mobile/navigation/authentication/LoginScreen.as:105
+#: mobile/navigation/authentication/RegisterScreen.as:104
+msgid "Nous ne publierons jamais sur votre mur sans votre accord"
+msgstr ""
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:238
+#: mobile/navigation/authentication/RegisterScreen.as:385
+msgid "Qu'est-ce que le code parrain ?"
+msgstr ""
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:244
+#: mobile/navigation/authentication/RegisterScreen.as:385
+msgid ""
+"Le code parrain est un numéro correspondant à l'identifiant d'un joueur sur "
+"l'application.\n"
+"\n"
+"Lorsqu'un joueur ou un ami souhaite vous parrainer, il vous envoie son code "
+"joueur que vous pouvez saisir dans ce champ en vous inscrivant."
 msgstr ""
 
 #: mobile/core/notification/content/FilleulDetailNotificationContent.as:90
@@ -1112,18 +1238,14 @@ msgstr ""
 msgid "Plus tard..."
 msgstr ""
 
-#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:64
+#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:69
 msgid ""
-"Recevez 50 jetons gratuits\n"
-"et un crédit bonus en créant votre compte !"
+"Recevez 50 Jetons GRATUITS par jour + un crédit bonus en créant votre "
+"compte !"
 msgstr ""
 
-#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:80
-msgid "Créer"
-msgstr ""
-
-#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:84
-msgid "J'ai déjà un compte"
+#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:83
+msgid "Je les veux !"
 msgstr ""
 
 #: mobile/core/notification/content/PendingBidDetailNotificationContent.as:112
@@ -1187,13 +1309,20 @@ msgstr ""
 msgid "Noter {0}"
 msgstr ""
 
-#: mobile/core/notification/content/SponsorNotificationContent.as:71
-msgid "Gagnez ces récompenses quand vos filleuls changent de rang."
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:71
+msgid ""
+"Entrez l'email de votre compte pour recevoir dans quelques minutes votre mot "
+"de passe."
 msgstr ""
 
-#: mobile/core/notification/content/SponsorNotificationContent.as:80
-#: mobile/core/notification/content/SponsorNotificationContent.as:87
-msgid "Matelot"
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:76
+#: mobile/navigation/authentication/LoginScreen.as:111
+#: mobile/navigation/authentication/RegisterScreen.as:116
+msgid "Email..."
+msgstr ""
+
+#: mobile/core/notification/content/SponsorNotificationContent.as:71
+msgid "Gagnez ces récompenses quand vos filleuls changent de rang."
 msgstr ""
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:80
@@ -1206,18 +1335,7 @@ msgstr ""
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:81
 #: mobile/core/notification/content/SponsorNotificationContent.as:88
-msgid "Boucanier"
-msgstr ""
-
-#: mobile/core/notification/content/SponsorNotificationContent.as:81
-#: mobile/core/notification/content/SponsorNotificationContent.as:88
 msgid "2 crédits"
-msgstr ""
-
-#: mobile/core/notification/content/SponsorNotificationContent.as:82
-#: mobile/core/notification/content/SponsorNotificationContent.as:83
-#: mobile/core/notification/content/SponsorNotificationContent.as:89
-msgid "Pirate III"
 msgstr ""
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:82
@@ -1244,10 +1362,6 @@ msgstr ""
 msgid "Jusqu'à 400 points*"
 msgstr ""
 
-#: mobile/core/notification/content/SponsorNotificationContent.as:90
-msgid "Capitaine"
-msgstr ""
-
 #: mobile/core/notification/content/SponsorNotificationContent.as:114
 msgid "BONUS !"
 msgstr ""
@@ -1269,19 +1383,19 @@ msgstr ""
 msgid "Jeu en pause"
 msgstr ""
 
-#: mobile/core/pause/PauseView.as:82
+#: mobile/core/pause/PauseView.as:79
 msgid "Reprendre"
 msgstr ""
 
-#: mobile/core/pause/PauseView.as:90
+#: mobile/core/pause/PauseView.as:84
 msgid "Abandonner"
 msgstr ""
 
-#: mobile/core/promo/PromoContent.as:85
+#: mobile/core/promo/PromoContent.as:87
 msgid "--:--"
 msgstr ""
 
-#: mobile/core/promo/PromoContent.as:216
+#: mobile/core/promo/PromoContent.as:218
 #: mobile/navigation/shop/bid/finished/FinishedBidItemRenderer.as:124
 #: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:134
 #: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:378
@@ -1304,11 +1418,11 @@ msgstr ""
 msgid "\""
 msgstr ""
 
-#: mobile/core/purchases/Store.as:386
+#: mobile/core/purchases/Store.as:406
 msgid "Achat annulé."
 msgstr ""
 
-#: mobile/core/purchases/Store.as:439
+#: mobile/core/purchases/Store.as:459
 msgid "L'achat a échoué."
 msgstr ""
 
@@ -1332,7 +1446,6 @@ msgstr ""
 
 #: mobile/core/scoring/ScoreToPointsContainer.as:124
 #: mobile/core/scoring/ScoreToStarsContainer.as:99
-#: mobile/navigation/engine/SoloEndScreen.as:201
 #: mobile/navigation/highscore/HighScoreListHeader.as:78
 msgid "Score"
 msgstr ""
@@ -1391,40 +1504,40 @@ msgstr ""
 msgid "Par exemple : avec un score de {0}, vous gagnez {1} Rubis."
 msgstr ""
 
-#: mobile/core/storage/StorageConfig.as:182
+#: mobile/core/storage/StorageConfig.as:197
 #: mobile/navigation/home/RulesAndScoresScreen.as:80
 msgid "Tournoi"
 msgstr ""
 
-#: mobile/core/storage/StorageConfig.as:183
+#: mobile/core/storage/StorageConfig.as:198
 msgid "Problème technique"
 msgstr ""
 
-#: mobile/core/storage/StorageConfig.as:184 mobile/navigation/menu/Menu.as:80
+#: mobile/core/storage/StorageConfig.as:199 mobile/navigation/menu/Menu.as:80
 msgid "Cadeaux"
 msgstr ""
 
-#: mobile/core/storage/StorageConfig.as:185 mobile/navigation/menu/Menu.as:76
+#: mobile/core/storage/StorageConfig.as:200 mobile/navigation/menu/Menu.as:76
 msgid "Mon Compte"
 msgstr ""
 
-#: mobile/core/storage/StorageConfig.as:186
+#: mobile/core/storage/StorageConfig.as:201
 msgid "Informations"
 msgstr ""
 
-#: mobile/core/storage/StorageConfig.as:187
+#: mobile/core/storage/StorageConfig.as:202
 msgid "Autre"
 msgstr ""
 
-#: mobile/core/storage/StorageConfig.as:222
+#: mobile/core/storage/StorageConfig.as:237
 msgid "Français"
 msgstr ""
 
-#: mobile/core/storage/StorageConfig.as:223
+#: mobile/core/storage/StorageConfig.as:238
 msgid "Anglais"
 msgstr ""
 
-#: mobile/debug/DebugScreen.as:146
+#: mobile/debug/DebugScreen.as:152
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:58
 #: mobile/navigation/settings/SettingsScreen.as:110
 #: mobile/navigation/settings/SettingsScreen.as:120
@@ -1435,28 +1548,21 @@ msgstr ""
 msgid "Non"
 msgstr ""
 
-#: mobile/navigation/FacebookManager.as:104
-#: mobile/navigation/authentication/AuthenticationScreen.as:249
+#: mobile/navigation/FacebookManager.as:146
 msgid "Facebook n'est pas supporté sur cet appareil."
 msgstr ""
 
-#: mobile/navigation/FacebookManager.as:265
-#: mobile/navigation/authentication/AuthenticationScreen.as:324
+#: mobile/navigation/FacebookManager.as:241
 msgid ""
-"Nous n'avons pas pu récupéré votre email via Facebook. Merci de compléter "
+"Nous n'avons pas pu récupérer votre email via Facebook. Merci de compléter "
 "l'inscription normalement."
 msgstr ""
 
-#: mobile/navigation/FacebookManager.as:289
-#: mobile/navigation/FacebookManager.as:305
-msgid ""
-"Ce compte Facebook ne correspond pas à celui associé à votre compte "
-"Ludokado.\n"
-"\n"
-"Merci de vous connecter avec le bon compte Facebook pour continuer."
+#: mobile/navigation/FacebookManager.as:327
+msgid "Publication annulée"
 msgstr ""
 
-#: mobile/navigation/Footer.as:330
+#: mobile/navigation/Footer.as:302
 msgid ""
 "Pour revenir à l'écran précédent,\n"
 "touchez le bouton de retour."
@@ -1548,24 +1654,23 @@ msgid ""
 "Statut : {3}"
 msgstr ""
 
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:370
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:367
 msgid "Voulez-vous vraiment échanger ce lot contre un chèque ?"
 msgstr ""
 
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:370
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:393
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:402
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:425
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:95
-#: mobile/navigation/authentication/LoginScreen.as:118
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:143
-#: mobile/navigation/authentication/RegisterScreen.as:118
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:367
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:390
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:399
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:422
+#: mobile/navigation/authentication/LoginScreen.as:129
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:144
+#: mobile/navigation/authentication/RegisterScreen.as:143
 #: mobile/navigation/authentication/SponsorScreen.as:95
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:678
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:681
 msgid "Confirmer"
 msgstr ""
 
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:402
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:399
 msgid "Voulez-vous vraiment échanger ce lot contre des points ?"
 msgstr ""
 
@@ -1826,7 +1931,6 @@ msgstr[1] ""
 
 #: mobile/navigation/alert/AlertItemRenderer.as:297
 #: mobile/navigation/alert/AlertItemRenderer.as:306
-#: mobile/navigation/authentication/AuthenticationScreen.as:83
 #: mobile/navigation/authentication/NotLoggedInContainer.as:52
 msgid "S'identifier"
 msgstr ""
@@ -1867,58 +1971,28 @@ msgstr ""
 msgid "Fermer les alertes"
 msgstr ""
 
-#: mobile/navigation/authentication/AuthenticationScreen.as:94
-msgid ""
-"Connectez-vous ou créez\n"
-"un compte LudoKado.com"
-msgstr ""
-
-#: mobile/navigation/authentication/AuthenticationScreen.as:109
-msgid "J'ai un compte"
-msgstr ""
-
-#: mobile/navigation/authentication/AuthenticationScreen.as:123
-msgid "Créer un compte"
-msgstr ""
-
-#: mobile/navigation/authentication/AuthenticationScreen.as:135
+#: mobile/navigation/authentication/LoginScreen.as:101
+#: mobile/navigation/authentication/RegisterScreen.as:100
+#: mobile/navigation/highscore/HighScoreListScreen.as:213
+#: mobile/navigation/home/HomeScreen.as:75
+#: mobile/navigation/home/HomeScreen.as:209
 msgid "Facebook"
 msgstr ""
 
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:71
-msgid "Mot de passe oublié"
-msgstr ""
-
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:83
-msgid ""
-"Entrez l'email de votre compte pour recevoir dans quelques minutes votre mot "
-"de passe."
-msgstr ""
-
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:88
-msgid "Entrez ici votre email..."
-msgstr ""
-
-#: mobile/navigation/authentication/LoginScreen.as:80
-#: mobile/navigation/menu/Menu.as:215
-msgid "Connexion"
-msgstr ""
-
-#: mobile/navigation/authentication/LoginScreen.as:95
-#: mobile/navigation/authentication/RegisterScreen.as:95
-msgid "Email..."
-msgstr ""
-
-#: mobile/navigation/authentication/LoginScreen.as:103
-#: mobile/navigation/authentication/RegisterScreen.as:103
+#: mobile/navigation/authentication/LoginScreen.as:119
+#: mobile/navigation/authentication/RegisterScreen.as:124
 msgid "Mot de passe..."
 msgstr ""
 
-#: mobile/navigation/authentication/LoginScreen.as:110
-msgid "J'ai oublié mon mot de passe..."
+#: mobile/navigation/authentication/LoginScreen.as:125
+msgid "Mot de passe oublié"
 msgstr ""
 
-#: mobile/navigation/authentication/LoginScreen.as:198
+#: mobile/navigation/authentication/LoginScreen.as:133
+msgid "Nouveau joueur ? Créez un compte"
+msgstr ""
+
+#: mobile/navigation/authentication/LoginScreen.as:217
 msgid "Mot de passe invalide."
 msgstr ""
 
@@ -1928,19 +2002,23 @@ msgid ""
 "pour accéder à cet écran."
 msgstr ""
 
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:94
-#: mobile/navigation/authentication/RegisterScreen.as:78
+#: mobile/navigation/authentication/OrContainer.as:59
+msgid "OU"
+msgstr ""
+
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:96
+#: mobile/navigation/authentication/RegisterScreen.as:98
 #: mobile/navigation/authentication/SponsorScreen.as:71
 msgid "Inscription"
 msgstr ""
 
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:106
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:108
 msgid ""
 "Marre des pseudos avec des chiffres ?\n"
 "Créez votre pseudo !"
 msgstr ""
 
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:106
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:108
 msgid ""
 "Vous n'avez pas encore de pseudo ?\n"
 "\n"
@@ -1948,11 +2026,16 @@ msgid ""
 "tournois !"
 msgstr ""
 
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:130
-msgid "Votre pseudo..."
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:132
+msgid "Ou choisissez votre pseudo..."
 msgstr ""
 
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:293
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:208
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:256
+msgid "Choisissez votre pseudo..."
+msgstr ""
+
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:295
 msgid "Le pseudo ne peut être vide !"
 msgstr ""
 
@@ -1971,26 +2054,24 @@ msgid ""
 msgstr ""
 
 #: mobile/navigation/authentication/RegisterCompleteScreen.as:82
-#: mobile/navigation/engine/FacebookEndScreen.as:140
-#: mobile/navigation/engine/HighScoreScreen.as:148
-#: mobile/navigation/engine/PodiumScreen.as:185
-#: mobile/navigation/engine/SoloEndScreen.as:366
-#: mobile/navigation/engine/TournamentEndScreen.as:406
-#: mobile/navigation/vip/VipUpScreen.as:141
+#: mobile/navigation/engine/FacebookEndScreen.as:126
+#: mobile/navigation/engine/HighScoreScreen.as:141
+#: mobile/navigation/engine/PodiumScreen.as:175
+#: mobile/navigation/vip/VipUpScreen.as:137
 msgid "Continuer"
 msgstr ""
 
-#: mobile/navigation/authentication/RegisterScreen.as:110
-msgid "Code parrain... (facultatif)"
+#: mobile/navigation/authentication/RegisterScreen.as:147
+msgid "Déjà un compte ? Identifiez-vous"
 msgstr ""
 
-#: mobile/navigation/authentication/RegisterScreen.as:210
+#: mobile/navigation/authentication/RegisterScreen.as:248
 msgid "Le mot de passe ne peut être vide."
 msgstr ""
 
 #: mobile/navigation/authentication/RetryContainer.as:60
-#: mobile/navigation/highscore/HighScoreListScreen.as:494
-#: mobile/navigation/highscore/HighScoreListScreen.as:560
+#: mobile/navigation/highscore/HighScoreListScreen.as:511
+#: mobile/navigation/highscore/HighScoreListScreen.as:586
 msgid ""
 "Vous ne pouvez pas afficher le contenu de cette page car vous n'êtes pas "
 "connecté à Internet."
@@ -2071,89 +2152,97 @@ msgid ""
 "vous serez connecté."
 msgstr ""
 
-#: mobile/navigation/engine/FacebookEndScreen.as:117
+#: mobile/navigation/engine/FacebookEndScreen.as:111
 msgid ""
 "Bravo !\n"
 "Vous avez dépassé un ami !"
 msgstr ""
 
-#: mobile/navigation/engine/FacebookEndScreen.as:131
-#: mobile/navigation/engine/FacebookEndScreen.as:341
-#: mobile/navigation/engine/HighScoreScreen.as:161
-#: mobile/navigation/engine/HighScoreScreen.as:311
-#: mobile/navigation/engine/PodiumScreen.as:198
-#: mobile/navigation/engine/PodiumScreen.as:365
-#: mobile/navigation/vip/VipUpScreen.as:170
-#: mobile/navigation/vip/VipUpScreen.as:375
-msgid "Publier"
+#: mobile/navigation/engine/FacebookEndScreen.as:115
+#: mobile/navigation/engine/PodiumScreen.as:180
+#: mobile/navigation/engine/SoloEndScreen.as:244
+#: mobile/navigation/engine/TournamentEndScreen.as:365
+#: mobile/navigation/engine/TournamentEndScreen.as:376
+#: mobile/navigation/vip/VipScreen.as:378
+#: mobile/navigation/vip/VipUpScreen.as:153
+msgid "Partager"
 msgstr ""
 
-#: mobile/navigation/engine/FacebookEndScreen.as:131
-#: mobile/navigation/engine/HighScoreScreen.as:161
-#: mobile/navigation/engine/PodiumScreen.as:198
-#: mobile/navigation/vip/VipUpScreen.as:170
-msgid "Associer"
-msgstr ""
-
-#: mobile/navigation/engine/FacebookEndScreen.as:352
+#: mobile/navigation/engine/FacebookEndScreen.as:115
 #, python-brace-format
 msgid "{0} a dépassé {1} sur le jeu {2}"
 msgstr ""
 
-#: mobile/navigation/engine/FacebookEndScreen.as:354
+#: mobile/navigation/engine/FacebookEndScreen.as:117
 #, python-brace-format
 msgid ""
 "Avec un score de {0}, je pense devenir rapidement le meilleur sur ce jeu."
 msgstr ""
 
-#: mobile/navigation/engine/FacebookEndScreen.as:355
-#: mobile/navigation/engine/HighScoreScreen.as:328
-#: mobile/navigation/engine/PodiumScreen.as:380
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:262
-#: mobile/navigation/vip/VipUpScreen.as:390
+#: mobile/navigation/engine/FacebookEndScreen.as:118
+#: mobile/navigation/engine/HighScoreScreen.as:149
+#: mobile/navigation/engine/PodiumScreen.as:183
+#: mobile/navigation/engine/SoloEndScreen.as:247
+#: mobile/navigation/engine/TournamentEndScreen.as:368
+#: mobile/navigation/engine/TournamentEndScreen.as:379
+#: mobile/navigation/engine/TournamentEndScreen.as:707
+#: mobile/navigation/engine/TournamentEndScreen.as:715
+#: mobile/navigation/highscore/HighScoreItemRenderer.as:268
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:260
+#: mobile/navigation/vip/VipScreen.as:381
+#: mobile/navigation/vip/VipScreen.as:878
+#: mobile/navigation/vip/VipUpScreen.as:156
 msgid "http://www.ludokado.com/"
 msgstr ""
 
-#: mobile/navigation/engine/FacebookEndScreen.as:356
+#: mobile/navigation/engine/FacebookEndScreen.as:119
+#: mobile/navigation/engine/SoloEndScreen.as:248
+#: mobile/navigation/engine/TournamentEndScreen.as:369
+#: mobile/navigation/engine/TournamentEndScreen.as:380
+#: mobile/navigation/engine/TournamentEndScreen.as:708
+#: mobile/navigation/engine/TournamentEndScreen.as:716
 #, python-brace-format
 msgid ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"
 msgstr ""
 
-#: mobile/navigation/engine/HighScoreScreen.as:127
+#: mobile/navigation/engine/HighScoreScreen.as:125
 #, python-brace-format
 msgid ""
 "Nouveau High Score !\n"
 "{0}"
 msgstr ""
 
-#: mobile/navigation/engine/HighScoreScreen.as:325
-#, python-brace-format
-msgid "Qui sera capable de me battre sur {0} ?"
+#: mobile/navigation/engine/HighScoreScreen.as:146
+msgid "Partager mon exploit !"
 msgstr ""
 
-#: mobile/navigation/engine/HighScoreScreen.as:327
+#: mobile/navigation/engine/HighScoreScreen.as:146
 #, python-brace-format
-msgid ""
-"Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me prouver "
-"le contraire ;)"
+msgid "Nouveau meilleur score : {0} !"
 msgstr ""
 
-#: mobile/navigation/engine/HighScoreScreen.as:329
+#: mobile/navigation/engine/HighScoreScreen.as:148
+#, python-brace-format
+msgid "Venez me défier et tenter de battre mon score de {0} sur {1} !"
+msgstr ""
+
+#: mobile/navigation/engine/HighScoreScreen.as:150
+#: mobile/navigation/highscore/HighScoreItemRenderer.as:269
 #, python-brace-format
 msgid ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
 "publication_highscore.jpg"
 msgstr ""
 
-#: mobile/navigation/engine/PodiumScreen.as:145
+#: mobile/navigation/engine/PodiumScreen.as:140
 #, python-brace-format
 msgid ""
 "Bravo !\n"
 "Vous êtes {0} du tournoi !"
 msgstr ""
 
-#: mobile/navigation/engine/PodiumScreen.as:145
+#: mobile/navigation/engine/PodiumScreen.as:140
 #, python-brace-format
 msgid ""
 "Bravo !\n"
@@ -2162,246 +2251,282 @@ msgid ""
 "{0} du tournoi !"
 msgstr ""
 
-#: mobile/navigation/engine/PodiumScreen.as:377
+#: mobile/navigation/engine/PodiumScreen.as:180
 #, python-brace-format
 msgid "Je suis dans le TOP {0} sur le tournoi {1}"
 msgstr ""
 
-#: mobile/navigation/engine/PodiumScreen.as:379
+#: mobile/navigation/engine/PodiumScreen.as:182
 #, python-brace-format
 msgid ""
 "La fin du tournoi approche ! Rejoignez moi vite et remportez vous aussi "
 "cette récompense : {0}"
 msgstr ""
 
-#: mobile/navigation/engine/PodiumScreen.as:381
+#: mobile/navigation/engine/PodiumScreen.as:184
 #, python-brace-format
 msgid ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
 "publication_top_{1}.jpg"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:227
-msgid "Points"
+#: mobile/navigation/engine/SoloEndScreen.as:203
+#: mobile/navigation/engine/TournamentEndScreen.as:203
+msgid "FIN DE PARTIE"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:253
-msgid "Points cumulés : "
+#: mobile/navigation/engine/SoloEndScreen.as:211
+#: mobile/navigation/engine/SoloEndScreen.as:461
+#: mobile/navigation/engine/SoloEndScreen.as:467
+#: mobile/navigation/engine/TournamentEndScreen.as:211
+#: mobile/navigation/engine/TournamentEndScreen.as:538
+#: mobile/navigation/engine/TournamentEndScreen.as:544
+#, python-brace-format
+msgid "Score final : {0}"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:290
+#: mobile/navigation/engine/SoloEndScreen.as:244
+#, python-brace-format
+msgid "J'ai obtenu {0} Points sur {1} !"
+msgstr ""
+
+#: mobile/navigation/engine/SoloEndScreen.as:246
+msgid ""
+"Je peux maintenant obtenir des tas de bonus en les convertissant dans la "
+"Boutique !"
+msgstr ""
+
+#: mobile/navigation/engine/SoloEndScreen.as:265
 msgid "Tournoi débloqué !"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:318
+#: mobile/navigation/engine/SoloEndScreen.as:291
 msgid "Convertir mes Points en Cadeaux dans la boutique"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:318
+#: mobile/navigation/engine/SoloEndScreen.as:291
 msgid ""
 "Convertir mes Points en\n"
 "Cadeaux dans la boutique"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:318
+#: mobile/navigation/engine/SoloEndScreen.as:291
 msgid "Convertir mes Points en Crédits dans la boutique"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:318
+#: mobile/navigation/engine/SoloEndScreen.as:291
 msgid ""
 "Convertir mes Points en\n"
 "Crédits dans la boutique"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:324
+#: mobile/navigation/engine/SoloEndScreen.as:297
 msgid "Utiliser mes Points sur le tournoi pour me classer"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:324
+#: mobile/navigation/engine/SoloEndScreen.as:297
 msgid ""
 "Utiliser mes Points sur\n"
 "le tournoi pour me classer"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:348
+#: mobile/navigation/engine/SoloEndScreen.as:309
+msgid ""
+"Créez votre compte pour continuer à cumuler des Points à convertir en "
+"Cadeaux !"
+msgstr ""
+
+#: mobile/navigation/engine/SoloEndScreen.as:309
+msgid ""
+"Créez votre compte pour continuer à cumuler des Points à convertir en "
+"Crédits !"
+msgstr ""
+
+#: mobile/navigation/engine/SoloEndScreen.as:311
 msgid ""
 "Créez votre compte et convertissez\n"
 "vos Points en Cadeaux !"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:348
+#: mobile/navigation/engine/SoloEndScreen.as:311
 msgid ""
 "Créez votre compte et convertissez\n"
 "vos Points en Crédits !"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:372
-#: mobile/navigation/engine/TournamentEndScreen.as:412
-msgid "Accueil"
+#: mobile/navigation/engine/SoloEndScreen.as:478
+#: mobile/navigation/engine/SoloEndScreen.as:549
+#: mobile/navigation/engine/TournamentEndScreen.as:556
+#, python-brace-format
+msgid "+{0}"
 msgstr ""
 
-#: mobile/navigation/engine/SoloEndScreen.as:377
-#: mobile/navigation/engine/TournamentEndScreen.as:417
-msgid "Rejouer"
+#: mobile/navigation/engine/SoloEndScreen.as:577
+#: mobile/navigation/engine/SoloEndScreen.as:611
+#: mobile/navigation/engine/TournamentEndScreen.as:595
+#: mobile/navigation/engine/TournamentEndScreen.as:635
+msgid "Vous n'avez plus assez de Jetons pour rejouer ?"
 msgstr ""
 
-#: mobile/navigation/engine/TournamentEndScreen.as:237
-msgid "Score final :"
+#: mobile/navigation/engine/TournamentEndScreen.as:227
+#: mobile/navigation/engine/TournamentEndScreen.as:557
+#: mobile/navigation/engine/TournamentEndScreen.as:719
+#, python-brace-format
+msgid "({0} au total)"
 msgstr ""
 
-#: mobile/navigation/engine/TournamentEndScreen.as:261
-msgid "Rubis :"
+#: mobile/navigation/engine/TournamentEndScreen.as:244
+#, python-brace-format
+msgid "Vous êtes <font color='#eb0064'>{0}</font>"
 msgstr ""
 
-#: mobile/navigation/engine/TournamentEndScreen.as:314
-msgid "Rubis cumulés :"
-msgstr ""
-
-#: mobile/navigation/engine/TournamentEndScreen.as:350
-msgid "Classement :"
-msgstr ""
-
-#: mobile/navigation/engine/TournamentEndScreen.as:363
-msgid "--"
-msgstr ""
-
-#: mobile/navigation/engine/TournamentEndScreen.as:452
+#: mobile/navigation/engine/TournamentEndScreen.as:266
 msgid "Gain actuel"
 msgstr ""
 
-#: mobile/navigation/engine/TournamentEndScreen.as:481
+#: mobile/navigation/engine/TournamentEndScreen.as:294
 msgid "Gain suivant"
 msgstr ""
 
-#: mobile/navigation/engine/TournamentEndScreen.as:527
-msgid "Fin du tournoi dans : --"
+#: mobile/navigation/engine/TournamentEndScreen.as:342
+msgid ""
+"Impossible de déterminer votre classement et vos gains provisoires car vous "
+"n'êtes pas connecté à Internet."
 msgstr ""
 
-#: mobile/navigation/engine/TournamentEndScreen.as:548
-msgid "Pas de connexion Internet"
+#: mobile/navigation/engine/TournamentEndScreen.as:343
+msgid ""
+"Impossible de déterminer votre classement et vos gains provisoires car vous "
+"n'êtes pas identifié."
 msgstr ""
 
-#: mobile/navigation/engine/TournamentEndScreen.as:548
-msgid "Vous n'êtes pas identifié"
+#: mobile/navigation/engine/TournamentEndScreen.as:365
+#: mobile/navigation/engine/TournamentEndScreen.as:376
+#: mobile/navigation/engine/TournamentEndScreen.as:704
+#: mobile/navigation/engine/TournamentEndScreen.as:712
+#, python-brace-format
+msgid "J'ai obtenu {0} Rubis au tournoi sur {1} !"
+msgid_plural "J'ai obtenu {0} Rubis au tournoi sur {1} !"
+msgstr[0] ""
+msgstr[1] ""
+
+#: mobile/navigation/engine/TournamentEndScreen.as:367
+#: mobile/navigation/engine/TournamentEndScreen.as:706
+#, python-brace-format
+msgid ""
+"Je suis maintenant {0} au classement du tournoi avec {1} Rubis !\n"
+"Venez jouer au tournoi pour tenter de remporter {2}"
 msgstr ""
 
-#: mobile/navigation/engine/TournamentEndScreen.as:548
-msgid "Les informations indiquées sont à titre informatives."
+#: mobile/navigation/engine/TournamentEndScreen.as:378
+#: mobile/navigation/engine/TournamentEndScreen.as:714
+#, python-brace-format
+msgid ""
+"Je cumule maintenant {1} Rubis pour le tournoi en cours!\n"
+"Venez participer au tournoi pour tenter de remporter de nombreux gains !"
 msgstr ""
 
-#: mobile/navigation/engine/TournamentEndScreen.as:548
-msgid "Connectez vous à votre compte."
-msgstr ""
-
-#: mobile/navigation/engine/TournamentEndScreen.as:998
+#: mobile/navigation/engine/TournamentEndScreen.as:673
 msgid "Tournoi terminé"
 msgstr ""
 
-#: mobile/navigation/engine/TournamentEndScreen.as:1004
+#: mobile/navigation/engine/TournamentEndScreen.as:679
 #, python-brace-format
-msgid "Fin du tournoi dans : {0}\"{1}'"
+msgid "Fin dans : {0}\"{1}'"
 msgstr ""
 
-#: mobile/navigation/engine/TournamentEndScreen.as:1008
+#: mobile/navigation/engine/TournamentEndScreen.as:683
 #, python-brace-format
-msgid "Fin du tournoi dans : {0} jour"
-msgid_plural "Fin du tournoi dans : {0} jours"
+msgid "Fin dans : {0} jour"
+msgid_plural "Fin dans : {0} jours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: mobile/navigation/game/GameModeSelectionPopup.as:176
-#: mobile/navigation/game/GameModeSelectionPopup.as:460
-#: mobile/navigation/game/GameModeSelectionPopup.as:517
+#: mobile/navigation/game/GameModeSelectionPopup.as:174
+#: mobile/navigation/game/GameModeSelectionPopup.as:430
+#: mobile/navigation/game/GameModeSelectionPopup.as:487
 msgid "Partie en Tournoi"
 msgstr ""
 
-#: mobile/navigation/game/GameModeSelectionPopup.as:182
-#: mobile/navigation/game/GameModeSelectionPopup.as:461
-#: mobile/navigation/game/GameModeSelectionPopup.as:518
+#: mobile/navigation/game/GameModeSelectionPopup.as:180
+#: mobile/navigation/game/GameModeSelectionPopup.as:431
+#: mobile/navigation/game/GameModeSelectionPopup.as:488
 msgid "Règles du jeu"
 msgstr ""
 
-#: mobile/navigation/game/GameModeSelectionPopup.as:427
-#: mobile/navigation/tournament/TournamentRankingScreen.as:613
+#: mobile/navigation/game/GameModeSelectionPopup.as:396
+#: mobile/navigation/tournament/TournamentRankingScreen.as:596
+#, python-brace-format
 msgid ""
-"Pour débloquer les parties en Tournoi, il suffit de terminer une partie "
+"Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie "
 "Solo !"
-msgstr ""
-
-#: mobile/navigation/game/StakeButton.as:80
-#, python-brace-format
-msgid "Utiliser {0} Crédit"
-msgid_plural "Utiliser {0} Crédits"
+msgid_plural ""
+"Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie "
+"Solo !"
 msgstr[0] ""
 msgstr[1] ""
 
-#: mobile/navigation/game/StakeButton.as:81
-#, python-brace-format
-msgid "Utiliser {0} Jeton"
-msgid_plural "Utiliser {0} Jetons"
-msgstr[0] ""
-msgstr[1] ""
-
-#: mobile/navigation/game/StakeButton.as:82
-#, python-brace-format
-msgid "Utiliser {0} Point"
-msgid_plural "Utiliser {0} Points"
-msgstr[0] ""
-msgstr[1] ""
-
-#: mobile/navigation/game/StakeButtonCredit.as:89
+#: mobile/navigation/game/StakeButtonCredit.as:83
 #, python-brace-format
 msgid "{0} Crédit"
 msgid_plural "{0} Crédits"
 msgstr[0] ""
 msgstr[1] ""
 
-#: mobile/navigation/game/StakeButtonPoint.as:46
+#: mobile/navigation/game/StakeButtonPoint.as:54
 #, python-brace-format
 msgid "{0} Points"
 msgid_plural "{0} Points"
 msgstr[0] ""
 msgstr[1] ""
 
-#: mobile/navigation/game/StakeButtonToken.as:110
+#: mobile/navigation/game/StakeButtonPoint.as:74
+msgid "Vous n'avez pas assez de Points."
+msgstr ""
+
 #: mobile/navigation/game/StakeButtonToken.as:117
-#: mobile/navigation/game/StakeButtonToken.as:154
+#: mobile/navigation/game/StakeButtonToken.as:123
+#: mobile/navigation/game/StakeButtonToken.as:155
 #, python-brace-format
 msgid "{0} Jeton"
 msgid_plural "{0} Jetons"
 msgstr[0] ""
 msgstr[1] ""
 
-#: mobile/navigation/game/StakeButtonToken.as:124
+#: mobile/navigation/game/StakeButtonToken.as:129
 msgid "???"
 msgstr ""
 
-#: mobile/navigation/game/StakeButtonToken.as:132
+#: mobile/navigation/game/StakeButtonToken.as:135
 msgid "Regarder une vidéo pour jouer gratuitement."
 msgstr ""
 
-#: mobile/navigation/game/StakeButtonToken.as:145
-#: mobile/navigation/game/StakeButtonToken.as:214
+#: mobile/navigation/game/StakeButtonToken.as:147
+#: mobile/navigation/game/StakeButtonToken.as:228
 #, python-brace-format
-msgid "{0} Jetons dans "
+msgid "{0} Jetons dans \n"
 msgstr ""
 
-#: mobile/navigation/game/StakeButtonToken.as:238
-#: mobile/navigation/home/summary/FooterStakeElement.as:385
+#: mobile/navigation/game/StakeButtonToken.as:252
+#: mobile/navigation/home/summary/FooterStakeElement.as:380
 #, python-brace-format
 msgid "Reconnectez-vous pour récupérer vos {0} Jetons."
 msgstr ""
 
-#: mobile/navigation/game/StakeSelectionScreen.as:84
+#: mobile/navigation/game/StakeButtonToken.as:273
+msgid "Vous n'avez plus assez de Jetons."
+msgstr ""
+
+#: mobile/navigation/game/StakeSelectionScreen.as:94
 msgid "Choisissez votre mise"
 msgstr ""
 
-#: mobile/navigation/game/StakeSelectionScreen.as:115
+#: mobile/navigation/game/StakeSelectionScreen.as:120
 msgid "Voir le classement"
 msgstr ""
 
 #: mobile/navigation/highscore/HighScoreHomeScreen.as:85
-#: mobile/navigation/highscore/HighScoreListScreen.as:117
+#: mobile/navigation/highscore/HighScoreListScreen.as:125
 msgid "Meilleurs scores"
 msgstr ""
 
@@ -2419,64 +2544,73 @@ msgstr ""
 msgid "Amis"
 msgstr ""
 
+#: mobile/navigation/highscore/HighScoreItemRenderer.as:265
+msgid "Partager mon score !"
+msgstr ""
+
+#: mobile/navigation/highscore/HighScoreItemRenderer.as:265
+#, python-brace-format
+msgid "Qui sera capable de me battre sur {0} ?"
+msgstr ""
+
+#: mobile/navigation/highscore/HighScoreItemRenderer.as:267
+#, python-brace-format
+msgid "Venez me défiez et tenter de battre mon meilleur score de {0} !"
+msgstr ""
+
 #: mobile/navigation/highscore/HighScoreListHeader.as:68
 #: mobile/navigation/tournament/listing/TournamentListHeader.as:67
 msgid "Rang"
 msgstr ""
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:137
+#: mobile/navigation/highscore/HighScoreListScreen.as:151
 msgid "Amis Facebook"
 msgstr ""
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:157
-msgid "Pays : "
-msgstr ""
-
-#: mobile/navigation/highscore/HighScoreListScreen.as:196
-#: mobile/navigation/highscore/HighScoreListScreen.as:588
-msgid "Associer mon compte à Facebook"
-msgstr ""
-
-#: mobile/navigation/highscore/HighScoreListScreen.as:201
-#: mobile/navigation/highscore/HighScoreListScreen.as:589
+#: mobile/navigation/highscore/HighScoreListScreen.as:218
+#: mobile/navigation/highscore/HighScoreListScreen.as:579
 msgid ""
 "Vous devez associer votre compte à Facebook pour voir la progression de vos "
 "amis !"
 msgstr ""
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:326
+#: mobile/navigation/highscore/HighScoreListScreen.as:351
 msgid ""
 "Aucun joueur n'est classé\n"
 "dans ce pays."
 msgstr ""
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:574
-#: mobile/navigation/highscore/HighScoreListScreen.as:602
+#: mobile/navigation/highscore/HighScoreListScreen.as:578
+msgid "Associer mon compte à Facebook"
+msgstr ""
+
+#: mobile/navigation/highscore/HighScoreListScreen.as:578
 msgid "Se connecter avec Facebook"
 msgstr ""
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:575
-#: mobile/navigation/highscore/HighScoreListScreen.as:603
+#: mobile/navigation/highscore/HighScoreListScreen.as:579
 msgid "Connectez-vous avec Facebook pour voir la progression de vos amis !"
 msgstr ""
 
-#: mobile/navigation/home/HomeScreen.as:85
-msgid "JOUER"
+#: mobile/navigation/highscore/HighScoreListScreen.as:617
+msgid ""
+"Impossible d'afficher le classement de vos amis car nous n'avons pas accès à "
+"votre liste d'amis."
 msgstr ""
 
-#: mobile/navigation/home/HomeScreen.as:107
-msgid "Gagner des cadeaux"
+#: mobile/navigation/highscore/HighScoreListScreen.as:618
+msgid "Toucher pour donner la permission."
 msgstr ""
 
-#: mobile/navigation/home/HomeScreen.as:107
-msgid "Gagner des crédits"
-msgstr ""
-
-#: mobile/navigation/home/HomeScreen.as:277
+#: mobile/navigation/highscore/HighScoreListScreen.as:692
 msgid ""
 "Le Game Center est désactivé.\n"
 "Pour le réactiver, connectez-vous directement à partir de l'application Game "
 "Center."
+msgstr ""
+
+#: mobile/navigation/home/HomeScreen.as:69
+msgid "JOUER"
 msgstr ""
 
 #: mobile/navigation/home/RulesAndScoresScreen.as:78
@@ -2487,35 +2621,36 @@ msgstr ""
 msgid "Solo"
 msgstr ""
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:324
+#: mobile/navigation/home/summary/FooterStakeElement.as:314
+#: mobile/navigation/home/summary/FooterStakeElement.as:373
 #, python-brace-format
 msgid "{0} Jetons dans {1}"
 msgstr ""
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:387
+#: mobile/navigation/home/summary/FooterStakeElement.as:382
 #, python-brace-format
 msgid "Vos Jetons ({0} quotidiens + {1} bonus)"
 msgstr ""
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:391
-#: mobile/navigation/home/summary/FooterStakeElement.as:399
-#: mobile/navigation/home/summary/FooterStakeElement.as:417
+#: mobile/navigation/home/summary/FooterStakeElement.as:386
+#: mobile/navigation/home/summary/FooterStakeElement.as:397
+#: mobile/navigation/home/summary/FooterStakeElement.as:415
 msgid "Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"
 msgstr ""
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:403
+#: mobile/navigation/home/summary/FooterStakeElement.as:401
 msgid ""
 "Vos Crédits de jeu\n"
 "Tapotez ici pour recharger votre compte"
 msgstr ""
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:421
+#: mobile/navigation/home/summary/FooterStakeElement.as:419
 msgid ""
 "Vos Points à convertir en Cadeaux\n"
 "Tapotez ici pour accéder à la boutique"
 msgstr ""
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:421
+#: mobile/navigation/home/summary/FooterStakeElement.as:419
 msgid ""
 "Vos Points à convertir en Crédits\n"
 "Tapotez ici pour accéder à la boutique"
@@ -2533,7 +2668,7 @@ msgstr ""
 msgid "Crédits"
 msgstr ""
 
-#: mobile/navigation/menu/Menu.as:81 mobile/navigation/vip/VipScreen.as:192
+#: mobile/navigation/menu/Menu.as:81 mobile/navigation/vip/VipScreen.as:201
 msgid "Rangs VIP"
 msgstr ""
 
@@ -2547,7 +2682,7 @@ msgstr ""
 msgid "Réglages"
 msgstr ""
 
-#: mobile/navigation/menu/Menu.as:215
+#: mobile/navigation/menu/Menu.as:213
 msgid "Déconnexion"
 msgstr ""
 
@@ -2606,29 +2741,29 @@ msgstr ""
 msgid "Langage"
 msgstr ""
 
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:112
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:162
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:109
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:152
 msgid "Enchères"
 msgstr ""
 
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:119
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:116
 msgid ""
 "Accessible à tous\n"
 "les rangs Vip"
 msgstr ""
 
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:134
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:131
 msgid ""
 "A partir du\n"
 "rang Aventurier I"
 msgstr ""
 
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:154
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:171
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:144
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:161
 msgid "Boutique VIP"
 msgstr ""
 
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:181
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:171
 msgid "Qu'est ce que les rangs Vip ?"
 msgstr ""
 
@@ -2647,49 +2782,49 @@ msgstr ""
 msgid "A venir"
 msgstr ""
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:78
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:75
 msgid ""
 "Echangez vos Points contre\n"
 "des Crédits de jeu !"
 msgstr ""
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:122
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:141
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:148
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:119
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:139
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:146
 msgid "Ludokado"
 msgstr ""
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:135
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:133
 msgid "Maison"
 msgstr ""
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:136
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:134
 msgid "Loisirs"
 msgstr ""
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:137
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:135
 msgid "Pour Elle"
 msgstr ""
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:138
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:136
 msgid "Vidéo"
 msgstr ""
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:139
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:137
 msgid "Jeux Vidéo"
 msgstr ""
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:140
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:138
 msgid "Image et Son"
 msgstr ""
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:252
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:250
 msgid "Vous devez être connecté à Internet pour afficher les lots."
 msgstr ""
 
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:442
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:461
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:486
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:443
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:462
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:487
 msgid "Aucune sous catégorie à afficher."
 msgstr ""
 
@@ -2772,15 +2907,15 @@ msgid ""
 "tous"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:195
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:198
 msgid "Entrer un email."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:195
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:198
 msgid "Entrer un numéro de téléphone."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:235
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:238
 #, python-brace-format
 msgid ""
 "L'application n'est pas autorisée à accéder à vos contacts.\n"
@@ -2789,37 +2924,37 @@ msgid ""
 "Confidentialité », sélectionnez « Contacts » et autorisez {0}."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:291
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:390
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:294
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:393
 msgid "Aucun contact à afficher."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:313
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:316
 msgid "Impossible d'accéder à vos contacts."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:545
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:614
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:548
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:617
 msgid "Envoyés"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:658
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:661
 msgid "Nom du filleul..."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:668
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:671
 msgid "Saisissez son email..."
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:668
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:671
 msgid "Saisissez son numéro de téléphone"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:748
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:751
 msgid "Nom du filleul invalide"
 msgstr ""
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:768
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:771
 msgid "Ce numéro est invalide."
 msgstr ""
 
@@ -2847,16 +2982,6 @@ msgid ""
 "JOUEUR"
 msgstr ""
 
-#: mobile/navigation/store/StoreScreen.as:107
-msgid "Acheter des crédits de jeu"
-msgstr ""
-
-#: mobile/navigation/store/StoreScreen.as:220
-msgid ""
-"Impossible d'afficher le magasin car vous ne pouvez pas effectuer d'achats "
-"(contrôle parental ou autre raison)."
-msgstr ""
-
 #: mobile/navigation/tournament/PreviousTournamentGiftBloc.as:146
 #, python-brace-format
 msgid ""
@@ -2864,12 +2989,12 @@ msgid ""
 "{0}"
 msgstr ""
 
-#: mobile/navigation/tournament/PreviousTournamentItemRenderer.as:163
-#: mobile/navigation/tournament/TournamentRankingScreen.as:121
+#: mobile/navigation/tournament/PreviousTournamentItemRenderer.as:164
+#: mobile/navigation/tournament/TournamentRankingScreen.as:119
 msgid "Tournoi en cours"
 msgstr ""
 
-#: mobile/navigation/tournament/PreviousTournamentItemRenderer.as:168
+#: mobile/navigation/tournament/PreviousTournamentItemRenderer.as:169
 #, python-brace-format
 msgid "Tournoi terminé n°{0}"
 msgstr ""
@@ -2884,54 +3009,68 @@ msgid "Tournoi n°{0}"
 msgstr ""
 
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:242
-#: mobile/navigation/tournament/TournamentRankingScreen.as:403
+#: mobile/navigation/tournament/TournamentRankingScreen.as:401
 msgid "Personne n'est encore classé !"
 msgstr ""
 
-#: mobile/navigation/tournament/TournamentRankingScreen.as:142
+#: mobile/navigation/tournament/TournamentRankingScreen.as:140
 msgid "Participer"
 msgstr ""
 
-#: mobile/navigation/vip/VipScreen.as:264
+#: mobile/navigation/vip/VipScreen.as:273
 msgid "Recharger"
 msgstr ""
 
-#: mobile/navigation/vip/VipScreen.as:273
+#: mobile/navigation/vip/VipScreen.as:282
 msgid "Renvoyer un email"
 msgstr ""
 
-#: mobile/navigation/vip/VipScreen.as:704
+#: mobile/navigation/vip/VipScreen.as:378
+#: mobile/navigation/vip/VipScreen.as:875
+#, python-brace-format
+msgid "Je suis {0} sur {1}"
+msgstr ""
+
+#: mobile/navigation/vip/VipScreen.as:380
+#: mobile/navigation/vip/VipScreen.as:877
+msgid ""
+"Avec ce rang, je bénéficie nombreux avantages pour gagner encore plus vite !"
+msgstr ""
+
+#: mobile/navigation/vip/VipScreen.as:382
+#: mobile/navigation/vip/VipScreen.as:879
+#: mobile/navigation/vip/VipUpScreen.as:157
+#, python-brace-format
+msgid ""
+"http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
+"publication_vip_{1}.jpg"
+msgstr ""
+
+#: mobile/navigation/vip/VipScreen.as:725
 msgid "Votre rang actuel."
 msgstr ""
 
-#: mobile/navigation/vip/VipScreen.as:708
+#: mobile/navigation/vip/VipScreen.as:729
 msgid "Vous avez déjà acquis ce rang."
 msgstr ""
 
-#: mobile/navigation/vip/VipUpScreen.as:129
+#: mobile/navigation/vip/VipUpScreen.as:125
 msgid ""
 "Bravo !\n"
 "Vous êtes maintenant"
 msgstr ""
 
-#: mobile/navigation/vip/VipUpScreen.as:137
+#: mobile/navigation/vip/VipUpScreen.as:133
 msgid "Voir mes privilèges"
 msgstr ""
 
-#: mobile/navigation/vip/VipUpScreen.as:387
+#: mobile/navigation/vip/VipUpScreen.as:153
 #, python-brace-format
-msgid "{0} est maintenant {1}"
+msgid "Je suis maintenant {0}"
 msgstr ""
 
-#: mobile/navigation/vip/VipUpScreen.as:389
+#: mobile/navigation/vip/VipUpScreen.as:155
 msgid ""
 "Avec ce nouveau rang, je peux bénéficier de nouveaux avantages pour gagner "
 "encore plus vite."
-msgstr ""
-
-#: mobile/navigation/vip/VipUpScreen.as:391
-#, python-brace-format
-msgid ""
-"http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
-"publication_vip_{1}.jpg"
 msgstr ""

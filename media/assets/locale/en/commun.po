@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
-"POT-Creation-Date: 2015-09-18 17:04+0200\n"
-"PO-Revision-Date: 2015-09-30 15:03+0200\n"
+"POT-Creation-Date: 2015-12-10 11:53+0100\n"
+"PO-Revision-Date: 2015-12-10 18:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -17,756 +17,849 @@ msgstr ""
 "dngettext:2,3;_f;_df:2\n"
 "X-Poedit-SearchPath-0: .\n"
 
+#: common/Ranks.as:51
+msgid "Moussaillon"
+msgstr "Midshipman"
+
+#: common/Ranks.as:52
+#: mobile/core/notification/content/SponsorNotificationContent.as:80
+#: mobile/core/notification/content/SponsorNotificationContent.as:87
+msgid "Matelot"
+msgstr "Seaman"
+
+#: common/Ranks.as:53
+#: mobile/core/notification/content/SponsorNotificationContent.as:81
+#: mobile/core/notification/content/SponsorNotificationContent.as:88
+msgid "Boucanier"
+msgstr "Buccaneer"
+
+#: common/Ranks.as:54
+msgid "Aventurier I"
+msgstr "Explorer I"
+
+#: common/Ranks.as:55
+msgid "Aventurier II"
+msgstr "Explorer II"
+
+#: common/Ranks.as:56
+msgid "Aventurier III"
+msgstr "Explorer III"
+
+#: common/Ranks.as:57
+msgid "Pirate I"
+msgstr "Pirate I"
+
+#: common/Ranks.as:58
+msgid "Pirate II"
+msgstr "Pirate II"
+
+#: common/Ranks.as:59
+#: mobile/core/notification/content/SponsorNotificationContent.as:82
+#: mobile/core/notification/content/SponsorNotificationContent.as:83
+#: mobile/core/notification/content/SponsorNotificationContent.as:89
+msgid "Pirate III"
+msgstr "Pirate III"
+
+#: common/Ranks.as:60
+msgid "Premier Maître"
+msgstr "1st Master"
+
+#: common/Ranks.as:61
+msgid "Second Maître"
+msgstr "2nd Master"
+
+#: common/Ranks.as:62
+#: mobile/core/notification/content/SponsorNotificationContent.as:90
+msgid "Capitaine"
+msgstr "Captain"
+
+#: common/Ranks.as:63
+msgid "Inconnu"
+msgstr "Unknown"
+
 #: common/gettext/ISO_639_1.as:46
 msgid "Afar."
-msgstr ""
+msgstr "Afar."
 
 #: common/gettext/ISO_639_1.as:48
 msgid "Abkhazian"
-msgstr ""
+msgstr "Abkhazian"
 
 #: common/gettext/ISO_639_1.as:50
 msgid "Adangme"
-msgstr ""
+msgstr "Adangme"
 
 #: common/gettext/ISO_639_1.as:52
 msgid "Avestan"
-msgstr ""
+msgstr "Avestan"
 
 #: common/gettext/ISO_639_1.as:54
 msgid "Afrikaans"
-msgstr ""
+msgstr "Afrikaans"
 
 #: common/gettext/ISO_639_1.as:56
 msgid "Akan"
-msgstr ""
+msgstr "Akan"
 
 #: common/gettext/ISO_639_1.as:58
 msgid "Amharic"
-msgstr ""
+msgstr "Amharic"
 
 #: common/gettext/ISO_639_1.as:60
 msgid "Aragonese"
-msgstr ""
+msgstr "Aragonese"
 
 #: common/gettext/ISO_639_1.as:62
 msgid "Arabic"
-msgstr ""
+msgstr "Arabic"
 
 #: common/gettext/ISO_639_1.as:64
 msgid "Assamese"
-msgstr ""
+msgstr "Assamese"
 
 #: common/gettext/ISO_639_1.as:66
 msgid "Avaric"
-msgstr ""
+msgstr "Avaric"
 
 #: common/gettext/ISO_639_1.as:68
 msgid "Aymara"
-msgstr ""
+msgstr "Aymara"
 
 #: common/gettext/ISO_639_1.as:70
 msgid "Azerbaijani"
-msgstr ""
+msgstr "Azerbaijani"
 
 #: common/gettext/ISO_639_1.as:72
 msgid "Bashkir"
-msgstr ""
+msgstr "Bashkir"
 
 #: common/gettext/ISO_639_1.as:74
 msgid "Byelorussian; Belarusian"
-msgstr ""
+msgstr "Byelorussian; Belarusian"
 
 #: common/gettext/ISO_639_1.as:76
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulgarian"
 
 #: common/gettext/ISO_639_1.as:78
 msgid "Bihari"
-msgstr ""
+msgstr "Bihari"
 
 #: common/gettext/ISO_639_1.as:80
 msgid "Bislama"
-msgstr ""
+msgstr "Bislama"
 
 #: common/gettext/ISO_639_1.as:82
 msgid "Bambara"
-msgstr ""
+msgstr "Bambara"
 
 #: common/gettext/ISO_639_1.as:84
 msgid "Bengali; Bangla"
-msgstr ""
+msgstr "Bengali; Bangla"
 
 #: common/gettext/ISO_639_1.as:86
 msgid "Tibetan"
-msgstr ""
+msgstr "Tibetan"
 
 #: common/gettext/ISO_639_1.as:88
 msgid "Breton"
-msgstr ""
+msgstr "Breton"
 
 #: common/gettext/ISO_639_1.as:90
 msgid "Bosnian"
-msgstr ""
+msgstr "Bosnian"
 
 #: common/gettext/ISO_639_1.as:92
 msgid "Catalan"
-msgstr ""
+msgstr "Catalan"
 
 #: common/gettext/ISO_639_1.as:96
 msgid "Chamorro"
-msgstr ""
+msgstr "Chamorro"
 
 #: common/gettext/ISO_639_1.as:98
 msgid "Corsican"
-msgstr ""
+msgstr "Corsican"
 
 #: common/gettext/ISO_639_1.as:100
 msgid "Cree"
-msgstr ""
+msgstr "Cree"
 
 #: common/gettext/ISO_639_1.as:102
 msgid "Czech"
-msgstr ""
+msgstr "Czech"
 
 #: common/gettext/ISO_639_1.as:104
 msgid "Church Slavic"
-msgstr ""
+msgstr "Church Slavic"
 
 #: common/gettext/ISO_639_1.as:106
 msgid "Chuvash"
-msgstr ""
+msgstr "Chuvash"
 
 #: common/gettext/ISO_639_1.as:108
 msgid "Welsh"
-msgstr ""
+msgstr "Welsh"
 
 #: common/gettext/ISO_639_1.as:110
 msgid "Danish"
-msgstr ""
+msgstr "Danish"
 
 #: common/gettext/ISO_639_1.as:112
 msgid "German"
-msgstr ""
+msgstr "German"
 
 #: common/gettext/ISO_639_1.as:114
 msgid "Divehi; Maldivian"
-msgstr ""
+msgstr "Divehi; Maldivian"
 
 #: common/gettext/ISO_639_1.as:116
 msgid "Dzongkha; Bhutani"
-msgstr ""
+msgstr "Dzongkha; Bhutani"
 
 #: common/gettext/ISO_639_1.as:118
 msgid "Ewe"
-msgstr ""
+msgstr "Ewe"
 
 #: common/gettext/ISO_639_1.as:120
 msgid "Greek"
-msgstr ""
+msgstr "Greek"
 
 #: common/gettext/ISO_639_1.as:122
 msgid "English"
-msgstr ""
+msgstr "English"
 
 #: common/gettext/ISO_639_1.as:124
 msgid "Esperanto"
-msgstr ""
+msgstr "Esperanto"
 
 #: common/gettext/ISO_639_1.as:126
 msgid "Spanish"
-msgstr ""
+msgstr "Spanish"
 
 #: common/gettext/ISO_639_1.as:128
 msgid "Estonian"
-msgstr ""
+msgstr "Estonian"
 
 #: common/gettext/ISO_639_1.as:130
 msgid "Basque"
-msgstr ""
+msgstr "Basque"
 
 #: common/gettext/ISO_639_1.as:132
 msgid "Persian"
-msgstr ""
+msgstr "Persian"
 
 #: common/gettext/ISO_639_1.as:134
 msgid "Fulah"
-msgstr ""
+msgstr "Fulah"
 
 #: common/gettext/ISO_639_1.as:136
 msgid "Finnish"
-msgstr ""
+msgstr "Finnish"
 
 #: common/gettext/ISO_639_1.as:138
 msgid "Fijian; Fiji"
-msgstr ""
+msgstr "Fijian; Fiji"
 
 #: common/gettext/ISO_639_1.as:140
 msgid "Faroese"
-msgstr ""
+msgstr "Faroese"
 
 #: common/gettext/ISO_639_1.as:142
 msgid "French"
-msgstr ""
+msgstr "French"
 
 #: common/gettext/ISO_639_1.as:144
 msgid "Western Frisian"
-msgstr ""
+msgstr "Western Frisian"
 
 #: common/gettext/ISO_639_1.as:146
 msgid "Irish"
-msgstr ""
+msgstr "Irish"
 
 #: common/gettext/ISO_639_1.as:148
 msgid "Scots; Gaelic"
-msgstr ""
+msgstr "Scots; Gaelic"
 
 #: common/gettext/ISO_639_1.as:150
 msgid "Galician"
-msgstr ""
+msgstr "Galician"
 
 #: common/gettext/ISO_639_1.as:152
 msgid "Guarani"
-msgstr ""
+msgstr "Guarani"
 
 #: common/gettext/ISO_639_1.as:154
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #: common/gettext/ISO_639_1.as:156
 msgid "Manx"
-msgstr ""
+msgstr "Manx"
 
 #: common/gettext/ISO_639_1.as:158
 msgid "Hausa"
-msgstr ""
+msgstr "Hausa"
 
 #: common/gettext/ISO_639_1.as:160
 msgid "Hebrew (formerly iw)"
-msgstr ""
+msgstr "Hebrew (formerly iw)"
 
 #: common/gettext/ISO_639_1.as:162
 msgid "Hindi"
-msgstr ""
+msgstr "Hindi"
 
 #: common/gettext/ISO_639_1.as:164
 msgid "Hiri Motu"
-msgstr ""
+msgstr "Hiri Motu"
 
 #: common/gettext/ISO_639_1.as:166
 msgid "Croatian"
-msgstr ""
+msgstr "Croatian"
 
 #: common/gettext/ISO_639_1.as:168
 msgid "Haitian; Haitian Creole"
-msgstr ""
+msgstr "Haitian; Haitian Creole"
 
 #: common/gettext/ISO_639_1.as:170
 msgid "Hungarian"
-msgstr ""
+msgstr "Hungarian"
 
 #: common/gettext/ISO_639_1.as:172
 msgid "Armenian"
-msgstr ""
+msgstr "Armenian"
 
 #: common/gettext/ISO_639_1.as:174
 msgid "Herero"
-msgstr ""
+msgstr "Herero"
 
 #: common/gettext/ISO_639_1.as:176
 msgid "Interlingua"
-msgstr ""
+msgstr "Interlingua"
 
 #: common/gettext/ISO_639_1.as:178
 msgid "Indonesian (formerly in)"
-msgstr ""
+msgstr "Indonesian (formerly in)"
 
 #: common/gettext/ISO_639_1.as:180
 msgid "Interlingue"
-msgstr ""
+msgstr "Interlingue"
 
 #: common/gettext/ISO_639_1.as:182
 msgid "Igbo"
-msgstr ""
+msgstr "Igbo"
 
 #: common/gettext/ISO_639_1.as:184
 msgid "Inupiak; Inupiaq"
-msgstr ""
+msgstr "Inupiak; Inupiaq"
 
 #: common/gettext/ISO_639_1.as:186
 msgid "Ido"
-msgstr ""
+msgstr "Ido"
 
 #: common/gettext/ISO_639_1.as:188
 msgid "Icelandic"
-msgstr ""
+msgstr "Icelandic"
 
 #: common/gettext/ISO_639_1.as:190
 msgid "Italian"
-msgstr ""
+msgstr "Italian"
 
 #: common/gettext/ISO_639_1.as:192
 msgid "Inuktitut"
-msgstr ""
+msgstr "Inuktitut"
 
 #: common/gettext/ISO_639_1.as:194
 msgid "Japanese"
-msgstr ""
+msgstr "Japanese"
 
 #: common/gettext/ISO_639_1.as:196
 msgid "Javanese"
-msgstr ""
+msgstr "Javanese"
 
 #: common/gettext/ISO_639_1.as:198
 msgid "Georgian"
-msgstr ""
+msgstr "Georgian"
 
 #: common/gettext/ISO_639_1.as:202
 msgid "Kikuyu; Gikuyu"
-msgstr ""
+msgstr "Kikuyu; Gikuyu"
 
 #: common/gettext/ISO_639_1.as:204
 msgid "Kuanyama; Kwanyama"
-msgstr ""
+msgstr "Kuanyama; Kwanyama"
 
 #: common/gettext/ISO_639_1.as:206
 msgid "Kazakh"
-msgstr ""
+msgstr "Kazakh"
 
 #: common/gettext/ISO_639_1.as:208
 msgid "Kalaallisut; Greenlandic"
-msgstr ""
+msgstr "Kalaallisut; Greenlandic"
 
 #: common/gettext/ISO_639_1.as:210
 msgid "Khmer; Cambodian"
-msgstr ""
+msgstr "Khmer; Cambodian"
 
 #: common/gettext/ISO_639_1.as:212
 msgid "Kannada"
-msgstr ""
+msgstr "Kannada"
 
 #: common/gettext/ISO_639_1.as:214
 msgid "Korean"
-msgstr ""
+msgstr "Korean"
 
 #: common/gettext/ISO_639_1.as:216
 msgid "Kashmiri"
-msgstr ""
+msgstr "Kashmiri"
 
 #: common/gettext/ISO_639_1.as:218
 msgid "Kurdish"
-msgstr ""
+msgstr "Kurdish"
 
 #: common/gettext/ISO_639_1.as:220
 msgid "Komi"
-msgstr ""
+msgstr "Komi"
 
 #: common/gettext/ISO_639_1.as:222
 msgid "Cornish"
-msgstr ""
+msgstr "Cornish"
 
 #: common/gettext/ISO_639_1.as:224
 msgid "Kirghiz"
-msgstr ""
+msgstr "Kirghiz"
 
 #: common/gettext/ISO_639_1.as:226
 msgid "Latin"
-msgstr ""
+msgstr "Latin"
 
 #: common/gettext/ISO_639_1.as:228
 msgid "Letzeburgesch; Luxembourgish"
-msgstr ""
+msgstr "Letzeburgesch; Luxembourgish"
 
 #: common/gettext/ISO_639_1.as:230
 msgid "Ganda"
-msgstr ""
+msgstr "Ganda"
 
 #: common/gettext/ISO_639_1.as:232
 msgid "Limburgish; Limburger; Limburgan"
-msgstr ""
+msgstr "Limburgish; Limburger; Limburgan"
 
 #: common/gettext/ISO_639_1.as:234
 msgid "Lingala"
-msgstr ""
+msgstr "Lingala"
 
 #: common/gettext/ISO_639_1.as:236
 msgid "Lao; Laotian"
-msgstr ""
+msgstr "Lao; Laotian"
 
 #: common/gettext/ISO_639_1.as:238
 msgid "Lithuanian"
-msgstr ""
+msgstr "Lithuanian"
 
 #: common/gettext/ISO_639_1.as:240
 msgid "Luba-Katanga"
-msgstr ""
+msgstr "Luba-Katanga"
 
 #: common/gettext/ISO_639_1.as:242
 msgid "Latvian; Lettish"
-msgstr ""
+msgstr "Latvian; Lettish"
 
 #: common/gettext/ISO_639_1.as:244
 msgid "Malagasy"
-msgstr ""
+msgstr "Malagasy"
 
 #: common/gettext/ISO_639_1.as:246
 msgid "Marshallese"
-msgstr ""
+msgstr "Marshallese"
 
 #: common/gettext/ISO_639_1.as:248
 msgid "Maori"
-msgstr ""
+msgstr "Maori"
 
 #: common/gettext/ISO_639_1.as:250
 msgid "Macedonian"
-msgstr ""
+msgstr "Macedonian"
 
 #: common/gettext/ISO_639_1.as:252
 msgid "Malayalam"
-msgstr ""
+msgstr "Malayalam"
 
 #: common/gettext/ISO_639_1.as:254
 msgid "Mongolian"
-msgstr ""
+msgstr "Mongolian"
 
 #: common/gettext/ISO_639_1.as:256
 msgid "Moldavian"
-msgstr ""
+msgstr "Moldavian"
 
 #: common/gettext/ISO_639_1.as:258
 msgid "Marathi"
-msgstr ""
+msgstr "Marathi"
 
 #: common/gettext/ISO_639_1.as:260
 msgid "Malay"
-msgstr ""
+msgstr "Malay"
 
 #: common/gettext/ISO_639_1.as:262
 msgid "Maltese"
-msgstr ""
+msgstr "Maltese"
 
 #: common/gettext/ISO_639_1.as:264
 msgid "Burmese"
-msgstr ""
+msgstr "Burmese"
 
 #: common/gettext/ISO_639_1.as:266
 msgid "Nauru"
-msgstr ""
+msgstr "Nauru"
 
 #: common/gettext/ISO_639_1.as:268
 msgid "Norwegian Bokm�l"
-msgstr ""
+msgstr "Norwegian Bokm�l"
 
 #: common/gettext/ISO_639_1.as:270
 msgid "Ndebele; North"
-msgstr ""
+msgstr "Ndebele; North"
 
 #: common/gettext/ISO_639_1.as:272
 msgid "Nepali"
-msgstr ""
+msgstr "Nepali"
 
 #: common/gettext/ISO_639_1.as:274
 msgid "Ndonga"
-msgstr ""
+msgstr "Ndonga"
 
 #: common/gettext/ISO_639_1.as:276
 msgid "Dutch"
-msgstr ""
+msgstr "Dutch"
 
 #: common/gettext/ISO_639_1.as:278
 msgid "Norwegian Nynorsk"
-msgstr ""
+msgstr "Norwegian Nynorsk"
 
 #: common/gettext/ISO_639_1.as:280
 msgid "Norwegian"
-msgstr ""
+msgstr "Norwegian"
 
 #: common/gettext/ISO_639_1.as:282
 msgid "Ndebele; South"
-msgstr ""
+msgstr "Ndebele; South"
 
 #: common/gettext/ISO_639_1.as:284
 msgid "Navajo; Navaho"
-msgstr ""
+msgstr "Navajo; Navaho"
 
 #: common/gettext/ISO_639_1.as:286
 msgid "Chichewa; Nyanja"
-msgstr ""
+msgstr "Chichewa; Nyanja"
 
 #: common/gettext/ISO_639_1.as:288
 msgid "Occitan; Provençal"
-msgstr ""
+msgstr "Occitan; Provençal"
 
 #: common/gettext/ISO_639_1.as:290
 msgid "(Afan) Oromo"
-msgstr ""
+msgstr "(Afan) Oromo"
 
 #: common/gettext/ISO_639_1.as:292
 msgid "Oriya"
-msgstr ""
+msgstr "Oriya"
 
 #: common/gettext/ISO_639_1.as:294
 msgid "Ossetian; Ossetic"
-msgstr ""
+msgstr "Ossetian; Ossetic"
 
 #: common/gettext/ISO_639_1.as:296
 msgid "Panjabi; Punjabi"
-msgstr ""
+msgstr "Panjabi; Punjabi"
 
 #: common/gettext/ISO_639_1.as:298
 msgid "Pali"
-msgstr ""
+msgstr "Pali"
 
 #: common/gettext/ISO_639_1.as:300
 msgid "Polish"
-msgstr ""
+msgstr "Polish"
 
 #: common/gettext/ISO_639_1.as:302
 msgid "Pashto; Pushto"
-msgstr ""
+msgstr "Pashto; Pushto"
 
 #: common/gettext/ISO_639_1.as:304
 msgid "Portuguese"
-msgstr ""
+msgstr "Portuguese"
 
 #: common/gettext/ISO_639_1.as:306
 msgid "Quechua"
-msgstr ""
+msgstr "Quechua"
 
 #: common/gettext/ISO_639_1.as:308
 msgid "Rhaeto-Romance"
-msgstr ""
+msgstr "Rhaeto-Romance"
 
 #: common/gettext/ISO_639_1.as:310
 msgid "Rundi; Kirundi"
-msgstr ""
+msgstr "Rundi; Kirundi"
 
 #: common/gettext/ISO_639_1.as:312
 msgid "Romanian"
-msgstr ""
+msgstr "Romanian"
 
 #: common/gettext/ISO_639_1.as:314
 msgid "Russian"
-msgstr ""
+msgstr "Russian"
 
 #: common/gettext/ISO_639_1.as:316
 msgid "Kinyarwanda"
-msgstr ""
+msgstr "Kinyarwanda"
 
 #: common/gettext/ISO_639_1.as:318
 msgid "Sanskrit"
-msgstr ""
+msgstr "Sanskrit"
 
 #: common/gettext/ISO_639_1.as:320
 msgid "Sardinian"
-msgstr ""
+msgstr "Sardinian"
 
 #: common/gettext/ISO_639_1.as:322
 msgid "Sindhi"
-msgstr ""
+msgstr "Sindhi"
 
 #: common/gettext/ISO_639_1.as:324
 msgid "Northern Sami"
-msgstr ""
+msgstr "Northern Sami"
 
 #: common/gettext/ISO_639_1.as:326
 msgid "Sango; Sangro"
-msgstr ""
+msgstr "Sango; Sangro"
 
 #: common/gettext/ISO_639_1.as:328
 msgid "Sinhala; Sinhalese"
-msgstr ""
+msgstr "Sinhala; Sinhalese"
 
 #: common/gettext/ISO_639_1.as:330
 msgid "Slovak"
-msgstr ""
+msgstr "Slovak"
 
 #: common/gettext/ISO_639_1.as:332
 msgid "Slovenian"
-msgstr ""
+msgstr "Slovenian"
 
 #: common/gettext/ISO_639_1.as:334
 msgid "Samoan"
-msgstr ""
+msgstr "Samoan"
 
 #: common/gettext/ISO_639_1.as:336
 msgid "Shona"
-msgstr ""
+msgstr "Shona"
 
 #: common/gettext/ISO_639_1.as:338
 msgid "Somali"
-msgstr ""
+msgstr "Somali"
 
 #: common/gettext/ISO_639_1.as:340
 msgid "Albanian"
-msgstr ""
+msgstr "Albanian"
 
 #: common/gettext/ISO_639_1.as:342
 msgid "Serbian"
-msgstr ""
+msgstr "Serbian"
 
 #: common/gettext/ISO_639_1.as:344
 msgid "Swati; Siswati"
-msgstr ""
+msgstr "Swati; Siswati"
 
 #: common/gettext/ISO_639_1.as:346
 msgid "Sesotho; Sotho; Southern"
-msgstr ""
+msgstr "Sesotho; Sotho; Southern"
 
 #: common/gettext/ISO_639_1.as:348
 msgid "Sundanese"
-msgstr ""
+msgstr "Sundanese"
 
 #: common/gettext/ISO_639_1.as:350
 msgid "Swedish"
-msgstr ""
+msgstr "Swedish"
 
 #: common/gettext/ISO_639_1.as:352
 msgid "Swahili"
-msgstr ""
+msgstr "Swahili"
 
 #: common/gettext/ISO_639_1.as:354
 msgid "Tamil"
-msgstr ""
+msgstr "Tamil"
 
 #: common/gettext/ISO_639_1.as:356
 msgid "Telugu"
-msgstr ""
+msgstr "Telugu"
 
 #: common/gettext/ISO_639_1.as:358
 msgid "Tajik"
-msgstr ""
+msgstr "Tajik"
 
 #: common/gettext/ISO_639_1.as:360
 msgid "Thai"
-msgstr ""
+msgstr "Thai"
 
 #: common/gettext/ISO_639_1.as:362
 msgid "Tigrinya"
-msgstr ""
+msgstr "Tigrinya"
 
 #: common/gettext/ISO_639_1.as:364
 msgid "Turkmen"
-msgstr ""
+msgstr "Turkmen"
 
 #: common/gettext/ISO_639_1.as:366
 msgid "Tagalog"
-msgstr ""
+msgstr "Tagalog"
 
 #: common/gettext/ISO_639_1.as:368
 msgid "Tswana; Setswana"
-msgstr ""
+msgstr "Tswana; Setswana"
 
 #: common/gettext/ISO_639_1.as:370
 msgid "Tonga"
-msgstr ""
+msgstr "Tonga"
 
 #: common/gettext/ISO_639_1.as:372
 msgid "Turkish"
-msgstr ""
+msgstr "Turkish"
 
 #: common/gettext/ISO_639_1.as:374
 msgid "Tsonga"
-msgstr ""
+msgstr "Tsonga"
 
 #: common/gettext/ISO_639_1.as:376
 msgid "Tatar"
-msgstr ""
+msgstr "Tatar"
 
 #: common/gettext/ISO_639_1.as:378
 msgid "Twi"
-msgstr ""
+msgstr "Twi"
 
 #: common/gettext/ISO_639_1.as:380
 msgid "Tahitian"
-msgstr ""
+msgstr "Tahitian"
 
 #: common/gettext/ISO_639_1.as:382
 msgid "Uighur"
-msgstr ""
+msgstr "Uighur"
 
 #: common/gettext/ISO_639_1.as:384
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrainian"
 
 #: common/gettext/ISO_639_1.as:386
 msgid "Urdu"
-msgstr ""
+msgstr "Urdu"
 
 #: common/gettext/ISO_639_1.as:388
 msgid "Uzbek"
-msgstr ""
+msgstr "Uzbek"
 
 #: common/gettext/ISO_639_1.as:390
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamese"
 
 #: common/gettext/ISO_639_1.as:392
 msgid "Volap�k; Volapuk"
-msgstr ""
+msgstr "Volap�k; Volapuk"
 
 #: common/gettext/ISO_639_1.as:394
 msgid "Walloon"
-msgstr ""
+msgstr "Walloon"
 
 #: common/gettext/ISO_639_1.as:396
 msgid "Wolof"
-msgstr ""
+msgstr "Wolof"
 
 #: common/gettext/ISO_639_1.as:398
 msgid "Xhosa"
-msgstr ""
+msgstr "Xhosa"
 
 #: common/gettext/ISO_639_1.as:400
 msgid "Yiddish (formerly ji)"
-msgstr ""
+msgstr "Yiddish (formerly ji)"
 
 #: common/gettext/ISO_639_1.as:402
 msgid "Yoruba"
-msgstr ""
+msgstr "Yoruba"
 
 #: common/gettext/ISO_639_1.as:404
 msgid "Zhuang"
-msgstr ""
+msgstr "Zhuang"
 
 #: common/gettext/ISO_639_1.as:406
 msgid "Chinese"
-msgstr ""
+msgstr "Chinese"
 
 #: common/gettext/ISO_639_1.as:408
 msgid "Zulu"
-msgstr ""
+msgstr "Zulu"
 
-#: common/utils/Utilities.as:180 common/utils/Utilities.as:187
+#: common/utils/Utilities.as:181 common/utils/Utilities.as:188
 msgid "TOURNAMENT_END.POSITION_SECOND"
 msgstr "{0} nd"
 
-#: common/utils/Utilities.as:186
+#: common/utils/Utilities.as:187
 msgid "TOURNAMENT_END.POSITION_FIRST"
 msgstr "{0} st"
 
-#: common/utils/Utilities.as:188
+#: common/utils/Utilities.as:189
 msgid "TOURNAMENT_END.POSITION_THIRD"
 msgstr "{0} rd"
 
-#: common/utils/Utilities.as:189
+#: common/utils/Utilities.as:190
 msgid "TOURNAMENT_END.POSITION_FOURTH"
 msgstr "{0} th"
 
-#: mobile/core/AbstractEntryPoint.as:1147
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:273
+#: mobile/FacebookButton.as:405
+#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:171
+#: mobile/core/notification/content/CSNewThreadNotificationContent.as:238
+#: mobile/core/notification/content/PendingBidDetailNotificationContent.as:241
+#: mobile/core/notification/content/PendingBidDetailNotificationContent.as:289
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:149
+#: mobile/core/purchases/Store.as:185 mobile/navigation/FacebookManager.as:103
+#: mobile/navigation/FacebookManager.as:313
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:379
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:411
+#: mobile/navigation/authentication/LoginScreen.as:225
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:154
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:303
+#: mobile/navigation/authentication/RegisterScreen.as:257
+#: mobile/navigation/authentication/SponsorScreen.as:173
+#: mobile/navigation/cs/thread/CSThreadScreen.as:145
+#: mobile/navigation/cs/thread/CSThreadScreen.as:255
+#: mobile/navigation/engine/HighScoreScreen.as:104
+#: mobile/navigation/engine/PodiumScreen.as:114
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:184
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:354
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:456
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:481
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:780
+msgid "Chargement..."
+msgstr "Loading..."
+
+#: mobile/FacebookButton.as:441
+msgid ""
+"Une erreur est survenue lors de l'ajout de votre récompense, veuillez "
+"réessayer."
+msgstr "An error occurred while adding your prize, please try again."
+
+#: mobile/core/AbstractEntryPoint.as:1142
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:275
 msgid "Vous devez choisir un pseudo !"
 msgstr "You need to choose a username !"
 
-#: mobile/core/AbstractEntryPoint.as:1147
+#: mobile/core/AbstractEntryPoint.as:1142
 msgid "Merci d'entrer un code parrain ou passez cette étape pour continuer."
 msgstr "Please enter a player ID or skip this step to continue."
 
-#: mobile/core/AbstractGame.as:249
+#: mobile/core/AbstractGame.as:245
 msgid "Commencer"
 msgstr "Start"
 
-#: mobile/core/AbstractGame.as:322
+#: mobile/core/AbstractGame.as:315
 msgid ""
 "Validation de votre partie en cours.\n"
 "Merci de patienter quelques secondes..."
@@ -880,107 +973,81 @@ msgstr "Tap anywhere to continue..."
 msgid "Commander"
 msgstr "Order"
 
-#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:172
-#: mobile/core/notification/content/CSNewThreadNotificationContent.as:238
-#: mobile/core/notification/content/PendingBidDetailNotificationContent.as:241
-#: mobile/core/notification/content/PendingBidDetailNotificationContent.as:289
-#: mobile/core/purchases/Store.as:185 mobile/navigation/FacebookManager.as:180
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:382
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:414
-#: mobile/navigation/authentication/AuthenticationScreen.as:232
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:167
-#: mobile/navigation/authentication/LoginScreen.as:206
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:153
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:301
-#: mobile/navigation/authentication/RegisterScreen.as:219
-#: mobile/navigation/authentication/SponsorScreen.as:173
-#: mobile/navigation/cs/thread/CSThreadScreen.as:145
-#: mobile/navigation/cs/thread/CSThreadScreen.as:255
-#: mobile/navigation/engine/HighScoreScreen.as:106
-#: mobile/navigation/engine/PodiumScreen.as:119
-#: mobile/navigation/engine/SoloEndScreen.as:163
-#: mobile/navigation/engine/TournamentEndScreen.as:196
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:183
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:353
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:455
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:480
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:777
-msgid "Chargement..."
-msgstr "Loading..."
+#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:164
+msgid "Vous devez être identifié pour pourvoir commander."
+msgstr "You must be logged in to order."
 
-#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:177
+#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:176
 #: mobile/core/notification/content/CSNewThreadNotificationContent.as:255
+#: mobile/core/notification/content/CreditsNotificationContent.as:443
 #: mobile/core/notification/content/PendingBidDetailNotificationContent.as:315
-#: mobile/navigation/FacebookManager.as:109
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:156
+#: mobile/navigation/FacebookManager.as:151
 #: mobile/navigation/account/history/account/AccountHistoryContainer.as:271
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:387
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:419
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:384
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:416
 #: mobile/navigation/account/history/gifts/MyGiftsScreen.as:330
 #: mobile/navigation/account/history/payments/PaymentsHistoryContainer.as:200
 #: mobile/navigation/account/history/settings/AccountItemRenderer.as:395
 #: mobile/navigation/account/history/settings/PersonalInformationsContainer.as:202
-#: mobile/navigation/authentication/AuthenticationScreen.as:254
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:174
-#: mobile/navigation/authentication/LoginScreen.as:214
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:308
-#: mobile/navigation/authentication/RegisterScreen.as:240
+#: mobile/navigation/authentication/LoginScreen.as:233
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:310
+#: mobile/navigation/authentication/RegisterScreen.as:278
 #: mobile/navigation/cs/display/CSMessagesContainer.as:216
-#: mobile/navigation/highscore/HighScoreListScreen.as:424
-#: mobile/navigation/highscore/HighScoreListScreen.as:440
+#: mobile/navigation/highscore/HighScoreListScreen.as:449
+#: mobile/navigation/highscore/HighScoreListScreen.as:626
 #: mobile/navigation/shop/bid/comingsoon/ComingSoonBidContainer.as:100
 #: mobile/navigation/shop/bid/finished/FinishedBidContainer.as:100
 #: mobile/navigation/shop/bid/pending/PendingBidContainer.as:100
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:224
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:315
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:364
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:473
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:498
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:222
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:316
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:365
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:474
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:499
 #: mobile/navigation/sponsor/filleuls/FilleulsScreen.as:193
 #: mobile/navigation/sponsor/invite/ContactItemRenderer.as:365
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:550
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:787
-#: mobile/navigation/store/StoreScreen.as:463
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:553
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:790
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:257
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:388
-#: mobile/navigation/tournament/TournamentRankingScreen.as:571
-#: mobile/navigation/vip/VipScreen.as:801
+#: mobile/navigation/tournament/TournamentRankingScreen.as:569
+#: mobile/navigation/vip/VipScreen.as:822
 msgid "Aucune connexion Internet."
 msgstr "No Internet connection."
 
-#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:230
+#: mobile/core/notification/content/BoutiqueItemDetailNotificationContent.as:229
 #: mobile/core/notification/content/CSNewThreadNotificationContent.as:298
+#: mobile/core/notification/content/CreditsNotificationContent.as:292
+#: mobile/core/notification/content/CreditsNotificationContent.as:382
 #: mobile/core/notification/content/PendingBidDetailNotificationContent.as:280
 #: mobile/core/notification/content/PendingBidDetailNotificationContent.as:345
-#: mobile/core/purchases/Store.as:222 mobile/navigation/FacebookManager.as:367
-#: mobile/navigation/FacebookManager.as:432
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:195
+#: mobile/core/purchases/Store.as:228 mobile/navigation/FacebookManager.as:403
+#: mobile/navigation/FacebookManager.as:494
 #: mobile/navigation/account/history/account/AccountHistoryContainer.as:251
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:458
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:455
 #: mobile/navigation/account/history/gifts/MyGiftsScreen.as:310
 #: mobile/navigation/account/history/payments/PaymentsHistoryContainer.as:181
 #: mobile/navigation/account/history/settings/PersonalInformationsContainer.as:183
-#: mobile/navigation/authentication/AuthenticationScreen.as:408
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:213
-#: mobile/navigation/authentication/LoginScreen.as:249
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:381
-#: mobile/navigation/authentication/RegisterScreen.as:329
+#: mobile/navigation/authentication/LoginScreen.as:268
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:383
+#: mobile/navigation/authentication/RegisterScreen.as:367
 #: mobile/navigation/authentication/SponsorScreen.as:210
 #: mobile/navigation/cs/display/CSMessagesContainer.as:197
 #: mobile/navigation/cs/thread/CSThreadScreen.as:247
-#: mobile/navigation/highscore/HighScoreListScreen.as:399
+#: mobile/navigation/highscore/HighScoreListScreen.as:424
 #: mobile/navigation/shop/bid/comingsoon/ComingSoonBidContainer.as:157
 #: mobile/navigation/shop/bid/finished/FinishedBidContainer.as:157
 #: mobile/navigation/shop/bid/pending/PendingBidContainer.as:157
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:205
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:331
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:432
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:203
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:332
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:433
 #: mobile/navigation/sponsor/filleuls/FilleulsScreen.as:174
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:861
-#: mobile/navigation/store/StoreScreen.as:314
-#: mobile/navigation/store/StoreScreen.as:404
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:864
 #: mobile/navigation/tournament/PreviousTournamentsScreen.as:223
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:367
-#: mobile/navigation/tournament/TournamentRankingScreen.as:547
-#: mobile/navigation/vip/VipScreen.as:811
+#: mobile/navigation/tournament/TournamentRankingScreen.as:545
+#: mobile/navigation/vip/VipScreen.as:832
 msgid "Une erreur est survenue, veuillez réessayer."
 msgstr "An error has occurred, please try again."
 
@@ -989,10 +1056,10 @@ msgid "Nouveau message"
 msgstr "New message"
 
 #: mobile/core/notification/content/CSNewThreadNotificationContent.as:115
-#: mobile/core/storage/StorageConfig.as:181
-#: mobile/navigation/game/GameModeSelectionPopup.as:169
-#: mobile/navigation/game/GameModeSelectionPopup.as:459
-#: mobile/navigation/game/GameModeSelectionPopup.as:516
+#: mobile/core/storage/StorageConfig.as:196
+#: mobile/navigation/game/GameModeSelectionPopup.as:167
+#: mobile/navigation/game/GameModeSelectionPopup.as:429
+#: mobile/navigation/game/GameModeSelectionPopup.as:486
 msgid "Partie Solo"
 msgstr "Single Player"
 
@@ -1005,6 +1072,7 @@ msgid "Saisissez ici votre question..."
 msgstr "Type your question here..."
 
 #: mobile/core/notification/content/CSNewThreadNotificationContent.as:146
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:84
 msgid "Envoyer"
 msgstr "Send"
 
@@ -1013,11 +1081,11 @@ msgid "Le message ne peut être vide."
 msgstr "The message cannot be blank."
 
 #: mobile/core/notification/content/CSNewThreadNotificationContent.as:233
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:141
 #: mobile/navigation/account/history/settings/EmailSettingsContainer.as:86
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:159
-#: mobile/navigation/authentication/LoginScreen.as:191
-#: mobile/navigation/authentication/RegisterScreen.as:203
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:758
+#: mobile/navigation/authentication/LoginScreen.as:210
+#: mobile/navigation/authentication/RegisterScreen.as:241
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:761
 msgid "Email invalide."
 msgstr "Email not valid."
 
@@ -1033,12 +1101,24 @@ msgstr ""
 msgid "Prochainement..."
 msgstr "Soon..."
 
+#: mobile/core/notification/content/CreditsNotificationContent.as:107
+msgid "Boutique de Crédits"
+msgstr "Credit Shop"
+
+#: mobile/core/notification/content/CreditsNotificationContent.as:211
+msgid ""
+"Impossible d'afficher le magasin car vous ne pouvez pas effectuer d'achats "
+"(contrôle parental ou autre raison)."
+msgstr ""
+"Unable to display the shop because you are not allowed to make any purchase "
+"(parental control or other)."
+
 #: mobile/core/notification/content/DisconnectNotificationContent.as:59
 msgid "Voulez-vous vous déconnecter ?"
 msgstr "Are you sure you want to log out ?"
 
 #: mobile/core/notification/content/DisconnectNotificationContent.as:65
-#: mobile/debug/DebugScreen.as:145
+#: mobile/debug/DebugScreen.as:151
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:57
 #: mobile/navigation/settings/SettingsScreen.as:109
 #: mobile/navigation/settings/SettingsScreen.as:119
@@ -1050,8 +1130,8 @@ msgid "Oui"
 msgstr "Yes"
 
 #: mobile/core/notification/content/DisconnectNotificationContent.as:70
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:370
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:402
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:367
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:399
 msgid "Annuler"
 msgstr "Cancel"
 
@@ -1077,9 +1157,63 @@ msgid "Activer"
 msgstr "Activate"
 
 #: mobile/core/notification/content/EventPushNotificationContent.as:95
-#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:74
+#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:87
 msgid "Plus tard"
 msgstr "Later"
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:89
+msgid "Connexion Facebook"
+msgstr "Sign up using Facebook"
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:94
+msgid "1 Crédit OFFERT"
+msgstr "1 Credit OFFERED"
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:95
+msgid "Dépassez vos amis !"
+msgstr "Get ahead of your friends!"
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:96
+msgid "Jouez sur plusieurs appareils !"
+msgstr "Play on multiple devices!"
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:113
+#: mobile/navigation/authentication/RegisterScreen.as:131
+msgid "Code parrain... (facultatif)"
+msgstr "Referring code...(optional)"
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:126
+#: mobile/navigation/authentication/LoginScreen.as:95
+#: mobile/navigation/menu/Menu.as:213
+msgid "Connexion"
+msgstr "Connection"
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:130
+#: mobile/navigation/authentication/LoginScreen.as:105
+#: mobile/navigation/authentication/RegisterScreen.as:104
+msgid "Nous ne publierons jamais sur votre mur sans votre accord"
+msgstr "We will never publish on your wall without your permission"
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:238
+#: mobile/navigation/authentication/RegisterScreen.as:385
+msgid "Qu'est-ce que le code parrain ?"
+msgstr "What's the invitation code?"
+
+#: mobile/core/notification/content/FacebookNotificationContent.as:244
+#: mobile/navigation/authentication/RegisterScreen.as:385
+msgid ""
+"Le code parrain est un numéro correspondant à l'identifiant d'un joueur sur "
+"l'application.\n"
+"\n"
+"Lorsqu'un joueur ou un ami souhaite vous parrainer, il vous envoie son code "
+"joueur que vous pouvez saisir dans ce champ en vous inscrivant."
+msgstr ""
+"The invitation code is the number corresponding to the ID of a player on the "
+"app.\n"
+"\n"
+"When a player or a friend wants to invite you to join him on the app, he/she "
+"can send you a player ID code that you can then enter in this field when "
+"you're subscribing."
 
 #: mobile/core/notification/content/FilleulDetailNotificationContent.as:90
 msgid "Etat du parrainage :"
@@ -1123,21 +1257,15 @@ msgstr "Let's go !"
 msgid "Plus tard..."
 msgstr "Later..."
 
-#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:64
+#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:69
 msgid ""
-"Recevez 50 jetons gratuits\n"
-"et un crédit bonus en créant votre compte !"
-msgstr ""
-"Get 50 free Tokens\n"
-"and a bonus Credit when creating your account !"
+"Recevez 50 Jetons GRATUITS par jour + un crédit bonus en créant votre "
+"compte !"
+msgstr "Get 50 FREE Tokens per day + a bonus Credit by creating your account!"
 
-#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:80
-msgid "Créer"
-msgstr "Create"
-
-#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:84
-msgid "J'ai déjà un compte"
-msgstr "I already have an account"
+#: mobile/core/notification/content/MarketingRegisterNotificationContent.as:83
+msgid "Je les veux !"
+msgstr "I want it!"
 
 #: mobile/core/notification/content/PendingBidDetailNotificationContent.as:112
 msgid "Enchère"
@@ -1205,14 +1333,21 @@ msgstr ""
 msgid "Noter {0}"
 msgstr "Give a mark {0}"
 
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:71
+msgid ""
+"Entrez l'email de votre compte pour recevoir dans quelques minutes votre mot "
+"de passe."
+msgstr "Enter your email address to receive your password in a few minutes."
+
+#: mobile/core/notification/content/RetrievePasswordNotificationContent.as:76
+#: mobile/navigation/authentication/LoginScreen.as:111
+#: mobile/navigation/authentication/RegisterScreen.as:116
+msgid "Email..."
+msgstr "Email..."
+
 #: mobile/core/notification/content/SponsorNotificationContent.as:71
 msgid "Gagnez ces récompenses quand vos filleuls changent de rang."
 msgstr "Win these prizes when your friends change their rank."
-
-#: mobile/core/notification/content/SponsorNotificationContent.as:80
-#: mobile/core/notification/content/SponsorNotificationContent.as:87
-msgid "Matelot"
-msgstr "Seaman"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:80
 msgid "400 points"
@@ -1224,19 +1359,8 @@ msgstr "200 Points*"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:81
 #: mobile/core/notification/content/SponsorNotificationContent.as:88
-msgid "Boucanier"
-msgstr "Buccaneer"
-
-#: mobile/core/notification/content/SponsorNotificationContent.as:81
-#: mobile/core/notification/content/SponsorNotificationContent.as:88
 msgid "2 crédits"
 msgstr "2 Credits"
-
-#: mobile/core/notification/content/SponsorNotificationContent.as:82
-#: mobile/core/notification/content/SponsorNotificationContent.as:83
-#: mobile/core/notification/content/SponsorNotificationContent.as:89
-msgid "Pirate III"
-msgstr "Pirate III"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:82
 #: mobile/core/notification/content/SponsorNotificationContent.as:89
@@ -1261,10 +1385,6 @@ msgstr "30 €"
 #: mobile/core/notification/content/SponsorNotificationContent.as:87
 msgid "Jusqu'à 400 points*"
 msgstr "Up to 400 Points*"
-
-#: mobile/core/notification/content/SponsorNotificationContent.as:90
-msgid "Capitaine"
-msgstr "Captain"
 
 #: mobile/core/notification/content/SponsorNotificationContent.as:114
 msgid "BONUS !"
@@ -1291,19 +1411,19 @@ msgstr ""
 msgid "Jeu en pause"
 msgstr "Game paused"
 
-#: mobile/core/pause/PauseView.as:82
+#: mobile/core/pause/PauseView.as:79
 msgid "Reprendre"
 msgstr "Resume"
 
-#: mobile/core/pause/PauseView.as:90
+#: mobile/core/pause/PauseView.as:84
 msgid "Abandonner"
 msgstr "Give up"
 
-#: mobile/core/promo/PromoContent.as:85
+#: mobile/core/promo/PromoContent.as:87
 msgid "--:--"
-msgstr ""
+msgstr "—:—"
 
-#: mobile/core/promo/PromoContent.as:216
+#: mobile/core/promo/PromoContent.as:218
 #: mobile/navigation/shop/bid/finished/FinishedBidItemRenderer.as:124
 #: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:134
 #: mobile/navigation/shop/bid/pending/PendingBidItemRenderer.as:378
@@ -1320,17 +1440,17 @@ msgstr "h"
 
 #: mobile/core/promo/PromoManager.as:124 mobile/core/promo/PromoManager.as:129
 msgid "'"
-msgstr ""
+msgstr "'"
 
 #: mobile/core/promo/PromoManager.as:130
 msgid "\""
-msgstr ""
+msgstr "\""
 
-#: mobile/core/purchases/Store.as:386
+#: mobile/core/purchases/Store.as:406
 msgid "Achat annulé."
 msgstr "Purchase cancelled."
 
-#: mobile/core/purchases/Store.as:439
+#: mobile/core/purchases/Store.as:459
 msgid "L'achat a échoué."
 msgstr "The purchase failed."
 
@@ -1364,7 +1484,6 @@ msgstr ""
 
 #: mobile/core/scoring/ScoreToPointsContainer.as:124
 #: mobile/core/scoring/ScoreToStarsContainer.as:99
-#: mobile/navigation/engine/SoloEndScreen.as:201
 #: mobile/navigation/highscore/HighScoreListHeader.as:78
 msgid "Score"
 msgstr "Score"
@@ -1437,40 +1556,40 @@ msgstr "Rubies"
 msgid "Par exemple : avec un score de {0}, vous gagnez {1} Rubis."
 msgstr "For example: with a score of {0}, you will get {1} Rubies."
 
-#: mobile/core/storage/StorageConfig.as:182
+#: mobile/core/storage/StorageConfig.as:197
 #: mobile/navigation/home/RulesAndScoresScreen.as:80
 msgid "Tournoi"
 msgstr "Tournament"
 
-#: mobile/core/storage/StorageConfig.as:183
+#: mobile/core/storage/StorageConfig.as:198
 msgid "Problème technique"
 msgstr "Technical issue"
 
-#: mobile/core/storage/StorageConfig.as:184 mobile/navigation/menu/Menu.as:80
+#: mobile/core/storage/StorageConfig.as:199 mobile/navigation/menu/Menu.as:80
 msgid "Cadeaux"
 msgstr "Prizes"
 
-#: mobile/core/storage/StorageConfig.as:185 mobile/navigation/menu/Menu.as:76
+#: mobile/core/storage/StorageConfig.as:200 mobile/navigation/menu/Menu.as:76
 msgid "Mon Compte"
 msgstr "My account"
 
-#: mobile/core/storage/StorageConfig.as:186
+#: mobile/core/storage/StorageConfig.as:201
 msgid "Informations"
 msgstr "Information"
 
-#: mobile/core/storage/StorageConfig.as:187
+#: mobile/core/storage/StorageConfig.as:202
 msgid "Autre"
 msgstr "Other"
 
-#: mobile/core/storage/StorageConfig.as:222
+#: mobile/core/storage/StorageConfig.as:237
 msgid "Français"
 msgstr "French"
 
-#: mobile/core/storage/StorageConfig.as:223
+#: mobile/core/storage/StorageConfig.as:238
 msgid "Anglais"
 msgstr "English"
 
-#: mobile/debug/DebugScreen.as:146
+#: mobile/debug/DebugScreen.as:152
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:58
 #: mobile/navigation/settings/SettingsScreen.as:110
 #: mobile/navigation/settings/SettingsScreen.as:120
@@ -1481,34 +1600,23 @@ msgstr "English"
 msgid "Non"
 msgstr "No"
 
-#: mobile/navigation/FacebookManager.as:104
-#: mobile/navigation/authentication/AuthenticationScreen.as:249
+#: mobile/navigation/FacebookManager.as:146
 msgid "Facebook n'est pas supporté sur cet appareil."
 msgstr "Facebook is not supported by this device."
 
-#: mobile/navigation/FacebookManager.as:265
-#: mobile/navigation/authentication/AuthenticationScreen.as:324
+#: mobile/navigation/FacebookManager.as:241
 msgid ""
-"Nous n'avons pas pu récupéré votre email via Facebook. Merci de compléter "
+"Nous n'avons pas pu récupérer votre email via Facebook. Merci de compléter "
 "l'inscription normalement."
 msgstr ""
-"We have not be able to retrieve your email address via Facebook. Please fill "
-"in the registration form normally."
+"We could not retrieve your email via Facebook. Please complete the "
+"registration normally."
 
-#: mobile/navigation/FacebookManager.as:289
-#: mobile/navigation/FacebookManager.as:305
-msgid ""
-"Ce compte Facebook ne correspond pas à celui associé à votre compte "
-"Ludokado.\n"
-"\n"
-"Merci de vous connecter avec le bon compte Facebook pour continuer."
-msgstr ""
-"This Facebook account does not match the one linked with your LudoKado "
-"account.\n"
-"\n"
-"Please log in with the right Facebook account to continue."
+#: mobile/navigation/FacebookManager.as:327
+msgid "Publication annulée"
+msgstr "Posting Canceled"
 
-#: mobile/navigation/Footer.as:330
+#: mobile/navigation/Footer.as:302
 msgid ""
 "Pour revenir à l'écran précédent,\n"
 "touchez le bouton de retour."
@@ -1615,24 +1723,23 @@ msgstr ""
 "Category : {2}\n"
 "Status : {3}"
 
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:370
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:367
 msgid "Voulez-vous vraiment échanger ce lot contre un chèque ?"
 msgstr "Are you sure you want to exchange this prize for a cheque ?"
 
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:370
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:393
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:402
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:425
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:95
-#: mobile/navigation/authentication/LoginScreen.as:118
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:143
-#: mobile/navigation/authentication/RegisterScreen.as:118
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:367
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:390
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:399
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:422
+#: mobile/navigation/authentication/LoginScreen.as:129
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:144
+#: mobile/navigation/authentication/RegisterScreen.as:143
 #: mobile/navigation/authentication/SponsorScreen.as:95
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:678
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:681
 msgid "Confirmer"
 msgstr "Confirm"
 
-#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:402
+#: mobile/navigation/account/history/gifts/GiftHistoryItemRenderer.as:399
 msgid "Voulez-vous vraiment échanger ce lot contre des points ?"
 msgstr "Are you sure you want to exchange this prize for Points ?"
 
@@ -1920,7 +2027,6 @@ msgstr[1] "You have won {0} cups."
 
 #: mobile/navigation/alert/AlertItemRenderer.as:297
 #: mobile/navigation/alert/AlertItemRenderer.as:306
-#: mobile/navigation/authentication/AuthenticationScreen.as:83
 #: mobile/navigation/authentication/NotLoggedInContainer.as:52
 msgid "S'identifier"
 msgstr "Sign in"
@@ -1963,60 +2069,28 @@ msgstr "Alerts"
 msgid "Fermer les alertes"
 msgstr "Close the alerts"
 
-#: mobile/navigation/authentication/AuthenticationScreen.as:94
-msgid ""
-"Connectez-vous ou créez\n"
-"un compte LudoKado.com"
-msgstr ""
-"Login or create\n"
-"a LudoKado.com account"
-
-#: mobile/navigation/authentication/AuthenticationScreen.as:109
-msgid "J'ai un compte"
-msgstr "I have an account"
-
-#: mobile/navigation/authentication/AuthenticationScreen.as:123
-msgid "Créer un compte"
-msgstr "Create an account"
-
-#: mobile/navigation/authentication/AuthenticationScreen.as:135
+#: mobile/navigation/authentication/LoginScreen.as:101
+#: mobile/navigation/authentication/RegisterScreen.as:100
+#: mobile/navigation/highscore/HighScoreListScreen.as:213
+#: mobile/navigation/home/HomeScreen.as:75
+#: mobile/navigation/home/HomeScreen.as:209
 msgid "Facebook"
 msgstr "Facebook"
 
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:71
-msgid "Mot de passe oublié"
-msgstr "Forgot your password"
-
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:83
-msgid ""
-"Entrez l'email de votre compte pour recevoir dans quelques minutes votre mot "
-"de passe."
-msgstr "Enter your email address to receive your password in a few minutes."
-
-#: mobile/navigation/authentication/ForgotPasswordScreen.as:88
-msgid "Entrez ici votre email..."
-msgstr "Enter your email address here..."
-
-#: mobile/navigation/authentication/LoginScreen.as:80
-#: mobile/navigation/menu/Menu.as:215
-msgid "Connexion"
-msgstr "Connection"
-
-#: mobile/navigation/authentication/LoginScreen.as:95
-#: mobile/navigation/authentication/RegisterScreen.as:95
-msgid "Email..."
-msgstr "Email..."
-
-#: mobile/navigation/authentication/LoginScreen.as:103
-#: mobile/navigation/authentication/RegisterScreen.as:103
+#: mobile/navigation/authentication/LoginScreen.as:119
+#: mobile/navigation/authentication/RegisterScreen.as:124
 msgid "Mot de passe..."
 msgstr "Password..."
 
-#: mobile/navigation/authentication/LoginScreen.as:110
-msgid "J'ai oublié mon mot de passe..."
-msgstr "I forgot my password..."
+#: mobile/navigation/authentication/LoginScreen.as:125
+msgid "Mot de passe oublié"
+msgstr "Forgot your password"
 
-#: mobile/navigation/authentication/LoginScreen.as:198
+#: mobile/navigation/authentication/LoginScreen.as:133
+msgid "Nouveau joueur ? Créez un compte"
+msgstr "New Player? Create an account"
+
+#: mobile/navigation/authentication/LoginScreen.as:217
 msgid "Mot de passe invalide."
 msgstr "Password not valid."
 
@@ -2028,13 +2102,17 @@ msgstr ""
 "You need to Sign in\n"
 "to access this screen."
 
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:94
-#: mobile/navigation/authentication/RegisterScreen.as:78
+#: mobile/navigation/authentication/OrContainer.as:59
+msgid "OU"
+msgstr "OR"
+
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:96
+#: mobile/navigation/authentication/RegisterScreen.as:98
 #: mobile/navigation/authentication/SponsorScreen.as:71
 msgid "Inscription"
 msgstr "Registration"
 
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:106
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:108
 msgid ""
 "Marre des pseudos avec des chiffres ?\n"
 "Créez votre pseudo !"
@@ -2042,7 +2120,7 @@ msgstr ""
 "Fed up with usernames with numbers ?\n"
 "Create your own username !"
 
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:106
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:108
 msgid ""
 "Vous n'avez pas encore de pseudo ?\n"
 "\n"
@@ -2053,11 +2131,16 @@ msgstr ""
 "\n"
 "Choose one from now on to recognize yourself in the tournaments leaderbord !"
 
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:130
-msgid "Votre pseudo..."
-msgstr "Your username..."
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:132
+msgid "Ou choisissez votre pseudo..."
+msgstr "Or choose your nickname."
 
-#: mobile/navigation/authentication/PseudoChoiceScreen.as:293
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:208
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:256
+msgid "Choisissez votre pseudo..."
+msgstr "Choose your nickname.."
+
+#: mobile/navigation/authentication/PseudoChoiceScreen.as:295
 msgid "Le pseudo ne peut être vide !"
 msgstr "The username cannot be blank !"
 
@@ -2078,26 +2161,24 @@ msgstr ""
 "you will receive."
 
 #: mobile/navigation/authentication/RegisterCompleteScreen.as:82
-#: mobile/navigation/engine/FacebookEndScreen.as:140
-#: mobile/navigation/engine/HighScoreScreen.as:148
-#: mobile/navigation/engine/PodiumScreen.as:185
-#: mobile/navigation/engine/SoloEndScreen.as:366
-#: mobile/navigation/engine/TournamentEndScreen.as:406
-#: mobile/navigation/vip/VipUpScreen.as:141
+#: mobile/navigation/engine/FacebookEndScreen.as:126
+#: mobile/navigation/engine/HighScoreScreen.as:141
+#: mobile/navigation/engine/PodiumScreen.as:175
+#: mobile/navigation/vip/VipUpScreen.as:137
 msgid "Continuer"
 msgstr "Continue"
 
-#: mobile/navigation/authentication/RegisterScreen.as:110
-msgid "Code parrain... (facultatif)"
-msgstr "Referring code...(optional)"
+#: mobile/navigation/authentication/RegisterScreen.as:147
+msgid "Déjà un compte ? Identifiez-vous"
+msgstr "You already have an account? Sign in"
 
-#: mobile/navigation/authentication/RegisterScreen.as:210
+#: mobile/navigation/authentication/RegisterScreen.as:248
 msgid "Le mot de passe ne peut être vide."
 msgstr "The password cannot be blank."
 
 #: mobile/navigation/authentication/RetryContainer.as:60
-#: mobile/navigation/highscore/HighScoreListScreen.as:494
-#: mobile/navigation/highscore/HighScoreListScreen.as:560
+#: mobile/navigation/highscore/HighScoreListScreen.as:511
+#: mobile/navigation/highscore/HighScoreListScreen.as:586
 msgid ""
 "Vous ne pouvez pas afficher le contenu de cette page car vous n'êtes pas "
 "connecté à Internet."
@@ -2147,7 +2228,7 @@ msgstr "Version of the application : {0}"
 #: mobile/navigation/cs/HelpScreen.as:122
 #: mobile/navigation/shop/bid/BidHomeScreen.as:83
 msgid "En cours"
-msgstr "Your opened requests"
+msgstr "In progress"
 
 #: mobile/navigation/cs/HelpScreen.as:123
 msgid "Résolus"
@@ -2183,7 +2264,7 @@ msgstr ""
 "No Internet connection. Your message has been saved and will be sent when "
 "you are connected."
 
-#: mobile/navigation/engine/FacebookEndScreen.as:117
+#: mobile/navigation/engine/FacebookEndScreen.as:111
 msgid ""
 "Bravo !\n"
 "Vous avez dépassé un ami !"
@@ -2191,52 +2272,57 @@ msgstr ""
 "Congratulations!\n"
 "You have beaten a friend !"
 
-#: mobile/navigation/engine/FacebookEndScreen.as:131
-#: mobile/navigation/engine/FacebookEndScreen.as:341
-#: mobile/navigation/engine/HighScoreScreen.as:161
-#: mobile/navigation/engine/HighScoreScreen.as:311
-#: mobile/navigation/engine/PodiumScreen.as:198
-#: mobile/navigation/engine/PodiumScreen.as:365
-#: mobile/navigation/vip/VipUpScreen.as:170
-#: mobile/navigation/vip/VipUpScreen.as:375
-msgid "Publier"
-msgstr "Post"
+#: mobile/navigation/engine/FacebookEndScreen.as:115
+#: mobile/navigation/engine/PodiumScreen.as:180
+#: mobile/navigation/engine/SoloEndScreen.as:244
+#: mobile/navigation/engine/TournamentEndScreen.as:365
+#: mobile/navigation/engine/TournamentEndScreen.as:376
+#: mobile/navigation/vip/VipScreen.as:378
+#: mobile/navigation/vip/VipUpScreen.as:153
+msgid "Partager"
+msgstr "Share"
 
-#: mobile/navigation/engine/FacebookEndScreen.as:131
-#: mobile/navigation/engine/HighScoreScreen.as:161
-#: mobile/navigation/engine/PodiumScreen.as:198
-#: mobile/navigation/vip/VipUpScreen.as:170
-msgid "Associer"
-msgstr "Associate"
-
-#: mobile/navigation/engine/FacebookEndScreen.as:352
+#: mobile/navigation/engine/FacebookEndScreen.as:115
 #, python-brace-format
 msgid "{0} a dépassé {1} sur le jeu {2}"
 msgstr "{0} has beaten {1} on the game {2}"
 
-#: mobile/navigation/engine/FacebookEndScreen.as:354
+#: mobile/navigation/engine/FacebookEndScreen.as:117
 #, python-brace-format
 msgid ""
 "Avec un score de {0}, je pense devenir rapidement le meilleur sur ce jeu."
 msgstr ""
 "With a score of {0}, I think I can quickly become the best one on this game."
 
-#: mobile/navigation/engine/FacebookEndScreen.as:355
-#: mobile/navigation/engine/HighScoreScreen.as:328
-#: mobile/navigation/engine/PodiumScreen.as:380
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:262
-#: mobile/navigation/vip/VipUpScreen.as:390
+#: mobile/navigation/engine/FacebookEndScreen.as:118
+#: mobile/navigation/engine/HighScoreScreen.as:149
+#: mobile/navigation/engine/PodiumScreen.as:183
+#: mobile/navigation/engine/SoloEndScreen.as:247
+#: mobile/navigation/engine/TournamentEndScreen.as:368
+#: mobile/navigation/engine/TournamentEndScreen.as:379
+#: mobile/navigation/engine/TournamentEndScreen.as:707
+#: mobile/navigation/engine/TournamentEndScreen.as:715
+#: mobile/navigation/highscore/HighScoreItemRenderer.as:268
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:260
+#: mobile/navigation/vip/VipScreen.as:381
+#: mobile/navigation/vip/VipScreen.as:878
+#: mobile/navigation/vip/VipUpScreen.as:156
 msgid "http://www.ludokado.com/"
 msgstr "http://www.ludokado.com/"
 
-#: mobile/navigation/engine/FacebookEndScreen.as:356
+#: mobile/navigation/engine/FacebookEndScreen.as:119
+#: mobile/navigation/engine/SoloEndScreen.as:248
+#: mobile/navigation/engine/TournamentEndScreen.as:369
+#: mobile/navigation/engine/TournamentEndScreen.as:380
+#: mobile/navigation/engine/TournamentEndScreen.as:708
+#: mobile/navigation/engine/TournamentEndScreen.as:716
 #, python-brace-format
 msgid ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"
 msgstr ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"
 
-#: mobile/navigation/engine/HighScoreScreen.as:127
+#: mobile/navigation/engine/HighScoreScreen.as:125
 #, python-brace-format
 msgid ""
 "Nouveau High Score !\n"
@@ -2245,21 +2331,22 @@ msgstr ""
 "New High Score !\n"
 "{0}"
 
-#: mobile/navigation/engine/HighScoreScreen.as:325
-#, python-brace-format
-msgid "Qui sera capable de me battre sur {0} ?"
-msgstr "Who can beat me on {0} ?"
+#: mobile/navigation/engine/HighScoreScreen.as:146
+msgid "Partager mon exploit !"
+msgstr "Share my performances & my score!"
 
-#: mobile/navigation/engine/HighScoreScreen.as:327
+#: mobile/navigation/engine/HighScoreScreen.as:146
 #, python-brace-format
-msgid ""
-"Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me prouver "
-"le contraire ;)"
-msgstr ""
-"With a score of {0}, I think I am the best player on this game. But prove me "
-"wrong ;)"
+msgid "Nouveau meilleur score : {0} !"
+msgstr "New Highest score: {0}!"
 
-#: mobile/navigation/engine/HighScoreScreen.as:329
+#: mobile/navigation/engine/HighScoreScreen.as:148
+#, python-brace-format
+msgid "Venez me défier et tenter de battre mon score de {0} sur {1} !"
+msgstr "Enter in the game and try to beat my score of {0} on {1}!"
+
+#: mobile/navigation/engine/HighScoreScreen.as:150
+#: mobile/navigation/highscore/HighScoreItemRenderer.as:269
 #, python-brace-format
 msgid ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
@@ -2268,7 +2355,7 @@ msgstr ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
 "publication_highscore.jpg"
 
-#: mobile/navigation/engine/PodiumScreen.as:145
+#: mobile/navigation/engine/PodiumScreen.as:140
 #, python-brace-format
 msgid ""
 "Bravo !\n"
@@ -2277,7 +2364,7 @@ msgstr ""
 "Congratulations !\n"
 "You are {0} in the tournament !"
 
-#: mobile/navigation/engine/PodiumScreen.as:145
+#: mobile/navigation/engine/PodiumScreen.as:140
 #, python-brace-format
 msgid ""
 "Bravo !\n"
@@ -2290,12 +2377,12 @@ msgstr ""
 "You are\n"
 "{0} in the tournament !"
 
-#: mobile/navigation/engine/PodiumScreen.as:377
+#: mobile/navigation/engine/PodiumScreen.as:180
 #, python-brace-format
 msgid "Je suis dans le TOP {0} sur le tournoi {1}"
 msgstr "I am in the TOP {0} on the tournament {1}"
 
-#: mobile/navigation/engine/PodiumScreen.as:379
+#: mobile/navigation/engine/PodiumScreen.as:182
 #, python-brace-format
 msgid ""
 "La fin du tournoi approche ! Rejoignez moi vite et remportez vous aussi "
@@ -2303,7 +2390,7 @@ msgid ""
 msgstr ""
 "The Tournament is about to end! Hurry up, join me and get the prize : {0}"
 
-#: mobile/navigation/engine/PodiumScreen.as:381
+#: mobile/navigation/engine/PodiumScreen.as:184
 #, python-brace-format
 msgid ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
@@ -2312,23 +2399,41 @@ msgstr ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
 "publication_top_{1}.jpg"
 
-#: mobile/navigation/engine/SoloEndScreen.as:227
-msgid "Points"
-msgstr "Points"
+#: mobile/navigation/engine/SoloEndScreen.as:203
+#: mobile/navigation/engine/TournamentEndScreen.as:203
+msgid "FIN DE PARTIE"
+msgstr "GAME OVER"
 
-#: mobile/navigation/engine/SoloEndScreen.as:253
-msgid "Points cumulés : "
-msgstr "Points collected : "
+#: mobile/navigation/engine/SoloEndScreen.as:211
+#: mobile/navigation/engine/SoloEndScreen.as:461
+#: mobile/navigation/engine/SoloEndScreen.as:467
+#: mobile/navigation/engine/TournamentEndScreen.as:211
+#: mobile/navigation/engine/TournamentEndScreen.as:538
+#: mobile/navigation/engine/TournamentEndScreen.as:544
+#, python-brace-format
+msgid "Score final : {0}"
+msgstr "Final score: {0}"
 
-#: mobile/navigation/engine/SoloEndScreen.as:290
+#: mobile/navigation/engine/SoloEndScreen.as:244
+#, python-brace-format
+msgid "J'ai obtenu {0} Points sur {1} !"
+msgstr "I’ve got {0} Points on {1} !"
+
+#: mobile/navigation/engine/SoloEndScreen.as:246
+msgid ""
+"Je peux maintenant obtenir des tas de bonus en les convertissant dans la "
+"Boutique !"
+msgstr "I can now get lots of bonuses by converting my points in the Shop!"
+
+#: mobile/navigation/engine/SoloEndScreen.as:265
 msgid "Tournoi débloqué !"
 msgstr "Tournament unlocked!"
 
-#: mobile/navigation/engine/SoloEndScreen.as:318
+#: mobile/navigation/engine/SoloEndScreen.as:291
 msgid "Convertir mes Points en Cadeaux dans la boutique"
 msgstr "Turn my Points into Prizes in the Shop"
 
-#: mobile/navigation/engine/SoloEndScreen.as:318
+#: mobile/navigation/engine/SoloEndScreen.as:291
 msgid ""
 "Convertir mes Points en\n"
 "Cadeaux dans la boutique"
@@ -2336,11 +2441,11 @@ msgstr ""
 "Turn my Points into\n"
 "Prizes in the Shop"
 
-#: mobile/navigation/engine/SoloEndScreen.as:318
+#: mobile/navigation/engine/SoloEndScreen.as:291
 msgid "Convertir mes Points en Crédits dans la boutique"
 msgstr "Turn my Points into Credits in the Shop"
 
-#: mobile/navigation/engine/SoloEndScreen.as:318
+#: mobile/navigation/engine/SoloEndScreen.as:291
 msgid ""
 "Convertir mes Points en\n"
 "Crédits dans la boutique"
@@ -2348,11 +2453,11 @@ msgstr ""
 "Turn my Points into\n"
 "Credits in the Shop"
 
-#: mobile/navigation/engine/SoloEndScreen.as:324
+#: mobile/navigation/engine/SoloEndScreen.as:297
 msgid "Utiliser mes Points sur le tournoi pour me classer"
 msgstr "Use my Points on the tournament to rank"
 
-#: mobile/navigation/engine/SoloEndScreen.as:324
+#: mobile/navigation/engine/SoloEndScreen.as:297
 msgid ""
 "Utiliser mes Points sur\n"
 "le tournoi pour me classer"
@@ -2360,7 +2465,22 @@ msgstr ""
 "Use my Points on\n"
 "the tournament to rank"
 
-#: mobile/navigation/engine/SoloEndScreen.as:348
+#: mobile/navigation/engine/SoloEndScreen.as:309
+msgid ""
+"Créez votre compte pour continuer à cumuler des Points à convertir en "
+"Cadeaux !"
+msgstr ""
+"Create an account to continue winning points to be converted into real "
+"prizes!"
+
+#: mobile/navigation/engine/SoloEndScreen.as:309
+msgid ""
+"Créez votre compte pour continuer à cumuler des Points à convertir en "
+"Crédits !"
+msgstr ""
+"Create an account to continue winning Points to be converted into Credits!"
+
+#: mobile/navigation/engine/SoloEndScreen.as:311
 msgid ""
 "Créez votre compte et convertissez\n"
 "vos Points en Cadeaux !"
@@ -2368,7 +2488,7 @@ msgstr ""
 "Create your account and turn\n"
 "your Points into Prizes"
 
-#: mobile/navigation/engine/SoloEndScreen.as:348
+#: mobile/navigation/engine/SoloEndScreen.as:311
 msgid ""
 "Créez votre compte et convertissez\n"
 "vos Points en Crédits !"
@@ -2376,175 +2496,187 @@ msgstr ""
 "Create your account and turn\n"
 "your Points into Credits !"
 
-#: mobile/navigation/engine/SoloEndScreen.as:372
-#: mobile/navigation/engine/TournamentEndScreen.as:412
-msgid "Accueil"
-msgstr "Homepage"
+#: mobile/navigation/engine/SoloEndScreen.as:478
+#: mobile/navigation/engine/SoloEndScreen.as:549
+#: mobile/navigation/engine/TournamentEndScreen.as:556
+#, python-brace-format
+msgid "+{0}"
+msgstr "+{0}"
 
-#: mobile/navigation/engine/SoloEndScreen.as:377
-#: mobile/navigation/engine/TournamentEndScreen.as:417
-msgid "Rejouer"
-msgstr "Play again"
+#: mobile/navigation/engine/SoloEndScreen.as:577
+#: mobile/navigation/engine/SoloEndScreen.as:611
+#: mobile/navigation/engine/TournamentEndScreen.as:595
+#: mobile/navigation/engine/TournamentEndScreen.as:635
+msgid "Vous n'avez plus assez de Jetons pour rejouer ?"
+msgstr "You don’t have enough Tokens to play again?"
 
-#: mobile/navigation/engine/TournamentEndScreen.as:237
-msgid "Score final :"
-msgstr "Final score :"
+#: mobile/navigation/engine/TournamentEndScreen.as:227
+#: mobile/navigation/engine/TournamentEndScreen.as:557
+#: mobile/navigation/engine/TournamentEndScreen.as:719
+#, python-brace-format
+msgid "({0} au total)"
+msgstr "({0} total)"
 
-#: mobile/navigation/engine/TournamentEndScreen.as:261
-msgid "Rubis :"
-msgstr "Rubies:"
+#: mobile/navigation/engine/TournamentEndScreen.as:244
+#, python-brace-format
+msgid "Vous êtes <font color='#eb0064'>{0}</font>"
+msgstr "You are <font color='#eb0064'>{0}</font>"
 
-#: mobile/navigation/engine/TournamentEndScreen.as:314
-msgid "Rubis cumulés :"
-msgstr "Rubies collected:"
-
-#: mobile/navigation/engine/TournamentEndScreen.as:350
-msgid "Classement :"
-msgstr "Leaderboard :"
-
-#: mobile/navigation/engine/TournamentEndScreen.as:363
-msgid "--"
-msgstr "--"
-
-#: mobile/navigation/engine/TournamentEndScreen.as:452
+#: mobile/navigation/engine/TournamentEndScreen.as:266
 msgid "Gain actuel"
 msgstr "Current prize"
 
-#: mobile/navigation/engine/TournamentEndScreen.as:481
+#: mobile/navigation/engine/TournamentEndScreen.as:294
 msgid "Gain suivant"
 msgstr "Next prize"
 
-#: mobile/navigation/engine/TournamentEndScreen.as:527
-msgid "Fin du tournoi dans : --"
-msgstr "End of the tournament in: --"
+#: mobile/navigation/engine/TournamentEndScreen.as:342
+msgid ""
+"Impossible de déterminer votre classement et vos gains provisoires car vous "
+"n'êtes pas connecté à Internet."
+msgstr ""
+"Unable to determine your ranking and your temporary winnings because you are "
+"not connected to the Internet."
 
-#: mobile/navigation/engine/TournamentEndScreen.as:548
-msgid "Pas de connexion Internet"
-msgstr "No Internet connection"
+#: mobile/navigation/engine/TournamentEndScreen.as:343
+msgid ""
+"Impossible de déterminer votre classement et vos gains provisoires car vous "
+"n'êtes pas identifié."
+msgstr ""
+"Unable to determine your ranking and your temporary winnings because you are "
+"not logged in."
 
-#: mobile/navigation/engine/TournamentEndScreen.as:548
-msgid "Vous n'êtes pas identifié"
-msgstr "You are not logged in"
+#: mobile/navigation/engine/TournamentEndScreen.as:365
+#: mobile/navigation/engine/TournamentEndScreen.as:376
+#: mobile/navigation/engine/TournamentEndScreen.as:704
+#: mobile/navigation/engine/TournamentEndScreen.as:712
+#, python-brace-format
+msgid "J'ai obtenu {0} Rubis au tournoi sur {1} !"
+msgid_plural "J'ai obtenu {0} Rubis au tournoi sur {1} !"
+msgstr[0] "I got {0} Ruby on the tournament {1}!"
+msgstr[1] "I got {0} Rubies on the tournament {1}!"
 
-#: mobile/navigation/engine/TournamentEndScreen.as:548
-msgid "Les informations indiquées sont à titre informatives."
-msgstr "The information provided is for informational purposes only."
+#: mobile/navigation/engine/TournamentEndScreen.as:367
+#: mobile/navigation/engine/TournamentEndScreen.as:706
+#, python-brace-format
+msgid ""
+"Je suis maintenant {0} au classement du tournoi avec {1} Rubis !\n"
+"Venez jouer au tournoi pour tenter de remporter {2}"
+msgstr ""
+"I am ranked {0} in the tournament with {1} Rubies!\n"
+"Join the tournament and try to win {2}"
 
-#: mobile/navigation/engine/TournamentEndScreen.as:548
-msgid "Connectez vous à votre compte."
-msgstr "Log into your account."
+#: mobile/navigation/engine/TournamentEndScreen.as:378
+#: mobile/navigation/engine/TournamentEndScreen.as:714
+#, python-brace-format
+msgid ""
+"Je cumule maintenant {1} Rubis pour le tournoi en cours!\n"
+"Venez participer au tournoi pour tenter de remporter de nombreux gains !"
+msgstr ""
+"I now have a total of {1} Rubies for the current tournament!\n"
+"Join the tournament and try to win one of the many prizes!"
 
-#: mobile/navigation/engine/TournamentEndScreen.as:998
+#: mobile/navigation/engine/TournamentEndScreen.as:673
 msgid "Tournoi terminé"
 msgstr "Tournament is over"
 
-#: mobile/navigation/engine/TournamentEndScreen.as:1004
+#: mobile/navigation/engine/TournamentEndScreen.as:679
 #, python-brace-format
-msgid "Fin du tournoi dans : {0}\"{1}'"
-msgstr "End of the tournament in : {0}\"{1}'"
+msgid "Fin dans : {0}\"{1}'"
+msgstr "End in : {0}\"{1}'"
 
-#: mobile/navigation/engine/TournamentEndScreen.as:1008
+#: mobile/navigation/engine/TournamentEndScreen.as:683
 #, python-brace-format
-msgid "Fin du tournoi dans : {0} jour"
-msgid_plural "Fin du tournoi dans : {0} jours"
-msgstr[0] "End of the tournament in : {0} day"
-msgstr[1] "End of the tournament in : {0} days"
+msgid "Fin dans : {0} jour"
+msgid_plural "Fin dans : {0} jours"
+msgstr[0] "End in : {0} day"
+msgstr[1] "End in : {0} days"
 
-#: mobile/navigation/game/GameModeSelectionPopup.as:176
-#: mobile/navigation/game/GameModeSelectionPopup.as:460
-#: mobile/navigation/game/GameModeSelectionPopup.as:517
+#: mobile/navigation/game/GameModeSelectionPopup.as:174
+#: mobile/navigation/game/GameModeSelectionPopup.as:430
+#: mobile/navigation/game/GameModeSelectionPopup.as:487
 msgid "Partie en Tournoi"
 msgstr "Game tournament"
 
-#: mobile/navigation/game/GameModeSelectionPopup.as:182
-#: mobile/navigation/game/GameModeSelectionPopup.as:461
-#: mobile/navigation/game/GameModeSelectionPopup.as:518
+#: mobile/navigation/game/GameModeSelectionPopup.as:180
+#: mobile/navigation/game/GameModeSelectionPopup.as:431
+#: mobile/navigation/game/GameModeSelectionPopup.as:488
 msgid "Règles du jeu"
 msgstr "Rules"
 
-#: mobile/navigation/game/GameModeSelectionPopup.as:427
-#: mobile/navigation/tournament/TournamentRankingScreen.as:613
+#: mobile/navigation/game/GameModeSelectionPopup.as:396
+#: mobile/navigation/tournament/TournamentRankingScreen.as:596
+#, python-brace-format
 msgid ""
-"Pour débloquer les parties en Tournoi, il suffit de terminer une partie "
+"Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie "
 "Solo !"
-msgstr ""
-"To unblock games in Tournaments, you've got to play a Single-player game "
-"first!"
+msgid_plural ""
+"Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie "
+"Solo !"
+msgstr[0] "To unblock the Tournament mode, simply play {0} Single-player game"
+msgstr[1] "To unblock the Tournament mode, simply play {0} Single-player game"
 
-#: mobile/navigation/game/StakeButton.as:80
-#, python-brace-format
-msgid "Utiliser {0} Crédit"
-msgid_plural "Utiliser {0} Crédits"
-msgstr[0] "Use {0} Credit"
-msgstr[1] "Use {0} Credits"
-
-#: mobile/navigation/game/StakeButton.as:81
-#, python-brace-format
-msgid "Utiliser {0} Jeton"
-msgid_plural "Utiliser {0} Jetons"
-msgstr[0] "Use {0} Token"
-msgstr[1] "Use {0} Tokens"
-
-#: mobile/navigation/game/StakeButton.as:82
-#, python-brace-format
-msgid "Utiliser {0} Point"
-msgid_plural "Utiliser {0} Points"
-msgstr[0] "Use {0} Point"
-msgstr[1] "use {0} Points"
-
-#: mobile/navigation/game/StakeButtonCredit.as:89
+#: mobile/navigation/game/StakeButtonCredit.as:83
 #, python-brace-format
 msgid "{0} Crédit"
 msgid_plural "{0} Crédits"
 msgstr[0] "{0} Credit"
 msgstr[1] "{0} Credits"
 
-#: mobile/navigation/game/StakeButtonPoint.as:46
+#: mobile/navigation/game/StakeButtonPoint.as:54
 #, python-brace-format
 msgid "{0} Points"
 msgid_plural "{0} Points"
 msgstr[0] "{0} Point"
 msgstr[1] "{0} Points"
 
-#: mobile/navigation/game/StakeButtonToken.as:110
+#: mobile/navigation/game/StakeButtonPoint.as:74
+msgid "Vous n'avez pas assez de Points."
+msgstr "You don’t have enough Points"
+
 #: mobile/navigation/game/StakeButtonToken.as:117
-#: mobile/navigation/game/StakeButtonToken.as:154
+#: mobile/navigation/game/StakeButtonToken.as:123
+#: mobile/navigation/game/StakeButtonToken.as:155
 #, python-brace-format
 msgid "{0} Jeton"
 msgid_plural "{0} Jetons"
 msgstr[0] "{0} Token"
 msgstr[1] "{0} Tokens"
 
-#: mobile/navigation/game/StakeButtonToken.as:124
+#: mobile/navigation/game/StakeButtonToken.as:129
 msgid "???"
 msgstr "???"
 
-#: mobile/navigation/game/StakeButtonToken.as:132
+#: mobile/navigation/game/StakeButtonToken.as:135
 msgid "Regarder une vidéo pour jouer gratuitement."
 msgstr "Watch a video to play for free."
 
-#: mobile/navigation/game/StakeButtonToken.as:145
-#: mobile/navigation/game/StakeButtonToken.as:214
+#: mobile/navigation/game/StakeButtonToken.as:147
+#: mobile/navigation/game/StakeButtonToken.as:228
 #, python-brace-format
-msgid "{0} Jetons dans "
-msgstr "{0} Tokens in "
+msgid "{0} Jetons dans \n"
+msgstr "{0} Tokens in \n"
 
-#: mobile/navigation/game/StakeButtonToken.as:238
-#: mobile/navigation/home/summary/FooterStakeElement.as:385
+#: mobile/navigation/game/StakeButtonToken.as:252
+#: mobile/navigation/home/summary/FooterStakeElement.as:380
 #, python-brace-format
 msgid "Reconnectez-vous pour récupérer vos {0} Jetons."
 msgstr "Sign in again to get your {0} Tokens."
 
-#: mobile/navigation/game/StakeSelectionScreen.as:84
+#: mobile/navigation/game/StakeButtonToken.as:273
+msgid "Vous n'avez plus assez de Jetons."
+msgstr "You don’t have enough Tokens"
+
+#: mobile/navigation/game/StakeSelectionScreen.as:94
 msgid "Choisissez votre mise"
 msgstr "Pick your bet"
 
-#: mobile/navigation/game/StakeSelectionScreen.as:115
+#: mobile/navigation/game/StakeSelectionScreen.as:120
 msgid "Voir le classement"
 msgstr "See the ranking"
 
 #: mobile/navigation/highscore/HighScoreHomeScreen.as:85
-#: mobile/navigation/highscore/HighScoreListScreen.as:117
+#: mobile/navigation/highscore/HighScoreListScreen.as:125
 msgid "Meilleurs scores"
 msgstr "High scores"
 
@@ -2564,26 +2696,31 @@ msgstr "National"
 msgid "Amis"
 msgstr "Friends"
 
+#: mobile/navigation/highscore/HighScoreItemRenderer.as:265
+msgid "Partager mon score !"
+msgstr "Share my score!"
+
+#: mobile/navigation/highscore/HighScoreItemRenderer.as:265
+#, python-brace-format
+msgid "Qui sera capable de me battre sur {0} ?"
+msgstr "Who can beat me on {0} ?"
+
+#: mobile/navigation/highscore/HighScoreItemRenderer.as:267
+#, python-brace-format
+msgid "Venez me défiez et tenter de battre mon meilleur score de {0} !"
+msgstr "Join me on the App and try to beat my highest score {0}!"
+
 #: mobile/navigation/highscore/HighScoreListHeader.as:68
 #: mobile/navigation/tournament/listing/TournamentListHeader.as:67
 msgid "Rang"
 msgstr "Level"
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:137
+#: mobile/navigation/highscore/HighScoreListScreen.as:151
 msgid "Amis Facebook"
 msgstr "Facebook friends"
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:157
-msgid "Pays : "
-msgstr "Country : "
-
-#: mobile/navigation/highscore/HighScoreListScreen.as:196
-#: mobile/navigation/highscore/HighScoreListScreen.as:588
-msgid "Associer mon compte à Facebook"
-msgstr "Link my account with Facebook"
-
-#: mobile/navigation/highscore/HighScoreListScreen.as:201
-#: mobile/navigation/highscore/HighScoreListScreen.as:589
+#: mobile/navigation/highscore/HighScoreListScreen.as:218
+#: mobile/navigation/highscore/HighScoreListScreen.as:579
 msgid ""
 "Vous devez associer votre compte à Facebook pour voir la progression de vos "
 "amis !"
@@ -2591,7 +2728,7 @@ msgstr ""
 "You need to link your account with Facebook to track the scores of your "
 "friends !"
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:326
+#: mobile/navigation/highscore/HighScoreListScreen.as:351
 msgid ""
 "Aucun joueur n'est classé\n"
 "dans ce pays."
@@ -2599,29 +2736,31 @@ msgstr ""
 "There is no player ranked\n"
 "in this country."
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:574
-#: mobile/navigation/highscore/HighScoreListScreen.as:602
+#: mobile/navigation/highscore/HighScoreListScreen.as:578
+msgid "Associer mon compte à Facebook"
+msgstr "Link my account with Facebook"
+
+#: mobile/navigation/highscore/HighScoreListScreen.as:578
 msgid "Se connecter avec Facebook"
 msgstr "Link my account with Facebook"
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:575
-#: mobile/navigation/highscore/HighScoreListScreen.as:603
+#: mobile/navigation/highscore/HighScoreListScreen.as:579
 msgid "Connectez-vous avec Facebook pour voir la progression de vos amis !"
 msgstr "Login with Facebook to follow and track the scores of your friends !"
 
-#: mobile/navigation/home/HomeScreen.as:85
-msgid "JOUER"
-msgstr "PLAY"
+#: mobile/navigation/highscore/HighScoreListScreen.as:617
+msgid ""
+"Impossible d'afficher le classement de vos amis car nous n'avons pas accès à "
+"votre liste d'amis."
+msgstr ""
+"Unable to show the ranking of your friends because we do not have access to "
+"your friends list."
 
-#: mobile/navigation/home/HomeScreen.as:107
-msgid "Gagner des cadeaux"
-msgstr "Win prizes"
+#: mobile/navigation/highscore/HighScoreListScreen.as:618
+msgid "Toucher pour donner la permission."
+msgstr "Tap here to grant permission"
 
-#: mobile/navigation/home/HomeScreen.as:107
-msgid "Gagner des crédits"
-msgstr "Win Credits"
-
-#: mobile/navigation/home/HomeScreen.as:277
+#: mobile/navigation/highscore/HighScoreListScreen.as:692
 msgid ""
 "Le Game Center est désactivé.\n"
 "Pour le réactiver, connectez-vous directement à partir de l'application Game "
@@ -2629,6 +2768,10 @@ msgid ""
 msgstr ""
 "Game Center is disabled.\n"
 "To enable it, log into the Game Center app"
+
+#: mobile/navigation/home/HomeScreen.as:69
+msgid "JOUER"
+msgstr "PLAY"
 
 #: mobile/navigation/home/RulesAndScoresScreen.as:78
 msgid "Règles"
@@ -2638,23 +2781,24 @@ msgstr "Rules"
 msgid "Solo"
 msgstr "Single-player"
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:324
+#: mobile/navigation/home/summary/FooterStakeElement.as:314
+#: mobile/navigation/home/summary/FooterStakeElement.as:373
 #, python-brace-format
 msgid "{0} Jetons dans {1}"
 msgstr "{0} Tokens in {1}"
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:387
+#: mobile/navigation/home/summary/FooterStakeElement.as:382
 #, python-brace-format
 msgid "Vos Jetons ({0} quotidiens + {1} bonus)"
 msgstr "Your {0} daily Tokens + {1} bonus"
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:391
-#: mobile/navigation/home/summary/FooterStakeElement.as:399
-#: mobile/navigation/home/summary/FooterStakeElement.as:417
+#: mobile/navigation/home/summary/FooterStakeElement.as:386
+#: mobile/navigation/home/summary/FooterStakeElement.as:397
+#: mobile/navigation/home/summary/FooterStakeElement.as:415
 msgid "Obtenez 50 Jetons par jour en créant votre compte (tapotez ici)"
 msgstr "Get 50 daily Tokens by creating your account (tap here)"
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:403
+#: mobile/navigation/home/summary/FooterStakeElement.as:401
 msgid ""
 "Vos Crédits de jeu\n"
 "Tapotez ici pour recharger votre compte"
@@ -2662,7 +2806,7 @@ msgstr ""
 "Your game Credits\n"
 "Tap here to top-up your account"
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:421
+#: mobile/navigation/home/summary/FooterStakeElement.as:419
 msgid ""
 "Vos Points à convertir en Cadeaux\n"
 "Tapotez ici pour accéder à la boutique"
@@ -2670,7 +2814,7 @@ msgstr ""
 "Your Points to be turned into Prizes\n"
 "Tap here to go to the shop"
 
-#: mobile/navigation/home/summary/FooterStakeElement.as:421
+#: mobile/navigation/home/summary/FooterStakeElement.as:419
 msgid ""
 "Vos Points à convertir en Crédits\n"
 "Tapotez ici pour accéder à la boutique"
@@ -2690,7 +2834,7 @@ msgstr "Help"
 msgid "Crédits"
 msgstr "Credits"
 
-#: mobile/navigation/menu/Menu.as:81 mobile/navigation/vip/VipScreen.as:192
+#: mobile/navigation/menu/Menu.as:81 mobile/navigation/vip/VipScreen.as:201
 msgid "Rangs VIP"
 msgstr "VIP levels"
 
@@ -2704,7 +2848,7 @@ msgstr "High Scores"
 msgid "Réglages"
 msgstr "Settings"
 
-#: mobile/navigation/menu/Menu.as:215
+#: mobile/navigation/menu/Menu.as:213
 msgid "Déconnexion"
 msgstr "Sign Out "
 
@@ -2773,12 +2917,12 @@ msgstr "Tutorial"
 msgid "Langage"
 msgstr "Language"
 
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:112
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:162
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:109
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:152
 msgid "Enchères"
-msgstr "Auction Room"
+msgstr "Auction"
 
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:119
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:116
 msgid ""
 "Accessible à tous\n"
 "les rangs Vip"
@@ -2786,7 +2930,7 @@ msgstr ""
 "Available for all\n"
 "VIP levels"
 
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:134
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:131
 msgid ""
 "A partir du\n"
 "rang Aventurier I"
@@ -2794,12 +2938,12 @@ msgstr ""
 "From Explorer I \n"
 "level"
 
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:154
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:171
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:144
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:161
 msgid "Boutique VIP"
 msgstr "VIP shop"
 
-#: mobile/navigation/shop/BoutiqueHomeScreen.as:181
+#: mobile/navigation/shop/BoutiqueHomeScreen.as:171
 msgid "Qu'est ce que les rangs Vip ?"
 msgstr "What are VIP levels ?"
 
@@ -2820,7 +2964,7 @@ msgstr "Completed"
 msgid "A venir"
 msgstr "Coming soon"
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:78
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:75
 msgid ""
 "Echangez vos Points contre\n"
 "des Crédits de jeu !"
@@ -2828,43 +2972,43 @@ msgstr ""
 "Trade your Points\n"
 "for game Credits !"
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:122
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:141
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:148
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:119
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:139
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:146
 msgid "Ludokado"
 msgstr "Ludokado"
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:135
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:133
 msgid "Maison"
 msgstr "Home"
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:136
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:134
 msgid "Loisirs"
 msgstr "Entertainment"
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:137
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:135
 msgid "Pour Elle"
 msgstr "For Her"
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:138
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:136
 msgid "Vidéo"
 msgstr "DVDs"
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:139
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:137
 msgid "Jeux Vidéo"
 msgstr "Video Games"
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:140
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:138
 msgid "Image et Son"
 msgstr "Electronics"
 
-#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:252
+#: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:250
 msgid "Vous devez être connecté à Internet pour afficher les lots."
 msgstr "You have to be connected to the Internet to see the prizes."
 
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:442
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:461
-#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:486
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:443
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:462
+#: mobile/navigation/shop/vip/BoutiqueSubCategoryScreen.as:487
 msgid "Aucune sous catégorie à afficher."
 msgstr "No sub-category to display."
 
@@ -2921,7 +3065,7 @@ msgstr "You do not have friends yet."
 
 #: mobile/navigation/sponsor/info/SponsorBonusItemRenderer.as:85
 msgid "="
-msgstr ""
+msgstr "="
 
 #: mobile/navigation/sponsor/invite/ContactItemRenderer.as:411
 msgid "Echec"
@@ -2951,15 +3095,15 @@ msgstr ""
 "Invite\n"
 "all"
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:195
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:198
 msgid "Entrer un email."
 msgstr "Enter an email."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:195
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:198
 msgid "Entrer un numéro de téléphone."
 msgstr "Enter a phone number."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:235
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:238
 #, python-brace-format
 msgid ""
 "L'application n'est pas autorisée à accéder à vos contacts.\n"
@@ -2970,37 +3114,37 @@ msgstr ""
 "The application cannot access your contacts. Go to « Settings », then to "
 "« Privacy », select « Contacts » and authorize {0}."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:291
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:390
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:294
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:393
 msgid "Aucun contact à afficher."
 msgstr "No contact to display."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:313
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:316
 msgid "Impossible d'accéder à vos contacts."
 msgstr "Unable to access your contacts."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:545
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:614
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:548
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:617
 msgid "Envoyés"
 msgstr "Sent"
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:658
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:661
 msgid "Nom du filleul..."
 msgstr "Friend's name..."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:668
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:671
 msgid "Saisissez son email..."
 msgstr "Enter his/her email..."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:668
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:671
 msgid "Saisissez son numéro de téléphone"
 msgstr "Enter his/her phone number."
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:748
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:751
 msgid "Nom du filleul invalide"
 msgstr "Friend's name invalid"
 
-#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:768
+#: mobile/navigation/sponsor/invite/SponsorInviteScreen.as:771
 msgid "Ce numéro est invalide."
 msgstr "This number is not valid."
 
@@ -3032,18 +3176,6 @@ msgstr ""
 "Player's\n"
 "Choice"
 
-#: mobile/navigation/store/StoreScreen.as:107
-msgid "Acheter des crédits de jeu"
-msgstr "Buy game Credits"
-
-#: mobile/navigation/store/StoreScreen.as:220
-msgid ""
-"Impossible d'afficher le magasin car vous ne pouvez pas effectuer d'achats "
-"(contrôle parental ou autre raison)."
-msgstr ""
-"Unable to display the shop because you are not allowed to make any purchase "
-"(parental control or other)."
-
 #: mobile/navigation/tournament/PreviousTournamentGiftBloc.as:146
 #, python-brace-format
 msgid ""
@@ -3053,12 +3185,12 @@ msgstr ""
 "Your winning on this tournament :\n"
 "{0}"
 
-#: mobile/navigation/tournament/PreviousTournamentItemRenderer.as:163
-#: mobile/navigation/tournament/TournamentRankingScreen.as:121
+#: mobile/navigation/tournament/PreviousTournamentItemRenderer.as:164
+#: mobile/navigation/tournament/TournamentRankingScreen.as:119
 msgid "Tournoi en cours"
 msgstr "Current Tournament"
 
-#: mobile/navigation/tournament/PreviousTournamentItemRenderer.as:168
+#: mobile/navigation/tournament/PreviousTournamentItemRenderer.as:169
 #, python-brace-format
 msgid "Tournoi terminé n°{0}"
 msgstr "Recently completed Tournament, no.{0}"
@@ -3073,31 +3205,54 @@ msgid "Tournoi n°{0}"
 msgstr "Tournament no.{0}"
 
 #: mobile/navigation/tournament/PreviousTournementDetailScreen.as:242
-#: mobile/navigation/tournament/TournamentRankingScreen.as:403
+#: mobile/navigation/tournament/TournamentRankingScreen.as:401
 msgid "Personne n'est encore classé !"
 msgstr "There is no player ranked yet !"
 
-#: mobile/navigation/tournament/TournamentRankingScreen.as:142
+#: mobile/navigation/tournament/TournamentRankingScreen.as:140
 msgid "Participer"
 msgstr "Participate"
 
-#: mobile/navigation/vip/VipScreen.as:264
+#: mobile/navigation/vip/VipScreen.as:273
 msgid "Recharger"
 msgstr "Top Up"
 
-#: mobile/navigation/vip/VipScreen.as:273
+#: mobile/navigation/vip/VipScreen.as:282
 msgid "Renvoyer un email"
 msgstr "Send an email again"
 
-#: mobile/navigation/vip/VipScreen.as:704
+#: mobile/navigation/vip/VipScreen.as:378
+#: mobile/navigation/vip/VipScreen.as:875
+#, python-brace-format
+msgid "Je suis {0} sur {1}"
+msgstr "I am {0} on {1}"
+
+#: mobile/navigation/vip/VipScreen.as:380
+#: mobile/navigation/vip/VipScreen.as:877
+msgid ""
+"Avec ce rang, je bénéficie nombreux avantages pour gagner encore plus vite !"
+msgstr "With this rank, I get more benefits for winning even faster!"
+
+#: mobile/navigation/vip/VipScreen.as:382
+#: mobile/navigation/vip/VipScreen.as:879
+#: mobile/navigation/vip/VipUpScreen.as:157
+#, python-brace-format
+msgid ""
+"http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
+"publication_vip_{1}.jpg"
+msgstr ""
+"http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
+"publication_vip_{1}.jpg"
+
+#: mobile/navigation/vip/VipScreen.as:725
 msgid "Votre rang actuel."
 msgstr "Your current level."
 
-#: mobile/navigation/vip/VipScreen.as:708
+#: mobile/navigation/vip/VipScreen.as:729
 msgid "Vous avez déjà acquis ce rang."
 msgstr "You have already reached this level."
 
-#: mobile/navigation/vip/VipUpScreen.as:129
+#: mobile/navigation/vip/VipUpScreen.as:125
 msgid ""
 "Bravo !\n"
 "Vous êtes maintenant"
@@ -3105,30 +3260,177 @@ msgstr ""
 "Congratulations !\n"
 "Now you are"
 
-#: mobile/navigation/vip/VipUpScreen.as:137
+#: mobile/navigation/vip/VipUpScreen.as:133
 msgid "Voir mes privilèges"
 msgstr "See my benefits"
 
-#: mobile/navigation/vip/VipUpScreen.as:387
+#: mobile/navigation/vip/VipUpScreen.as:153
 #, python-brace-format
-msgid "{0} est maintenant {1}"
-msgstr "{0} is now {1}"
+msgid "Je suis maintenant {0}"
+msgstr "I am now {0}"
 
-#: mobile/navigation/vip/VipUpScreen.as:389
+#: mobile/navigation/vip/VipUpScreen.as:155
 msgid ""
 "Avec ce nouveau rang, je peux bénéficier de nouveaux avantages pour gagner "
 "encore plus vite."
 msgstr ""
 "With this new rank, I can benefit from new advantages to win even faster."
 
-#: mobile/navigation/vip/VipUpScreen.as:391
-#, python-brace-format
-msgid ""
-"http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
-"publication_vip_{1}.jpg"
-msgstr ""
-"http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/"
-"publication_vip_{1}.jpg"
+#~ msgid ""
+#~ "Recevez 50 jetons gratuits\n"
+#~ "et un crédit bonus en créant votre compte !"
+#~ msgstr ""
+#~ "Get 50 free Tokens\n"
+#~ "and a bonus Credit when creating your account !"
+
+#~ msgid "Créer"
+#~ msgstr "Create"
+
+#~ msgid "J'ai déjà un compte"
+#~ msgstr "I already have an account"
+
+#~ msgid ""
+#~ "Nous n'avons pas pu récupéré votre email via Facebook. Merci de compléter "
+#~ "l'inscription normalement."
+#~ msgstr ""
+#~ "We have not be able to retrieve your email address via Facebook. Please "
+#~ "fill in the registration form normally."
+
+#~ msgid ""
+#~ "Ce compte Facebook ne correspond pas à celui associé à votre compte "
+#~ "Ludokado.\n"
+#~ "\n"
+#~ "Merci de vous connecter avec le bon compte Facebook pour continuer."
+#~ msgstr ""
+#~ "This Facebook account does not match the one linked with your LudoKado "
+#~ "account.\n"
+#~ "\n"
+#~ "Please log in with the right Facebook account to continue."
+
+#~ msgid ""
+#~ "Connectez-vous ou créez\n"
+#~ "un compte LudoKado.com"
+#~ msgstr ""
+#~ "Login or create\n"
+#~ "a LudoKado.com account"
+
+#~ msgid "J'ai un compte"
+#~ msgstr "I have an account"
+
+#~ msgid "Créer un compte"
+#~ msgstr "Create an account"
+
+#~ msgid "Entrez ici votre email..."
+#~ msgstr "Enter your email address here..."
+
+#~ msgid "J'ai oublié mon mot de passe..."
+#~ msgstr "I forgot my password..."
+
+#~ msgid "Votre pseudo..."
+#~ msgstr "Your username..."
+
+#~ msgid "Publier"
+#~ msgstr "Post"
+
+#~ msgid "Associer"
+#~ msgstr "Associate"
+
+#~ msgid ""
+#~ "Avec un score de {0}, je pense être le meilleur sur ce jeu. Venez me "
+#~ "prouver le contraire ;)"
+#~ msgstr ""
+#~ "With a score of {0}, I think I am the best player on this game. But prove "
+#~ "me wrong ;)"
+
+#~ msgid "Points"
+#~ msgstr "Points"
+
+#~ msgid "Points cumulés : "
+#~ msgstr "Points collected : "
+
+#~ msgid "Accueil"
+#~ msgstr "Homepage"
+
+#~ msgid "Rejouer"
+#~ msgstr "Play again"
+
+#~ msgid "Score final :"
+#~ msgstr "Final score :"
+
+#~ msgid "Rubis :"
+#~ msgstr "Rubies:"
+
+#~ msgid "Rubis cumulés :"
+#~ msgstr "Rubies collected:"
+
+#~ msgid "Classement :"
+#~ msgstr "Leaderboard :"
+
+#~ msgid "--"
+#~ msgstr "--"
+
+#~ msgid "Fin du tournoi dans : --"
+#~ msgstr "End of the tournament in: --"
+
+#~ msgid "Pas de connexion Internet"
+#~ msgstr "No Internet connection"
+
+#~ msgid "Vous n'êtes pas identifié"
+#~ msgstr "You are not logged in"
+
+#~ msgid "Les informations indiquées sont à titre informatives."
+#~ msgstr "The information provided is for informational purposes only."
+
+#~ msgid "Connectez vous à votre compte."
+#~ msgstr "Log into your account."
+
+#~ msgid "Fin du tournoi dans : {0}\"{1}'"
+#~ msgstr "End of the tournament in : {0}\"{1}'"
+
+#~ msgid "Fin du tournoi dans : {0} jour"
+#~ msgid_plural "Fin du tournoi dans : {0} jours"
+#~ msgstr[0] "End of the tournament in : {0} day"
+#~ msgstr[1] "End of the tournament in : {0} days"
+
+#~ msgid ""
+#~ "Pour débloquer les parties en Tournoi, il suffit de terminer une partie "
+#~ "Solo !"
+#~ msgstr ""
+#~ "To unblock games in Tournaments, you've got to play a Single-player game "
+#~ "first!"
+
+#~ msgid "Utiliser {0} Crédit"
+#~ msgid_plural "Utiliser {0} Crédits"
+#~ msgstr[0] "Use {0} Credit"
+#~ msgstr[1] "Use {0} Credits"
+
+#~ msgid "Utiliser {0} Jeton"
+#~ msgid_plural "Utiliser {0} Jetons"
+#~ msgstr[0] "Use {0} Token"
+#~ msgstr[1] "Use {0} Tokens"
+
+#~ msgid "Utiliser {0} Point"
+#~ msgid_plural "Utiliser {0} Points"
+#~ msgstr[0] "Use {0} Point"
+#~ msgstr[1] "use {0} Points"
+
+#~ msgid "{0} Jetons dans "
+#~ msgstr "{0} Tokens in "
+
+#~ msgid "Pays : "
+#~ msgstr "Country : "
+
+#~ msgid "Gagner des cadeaux"
+#~ msgstr "Win prizes"
+
+#~ msgid "Gagner des crédits"
+#~ msgstr "Win Credits"
+
+#~ msgid "Acheter des crédits de jeu"
+#~ msgstr "Buy game Credits"
+
+#~ msgid "{0} est maintenant {1}"
+#~ msgstr "{0} is now {1}"
 
 #~ msgid "200 points"
 #~ msgstr "200 Points"
