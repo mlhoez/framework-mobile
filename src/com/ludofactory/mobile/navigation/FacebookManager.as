@@ -467,7 +467,10 @@ package com.ludofactory.mobile.navigation
 						AbstractEntryPoint.screenNavigator.screenData.defaultPseudo = result.pseudo_defaut;
 						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
 
-						dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
+						// no event dispatched here because we redirect to the pseudo choixe screen already
+						// if we dispatch an event, the popup will close, redirect to the pseudo choixe screen and
+						// then to the home screen
+						//dispatchEventWith(FacebookManagerEventType.AUTHENTICATED);
 					}
 					
 					break;
