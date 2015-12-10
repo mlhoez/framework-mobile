@@ -104,7 +104,7 @@ package com.ludofactory.mobile
 				
 				case BLUE:
 				{
-					buttonToReturn = new MobileButton(Theme.buttonYellowSkinTextures, text);
+					buttonToReturn = new MobileButton(Theme.buttonBlueSkinTextures, text);
 					buttonToReturn.fontColor = 0xffffff;
 					buttonToReturn.nativeFilters = [ new GlowFilter(0x0170a9, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
 						new DropShadowFilter(2, 75, 0x0170a9, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
