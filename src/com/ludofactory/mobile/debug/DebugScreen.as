@@ -23,6 +23,7 @@ package com.ludofactory.mobile.debug
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
 	import com.ludofactory.mobile.navigation.settings.LanguageData;
+	import com.milkmangames.nativeextensions.GoViral;
 	
 	import feathers.controls.Button;
 	import feathers.controls.List;
@@ -214,6 +215,8 @@ package com.ludofactory.mobile.debug
 		{
 			Storage.getInstance().clearStorage();
 			EncryptedLocalStore.reset();
+			if( GoViral.isSupported() && GoViral.goViral.isFacebookSupported() )
+				GoViral.goViral.logoutFacebook();
 			if( GlobalConfig.ios )
 				InfoManager.show("Redémarrer l'application pour éviter tout bug.");
 			else
