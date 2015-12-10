@@ -10,8 +10,11 @@ package com.ludofactory.mobile.navigation.sponsor
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
+	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.FacebookButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -24,6 +27,7 @@ package com.ludofactory.mobile.navigation.sponsor
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	import com.ludofactory.mobile.navigation.sponsor.invite.SponsorTypes;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
@@ -41,6 +45,7 @@ package com.ludofactory.mobile.navigation.sponsor
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.utils.deg2rad;
+	import starling.utils.formatString;
 	
 	public class SponsorHomeScreen extends AdvancedScreen
 	{
@@ -76,6 +81,10 @@ package com.ludofactory.mobile.navigation.sponsor
 		/**
 		 * The my filleuls button. */		
 		private var _myFriendsButton:Button;
+		
+		/**
+		 * Facebook button that will associate the account or directly publish, depending on the actual state. */
+		private var _facebookButton:FacebookButton;
 		
 		public function SponsorHomeScreen()
 		{
@@ -150,6 +159,14 @@ package com.ludofactory.mobile.navigation.sponsor
 			addChild(_myFriendsButton);
 			_myFriendsButton.minHeight = scaleAndRoundToDpi(GlobalConfig.isPhone ? 118 : 128);
 			
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("Mon code parrain : {0} !"), MemberManager.getInstance().id),
+					"",
+					_("Devenez mes filleuls en vous inscrivant avec ce code et gagnez des tas de bonus !"),
+					_("http://www.ludokado.com/"),
+					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
+			_facebookButton.addEventListener(FacebookManagerEventType.REFRESH_PUBLICAION_DATA, onRefreshPublicationData);
+			addChild(_facebookButton);
+			
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				if( AirNetworkInfo.networkInfo.isConnected() )
@@ -171,17 +188,20 @@ package com.ludofactory.mobile.navigation.sponsor
 					_glow.x = _mainContainer.x + (_mainContainer.width * 0.5);
 					_glow.y = _mainContainer.y + (_mainContainer.height * 0.35);
 					
-					_myFriendsButton.width = _emailButton.width = actualWidth * 0.4;
+					_myFriendsButton.width = _emailButton.width = _facebookButton.width = actualWidth * 0.4;
 					
 					_emailButton.validate();
-					_friendsImage.y = ( actualHeight - (_emailButton.height * 2 + _friendsImage.height * 0.4 + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 100)) ) * 0.5;
-					_myFriendsButton.x = _emailButton.x = actualWidth * 0.5 + ((actualWidth * 0.5) - _myFriendsButton.width) * 0.5;
+					_friendsImage.y = ( actualHeight - (_emailButton.height * 2 + _friendsImage.height * 0.4 + _facebookButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 100)) ) * 0.5;
+					_myFriendsButton.x = _emailButton.x = _facebookButton.x = actualWidth * 0.5 + ((actualWidth * 0.5) - _myFriendsButton.width) * 0.5;
 					_myFriendsButton.validate();
 					_myFriendsButton.y = _friendsImage.y + _friendsImage.height * 0.6;
 					
 					_friendsImage.x = _myFriendsButton.x + (_myFriendsButton.width - _friendsImage.width) * 0.5;
 					
-					_emailButton.y = _myFriendsButton.y + _myFriendsButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 100);
+					_emailButton.y = _myFriendsButton.y + _myFriendsButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 50);
+					_facebookButton.y = _emailButton.y + _emailButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 50);
+					
+					
 					
 					TweenMax.to(_glow, 1.25, { alpha:0.1, repeat:-1, yoyo:true, ease:Linear.easeNone });
 					TweenMax.to(_glow, 25, { rotation:deg2rad(360), repeat:-1, ease:Linear.easeNone });
@@ -283,6 +303,22 @@ package com.ludofactory.mobile.navigation.sponsor
 		}
 		
 //------------------------------------------------------------------------------------------------------------
+//	Facebook
+		
+		private function onRefreshPublicationData(event:Event):void
+		{
+			// no need to listen again
+			_facebookButton.removeEventListener(FacebookManagerEventType.REFRESH_PUBLICAION_DATA, onRefreshPublicationData);
+			
+			_facebookButton.refreshPublicationData(formatString(_("Mon code parrain : {0} !"), MemberManager.getInstance().id),
+					"",
+					_("Devenez mes filleuls en vous inscrivant avec ce code et gagnez des tas de bonus !"),
+					_("http://www.ludokado.com/"),
+					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
+			_facebookButton.publish();
+		}
+		
+//------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
 		override public function dispose():void
@@ -308,6 +344,10 @@ package com.ludofactory.mobile.navigation.sponsor
 			_myFriendsButton.removeEventListener(Event.TRIGGERED, onMyFriendsSelected);
 			_myFriendsButton.removeFromParent(true);
 			_myFriendsButton = null;
+			
+			_facebookButton.removeEventListener(FacebookManagerEventType.REFRESH_PUBLICAION_DATA, onRefreshPublicationData);
+			_facebookButton.removeFromParent(true);
+			_facebookButton = null;
 			
 			_friendsImage.removeFromParent(true);
 			_friendsImage = null;
