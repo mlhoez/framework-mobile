@@ -43,7 +43,7 @@ package com.ludofactory.mobile.core.notification.content
 		private var _createButton:MobileButton;
 		/**
 		 * T. */
-		private var _alreadyButton:ArrowGroup;
+		private var _laterButton:ArrowGroup;
 		
 		/**
 		 * The screen id if the user clicks on "continue" */		
@@ -84,9 +84,9 @@ package com.ludofactory.mobile.core.notification.content
 			_createButton.addEventListener(Event.TRIGGERED, onConfirm);
 			addChild(_createButton);
 			
-			_alreadyButton = new ArrowGroup( _("Plus tard") );
-			_alreadyButton.addEventListener(Event.TRIGGERED, onAlreadyHaveAccount);
-			addChild(_alreadyButton);
+			_laterButton = new ArrowGroup( _("Plus tard") );
+			_laterButton.addEventListener(Event.TRIGGERED, onLaterChosen);
+			addChild(_laterButton);
 			
 			Flox.logEvent("Affichages popup marketing inscription", {Total:"Total"});
 			
@@ -112,18 +112,18 @@ package com.ludofactory.mobile.core.notification.content
 					_image.y = _titleMain.y + _titleMain.height + paddingTitleMain;
 					
 					_createButton.x = actualWidth * 0.5  + ((actualWidth * 0.5) - _createButton.width) * 0.5;
-					_alreadyButton.x = actualWidth * 0.5  + ((actualWidth * 0.5) - _alreadyButton.width) * 0.5;
+					_laterButton.x = actualWidth * 0.5  + ((actualWidth * 0.5) - _laterButton.width) * 0.5;
 					
-					if(_title.height > (NotificationPopupManager.maxContentHeight - _titleMain.y - _titleMain.height - paddingTitleMain -_createButton.height - _alreadyButton.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40) - scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 30) - scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20)))
+					if(_title.height > (NotificationPopupManager.maxContentHeight - _titleMain.y - _titleMain.height - paddingTitleMain -_createButton.height - _laterButton.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40) - scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 30) - scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20)))
 					{
 						_title.autoSize = TextFieldAutoSize.NONE;
 						_title.autoScale = true;
-						_title.height = NotificationPopupManager.maxContentHeight - _titleMain.y - _titleMain.height - paddingTitleMain - _createButton.height - _alreadyButton.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40) - scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 30) - scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
+						_title.height = NotificationPopupManager.maxContentHeight - _titleMain.y - _titleMain.height - paddingTitleMain - _createButton.height - _laterButton.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40) - scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 30) - scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 20);
 					}
 					
-					_title.y = roundUp(_titleMain.y + _titleMain.height + (paddingTitleMain * 0.5) + (NotificationPopupManager.maxContentHeight - (_title.height + _titleMain.y + _titleMain.height + _createButton.height + _alreadyButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ?  20 : 80))) * 0.5);
+					_title.y = roundUp(_titleMain.y + _titleMain.height + (paddingTitleMain * 0.5) + (NotificationPopupManager.maxContentHeight - (_title.height + _titleMain.y + _titleMain.height + _createButton.height + _laterButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ?  20 : 80))) * 0.5);
 					_createButton.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 40);
-					_alreadyButton.y = _createButton.y + _createButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 30);
+					_laterButton.y = _createButton.y + _createButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 30);
 				}
 				else
 				{
@@ -136,11 +136,11 @@ package com.ludofactory.mobile.core.notification.content
 					
 					_createButton.x = (actualWidth - _createButton.width) * 0.5;
 					
-					_alreadyButton.x = roundUp((actualWidth - _alreadyButton.width) * 0.5);
+					_laterButton.x = roundUp((actualWidth - _laterButton.width) * 0.5);
 					
 					_title.y = _image.height + scaleAndRoundToDpi(20);
 					_createButton.y = _title.y + _title.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 10 : 30);
-					_alreadyButton.y = _createButton.y + _createButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 15);
+					_laterButton.y = _createButton.y + _createButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 0 : 15);
 				}
 				
 				super.draw();
@@ -160,13 +160,14 @@ package com.ludofactory.mobile.core.notification.content
 			onClose();
 		}
 		
-		private function onAlreadyHaveAccount(event:Event):void
+		private function onLaterChosen(event:Event):void
 		{
+			Flox.logEvent("Affichages popup marketing inscription", {Action:"Annulation"});
 			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Popup marketing inscription", "Connexion à un compte existant", null, NaN, MemberManager.getInstance().id);
-			AuthenticationManager.startAuthenticationProcess(AbstractEntryPoint.screenNavigator, AbstractEntryPoint.screenNavigator.activeScreenID);
+				GAnalytics.analytics.defaultTracker.trackEvent("Popup marketing inscription", "Annulation", null, NaN, MemberManager.getInstance().id);
+			AbstractEntryPoint.screenNavigator.showScreen( _continueScreenId );
 			onClose();
-		}
+		} 
 
 		/**
 		 * Close the notification.
@@ -190,9 +191,9 @@ package com.ludofactory.mobile.core.notification.content
 			_createButton.removeFromParent(true);
 			_createButton = null;
 			
-			_alreadyButton.removeEventListener(Event.TRIGGERED, onAlreadyHaveAccount);
-			_alreadyButton.removeFromParent(true);
-			_alreadyButton = null;
+			_laterButton.removeEventListener(Event.TRIGGERED, onLaterChosen);
+			_laterButton.removeFromParent(true);
+			_laterButton = null;
 			
 			super.dispose();
 		}
