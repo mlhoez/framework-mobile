@@ -250,7 +250,7 @@ package com.ludofactory.mobile.navigation
 					case MODE_ASSOCIATING:
 					{
 						// we got a Facebook session, now we can try to associate this account
-						Remote.getInstance().associateAccount(MemberManager.getInstance().id, formattedUserData.id_facebook, formattedUserData.mail, formattedUserData.prenom, formattedUserData.nom, formattedUserData.ville, formattedUserData.date_naissance, formattedUserData.titre, onFacebookAssociationSuccess, onFacebookAssociationFailure, onFacebookAssociationFailure, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+						Remote.getInstance().associateAccount(MemberManager.getInstance().id, formattedUserData.id_facebook, formattedUserData.mail, formattedUserData.prenom, formattedUserData.nom, formattedUserData.ville, formattedUserData.date_naissance, formattedUserData.titre, formattedUserData.isPublishing, onFacebookAssociationSuccess, onFacebookAssociationFailure, onFacebookAssociationFailure, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
 						
 						break;
 					}

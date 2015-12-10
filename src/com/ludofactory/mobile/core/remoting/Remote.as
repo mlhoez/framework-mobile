@@ -248,9 +248,9 @@ package com.ludofactory.mobile.core.remoting
 		 * @param facebookId The facebook id
 		 * @param password The password
 		 */		
-		public function associateAccount(memberId:int, facebookId:String, email:String, prenom:String, nom:String, ville:String, dateNaissance:String, title:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		public function associateAccount(memberId:int, facebookId:String, email:String, prenom:String, nom:String, ville:String, dateNaissance:String, title:int, isPublishing:Boolean, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
-			var params:Object = mergeWithGenericParams( { id_membre:memberId, id_facebook:facebookId, mail_facebook:email, prenom:prenom, nom:nom, ville:ville, date_naissance:dateNaissance, titre:title } );
+			var params:Object = mergeWithGenericParams( { id_membre:memberId, id_facebook:facebookId, mail_facebook:email, prenom:prenom, nom:nom, ville:ville, date_naissance:dateNaissance, titre:title, isPublishing:isPublishing } );
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "associationCompteLK", params);
 		}
 		
