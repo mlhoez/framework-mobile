@@ -15,6 +15,8 @@ package com.ludofactory.mobile.navigation.account.history.settings
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.navigation.highscore.CountryData;
 	
+	import feathers.controls.Label;
+	
 	import feathers.controls.LayoutGroup;
 	import feathers.controls.List;
 	import feathers.controls.PickerList;
@@ -33,7 +35,11 @@ package com.ludofactory.mobile.navigation.account.history.settings
 		
 		/**
 		 * The pseudo control. */		
-		private var _pseudoControl:TextInput;
+		private var _pseudoControlCanBeModified:TextInput;
+		
+		/**
+		 * The id control. */
+		private var _pseudoControlCannotBeModified:Label;
 		/**
 		 * The pseudo country control. */		
 		//private var _countryPseudoControl:PickerList;
@@ -60,9 +66,12 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			//_countriesWithoutInternational = GlobalConfig.COUNTRIES.concat();
 			//_countriesWithoutInternational.shift();
 			
-			_pseudoControl = new TextInput();
-			_pseudoControl.text = _pseudoInformations.pseudo;
-			_pseudoControl.textEditorProperties.maxChars = 25;
+			_pseudoControlCanBeModified = new TextInput();
+			_pseudoControlCanBeModified.text = _pseudoInformations.pseudo;
+			_pseudoControlCanBeModified.textEditorProperties.maxChars = 25;
+			
+			_pseudoControlCannotBeModified = new Label();
+			_pseudoControlCannotBeModified.text = _pseudoInformations.pseudo;
 			
 			//_countryPseudoControl = new PickerList();
 			//_countryPseudoControl.dataProvider = new ListCollection( _countriesWithoutInternational );
@@ -77,9 +86,17 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			_list.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_list.itemRendererType = AccountItemRenderer;
-			_list.dataProvider = new ListCollection( [ { title:_("Pseudo"),         accessory:_pseudoControl },
-													   //{ title:_("Pays associé"), accessory:_countryPseudoControl },
-													   { title:"",   isSaveButton:true } ] );
+			
+			if(_pseudoInformations.modify == true)
+			{
+				_list.dataProvider = new ListCollection( [ { title:_("Pseudo"),         accessory:_pseudoControlCanBeModified },
+														   //{ title:_("Pays associé"), accessory:_countryPseudoControl },
+														   { title:"",   isSaveButton:true } ] );
+			}
+			else
+			{
+				_list.dataProvider = new ListCollection( [ { title:_("Pseudo"),  accessory:_pseudoControlCannotBeModified } ] );
+			}
 			addChild(_list);
 		}
 		
@@ -101,10 +118,10 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			var paramObject:Object = {};
 			var change:Boolean = false;
 			
-			_pseudoControl.touchable = false;
+			_pseudoControlCanBeModified.touchable = false;
 			//_countryPseudoControl.touchable = false;
 			
-			paramObject.pseudo = _pseudoControl.text;
+			paramObject.pseudo = _pseudoControlCanBeModified.text;
 			//paramObject.id_pays = _countryPseudoControl.selectedItem.id;
 			
 			Remote.getInstance().accountUpdatePseudo(paramObject, onUpdatePseudoComplete, onUpdatePseudoComplete, onUpdatePseudoComplete, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
@@ -115,7 +132,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 		 */		
 		private function onUpdatePseudoComplete(result:Object = null):void
 		{
-			_pseudoControl.touchable = true;
+			_pseudoControlCanBeModified.touchable = true;
 			//_countryPseudoControl.touchable = true;
 			
 			((_list.viewPort as ListDataViewPort).getChildAt( (_list.viewPort as ListDataViewPort).numChildren - 1 ) as AccountItemRenderer).onUpdateComplete();
@@ -132,7 +149,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			}
 			
 			if( result && result.hasOwnProperty("obj_membre_mobile") && result.obj_membre_mobile.hasOwnProperty("pseudo") )
-				_pseudoControl.text = result.obj_membre_mobile.pseudo;
+				_pseudoControlCanBeModified.text = result.obj_membre_mobile.pseudo;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -141,10 +158,16 @@ package com.ludofactory.mobile.navigation.account.history.settings
 		
 		override public function dispose():void
 		{
-			if( _pseudoControl )
+			if( _pseudoControlCanBeModified )
 			{
-				_pseudoControl.removeFromParent(true);
-				_pseudoControl = null;
+				_pseudoControlCanBeModified.removeFromParent(true);
+				_pseudoControlCanBeModified = null;
+			}
+			
+			if( _pseudoControlCannotBeModified )
+			{
+				_pseudoControlCannotBeModified.removeFromParent(true);
+				_pseudoControlCannotBeModified = null;
 			}
 			
 			//if( _countryPseudoControl )
