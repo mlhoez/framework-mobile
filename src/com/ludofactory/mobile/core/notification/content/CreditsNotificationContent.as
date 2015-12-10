@@ -145,24 +145,11 @@ package com.ludofactory.mobile.core.notification.content
 			_store = new Store();
 			_store.addEventListener(MobileEventTypes.STORE_INITIALIZED, onStoreInitialized);
 			
-			// les commentaires permettent d'autoriser un joueur non connecté à effectuer des achats
-			// cf le rejet d'Apple pour Zeven
-			/*if( MemberManager.getInstance().isLoggedIn() )
-			 {*/
 			_retryContainer.visible = true;
 			if( AirNetworkInfo.networkInfo.isConnected() )
-			{
 				_store.initialize();
-			}
 			else
-			{
 				_retryContainer.loadingMode = false;
-			}
-			/*}
-			 else
-			 {
-			 _authenticationContainer.visible = true;
-			 }*/
 		}
 		
 		override protected function draw():void
