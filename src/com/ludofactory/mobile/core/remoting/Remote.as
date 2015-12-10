@@ -52,8 +52,8 @@ package com.ludofactory.mobile.core.remoting
 		//private const DEV_URL:String = "http://www.ludokado.dev";
 		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokado2.pterrier.ludofactory.dev";
-		private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
-		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
+		//private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
+		private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.tadiasse.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado3.sravet.ludofactory.dev";
 		//private const DEV_URL:String = "http://semiprod.ludokado.com";
@@ -843,7 +843,7 @@ package com.ludofactory.mobile.core.remoting
 				if( MemberManager.getInstance().isLoggedIn() && "tab_trophy_win" in result )
 					MemberManager.getInstance().trophiesWon = result.tab_trophy_win as Array; // TODO peut être afficher les trophées ici ? canWin... si oui => onWinTrophy...
 				
-				if( MemberManager.getInstance().isLoggedIn() && "acces_tournoi" in result && queryName != "LudoMobile.useClass.ServeurJeux.pushPartie" )
+				if( MemberManager.getInstance().isLoggedIn() && "acces_tournoi" in result && queryName.indexOf("LudoMobile.useClass.ServeurJeux.pushPartie") == -1 )
 				{
 					MemberManager.getInstance().isTournamentUnlocked = int(result.acces_tournoi);
 					//MemberManager.getInstance().setTournamentAnimPending( false ); // sinon pas d'anim quand partie classique => popup marketing => inscription => acccueil
@@ -971,7 +971,7 @@ package com.ludofactory.mobile.core.remoting
 			genericParam.type_appareil = GlobalConfig.isPhone ? "smartphone":"tablette";
 			genericParam.plateforme = GlobalConfig.platformName;
 			genericParam.id_appareil = GlobalConfig.deviceId;
-			genericParam.version_jeu = AbstractGameInfo.GAME_VERSION; // TODO concaténer le n° de build pour plus de précision
+			genericParam.version_jeu = AbstractGameInfo.GAME_VERSION + "." + AbstractGameInfo.GAME_BUILD_VERSION;
 			genericParam.screen_orientation = AbstractGameInfo.LANDSCAPE ? "paysage" : "portrait";
 			genericParam.store = GlobalConfig.ios ? "applestore" : (GlobalConfig.amazon ? "amazon" : "googleplay");
 			try
