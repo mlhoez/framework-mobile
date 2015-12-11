@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Français)\n"
-"POT-Creation-Date: 2015-12-10 11:52+0100\n"
-"PO-Revision-Date: 2015-12-10 18:05+0100\n"
+"POT-Creation-Date: 2015-12-11 16:39+0100\n"
+"PO-Revision-Date: 2015-12-11 16:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -993,7 +993,7 @@ msgstr ""
 #: mobile/navigation/authentication/RegisterScreen.as:278
 #: mobile/navigation/cs/display/CSMessagesContainer.as:216
 #: mobile/navigation/highscore/HighScoreListScreen.as:449
-#: mobile/navigation/highscore/HighScoreListScreen.as:626
+#: mobile/navigation/highscore/HighScoreListScreen.as:634
 #: mobile/navigation/shop/bid/comingsoon/ComingSoonBidContainer.as:100
 #: mobile/navigation/shop/bid/finished/FinishedBidContainer.as:100
 #: mobile/navigation/shop/bid/pending/PendingBidContainer.as:100
@@ -1112,7 +1112,7 @@ msgid "Voulez-vous vous déconnecter ?"
 msgstr ""
 
 #: mobile/core/notification/content/DisconnectNotificationContent.as:65
-#: mobile/debug/DebugScreen.as:151
+#: mobile/debug/DebugScreen.as:158
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:57
 #: mobile/navigation/settings/SettingsScreen.as:109
 #: mobile/navigation/settings/SettingsScreen.as:119
@@ -1174,6 +1174,7 @@ msgstr ""
 
 #: mobile/core/notification/content/FacebookNotificationContent.as:126
 #: mobile/navigation/authentication/LoginScreen.as:95
+#: mobile/navigation/highscore/HighScoreListScreen.as:581
 #: mobile/navigation/menu/Menu.as:213
 msgid "Connexion"
 msgstr ""
@@ -1537,7 +1538,7 @@ msgstr ""
 msgid "Anglais"
 msgstr ""
 
-#: mobile/debug/DebugScreen.as:152
+#: mobile/debug/DebugScreen.as:159
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:58
 #: mobile/navigation/settings/SettingsScreen.as:110
 #: mobile/navigation/settings/SettingsScreen.as:120
@@ -1788,7 +1789,8 @@ msgid "Informations personnelles"
 msgstr ""
 
 #: mobile/navigation/account/history/settings/PersonalInformationsContainer.as:154
-#: mobile/navigation/account/history/settings/PseudoSettingsContainer.as:80
+#: mobile/navigation/account/history/settings/PseudoSettingsContainer.as:92
+#: mobile/navigation/account/history/settings/PseudoSettingsContainer.as:98
 msgid "Pseudo"
 msgstr ""
 
@@ -1838,7 +1840,7 @@ msgstr ""
 msgid "Anniversaire"
 msgstr ""
 
-#: mobile/navigation/account/history/settings/PseudoSettingsContainer.as:81
+#: mobile/navigation/account/history/settings/PseudoSettingsContainer.as:93
 msgid "Pays associé"
 msgstr ""
 
@@ -1975,7 +1977,7 @@ msgstr ""
 #: mobile/navigation/authentication/RegisterScreen.as:100
 #: mobile/navigation/highscore/HighScoreListScreen.as:213
 #: mobile/navigation/home/HomeScreen.as:75
-#: mobile/navigation/home/HomeScreen.as:209
+#: mobile/navigation/home/HomeScreen.as:214
 msgid "Facebook"
 msgstr ""
 
@@ -2054,7 +2056,7 @@ msgid ""
 msgstr ""
 
 #: mobile/navigation/authentication/RegisterCompleteScreen.as:82
-#: mobile/navigation/engine/FacebookEndScreen.as:126
+#: mobile/navigation/engine/FacebookEndScreen.as:118
 #: mobile/navigation/engine/HighScoreScreen.as:141
 #: mobile/navigation/engine/PodiumScreen.as:175
 #: mobile/navigation/vip/VipUpScreen.as:137
@@ -2071,7 +2073,7 @@ msgstr ""
 
 #: mobile/navigation/authentication/RetryContainer.as:60
 #: mobile/navigation/highscore/HighScoreListScreen.as:511
-#: mobile/navigation/highscore/HighScoreListScreen.as:586
+#: mobile/navigation/highscore/HighScoreListScreen.as:589
 msgid ""
 "Vous ne pouvez pas afficher le contenu de cette page car vous n'êtes pas "
 "connecté à Internet."
@@ -2158,28 +2160,29 @@ msgid ""
 "Vous avez dépassé un ami !"
 msgstr ""
 
-#: mobile/navigation/engine/FacebookEndScreen.as:115
+#: mobile/navigation/engine/FacebookEndScreen.as:181
 #: mobile/navigation/engine/PodiumScreen.as:180
 #: mobile/navigation/engine/SoloEndScreen.as:244
 #: mobile/navigation/engine/TournamentEndScreen.as:365
 #: mobile/navigation/engine/TournamentEndScreen.as:376
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:162
 #: mobile/navigation/vip/VipScreen.as:378
 #: mobile/navigation/vip/VipUpScreen.as:153
 msgid "Partager"
 msgstr ""
 
-#: mobile/navigation/engine/FacebookEndScreen.as:115
+#: mobile/navigation/engine/FacebookEndScreen.as:181
 #, python-brace-format
 msgid "{0} a dépassé {1} sur le jeu {2}"
 msgstr ""
 
-#: mobile/navigation/engine/FacebookEndScreen.as:117
+#: mobile/navigation/engine/FacebookEndScreen.as:183
 #, python-brace-format
 msgid ""
 "Avec un score de {0}, je pense devenir rapidement le meilleur sur ce jeu."
 msgstr ""
 
-#: mobile/navigation/engine/FacebookEndScreen.as:118
+#: mobile/navigation/engine/FacebookEndScreen.as:184
 #: mobile/navigation/engine/HighScoreScreen.as:149
 #: mobile/navigation/engine/PodiumScreen.as:183
 #: mobile/navigation/engine/SoloEndScreen.as:247
@@ -2189,18 +2192,22 @@ msgstr ""
 #: mobile/navigation/engine/TournamentEndScreen.as:715
 #: mobile/navigation/highscore/HighScoreItemRenderer.as:268
 #: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:260
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:165
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:318
 #: mobile/navigation/vip/VipScreen.as:381
 #: mobile/navigation/vip/VipScreen.as:878
 #: mobile/navigation/vip/VipUpScreen.as:156
 msgid "http://www.ludokado.com/"
 msgstr ""
 
-#: mobile/navigation/engine/FacebookEndScreen.as:119
+#: mobile/navigation/engine/FacebookEndScreen.as:185
 #: mobile/navigation/engine/SoloEndScreen.as:248
 #: mobile/navigation/engine/TournamentEndScreen.as:369
 #: mobile/navigation/engine/TournamentEndScreen.as:380
 #: mobile/navigation/engine/TournamentEndScreen.as:708
 #: mobile/navigation/engine/TournamentEndScreen.as:716
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:166
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:319
 #, python-brace-format
 msgid ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"
@@ -2484,36 +2491,46 @@ msgstr[1] ""
 msgid "Vous n'avez pas assez de Points."
 msgstr ""
 
-#: mobile/navigation/game/StakeButtonToken.as:117
-#: mobile/navigation/game/StakeButtonToken.as:123
-#: mobile/navigation/game/StakeButtonToken.as:155
+#: mobile/navigation/game/StakeButtonToken.as:121
+#: mobile/navigation/game/StakeButtonToken.as:127
+#: mobile/navigation/game/StakeButtonToken.as:159
 #, python-brace-format
 msgid "{0} Jeton"
 msgid_plural "{0} Jetons"
 msgstr[0] ""
 msgstr[1] ""
 
-#: mobile/navigation/game/StakeButtonToken.as:129
+#: mobile/navigation/game/StakeButtonToken.as:133
 msgid "???"
 msgstr ""
 
-#: mobile/navigation/game/StakeButtonToken.as:135
-msgid "Regarder une vidéo pour jouer gratuitement."
+#: mobile/navigation/game/StakeButtonToken.as:139
+msgid "Regardez une vidéo et obtenez des Jetons"
 msgstr ""
 
-#: mobile/navigation/game/StakeButtonToken.as:147
-#: mobile/navigation/game/StakeButtonToken.as:228
+#: mobile/navigation/game/StakeButtonToken.as:151
+#: mobile/navigation/game/StakeButtonToken.as:246
 #, python-brace-format
 msgid "{0} Jetons dans \n"
 msgstr ""
 
-#: mobile/navigation/game/StakeButtonToken.as:252
+#: mobile/navigation/game/StakeButtonToken.as:186
+msgid "Mise à jour de vos Jetons en cours..."
+msgstr ""
+
+#: mobile/navigation/game/StakeButtonToken.as:241
+msgid ""
+"Nous n'avons pas pu mettre à jour votre solde de Jetons, veuillez vous "
+"reconnecter à nouveau."
+msgstr ""
+
+#: mobile/navigation/game/StakeButtonToken.as:270
 #: mobile/navigation/home/summary/FooterStakeElement.as:380
 #, python-brace-format
 msgid "Reconnectez-vous pour récupérer vos {0} Jetons."
 msgstr ""
 
-#: mobile/navigation/game/StakeButtonToken.as:273
+#: mobile/navigation/game/StakeButtonToken.as:291
 msgid "Vous n'avez plus assez de Jetons."
 msgstr ""
 
@@ -2568,7 +2585,7 @@ msgid "Amis Facebook"
 msgstr ""
 
 #: mobile/navigation/highscore/HighScoreListScreen.as:218
-#: mobile/navigation/highscore/HighScoreListScreen.as:579
+#: mobile/navigation/highscore/HighScoreListScreen.as:582
 msgid ""
 "Vous devez associer votre compte à Facebook pour voir la progression de vos "
 "amis !"
@@ -2580,29 +2597,21 @@ msgid ""
 "dans ce pays."
 msgstr ""
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:578
-msgid "Associer mon compte à Facebook"
-msgstr ""
-
-#: mobile/navigation/highscore/HighScoreListScreen.as:578
-msgid "Se connecter avec Facebook"
-msgstr ""
-
-#: mobile/navigation/highscore/HighScoreListScreen.as:579
+#: mobile/navigation/highscore/HighScoreListScreen.as:582
 msgid "Connectez-vous avec Facebook pour voir la progression de vos amis !"
 msgstr ""
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:617
+#: mobile/navigation/highscore/HighScoreListScreen.as:625
 msgid ""
 "Impossible d'afficher le classement de vos amis car nous n'avons pas accès à "
 "votre liste d'amis."
 msgstr ""
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:618
+#: mobile/navigation/highscore/HighScoreListScreen.as:626
 msgid "Toucher pour donner la permission."
 msgstr ""
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:692
+#: mobile/navigation/highscore/HighScoreListScreen.as:700
 msgid ""
 "Le Game Center est désactivé.\n"
 "Pour le réactiver, connectez-vous directement à partir de l'application Game "
@@ -2828,33 +2837,46 @@ msgstr ""
 msgid "Aucune sous catégorie à afficher."
 msgstr ""
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:106
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:115
 msgid ""
 "Parrainez\n"
 "et gagnez jusqu'à"
 msgstr ""
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:121
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:235
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:130
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:257
 msgid "POINTS PAR FILLEUL"
 msgstr ""
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:121
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:235
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:130
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:257
 msgid "PAR FILLEUL"
 msgstr ""
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:129
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:138
 msgid "Comment ça marche ?"
 msgstr ""
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:136
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:145
 #: mobile/navigation/sponsor/invite/ContactItemRenderer.as:167
 msgid "Inviter"
 msgstr ""
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:149
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:158
 msgid "Mes filleuls"
+msgstr ""
+
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:162
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:315
+#, python-brace-format
+msgid "Mon code parrain : {0} !"
+msgstr ""
+
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:164
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:317
+msgid ""
+"Devenez mes filleuls en vous inscrivant avec ce code et gagnez des tas de "
+"bonus !"
 msgstr ""
 
 #: mobile/navigation/sponsor/filleuls/FilleulItemRenderer.as:198

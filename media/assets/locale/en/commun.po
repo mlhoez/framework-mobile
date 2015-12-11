@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
-"POT-Creation-Date: 2015-12-10 11:53+0100\n"
-"PO-Revision-Date: 2015-12-11 09:01+0100\n"
+"POT-Creation-Date: 2015-12-11 16:01+0100\n"
+"PO-Revision-Date: 2015-12-11 16:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -995,7 +995,7 @@ msgstr "You must be logged in to order."
 #: mobile/navigation/authentication/RegisterScreen.as:278
 #: mobile/navigation/cs/display/CSMessagesContainer.as:216
 #: mobile/navigation/highscore/HighScoreListScreen.as:449
-#: mobile/navigation/highscore/HighScoreListScreen.as:626
+#: mobile/navigation/highscore/HighScoreListScreen.as:634
 #: mobile/navigation/shop/bid/comingsoon/ComingSoonBidContainer.as:100
 #: mobile/navigation/shop/bid/finished/FinishedBidContainer.as:100
 #: mobile/navigation/shop/bid/pending/PendingBidContainer.as:100
@@ -1118,7 +1118,7 @@ msgid "Voulez-vous vous déconnecter ?"
 msgstr "Are you sure you want to log out ?"
 
 #: mobile/core/notification/content/DisconnectNotificationContent.as:65
-#: mobile/debug/DebugScreen.as:151
+#: mobile/debug/DebugScreen.as:158
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:57
 #: mobile/navigation/settings/SettingsScreen.as:109
 #: mobile/navigation/settings/SettingsScreen.as:119
@@ -1184,6 +1184,7 @@ msgstr "Referral code...(optional)"
 
 #: mobile/core/notification/content/FacebookNotificationContent.as:126
 #: mobile/navigation/authentication/LoginScreen.as:95
+#: mobile/navigation/highscore/HighScoreListScreen.as:581
 #: mobile/navigation/menu/Menu.as:213
 msgid "Connexion"
 msgstr "Connection"
@@ -1588,7 +1589,7 @@ msgstr "French"
 msgid "Anglais"
 msgstr "English"
 
-#: mobile/debug/DebugScreen.as:152
+#: mobile/debug/DebugScreen.as:159
 #: mobile/navigation/account/history/settings/NotificationSettingsContainer.as:58
 #: mobile/navigation/settings/SettingsScreen.as:110
 #: mobile/navigation/settings/SettingsScreen.as:120
@@ -1871,7 +1872,8 @@ msgid "Informations personnelles"
 msgstr "Personal information"
 
 #: mobile/navigation/account/history/settings/PersonalInformationsContainer.as:154
-#: mobile/navigation/account/history/settings/PseudoSettingsContainer.as:80
+#: mobile/navigation/account/history/settings/PseudoSettingsContainer.as:92
+#: mobile/navigation/account/history/settings/PseudoSettingsContainer.as:98
 msgid "Pseudo"
 msgstr "Username"
 
@@ -1921,7 +1923,7 @@ msgstr "First name"
 msgid "Anniversaire"
 msgstr "Birthday"
 
-#: mobile/navigation/account/history/settings/PseudoSettingsContainer.as:81
+#: mobile/navigation/account/history/settings/PseudoSettingsContainer.as:93
 msgid "Pays associé"
 msgstr "Associated country"
 
@@ -2072,7 +2074,7 @@ msgstr "Close the alerts"
 #: mobile/navigation/authentication/RegisterScreen.as:100
 #: mobile/navigation/highscore/HighScoreListScreen.as:213
 #: mobile/navigation/home/HomeScreen.as:75
-#: mobile/navigation/home/HomeScreen.as:209
+#: mobile/navigation/home/HomeScreen.as:214
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -2160,7 +2162,7 @@ msgstr ""
 "you will receive."
 
 #: mobile/navigation/authentication/RegisterCompleteScreen.as:82
-#: mobile/navigation/engine/FacebookEndScreen.as:126
+#: mobile/navigation/engine/FacebookEndScreen.as:118
 #: mobile/navigation/engine/HighScoreScreen.as:141
 #: mobile/navigation/engine/PodiumScreen.as:175
 #: mobile/navigation/vip/VipUpScreen.as:137
@@ -2177,7 +2179,7 @@ msgstr "The password cannot be blank."
 
 #: mobile/navigation/authentication/RetryContainer.as:60
 #: mobile/navigation/highscore/HighScoreListScreen.as:511
-#: mobile/navigation/highscore/HighScoreListScreen.as:586
+#: mobile/navigation/highscore/HighScoreListScreen.as:589
 msgid ""
 "Vous ne pouvez pas afficher le contenu de cette page car vous n'êtes pas "
 "connecté à Internet."
@@ -2271,29 +2273,30 @@ msgstr ""
 "Congratulations!\n"
 "You have beaten a friend !"
 
-#: mobile/navigation/engine/FacebookEndScreen.as:115
+#: mobile/navigation/engine/FacebookEndScreen.as:181
 #: mobile/navigation/engine/PodiumScreen.as:180
 #: mobile/navigation/engine/SoloEndScreen.as:244
 #: mobile/navigation/engine/TournamentEndScreen.as:365
 #: mobile/navigation/engine/TournamentEndScreen.as:376
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:162
 #: mobile/navigation/vip/VipScreen.as:378
 #: mobile/navigation/vip/VipUpScreen.as:153
 msgid "Partager"
 msgstr "Share"
 
-#: mobile/navigation/engine/FacebookEndScreen.as:115
+#: mobile/navigation/engine/FacebookEndScreen.as:181
 #, python-brace-format
 msgid "{0} a dépassé {1} sur le jeu {2}"
 msgstr "{0} has beaten {1} on the game {2}"
 
-#: mobile/navigation/engine/FacebookEndScreen.as:117
+#: mobile/navigation/engine/FacebookEndScreen.as:183
 #, python-brace-format
 msgid ""
 "Avec un score de {0}, je pense devenir rapidement le meilleur sur ce jeu."
 msgstr ""
 "With a score of {0}, I think I can quickly become the best one on this game."
 
-#: mobile/navigation/engine/FacebookEndScreen.as:118
+#: mobile/navigation/engine/FacebookEndScreen.as:184
 #: mobile/navigation/engine/HighScoreScreen.as:149
 #: mobile/navigation/engine/PodiumScreen.as:183
 #: mobile/navigation/engine/SoloEndScreen.as:247
@@ -2303,18 +2306,22 @@ msgstr ""
 #: mobile/navigation/engine/TournamentEndScreen.as:715
 #: mobile/navigation/highscore/HighScoreItemRenderer.as:268
 #: mobile/navigation/shop/vip/BoutiqueCategoryScreen.as:260
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:165
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:318
 #: mobile/navigation/vip/VipScreen.as:381
 #: mobile/navigation/vip/VipScreen.as:878
 #: mobile/navigation/vip/VipUpScreen.as:156
 msgid "http://www.ludokado.com/"
 msgstr "http://www.ludokado.com/"
 
-#: mobile/navigation/engine/FacebookEndScreen.as:119
+#: mobile/navigation/engine/FacebookEndScreen.as:185
 #: mobile/navigation/engine/SoloEndScreen.as:248
 #: mobile/navigation/engine/TournamentEndScreen.as:369
 #: mobile/navigation/engine/TournamentEndScreen.as:380
 #: mobile/navigation/engine/TournamentEndScreen.as:708
 #: mobile/navigation/engine/TournamentEndScreen.as:716
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:166
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:319
 #, python-brace-format
 msgid ""
 "http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"
@@ -2633,36 +2640,46 @@ msgstr[1] "{0} Points"
 msgid "Vous n'avez pas assez de Points."
 msgstr "You don’t have enough Points"
 
-#: mobile/navigation/game/StakeButtonToken.as:117
-#: mobile/navigation/game/StakeButtonToken.as:123
-#: mobile/navigation/game/StakeButtonToken.as:155
+#: mobile/navigation/game/StakeButtonToken.as:121
+#: mobile/navigation/game/StakeButtonToken.as:127
+#: mobile/navigation/game/StakeButtonToken.as:159
 #, python-brace-format
 msgid "{0} Jeton"
 msgid_plural "{0} Jetons"
 msgstr[0] "{0} Token"
 msgstr[1] "{0} Tokens"
 
-#: mobile/navigation/game/StakeButtonToken.as:129
+#: mobile/navigation/game/StakeButtonToken.as:133
 msgid "???"
 msgstr "???"
 
-#: mobile/navigation/game/StakeButtonToken.as:135
-msgid "Regarder une vidéo pour jouer gratuitement."
-msgstr "Watch a video to play for free."
+#: mobile/navigation/game/StakeButtonToken.as:139
+msgid "Regardez une vidéo et obtenez des Jetons"
+msgstr "Watch a video and get free Tokens"
 
-#: mobile/navigation/game/StakeButtonToken.as:147
-#: mobile/navigation/game/StakeButtonToken.as:228
+#: mobile/navigation/game/StakeButtonToken.as:151
+#: mobile/navigation/game/StakeButtonToken.as:246
 #, python-brace-format
 msgid "{0} Jetons dans \n"
 msgstr "{0} Tokens in \n"
 
-#: mobile/navigation/game/StakeButtonToken.as:252
+#: mobile/navigation/game/StakeButtonToken.as:186
+msgid "Mise à jour de vos Jetons en cours..."
+msgstr "Updating your Tokens…"
+
+#: mobile/navigation/game/StakeButtonToken.as:241
+msgid ""
+"Nous n'avons pas pu mettre à jour votre solde de Jetons, veuillez vous "
+"reconnecter à nouveau."
+msgstr "We could not update your Tokens, please log in again."
+
+#: mobile/navigation/game/StakeButtonToken.as:270
 #: mobile/navigation/home/summary/FooterStakeElement.as:380
 #, python-brace-format
 msgid "Reconnectez-vous pour récupérer vos {0} Jetons."
 msgstr "Sign in again to get your {0} Tokens."
 
-#: mobile/navigation/game/StakeButtonToken.as:273
+#: mobile/navigation/game/StakeButtonToken.as:291
 msgid "Vous n'avez plus assez de Jetons."
 msgstr "You don’t have enough Tokens"
 
@@ -2719,7 +2736,7 @@ msgid "Amis Facebook"
 msgstr "Facebook friends"
 
 #: mobile/navigation/highscore/HighScoreListScreen.as:218
-#: mobile/navigation/highscore/HighScoreListScreen.as:579
+#: mobile/navigation/highscore/HighScoreListScreen.as:582
 msgid ""
 "Vous devez associer votre compte à Facebook pour voir la progression de vos "
 "amis !"
@@ -2735,19 +2752,11 @@ msgstr ""
 "There is no player ranked\n"
 "in this country."
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:578
-msgid "Associer mon compte à Facebook"
-msgstr "Link my account with Facebook"
-
-#: mobile/navigation/highscore/HighScoreListScreen.as:578
-msgid "Se connecter avec Facebook"
-msgstr "Link my account with Facebook"
-
-#: mobile/navigation/highscore/HighScoreListScreen.as:579
+#: mobile/navigation/highscore/HighScoreListScreen.as:582
 msgid "Connectez-vous avec Facebook pour voir la progression de vos amis !"
 msgstr "Login with Facebook to follow and track the scores of your friends !"
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:617
+#: mobile/navigation/highscore/HighScoreListScreen.as:625
 msgid ""
 "Impossible d'afficher le classement de vos amis car nous n'avons pas accès à "
 "votre liste d'amis."
@@ -2755,11 +2764,11 @@ msgstr ""
 "Unable to show the ranking of your friends because we do not have access to "
 "your friends list."
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:618
+#: mobile/navigation/highscore/HighScoreListScreen.as:626
 msgid "Toucher pour donner la permission."
 msgstr "Tap here to grant permission"
 
-#: mobile/navigation/highscore/HighScoreListScreen.as:692
+#: mobile/navigation/highscore/HighScoreListScreen.as:700
 msgid ""
 "Le Game Center est désactivé.\n"
 "Pour le réactiver, connectez-vous directement à partir de l'application Game "
@@ -3011,7 +3020,7 @@ msgstr "You have to be connected to the Internet to see the prizes."
 msgid "Aucune sous catégorie à afficher."
 msgstr "No sub-category to display."
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:106
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:115
 msgid ""
 "Parrainez\n"
 "et gagnez jusqu'à"
@@ -3019,28 +3028,41 @@ msgstr ""
 "Refer\n"
 "and win up to"
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:121
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:235
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:130
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:257
 msgid "POINTS PAR FILLEUL"
 msgstr "POINTS PER FRIEND"
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:121
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:235
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:130
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:257
 msgid "PAR FILLEUL"
 msgstr "PER FRIEND"
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:129
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:138
 msgid "Comment ça marche ?"
 msgstr "How does it work ?"
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:136
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:145
 #: mobile/navigation/sponsor/invite/ContactItemRenderer.as:167
 msgid "Inviter"
 msgstr "Invite"
 
-#: mobile/navigation/sponsor/SponsorHomeScreen.as:149
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:158
 msgid "Mes filleuls"
 msgstr "My friends"
+
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:162
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:315
+#, python-brace-format
+msgid "Mon code parrain : {0} !"
+msgstr "My referral code : {0}!"
+
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:164
+#: mobile/navigation/sponsor/SponsorHomeScreen.as:317
+msgid ""
+"Devenez mes filleuls en vous inscrivant avec ce code et gagnez des tas de "
+"bonus !"
+msgstr "Use my referral code to become my guest and get incredible bonuses!"
 
 #: mobile/navigation/sponsor/filleuls/FilleulItemRenderer.as:198
 msgid "Refusé"
@@ -3274,6 +3296,15 @@ msgid ""
 "encore plus vite."
 msgstr ""
 "With this new rank, I can benefit from new advantages to win even faster."
+
+#~ msgid "Regarder une vidéo pour jouer gratuitement."
+#~ msgstr "Watch a video to play for free."
+
+#~ msgid "Associer mon compte à Facebook"
+#~ msgstr "Link my account with Facebook"
+
+#~ msgid "Se connecter avec Facebook"
+#~ msgstr "Link my account with Facebook"
 
 #~ msgid ""
 #~ "Recevez 50 jetons gratuits\n"
