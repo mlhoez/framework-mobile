@@ -6,7 +6,7 @@ Created : 17 Août 2013
 */
 package com.ludofactory.mobile.navigation.game
 {
-
+	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.gettext.aliases._n;
@@ -15,7 +15,10 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.GameSessionTimer;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
+	import com.ludofactory.mobile.core.manager.InfoContent;
+	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.model.ScreenIds;
@@ -27,20 +30,21 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.vidcoin.extension.ane.VidCoinController;
 	import com.vidcoin.extension.ane.events.VidCoinEvents;
-
+	
 	import feathers.controls.Callout;
 	import feathers.controls.Label;
-
+	
 	import flash.filters.BitmapFilterQuality;
 	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
+	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.utils.formatString;
-
+	
 	public class StakeButtonToken extends StakeButton
 	{
 		/**
@@ -179,7 +183,9 @@ package com.ludofactory.mobile.navigation.game
 					// the video left the screen, here we can resume audio and refresh the stakes if necessary
 					if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeSuccess)
 					{
-						Remote.getInstance().updateMises(null, null, null, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
+						InfoManager.show(_("Mise à jour de vos Jetons en cours..."));
+						AdvancedScreen(AbstractEntryPoint.screenNavigator.activeScreen).canBack = false;
+						Starling.juggler.delayCall(Remote.getInstance().updateMises, 2, onStakesUpdated, onStakesNotUpdated, onStakesNotUpdated, 1, AbstractEntryPoint.screenNavigator.activeScreenID)
 					}
 					else if(event.viewInfo["statusCode"] == VidCoinController.VCStatusCodeError)
 					{
@@ -221,6 +227,18 @@ package com.ludofactory.mobile.navigation.game
 					break;
 				}
 			}
+		}
+		
+		private function onStakesUpdated(result:Object):void
+		{
+			AdvancedScreen(AbstractEntryPoint.screenNavigator.activeScreen).canBack = true;
+			InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME);
+		}
+		
+		private function onStakesNotUpdated():void
+		{
+			AdvancedScreen(AbstractEntryPoint.screenNavigator.activeScreen).canBack = true;
+			InfoManager.hide(_("Nous n'avons pas pu mettre à jour votre solde de Jetons, veuillez vous reconnecter à nouveau."), InfoContent.ICON_CROSS);
 		}
 		
 		private function setText(val:String):void
