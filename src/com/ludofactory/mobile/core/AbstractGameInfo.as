@@ -153,9 +153,8 @@ package com.ludofactory.mobile.core
 
 		/**
 		 * The VidCoin game id.
-		 * The game id is common for any mobile app.
 		 */
-		public static var VID_COIN_GAME_ID:String = "684849655541269";
+		public static var VID_COIN_GAME_ID:String;
 
 		/**
 		 * The VidCoin placement id.
