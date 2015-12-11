@@ -112,14 +112,6 @@ package com.ludofactory.mobile.navigation.engine
 			addChild(_title);
 			_title.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 48 : 50), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			
-			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("{0} a dépassé {1} sur le jeu {2}"), _me.friendName, _friendToSwitch.friendName, AbstractGameInfo.GAME_NAME),
-					"",
-					formatString(_("Avec un score de {0}, je pense devenir rapidement le meilleur sur ce jeu."), _me.currentScore),
-					_("http://www.ludokado.com/"),
-					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
-			_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
-			addChild(_facebookButton);
-			
 			_continueButton = new Button();
 			_continueButton.addEventListener(Event.TRIGGERED, onContinue);
 			_continueButton.styleName = Theme.BUTTON_EMPTY;
@@ -182,6 +174,17 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			
 			_all.push(_firstFriend, _middleFriend, _lastFriend);
+			var switchId:int = advancedOwner.screenData.gameData.facebookPosition - advancedOwner.screenData.gameData.facebookMoving;
+			_friendToSwitch = _all[switchId];
+			_me = getMe();
+			
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("{0} a dépassé {1} sur le jeu {2}"), _me.friendName, _friendToSwitch.friendName, AbstractGameInfo.GAME_NAME),
+					"",
+					formatString(_("Avec un score de {0}, je pense devenir rapidement le meilleur sur ce jeu."), _me.currentScore),
+					_("http://www.ludokado.com/"),
+					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
+			_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
+			addChild(_facebookButton);
 		}
 		
 		override protected function draw():void
@@ -251,10 +254,6 @@ package com.ludofactory.mobile.navigation.engine
 		
 		private function animate():void
 		{
-			var switchId:int = advancedOwner.screenData.gameData.facebookPosition - advancedOwner.screenData.gameData.facebookMoving;
-			_friendToSwitch = _all[switchId];
-			_me = getMe();
-			
 			_upArrow.x = (_friendToSwitch.x - _upArrow.width) * 0.5;
 			_upArrow.y = _friendToSwitch.y + _upArrow.height;
 			_upValue.text = _me.getUpValue();
