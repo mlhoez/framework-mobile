@@ -196,6 +196,8 @@ package com.ludofactory.mobile.navigation.sponsor
 					_myFriendsButton.validate();
 					_myFriendsButton.y = _friendsImage.y + _friendsImage.height * 0.6;
 					
+					_facebookButton.height = _emailButton.height;
+					
 					_friendsImage.x = _myFriendsButton.x + (_myFriendsButton.width - _friendsImage.width) * 0.5;
 					
 					_emailButton.y = _myFriendsButton.y + _myFriendsButton.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 50);
