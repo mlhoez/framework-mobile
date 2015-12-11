@@ -170,7 +170,7 @@ package com.ludofactory.mobile.navigation.game
 				case "vidCoinViewWillAppear":
 				{
 					// the video appears, here we need to insert a line in the database, stop sounds, etc.
-					Remote.getInstance().logVidCoin(null, null, null, 2);
+					Remote.getInstance().logVidCoin(null, null, null, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 					break;
 				}
 				case "vidcoinViewDidDisappearWithInformation":
