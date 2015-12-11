@@ -196,9 +196,12 @@ package com.ludofactory.mobile.navigation.home
 		 */
 		private function onAuthenticatedWithFacebook(event:Event):void
 		{
-			_facebookButton.removeEventListener(FacebookManagerEventType.AUTHENTICATED, onAuthenticatedWithFacebook);
-			_facebookButton.removeFromParent(true);
-			_facebookButton = null;
+			if(_facebookButton)
+			{
+				_facebookButton.removeEventListener(FacebookManagerEventType.AUTHENTICATED, onAuthenticatedWithFacebook);
+				_facebookButton.removeFromParent(true);
+				_facebookButton = null;
+			}
 			
 			// layout again
 			invalidate(INVALIDATION_FLAG_SIZE);
@@ -206,9 +209,12 @@ package com.ludofactory.mobile.navigation.home
 		
 		public function onUserDisconnected():void
 		{
-			_facebookButton = ButtonFactory.getFacebookButton(_("Facebook"), ButtonFactory.FACEBOOK_TYPE_CONNECT);
-			_facebookButton.addEventListener(FacebookManagerEventType.AUTHENTICATED, onAuthenticatedWithFacebook);
-			addChild(_facebookButton);
+			if(!_facebookButton)
+			{
+				_facebookButton = ButtonFactory.getFacebookButton(_("Facebook"), ButtonFactory.FACEBOOK_TYPE_CONNECT);
+				_facebookButton.addEventListener(FacebookManagerEventType.AUTHENTICATED, onAuthenticatedWithFacebook);
+				addChild(_facebookButton);
+			}
 
 			// layout again
 			invalidate(INVALIDATION_FLAG_SIZE);
