@@ -231,7 +231,7 @@ package com.ludofactory.mobile.navigation.highscore
 				addChild(_socialGameButton);
 			}
 			
-			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
+			
 			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
@@ -566,16 +566,19 @@ package com.ludofactory.mobile.navigation.highscore
 					_retryContainer.visible = true;
 					_associateButton.visible = false;
 					_associateLabel.visible = false;
+					FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
 					FacebookManager.getInstance().connect();
 				}
 				else
 				{
+					FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
+					
 					// register or associate account
 					_retryContainer.visible = false;
 					_associateButton.visible = true;
 					_associateLabel.visible = true;
 					
-					_associateButton.text = MemberManager.getInstance().isLoggedIn() ? _("Associer mon compte à Facebook") : _("Se connecter avec Facebook");
+					_associateButton.text = _("Connexion");
 					_associateLabel.text = MemberManager.getInstance().isLoggedIn() ? _("Vous devez associer votre compte à Facebook pour voir la progression de vos amis !") : _("Connectez-vous avec Facebook pour voir la progression de vos amis !");
 				}
 				
@@ -593,8 +596,11 @@ package com.ludofactory.mobile.navigation.highscore
 		 */
 		private function launchRequestAfterSuccessLoginFacebook(event:Event = null):void
 		{
+			FacebookManager.getInstance().removeEventListener(FacebookManagerEventType.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
+			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
+				InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
 				if(GoViral.goViral.isFacebookPermissionGranted("user_friends"))
 				{
 					log("Permission user_friends granted");
@@ -609,6 +615,8 @@ package com.ludofactory.mobile.navigation.highscore
 				}
 				else
 				{
+					FacebookManager.getInstance().addEventListener(FacebookManagerEventType.AUTHENTICATED, launchRequestAfterSuccessLoginFacebook);
+					
 					_associateButton.visible = false;
 					_associateLabel.visible = false;
 					
@@ -629,8 +637,8 @@ package com.ludofactory.mobile.navigation.highscore
 		
 		private function requestPermission(event:Event = null):void
 		{
-			FacebookManager.getInstance().requestNewReadPermission("user_friends");
 			FacebookManager.getInstance().addEventListener(FacebookManagerEventType.PERMISSION_GRANTED, onPermissionGranted);
+			FacebookManager.getInstance().requestNewReadPermission("user_friends");
 		}
 		
 		/**
