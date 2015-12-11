@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Framework Mobile (Anglais)\n"
 "POT-Creation-Date: 2015-12-10 11:53+0100\n"
-"PO-Revision-Date: 2015-12-10 18:06+0100\n"
+"PO-Revision-Date: 2015-12-11 09:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -1167,7 +1167,7 @@ msgstr "Sign up using Facebook"
 
 #: mobile/core/notification/content/FacebookNotificationContent.as:94
 msgid "1 Crédit OFFERT"
-msgstr "1 Credit OFFERED"
+msgstr "1 FREE Credit"
 
 #: mobile/core/notification/content/FacebookNotificationContent.as:95
 msgid "Dépassez vos amis !"
@@ -1180,7 +1180,7 @@ msgstr "Play on multiple devices!"
 #: mobile/core/notification/content/FacebookNotificationContent.as:113
 #: mobile/navigation/authentication/RegisterScreen.as:131
 msgid "Code parrain... (facultatif)"
-msgstr "Referring code...(optional)"
+msgstr "Referral code...(optional)"
 
 #: mobile/core/notification/content/FacebookNotificationContent.as:126
 #: mobile/navigation/authentication/LoginScreen.as:95
@@ -1197,7 +1197,7 @@ msgstr "We will never publish on your wall without your permission"
 #: mobile/core/notification/content/FacebookNotificationContent.as:238
 #: mobile/navigation/authentication/RegisterScreen.as:385
 msgid "Qu'est-ce que le code parrain ?"
-msgstr "What's the invitation code?"
+msgstr "What's the referral code?"
 
 #: mobile/core/notification/content/FacebookNotificationContent.as:244
 #: mobile/navigation/authentication/RegisterScreen.as:385
@@ -1208,12 +1208,11 @@ msgid ""
 "Lorsqu'un joueur ou un ami souhaite vous parrainer, il vous envoie son code "
 "joueur que vous pouvez saisir dans ce champ en vous inscrivant."
 msgstr ""
-"The invitation code is the number corresponding to the ID of a player on the "
-"app.\n"
+"The referral code is a number - the ID of a registered player.\n"
 "\n"
-"When a player or a friend wants to invite you to join him on the app, he/she "
-"can send you a player ID code that you can then enter in this field when "
-"you're subscribing."
+"When a player or a friend invites you to join him on the app, he/she can "
+"send you a refferal code that you can then enter in this field upon "
+"subscription."
 
 #: mobile/core/notification/content/FilleulDetailNotificationContent.as:90
 msgid "Etat du parrainage :"
@@ -1609,8 +1608,8 @@ msgid ""
 "Nous n'avons pas pu récupérer votre email via Facebook. Merci de compléter "
 "l'inscription normalement."
 msgstr ""
-"We could not retrieve your email via Facebook. Please complete the "
-"registration normally."
+"We could not retrieve your e-mail via Facebook. Please resume and complete "
+"the registration."
 
 #: mobile/navigation/FacebookManager.as:327
 msgid "Publication annulée"
@@ -2338,12 +2337,12 @@ msgstr "Share my performances & my score!"
 #: mobile/navigation/engine/HighScoreScreen.as:146
 #, python-brace-format
 msgid "Nouveau meilleur score : {0} !"
-msgstr "New Highest score: {0}!"
+msgstr "New High score: {0}!"
 
 #: mobile/navigation/engine/HighScoreScreen.as:148
 #, python-brace-format
 msgid "Venez me défier et tenter de battre mon score de {0} sur {1} !"
-msgstr "Enter in the game and try to beat my score of {0} on {1}!"
+msgstr "Enter the game to try and beat my score of {0} on {1}!"
 
 #: mobile/navigation/engine/HighScoreScreen.as:150
 #: mobile/navigation/highscore/HighScoreItemRenderer.as:269
