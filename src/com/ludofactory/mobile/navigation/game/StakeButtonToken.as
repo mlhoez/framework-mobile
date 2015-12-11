@@ -136,7 +136,7 @@ package com.ludofactory.mobile.navigation.game
 					{
 						if( MemberManager.getInstance().getCanWatchVideo() && AbstractEntryPoint.vidCoin.videoIsAvailableForPlacement(AbstractGameInfo.VID_COIN_PLACEMENT_ID) )
 						{
-							_label.text = formatString(_("Regarder une vidéo pour jouer gratuitement."));
+							_label.text = formatString(_("Regardez une vidéo et obtenez des Jetons"));
 
 							_vidCoinEnabled = true;
 
