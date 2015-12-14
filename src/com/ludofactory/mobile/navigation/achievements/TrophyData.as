@@ -59,7 +59,7 @@ package com.ludofactory.mobile.navigation.achievements
 			_description = data.description;
 			_reward = data.reward;
 			_values = data.values;
-			_textureName = (data.textureName && textureName != "") ? data.textureName : ("trophy" + _id);
+			_textureName = (data.textureName && textureName != "" && data.textureName.indexOf("http") > -1) ? data.textureName : ("trophy" + _id);
 			_currentValue = (data.currentValue != null) ? Number(data.currentValue) : 0;
 			_isProgressive = (data.isProgressive != null) ? Boolean(data.isProgressive) : false;
 		}
