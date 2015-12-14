@@ -295,7 +295,9 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function onValidatePurchaseSuccess(result:Object = null):void
 		{
-			log("[Store] Request " + _currentRequest.id + " validated.");
+			log("[Store] Request " + _currentRequest.id + " validated with code " + result.code);
+			log("[Store] Object returned :");
+			log(result);
 			
 			if( GAnalytics.isSupported() )
 			{
