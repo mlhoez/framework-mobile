@@ -52,8 +52,8 @@ package com.ludofactory.mobile.core.remoting
 		//private const DEV_URL:String = "http://www.ludokado.dev";
 		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
 		//private const DEV_URL:String = "http://ludokado2.pterrier.ludofactory.dev";
-		//private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
-		private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
+		private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
+		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado.tadiasse.ludofactory.dev";
 		//private const DEV_URL:String = "http://ludokado3.sravet.ludofactory.dev";
 		//private const DEV_URL:String = "http://semiprod.ludokado.com";
