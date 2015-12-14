@@ -111,7 +111,7 @@ package com.ludofactory.common.utils
 	    public function addLog(log:String):void
 	    {
 		    _logText = log + "\n" + _logText;
-		    if( _logText.length > 10000 )
+		    if( _logText.length > 20000 )
 			    _logText = _logText.slice(0, _logText.length * 0.25); // suppression du quart le plus ancien des logs
 		    if( _logs) _logs.text = _logText;
 	    }
