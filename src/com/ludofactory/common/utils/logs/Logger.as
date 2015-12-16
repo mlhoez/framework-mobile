@@ -124,8 +124,8 @@ package com.ludofactory.common.utils.logs
 	        enableType = CONFIG::DEBUG;
 	        
 	        // if we have a name, we create one more indentation
-            if (name != "")
-                tabs += "\t";
+            //if (name != "")
+            //    tabs += "\t";
             
 	        // then create the normal indentation
             for (var i:int = 0; i <= indentationLevel; i++)
@@ -204,7 +204,7 @@ package com.ludofactory.common.utils.logs
 	        // the recursivity is done, we can output the log
             if (indentationLevel == 0)
             {
-                output = (name != "" ? (name + " ") : "") + (bool ? (name != "" ? "\n\t" : "\n") + propertyType + " (" + (propertyType == "Array" ? property.length : Utilities.countObject(property)) + ")" + "\n" + (name != "" ? "\t" : "") + (propertyType == "Array" ? "[" : "{") + '\n' : "") + output + (bool ? (name != "" ? "\t" : "") + (propertyType == "Array" ? "]" : "}") : "");
+                output = (name != "" ? (name + " ") : "") + (bool ? "\n" + propertyType + " (" + (propertyType == "Array" ? property.length : Utilities.countObject(property)) + ")" + "\n" + (propertyType == "Array" ? "[" : "{") + '\n' : "") + output + (bool ? (propertyType == "Array" ? "]" : "}") : "");
                 
 	            if (CONFIG::DEBUG)
 	                trace(formattedColor + output + NO_STYLE);
