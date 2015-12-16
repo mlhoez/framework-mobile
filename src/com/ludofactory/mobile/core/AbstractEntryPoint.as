@@ -1167,6 +1167,7 @@ package com.ludofactory.mobile.core
 			if( !_areLogsShowing )
 			{
 				addChild(LogDisplayer.getInstance());
+				LogDisplayer.getInstance().enable();
 				_areLogsShowing = true;
 			}
 		}
@@ -1179,6 +1180,7 @@ package com.ludofactory.mobile.core
 			if( _areLogsShowing )
 			{
 				removeChild(LogDisplayer.getInstance());
+				LogDisplayer.getInstance().disable();
 				_areLogsShowing = false;
 			}
 		}

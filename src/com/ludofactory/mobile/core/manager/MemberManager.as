@@ -10,7 +10,7 @@ package com.ludofactory.mobile.core.manager
 	import com.gamua.flox.Flox;
 	import com.ludofactory.ane.DeviceUtils;
 	import com.ludofactory.common.encryption.Encryption;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.AbstractMain;
@@ -69,7 +69,7 @@ package com.ludofactory.mobile.core.manager
 		private static const MEMBER_ACCESS_PREFIX:String = "Member_";
 		
 		/**
-		 * The current member data. */		
+		 * The current member data. */
 		private var _member:Member;
 		
 		/**
@@ -702,6 +702,11 @@ package com.ludofactory.mobile.core.manager
 			return count;
 		}
 		
+		
+		public function get member():Member
+		{
+			return _member;
+		}
 		
 		/**
 		 * Return the MemberManager instance.

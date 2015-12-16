@@ -516,9 +516,7 @@ package com.ludofactory.mobile.core
 		private static function onGesture(event:GestureEvent):void
 		{
 			if( Starling.current && MemberManager.getInstance().isAdmin() ) // just in case
-			{
 				(Starling.current.root as AbstractEntryPoint).showOrHideLogs();
-			}
 		}
 		
 		/**
