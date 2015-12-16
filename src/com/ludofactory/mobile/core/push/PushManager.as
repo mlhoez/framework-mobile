@@ -7,7 +7,7 @@ Created : 1 oct. 2013
 package com.ludofactory.mobile.core.push
 {
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.HeartBeat;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;

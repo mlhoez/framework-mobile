@@ -7,7 +7,8 @@ Created : 11 déc. 2012
 package com.ludofactory.mobile.core
 {
 	
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.Logger;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;

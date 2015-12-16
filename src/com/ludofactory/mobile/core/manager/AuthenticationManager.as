@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core.manager
 {
 
 	import com.ludofactory.mobile.navigation.authentication.*;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	

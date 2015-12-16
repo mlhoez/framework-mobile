@@ -14,7 +14,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
-	import com.ludofactory.common.utils.LogDisplayer;
+	import com.ludofactory.common.utils.logs.LogDisplayer;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;

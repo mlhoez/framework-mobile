@@ -7,7 +7,7 @@ Created : 2 sept. 2013
 package com.ludofactory.mobile.core.controls
 {
 	
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.navigation.vip.VipAccordionItem;
 	

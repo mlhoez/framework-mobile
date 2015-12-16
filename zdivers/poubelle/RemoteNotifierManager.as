@@ -1,7 +1,7 @@
 package com.ludofactory.mobile.application.ios
 {
 	import com.demonsters.debugger.MonsterDebugger;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	
 	import flash.events.Event;
 	import flash.events.HTTPStatusEvent;

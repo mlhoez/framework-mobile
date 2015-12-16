@@ -8,7 +8,7 @@ package app.screens
 	|________________________________________________________________________________________*/
 	
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	
 	import flash.display.Loader;
 	import flash.events.IOErrorEvent;

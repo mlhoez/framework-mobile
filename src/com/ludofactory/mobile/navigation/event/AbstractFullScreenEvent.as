@@ -4,7 +4,7 @@
 package com.ludofactory.mobile.navigation.event
 {
 	
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	
 	import feathers.core.FeathersControl;
 	

@@ -9,7 +9,7 @@ package com.ludofactory.mobile.navigation.authentication
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;

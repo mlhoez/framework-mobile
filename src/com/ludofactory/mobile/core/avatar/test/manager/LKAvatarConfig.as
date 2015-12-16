@@ -4,7 +4,7 @@
 package com.ludofactory.mobile.core.avatar.test.manager
 {
 	
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
 	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
 	

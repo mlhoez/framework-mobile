@@ -4,8 +4,10 @@
  Author  : Maxime Lhoez
  Created : 12 sept. 2014
 */
-package com.ludofactory.common.utils
+package com.ludofactory.common.utils.logs
 {
+	
+	import com.ludofactory.common.utils.*;
 	
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -111,7 +113,7 @@ package com.ludofactory.common.utils
 	    public function addLog(log:String):void
 	    {
 		    _logText = log + "\n" + _logText;
-		    if( _logText.length > 20000 )
+		    if( _logText.length > 40000 )
 			    _logText = _logText.slice(0, _logText.length * 0.25); // suppression du quart le plus ancien des logs
 		    if( _logs) _logs.text = _logText;
 	    }

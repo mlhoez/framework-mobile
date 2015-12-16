@@ -6,7 +6,7 @@ Created : 2 mai 2013
 */
 package com.ludofactory.mobile.core
 {
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	

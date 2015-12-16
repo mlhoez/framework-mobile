@@ -9,7 +9,7 @@ package com.ludofactory.mobile.core.remoting
 	
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.LanguageManager;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;

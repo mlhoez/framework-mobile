@@ -6,7 +6,7 @@ Created : 4 sept. 2012
 */
 package com.ludofactory.mobile.navigation.achievements
 {
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.milkmangames.nativeextensions.ios.GameCenter;
 	import com.milkmangames.nativeextensions.ios.events.GameCenterErrorEvent;

@@ -6,7 +6,7 @@ Created : 12 déc. 2013
 */
 package com.ludofactory.mobile.core.controls
 {
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	
 	import feathers.controls.LayoutGroup;
 	import feathers.core.IFeathersControl;

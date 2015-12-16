@@ -6,12 +6,15 @@ Created : 11 Décembre 2012
 */
 package com.ludofactory.mobile.core.remoting
 {
+	
+	import air.net.SocketMonitor;
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.encryption.Encryption;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.logRemote;
 	import com.ludofactory.mobile.core.HeartBeat;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	
 	import flash.display.MovieClip;
 	import flash.events.NetStatusEvent;
@@ -19,8 +22,6 @@ package com.ludofactory.mobile.core.remoting
 	import flash.net.NetConnection;
 	import flash.net.ObjectEncoding;
 	import flash.utils.Dictionary;
-	
-	import air.net.SocketMonitor;
 	
 	/**
 	 * NetConnectionManager
@@ -223,7 +224,7 @@ package com.ludofactory.mobile.core.remoting
 		 */		
 		private function announceSocket(event:StatusEvent):void
 		{
-			log("[NetConnectionManager] Host " + (_baseGatewayUrl + (_gatewayPortNumber ? (":" + _gatewayPortNumber) : "")) + " available : " + _socketMonitor.available);
+			logRemote("[NetConnectionManager] Host " + (_baseGatewayUrl + (_gatewayPortNumber ? (":" + _gatewayPortNumber) : "")) + " available : " + _socketMonitor.available);
 			
 			/*if( _socketMonitor.available || GlobalConfig.DEBUG )
 			{*/
@@ -277,13 +278,14 @@ package com.ludofactory.mobile.core.remoting
 			if( commandName in _activeCalls )
 				return;
 			
-			if( CONFIG::DEBUG )
+			if( CONFIG::DEBUG || MemberManager.getInstance().isAdmin() )
 			{
-				log("[NetConnectionManager] Calling " + commandName + " with parameters : " + JSON.stringify( args[2] ));
+				//logRemote("[NetConnectionManager] Calling " + commandName + " with parameters : " + JSON.stringify( args[2] ));
+				logRemote(args[2], "[NetConnectionManager] Calling " + commandName + " with parameters : ");
 			}
 			else
 			{
-				log("[NetConnectionManager] Calling " + commandName + (args[1] == "pushPartie" ? " with parameters : " + _cryptageDef.encrypt(JSON.stringify(args[2])) : "") );
+				logRemote("[NetConnectionManager] Calling " + commandName + (args[1] == "pushPartie" ? " with parameters : " + _cryptageDef.encrypt(JSON.stringify(args[2])) : "") );
 			}
 			
 			var responderManager:NetResponder = createResponder(callbacks, commandName, maxAttempts, screenName, args);
@@ -484,7 +486,7 @@ package com.ludofactory.mobile.core.remoting
 		 */		
 		private function onErrorCall(error:Object, responderManager:NetResponder):void
 		{
-			log("[NetConnectionManager] Error calling " + responderManager.command + " : " + error.faultString);
+			logRemote("[NetConnectionManager] Error calling " + responderManager.command + " : " + error.faultString);
 			
 			// the call have been deleted, then we have nothing to do
 			if( !(responderManager.command in _activeCalls) )
@@ -533,7 +535,7 @@ package com.ludofactory.mobile.core.remoting
 		 */		
 		private function netStatusHandler(event:NetStatusEvent, responderManager:NetResponder = null):void 
 		{
-			log("[NetConnectionManager] NetStatusHandler : " + event.info.code);
+			logRemote("[NetConnectionManager] NetStatusHandler : " + event.info.code);
 			switch (event.info.code)
 			{
 				case "NetConnection.Call.Failed":
@@ -541,7 +543,7 @@ package com.ludofactory.mobile.core.remoting
 					// we get into this case when we try to run a request but the net
 					// connection is not connected to the gateway (wrong url or maybe
 					// the server is down). That's why we need to try to reconnect here.
-					log("[NetConnectionManager] Could not connect to " + _completeGatewayUrl + ". Retry...");
+					logRemote("[NetConnectionManager] Could not connect to " + _completeGatewayUrl + ". Retry...");
 					connect();
 					
 					break;
@@ -644,7 +646,7 @@ package com.ludofactory.mobile.core.remoting
 			{
 				if( AirNetworkInfo.networkInfo.isConnected() )
 				{
-					log("[NetConnectionManager] Relaunching timer.");
+					logRemote("[NetConnectionManager] Relaunching timer.");
 					// start a new call
 					HeartBeat.unregisterFunction(updateTimer);
 					
@@ -655,7 +657,7 @@ package com.ludofactory.mobile.core.remoting
 				}
 				else
 				{
-					log("[NetConnectionManager] Cannot relaunch timer.");
+					logRemote("[NetConnectionManager] Cannot relaunch timer.");
 					_timerRestart = TIMER_BASE_VALUE;
 				}
 				
@@ -707,12 +709,12 @@ package com.ludofactory.mobile.core.remoting
 		
 		public function failAndClearAllResponders():void
 		{
-			log("[NetConnectionManager] failAllResponders");
+			logRemote("[NetConnectionManager] failAllResponders");
 			
 			var deleteScreen:Boolean = true;
 			for each( var responderManager:NetResponder in _activeCalls )
 			{
-				log("[NetConnectionManager] Failing and clearing responder '" + responderManager.command + "' for screen " + responderManager.associatedScreenName);
+				logRemote("[NetConnectionManager] Failing and clearing responder '" + responderManager.command + "' for screen " + responderManager.associatedScreenName);
 				
 				if( _genericFailureCallback )
 				{
@@ -723,7 +725,7 @@ package com.ludofactory.mobile.core.remoting
 					if( responderManager.failCallback )
 						responderManager.failCallback( null ); // TODO A checker
 				}
-				return;
+				//return;
 				
 				delete _activeCalls[ responderManager.command ];
 				delete _callsByScreen[ responderManager.associatedScreenName ][ responderManager.command ];

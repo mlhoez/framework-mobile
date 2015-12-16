@@ -7,7 +7,7 @@ Created : 27 sept. 2013
 package com.ludofactory.mobile.navigation.sponsor.info
 {
 	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import AbstractNotification;

@@ -8,7 +8,7 @@ package com.ludofactory.mobile.navigation.sponsor.filleuls
 {
 
 	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.notification.NotificationPopupManager;

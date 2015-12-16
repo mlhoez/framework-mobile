@@ -11,7 +11,7 @@ package com.ludofactory.mobile.core
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.ButtonFactory;
 	import com.ludofactory.mobile.MobileButton;
 	import com.ludofactory.mobile.core.config.GlobalConfig;

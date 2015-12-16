@@ -17,7 +17,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Shaker;
 	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;

@@ -8,7 +8,7 @@ package com.ludofactory.mobile.navigation.ads
 {
 	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.manager.TimerManager;
 	import com.milkmangames.nativeextensions.AdMob;

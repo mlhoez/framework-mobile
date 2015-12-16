@@ -8,7 +8,7 @@ Created : 7 mai 2014
 package com.ludofactory.common.gettext
 {
 	import com.gamua.flox.Flox;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;

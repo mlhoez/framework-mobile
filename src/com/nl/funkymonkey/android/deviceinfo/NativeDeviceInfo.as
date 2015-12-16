@@ -7,7 +7,7 @@ Created : 9 avril 2014
 package com.nl.funkymonkey.android.deviceinfo
 {
 	import com.gamua.flox.Flox;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import flash.filesystem.File;

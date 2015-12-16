@@ -7,7 +7,7 @@ Created : 25 juil. 2013
 package com.ludofactory.mobile.application.ads
 {
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.scaleToDpi;
 	
 	import flash.geom.Point;
