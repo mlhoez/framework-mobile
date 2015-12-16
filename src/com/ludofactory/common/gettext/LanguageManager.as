@@ -9,7 +9,7 @@ package com.ludofactory.common.gettext
 {
 	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.dispatcher;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -339,6 +339,9 @@ package com.ludofactory.common.gettext
 			function onIoError(event:IOErrorEvent):void
 			{
 				log("[LanguageManager] Cannot download " + event.text);
+				
+				urlLoader.removeEventListener(IOErrorEvent.IO_ERROR, onIoError);
+				urlLoader.removeEventListener(Event.COMPLETE, onUrlLoaderComplete);
 				
 				urlLoader.close();
 				urlLoader = null;
