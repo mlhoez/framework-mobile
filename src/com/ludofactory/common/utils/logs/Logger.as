@@ -148,7 +148,7 @@ package com.ludofactory.common.utils.logs
                     }
                 }
 	            
-	            if (Utilities.countObject(property) <= 1)
+	            if (propertyType != "Object" && Utilities.countObject(property) <= 1)
 	            {
 		            output += property;
 	            }
@@ -175,11 +175,8 @@ package com.ludofactory.common.utils.logs
 				            continue;
 			            }
 			            
-			            if(key == "anonymousGameSessions")
-			                trace("sdfs");
-			            
 			            var childOutput:String = "";
-			            if(Utilities.countObject(child) <= 1)
+			            if(childType != "Object" && Utilities.countObject(child) <= 1)
 			            {
 				            output += tabs + "[" + key + "]" + " => " + (childType == "String" ? '"' + child + '"' : ((childType == "Array" || childType == "Vector") ? (childType + " (empty)") : child) );
 			            }
