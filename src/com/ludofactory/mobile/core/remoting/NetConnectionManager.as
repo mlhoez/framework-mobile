@@ -12,6 +12,7 @@ package com.ludofactory.mobile.core.remoting
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.gamua.flox.Flox;
 	import com.ludofactory.common.encryption.Encryption;
+	import com.ludofactory.common.utils.logs.logError;
 	import com.ludofactory.common.utils.logs.logRemote;
 	import com.ludofactory.mobile.core.HeartBeat;
 	import com.ludofactory.mobile.core.manager.MemberManager;
@@ -486,7 +487,7 @@ package com.ludofactory.mobile.core.remoting
 		 */		
 		private function onErrorCall(error:Object, responderManager:NetResponder):void
 		{
-			logRemote("[NetConnectionManager] Error calling " + responderManager.command + " : " + error.faultString);
+			logError("[NetConnectionManager] Error calling " + responderManager.command + " : " + error.faultString);
 			
 			// the call have been deleted, then we have nothing to do
 			if( !(responderManager.command in _activeCalls) )
