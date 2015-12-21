@@ -9,6 +9,7 @@ package com.ludofactory.mobile.core.storage
 	
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.utils.logs.log;
+	import com.ludofactory.common.utils.logs.logWarning;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -209,7 +210,7 @@ package com.ludofactory.mobile.core.storage
 		 */		
 		private function onLoadConfigFailure(error:Object = null):void
 		{
-			log("[Storage] WARNING : The global configuration could not be loaded from the server.");
+			logWarning("[Storage] WARNING : The global configuration could not be loaded from the server.");
 		}
 		
 //------------------------------------------------------------------------------------------------------------
