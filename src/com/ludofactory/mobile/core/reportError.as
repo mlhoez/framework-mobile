@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core
 {
 	
 	import com.ludofactory.common.utils.logs.Logger;
-	import com.ludofactory.common.utils.logs.log;
+	import com.ludofactory.common.utils.logs.logError;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -22,7 +22,7 @@ package com.ludofactory.mobile.core
 	 */
 	public function reportError(...args):void
 	{
-		log("\n ------------------------------------------------------------------------------");
+		logError("\n ------------------------------------------------------------------------------");
 		
 		//if(!AbstractServer.timerBeforeRecallErrorLogFunction)
 		//	AbstractServer.timerBeforeRecallErrorLogFunction = new Timer(AbstractServer.timeBeforeRecallErrorLogFunction,1);
@@ -60,31 +60,31 @@ package com.ludofactory.mobile.core
 				if(arg is String)
 				{
 					objCall.message = arg;
-					log(arg,"reportError (String) in "+ objCall.game);
+					logError(arg,"reportError (String) in "+ objCall.game);
 				}
 				else if(arg is Error)
 				{
 					objCall.stackTrace = (arg as Error).getStackTrace();
-					log((arg as Error).getStackTrace(),"reportError (Error) in " + objCall.game);
+					logError((arg as Error).getStackTrace(),"reportError (Error) in " + objCall.game);
 				}
 				else if(arg is Object)
 				{
-					log(arg,"reportError (Object) in "+ objCall.game);
+					logError(arg,"reportError (Object) in "+ objCall.game);
 				}
 			}
 			else
 			{
 				objCall.reportError = args;
-				log(args,"reportError args.length > 1 ");
+				logError(args,"reportError args.length > 1 ");
 			}
 			
 			Remote.getInstance().reportError(objCall);
 		}
 		catch(err:Error)
 		{
-			log(err,"Bug to reportError");
+			logError(err,"Bug to reportError");
 		}
-		log(" ------------------------------------------------------------------------------\n");
+		logError(" ------------------------------------------------------------------------------\n");
 	}
 	
 }
