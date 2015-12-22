@@ -7,7 +7,7 @@ Created : 23 mai 2014
 package com.ludofactory.mobile.core.avatar
 {
 	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.log;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.HeartBeat;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;

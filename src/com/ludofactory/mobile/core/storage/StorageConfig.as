@@ -149,6 +149,13 @@ package com.ludofactory.mobile.core.storage
 		public static const PROPERTY_VIP:String = "DEFAULT_VIP";
 		public static const DEFAULT_VIP:Object = { fr:DefaultVip.FR, en:DefaultVip.EN };
 		
+	// -----
+		
+		/**
+		 * The VIP (must be by default without gifts). */
+		public static const PROPERTY_AVATARS_NEED_UPDATE:String = "DEFAULT_AVATARS_NEED_UPDATE";
+		public static const DEFAULT_AVATARS_NEED_UPDATE:Boolean = true;
+		
 //------------------------------------------------------------------------------------------------------------
 //	Configuration default values
 		
