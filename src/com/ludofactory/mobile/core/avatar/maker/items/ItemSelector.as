@@ -8,26 +8,31 @@ package com.ludofactory.mobile.core.avatar.maker.items
 {
 	
 	import com.greensock.TweenMax;
-	import com.ludofactory.desktop.core.StarlingRoot;
-	import com.ludofactory.desktop.gettext.aliases._;
-	import com.ludofactory.desktop.tools.roundUp;
-	import com.ludofactory.globbies.events.AvatarMakerEventTypes;
-	import com.ludofactory.ludokado.manager.LKConfigManager;
-	import com.ludofactory.ludokado.manager.LudokadoBoneConfiguration;
-	import com.ludofactory.ludokado.config.LudokadoBones;
-	import com.ludofactory.server.avatar.customization.*;
-	import com.ludofactory.server.avatar.data.AvatarItemData;
-	import com.ludofactory.server.starling.theme.Theme;
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.roundUp;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.maker.CustomCheckBox;
+	import com.ludofactory.mobile.core.avatar.maker.data.AvatarItemData;
+	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
+	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
+	import com.ludofactory.mobile.core.avatar.test.manager.LudokadoBoneConfiguration;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.List;
 	import feathers.controls.Scroller;
 	import feathers.core.FeathersControl;
 	import feathers.data.ListCollection;
 	import feathers.display.Scale9Image;
+	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
 	import feathers.textures.Scale9Textures;
 	
 	import flash.geom.Rectangle;
+	import flash.utils.unescapeMultiByte;
 	
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -40,6 +45,10 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	public class ItemSelector extends FeathersControl
 	{
 		
+	// ---------- Textures
+		
+		//private static const 
+		
 	// ---------- Constants
 		
 		/**
@@ -47,7 +56,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		public static const INVALIDATION_FLAG_ITEMS:String = "items";
 		/**
 		 * Maximum list height (8 items * 54 height). */
-		private static const MAXIMUM_LIST_HEIGHT:int = 475;
+		private static var MAXIMUM_LIST_HEIGHT:int = 475;
 		/**
 		 * Whether the filters are applied or reset on category change. */
 		public static const KEEP_FILTERS_ON_CATEGORY_CHANGE:Boolean = true;
@@ -67,13 +76,6 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		/**
 		 * The panel background. */
 		private var _background:Scale9Image;
-		/**
-		 * The panel title. */
-		protected var _titleLabel:TextField;
-		/**
-		 * Stripe under the title. */
-		private var _stripe:Quad;
-		
 		
 		/**
 		 * The items list. */
@@ -97,32 +99,22 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		public function ItemSelector()
 		{
 			super();
+			
+			MAXIMUM_LIST_HEIGHT = scaleAndRoundToDpi(MAXIMUM_LIST_HEIGHT);
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-			_background = new Scale9Image(new Scale9Textures(Theme.panelBackground, new Rectangle(10, 10, 12, 12)));
+			_background = new Scale9Image(new Scale9Textures(AvatarAssets.panelBackground, new Rectangle(10, 10, 12, 12)));
 			_background.touchable = false;
 			addChild(_background);
-			
-			_titleLabel = new TextField(50, 30, "", Theme.FONT_OSWALD, 16, 0xffffff, true);
-			_titleLabel.touchable = false;
-			_titleLabel.autoScale = true;
-			//_titleLabel.border = true;
-			_titleLabel.hAlign = HAlign.LEFT;
-			addChild(_titleLabel);
-			
-			_stripe = new Quad(5, 1, 0xffffff);
-			_stripe.alpha = 0.75;
-			_stripe.touchable = false;
-			addChild(_stripe);
 
-			const layout:VerticalLayout = new VerticalLayout();
+			const layout:HorizontalLayout = new HorizontalLayout();
 			layout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_TOP;
 			layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_JUSTIFY;
-			layout.gap = 5;
+			layout.gap = scaleAndRoundToDpi(5);
 			layout.hasVariableItemDimensions = true;
 			
 			_itemsList = new List();
@@ -133,16 +125,18 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			_itemsList.verticalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 			_itemsList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_itemsList.addEventListener(Event.SCROLL, onScroll);
-			_itemsList.addEventListener(AvatarMakerEventTypes.ITEM_SELECTED, onItemSelected);
+			_itemsList.addEventListener(LKAvatarMakerEventTypes.ITEM_SELECTED, onItemSelected);
 			
-			_listTopShadow = new Image(StarlingRoot.assets.getTexture("list-shadow"));
+			_listTopShadow = new Image(AbstractEntryPoint.assets.getTexture("list-shadow"));
 			_listTopShadow.touchable = false;
+			_listTopShadow.scaleX = _listTopShadow.scaleY = GlobalConfig.dpiScale;
 			addChild(_listTopShadow);
 
-			_listBottomShadow = new Image(StarlingRoot.assets.getTexture("list-shadow"));
+			_listBottomShadow = new Image(AbstractEntryPoint.assets.getTexture("list-shadow"));
 			_listBottomShadow.touchable = false;
 			_listBottomShadow.alignPivot(HAlign.RIGHT, VAlign.BOTTOM);
 			_listBottomShadow.rotation = deg2rad(180);
+			_listBottomShadow.scaleX = _listBottomShadow.scaleY = GlobalConfig.dpiScale;
 			addChild(_listBottomShadow);
 			
 			_checkBox = new CustomCheckBox();
@@ -159,26 +153,18 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				_background.width = actualWidth;
 				_background.height = actualHeight;
 				
-				_titleLabel.y = 5;
-				_titleLabel.x = 8;
-				_titleLabel.width = actualWidth - _titleLabel.x;
-				
-				_itemsList.x = 10;
-				_itemsList.y = _titleLabel.y + _titleLabel.height + 5;
+				_itemsList.x = scaleAndRoundToDpi(10);
+				_itemsList.y = scaleAndRoundToDpi(5);
 				_itemsList.width = roundUp(this.actualWidth - (_itemsList.x * 2));
 				_itemsList.height = MAXIMUM_LIST_HEIGHT;
 				
-				_stripe.x = _titleLabel.x + 2;
-				_stripe.y = _titleLabel.y + _titleLabel.height - 4;
-				_stripe.width = _itemsList.width;
+				_checkBox.x = -scaleAndRoundToDpi(50);
+				_checkBox.y = _itemsList.y + _itemsList.height + scaleAndRoundToDpi(5);
 				
-				_checkBox.x = -50;
-				_checkBox.y = _itemsList.y + _itemsList.height + 5;
-				
-				_listTopShadow.x = 10;
+				_listTopShadow.x = scaleAndRoundToDpi(10);
 				_listTopShadow.y = _itemsList.y;
 				
-				_listBottomShadow.x = 10;
+				_listBottomShadow.x = scaleAndRoundToDpi(10);
 				_listBottomShadow.y = _itemsList.y + _itemsList.height - _listBottomShadow.height;
 				
 				this.invalidate(INVALIDATION_FLAG_ITEMS);
@@ -187,7 +173,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			if( isInvalid(INVALIDATION_FLAG_ITEMS) )
 			{
 				_itemsList.validate();
-				_listTopShadow.width = _listBottomShadow.width = _itemsList.width + (_itemsList.viewPort.height <= MAXIMUM_LIST_HEIGHT ? 0 : -14);
+				_listTopShadow.width = _listBottomShadow.width = _itemsList.width + (_itemsList.viewPort.height <= MAXIMUM_LIST_HEIGHT ? 0 : scaleAndRoundToDpi(-14));
 
 				if( _itemsList.dataProvider )
 				{
@@ -234,7 +220,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			}
 			
 			this.invalidate(INVALIDATION_FLAG_ITEMS);
-			dispatchEventWith(AvatarMakerEventTypes.ITEM_SELECTED, false, event.data);
+			dispatchEventWith(LKAvatarMakerEventTypes.ITEM_SELECTED, false, event.data);
 		}
 		
 		/**
@@ -313,7 +299,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		 */
 		public function updateItems(items:Vector.<AvatarItemData>, armatureSectionGroup:String):void
 		{
-			switch (armatureSectionGroup)
+			/*switch (armatureSectionGroup)
 			{
 				case LudokadoBones.HAT:          { _titleLabel.text = _("Chapeau");             break; }
 				case LudokadoBones.HAIR:         { _titleLabel.text = _("Cheveux");             break; }
@@ -332,7 +318,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				case LudokadoBones.EYES_COLOR:   { _titleLabel.text = _("Couleur des yeux");    break; }
 				case LudokadoBones.SKIN_COLOR:   { _titleLabel.text = _("Couleur de peau");     break; }
 				case LudokadoBones.LIPS_COLOR:   { _titleLabel.text = _("Couleur des lèvres");  break; }
-			}
+			}*/
 			
 			if( !KEEP_FILTERS_ON_CATEGORY_CHANGE )
 				_checkBox.isSelected = false;
@@ -394,9 +380,6 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			_background.removeFromParent(true);
 			_background = null;
 			
-			_titleLabel.removeFromParent(true);
-			_titleLabel = null;
-			
 			TweenMax.killTweensOf(_listTopShadow);
 			_listTopShadow.removeFromParent(true);
 			_listTopShadow = null;
@@ -406,7 +389,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			_listBottomShadow = null;
 			
 			_itemsList.removeEventListener(Event.SCROLL, onScroll);
-			_itemsList.removeEventListener(AvatarMakerEventTypes.ITEM_SELECTED, onItemSelected);
+			_itemsList.removeEventListener(LKAvatarMakerEventTypes.ITEM_SELECTED, onItemSelected);
 			_itemsList.removeFromParent(true);
 			_itemsList = null;
 			
