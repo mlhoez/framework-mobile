@@ -86,8 +86,15 @@ package com.ludofactory.mobile.core.theme
 		[Embed(source="./fonts/SansitaOne.ttf", fontFamily="Sansita", fontWeight="normal", fontStyle="normal", mimeType="application/x-font-truetype", embedAsCFF="false")]
 		protected static const SANSITAONE:Class;
 		
+		[Embed(source="./fonts/Oswald-Regular.ttf", fontFamily="Oswald", fontWeight="normal", fontStyle="normal", mimeType="application/x-font-truetype", embedAsCFF="false")]
+		protected static const OSWALD_REGULAR:Class;
+		
+		[Embed(source="./fonts/Oswald-Bold.ttf", fontFamily="Oswald", fontWeight="bold", fontStyle="normal", mimeType="application/x-font-truetype", embedAsCFF="false")]
+		protected static const OSWALD_BOLD:Class;
+		
 		public static const FONT_ARIAL:String = "Arial";
 		public static const FONT_SANSITA:String = "Sansita";
+		public static const FONT_OSWALD:String = "Oswald";
 		
 //------------------------------------------------------------------------------------------------------------
 //	Scale factor
