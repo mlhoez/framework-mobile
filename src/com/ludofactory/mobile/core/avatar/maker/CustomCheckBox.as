@@ -3,20 +3,17 @@
  */
 package com.ludofactory.mobile.core.avatar.maker
 {
-
+	
 	import com.greensock.TweenMax;
-	import com.greensock.easing.Elastic;
-	import com.ludofactory.desktop.core.StarlingRoot;
-	import com.ludofactory.desktop.gettext.aliases._;
-	import com.ludofactory.desktop.tools.roundUp;
-	import com.ludofactory.globbies.events.AvatarMakerEventTypes;
-	import com.ludofactory.server.data.ServerData;
-	import com.ludofactory.server.starling.theme.Theme;
-
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.roundUp;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.theme.Theme;
+	
 	import flash.geom.Rectangle;
 	import flash.ui.Mouse;
 	import flash.ui.MouseCursor;
-
+	
 	import starling.display.ButtonState;
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -26,9 +23,8 @@ package com.ludofactory.mobile.core.avatar.maker
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
-	import starling.text.TextFieldAutoSize;
 	import starling.utils.HAlign;
-
+	
 	public class CustomCheckBox extends Sprite
 	{
 		private static const MAX_DRAG_DIST:Number = 50;
@@ -69,7 +65,7 @@ package com.ludofactory.mobile.core.avatar.maker
 			_background.y = roundUp((_onlyMyItemsLabel.height - _background.height) * 0.5);
 			addChild(_background);
 			
-			_checkIcon = new Image(StarlingRoot.assets.getTexture("checkbox-arrow"));
+			_checkIcon = new Image(AbstractEntryPoint.assets.getTexture("checkbox-arrow"));
 			_checkIcon.visible = false;
 			_checkIcon.alpha = 0;
 			_checkIcon.alignPivot();

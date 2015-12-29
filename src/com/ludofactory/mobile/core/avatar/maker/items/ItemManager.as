@@ -7,13 +7,13 @@
 package com.ludofactory.mobile.core.avatar.maker.items
 {
 	
-	import com.ludofactory.ludokado.config.AvatarGenderType;
-	import com.ludofactory.ludokado.config.LudokadoBones;
-	import com.ludofactory.ludokado.manager.LKConfigManager;
-	import com.ludofactory.ludokado.manager.LudokadoBoneConfiguration;
-	import com.ludofactory.server.avatar.customization.sections.SectionData;
-	import com.ludofactory.server.avatar.data.AvatarFrameData;
-	import com.ludofactory.server.avatar.data.AvatarItemData;
+	import com.ludofactory.mobile.core.avatar.maker.data.AvatarFrameData;
+	import com.ludofactory.mobile.core.avatar.maker.data.AvatarItemData;
+	import com.ludofactory.mobile.core.avatar.maker.sections.SectionData;
+	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
+	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
+	import com.ludofactory.mobile.core.avatar.test.manager.LudokadoBoneConfiguration;
 	
 	/**
 	 * Item Manager

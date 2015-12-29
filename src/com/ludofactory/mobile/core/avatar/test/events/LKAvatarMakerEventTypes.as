@@ -39,5 +39,9 @@ package com.ludofactory.mobile.core.avatar.test.events
 		 * Error event dispatched when one of the assets could not be downloaded. */
 		public static const ASSET_NOT_LOADED:String = "asset-not-loaded";
 		
+		public static const ITEM_SELECTED:String = "item-selected";
+		public static const BEHAVIOR_SELECTED:String = "behavior-selected";
+		
+		
 	}
 }
