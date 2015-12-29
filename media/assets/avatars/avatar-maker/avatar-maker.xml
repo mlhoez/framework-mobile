@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:2625314e1c2fe745a02b628301958648:0bd1ad881ba791fef80e22d89c6bb8f2:6fb769b0add6c096764b965b84f25f60$ -->
+<TextureAtlas imagePath="avatar-maker.png" width="512" height="256">
+    <SubTexture name="avatar-name-background" x="118" y="3" width="352" height="64"/>
+    <SubTexture name="basket-icon-background" x="20" y="240" width="20" height="10" frameX="0" frameY="0" frameWidth="21" frameHeight="27"/>
+    <SubTexture name="basket-icon-foreground" x="37" y="206" width="21" height="27"/>
+    <SubTexture name="behaviors-background" x="308" y="73" width="167" height="74"/>
+    <SubTexture name="checkbox-arrow" x="3" y="240" width="13" height="13"/>
+    <SubTexture name="collapse-icon" x="474" y="39" width="30" height="30"/>
+    <SubTexture name="expand-icon" x="3" y="206" width="30" height="30"/>
+    <SubTexture name="item-renderer-background" x="3" y="118" width="167" height="84"/>
+    <SubTexture name="item-renderer-icon-background-bought-not-equipped" x="174" y="151" width="74" height="74"/>
+    <SubTexture name="item-renderer-icon-background-buyable" x="184" y="71" width="74" height="73" frameX="0" frameY="-1" frameWidth="74" frameHeight="74"/>
+    <SubTexture name="item-renderer-icon-background-equipped" x="252" y="151" width="74" height="73" frameX="0" frameY="-1" frameWidth="74" frameHeight="74"/>
+    <SubTexture name="list-shadow" x="88" y="234" width="216" height="9"/>
+    <SubTexture name="new-item-icon" x="62" y="206" width="28" height="24"/>
+    <SubTexture name="new-item-small-icon" x="64" y="234" width="20" height="17"/>
+    <SubTexture name="new-items-button" x="118" y="73" width="62" height="38"/>
+    <SubTexture name="panel-background" x="474" y="3" width="32" height="32"/>
+    <SubTexture name="points-list-icon" x="44" y="237" width="16" height="16"/>
+    <SubTexture name="remove-icon" x="3" y="3" width="111" height="111" frameX="-14" frameY="-15" frameWidth="140" frameHeight="140"/>
+</TextureAtlas>
