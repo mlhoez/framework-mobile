@@ -30,6 +30,12 @@ package com.ludofactory.mobile.core.avatar
 		public static var newItemIconTexture:Texture;
 		public static var newItemSmallIconTexture:Texture;
 		
+		public static var checkBoxArrow:Texture;
+		
+		public static var cartIconBackground:Texture;
+		public static var cartPointsIcon:Texture;
+		public static var cartIconForeground:Texture;
+		
 		public function AvatarAssets()
 		{
 			
@@ -53,11 +59,17 @@ package com.ludofactory.mobile.core.avatar
 			
 			newItemIconTexture = AbstractEntryPoint.assets.getTexture("new-item-icon");
 			newItemSmallIconTexture = AbstractEntryPoint.assets.getTexture("new-item-small-icon");
+			
+			checkBoxArrow = AbstractEntryPoint.assets.getTexture("checkbox-arrow");
+			
+			cartIconBackground = AbstractEntryPoint.assets.getTexture("basket-icon-background");
+			cartPointsIcon = AbstractEntryPoint.assets.getTexture("points-list-icon");
+			cartIconForeground = AbstractEntryPoint.assets.getTexture("basket-icon-foreground");
 		}
 		
 		public static function dispose():void
 		{
-			
+			// TODO
 		}
 		
 	}

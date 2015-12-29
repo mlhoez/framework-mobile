@@ -3,13 +3,13 @@
  */
 package com.ludofactory.mobile.core.avatar.maker
 {
-
+	
 	import com.greensock.TweenMax;
-	import com.ludofactory.server.starling.theme.Theme;
-
+	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	
 	import starling.display.Image;
 	import starling.display.Sprite;
-
+	
 	public class CoinsAndBasket extends Sprite
 	{
 		private static const BASKET_TARGET_X:int = 30;
@@ -28,14 +28,14 @@ package com.ludofactory.mobile.core.avatar.maker
 		{
 			super();
 
-			_basketBackgroundIcon = new Image(Theme.basketBackgroundIconTexture);
+			_basketBackgroundIcon = new Image(AvatarAssets.cartIconBackground);
 			_basketBackgroundIcon.visible = false;
 			addChild(_basketBackgroundIcon);
 
-			_cookieIcon = new Image(Theme.pointsSmallIconTexture);
+			_cookieIcon = new Image(AvatarAssets.cartPointsIcon);
 			addChild(_cookieIcon);
 
-			_basketForegroundIcon = new Image(Theme.basketForegroundIconTexture);
+			_basketForegroundIcon = new Image(AvatarAssets.cartIconForeground);
 			_basketForegroundIcon.visible = false;
 			addChild(_basketForegroundIcon);
 			

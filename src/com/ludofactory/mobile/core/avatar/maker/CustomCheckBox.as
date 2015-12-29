@@ -7,7 +7,7 @@ package com.ludofactory.mobile.core.avatar.maker
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.roundUp;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.avatar.AvatarAssets;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import flash.geom.Rectangle;
@@ -65,7 +65,7 @@ package com.ludofactory.mobile.core.avatar.maker
 			_background.y = roundUp((_onlyMyItemsLabel.height - _background.height) * 0.5);
 			addChild(_background);
 			
-			_checkIcon = new Image(AbstractEntryPoint.assets.getTexture("checkbox-arrow"));
+			_checkIcon = new Image(AvatarAssets.checkBoxArrow);
 			_checkIcon.visible = false;
 			_checkIcon.alpha = 0;
 			_checkIcon.alignPivot();
