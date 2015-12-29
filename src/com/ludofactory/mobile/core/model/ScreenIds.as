@@ -161,10 +161,14 @@ package com.ludofactory.mobile.core.model
 		public static const UPDATE_SCREEN:String = "Mise à jour nécessaire";
 		
 //------------------------------------------------------------------------------------------------------------
-//	Avatar screen
+//	Avatars
 		
-		/** The debug screen. */		
-		public static const AVATAR_SCREEN:String = "Avatar";
+		/** Avatars home screen. */		
+		public static const AVATAR_HOME_SCREEN:String = "Accueil avatars";
+		/** Avatar maker screen */
+		public static const AVATAR_MAKER_SCREEN:String = "Avatar maker";
+		/** Avatar gender choice screen */
+		public static const AVATAR_GENDER_CHOICE_SCREEN:String = "Avatar - choix du genre";
 		
 //------------------------------------------------------------------------------------------------------------
 //	Debug screen
@@ -175,7 +179,6 @@ package com.ludofactory.mobile.core.model
 		// not used as a screen, just a reference in the menu
 		public static const LOG_IN_OUT:String = "log_in_out";
 		public static const SHOW_MENU:String = "show-menu";
-		
 		
 	}
 }
