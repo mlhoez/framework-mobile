@@ -36,6 +36,19 @@ package com.ludofactory.mobile.core.avatar
 		public static var cartPointsIcon:Texture;
 		public static var cartIconForeground:Texture;
 		
+		public static var vip_locked_icon_rank_12:Texture;
+		public static var vip_locked_icon_rank_11:Texture;
+		public static var vip_locked_icon_rank_10:Texture;
+		public static var vip_locked_icon_rank_9:Texture;
+		public static var vip_locked_icon_rank_8:Texture;
+		public static var vip_locked_icon_rank_7:Texture;
+		public static var vip_locked_icon_rank_6:Texture;
+		public static var vip_locked_icon_rank_5:Texture;
+		public static var vip_locked_icon_rank_4:Texture;
+		public static var vip_locked_icon_rank_3:Texture;
+		public static var vip_locked_icon_rank_2:Texture;
+		public static var vip_locked_icon_rank_1:Texture;
+		
 		public function AvatarAssets()
 		{
 			
@@ -65,6 +78,19 @@ package com.ludofactory.mobile.core.avatar
 			cartIconBackground = AbstractEntryPoint.assets.getTexture("basket-icon-background");
 			cartPointsIcon = AbstractEntryPoint.assets.getTexture("points-list-icon");
 			cartIconForeground = AbstractEntryPoint.assets.getTexture("basket-icon-foreground");
+			
+			vip_locked_icon_rank_1 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-1");
+			vip_locked_icon_rank_2 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-2");
+			vip_locked_icon_rank_3 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-3");
+			vip_locked_icon_rank_4 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-4");
+			vip_locked_icon_rank_5 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-5");
+			vip_locked_icon_rank_6 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-6");
+			vip_locked_icon_rank_7 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-7");
+			vip_locked_icon_rank_8 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-8");
+			vip_locked_icon_rank_9 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-9");
+			vip_locked_icon_rank_10 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-10");
+			vip_locked_icon_rank_11 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-11");
+			vip_locked_icon_rank_12 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-12");
 		}
 		
 		public static function dispose():void
