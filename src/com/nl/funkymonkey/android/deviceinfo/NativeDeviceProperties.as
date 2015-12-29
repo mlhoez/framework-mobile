@@ -40,20 +40,20 @@ package com.nl.funkymonkey.android.deviceinfo
 		public static var LCD_DENSITY : NativeDevicePropertiesData 		= new NativeDevicePropertiesData("ro.sf.lcd_density", "LCD_DENSITY");
 		public static var DALVIK_HEAPSIZE : NativeDevicePropertiesData 		= new NativeDevicePropertiesData("dalvik.vm.heapsize", "DALVIK_HEAPSIZE");
 		
-		public static var DEVICE_PROPERTIES:Array = new Array( OS_NAME,
-															   OS_VERSION,
-															   OS_BUILD,
-															   OS_SDK_VERSION,
-															   OS_SDK_DESCRIPTION,
-															   PRODUCT_MODEL,
-															   PRODUCT_BRAND,
-															   PRODUCT_NAME,
-															   PRODUCT_VERSION,
-															   PRODUCT_BOARD,
-															   PRODUCT_CPU,
-															   PRODUCT_MANUFACTURER,
-															   OPENGLES_VERSION,
-															   LCD_DENSITY,
-															   DALVIK_HEAPSIZE );
+		public static var DEVICE_PROPERTIES:Array =  [ OS_NAME,
+													   OS_VERSION,
+													   OS_BUILD,
+													   OS_SDK_VERSION,
+													   OS_SDK_DESCRIPTION,
+													   PRODUCT_MODEL,
+													   PRODUCT_BRAND,
+													   PRODUCT_NAME,
+													   PRODUCT_VERSION,
+													   PRODUCT_BOARD,
+													   PRODUCT_CPU,
+													   PRODUCT_MANUFACTURER,
+													   OPENGLES_VERSION,
+													   LCD_DENSITY,
+													   DALVIK_HEAPSIZE ];
 	}
 }
