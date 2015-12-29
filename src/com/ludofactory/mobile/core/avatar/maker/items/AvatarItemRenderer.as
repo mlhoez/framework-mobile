@@ -7,9 +7,20 @@ Created : 15 Décembre 2014
 package com.ludofactory.mobile.core.avatar.maker.items
 {
 	
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.avatar.AvatarAssets;
 	import com.ludofactory.mobile.core.avatar.maker.CoinsAndBasket;
 	import com.ludofactory.mobile.core.avatar.maker.CustomDefaultListItemRenderer;
 	import com.ludofactory.mobile.core.avatar.maker.data.AvatarFrameData;
+	import com.ludofactory.mobile.core.avatar.maker.data.AvatarItemData;
+	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
+	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
+	import com.ludofactory.mobile.core.avatar.test.manager.LudokadoBoneConfiguration;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.List;
@@ -76,7 +87,8 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		
 		/**
 		 * Maximum height of an item in the list. */		
-		public static const MAX_ITEM_HEIGHT:int = 87;
+		//public static const MAX_ITEM_HEIGHT:int = 87;
+		public static const MAX_ITEM_WIDTH:int = 87;
 
 	// ---------- Common properties
 
@@ -121,7 +133,8 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		{
 			super();
 			
-			this.height = MAX_ITEM_HEIGHT;
+			//this.height = MAX_ITEM_HEIGHT;
+			this.width = scaleAndRoundToDpi(MAX_ITEM_WIDTH);
 			useHandCursor = true;
 		}
 		
@@ -129,10 +142,10 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		{
 			super.initialize();
 			
-			_background = new Image(Theme.itemListBackgroundTexture);
+			_background = new Image(AvatarAssets.itemListBackgroundTexture);
 			addChild(_background);
 			
-			_iconBackground = new Image(Theme.iconBuyableBackgroundTexture);
+			_iconBackground = new Image(AvatarAssets.iconBuyableBackgroundTexture);
 			_iconBackground.touchable = false;
 			_iconBackground.alignPivot();
 			addChild(_iconBackground);
@@ -164,21 +177,21 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			_behaviorsList.paddingBottom = 4;
 			addChild(_behaviorsList);
 			
-			_behaviorListBackground = new Scale3Image(Theme.behaviorListBackground);
+			_behaviorListBackground = new Scale3Image(AvatarAssets.behaviorListBackground);
 			_behaviorsList.backgroundSkin = _behaviorListBackground;
 			
-			_expandOrCollapseIcon = new Image(Theme.expandTexture);
+			_expandOrCollapseIcon = new Image(AvatarAssets.expandTexture);
 			_expandOrCollapseIcon.visible = false;
 			_expandOrCollapseIcon.touchable = false;
 			_expandOrCollapseIcon.alignPivot();
 			addChild(_expandOrCollapseIcon);
 			
-			_isNewIcon = new Image(Theme.newItemIconTexture);
+			_isNewIcon = new Image(AvatarAssets.newItemIconTexture);
 			_isNewIcon.touchable = false;
 			_isNewIcon.visible = false;
 			addChild(_isNewIcon);
 			
-			_vipIconBackground = new Image(Theme.vip_locked_icon_rank_12);
+			_vipIconBackground = new Image(AbstractEntryPoint.assets.getTexture("Rank-12"));
 			_vipIconBackground.touchable = false;
 			_vipIconBackground.visible = false;
 			addChild(_vipIconBackground);
@@ -213,7 +226,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			{
 				if(!_data) return;
 				
-				_background.width = actualWidth;
+				_background.width = MAX_ITEM_WIDTH;
 				
 				_iconBackground.x = (_iconBackground.width * 0.5) + 5;
 				_iconBackground.y = (_iconBackground.height * 0.5) + 5;
@@ -227,14 +240,14 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				
 				_itemNameLabel.x = _iconBackground.x + (_iconBackground.width * 0.5) + 5;
 				_itemNameLabel.y = 5;
-				_itemNameLabel.width = actualWidth - _itemNameLabel.x - 8;
+				_itemNameLabel.width = MAX_ITEM_WIDTH - _itemNameLabel.x - 8;
 				
 				_itemPriceLabel.x = _iconBackground.x + (_iconBackground.width * 0.5) + 5;
-				_itemPriceLabel.y = MAX_ITEM_HEIGHT - _itemPriceLabel.height - 7;
-				_itemPriceLabel.width = actualWidth - _itemPriceLabel.x - (_basket.visible ? 30 : 8);
+				_itemPriceLabel.y = actualHeight - _itemPriceLabel.height - 7;
+				_itemPriceLabel.width = MAX_ITEM_WIDTH - _itemPriceLabel.x - (_basket.visible ? 30 : 8);
 				
-				_basket.x = (actualWidth - 30); // 30 = largeur du basket icon
-				_basket.y = MAX_ITEM_HEIGHT - _basket.height - 7;
+				_basket.x = (MAX_ITEM_WIDTH - 30); // 30 = largeur du basket icon
+				_basket.y = actualHeight - _basket.height - 7;
 				
 				// icons
 				
@@ -251,15 +264,15 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				
 				if( _data && _data.isExpanded && _data.behaviors.length > 0 )
 				{
-					_behaviorsList.y = MAX_ITEM_HEIGHT + 6;
-					_behaviorsList.width = actualWidth;
+					_behaviorsList.y = actualHeight + 6;
+					_behaviorsList.width = MAX_ITEM_WIDTH;
 					_behaviorsList.validate();
 					
-					setSize(this.width, (MAX_ITEM_HEIGHT + 6 + _behaviorsList.height));
+					setSize(this.width, (actualHeight + 6 + _behaviorsList.height));
 				}
 				else
 				{
-					setSize(this.width, MAX_ITEM_HEIGHT);
+					setSize(this.width, actualHeight);
 				}
 			}
 		}
@@ -276,7 +289,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				
 				// item price
 				_itemPriceLabel.visible = !_data.isEmptyable;
-				_itemPriceLabel.text = _data.hasBehaviors ? (_("+ de déclinaisons")) : (_data.isLocked ? _("Rang insuffisant") : (_data.isSelected ? (_data.isOwned ? _("Equipé") : (_data.price == 0 ? _("GRATUIT") : splitThousands(_data.price))) : (_data.isOwned ? _("Acquis") : (_data.price == 0 ? _("GRATUIT") : splitThousands(_data.price)))));
+				_itemPriceLabel.text = _data.hasBehaviors ? (_("+ de déclinaisons")) : (_data.isLocked ? _("Rang insuffisant") : (_data.isSelected ? (_data.isOwned ? _("Equipé") : (_data.price == 0 ? _("GRATUIT") : Utilities.splitThousands(_data.price))) : (_data.isOwned ? _("Acquis") : (_data.price == 0 ? _("GRATUIT") : Utilities.splitThousands(_data.price)))));
 				_itemPriceLabel.color = _data.isLocked ? LOCKED_ITEM_COLOR : PRICE_ITEM_COLOR;
 				
 				_vipIconBackground.texture = _data.isLocked ? Theme["vip_locked_icon_rank_" + _data.rank] : _vipIconBackground.texture;
@@ -287,13 +300,13 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				
 				// check icon visibility
 				_expandOrCollapseIcon.visible = _data.hasBehaviors;
-				_expandOrCollapseIcon.texture = _data.isExpanded ? Theme.collapseTexture : Theme.expandTexture;
+				_expandOrCollapseIcon.texture = _data.isExpanded ? AvatarAssets.collapseTexture : AvatarAssets.expandTexture;
 				
 				if(_data.hasBehaviors) // there are behaviors to display
 				{
 					_basket.visible = false;
 					
-					_behaviorsList.addEventListener(AvatarMakerEventTypes.BEHAVIOR_SELECTED, onBehaviorSelected);
+					_behaviorsList.addEventListener(LKAvatarMakerEventTypes.BEHAVIOR_SELECTED, onBehaviorSelected);
 					_behaviorsList.visible = _data.isExpanded;
 					_behaviorsList.dataProvider.removeAll();
 					
@@ -316,7 +329,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 					
 					_data.isSelected = HELPER_SELECTED_FRAME_DATA ? true : false;
 					// change the icon background texture
-					_iconBackground.texture = HELPER_SELECTED_FRAME_DATA ? Theme.iconEquippedBackgroundTexture : Theme.iconBuyableBackgroundTexture;
+					_iconBackground.texture = HELPER_SELECTED_FRAME_DATA ? AvatarAssets.iconEquippedBackgroundTexture : AvatarAssets.iconBuyableBackgroundTexture;
 					// update the item name color accordingly
 					_itemNameLabel.color = HELPER_SELECTED_FRAME_DATA ? EQUIPPED_ITEM_COLOR : BUYABLE_ITEM_COLOR;
 					// and the name (with de selected frame name in parethesis)
@@ -337,15 +350,15 @@ package com.ludofactory.mobile.core.avatar.maker.items
 					}
 					
 					// change the icon background texture
-					_iconBackground.texture = _data.isSelected ? Theme.iconEquippedBackgroundTexture : (_data.isOwned ? Theme.iconBoughtNotEquippedBackgroundTexture : Theme.iconBuyableBackgroundTexture);
+					_iconBackground.texture = _data.isSelected ? AvatarAssets.iconEquippedBackgroundTexture : (_data.isOwned ? AvatarAssets.iconBoughtNotEquippedBackgroundTexture : AvatarAssets.iconBuyableBackgroundTexture);
 					// update the item name color accordingly
 					_itemNameLabel.color = _data.isSelected ? EQUIPPED_ITEM_COLOR : (_data.isOwned ? OWNED_ITEM_COLOR : BUYABLE_ITEM_COLOR);
 					// and the name
 					_itemNameLabel.text = _data.name;
 					
-					_itemIcon.source = _data.isEmptyable ? Theme.removeIconTexture : _data.imageUrl;
+					_itemIcon.source = _data.isEmptyable ? AvatarAssets.removeIconTexture : _data.imageUrl;
 					
-					_behaviorsList.removeEventListener(AvatarMakerEventTypes.BEHAVIOR_SELECTED, onBehaviorSelected);
+					_behaviorsList.removeEventListener(LKAvatarMakerEventTypes.BEHAVIOR_SELECTED, onBehaviorSelected);
 					_behaviorsList.visible = false;
 					if( _behaviorsList.dataProvider )
 						_behaviorsList.dataProvider.removeAll();
@@ -371,7 +384,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			}
 			
 			// the configuration will be updated in the handler in the AvatarMakerScreen
-			owner.dispatchEventWith(AvatarMakerEventTypes.ITEM_SELECTED, false, { itemData:_data, behaviorData:selectedFrameData });
+			owner.dispatchEventWith(LKAvatarMakerEventTypes.ITEM_SELECTED, false, { itemData:_data, behaviorData:selectedFrameData });
 		}
 		
 		
@@ -382,7 +395,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	     */
 	    private function expand():void
 	    {
-		    setSize(this.width, (MAX_ITEM_HEIGHT + 6 + _behaviorsList.height));
+		    setSize(this.width, (actualHeight + 6 + _behaviorsList.height));
 	    }
 	
 	    /**
@@ -392,7 +405,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	     */
 	    private function collapse():void
 	    {
-		    setSize(this.width, MAX_ITEM_HEIGHT);
+		    setSize(this.width, actualHeight);
 	    }
 		
 		/**
@@ -498,7 +511,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 						state = ButtonState.UP;
 						_data.isSelected = !_data.isSelected;
 					}
-					owner.dispatchEventWith(AvatarMakerEventTypes.ITEM_SELECTED, false, { itemData:_data, behaviorData:null });
+					owner.dispatchEventWith(LKAvatarMakerEventTypes.ITEM_SELECTED, false, { itemData:_data, behaviorData:null });
 				}
 			}
 		}
@@ -598,7 +611,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			// TODO cleaner la liste des behaviors proprement
 			if(_behaviorsList)
 			{
-				_behaviorsList.removeEventListener(AvatarMakerEventTypes.BEHAVIOR_SELECTED, onBehaviorSelected);
+				_behaviorsList.removeEventListener(LKAvatarMakerEventTypes.BEHAVIOR_SELECTED, onBehaviorSelected);
 			}
 			
 			_data = null;

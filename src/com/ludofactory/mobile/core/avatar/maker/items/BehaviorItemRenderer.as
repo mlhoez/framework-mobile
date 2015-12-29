@@ -7,14 +7,15 @@ Created : 15 Décembre 2014
 package com.ludofactory.mobile.core.avatar.maker.items
 {
 	
-	import com.ludofactory.desktop.core.starlingComponents.TouchableItemRenderer;
-	import com.ludofactory.desktop.gettext.aliases._;
-	import com.ludofactory.desktop.tools.Utilities;
-	import com.ludofactory.desktop.tools.splitThousands;
-	import com.ludofactory.globbies.events.AvatarMakerEventTypes;
-	import com.ludofactory.server.avatar.customization.*;
-	import com.ludofactory.server.avatar.data.AvatarFrameData;
-	import com.ludofactory.server.starling.theme.Theme;
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.maker.CoinsAndBasket;
+	import com.ludofactory.mobile.core.avatar.maker.TouchableItemRenderer;
+	import com.ludofactory.mobile.core.avatar.maker.data.AvatarFrameData;
+	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.events.FeathersEventType;
@@ -58,7 +59,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		private var _itemPriceLabel:TextField;
 		/**
 		 * The basket used to animate the basket and cookie when selected and not owned. */
-		private var _basket:CoinsAndBaskcartet;
+		private var _basket:CoinsAndBasket;
 		/**
 		 * New icon displayed when it's a new item or when one of the behaviors is new. */
 		private var _isNewIcon:Image;
@@ -78,7 +79,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			
 			this.height = MAX_ITEM_HEIGHT;
 			
-			_background = new Image(Theme.itemListBackgroundTexture);
+			_background = new Image(AvatarAssets.itemListBackgroundTexture);
 			_background.alpha = 0;
 			addChild(_background);
 			
@@ -97,7 +98,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			//_itemPriceLabel.border = true;
 			addChild(_itemPriceLabel);
 			
-			_iconBackground = new Image(Theme.iconBuyableBackgroundTexture);
+			_iconBackground = new Image(AvatarAssets.iconBuyableBackgroundTexture);
 			_iconBackground.touchable = false;
 			_iconBackground.alignPivot();
 			_iconBackground.scaleX = _iconBackground.scaleY = Utilities.getScaleToFill(_iconBackground.width, _iconBackground.height, NaN, (MAX_ITEM_HEIGHT - 10));
@@ -118,12 +119,12 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			_basket.scaleX = _basket.scaleY = 0.8;
 			addChild(_basket);
 			
-			_isNewIcon = new Image(Theme.newItemSmallIconTexture);
+			_isNewIcon = new Image(AvatarAssets.newItemSmallIconTexture);
 			_isNewIcon.touchable = false;
 			_isNewIcon.visible = false;
 			addChild(_isNewIcon);
 			
-			_vipIconBackground = new Image(Theme.vip_locked_small_icon_rank_12);
+			_vipIconBackground = new Image(AbstractEntryPoint.assets.getTexture("Rank-12"));
 			_vipIconBackground.touchable = false;
 			_vipIconBackground.visible = false;
 			addChild(_vipIconBackground);
@@ -174,7 +175,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		{
 			if(this._owner && _data)
 			{
-				_iconBackground.texture = _data.isSelected ? Theme.iconEquippedBackgroundTexture : (_data.isOwned ? Theme.iconBoughtNotEquippedBackgroundTexture : Theme.iconBuyableBackgroundTexture);
+				_iconBackground.texture = _data.isSelected ? AvatarAssets.iconEquippedBackgroundTexture : (_data.isOwned ? AvatarAssets.iconBoughtNotEquippedBackgroundTexture : AvatarAssets.iconBuyableBackgroundTexture);
 				
 				// the new icon is displayed when the behavior is a new one
 				_isNewIcon.visible = _data.isNew || _data.isNewVip;
@@ -184,7 +185,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				
 				_itemNameLabel.visible = _itemPriceLabel.visible = true;
 				_itemNameLabel.text = _data.name;
-				_itemPriceLabel.text = _data.isLocked ? _("Rang insuffisant") : (_data.isSelected ? (_data.isOwned ? _("Equipé") : (_data.price == 0 ? _("GRATUIT") : splitThousands(_data.price))) : (_data.isOwned ? _("Acquis") : (_data.price == 0 ? _("GRATUIT") : splitThousands(_data.price))));
+				_itemPriceLabel.text = _data.isLocked ? _("Rang insuffisant") : (_data.isSelected ? (_data.isOwned ? _("Equipé") : (_data.price == 0 ? _("GRATUIT") : Utilities.splitThousands(_data.price))) : (_data.isOwned ? _("Acquis") : (_data.price == 0 ? _("GRATUIT") : Utilities.splitThousands(_data.price))));
 				_itemPriceLabel.color = _data.isLocked ? AvatarItemRenderer.LOCKED_ITEM_COLOR : AvatarItemRenderer.PRICE_ITEM_COLOR;
 				
 				_itemNameLabel.color = _data.isSelected ? AvatarItemRenderer.EQUIPPED_ITEM_COLOR : (_data.isOwned ? AvatarItemRenderer.OWNED_ITEM_COLOR : AvatarItemRenderer.BUYABLE_ITEM_COLOR);
@@ -211,7 +212,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			{
 				state = ButtonState.UP;
 				_data.isSelected = !_data.isSelected;
-				dispatchEventWith(AvatarMakerEventTypes.BEHAVIOR_SELECTED, true, _data);
+				dispatchEventWith(LKAvatarMakerEventTypes.BEHAVIOR_SELECTED, true, _data);
 			}
 		}
 
