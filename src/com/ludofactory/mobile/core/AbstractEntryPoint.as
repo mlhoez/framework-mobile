@@ -14,9 +14,12 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.sound.SoundManager;
-	import com.ludofactory.common.utils.logs.LogDisplayer;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.logs.LogDisplayer;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.avatar.AvatarGenderChoiceScreen;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerHomeScreen;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerScreen;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
@@ -199,7 +202,10 @@ package com.ludofactory.mobile.core
 												{ id:ScreenIds.FACEBOOK_END_SCREEN, clazz:FacebookEndScreen },
 												{ id:ScreenIds.UPDATE_SCREEN, clazz:UpdateScreen },
 												{ id:ScreenIds.VIP_UP_SCREEN, clazz:VipUpScreen },
-												{ id:ScreenIds.CGU_SCREEN, clazz:CGUScreen } ];
+												{ id:ScreenIds.CGU_SCREEN, clazz:CGUScreen },
+												{ id:ScreenIds.AVATAR_HOME_SCREEN, clazz:AvatarMakerHomeScreen },
+												{ id:ScreenIds.AVATAR_MAKER_SCREEN, clazz:AvatarMakerScreen },
+												{ id:ScreenIds.AVATAR_GENDER_CHOICE_SCREEN, clazz:AvatarGenderChoiceScreen } ];
 		
 		/**
 		 * The debug screens concatened to SCREEN when the app is in debug mode. */		
