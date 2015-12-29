@@ -8,19 +8,16 @@ package com.ludofactory.mobile.core.avatar.maker.items
 {
 	
 	import com.greensock.TweenMax;
-	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.avatar.AvatarAssets;
 	import com.ludofactory.mobile.core.avatar.maker.CustomCheckBox;
 	import com.ludofactory.mobile.core.avatar.maker.data.AvatarItemData;
-	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
 	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
 	import com.ludofactory.mobile.core.avatar.test.manager.LudokadoBoneConfiguration;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.List;
 	import feathers.controls.Scroller;
@@ -32,12 +29,9 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	import feathers.textures.Scale9Textures;
 	
 	import flash.geom.Rectangle;
-	import flash.utils.unescapeMultiByte;
 	
 	import starling.display.Image;
-	import starling.display.Quad;
 	import starling.events.Event;
-	import starling.text.TextField;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	import starling.utils.deg2rad;
@@ -122,8 +116,8 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			_itemsList.layout = layout;
 			_itemsList.itemRendererType = AvatarItemRenderer;
 			addChild(_itemsList);
-			_itemsList.verticalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
-			_itemsList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
+			_itemsList.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
+			_itemsList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 			_itemsList.addEventListener(Event.SCROLL, onScroll);
 			_itemsList.addEventListener(LKAvatarMakerEventTypes.ITEM_SELECTED, onItemSelected);
 			
