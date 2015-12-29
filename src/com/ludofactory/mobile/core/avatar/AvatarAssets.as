@@ -49,6 +49,8 @@ package com.ludofactory.mobile.core.avatar
 		public static var vip_locked_icon_rank_2:Texture;
 		public static var vip_locked_icon_rank_1:Texture;
 		
+		public static var previewButtonTexture:Texture;
+		
 		public function AvatarAssets()
 		{
 			
@@ -91,6 +93,8 @@ package com.ludofactory.mobile.core.avatar
 			vip_locked_icon_rank_10 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-10");
 			vip_locked_icon_rank_11 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-11");
 			vip_locked_icon_rank_12 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-12");
+			
+			previewButtonTexture = AbstractEntryPoint.assets.getTexture("preview-button");
 		}
 		
 		public static function dispose():void
