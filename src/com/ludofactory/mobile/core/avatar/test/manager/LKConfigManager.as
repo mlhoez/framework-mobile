@@ -7,7 +7,6 @@
 package com.ludofactory.mobile.core.avatar.test.manager
 {
 	
-	import com.ludofactory.common.utils.Dimension;
 	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
 	
 	import flash.utils.Dictionary;
@@ -22,33 +21,32 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		/**
 		 * All the configurations by gender. */
 		private static var _configsByGender:Dictionary;
+		
 		/**
 		 * The current gender id. */
 		private static var _currentGenderId:int;
 		
-		/**
-		 * Image dimensions.
-		 */
-		private static var _imageDimensions:Dimension = new Dimension();
-		
-		/**
-		 * Reference width and height of the avatar (to which width they have been designed).
-		 * This value is used by the AvatarManager in order to scale the avatar depending on desired png size.
-		 */
-		private static var _imageRefDimensions:Dimension = new Dimension();
-		
-		/**
-		 * Default animation name. */
-		private static var _defaultAnimationName:String = "idle";
+		private static var _isInitialized:Boolean = false;
 		
 		public function LKConfigManager()
 		{
 			super();
-			
-			_configsByGender = new Dictionary();
-			_configsByGender[AvatarGenderType.BOY] = new LKAvatarConfig(AvatarGenderType.BOY);
-			_configsByGender[AvatarGenderType.GIRL] = new LKAvatarConfig(AvatarGenderType.GIRL);
-			_configsByGender[AvatarGenderType.POTATO] = new LKAvatarConfig(AvatarGenderType.POTATO);
+		}
+		
+		public static function initializeManager():void
+		{
+			if(!_isInitialized)
+			{
+				_isInitialized = true;
+				
+				_configsByGender = new Dictionary();
+				_configsByGender[AvatarGenderType.BOY] = new LKAvatarConfig();
+				LKAvatarConfig(_configsByGender[AvatarGenderType.BOY]).gender = AvatarGenderType.BOY;
+				_configsByGender[AvatarGenderType.GIRL] = new LKAvatarConfig();
+				LKAvatarConfig(_configsByGender[AvatarGenderType.GIRL]).gender = AvatarGenderType.GIRL;
+				_configsByGender[AvatarGenderType.POTATO] = new LKAvatarConfig();
+				LKAvatarConfig(_configsByGender[AvatarGenderType.POTATO]).gender = AvatarGenderType.POTATO;
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -63,16 +61,30 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		 */
 		public static function initialize(flashVars:Object):void
 		{
+			initializeManager();
+			
 			if(flashVars)
 			{
 				_currentGenderId = flashVars.idGender;
-				_imageDimensions.width = "pngWidth" in flashVars ? flashVars.pngWidth : 1;
-				_imageDimensions.height = "pngHeight" in flashVars ? flashVars.pngHeight : 1;
-				_imageRefDimensions.width = "pngRefWidth" in flashVars ? flashVars.pngRefWidth : 1;
-				_imageRefDimensions.height = "pngRefHeight" in flashVars ? flashVars.pngRefHeight : 1;
-				if("defaultAnimationName" in flashVars) _defaultAnimationName = flashVars.defaultAnimationName;
 				if(_currentGenderId != 0)
-					LKAvatarConfig(getConfigByGender(_currentGenderId)).initialize(flashVars);
+					LKAvatarConfig(getConfigByGender(currentGenderId)).initialize(flashVars);
+			}
+		}
+		
+		/**
+		 * This function is called at the launch of the application and when the avatar have been successfully saved.
+		 *
+		 * It will store the current gender id (given in the FlashVars) and parse the config for this gender.
+		 */
+		public static function parseData(flashVars:Object):void
+		{
+			initializeManager();
+			
+			if(flashVars)
+			{
+				_currentGenderId = flashVars.idGender;
+				if(_currentGenderId != 0)
+					LKAvatarConfig(getConfigByGender(currentGenderId)).parseConfig(flashVars);
 			}
 		}
 		
@@ -86,24 +98,11 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		 */
 		public static function initializeConfigForGender(genderId:int, config:Object):void
 		{
+			initializeManager();
+			
 			// reset to user first
 			LKAvatarConfig(_configsByGender[genderId]).resetToUser();
 			LKAvatarConfig(_configsByGender[genderId]).initialize(config);
-		}
-		
-		/**
-		 * This function is called at the launch of the application and when the avatar have been successfully saved.
-		 * 
-		 * It will store the current gender id (given in the FlashVars) and parse the config for this gender.
-		 */
-		public static function parseData(flashVars:Object):void
-		{
-			if(flashVars)
-			{
-				_currentGenderId = flashVars.idGender;
-				if(_currentGenderId != 0)
-					LKAvatarConfig(getConfigByGender(_currentGenderId)).parseConfig(flashVars);
-			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -116,7 +115,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		 */
 		public static function resetToUserConfiguration():void
 		{
-			LKAvatarConfig(getConfigByGender(_currentGenderId)).resetToUser();
+			LKAvatarConfig(getConfigByGender(currentGenderId)).resetToUser();
 		}
 		
 		/**
@@ -124,7 +123,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		 */
 		public static function getConfigByGender(genderId:int):LKAvatarConfig
 		{
-			return LKAvatarConfig(_configsByGender[genderId]);
+			return (genderId in _configsByGender ? LKAvatarConfig(_configsByGender[genderId]) : null);
 		}
 		
 		/**
@@ -145,7 +144,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		 */
 		public static function isDefaultConfiguration():Boolean
 		{
-			return _currentGenderId == 0;
+			return currentGenderId == 0;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -159,15 +158,12 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		 */
 		public static function getTemporaryConfig():Object
 		{
-			return LKAvatarConfig(getConfigByGender(_currentGenderId)).generateTemporaryConfig();
+			return LKAvatarConfig(getConfigByGender(currentGenderId)).generateTemporaryConfig();
 		}
 		
 		public static function get currentGenderId():int { return _currentGenderId; }
 		public static function set currentGenderId(value:int):void { _currentGenderId = value; }
-		public static function get currentConfig():LKAvatarConfig { return getConfigByGender(_currentGenderId); }
-		public static function get imageDimensions():Dimension { return _imageDimensions; }
-		public static function get imageRefDimensions():Dimension { return _imageRefDimensions; }
-		public static function get defaultAnimationName():String { return _defaultAnimationName; }
+		public static function get currentConfig():LKAvatarConfig { return getConfigByGender(currentGenderId); }
 		
 	}
 }

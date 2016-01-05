@@ -18,6 +18,8 @@ package com.ludofactory.mobile.core.avatar.test.manager
 	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
 	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.avatar.test.manager.AvatarData;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -843,14 +845,14 @@ package com.ludofactory.mobile.core.avatar.test.manager
 			// get bounds
 			var bounds:Rectangle = (avatarToDraw.display as DisplayObject).getBounds(avatarToDraw.display as DisplayObject);
 			// then scale the avatar to fit the reference size
-			var scale:Number = Utilities.getScaleToFill(LKConfigManager.imageRefDimensions.width, LKConfigManager.imageRefDimensions.height, LKConfigManager.imageDimensions.width, LKConfigManager.imageDimensions.height); // 440x600 = ref (avatar designed for) - other is the size to fit in
+			var scale:Number = Utilities.getScaleToFill(LKConfigManager.getConfigByGender(AvatarData(avatarToDraw.userData).genderId).imageRefDimensions.width, LKConfigManager.getConfigByGender(AvatarData(avatarToDraw.userData).genderId).imageRefDimensions.height, LKConfigManager.getConfigByGender(AvatarData(avatarToDraw.userData).genderId).imageDimensions.width, LKConfigManager.getConfigByGender(AvatarData(avatarToDraw.userData).genderId).imageDimensions.height); // 440x600 = ref (avatar designed for) - other is the size to fit in
 			
 			HELPER_MATRIX = new Matrix();
 			HELPER_MATRIX.scale(scale, scale);
 			var gap:int = 70;
-			HELPER_MATRIX.translate((LKConfigManager.imageDimensions.width * 0.5 + gap), (LKConfigManager.imageDimensions.height + ((bounds.height + bounds.y) * -scale)));
+			HELPER_MATRIX.translate((LKConfigManager.getConfigByGender(AvatarData(avatarToDraw.userData).genderId).imageDimensions.width * 0.5 + gap), (LKConfigManager.getConfigByGender(AvatarData(avatarToDraw.userData).genderId).imageDimensions.height + ((bounds.height + bounds.y) * -scale)));
 			
-			HELPER_BITMAP_DATA = new BitmapData(LKConfigManager.imageDimensions.width, LKConfigManager.imageDimensions.height, true, 0xFFFFFF);
+			HELPER_BITMAP_DATA = new BitmapData(LKConfigManager.getConfigByGender(AvatarData(avatarToDraw.userData).genderId).imageDimensions.width, LKConfigManager.getConfigByGender(AvatarData(avatarToDraw.userData).genderId).imageDimensions.height, true, 0xFFFFFF);
 			HELPER_BITMAP_DATA.drawWithQuality(avatarToDraw.display as Sprite, HELPER_MATRIX, null, null, null, true, StageQuality.HIGH);
 			
 			HELPER_BITMAP = new Bitmap(HELPER_BITMAP_DATA, PixelSnapping.NEVER, true);
@@ -899,7 +901,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 			_avatar.cacheFrameRate = 60;
 			WorldClock.clock.add(_avatar);
 			
-			_avatar.animation.gotoAndPlay(LKConfigManager.defaultAnimationName);
+			_avatar.animation.gotoAndPlay(LKConfigManager.getConfigByGender(AvatarData(_avatar.userData).genderId).defaultAnimationName);
 			_avatar.display.scaleX = _avatar.display.scaleY = _scale;
 			_avatar.display.x = savedPosition.x;
 			_avatar.display.y = savedPosition.y;
@@ -923,7 +925,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		{
 			var avatar:Armature = _factoryManager.buildArmature(avatarDisplayType, AvatarGenderType.gerGenderNameById(genderId));
 			avatar.userData = new AvatarData(genderId, avatarDisplayType, true);
-			avatar.animation.gotoAndPlay(LKConfigManager.defaultAnimationName);
+			avatar.animation.gotoAndPlay(LKConfigManager.getConfigByGender(AvatarData(avatar.userData).genderId).defaultAnimationName);
 			
 			// if the avatar is owned, we need to show its configuration so that the user is not confused
 			if(LKConfigManager.getConfigByGender(genderId).isOwned)

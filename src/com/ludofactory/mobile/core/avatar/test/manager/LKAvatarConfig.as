@@ -4,6 +4,7 @@
 package com.ludofactory.mobile.core.avatar.test.manager
 {
 	
+	import com.ludofactory.common.utils.Dimension;
 	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
 	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
@@ -18,7 +19,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		
 		/**
 		 * Gender. */
-		private var _gender:int = 0;
+		private var _gender:int = AvatarGenderType.BOY;
 		/**
 		 * Price (in points) to unlock the gender. */
 		private var _price:int = 0;
@@ -54,9 +55,22 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		private var _age:LudokadoBoneConfiguration = new LudokadoBoneConfiguration();
 		private var _epaulet:LudokadoBoneConfiguration = new LudokadoBoneConfiguration();
 		
-		public function LKAvatarConfig(genderId:int)
+		/**
+		 * Image dimensions. */
+		private static var _imageDimensions:Dimension = new Dimension();
+		
+		/**
+		 * Reference width and height of the avatar (to which width they have been designed).
+		 * This value is used by the AvatarManager in order to scale the avatar depending on desired png size. */
+		private static var _imageRefDimensions:Dimension = new Dimension();
+		
+		/**
+		 * Default animation name. */
+		private static var _defaultAnimationName:String = "idle";
+		
+		public function LKAvatarConfig()
 		{
-			_gender = genderId;
+			
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -67,6 +81,10 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		 */
 		public function initialize(config:Object):void
 		{
+			// necessary to get a clean configuration before initializing the new one (specially when the user changes
+			// the account on the device).
+			resetToDefaults();
+			
 			if(config)
 			{
 				for (var i:int = 0; i < LudokadoBones.PURCHASABLE_ITEMS.length; i++)
@@ -75,6 +93,12 @@ package com.ludofactory.mobile.core.avatar.test.manager
 				if( "price" in config && config.price != null ) _price = int(config.price);
 				if( "paiementType" in config && config.paiementType != null ) _priceType = int(config.paiementType);
 				if( "isOwned" in config && config.isOwned != null ) _isOwned = Boolean(config.isOwned);
+				
+				_imageDimensions.width = "pngWidth" in config ? config.pngWidth : 1;
+				_imageDimensions.height = "pngHeight" in config ? config.pngHeight : 1;
+				_imageRefDimensions.width = "pngRefWidth" in config ? config.pngRefWidth : 1;
+				_imageRefDimensions.height = "pngRefHeight" in config ? config.pngRefHeight : 1;
+				_defaultAnimationName = "defaultAnimationName" in config ? config.defaultAnimationName : "idle";
 			}
 		}
 		
@@ -92,6 +116,12 @@ package com.ludofactory.mobile.core.avatar.test.manager
 				if( "paiementType" in config && config.paiementType != null ) _priceType = int(config.paiementType);
 				if( "isOwned" in config && config.isOwned != null ) _isOwned = Boolean(config.isOwned);
 				
+				_imageDimensions.width = "pngWidth" in config ? config.pngWidth : 1;
+				_imageDimensions.height = "pngHeight" in config ? config.pngHeight : 1;
+				_imageRefDimensions.width = "pngRefWidth" in config ? config.pngRefWidth : 1;
+				_imageRefDimensions.height = "pngRefHeight" in config ? config.pngRefHeight : 1;
+				_defaultAnimationName = "defaultAnimationName" in config ? config.defaultAnimationName : "idle";
+				
 				log("Gender " + AvatarGenderType.gerGenderNameById(_gender) + " parsed and owned ? " + _isOwned)
 			}
 		}
@@ -106,6 +136,15 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		{
 			for (var i:int = 0; i < LudokadoBones.PURCHASABLE_ITEMS.length; i++)
 				LudokadoBoneConfiguration(this[LudokadoBones.PURCHASABLE_ITEMS[i]]).resetToUser();
+		}
+		
+		/**
+		 * Resets the configuration to the user values.
+		 */
+		public function resetToDefaults():void
+		{
+			for (var i:int = 0; i < LudokadoBones.PURCHASABLE_ITEMS.length; i++)
+				LudokadoBoneConfiguration(this[LudokadoBones.PURCHASABLE_ITEMS[i]]).resetToDefaults();
 		}
 		
 		/**
@@ -166,6 +205,8 @@ package com.ludofactory.mobile.core.avatar.test.manager
 //	Get - Set
 		
 		public function get gender():int { return _gender; }
+		public function set gender(value:int):void { _gender = value; }
+		
 		public function get price():int { return _price; }
 		public function get priceType():int { return _priceType; }
 		public function get isOwned():Boolean { return _isOwned; }
@@ -192,5 +233,19 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		public function get epaulet():LudokadoBoneConfiguration { return _epaulet; }
 		public function get age():LudokadoBoneConfiguration { return _age; }
 		
+		public function get imageDimensions():Dimension
+		{
+			return _imageDimensions;
+		}
+		
+		public function get imageRefDimensions():Dimension
+		{
+			return _imageRefDimensions;
+		}
+		
+		public function get defaultAnimationName():String
+		{
+			return _defaultAnimationName;
+		}
 	}
 }

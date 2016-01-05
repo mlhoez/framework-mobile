@@ -14,9 +14,10 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.AbstractMain;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKAvatarConfig;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
-	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
@@ -147,6 +148,8 @@ package com.ludofactory.mobile.core.manager
 			_member.parseData(memberData);
 			setEncryptedMember();
 			
+			LKConfigManager.parseData(_member.avatarConfig);
+			
 			// check if we can enable logs
 			AbstractMain.checkToEnableLogs();
 			
@@ -223,6 +226,9 @@ package com.ludofactory.mobile.core.manager
 			
 			if( checkForAdminParameters ) // not done the first time
 				AbstractMain.checkToEnableLogs();
+			
+			// when the user logs in, we need to initialize the LKConfigManager
+			LKConfigManager.initialize(_member.avatarConfig);
 		}
 		
 		public function updateVidCoinData():void
@@ -622,6 +628,15 @@ package com.ludofactory.mobile.core.manager
 				_member.facebookTokenExpiryTimestamp = value;
 				setEncryptedMember();
 			}
+		}
+		
+		/**
+		 * Updates the value of <code>avatarConfig</code>. */
+		public function get avatarConfig():Object { return _member.avatarConfig; }
+		public function set avatarConfig(value:Object):void
+		{
+			_member.avatarConfig = value;
+			setEncryptedMember();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
