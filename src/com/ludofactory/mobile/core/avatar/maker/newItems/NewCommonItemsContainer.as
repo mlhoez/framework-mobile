@@ -8,7 +8,10 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 {
 	
 	import com.ludofactory.common.gettext.aliases._n;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.avatar.AvatarAssets;
 	import com.ludofactory.mobile.core.avatar.maker.items.ItemManager;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.List;
 	import feathers.controls.Scroller;
@@ -47,7 +50,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 		{
 			super();
 			
-			_title = new TextField(300, 70, _n("NOUVEL OBJET !", "NOUVEAUX OBJETS !", ItemManager.getInstance().newCommonItems.length), Theme.FONT_MOUSE_MEMOIRS, 55, 0xfff600);
+			_title = new TextField(300, 70, _n("NOUVEL OBJET !", "NOUVEAUX OBJETS !", ItemManager.getInstance().newCommonItems.length), Theme.FONT_OSWALD, 55, 0xfff600);
 			_title.nativeFilters = [ new DropShadowFilter(4, 45, 0x010101, 0.5, 3, 3, 3) ];
 			_title.autoScale = true;
 			_title.batchable = true;
@@ -57,7 +60,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			_title.y = 35;
 			addChild(_title);
 			
-			_messageLabel = new TextField(300, 30, _n("Un nouvel objet est disponbile !", "De nouveaux objets sont disponibles", ItemManager.getInstance().newCommonItems.length), Theme.FONT_MOUSE_MEMOIRS, 23, 0xffffff, true);
+			_messageLabel = new TextField(300, 30, _n("Un nouvel objet est disponbile !", "De nouveaux objets sont disponibles", ItemManager.getInstance().newCommonItems.length), Theme.FONT_OSWALD, 23, 0xffffff, true);
 			_messageLabel.touchable = false;
 			_messageLabel.batchable = true;
 			_messageLabel.autoScale = true;
@@ -99,13 +102,13 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			{
 				_itemsList.validate();
 				
-				_leftArrow = new Button(StarlingRoot.assets.getTexture("new-items-left-arrow"));
+				_leftArrow = new Button(AvatarAssets.newItemsLeftArrow);
 				_leftArrow.addEventListener(Event.TRIGGERED, onGoLeft);
 				_leftArrow.x = _itemsList.x - _leftArrow.width;
 				_leftArrow.y = _itemsList.y + (_itemsList.height - _leftArrow.height) * 0.5;
 				addChild(_leftArrow);
 				
-				_rightArrow = new Button(StarlingRoot.assets.getTexture("new-items-right-arrow"));
+				_rightArrow = new Button(AvatarAssets.newItemsRightArrow);
 				_rightArrow.addEventListener(Event.TRIGGERED, onGoRight);
 				_rightArrow.x = _itemsList.x + _itemsList.width;
 				_rightArrow.y = _itemsList.y + (_itemsList.height - _rightArrow.height) * 0.5;

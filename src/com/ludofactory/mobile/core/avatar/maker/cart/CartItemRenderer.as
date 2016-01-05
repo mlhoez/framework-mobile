@@ -7,15 +7,31 @@ Created : 15 Décembre 2014
 package com.ludofactory.mobile.core.avatar.maker.cart
 {
 	
-	import feathers.controls.Callout;
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.roundUp;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.maker.TouchableItemRenderer;
+	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
+	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
+	import com.ludofactory.mobile.core.avatar.test.manager.LudokadoBoneConfiguration;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.content.FaqNotificationContent;
+	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.faq.FaqQuestionAnswerData;
+	
 	import feathers.controls.ImageLoader;
 	import feathers.events.FeathersEventType;
 	
+	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.text.TextField;
-	import starling.text.TextFieldAutoSize;
 	import starling.utils.HAlign;
 	import starling.utils.formatString;
 	
@@ -36,7 +52,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		
 		/**
 		 * Maximum height of an item in the list. */		
-		public static const MAX_ITEM_HEIGHT:int = 42;
+		public static const MAX_ITEM_HEIGHT:int = 80;
 
 	// ---------- Properties
 
@@ -62,17 +78,9 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		 * The remove button. */
 		//private var _removeButton:Button;
 				
-		private var _moreInfoButton:LudokadoStarlingButton;
+		private var _infoButton:Button;
 		
 		private var _checkbox:CartCheckBox;
-		
-		/**
-		 * Whether the callout is displaying. */
-		private var _isCalloutDisplaying:Boolean = false;
-		/**
-		 * Callout label. */
-		private var _calloutLabel:TextField;
-		private var _callout:Callout;
 		
 		public function CartItemRenderer()
 		{
@@ -86,12 +94,12 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		{
 			super.initialize();
 			
-			this.height = MAX_ITEM_HEIGHT;
+			this.height = scaleAndRoundToDpi(MAX_ITEM_HEIGHT);
 			
 			_background = new Quad(10, IMAGE_REF_HEIGHT, 0xdddddd);
 			addChild(_background);
 			
-			_itemImageBackground = new Image(Theme.cartItemIconBackgroundTexture);
+			_itemImageBackground = new Image(AvatarAssets.cartItemIconBackgroundTexture);
 			addChild(_itemImageBackground);
 			
 			_itemImage = new ImageLoader();
@@ -102,7 +110,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_itemImage.addEventListener(Event.COMPLETE, onImageloaded);
 			addChild(_itemImage);
 			
-			_pointsIcon = new Image(Theme.cartPointBigIconTexture);
+			_pointsIcon = new Image(AvatarAssets.cartPointBigIconTexture);
 			_pointsIcon.scaleX = _pointsIcon.scaleY = 0.8;
 			addChild(_pointsIcon);
 			
@@ -118,17 +126,9 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_itemPriceLabel.hAlign = HAlign.RIGHT;
 			addChild(_itemPriceLabel);
 			
-			_moreInfoButton = new LudokadoStarlingButton(StarlingRoot.assets.getTexture("vip-more-informations-button"), "", StarlingRoot.assets.getTexture("vip-more-informations-button-over"), StarlingRoot.assets.getTexture("vip-more-informations-button-over"));
-			_moreInfoButton.visible = false;
-			_moreInfoButton.isToolTipEnabled = true;
-			_moreInfoButton.calloutText = "dfsfsfs\nsrfdrgr";
-			_moreInfoButton.calloutDirection = Callout.DIRECTION_RIGHT;
-			addChild(_moreInfoButton);
-			
-			_calloutLabel = new TextField(5, 5, "", Theme.FONT_OSWALD, 12, 0xffffff);
-			_calloutLabel.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
-			_calloutLabel.hAlign = HAlign.CENTER;
-			_calloutLabel.touchable = false;
+			_infoButton = new Button(AbstractEntryPoint.assets.getTexture("info-icon"));
+			_infoButton.scaleX = _infoButton.scaleY = GlobalConfig.dpiScale;
+			addChild(_infoButton);
 		}
 		
 		override protected function draw():void
@@ -155,8 +155,8 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 				_pointsIcon.x = _checkbox.x - _pointsIcon.width - 3 - 5;
 				_pointsIcon.y = roundUp((MAX_ITEM_HEIGHT - _pointsIcon.height) * 0.5) - 2;
 				
-				_moreInfoButton.x = actualWidth - _moreInfoButton.width - 5;
-				_moreInfoButton.y = roundUp((MAX_ITEM_HEIGHT - _pointsIcon.height) * 0.5) - 1;
+				_infoButton.x = actualWidth - _infoButton.width - 5;
+				_infoButton.y = roundUp((MAX_ITEM_HEIGHT - _pointsIcon.height) * 0.5) - 1;
 				
 				_itemNameLabel.x = IMAGE_REF_WIDTH;
 				_itemNameLabel.y = -1;
@@ -173,13 +173,12 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			if(this._owner && _data)
 			{
 				_itemNameLabel.text = _data.name;
-				_itemPriceLabel.text = _data.isOwned ? _("Acquis") : ((_data.isLocked ? _("Rang insuffisant") : (_data.price == 0 ? _("GRATUIT") : splitThousands(_data.price))));
+				_itemPriceLabel.text = _data.isOwned ? _("Acquis") : ((_data.isLocked ? _("Rang insuffisant") : (_data.price == 0 ? _("GRATUIT") : Utilities.splitThousands(_data.price))));
 				_itemImage.source = _data.imageUrl;
 				
 				_checkbox.isSelected = _data.isChecked;
 				
-				_moreInfoButton.calloutText = formatString(_("Vous devez avoir le rang {0} pour pouvoir acheter cet objet.\nCliquez pour plus d'informations.\n\n"), _data.rankName);
-				_moreInfoButton.visible = _data.isLocked;
+				_infoButton.visible = _data.isLocked;
 				
 				_background.color = _index % 2 == 0 ? 0xe7e7e7 : 0xffffff;
 				_itemPriceLabel.color = _data.isLocked ? 0xee0000 : 0x676462;
@@ -205,35 +204,8 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			}
 			else
 			{
-				ExternalInterfaceManager.call(ServerData.vipJSFunctionName, true, _data.rank, true);
-			}
-		}
-		
-		override protected function onRollOver():void
-		{
-			if(_data.isLocked)
-			{
-				if(!_isCalloutDisplaying)
-				{
-					_isCalloutDisplaying = true;
-					_calloutLabel.text = formatString(_("Vous devez avoir le rang {0} pour pouvoir acheter cet objet.\nCliquez pour plus d'informations.\n\n"), _data.rankName);
-					_callout = Callout.show(_calloutLabel, this, Callout.DIRECTION_RIGHT, false);
-					_callout.disposeContent = false;
-					_callout.touchable = false;
-				}
-			}
-		}
-		
-		override protected function onRollOut():void
-		{
-			if(_data.isLocked)
-			{
-				if(_callout)
-				{
-					_isCalloutDisplaying = false;
-					_callout.close(true);
-					_callout = null;
-				}
+				// TODO afficher un truc plus spécifique et poussant à l'achat
+				NotificationPopupManager.addNotification( new FaqNotificationContent(new FaqQuestionAnswerData({question:_("Pourquoi cet objet est bloqué ?"), reponse:formatString(_("Vous devez avoir le rang {0} pour pouvoir acheter cet objet."), _data.rankName)})));
 			}
 		}
 		
@@ -319,17 +291,8 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_pointsIcon.removeFromParent(true);
 			_pointsIcon = null;
 			
-			_moreInfoButton.removeFromParent(true);
-			_moreInfoButton = null;
-			
-			if(_callout)
-			{
-				_calloutLabel.removeFromParent(true);
-				_calloutLabel = null;
-				
-				_callout.removeFromParent(true);
-				_callout = null;
-			}
+			_infoButton.removeFromParent(true);
+			_infoButton = null;
 			
 			_data = null;
 			

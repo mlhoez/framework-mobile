@@ -239,6 +239,12 @@ package com.ludofactory.mobile.core.events
 		
 		
 		
+		public static const BUTTON_DOWN:String   = "button-down";
+		public static const BUTTON_UP:String   = "button-up";
+		
+		
+		
+		
 		
 		
 	}

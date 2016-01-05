@@ -7,11 +7,13 @@
 package com.ludofactory.mobile.core.avatar.maker.cart
 {
 	
-	import com.ludofactory.desktop.core.StarlingRoot;
-	import com.ludofactory.desktop.gettext.aliases._;
-	import com.ludofactory.desktop.tools.roundUp;
-	import com.ludofactory.globbies.events.AvatarMakerEventTypes;
-	import com.ludofactory.server.starling.theme.Theme;
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.roundUp;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.MobileButton;
+	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import starling.display.Button;
 	import starling.display.Image;
@@ -42,16 +44,16 @@ package com.ludofactory.mobile.core.avatar.maker.cart
         private var _closeButton:Button;
         /**
          * The validation button. */
-        private var _validateButton:Button;
+        private var _validateButton:MobileButton;
         
         public function NotEnoughPointsPopUp()
         {
             super();
 
-            _background = new Image(Theme.notEnoughPointsPopupBackgroundTexture);
+            _background = new Image(AvatarAssets.notEnoughPointsPopupBackgroundTexture);
             addChild(_background);
 
-            _titleLabel = new TextField(430, 50, _("VOUS N'AVEZ PAS ASSEZ DE POINTS"), Theme.FONT_MOUSE_MEMOIRS, 40, 0xffffff);
+            _titleLabel = new TextField(430, 50, _("VOUS N'AVEZ PAS ASSEZ DE POINTS"), Theme.FONT_OSWALD, 40, 0xffffff);
             _titleLabel.x = 120;
             _titleLabel.y = 18;
             _titleLabel.autoScale = true;
@@ -81,20 +83,15 @@ package com.ludofactory.mobile.core.avatar.maker.cart
             _toolTipLabel.y = 160;
             addChild(_toolTipLabel);
 	
-	        _closeButton = new Button(StarlingRoot.assets.getTexture("close-button-background"));
+	        _closeButton = new Button(AvatarAssets.closeButton);
 	        _closeButton.addEventListener(Event.TRIGGERED, onClose);
 	        _closeButton.x = _background.width - _closeButton.width - 16;
 	        _closeButton.y = 34;
 	        _closeButton.scaleWhenDown = 0.9;
 	        addChild(_closeButton);
 	
-	        _validateButton = new Button(StarlingRoot.assets.getTexture("save-button-background"), _("Continuer"), StarlingRoot.assets.getTexture("save-button-over-background"), StarlingRoot.assets.getTexture("save-button-over-background"));
-	        _validateButton.fontName = Theme.FONT_OSWALD;
-	        _validateButton.fontColor = 0xffffff;
-	        _validateButton.fontBold = true;
-	        _validateButton.fontSize = 20;
+	        _validateButton = ButtonFactory.getButton(_("Continuer"), ButtonFactory.GREEN);
 	        _validateButton.addEventListener(Event.TRIGGERED, onClose);
-	        _validateButton.scaleWhenDown = 0.9;
 	        _validateButton.x = roundUp((_background.width - _validateButton.width) * 0.72);
 	        _validateButton.y = roundUp(_background.height - _validateButton.height - 25);
 	        addChild(_validateButton);
@@ -111,7 +108,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 	        //_validateButton.enabled = false;
 	        //_closeButton.enabled = false;
 	        
-            dispatchEventWith(AvatarMakerEventTypes.CLOSE_NOT_ENOUGH_COOKIES, false, false);
+            dispatchEventWith(LKAvatarMakerEventTypes.CLOSE_NOT_ENOUGH_COOKIES, false, false);
         }
 	
 //------------------------------------------------------------------------------------------------------------

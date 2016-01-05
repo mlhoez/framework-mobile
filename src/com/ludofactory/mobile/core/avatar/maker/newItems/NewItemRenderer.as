@@ -7,13 +7,12 @@
 package com.ludofactory.mobile.core.avatar.maker.newItems
 {
 	
-	import com.ludofactory.desktop.core.StarlingRoot;
-	import com.ludofactory.desktop.core.starlingComponents.TouchableItemRenderer;
-	import com.ludofactory.desktop.tools.roundUp;
-	import com.ludofactory.ludokado.config.LudokadoBones;
-	import com.ludofactory.ludokado.events.LKAvatarMakerEventTypes;
-	import com.ludofactory.server.avatar.data.AvatarItemData;
-	import com.ludofactory.server.starling.theme.Theme;
+	import com.ludofactory.common.utils.roundUp;
+	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.maker.TouchableItemRenderer;
+	import com.ludofactory.mobile.core.avatar.maker.data.AvatarItemData;
+	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
+	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.events.FeathersEventType;
@@ -67,10 +66,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			this.width = MAX_ITEM_WIDTH;
 			this.height = MAX_ITEM_HEIGHT;
 			
-			if(!Theme.newItemRendererBackgroundTexture) // optimize
-				Theme.newItemRendererBackgroundTexture = StarlingRoot.assets.getTexture("new-item-ir-background");
-			
-			_background = new Image(Theme.newItemRendererBackgroundTexture);
+			_background = new Image(AvatarAssets.newItemRendererBackgroundTexture);
 			addChild(_background);
 			
 			_itemIcon = new ImageLoader();

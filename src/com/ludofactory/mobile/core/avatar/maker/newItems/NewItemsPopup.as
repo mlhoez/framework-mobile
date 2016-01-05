@@ -7,12 +7,9 @@
 package com.ludofactory.mobile.core.avatar.maker.newItems
 {
 	
-	import com.ludofactory.desktop.core.StarlingRoot;
-	import com.ludofactory.ludokado.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.avatar.AvatarAssets;
 	import com.ludofactory.mobile.core.avatar.maker.items.ItemManager;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
-	import com.ludofactory.server.avatar.customization.items.ItemManager;
-	import com.ludofactory.server.starling.theme.Theme;
 	
 	import starling.core.Starling;
 	import starling.display.Button;
@@ -59,26 +56,26 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			
 			_displayBoth = ItemManager.getInstance().newVipItems.length > 0 && ItemManager.getInstance().newCommonItems.length > 0;
 			
-			_particles = new PDParticleSystem(Theme.particleStarsXml, StarlingRoot.assets.getTexture("star-particle"));
+			_particles = new PDParticleSystem(AvatarAssets.particleStarsXml, AvatarAssets.starParticle);
 			_particles.touchable = false;
 			_particles.maxNumParticles = 75;
 			_particles.emitterXVariance = _displayBoth ? 400 : 200;
 			_particles.emitterYVariance = 180;
 			addChild(_particles);
 			
-			_stripes = new Image(StarlingRoot.assets.getTexture("new-items-stripes"));
+			_stripes = new Image(AvatarAssets.newItemsStripes);
 			_stripes.touchable = false;
 			addChild(_stripes);
 			
 			_particles.emitterX = _stripes.width * 0.5;
 			_particles.emitterY = _stripes.height * 0.5;
 			
-			_background = new Image(StarlingRoot.assets.getTexture((_displayBoth ? "new-items-popup-both-background" : "new-items-popup-background")));
+			_background = new Image(_displayBoth ? AvatarAssets.newItemsPopupBothBackground : AvatarAssets.newItemsPopupSingleBackground);
 			_background.x = (_stripes.width - _background.width) * 0.5;
 			_background.y = (_stripes.height - _background.height) * 0.5;
 			addChild(_background);
 			
-			_closeButton = new Button(StarlingRoot.assets.getTexture("new-items-close-button"));
+			_closeButton = new Button(AvatarAssets.newItemsCloseButton);
 			_closeButton.addEventListener(Event.TRIGGERED, onClose);
 			addChild(_closeButton);
 			

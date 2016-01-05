@@ -79,7 +79,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			
 			this.height = MAX_ITEM_HEIGHT;
 			
-			_background = new Image(AvatarAssets.itemListBackgroundTexture);
+			_background = new Image(AvatarAssets.expandTexture);
 			_background.alpha = 0;
 			addChild(_background);
 			

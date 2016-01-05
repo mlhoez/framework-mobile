@@ -43,5 +43,25 @@ package com.ludofactory.mobile.core.avatar.test.events
 		public static const BEHAVIOR_SELECTED:String = "behavior-selected";
 		
 		
+	// ---------- Cart events
+		
+		/**
+		 * When an item have been removed from the basket. */
+		public static const ITEM_REMOVED_FROM_BASKET:String = "item-removed-from-basket";
+		
+		
+		/**
+		 * When an item have been removed from the basket. */
+		public static const CONFIRM_NOT_ENOUGH_COOKIES:String = "confirm-not-enough-cookies";
+		
+		/**
+		 * When an item have been removed from the basket. */
+		public static const CLOSE_NOT_ENOUGH_COOKIES:String = "close-not-enough-cookies";
+		
+		/**
+		 * When the basket popup is closed. */
+		public static const CLOSE_BASKET_POPUP:String = "close-basket-popup";
+		
+		
 	}
 }

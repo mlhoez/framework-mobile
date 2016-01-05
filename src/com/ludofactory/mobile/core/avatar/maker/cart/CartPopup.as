@@ -8,20 +8,24 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 {
 	
 	import com.greensock.TweenMax;
-	import com.ludofactory.desktop.core.LoaderManager;
-	import com.ludofactory.desktop.core.StarlingRoot;
-	import com.ludofactory.desktop.gettext.aliases._;
-	import com.ludofactory.desktop.tools.Utilities;
-	import com.ludofactory.desktop.tools.log;
-	import com.ludofactory.desktop.tools.splitThousands;
-	import com.ludofactory.globbies.events.AvatarMakerEventTypes;
-	import com.ludofactory.ludokado.events.LKAvatarMakerEventTypes;
-	import com.ludofactory.ludokado.manager.AvatarManager;
-	import com.ludofactory.ludokado.manager.LKConfigManager;
-	import com.ludofactory.ludokado.manager.LudokadoBoneConfiguration;
-	import com.ludofactory.server.data.ServerData;
-	import com.ludofactory.server.remoting.Remote;
-	import com.ludofactory.server.starling.theme.Theme;
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.logs.log;
+	import com.ludofactory.mobile.ButtonFactory;
+	import com.ludofactory.mobile.MobileButton;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.avatar.test.manager.AvatarManager;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
+	import com.ludofactory.mobile.core.manager.InfoContent;
+	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.List;
 	import feathers.controls.Scroller;
@@ -68,7 +72,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		private var _closeButton:Button;
 		/**
 		 * The validation button. */
-		private var _validateButton:Button;
+		private var _validateButton:MobileButton;
 
 	// ---------- Second part
 
@@ -94,10 +98,10 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		{
 			super();
 			
-			_background = new Image(Theme.cartConfirmationPopupBackgroundTexture);
+			_background = new Image(AvatarAssets.cartConfirmationPopupBackgroundTexture);
 			addChild(_background);
 
-			_title = new TextField(430, 50, _("RECAPITULATIF"), Theme.FONT_MOUSE_MEMOIRS, 40, 0xffffff);
+			_title = new TextField(430, 50, _("RECAPITULATIF"), Theme.FONT_OSWALD, 40, 0xffffff);
 			_title.x = 120;
 			_title.y = 18;
 			_title.autoScale = true;
@@ -106,7 +110,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			
 			// first part
 			
-			_itemsTitleLabel = new TextField(354, 30, _("Votre liste d'achats"), Theme.FONT_MOUSE_MEMOIRS, 28, 0x676462);
+			_itemsTitleLabel = new TextField(354, 30, _("Votre liste d'achats"), Theme.FONT_OSWALD, 28, 0x676462);
 			_itemsTitleLabel.x = 9;
 			_itemsTitleLabel.y = 76;
 			_itemsTitleLabel.autoScale = true;
@@ -125,7 +129,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_itemsList.dataProvider = new ListCollection(CartManager.getInstance().generateDataProvider());
 			_itemsList.verticalScrollPolicy = Scroller.SCROLL_POLICY_ON;
 			_itemsList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_itemsList.customVerticalScrollBarStyleName = Theme.SCROLL_BAR_CART_STYLE_NAME;
+			//_itemsList.customVerticalScrollBarStyleName = Theme.SCROLL_BAR_CART_STYLE_NAME;
 			_itemsList.x = 9;
 			_itemsList.y = 105;
 			_itemsList.width = 354;
@@ -134,13 +138,13 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_itemsList.addEventListener(Event.SCROLL, onScroll);
 			_itemsList.addEventListener(LKAvatarMakerEventTypes.ITEM_SELECTED_OR_DESELECTED, onBasketItemSelectedOrDeselected);
 
-			_listTopShadow = new Image(StarlingRoot.assets.getTexture("list-shadow"));
+			_listTopShadow = new Image(AvatarAssets.listShadow);
 			_listTopShadow.touchable = false;
 			_listTopShadow.x = _itemsList.x;
 			_listTopShadow.y = _itemsList.y;
 			addChild(_listTopShadow);
 
-			_listBottomShadow = new Image(StarlingRoot.assets.getTexture("list-shadow"));
+			_listBottomShadow = new Image(AvatarAssets.listShadow);
 			_listBottomShadow.touchable = false;
 			_listBottomShadow.alignPivot(HAlign.RIGHT, VAlign.BOTTOM);
 			_listBottomShadow.rotation = deg2rad(180);
@@ -154,7 +158,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			// second part
 			
 			// total
-			_purchaseTotalTitleLabel = new TextField(200, 40, _("Total du panier :"), Theme.FONT_MOUSE_MEMOIRS, 28, 0xff6600);
+			_purchaseTotalTitleLabel = new TextField(200, 40, _("Total du panier :"), Theme.FONT_OSWALD, 28, 0xff6600);
 			_purchaseTotalTitleLabel.touchable = false;
 			_purchaseTotalTitleLabel.batchable = true;
 			//_purchaseTotalTitleLabel.border = true;
@@ -163,7 +167,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_purchaseTotalTitleLabel.y = 127;
 			addChild(_purchaseTotalTitleLabel);
 			
-			_purchaseTotalValueLabel = new TextField(90, 40, splitThousands(9999999), Theme.FONT_OSWALD, 26, 0xff6600);
+			_purchaseTotalValueLabel = new TextField(90, 40, Utilities.splitThousands(9999999), Theme.FONT_OSWALD, 26, 0xff6600);
 			_purchaseTotalValueLabel.touchable = false;
 			_purchaseTotalValueLabel.batchable = true;
 			//_purchaseTotalValueLabel.border = true;
@@ -172,7 +176,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_purchaseTotalValueLabel.y = 127;
 			addChild(_purchaseTotalValueLabel);
 			
-			_purchaseTotalPointsIcon = new Image(Theme.cartPointBigIconTexture);
+			_purchaseTotalPointsIcon = new Image(AvatarAssets.cartPointBigIconTexture);
 			_purchaseTotalPointsIcon.x = _purchaseTotalValueLabel.x + _purchaseTotalValueLabel.width + 5;
 			_purchaseTotalPointsIcon.y = _purchaseTotalValueLabel.y + 8;
 			addChild(_purchaseTotalPointsIcon);
@@ -187,7 +191,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_currentPointsTitleLabel.y = 180;
 			addChild(_currentPointsTitleLabel);
 			
-			_currentPointsValueLabel = new TextField(90, 41, splitThousands(9999999), Theme.FONT_OSWALD, 16, 0x676462);
+			_currentPointsValueLabel = new TextField(90, 41, Utilities.splitThousands(9999999), Theme.FONT_OSWALD, 16, 0x676462);
 			_currentPointsValueLabel.touchable = false;
 			_currentPointsValueLabel.batchable = true;
 			//_currentPointsValueLabel.border = true;
@@ -196,7 +200,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_currentPointsValueLabel.y = 180;
 			addChild(_currentPointsValueLabel);
 
-			_currentPointsIcon = new Image(Theme.cartPointBigIconTexture);
+			_currentPointsIcon = new Image(AvatarAssets.cartPointBigIconTexture);
 			_currentPointsIcon.scaleX = _currentPointsIcon.scaleY = 0.8;
 			_currentPointsIcon.x = _currentPointsValueLabel.x + _currentPointsValueLabel.width + 8;
 			_currentPointsIcon.y = _currentPointsValueLabel.y + 10;
@@ -211,7 +215,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_remainingCookiesTitleLabel.y = 228;
 			addChild(_remainingCookiesTitleLabel);
 
-			_remainingCookiesValueLabel = new TextField(90, 41, splitThousands(-99999999), Theme.FONT_OSWALD, 16, 0x676462);
+			_remainingCookiesValueLabel = new TextField(90, 41, Utilities.splitThousands(-99999999), Theme.FONT_OSWALD, 16, 0x676462);
 			_remainingCookiesValueLabel.touchable = false;
 			_remainingCookiesValueLabel.batchable = true;
 			_remainingCookiesValueLabel.hAlign = HAlign.RIGHT;
@@ -219,7 +223,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_remainingCookiesValueLabel.y = 228;
 			addChild(_remainingCookiesValueLabel);
 
-			_remainingPointsIcon = new Image(Theme.cartPointBigIconTexture);
+			_remainingPointsIcon = new Image(AvatarAssets.cartPointBigIconTexture);
 			_remainingPointsIcon.scaleX = _remainingPointsIcon.scaleY = 0.8;
 			_remainingPointsIcon.x = _remainingCookiesValueLabel.x + _remainingCookiesValueLabel.width + 8;
 			_remainingPointsIcon.y = _remainingCookiesValueLabel.y + 10;
@@ -227,20 +231,15 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			
 			// buttons
 			
-			_closeButton = new Button(StarlingRoot.assets.getTexture("close-button-background"), "", StarlingRoot.assets.getTexture("close-button-over-background"), StarlingRoot.assets.getTexture("close-button-over-background"));
+			_closeButton = new Button(AvatarAssets.closeButton);
 			_closeButton.addEventListener(Event.TRIGGERED, onClose);
 			_closeButton.x = _background.width - _closeButton.width - 16;
 			_closeButton.y = 34;
 			_closeButton.scaleWhenDown = 0.9;
 			addChild(_closeButton);
 			
-			_validateButton = new Button(StarlingRoot.assets.getTexture("save-button-background"), _("VALIDER"), StarlingRoot.assets.getTexture("save-button-over-background"), StarlingRoot.assets.getTexture("save-button-over-background"));
-			_validateButton.fontName = Theme.FONT_OSWALD;
-			_validateButton.fontColor = 0xffffff;
-			_validateButton.fontBold = true;
-			_validateButton.fontSize = 20;
+			_validateButton = ButtonFactory.getButton(_("VALIDER"), ButtonFactory.GREEN);
 			_validateButton.addEventListener(Event.TRIGGERED, onValidate);
-			_validateButton.scaleWhenDown = 0.9;
 			_validateButton.x = 415;
 			_validateButton.y = 291;
 			addChild(_validateButton);
@@ -273,10 +272,10 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		 */
 		private function calculateBill():void
 		{
-			_purchaseTotalValueLabel.text = splitThousands(CartManager.getInstance().getTotal());
-			_currentPointsValueLabel.text = splitThousands(ServerData.totalPoints.value);
-			_remainingCookiesValueLabel.text = splitThousands(ServerData.totalPoints.value - CartManager.getInstance().getTotal());
-			_remainingCookiesValueLabel.color = ((ServerData.totalPoints.value - CartManager.getInstance().getTotal()) < 0) ? 0xff0000 : 0x676462;
+			_purchaseTotalValueLabel.text = Utilities.splitThousands(CartManager.getInstance().getTotal());
+			_currentPointsValueLabel.text = Utilities.splitThousands(MemberManager.getInstance().points);
+			_remainingCookiesValueLabel.text = Utilities.splitThousands(MemberManager.getInstance().points - CartManager.getInstance().getTotal());
+			_remainingCookiesValueLabel.color = ((MemberManager.getInstance().points - CartManager.getInstance().getTotal()) < 0) ? 0xff0000 : 0x676462;
 		}
 		
 		/**
@@ -304,16 +303,16 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		{
 			log("[BasketConfirmationPopup] Purchasing items...");
 			
-			if((ServerData.totalPoints.value - CartManager.getInstance().getTotal()) < 0)
+			if((MemberManager.getInstance().points - CartManager.getInstance().getTotal()) < 0)
 			{
 				// the user does not have enought points, we let him click the button but we display an information popup
-				dispatchEventWith(AvatarMakerEventTypes.CLOSE_BASKET_POPUP, false, AvatarMakerEventTypes.CONFIRM_NOT_ENOUGH_COOKIES);
+				dispatchEventWith(LKAvatarMakerEventTypes.CLOSE_BASKET_POPUP, false, LKAvatarMakerEventTypes.CONFIRM_NOT_ENOUGH_COOKIES);
 			}
 			else
 			{
 				// the user have enough points, we make a request on the server side
 				log("[CartPopup] User have enough points, purchasing items...");
-				LoaderManager.getInstance().showLoader(_("Traitement de votre demande en cours...\nVeuillez patienter quelques instants."));
+				InfoManager.show(_("Traitement de votre demande en cours...\nVeuillez patienter quelques instants."));
 				
 				CartManager.getInstance().resetConfigForLockedItems();
 				
@@ -325,7 +324,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		private function onImageCreated(event:Event):void
 		{
 			AvatarManager.getInstance().removeEventListener(LKAvatarMakerEventTypes.AVATAR_IMAGE_CREATED, onImageCreated);
-			Remote.getInstance().saveAvatar(String(event.data), onAvatarSaved, null, null, 1);
+			Remote.getInstance().saveAvatar(String(event.data), onAvatarSaved, onAvatarSaveFail, onAvatarSaveFail, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
 		}
 		
 		/**
@@ -335,25 +334,25 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		{
 			CartManager.getInstance().bringBackConfigForLockedItem();
 			
-			if(result.status == 1)
+			if(result.code == 1)
 			{
 				// then parse the configuration (it will validate what have been bought)
-				LKConfigManager.parseData(Utilities.getProperty("avatarConfiguration", result.data));
+				LKConfigManager.parseData(result.data["avatarConfiguration"]);
 				// hide the loader
-				LoaderManager.getInstance().hideLoader();
+				InfoManager.hide(_("Votre personnage a bien été sauvegardé !"), InfoContent.ICON_CHECK);
 				
-				dispatchEventWith(AvatarMakerEventTypes.CLOSE_BASKET_POPUP, false, true);
+				dispatchEventWith(LKAvatarMakerEventTypes.CLOSE_BASKET_POPUP, false, true);
 			}
 			else
 			{
-				LoaderManager.getInstance().hideLoader();
+				InfoManager.hide(_("Une erreur est survenue lors de l'enregistrement de votre avatar.\n\n Merci de réessayer."), InfoContent.ICON_CROSS);
 			}
 		}
 		
 		private function onAvatarSaveFail(error:Object):void
 		{
 			// TODO afficher une popup
-			LoaderManager.getInstance().hideLoader();
+			InfoManager.hide(_("Une erreur est survenue lors de l'enregistrement de votre avatar.\n\n Merci de réessayer."), InfoContent.ICON_CROSS);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -371,7 +370,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		
 		private function onClose(event:Event):void
 		{
-			dispatchEventWith(AvatarMakerEventTypes.CLOSE_BASKET_POPUP, false, false);
+			dispatchEventWith(LKAvatarMakerEventTypes.CLOSE_BASKET_POPUP, false, false);
 		}
 
 //------------------------------------------------------------------------------------------------------------

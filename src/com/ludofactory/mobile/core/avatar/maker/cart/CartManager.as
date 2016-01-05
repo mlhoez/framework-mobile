@@ -4,9 +4,6 @@
 package com.ludofactory.mobile.core.avatar.maker.cart
 {
 	
-	import com.ludofactory.ludokado.config.LudokadoBones;
-	import com.ludofactory.ludokado.manager.LKConfigManager;
-	import com.ludofactory.ludokado.manager.LudokadoBoneConfiguration;
 	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
 	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
 	import com.ludofactory.mobile.core.avatar.test.manager.LudokadoBoneConfiguration;
