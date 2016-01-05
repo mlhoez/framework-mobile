@@ -66,9 +66,6 @@ package com.ludofactory.mobile.core.avatar
 		{
 			super.initialize();
 			
-			new LKConfigManager();
-			LKConfigManager.initialize(JSON.parse('{"pngWidth":860,"eyesColor":{"itemId":296,"frameId":"black","itemLinkageName":"eyesColor_0"},"nose":{"itemId":184,"frameId":"defaut","itemLinkageName":"nose_3"},"moustache":{"itemId":407,"frameId":"defaut","itemLinkageName":"moustache_2"},"pngHeight":660,"mouth":{"itemId":115,"frameId":"defaut","itemLinkageName":"mouth_6"},"beard":{"itemId":401,"frameId":"defaut","itemLinkageName":"beard_1"},"leftHand":{"itemId":129,"frameId":"level_1","itemLinkageName":"leftHand_2"},"hat":{"itemId":82,"frameId":"brown","itemLinkageName":"hat_3"},"rightHand":{"itemId":572,"frameId":"level_4","itemLinkageName":"rightHand_4"},"skinColor":{"itemId":262,"frameId":"white","itemLinkageName":"skinColor_0"},"shirt":{"itemId":206,"frameId":"red","itemLinkageName":"shirt_0"},"hair":{"itemId":35,"frameId":"defaut","itemLinkageName":"hair_0"},"pngRefHeight":660,"age":{"itemId":353,"frameId":"age_2","itemLinkageName":"age_2"},"pngRefWidth":860,"faceCustom":{"itemId":416,"frameId":"defaut","itemLinkageName":"faceCustom_2"},"eyebrows":{"itemId":1,"frameId":"defaut","itemLinkageName":"eyebrows_0"},"idGender":1,"eyes":{"itemId":15,"frameId":"defaut","itemLinkageName":"eyes_0"},"hairColor":{"itemId":253,"frameId":"black","itemLinkageName":"hairColor_5"}}'));
-			
 			InfoManager.show(_("Chargement..."));
 			
 			// load assets first
