@@ -8,10 +8,20 @@ package com.ludofactory.mobile.core.avatar
 	
 	import feathers.textures.Scale3Textures;
 	
+	import flash.system.System;
+	
 	import starling.textures.Texture;
 	
 	public class AvatarAssets
 	{
+		
+//------------------------------------------------------------------------------------------------------------
+//	Particles
+		
+		[Embed(source="particle-star.pex", mimeType="application/octet-stream")]
+		protected static const PARTICLE_STARS_XML_CLASS:Class;
+		public static var particleStarsXml:XML;
+		
 		public static var panelBackground:Texture;
 		
 		public static var itemListBackgroundTexture:Texture;
@@ -49,7 +59,47 @@ package com.ludofactory.mobile.core.avatar
 		public static var vip_locked_icon_rank_2:Texture;
 		public static var vip_locked_icon_rank_1:Texture;
 		
+		public static var rank_1_texture:Texture;
+		public static var rank_2_texture:Texture;
+		public static var rank_3_texture:Texture;
+		public static var rank_4_texture:Texture;
+		public static var rank_5_texture:Texture;
+		public static var rank_6_texture:Texture;
+		public static var rank_7_texture:Texture;
+		public static var rank_8_texture:Texture;
+		public static var rank_9_texture:Texture;
+		public static var rank_10_texture:Texture;
+		public static var rank_11_texture:Texture;
+		public static var rank_12_texture:Texture;
+		
 		public static var previewButtonTexture:Texture;
+		
+		public static var cartIrCheckboxBackground:Texture;
+		public static var cartIrCheckboxCheck:Texture;
+		
+		public static var cartItemIconBackgroundTexture:Texture;
+		public static var cartPointBigIconTexture:Texture;
+		
+		public static var cartConfirmationPopupBackgroundTexture:Texture;
+		public static var notEnoughPointsPopupBackgroundTexture:Texture;
+		public static var newItemsPopupBothBackground:Texture;
+		public static var newItemsPopupSingleBackground:Texture;
+		
+		public static var listShadow:Texture;
+		
+		public static var closeButton:Texture;
+		
+		public static var newItemRendererBackgroundTexture:Texture;
+		
+		public static var newItemsLeftArrow:Texture;
+		public static var newItemsRightArrow:Texture;
+		
+		public static var rankStripes:Texture;
+		public static var newItemsStripes:Texture;
+		
+		public static var newItemsCloseButton:Texture;
+		
+		public static var starParticle:Texture;
 		
 		public function AvatarAssets()
 		{
@@ -58,6 +108,8 @@ package com.ludofactory.mobile.core.avatar
 		
 		public static function build():void
 		{
+			particleStarsXml = XML(new PARTICLE_STARS_XML_CLASS());
+			
 			panelBackground = AbstractEntryPoint.assets.getTexture("panel-background");
 			
 			itemListBackgroundTexture = AbstractEntryPoint.assets.getTexture("item-renderer-background");
@@ -94,12 +146,55 @@ package com.ludofactory.mobile.core.avatar
 			vip_locked_icon_rank_11 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-11");
 			vip_locked_icon_rank_12 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-12");
 			
+			rank_1_texture = AbstractEntryPoint.assets.getTexture("rank-1");
+			rank_2_texture = AbstractEntryPoint.assets.getTexture("rank-2");
+			rank_3_texture = AbstractEntryPoint.assets.getTexture("rank-3");
+			rank_4_texture = AbstractEntryPoint.assets.getTexture("rank-4");
+			rank_5_texture = AbstractEntryPoint.assets.getTexture("rank-5");
+			rank_6_texture = AbstractEntryPoint.assets.getTexture("rank-6");
+			rank_7_texture = AbstractEntryPoint.assets.getTexture("rank-7");
+			rank_8_texture = AbstractEntryPoint.assets.getTexture("rank-8");
+			rank_9_texture = AbstractEntryPoint.assets.getTexture("rank-9");
+			rank_10_texture = AbstractEntryPoint.assets.getTexture("rank-10");
+			rank_11_texture = AbstractEntryPoint.assets.getTexture("rank-11");
+			rank_12_texture = AbstractEntryPoint.assets.getTexture("rank-12");
+			
 			previewButtonTexture = AbstractEntryPoint.assets.getTexture("preview-button");
+			
+			cartIrCheckboxBackground = AbstractEntryPoint.assets.getTexture("cart-ir-checkbox-background");
+			cartIrCheckboxCheck = AbstractEntryPoint.assets.getTexture("cart-ir-checkbox-check");
+			
+			cartItemIconBackgroundTexture = AbstractEntryPoint.assets.getTexture("cart-ir-item-background");
+			cartPointBigIconTexture = AbstractEntryPoint.assets.getTexture("cart-ir-point-big-icon");
+			newItemsPopupBothBackground = AbstractEntryPoint.assets.getTexture("new-items-popup-both-background");
+			newItemsPopupSingleBackground = AbstractEntryPoint.assets.getTexture("new-items-popup-background");
+			
+			cartConfirmationPopupBackgroundTexture = AbstractEntryPoint.assets.getTexture("popup-cart-background");
+			notEnoughPointsPopupBackgroundTexture = AbstractEntryPoint.assets.getTexture("popup-not-enough-points");
+			
+			listShadow = AbstractEntryPoint.assets.getTexture("list-shadow");
+			
+			closeButton = AbstractEntryPoint.assets.getTexture("close-button-background");
+			
+			newItemRendererBackgroundTexture = AbstractEntryPoint.assets.getTexture("new-item-ir-background");
+			
+			newItemsLeftArrow = AbstractEntryPoint.assets.getTexture("new-items-left-arrow");
+			newItemsRightArrow = AbstractEntryPoint.assets.getTexture("new-items-right-arrow");
+			
+			rankStripes = AbstractEntryPoint.assets.getTexture("rank-stripes");
+			newItemsStripes = AbstractEntryPoint.assets.getTexture("new-items-stripes");
+			
+			newItemsCloseButton = AbstractEntryPoint.assets.getTexture("new-items-close-button");
+			
+			starParticle = AbstractEntryPoint.assets.getTexture("star-particle");
 		}
 		
 		public static function dispose():void
 		{
 			// TODO
+			
+			System.disposeXML(particleStarsXml);
+			particleStarsXml = null;
 		}
 		
 	}
