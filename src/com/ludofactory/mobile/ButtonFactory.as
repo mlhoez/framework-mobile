@@ -86,7 +86,7 @@ package com.ludofactory.mobile
 				
 				case GREEN:
 				{
-					buttonToReturn = new MobileButton(Theme.buttonYellowSkinTextures, text);
+					buttonToReturn = new MobileButton(Theme.buttonGreenSkinTextures, text);
 					buttonToReturn.fontColor = 0xffffff;
 					buttonToReturn.nativeFilters = [ new GlowFilter(0x1a7602, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
 						new DropShadowFilter(2, 75, 0x1a7602, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
