@@ -18,8 +18,6 @@ package com.ludofactory.mobile.core.avatar.test.manager
 	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
 	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
-	import com.ludofactory.mobile.core.avatar.test.manager.AvatarData;
-	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -347,7 +345,8 @@ package com.ludofactory.mobile.core.avatar.test.manager
 			stream.readBytes(bytes, 0, stream.bytesAvailable);
 			
 			// necessary to load it on the same application domain on ios
-			var loaderContext:LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
+			var loaderContext:LoaderContext = new LoaderContext();
+			loaderContext.applicationDomain = GlobalConfig.android ? null : ApplicationDomain.currentDomain; // multiple domains are not supported on iOS   
 			loaderContext.allowCodeImport = true;
 			bytes.position = 0;
 			
