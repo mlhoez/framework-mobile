@@ -54,7 +54,6 @@ package com.ludofactory.mobile.core.avatar.test.manager
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
-	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedSuperclassName;
 	
 	import starling.core.Starling;
@@ -148,7 +147,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		private var _assetsToLoad:Array;
 		/**
 		 * The stored assets. */
-		private var _assets:Dictionary;
+		private var _assets:LoaderInfo;
 		
 		private var _rasterized:Boolean = false;
 		
@@ -178,9 +177,6 @@ package com.ludofactory.mobile.core.avatar.test.manager
 			
 			// load the assets from disk
 			_factoryManager = new FactoryManager();
-			
-			// build the dictionary
-			_assets = new Dictionary();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -294,10 +290,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		{
 			_factoryManager.removeEventListener(LKAvatarMakerEventTypes.ALL_FACTORIES_READY, onFactoriesReady);
 			
-			_assetsToLoad = [ new AvatarLocalFileData(AvatarGenderType.BOY, File.applicationStorageDirectory.resolvePath(_assetsPath + "/items/boy-assets.swf"), AvatarFileType.ITEMS),
-							  new AvatarLocalFileData(AvatarGenderType.GIRL, File.applicationStorageDirectory.resolvePath(_assetsPath + "/items/girl-assets.swf"), AvatarFileType.ITEMS),
-							  new AvatarLocalFileData(AvatarGenderType.POTATO, File.applicationStorageDirectory.resolvePath(_assetsPath + "/items/potato-assets.swf"), AvatarFileType.ITEMS)
-							];
+			_assetsToLoad = [ new AvatarLocalFileData(File.applicationStorageDirectory.resolvePath(_assetsPath + "/items/avatars-assets.swf"), AvatarFileType.ITEMS) ];
 			
 			loadLocalFile(_assetsToLoad[0]);
 		}
@@ -314,12 +307,11 @@ package com.ludofactory.mobile.core.avatar.test.manager
 			}
 			
 			// first unload the previous file if necessary and clear the cache
-			if(_assets[fileToLoadData.genderId] != null)
+			if(_assets != null)
 			{
-				logWarning("[AvatarManager] Unloading deprecated assets for " + AvatarGenderType.gerGenderNameById(fileToLoadData.genderId) + " !");
-				(_assets[fileToLoadData.genderId] as LoaderInfo).loader.unloadAndStop(true);
-				_assets[fileToLoadData.genderId] = null;
-				delete _assets[fileToLoadData.genderId];
+				logWarning("[AvatarManager] Unloading deprecated assets !");
+				_assets.loader.unloadAndStop(true);
+				_assets = null;
 				
 				// clear the cache for this file
 				if(File.cacheDirectory.resolvePath(_assetsPath + fileToLoadData.fileType + File.separator + fileToLoadData.fileNameWithExtension).exists)
@@ -346,7 +338,15 @@ package com.ludofactory.mobile.core.avatar.test.manager
 			
 			// necessary to load it on the same application domain on ios
 			var loaderContext:LoaderContext = new LoaderContext();
-			loaderContext.applicationDomain = GlobalConfig.android ? null : ApplicationDomain.currentDomain; // multiple domains are not supported on iOS   
+			
+			// Note : because we changed the way the assets are built (now all prefixed so that we can mix everything in one swf),
+			// we can load everything in the main application domain.
+			// On Android and desktop : we can build different application domains
+			// On iOS : we can only load everything in the same (the main one) application domain
+			//loaderContext.applicationDomain = GlobalConfig.android ? null : (GlobalConfig.ios ? ApplicationDomain.currentDomain : new ApplicationDomain(ApplicationDomain.currentDomain)); // multiple domains are not supported on iOS   
+			
+			loaderContext.applicationDomain = ApplicationDomain.currentDomain;
+			
 			loaderContext.allowCodeImport = true;
 			bytes.position = 0;
 			
@@ -362,29 +362,19 @@ package com.ludofactory.mobile.core.avatar.test.manager
 			_assetsLoader.contentLoaderInfo.removeEventListener(flash.events.Event.COMPLETE, processNextLocalFile);
 			_assetsLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onError);
 			
-			if (_assetsToLoad.length > 0)
-			{
-				var data:AvatarLocalFileData = _assetsToLoad.shift();
-				_assets[data.genderId] = event.target as LoaderInfo;
-				data.dispose();
-				data = null;
-			}
+			var data:AvatarLocalFileData = _assetsToLoad.shift();
+			data.dispose();
+			data = null;
 			
-			if (_assetsToLoad.length > 0)
-			{
-				// we need to create a new one or the contentLoaderInfo will be erased at each new loading
-				loadLocalFile(_assetsToLoad[0]);
-			}
-			else
-			{
-				_isInitialized = true; // a mettre à la fin
-				
-				Starling.current.nativeStage.addEventListener(flash.events.Event.ENTER_FRAME, onNativeEnterFrameHandler);
-				
-				// FIXME chercher comment améliorer ça, si pas de délais, certains éléments ne s'affichent pas 'ne semblent pas être dispo)
-				Starling.juggler.delayCall(dispatchEventWith, 1, LKAvatarMakerEventTypes.AVATAR_READY);
-				//dispatchEventWith(LKAvatarMakerEventTypes.AVATAR_READY);
-			}
+			_assets = event.target as LoaderInfo;
+		
+			_isInitialized = true; // a mettre à la fin
+			
+			Starling.current.nativeStage.addEventListener(flash.events.Event.ENTER_FRAME, onNativeEnterFrameHandler);
+			
+			// FIXME chercher comment améliorer ça, si pas de délais, certains éléments ne s'affichent pas 'ne semblent pas être dispo)
+			Starling.juggler.delayCall(dispatchEventWith, 1, LKAvatarMakerEventTypes.AVATAR_READY);
+			//dispatchEventWith(LKAvatarMakerEventTypes.AVATAR_READY);
 		}
 	
 		/**
@@ -407,6 +397,9 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		 */
 		private function setTempItems(avatar:Armature):void
 		{
+			if(AvatarData(avatar.userData).genderId == 0)
+				return;
+			
 			var currentConfig:LKAvatarConfig = LKConfigManager.getConfigByGender(AvatarData(avatar.userData).genderId);
 			
 			// then update the graphics accordingly (not all of them because some are linked)
@@ -437,6 +430,9 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		 */
 		private function setUserItems(avatar:Armature):void
 		{
+			if(AvatarData(avatar.userData).genderId == 0)
+				return;
+			
 			var currentConfig:LKAvatarConfig = LKConfigManager.getConfigByGender(AvatarData(avatar.userData).genderId);
 			
 			//log("Current config = ");
@@ -482,6 +478,30 @@ package com.ludofactory.mobile.core.avatar.test.manager
 //------------------------------------------------------------------------------------------------------------
 //	Update
 		
+		private function getAssetPrefix(genderId:int, armatureSection:String):String
+		{
+			switch (armatureSection)
+			{
+				// prefixe commun pour girl et boy (human) et dossier different pour potato
+				case LudokadoBones.NOSE:
+				case LudokadoBones.HAT:
+				{
+					return genderId == AvatarGenderType.POTATO ? "potato" : "human"
+				}
+				// commun pour les 3 genres
+				case LudokadoBones.LEFT_HAND:
+				case LudokadoBones.RIGHT_HAND:
+				{
+					return "common";
+				}
+				// un prefixe par genre
+				default:
+				{
+					return AvatarGenderType.gerGenderNameById(genderId);
+				}
+			}
+		}
+		
 		/**
 		 * Updates the armature section with the new display.
 		 *
@@ -491,7 +511,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		 */
 		public function update(avatar:Armature, armatureSection:String, linkageName:String):void
 		{
-			linkageName = linkageName == "" ? (armatureSection + "_0") : linkageName;
+			linkageName = linkageName == "" ? (getAssetPrefix(AvatarData(avatar.userData).genderId, armatureSection) + "_" + armatureSection + "_0") : linkageName;
 			//log("Setting " + linkageName + " for " + armatureSection);
 			
 			if(armatureSection == LudokadoBones.HAT) // Changement de chapeau
@@ -499,7 +519,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 				if(AvatarData(avatar.userData).genderId == AvatarGenderType.POTATO)
 				{
 					// update the back hair for the potato because the back hair is linked to the hat
-					LKConfigManager.getBoneConfigByGender(AvatarData(avatar.userData).genderId, LudokadoBones.BACK_HAIR).tempLinkageName = (LudokadoBones.BACK_HAIR + "_" + LKConfigManager.getBoneConfigByGender(AvatarData(avatar.userData).genderId, LudokadoBones.HAT).tempLinkageExtractedId);
+					LKConfigManager.getBoneConfigByGender(AvatarData(avatar.userData).genderId, LudokadoBones.BACK_HAIR).tempLinkageName = (getAssetPrefix(AvatarData(avatar.userData).genderId, LudokadoBones.BACK_HAIR) + "_" + LudokadoBones.BACK_HAIR + "_" + LKConfigManager.getBoneConfigByGender(AvatarData(avatar.userData).genderId, LudokadoBones.HAT).tempLinkageExtractedId);
 					update(avatar, LudokadoBones.BACK_HAIR, LKConfigManager.getBoneConfigByGender(AvatarData(avatar.userData).genderId, LudokadoBones.BACK_HAIR).tempLinkageName);
 				}
 				else
@@ -517,10 +537,10 @@ package com.ludofactory.mobile.core.avatar.test.manager
 					{
 						// we updated the hair for the humans. Because the hair cannot be updated if a hat is worn, we
 						// need to force the hair_0
-						linkageName = LudokadoBones.HAIR +"_0";
+						linkageName = getAssetPrefix(AvatarData(avatar.userData).genderId, LudokadoBones.HAIR) + "_" + LudokadoBones.HAIR + "_0";
 					}
 					
-					LKConfigManager.getBoneConfigByGender(AvatarData(avatar.userData).genderId, LudokadoBones.BACK_HAIR).tempLinkageName = (LudokadoBones.BACK_HAIR + "_" + LKConfigManager.getBoneConfigByGender(AvatarData(avatar.userData).genderId, LudokadoBones.HAIR).tempLinkageExtractedId);
+					LKConfigManager.getBoneConfigByGender(AvatarData(avatar.userData).genderId, LudokadoBones.BACK_HAIR).tempLinkageName = (getAssetPrefix(AvatarData(avatar.userData).genderId, LudokadoBones.BACK_HAIR) + "_" + LudokadoBones.BACK_HAIR + "_" + LKConfigManager.getBoneConfigByGender(AvatarData(avatar.userData).genderId, LudokadoBones.HAIR).tempLinkageExtractedId);
 					update(avatar, LudokadoBones.BACK_HAIR, LKConfigManager.getBoneConfigByGender(AvatarData(avatar.userData).genderId, LudokadoBones.BACK_HAIR).tempLinkageName);
 				}
 			}
@@ -637,7 +657,8 @@ package com.ludofactory.mobile.core.avatar.test.manager
 			
 			try
 			{
-				HELPER_CONTENT = new (_assets[AvatarData(avatar.userData).genderId].applicationDomain.getDefinition(assetLinkageName) as Class)();
+				HELPER_CONTENT = new (_assets.applicationDomain.getDefinition(assetLinkageName) as Class)();
+				//HELPER_CONTENT = new (ApplicationDomain.currentDomain.getDefinition(assetLinkageName) as Class)(); // or we can use that because the assets are loaded in the same domain
 			}
 			catch(error:Error)
 			{
@@ -1180,12 +1201,6 @@ package com.ludofactory.mobile.core.avatar.test.manager
 				
 				// retrieve the file binary content
 				var bytes:ByteArray = urlLoader.data as ByteArray;
-				
-				// "?v="+getTimer()
-				var file:File = File.applicationStorageDirectory.resolvePath(_assetsPath + fileToLoadInfo.fileType + File.separator + fileToLoadInfo.name + "." + fileToLoadInfo.extension);
-				//file.deleteFile();
-				file.deleteFile();
-				
 				var file:File = File.applicationStorageDirectory.resolvePath(_assetsPath + fileToLoadInfo.fileType + File.separator + fileToLoadInfo.name + "." + fileToLoadInfo.extension);
 				
 				// FIXME essayer openAsync si ça freeze
@@ -1205,7 +1220,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 				if(fileToLoadInfo.fileType == AvatarFileType.ITEMS)
 				{
 					logError(fileToLoadInfo);
-					_assetsToLoad.push( new AvatarLocalFileData(AvatarGenderType.getGenderIdByName(fileToLoadInfo.genderName), File.applicationStorageDirectory.resolvePath(_assetsPath + "/items/" + fileToLoadInfo.name + ".swf"), fileToLoadInfo.fileType) );
+					_assetsToLoad.push( new AvatarLocalFileData(File.applicationStorageDirectory.resolvePath(_assetsPath + "/items/" + fileToLoadInfo.name + ".swf"), fileToLoadInfo.fileType) );
 					logError(_assetsToLoad[_assetsToLoad.length-1].file.url);
 				}
 				
