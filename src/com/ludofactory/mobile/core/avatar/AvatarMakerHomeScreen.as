@@ -4,6 +4,7 @@
 package com.ludofactory.mobile.core.avatar
 {
 	
+	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
@@ -25,6 +26,7 @@ package com.ludofactory.mobile.core.avatar
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
+	import com.ludofactory.mobile.core.remoting.Remote;
 	
 	import flash.filesystem.File;
 	
@@ -66,14 +68,27 @@ package com.ludofactory.mobile.core.avatar
 		{
 			super.initialize();
 			
-			InfoManager.show(_("Chargement..."));
-			
-			// load assets first
-			var path:File = File.applicationDirectory.resolvePath("assets/avatars/avatar-maker/");
-			AbstractEntryPoint.assets.enqueue( path.url + "/avatar-maker.png" );
-			AbstractEntryPoint.assets.enqueue( path.url + "/avatar-maker.xml" );
-			AbstractEntryPoint.assets.enqueue( path.url + "/avatars-background.jpg" );
-			AbstractEntryPoint.assets.loadQueue( function onLoading(ratio:Number):void{ if(ratio == 1) initializeAvatar(); });
+			if(AvatarMakerAssets.isInitializd)
+			{
+				_background = new Image(AbstractEntryPoint.assets.getTexture("avatars-background"));
+				_background.width = actualWidth;
+				_background.height = actualHeight;
+				addChild(_background);
+				
+				AvatarManager.getInstance().addEventListener(LKAvatarMakerEventTypes.AVATAR_READY, onAvatarsReady);
+				AvatarManager.getInstance().initialize();
+			}
+			else
+			{
+				InfoManager.show(_("Chargement..."));
+				
+				// load assets first
+				var path:File = File.applicationDirectory.resolvePath("assets/avatars/avatar-maker/");
+				AbstractEntryPoint.assets.enqueue( path.url + "/avatar-maker.png" );
+				AbstractEntryPoint.assets.enqueue( path.url + "/avatar-maker.xml" );
+				AbstractEntryPoint.assets.enqueue( path.url + "/avatars-background.jpg" );
+				AbstractEntryPoint.assets.loadQueue( function onLoading(ratio:Number):void{ if(ratio == 1) initializeAvatar(); });
+			}
 		}
 		
 		override protected function draw():void
@@ -117,9 +132,11 @@ package com.ludofactory.mobile.core.avatar
 		
 		private function initializeAvatar():void
 		{
-			AvatarAssets.build();
+			AvatarMakerAssets.build();
 			
 			_background = new Image(AbstractEntryPoint.assets.getTexture("avatars-background"));
+			_background.width = actualWidth;
+			_background.height = actualHeight;
 			addChild(_background);
 			
 			AvatarManager.getInstance().addEventListener(LKAvatarMakerEventTypes.AVATAR_READY, onAvatarsReady);
@@ -134,7 +151,7 @@ package com.ludofactory.mobile.core.avatar
 		{
 			AvatarManager.getInstance().removeEventListener(LKAvatarMakerEventTypes.AVATAR_READY, onAvatarsReady);
 			
-			InfoManager.hide(_("Avatar chargé."), InfoContent.ICON_CHECK);
+			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
 			
 			AvatarManager.getInstance().changeAvatar(AvatarDisplayerType.STARLING);
 			addChild(AvatarManager.getInstance().currentAvatar.display as Sprite);
@@ -174,7 +191,16 @@ package com.ludofactory.mobile.core.avatar
 		 */
 		private function onChangeGender(event:Event):void
 		{
-			advancedOwner.showScreen(ScreenIds.AVATAR_GENDER_CHOICE_SCREEN);
+			if(AirNetworkInfo.networkInfo.isConnected())
+			{
+				InfoManager.show(_("Chargement..."));
+				Remote.getInstance().requestAvatarChange(onChangeAvatarRequestSuccess, onChangeAvatarRequestFail, onChangeAvatarRequestFail, 1, advancedOwner.activeScreenID);
+			}
+			else
+			{
+				InfoManager.showTimed(_("Vous devez être connecté à Internet pour pouvoir changer de personnage."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+			}
+			
 		}
 		
 		/**
@@ -186,6 +212,43 @@ package com.ludofactory.mobile.core.avatar
 		}
 		
 //------------------------------------------------------------------------------------------------------------
+//	Callbacks
+		
+		/**
+		 * The request was a success.
+		 *
+		 * Here we fetched the configuration of the two other genders of avatars so that we can display them with
+		 * their configuration and allow the reset (handling costs, etc.).
+		 */
+		private function onChangeAvatarRequestSuccess(result:Object = null):void
+		{
+			if(result.code == 1)
+			{
+				// parse the configuration of all genders in order to display the user configuration in the popup
+				if(result.otherAvatarConfigurations)
+				{
+					for each (var config:Object in result.otherAvatarConfigurations)
+						LKConfigManager.initializeConfigForGender(config.idGender, config);
+				}
+				
+				InfoManager.hide("", InfoContent.ICON_CROSS, 0);
+				advancedOwner.showScreen(ScreenIds.AVATAR_GENDER_CHOICE_SCREEN);
+			}
+			else
+			{
+				InfoManager.hide(_("Une erreur est survenue.\n\nVeuillez réessayer."), InfoContent.ICON_CROSS);
+			}
+		}
+		
+		/**
+		 * The request failed, so here we need to display an error message and clear the popup.
+		 */
+		private function onChangeAvatarRequestFail(error:Object = null):void
+		{
+			InfoManager.hide(_("Une erreur est survenue.\n\nVeuillez réessayer."), InfoContent.ICON_CROSS);
+		}
+		
+//------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
 		override public function dispose():void
@@ -193,19 +256,31 @@ package com.ludofactory.mobile.core.avatar
 			// just in case
 			AvatarManager.getInstance().removeEventListener(LKAvatarMakerEventTypes.AVATAR_READY, onAvatarsReady);
 			
-			_avatarNameContainer.removeFromParent(true);
-			_avatarNameContainer = null;
+			if(_avatarNameContainer)
+			{
+				_avatarNameContainer.removeFromParent(true);
+				_avatarNameContainer = null;
+			}
 			
-			_changeGenderButton.removeEventListener(Event.TRIGGERED, onChangeGender);
-			_changeGenderButton.removeFromParent(true);
-			_changeGenderButton = null;
+			if(_changeGenderButton)
+			{
+				_changeGenderButton.removeEventListener(Event.TRIGGERED, onChangeGender);
+				_changeGenderButton.removeFromParent(true);
+				_changeGenderButton = null;
+			}
 			
-			_modifyButton.removeEventListener(Event.TRIGGERED, onModifiy);
-			_modifyButton.removeFromParent(true);
-			_modifyButton = null;
+			if(_modifyButton)
+			{
+				_modifyButton.removeEventListener(Event.TRIGGERED, onModifiy);
+				_modifyButton.removeFromParent(true);
+				_modifyButton = null;
+			}
 			
-			_facebookButton.removeFromParent(true);
-			_facebookButton = null;
+			if(_facebookButton)
+			{
+				_facebookButton.removeFromParent(true);
+				_facebookButton = null;
+			}
 			
 			super.dispose();
 		}

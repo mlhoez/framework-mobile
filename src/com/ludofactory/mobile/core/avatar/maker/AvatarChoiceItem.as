@@ -4,189 +4,130 @@
 package com.ludofactory.mobile.core.avatar.maker
 {
 	
-	import com.greensock.TweenMax;
-	import com.ludofactory.desktop.core.AbstractServer;
-	import com.ludofactory.desktop.tools.splitThousands;
-	import com.ludofactory.globbies.events.AvatarMakerEventTypes;
-	import com.ludofactory.ludokado.config.AvatarDisplayerType;
-	import com.ludofactory.ludokado.manager.AvatarData;
-	import com.ludofactory.ludokado.manager.AvatarManager;
-	import com.ludofactory.ludokado.manager.LKAvatarConfig;
-	import com.ludofactory.ludokado.manager.LKConfigManager;
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.roundUp;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
+	import com.ludofactory.mobile.core.avatar.test.config.AvatarDisplayerType;
+	import com.ludofactory.mobile.core.avatar.test.manager.AvatarData;
+	import com.ludofactory.mobile.core.avatar.test.manager.AvatarManager;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKAvatarConfig;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import dragonBones.Armature;
 	import dragonBones.animation.WorldClock;
 	
-	import flash.display.DisplayObject;
+	import feathers.display.Scale3Image;
 	
-	import starling.display.Button;
+	import starling.display.DisplayObject;
+	import starling.display.Image;
 	import starling.display.Sprite;
-	import starling.events.Event;
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
+	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
+	import starling.utils.HAlign;
+	import starling.utils.VAlign;
 	
 	public class AvatarChoiceItem extends Sprite
 	{
 		/**
-		 * The associated gender. */
-		private var _gender:int;
+		 * The associated gender id. */
+		private var _genderId:int;
+		/**
+		 * The avatar configuration. */
+		private var _avatarConfig:LKAvatarConfig;
 		
 		/**
 		 * The avatar to display. */
 		private var _avatar:Armature;
+		
 		/**
-		 * Choose button. */
-		private var _chooseButton:SelectButton;
-		private var _priceButton:PriceButton;
+		 * Price background. */
+		private var _priceBackground:Scale3Image;
+		/**
+		 * Price label. */
+		private var _priceLabel:TextField;
+		/**
+		 * Price icon. */
+		private var _priceIcon:Image;
 		
-		private var _avatarConfig:LKAvatarConfig;
-		
-		public function AvatarChoiceItem(gender:int, isFirstChoice:Boolean = false)
+		public function AvatarChoiceItem(genderId:int)
 		{
 			super();
 			
-			_gender = gender;
+			_genderId = genderId;
+			_avatarConfig = LKConfigManager.getConfigByGender(_genderId);
 			
-			var delay:Number = 0;
-			/*switch (LudokadoConfigurationManager.gender)
-			{
-				case AvatarGender.BOY : { delay = gender == AvatarGender.GIRL ? 0 : 0.5; break; }
-				case AvatarGender.GIRL : { delay = gender == AvatarGender.BOY ? 0 : 0.25; break; }
-				case AvatarGender.POTATO : { delay = gender == AvatarGender.BOY ? 0 : 0.25; break; }
-			}*/
+			_priceBackground = new Scale3Image(AvatarMakerAssets.avatarChoicePriceBackground, GlobalConfig.dpiScale);
+			_priceBackground.width = scaleAndRoundToDpi(GlobalConfig.isPhone ? 240 : 340);
+			addChild(_priceBackground);
+			_priceBackground.validate();
 			
-			_avatar = AvatarManager.getInstance().getAvatar(_gender, AvatarDisplayerType.STARLING);
-			_avatar.display.scaleX = _avatar.display.scaleY = isFirstChoice ? 0.55 : 0.6;
-			TweenMax.delayedCall(delay, WorldClock.clock.add, [_avatar]);
-			if(AvatarData(_avatar.userData).displayType == AvatarDisplayerType.NATIVE)
-				AbstractServer.contentLayer.addChild(_avatar.display as DisplayObject);
-			else
-			{
-				addChildAt(_avatar.display as starling.display.DisplayObject, 0);
-				(_avatar.display as Sprite).addEventListener(TouchEvent.TOUCH, onTouch);
-				(_avatar.display as Sprite).touchGroup = true;
-				(_avatar.display as Sprite).touchable = true;
-				(_avatar.display as Sprite).useHandCursor = true;
-			}
+			alignPivot(HAlign.CENTER, VAlign.BOTTOM);
 			
-			_avatarConfig = LKConfigManager.getConfigByGender(_avatar.userData.genderId);
+			// build the avatar
+			_avatar = AvatarManager.getInstance().getAvatar(_genderId, AvatarDisplayerType.STARLING);
+			(_avatar.display as Sprite).touchGroup = false;
+			(_avatar.display as Sprite).touchable = false;
+			addChildAt(_avatar.display as DisplayObject, 0);
+			WorldClock.clock.add(_avatar);
+			(_avatar.display as Sprite).x = _priceBackground.width * 0.45;
+			(_avatar.display as Sprite).y = scaleAndRoundToDpi(10);
 			
-			if(isFirstChoice || _avatarConfig.isOwned)
-			{
-				/*_chooseButton = new Button(StarlingRoot.assets.getTexture("avatar-choice-button-background"), _("CHOISIR"), StarlingRoot.assets.getTexture("avatar-choice-button-over-background"), StarlingRoot.assets.getTexture("avatar-choice-button-over-background"));
-				 _chooseButton.fontName = Theme.FONT_OSWALD;
-				 _chooseButton.fontColor = 0x4a2800;
-				 _chooseButton.fontBold = true;
-				 _chooseButton.fontSize = 24;
-				 _chooseButton.addEventListener(Event.TRIGGERED, onSelect);
-				 _chooseButton.scaleWhenDown = 0.9;
-				 _chooseButton.x = _chooseButton.width * -0.4;
-				 _chooseButton.y = _chooseButton.height * -0.2;
-				 addChild(_chooseButton);*/
-				
-				_chooseButton = new SelectButton();
-				_chooseButton.addEventListener(Event.TRIGGERED, onSelect);
-				_chooseButton.scaleWhenDown = 0.9;
-				_chooseButton.x = _chooseButton.width * -0.4;
-				_chooseButton.y = _chooseButton.height * -0.2;
-				addChild(_chooseButton);
-			}
-			else
-			{
-				_priceButton = new PriceButton(splitThousands(_avatarConfig.price), _avatarConfig.priceType);
-				_priceButton.addEventListener(Event.TRIGGERED, onSelect);
-				_priceButton.scaleWhenDown = 0.9;
-				_priceButton.x = _priceButton.width * -0.4;
-				_priceButton.y = _priceButton.height * -0.2;
-				addChild(_priceButton);
-			}
+			_priceLabel = new TextField(5, _priceBackground.height, Utilities.splitThousands(_avatarConfig.price), Theme.FONT_OSWALD, scaleAndRoundToDpi(28), 0x221008, true);
+			_priceLabel.autoSize = TextFieldAutoSize.HORIZONTAL;
+			addChild(_priceLabel);
+			
+			_priceIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
+			_priceIcon.scaleX = _priceIcon.scaleY = Utilities.getScaleToFillHeight(_priceIcon.height, _priceBackground.height * 0.6);
+			addChild(_priceIcon);
+			
+			_priceLabel.x = roundUp((_priceBackground.width - _priceLabel.width - _priceIcon.width) * 0.5);
+			_priceIcon.x = _priceLabel.x + _priceLabel.width;
+			_priceIcon.y = roundUp((_priceBackground.height - _priceIcon.height) *0.5);
+			
+			//_avatarConfig.priceType
 		}
 		
-//------------------------------------------------------------------------------------------------------------
-//	Handlers
-		
-		private function onTouch(event:TouchEvent):void
+		public function resize(height:Number):void
 		{
-			var touch:Touch = event.getTouch(_avatar.display as Sprite);
-			
-			if(_priceButton) _priceButton.onTouch(event, null, touch);
-			if(_chooseButton) _chooseButton.onTouch(event, null, touch);
-			
-			if(touch && touch.phase == TouchPhase.ENDED)
-				onSelect();
+			_avatar.display.scaleX = _avatar.display.scaleY = 1;
+			_avatar.display.scaleX = _avatar.display.scaleY = Utilities.getScaleToFillHeight(_avatar.display.height, (height - _priceBackground.height  *0.5));
 		}
 		
-		private function onSelect(event:Event = null):void
+		public function test(scale:Number):void
 		{
-			isSelected = _chooseButton ? _chooseButton.isSelected : true;
-			dispatchEventWith(AvatarMakerEventTypes.AVATAR_CHOSEN, true);
+			_avatar.display.scaleX = _avatar.display.scaleY = 1;
+			_avatar.display.scaleX = _avatar.display.scaleY = scale;
 		}
 		
-		override public function set x(value:Number):void
+		public function getScale():Number
 		{
-			if(AvatarData(_avatar.userData).displayType == AvatarDisplayerType.NATIVE)
-				_avatar.display.x = value;
-			super.x = value;	
-		}
-		
-		override public function set y(value:Number):void
-		{
-			if(AvatarData(_avatar.userData).displayType == AvatarDisplayerType.NATIVE)
-				_avatar.display.y = value;
-			super.y = value;
-		}
-		
-		private var _isSelected:Boolean = false;
-		
-		
-		public function get isSelected():Boolean
-		{
-			return _isSelected;
-		}
-		
-		public function set isSelected(value:Boolean):void
-		{
-			_isSelected = value;
-			_chooseButton ? (_chooseButton.isSelected = _isSelected) : null;
+			return _avatar.display.scaleX;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
 		
-		public function get gender():int { return _gender; }
+		public function get genderId():int { return _genderId; }
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
 		override public function dispose():void
 		{
-			if(_priceButton)
-			{
-				_priceButton.removeEventListener(Event.TRIGGERED, onSelect);
-				_priceButton.removeFromParent(true);
-				_priceButton = null;
-			}
-			
-			if(_chooseButton)
-			{
-				_chooseButton.removeEventListener(Event.TRIGGERED, onSelect);
-				_chooseButton.removeFromParent(true);
-				_chooseButton = null;
-			}
-			
 			WorldClock.clock.remove(_avatar);
-			if(AvatarManager.getInstance().currentAvatarDisplayType == AvatarDisplayerType.STARLING)
-			{
-				(_avatar.display as Sprite).removeEventListener(TouchEvent.TOUCH, onTouch);
-				_avatar.display.removeFromParent(true);
-			}
-			else
-			{
-				_avatar.display.parent.removeChild(_avatar.display);
-			}
+			_avatar.display.removeFromParent(true);
 			_avatar.dispose();
 			_avatar = null;
+			
+			_priceBackground.removeFromParent(true);
+			_priceBackground = null;
+			
+			_priceLabel.removeFromParent(true);
+			_priceLabel = null;
 			
 			_avatarConfig = null;
 			
