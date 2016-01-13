@@ -7,14 +7,14 @@
 package com.ludofactory.mobile.core.avatar.maker.sections
 {
 	
-	import com.ludofactory.desktop.core.StarlingRoot;
-	import com.ludofactory.globbies.events.AvatarMakerEventTypes;
-	import com.ludofactory.ludokado.config.AvatarGenderType;
-	import com.ludofactory.ludokado.config.LudokadoBones;
-	import com.ludofactory.ludokado.manager.LKConfigManager;
-	import com.ludofactory.server.CustomDefaultListItemRenderer;
-	import com.ludofactory.server.starling.theme.Theme;
-	import com.ludofactory.server.starling.theme.Theme;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
+	import com.ludofactory.mobile.core.avatar.maker.CustomDefaultListItemRenderer;
+	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
+	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
+	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Callout;
 	
@@ -28,7 +28,6 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
 	import starling.textures.Texture;
-	import starling.utils.VAlign;
 	
 	/**
 	 * Item renderer used to display the customer service messages.
@@ -64,7 +63,8 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 			
 			this.useHandCursor = true;
 			
-			_background = new Image(Theme.sectionButtonIdleBackground);
+			_background = new Image(AvatarMakerAssets.sectionButtonIdleBackground);
+			_background.scaleX = _background.scaleY = GlobalConfig.dpiScale;
 			addChild(_background);
 			
 			this.width = _background.width;
@@ -100,19 +100,19 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		{
 			switch (boneName)
 			{
-				case LudokadoBones.BEARD: { return StarlingRoot.assets.getTexture("selector-beard-human"); }
-				case LudokadoBones.EYEBROWS: { return StarlingRoot.assets.getTexture("selector-eyebrows"); }
-				case LudokadoBones.EYES: { return LKConfigManager.currentGenderId == AvatarGenderType.POTATO ? StarlingRoot.assets.getTexture("selector-eyes-potato") : StarlingRoot.assets.getTexture("selector-eyes-human"); }
-				case LudokadoBones.FACE_CUSTOM: { return StarlingRoot.assets.getTexture("selector-faceCustom-human"); }
-				case LudokadoBones.HAIR: { return StarlingRoot.assets.getTexture("selector-hair-human"); }
-				case LudokadoBones.HAT: { return StarlingRoot.assets.getTexture("selector-hat"); }
-				case LudokadoBones.LEFT_HAND: { return StarlingRoot.assets.getTexture("selector-leftHand"); }
-				case LudokadoBones.RIGHT_HAND: { return StarlingRoot.assets.getTexture("selector-rightHand"); }
-				case LudokadoBones.MOUSTACHE: { return StarlingRoot.assets.getTexture("selector-moustache"); }
-				case LudokadoBones.MOUTH: { return StarlingRoot.assets.getTexture("selector-mouth"); }
-				case LudokadoBones.NOSE: { return LKConfigManager.currentGenderId == AvatarGenderType.POTATO ? StarlingRoot.assets.getTexture("selector-nose-potato") : StarlingRoot.assets.getTexture("selector-nose-human"); }
-				case LudokadoBones.SHIRT: { return StarlingRoot.assets.getTexture("selector-shirt"); }
-				case LudokadoBones.EPAULET: { return StarlingRoot.assets.getTexture("selector-epaulet"); }
+				case LudokadoBones.BEARD: { return AvatarMakerAssets.selectorBeardHuman; }
+				case LudokadoBones.EYEBROWS: { return AvatarMakerAssets.selectorEyebrows; }
+				case LudokadoBones.EYES: { return LKConfigManager.currentGenderId == AvatarGenderType.POTATO ? AvatarMakerAssets.selectorEyesPotato : AvatarMakerAssets.selectorEyesHuman; }
+				case LudokadoBones.FACE_CUSTOM: { return AvatarMakerAssets.selectorFaceCustomHuman; }
+				case LudokadoBones.HAIR: { return AvatarMakerAssets.selectorHairHuman; }
+				case LudokadoBones.HAT: { return AvatarMakerAssets.selectorHat; }
+				case LudokadoBones.LEFT_HAND: { return AvatarMakerAssets.selectorLeftHand; }
+				case LudokadoBones.RIGHT_HAND: { return AvatarMakerAssets.selectorRightHand; }
+				case LudokadoBones.MOUSTACHE: { return AvatarMakerAssets.selectorMoustache; }
+				case LudokadoBones.MOUTH: { return AvatarMakerAssets.selectorMouth; }
+				case LudokadoBones.NOSE: { return LKConfigManager.currentGenderId == AvatarGenderType.POTATO ? AvatarMakerAssets.selectorNosePotato : AvatarMakerAssets.selectorNoseHuman; }
+				case LudokadoBones.SHIRT: { return AvatarMakerAssets.selectorShirt; }
+				case LudokadoBones.EPAULET: { return AvatarMakerAssets.selectorEpaulet; }
 				default: { throw new Error("Missing section icon : " + boneName); }
 			}
 		}
@@ -125,6 +125,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 				if(!_sectionImage)
 				{
 					_sectionImage = new Image(getImage(_data.asociatedBone));
+					_sectionImage.scaleX = _sectionImage.scaleY = GlobalConfig.dpiScale;
 					addChild(_sectionImage);
 				}
 				else
@@ -136,7 +137,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 					onTriggered();
 				}
 				
-				_background.texture = (!_isChoosed && _data.isChoosed) ? Theme.sectionButtonSelectedBackground : Theme.sectionButtonIdleBackground;
+				_background.texture = (!_isChoosed && _data.isChoosed) ? AvatarMakerAssets.sectionButtonSelectedBackground : AvatarMakerAssets.sectionButtonIdleBackground;
 			}
 		}
 		
@@ -185,7 +186,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		 */
 		protected function onTriggered():void
 		{
-			dispatchEventWith(AvatarMakerEventTypes.PART_SELECTED, true, _data.asociatedBone);
+			dispatchEventWith(LKAvatarMakerEventTypes.PART_SELECTED, true, _data.asociatedBone);
 		}
 		
 		private var _callout:Callout;
@@ -209,7 +210,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 				case ButtonState.DISABLED: { break; }
 				case ButtonState.UP:
 				{
-					_background.texture = _data.isChoosed ? Theme.sectionButtonSelectedBackground : Theme.sectionButtonIdleBackground;
+					_background.texture = _data.isChoosed ? AvatarMakerAssets.sectionButtonSelectedBackground : AvatarMakerAssets.sectionButtonIdleBackground;
 					_isOver = false;
 					
 					if(_callout)
@@ -223,9 +224,10 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 				}
 				case ButtonState.OVER:
 				{
-					_background.texture = _data.isChoosed ? Theme.sectionButtonSelectedBackground : Theme.sectionButtonOverBackground;
-					
 					_isOver = true;
+					
+					/*
+					_background.texture = _data.isChoosed ? Theme.sectionButtonSelectedBackground : Theme.sectionButtonOverBackground;
 					
 					if(!_isCalloutDisplaying)
 					{
@@ -236,7 +238,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 						_callout.focusPaddingTop = 20;
 						_callout.disposeContent = false;
 						_callout.touchable = false;
-					}
+					}*/
 					
 					break;
 				}

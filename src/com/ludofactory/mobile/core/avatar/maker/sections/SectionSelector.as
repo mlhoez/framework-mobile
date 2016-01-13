@@ -7,15 +7,17 @@
 package com.ludofactory.mobile.core.avatar.maker.sections
 {
 	
-	import com.ludofactory.desktop.core.StarlingRoot;
-	import com.ludofactory.desktop.gettext.aliases._;
-	import com.ludofactory.globbies.events.AvatarMakerEventTypes;
-	import com.ludofactory.ludokado.config.AvatarGenderType;
-	import com.ludofactory.ludokado.config.LudokadoBones;
-	import com.ludofactory.ludokado.manager.LKConfigManager;
-	import com.ludofactory.server.avatar.customization.LudokadoStarlingButton;
-	import com.ludofactory.server.avatar.customization.items.ItemManager;
-	import com.ludofactory.server.starling.theme.Theme;
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
+	import com.ludofactory.mobile.core.avatar.maker.CustomButton;
+	import com.ludofactory.mobile.core.avatar.maker.LudokadoStarlingButton;
+	import com.ludofactory.mobile.core.avatar.maker.items.ItemManager;
+	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
+	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
+	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.GroupedList;
 	import feathers.controls.Scroller;
@@ -41,7 +43,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		private var _categoryList:GroupedList;
 		/**
 		 * Age button. */
-		private var _ageButton:LudokadoStarlingButton;
+		private var _ageButton:CustomButton;
 		/**
 		 * Color selector. */
 		private var _colorSelector:ColorSelector;
@@ -55,32 +57,30 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		{
 			super.initialize();
 			
-			_background = new Scale9Image(new Scale9Textures(Theme.panelBackground, new Rectangle(10, 10, 12, 12)));
+			_background = new Scale9Image(new Scale9Textures(AvatarMakerAssets.panelBackground, new Rectangle(10, 10, 12, 12)));
 			_background.touchable = false;
+			_background.alpha = 0.5;
 			addChild(_background);
 			
 			_categoryList = new GroupedList();
 			_categoryList.headerRendererType = CategoryHeaderItemRenderer;
 			_categoryList.itemRendererType = CategoryItemRenderer;
 			_categoryList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_categoryList.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
+			_categoryList.verticalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 			addChild(_categoryList);
 			
-			_ageButton = new LudokadoStarlingButton(StarlingRoot.assets.getTexture("selector-age"), _("Age"), StarlingRoot.assets.getTexture("selector-age-selected"), StarlingRoot.assets.getTexture("selector-age-over"));
+			_ageButton = new CustomButton(AvatarMakerAssets.ageSelector, _("Age"), AvatarMakerAssets.ageSelectorSelected);
 			_ageButton.isToggle = true;
-			//_ageButton.isToolTipEnabled = true;
-			//_ageButton.calloutText = _("Age du personnage");
-			//_ageButton.calloutDirection = Callout.DIRECTION_LEFT;
-			_ageButton.fontName = Theme.FONT_MOUSE_MEMOIRS;
+			_ageButton.fontName = Theme.FONT_OSWALD;
 			_ageButton.fontColor = 0xffffff;
-			_ageButton.fontSize = 20;
+			_ageButton.fontSize = scaleAndRoundToDpi(20);
 			_ageButton.addEventListener(Event.TRIGGERED, onAgeSelected);
 			addChild(_ageButton);
 			
 			_colorSelector = new ColorSelector();
 			addChild(_colorSelector);
 			
-			addEventListener(AvatarMakerEventTypes.PART_SELECTED, onPartSelected);
+			addEventListener(LKAvatarMakerEventTypes.PART_SELECTED, onPartSelected);
 		}
 		
 		override protected function draw():void
@@ -94,13 +94,13 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 				
 				_categoryList.x = 0;
 				_categoryList.width = actualWidth - (_categoryList.x * 2);
-				_categoryList.height = actualHeight - _categoryList.y - 5;
+				_categoryList.height = actualHeight - _categoryList.y - scaleAndRoundToDpi(5);
 				
-				_ageButton.x = -55;
-				_ageButton.y = 10;
+				_ageButton.x = scaleAndRoundToDpi(-55);
+				_ageButton.y = scaleAndRoundToDpi(10);
 				
-				_colorSelector.x = -55;
-				_colorSelector.y = 10;
+				_colorSelector.x = scaleAndRoundToDpi(-55);
+				_colorSelector.y = scaleAndRoundToDpi(10);
 			}
 		}
 		
@@ -147,7 +147,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 			if(LKConfigManager.currentGenderId != AvatarGenderType.POTATO)
 			{
 				_ageButton.visible = true;
-				_colorSelector.y = _ageButton.y + _ageButton.height - 10;
+				_colorSelector.y = _ageButton.y + _ageButton.height - scaleAndRoundToDpi(10);
 			}
 			else
 			{
@@ -158,7 +158,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		
 		private function onAgeSelected(event:Event):void
 		{
-			dispatchEventWith(AvatarMakerEventTypes.PART_SELECTED, true, LudokadoBones.AGE);
+			dispatchEventWith(LKAvatarMakerEventTypes.PART_SELECTED, true, LudokadoBones.AGE);
 		}
 
 		/**
@@ -170,22 +170,6 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		public function onBasketUpdated(armatureSectionType:String):void
 		{
 			//_sections.onCartUpdated(armatureSectionType);
-		}
-		
-		/**
-		 * When the user clicks on a bone directly on the avatar.
-		 */
-		public function onSelectPartFromAvatar(armatureSectionType:String):void
-		{
-			//_sections.onSelectPartFromAvatar(armatureSectionType);
-		}
-		
-		/**
-		 * When the user roll-over / roll-out a part directly on the avatar.
-		 */
-		public function onPartHoveredFromAvatar(armatureSectionType:String,state:String):void
-		{
-			//_sections.onPartHoveredFromAvatar(armatureSectionType, state);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -270,7 +254,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		
 		override public function dispose():void
 		{
-			removeEventListener(AvatarMakerEventTypes.PART_SELECTED, onPartSelected);
+			removeEventListener(LKAvatarMakerEventTypes.PART_SELECTED, onPartSelected);
 			
 			_background.removeFromParent(true);
 			_background = null;
