@@ -4,18 +4,18 @@
 package com.ludofactory.mobile.core.avatar.maker.sections
 {
 	
-	import com.ludofactory.server.avatar.customization.*;
-	
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Linear;
-	import com.ludofactory.desktop.core.StarlingRoot;
-	import com.ludofactory.desktop.gettext.aliases._;
-	import com.ludofactory.desktop.tools.log;
-	import com.ludofactory.globbies.events.AvatarMakerEventTypes;
-	import com.ludofactory.ludokado.config.AvatarGenderType;
-	import com.ludofactory.ludokado.manager.LKConfigManager;
-	import com.ludofactory.ludokado.config.LudokadoBones;
+	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
+	import com.ludofactory.mobile.core.avatar.maker.LudokadoStarlingButton;
+	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
+	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
+	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import feathers.controls.Callout;
 	import feathers.core.FeathersControl;
@@ -83,7 +83,8 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		{
 			super.initialize();
 			
-			_iconsMask = new Image(StarlingRoot.assets.getTexture("icons-mask"));
+			_iconsMask = new Image(AvatarMakerAssets.iconsMask);
+			_iconsMask.scaleX = _iconsMask.scaleY = GlobalConfig.dpiScale;
 			_iconsMask.touchable = false;
 			
 			_iconsMaskedContainer = new PixelMaskDisplayObject(1, true);
@@ -91,10 +92,11 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 			addChild(_iconsMaskedContainer);
 			
 			_iconsContainer = new Sprite();
-			_iconsBackground = new Image(StarlingRoot.assets.getTexture("icons-background"));
+			_iconsBackground = new Image(AvatarMakerAssets.iconsBackground);
+			_iconsBackground.scaleX = _iconsBackground.scaleY = GlobalConfig.dpiScale;
 			_iconsBackground.touchable = false;
 			// lips color
-			_lipsColorButton = new LudokadoStarlingButton(StarlingRoot.assets.getTexture("selector-lips-color"), "", StarlingRoot.assets.getTexture("selector-lips-color-selected"), StarlingRoot.assets.getTexture("selector-lips-color-over"));
+			_lipsColorButton = new LudokadoStarlingButton(AvatarMakerAssets.lipsColor, "", AvatarMakerAssets.lipsColorSelected);
 			_lipsColorButton.isToolTipEnabled = true;
 			_lipsColorButton.isToggle = true;
 			_lipsColorButton.calloutText = _("Couleur des lèvres");
@@ -102,7 +104,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 			_lipsColorButton.addEventListener(Event.TRIGGERED, onButtonTouched);
 			_iconsContainer.addChild(_lipsColorButton);
 			// skin color
-			_skinColorButton = new LudokadoStarlingButton(StarlingRoot.assets.getTexture("selector-skin-color"), "", StarlingRoot.assets.getTexture("selector-skin-color-selected"), StarlingRoot.assets.getTexture("selector-skin-color-over"));
+			_skinColorButton = new LudokadoStarlingButton(AvatarMakerAssets.skinColor, "", AvatarMakerAssets.skinColorSelected);
 			_skinColorButton.isToolTipEnabled = true;
 			_skinColorButton.isToggle = true;
 			_skinColorButton.calloutText = _("Couleur de peau");
@@ -110,7 +112,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 			_skinColorButton.addEventListener(Event.TRIGGERED, onButtonTouched);
 			_iconsContainer.addChild(_skinColorButton);
 			// eyes color
-			_eyesColorButton = new LudokadoStarlingButton(StarlingRoot.assets.getTexture("selector-eyes-color"), "", StarlingRoot.assets.getTexture("selector-eyes-color-selected"), StarlingRoot.assets.getTexture("selector-eyes-color-over"));
+			_eyesColorButton = new LudokadoStarlingButton(AvatarMakerAssets.eyesColor, "", AvatarMakerAssets.eyesColorSelected);
 			_eyesColorButton.isToolTipEnabled = true;
 			_eyesColorButton.isToggle = true;
 			_eyesColorButton.calloutText = _("Couleur des yeux");
@@ -118,7 +120,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 			_eyesColorButton.addEventListener(Event.TRIGGERED, onButtonTouched);
 			_iconsContainer.addChild(_eyesColorButton);
 			// hair color
-			_hairColorButton = new LudokadoStarlingButton(StarlingRoot.assets.getTexture("selector-hair-color"), "", StarlingRoot.assets.getTexture("selector-hair-color-selected"), StarlingRoot.assets.getTexture("selector-hair-color-over"));
+			_hairColorButton = new LudokadoStarlingButton(AvatarMakerAssets.hairColor, "", AvatarMakerAssets.hairColorSelected);
 			_hairColorButton.isToolTipEnabled = true;
 			_hairColorButton.isToggle = true;
 			_hairColorButton.calloutText = _("Couleur des cheveux");
@@ -147,11 +149,11 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 			if(isInvalid(INVALIDATION_FLAG_SIZE))
 			{
 				// place icons
-				_lipsColorButton.x = _skinColorButton.x = _eyesColorButton.x = _hairColorButton.x = ICONS_POSITION_X;
-				_lipsColorButton.y = ICONS_START_Y;
-				_skinColorButton.y = _lipsColorButton.y + _lipsColorButton.height + ICONS_GAP;
-				_eyesColorButton.y = _skinColorButton.y + _skinColorButton.height + ICONS_GAP;
-				_hairColorButton.y = _eyesColorButton.y + _eyesColorButton.height + ICONS_GAP;
+				_lipsColorButton.x = _skinColorButton.x = _eyesColorButton.x = _hairColorButton.x = scaleAndRoundToDpi(ICONS_POSITION_X);
+				_lipsColorButton.y = scaleAndRoundToDpi(ICONS_START_Y);
+				_skinColorButton.y = _lipsColorButton.y + _lipsColorButton.height + scaleAndRoundToDpi(ICONS_GAP);
+				_eyesColorButton.y = _skinColorButton.y + _skinColorButton.height + scaleAndRoundToDpi(ICONS_GAP);
+				_hairColorButton.y = _eyesColorButton.y + _eyesColorButton.height + scaleAndRoundToDpi(ICONS_GAP);
 				
 				// then hide the container and animate its arrival (done once)
 				_iconsContainer.y = -_iconsContainer.height;
@@ -167,9 +169,9 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		public function onAvatarChanged():void
 		{
 			if(_iconsContainer.y == -_iconsContainer.height)
-				TweenMax.to(_iconsContainer, 0.5, { delay:1, y:(LKConfigManager.currentConfig.gender == AvatarGenderType.GIRL ? 0 : -47), ease:Back.easeOut });
+				TweenMax.to(_iconsContainer, 0.5, { delay:1, y:(LKConfigManager.currentConfig.gender == AvatarGenderType.GIRL ? 0 : scaleAndRoundToDpi(-47)), ease:Back.easeOut });
 			else
-				TweenMax.to(_iconsContainer, 0.5, { delay:1, y:(LKConfigManager.currentConfig.gender == AvatarGenderType.GIRL ? 0 : -47), ease:Linear.easeNone });
+				TweenMax.to(_iconsContainer, 0.5, { delay:1, y:(LKConfigManager.currentConfig.gender == AvatarGenderType.GIRL ? 0 : scaleAndRoundToDpi(-47)), ease:Linear.easeNone });
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -186,26 +188,26 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 			{
 				case _lipsColorButton:
 				{
-					dispatchEventWith(AvatarMakerEventTypes.PART_SELECTED, true, LudokadoBones.LIPS_COLOR);
+					dispatchEventWith(LKAvatarMakerEventTypes.PART_SELECTED, true, LudokadoBones.LIPS_COLOR);
 					break;
 				}
 				
 				case _skinColorButton:
 				{
-					dispatchEventWith(AvatarMakerEventTypes.PART_SELECTED, true, LudokadoBones.SKIN_COLOR);
+					dispatchEventWith(LKAvatarMakerEventTypes.PART_SELECTED, true, LudokadoBones.SKIN_COLOR);
 					break;
 				}
 				
 				case _eyesColorButton:
 				{
-					dispatchEventWith(AvatarMakerEventTypes.PART_SELECTED, true, LudokadoBones.EYES_COLOR);
+					dispatchEventWith(LKAvatarMakerEventTypes.PART_SELECTED, true, LudokadoBones.EYES_COLOR);
 					
 					break;
 				}
 				
 				case _hairColorButton:
 				{
-					dispatchEventWith(AvatarMakerEventTypes.PART_SELECTED, true, LudokadoBones.HAIR_COLOR);
+					dispatchEventWith(LKAvatarMakerEventTypes.PART_SELECTED, true, LudokadoBones.HAIR_COLOR);
 					break;
 				}
 			}
@@ -230,7 +232,8 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 			_colorButton.removeFromParent(true);
 			_colorButton = null;
 			
-			_allButtons.length = 0;
+			if(_allButtons)
+				_allButtons.length = 0;
 			_allButtons = null;
 			
 			_lipsColorButton.removeEventListener(Event.TRIGGERED, onButtonTouched);

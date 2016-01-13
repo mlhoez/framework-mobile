@@ -5,7 +5,9 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 {
 	
 	import com.greensock.TweenMax;
-	import com.ludofactory.desktop.core.StarlingRoot;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import flash.geom.Rectangle;
 	
@@ -51,37 +53,40 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		{
 			super();
 			
-			_background = new Image(StarlingRoot.assets.getTexture("palette-background"));
+			_background = new Image(AvatarMakerAssets.paletteBackground);
+			_background.scaleX = _background.scaleY = GlobalConfig.dpiScale;
 			addChild(_background);
 			
-			_palette = new Image(StarlingRoot.assets.getTexture("palette-icon"));
+			_palette = new Image(AvatarMakerAssets.paletteIcon);
+			_palette.scaleX = _palette.scaleY = GlobalConfig.dpiScale;
 			addChild(_palette);
 			
-			_redColor = new Image(StarlingRoot.assets.getTexture("palette-color-red"));
+			_redColor = new Image(AvatarMakerAssets.paletteColorRed);
+			_redColor.scaleX = _redColor.scaleY = GlobalConfig.dpiScale;
 			addChild(_redColor);
 			
-			_yellowColor = new Image(StarlingRoot.assets.getTexture("palette-color-yellow"));
+			_yellowColor = new Image(AvatarMakerAssets.paletteColorYellow);
+			_yellowColor.scaleX = _yellowColor.scaleY = GlobalConfig.dpiScale;
 			addChild(_yellowColor);
 			
-			_blueColor = new Image(StarlingRoot.assets.getTexture("palette-color-blue"));
+			_blueColor = new Image(AvatarMakerAssets.paletteColorBlue);
+			_blueColor.scaleX = _blueColor.scaleY = GlobalConfig.dpiScale;
 			addChild(_blueColor);
 			
-			_greenColor = new Image(StarlingRoot.assets.getTexture("palette-color-green"));
+			_greenColor = new Image(AvatarMakerAssets.paletteColorGreen);
+			_greenColor.scaleX = _greenColor.scaleY = GlobalConfig.dpiScale;
 			addChild(_greenColor);
 			
-			addEventListener(TouchEvent.TOUCH, onTouch);
+			//addEventListener(TouchEvent.TOUCH, onTouch);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Touch events
 		
 		/**
-		 * Touch event.
-		 */
-		/**
 		 * Touch handler.
 		 */
-		protected function onTouch(event:TouchEvent):void
+		/*protected function onTouch(event:TouchEvent):void
 		{
 			var touch:Touch = event.getTouch(this);
 			if (touch == null)
@@ -111,17 +116,17 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 			{
 				onTriggered();
 			}
-		}
+		}*/
 		
-		protected function onTriggered():void
+		/*protected function onTriggered():void
 		{
 			//dispatchEventWith(AvatarMakerEventTypes.PART_SELECTED, true, _data.asociatedBone);
-		}
+		}*/
 		
 		/**
 		 * Updates the current touch state.
 		 */
-		public function set state(value:String):void
+		/*public function set state(value:String):void
 		{
 			_currentTouchState = value;
 			
@@ -142,7 +147,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 				}
 				default: { throw new ArgumentError("Invalid button state: " + _currentTouchState); }
 			}
-		}
+		}*/
 		
 //------------------------------------------------------------------------------------------------------------
 //	Animation
@@ -156,29 +161,29 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 				_isAnimating = true;
 				
 				_palette.y = 0;
-				_palette.scaleX = _palette.scaleY = 1;
+				_palette.scaleX = _palette.scaleY = GlobalConfig.dpiScale;
 				TweenMax.killTweensOf(_palette);
-				TweenMax.to(_palette, 0.18, { y:-10, yoyo:true, repeat:1, scaleX:1.1, scaleY:1.1 });
+				TweenMax.to(_palette, 0.18, { y:scaleAndRoundToDpi(-10), yoyo:true, repeat:1, scaleX:(GlobalConfig.dpiScale + (0.1 * GlobalConfig.dpiScale)), scaleY:(GlobalConfig.dpiScale + (0.1 * GlobalConfig.dpiScale)) });
 				
 				_redColor.y = 0;
-				_redColor.scaleX = _redColor.scaleY = 1;
+				_redColor.scaleX = _redColor.scaleY = GlobalConfig.dpiScale;
 				TweenMax.killTweensOf(_redColor);
-				TweenMax.to(_redColor, 0.22, { y:-16, yoyo:true, repeat:1, scaleX:1.2, scaleY:1.2 });
+				TweenMax.to(_redColor, 0.22, { y:-16, yoyo:true, repeat:1, scaleX:(GlobalConfig.dpiScale + (0.2 * GlobalConfig.dpiScale)), scaleY:(GlobalConfig.dpiScale + (0.2 * GlobalConfig.dpiScale)) });
 				
 				_yellowColor.y = 0;
-				_yellowColor.scaleX = _yellowColor.scaleY = 1;
+				_yellowColor.scaleX = _yellowColor.scaleY = GlobalConfig.dpiScale;
 				TweenMax.killTweensOf(_yellowColor);
-				TweenMax.to(_yellowColor, 0.25, { y:-15, yoyo:true, repeat:1, scaleX:1.2, scaleY:1.2 });
+				TweenMax.to(_yellowColor, 0.25, { y:-15, yoyo:true, repeat:1, scaleX:(GlobalConfig.dpiScale + (0.2 * GlobalConfig.dpiScale)), scaleY:(GlobalConfig.dpiScale + (0.2 * GlobalConfig.dpiScale)) });
 				
 				_blueColor.y = 0;
-				_blueColor.scaleX = _blueColor.scaleY = 1;
+				_blueColor.scaleX = _blueColor.scaleY = GlobalConfig.dpiScale;
 				TweenMax.killTweensOf(_blueColor);
-				TweenMax.to(_blueColor, 0.28, { y:-12, yoyo:true, repeat:1, scaleX:1.2, scaleY:1.2 });
+				TweenMax.to(_blueColor, 0.28, { y:-12, yoyo:true, repeat:1, scaleX:(GlobalConfig.dpiScale + (0.2 * GlobalConfig.dpiScale)), scaleY:(GlobalConfig.dpiScale + (0.2 * GlobalConfig.dpiScale)) });
 				
 				_greenColor.y = 0;
-				_greenColor.scaleX = _greenColor.scaleY = 1;
+				_greenColor.scaleX = _greenColor.scaleY = GlobalConfig.dpiScale;
 				TweenMax.killTweensOf(_greenColor);
-				TweenMax.to(_greenColor, 0.31, { y:-12, yoyo:true, repeat:1, scaleX:1.2, scaleY:1.2, onComplete:function():void{ _isAnimating = false; } });
+				TweenMax.to(_greenColor, 0.31, { y:-12, yoyo:true, repeat:1, scaleX:(GlobalConfig.dpiScale + (0.2 * GlobalConfig.dpiScale)), scaleY:(GlobalConfig.dpiScale + (0.2 * GlobalConfig.dpiScale)), onComplete:function():void{ _isAnimating = false; } });
 			}
 		}
 		
@@ -187,7 +192,25 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		
 		override public function dispose():void
 		{
+			//removeEventListener(TouchEvent.TOUCH, onTouch);
 			
+			_background.removeFromParent(true);
+			_background = null;
+			
+			_palette.removeFromParent(true);
+			_palette = null;
+			
+			_redColor.removeFromParent(true);
+			_redColor = null;
+			
+			_yellowColor.removeFromParent(true);
+			_yellowColor = null;
+			
+			_blueColor.removeFromParent(true);
+			_blueColor = null;
+			
+			_greenColor.removeFromParent(true);
+			_greenColor = null;
 			
 			super.dispose();
 		}
