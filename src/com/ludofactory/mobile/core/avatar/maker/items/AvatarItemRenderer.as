@@ -9,9 +9,10 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.maker.CoinsAndBasket;
 	import com.ludofactory.mobile.core.avatar.maker.CustomDefaultListItemRenderer;
 	import com.ludofactory.mobile.core.avatar.maker.data.AvatarFrameData;
@@ -20,6 +21,9 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
 	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
 	import com.ludofactory.mobile.core.avatar.test.manager.LudokadoBoneConfiguration;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.ImageLoader;
@@ -34,6 +38,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	
 	import starling.display.ButtonState;
 	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -84,11 +89,6 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		private var HELPER_SELECTED_FRAME_DATA:AvatarFrameData;
 		
 	// ---------- Layout properties
-		
-		/**
-		 * Maximum height of an item in the list. */		
-		//public static const MAX_ITEM_HEIGHT:int = 87;
-		public static const MAX_ITEM_WIDTH:int = 87;
 
 	// ---------- Common properties
 
@@ -129,12 +129,16 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		 * Background displayed behing the behaviors list. */
 		private var _behaviorListBackground:Scale3Image;
 		
+		private var _maxItemHeight:int;
+		
 		public function AvatarItemRenderer()
 		{
 			super();
 			
-			//this.height = MAX_ITEM_HEIGHT;
-			this.width = scaleAndRoundToDpi(MAX_ITEM_WIDTH);
+			_maxItemHeight = 
+			
+			_maxItemHeight = scaleAndRoundToDpi(GlobalConfig.isPhone ? 80 : 160);
+			this.height = _maxItemHeight;
 			useHandCursor = true;
 		}
 		
@@ -142,12 +146,15 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		{
 			super.initialize();
 			
-			_background = new Image(AvatarAssets.itemListBackgroundTexture);
+			
+			_background = new Image(AvatarMakerAssets.itemListBackgroundTexture);
+			_background.height = _maxItemHeight;
 			addChild(_background);
 			
-			_iconBackground = new Image(AvatarAssets.iconBuyableBackgroundTexture);
+			_iconBackground = new Image(AvatarMakerAssets.iconBuyableBackgroundTexture);
 			_iconBackground.touchable = false;
 			_iconBackground.alignPivot();
+			_iconBackground.scaleX = _iconBackground.scaleY = Utilities.getScaleToFillHeight(_iconBackground.height, (_maxItemHeight * 0.9));
 			addChild(_iconBackground);
 			
 			_itemIcon = new ImageLoader();
@@ -173,37 +180,38 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			_behaviorsList.itemRendererType = BehaviorItemRenderer;
 			_behaviorsList.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_behaviorsList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_behaviorsList.paddingTop = 10;
-			_behaviorsList.paddingBottom = 4;
+			_behaviorsList.paddingTop = scaleAndRoundToDpi(10);
+			_behaviorsList.paddingBottom = scaleAndRoundToDpi(4);
 			addChild(_behaviorsList);
 			
-			_behaviorListBackground = new Scale3Image(AvatarAssets.behaviorListBackground);
+			_behaviorListBackground = new Scale3Image(AvatarMakerAssets.behaviorListBackground);
 			_behaviorsList.backgroundSkin = _behaviorListBackground;
 			
-			_expandOrCollapseIcon = new Image(AvatarAssets.expandTexture);
+			_expandOrCollapseIcon = new Image(AvatarMakerAssets.expandTexture);
+			_expandOrCollapseIcon.scaleX = _expandOrCollapseIcon.scaleY = GlobalConfig.dpiScale;
 			_expandOrCollapseIcon.visible = false;
 			_expandOrCollapseIcon.touchable = false;
 			_expandOrCollapseIcon.alignPivot();
 			addChild(_expandOrCollapseIcon);
 			
-			_isNewIcon = new Image(AvatarAssets.newItemIconTexture);
+			_isNewIcon = new Image(AvatarMakerAssets.newItemIconTexture);
 			_isNewIcon.touchable = false;
 			_isNewIcon.visible = false;
 			addChild(_isNewIcon);
 			
-			_vipIconBackground = new Image(AbstractEntryPoint.assets.getTexture("Rank-12"));
+			_vipIconBackground = new Image(AvatarMakerAssets["vip_locked_icon_rank_1"]);
 			_vipIconBackground.touchable = false;
 			_vipIconBackground.visible = false;
 			addChild(_vipIconBackground);
 			
-			_itemNameLabel = new TextField(100, 48, "", Theme.FONT_OSWALD, 14, BUYABLE_ITEM_COLOR);
+			_itemNameLabel = new TextField(100, scaleAndRoundToDpi(48), "", Theme.FONT_OSWALD, scaleAndRoundToDpi(GlobalConfig.isPhone ? 14 : 24), BUYABLE_ITEM_COLOR);
 			_itemNameLabel.autoScale = true;
 			_itemNameLabel.hAlign = HAlign.RIGHT;
 			_itemNameLabel.vAlign = VAlign.BOTTOM;
 			_itemNameLabel.touchable = false;
 			addChild(_itemNameLabel);
 			
-			_itemPriceLabel = new TextField(100, 26, "", Theme.FONT_OSWALD, 14, PRICE_ITEM_COLOR);
+			_itemPriceLabel = new TextField(100, scaleAndRoundToDpi(26), "", Theme.FONT_OSWALD, scaleAndRoundToDpi(GlobalConfig.isPhone ? 14: 24), PRICE_ITEM_COLOR);
 			_itemPriceLabel.hAlign = HAlign.RIGHT;
 			_itemPriceLabel.touchable = false;
 			_itemPriceLabel.autoScale = true;
@@ -226,7 +234,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			{
 				if(!_data) return;
 				
-				_background.width = MAX_ITEM_WIDTH;
+				_background.width = actualWidth;
 				
 				_iconBackground.x = (_iconBackground.width * 0.5) + 5;
 				_iconBackground.y = (_iconBackground.height * 0.5) + 5;
@@ -240,14 +248,14 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				
 				_itemNameLabel.x = _iconBackground.x + (_iconBackground.width * 0.5) + 5;
 				_itemNameLabel.y = 5;
-				_itemNameLabel.width = MAX_ITEM_WIDTH - _itemNameLabel.x - 8;
+				_itemNameLabel.width = actualWidth - _itemNameLabel.x - 8;
 				
 				_itemPriceLabel.x = _iconBackground.x + (_iconBackground.width * 0.5) + 5;
-				_itemPriceLabel.y = actualHeight - _itemPriceLabel.height - 7;
-				_itemPriceLabel.width = MAX_ITEM_WIDTH - _itemPriceLabel.x - (_basket.visible ? 30 : 8);
+				_itemPriceLabel.y = _maxItemHeight - _itemPriceLabel.height - 7;
+				_itemPriceLabel.width = actualWidth - _itemPriceLabel.x - (_basket.visible ? 30 : 8);
 				
-				_basket.x = (MAX_ITEM_WIDTH - 30); // 30 = largeur du basket icon
-				_basket.y = actualHeight - _basket.height - 7;
+				_basket.x = (actualWidth - 30); // 30 = largeur du basket icon
+				_basket.y = _maxItemHeight - _basket.height - 7;
 				
 				// icons
 				
@@ -264,15 +272,15 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				
 				if( _data && _data.isExpanded && _data.behaviors.length > 0 )
 				{
-					_behaviorsList.y = actualHeight + 6;
-					_behaviorsList.width = MAX_ITEM_WIDTH;
+					_behaviorsList.y = _maxItemHeight + scaleAndRoundToDpi(6);
+					_behaviorsList.width = actualWidth;
 					_behaviorsList.validate();
 					
-					setSize(this.width, (actualHeight + 6 + _behaviorsList.height));
+					setSize(this.width, (_maxItemHeight + scaleAndRoundToDpi(6) + _behaviorsList.height));
 				}
 				else
 				{
-					setSize(this.width, actualHeight);
+					setSize(this.width, _maxItemHeight);
 				}
 			}
 		}
@@ -300,7 +308,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				
 				// check icon visibility
 				_expandOrCollapseIcon.visible = _data.hasBehaviors;
-				_expandOrCollapseIcon.texture = _data.isExpanded ? AvatarAssets.collapseTexture : AvatarAssets.expandTexture;
+				_expandOrCollapseIcon.texture = _data.isExpanded ? AvatarMakerAssets.collapseTexture : AvatarMakerAssets.expandTexture;
 				
 				if(_data.hasBehaviors) // there are behaviors to display
 				{
@@ -329,7 +337,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 					
 					_data.isSelected = HELPER_SELECTED_FRAME_DATA ? true : false;
 					// change the icon background texture
-					_iconBackground.texture = HELPER_SELECTED_FRAME_DATA ? AvatarAssets.iconEquippedBackgroundTexture : AvatarAssets.iconBuyableBackgroundTexture;
+					_iconBackground.texture = HELPER_SELECTED_FRAME_DATA ? AvatarMakerAssets.iconEquippedBackgroundTexture : AvatarMakerAssets.iconBuyableBackgroundTexture;
 					// update the item name color accordingly
 					_itemNameLabel.color = HELPER_SELECTED_FRAME_DATA ? EQUIPPED_ITEM_COLOR : BUYABLE_ITEM_COLOR;
 					// and the name (with de selected frame name in parethesis)
@@ -350,13 +358,13 @@ package com.ludofactory.mobile.core.avatar.maker.items
 					}
 					
 					// change the icon background texture
-					_iconBackground.texture = _data.isSelected ? AvatarAssets.iconEquippedBackgroundTexture : (_data.isOwned ? AvatarAssets.iconBoughtNotEquippedBackgroundTexture : AvatarAssets.iconBuyableBackgroundTexture);
+					_iconBackground.texture = _data.isSelected ? AvatarMakerAssets.iconEquippedBackgroundTexture : (_data.isOwned ? AvatarMakerAssets.iconBoughtNotEquippedBackgroundTexture : AvatarMakerAssets.iconBuyableBackgroundTexture);
 					// update the item name color accordingly
 					_itemNameLabel.color = _data.isSelected ? EQUIPPED_ITEM_COLOR : (_data.isOwned ? OWNED_ITEM_COLOR : BUYABLE_ITEM_COLOR);
 					// and the name
 					_itemNameLabel.text = _data.name;
 					
-					_itemIcon.source = _data.isEmptyable ? AvatarAssets.removeIconTexture : _data.imageUrl;
+					_itemIcon.source = _data.isEmptyable ? AvatarMakerAssets.removeIconTexture : _data.imageUrl;
 					
 					_behaviorsList.removeEventListener(LKAvatarMakerEventTypes.BEHAVIOR_SELECTED, onBehaviorSelected);
 					_behaviorsList.visible = false;
@@ -395,7 +403,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	     */
 	    private function expand():void
 	    {
-		    setSize(this.width, (actualHeight + 6 + _behaviorsList.height));
+		    setSize(this.width, (_maxItemHeight + scaleAndRoundToDpi(6) + _behaviorsList.height));
 	    }
 	
 	    /**
@@ -405,7 +413,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	     */
 	    private function collapse():void
 	    {
-		    setSize(this.width, actualHeight);
+		    setSize(this.width, _maxItemHeight);
 	    }
 		
 		/**
@@ -526,15 +534,15 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		{
 			//invalidate(INVALIDATION_FLAG_SIZE);
 			if(_data.armatureSectionType == LudokadoBones.EYES_COLOR || _data.armatureSectionType == LudokadoBones.HAIR_COLOR
-			|| _data.armatureSectionType == LudokadoBones.LIPS_COLOR || _data.armatureSectionType == LudokadoBones.SKIN_COLOR)
-				_itemIcon.scaleX = _itemIcon.scaleY = 0.75;
+			|| _data.armatureSectionType == LudokadoBones.LIPS_COLOR || _data.armatureSectionType == LudokadoBones.SKIN_COLOR
+			/*|| LudokadoBones.HAIR*/)
+				_itemIcon.scaleX = _itemIcon.scaleY = _iconBackground.scaleX - (0.25 * GlobalConfig.dpiScale); //0.75;
 			else if( _data.armatureSectionType == LudokadoBones.MOUSTACHE || _data.armatureSectionType == LudokadoBones.BEARD ||
 					_data.armatureSectionType == LudokadoBones.EYEBROWS || _data.armatureSectionType == LudokadoBones.EYES ||
-				_data.armatureSectionType == LudokadoBones.FACE_CUSTOM || _data.armatureSectionType == LudokadoBones.NOSE ||
-					_data.armatureSectionType == LudokadoBones.AGE )
-				_itemIcon.scaleX = _itemIcon.scaleY = 0.5;
+				_data.armatureSectionType == LudokadoBones.FACE_CUSTOM || _data.armatureSectionType == LudokadoBones.AGE )
+				_itemIcon.scaleX = _itemIcon.scaleY = _iconBackground.scaleX - (0.5 * GlobalConfig.dpiScale); //0.5;
 			else
-				_itemIcon.scaleX = _itemIcon.scaleY = 0.6;
+				_itemIcon.scaleX = _itemIcon.scaleY = _iconBackground.scaleX - (0.4 * GlobalConfig.dpiScale); //0.6;
 			
 			_itemIcon.validate();
 			_itemIcon.alignPivot();
