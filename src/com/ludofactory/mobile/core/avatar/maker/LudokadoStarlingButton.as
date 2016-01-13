@@ -4,7 +4,7 @@
 package com.ludofactory.mobile.core.avatar.maker
 {
 	
-	import com.ludofactory.server.starling.theme.Theme;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Callout;
 	

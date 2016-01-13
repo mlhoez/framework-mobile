@@ -30,6 +30,10 @@ package com.ludofactory.mobile.core.avatar.test.events
 		public static const ITEM_SELECTED_OR_DESELECTED:String = "item-selected-or-deselected";
 		public static const UPDATED_BONE:String = "updated-bone";
 		
+		/**
+		 * When an reset have been requested. */
+		public static const PART_SELECTED:String = "part-selected";
+		
 	// ---------- Errors
 		
 		/**
@@ -41,6 +45,8 @@ package com.ludofactory.mobile.core.avatar.test.events
 		
 		public static const ITEM_SELECTED:String = "item-selected";
 		public static const BEHAVIOR_SELECTED:String = "behavior-selected";
+		
+		
 		
 		
 	// ---------- Cart events
@@ -61,6 +67,10 @@ package com.ludofactory.mobile.core.avatar.test.events
 		/**
 		 * When the basket popup is closed. */
 		public static const CLOSE_BASKET_POPUP:String = "close-basket-popup";
+		
+		/**
+		 * When an avatar have been chosen. */
+		public static const AVATAR_CHOSEN:String = "avatar-chosen";
 		
 		
 	}

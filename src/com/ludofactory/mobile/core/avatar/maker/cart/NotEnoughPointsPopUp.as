@@ -11,7 +11,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.mobile.ButtonFactory;
 	import com.ludofactory.mobile.MobileButton;
-	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -50,7 +50,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
         {
             super();
 
-            _background = new Image(AvatarAssets.notEnoughPointsPopupBackgroundTexture);
+            _background = new Image(AvatarMakerAssets.notEnoughPointsPopupBackgroundTexture);
             addChild(_background);
 
             _titleLabel = new TextField(430, 50, _("VOUS N'AVEZ PAS ASSEZ DE POINTS"), Theme.FONT_OSWALD, 40, 0xffffff);
@@ -83,7 +83,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
             _toolTipLabel.y = 160;
             addChild(_toolTipLabel);
 	
-	        _closeButton = new Button(AvatarAssets.closeButton);
+	        _closeButton = new Button(AvatarMakerAssets.closeButton);
 	        _closeButton.addEventListener(Event.TRIGGERED, onClose);
 	        _closeButton.x = _background.width - _closeButton.width - 16;
 	        _closeButton.y = 34;

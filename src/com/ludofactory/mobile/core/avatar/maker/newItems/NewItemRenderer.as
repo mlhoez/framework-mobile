@@ -8,7 +8,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 {
 	
 	import com.ludofactory.common.utils.roundUp;
-	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.maker.TouchableItemRenderer;
 	import com.ludofactory.mobile.core.avatar.maker.data.AvatarItemData;
 	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
@@ -66,7 +66,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			this.width = MAX_ITEM_WIDTH;
 			this.height = MAX_ITEM_HEIGHT;
 			
-			_background = new Image(AvatarAssets.newItemRendererBackgroundTexture);
+			_background = new Image(AvatarMakerAssets.newItemRendererBackgroundTexture);
 			addChild(_background);
 			
 			_itemIcon = new ImageLoader();

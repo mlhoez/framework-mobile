@@ -9,7 +9,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 	
 	import com.ludofactory.common.gettext.aliases._n;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.maker.items.ItemManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -102,13 +102,13 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			{
 				_itemsList.validate();
 				
-				_leftArrow = new Button(AvatarAssets.newItemsLeftArrow);
+				_leftArrow = new Button(AvatarMakerAssets.newItemsLeftArrow);
 				_leftArrow.addEventListener(Event.TRIGGERED, onGoLeft);
 				_leftArrow.x = _itemsList.x - _leftArrow.width;
 				_leftArrow.y = _itemsList.y + (_itemsList.height - _leftArrow.height) * 0.5;
 				addChild(_leftArrow);
 				
-				_rightArrow = new Button(AvatarAssets.newItemsRightArrow);
+				_rightArrow = new Button(AvatarMakerAssets.newItemsRightArrow);
 				_rightArrow.addEventListener(Event.TRIGGERED, onGoRight);
 				_rightArrow.x = _itemsList.x + _itemsList.width;
 				_rightArrow.y = _itemsList.y + (_itemsList.height - _rightArrow.height) * 0.5;

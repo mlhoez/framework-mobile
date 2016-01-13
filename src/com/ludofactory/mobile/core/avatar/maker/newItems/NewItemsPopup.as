@@ -7,7 +7,7 @@
 package com.ludofactory.mobile.core.avatar.maker.newItems
 {
 	
-	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.maker.items.ItemManager;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
 	
@@ -56,26 +56,26 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			
 			_displayBoth = ItemManager.getInstance().newVipItems.length > 0 && ItemManager.getInstance().newCommonItems.length > 0;
 			
-			_particles = new PDParticleSystem(AvatarAssets.particleStarsXml, AvatarAssets.starParticle);
+			_particles = new PDParticleSystem(AvatarMakerAssets.particleStarsXml, AvatarMakerAssets.starParticle);
 			_particles.touchable = false;
 			_particles.maxNumParticles = 75;
 			_particles.emitterXVariance = _displayBoth ? 400 : 200;
 			_particles.emitterYVariance = 180;
 			addChild(_particles);
 			
-			_stripes = new Image(AvatarAssets.newItemsStripes);
+			_stripes = new Image(AvatarMakerAssets.newItemsStripes);
 			_stripes.touchable = false;
 			addChild(_stripes);
 			
 			_particles.emitterX = _stripes.width * 0.5;
 			_particles.emitterY = _stripes.height * 0.5;
 			
-			_background = new Image(_displayBoth ? AvatarAssets.newItemsPopupBothBackground : AvatarAssets.newItemsPopupSingleBackground);
+			_background = new Image(_displayBoth ? AvatarMakerAssets.newItemsPopupBothBackground : AvatarMakerAssets.newItemsPopupSingleBackground);
 			_background.x = (_stripes.width - _background.width) * 0.5;
 			_background.y = (_stripes.height - _background.height) * 0.5;
 			addChild(_background);
 			
-			_closeButton = new Button(AvatarAssets.newItemsCloseButton);
+			_closeButton = new Button(AvatarMakerAssets.newItemsCloseButton);
 			_closeButton.addEventListener(Event.TRIGGERED, onClose);
 			addChild(_closeButton);
 			
