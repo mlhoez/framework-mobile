@@ -9,6 +9,9 @@ package com.ludofactory.mobile.core.avatar.test.config
 	public class AvatarGenderType
 	{
 		/**
+		 * Shadow. */
+		public static const SHADOW:int = 0;
+		/**
 		 * Boy gender. */
 		public static const BOY:int = 1;
 		/**
@@ -18,6 +21,9 @@ package com.ludofactory.mobile.core.avatar.test.config
 		 * Potato gender. */
 		public static const POTATO:int = 3;
 		
+		/**
+		 * Shadow gender name. */
+		public static const SHADOW_NAME:String = "shadow";
 		/**
 		 * Boy gender name. */
 		public static const BOY_NAME:String = "boy";
@@ -32,6 +38,7 @@ package com.ludofactory.mobile.core.avatar.test.config
 		{
 			switch (genderId)
 			{
+				case SHADOW: { return SHADOW_NAME; }
 				case BOY:    { return BOY_NAME; }
 				case GIRL:   { return GIRL_NAME; }
 				case POTATO: { return POTATO_NAME; }
@@ -43,6 +50,7 @@ package com.ludofactory.mobile.core.avatar.test.config
 		{
 			switch (genderName)
 			{
+				case SHADOW_NAME: { return SHADOW; }
 				case BOY_NAME:    { return BOY; }
 				case GIRL_NAME:   { return GIRL; }
 				case POTATO_NAME: { return POTATO; }

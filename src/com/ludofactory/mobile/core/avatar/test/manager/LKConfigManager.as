@@ -40,6 +40,8 @@ package com.ludofactory.mobile.core.avatar.test.manager
 				_isInitialized = true;
 				
 				_configsByGender = new Dictionary();
+				_configsByGender[AvatarGenderType.SHADOW] = new LKAvatarConfig();
+				LKAvatarConfig(_configsByGender[AvatarGenderType.SHADOW]).gender = AvatarGenderType.SHADOW;
 				_configsByGender[AvatarGenderType.BOY] = new LKAvatarConfig();
 				LKAvatarConfig(_configsByGender[AvatarGenderType.BOY]).gender = AvatarGenderType.BOY;
 				_configsByGender[AvatarGenderType.GIRL] = new LKAvatarConfig();
