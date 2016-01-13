@@ -83,7 +83,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		{
 			// necessary to get a clean configuration before initializing the new one (specially when the user changes
 			// the account on the device).
-			resetToDefaults();
+			//resetToDefaults();
 			
 			if(config)
 			{
