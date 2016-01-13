@@ -15,12 +15,12 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.Platform;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.pause.PauseManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.debug.TouchMarkerManager;
+	import com.mesmotronic.ane.AndroidFullScreen;
 	import com.milkmangames.nativeextensions.CoreMobile;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	
@@ -31,6 +31,7 @@ package com.ludofactory.mobile.core
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
+	import flash.display.StageDisplayState;
 	import flash.display.StageOrientation;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
@@ -96,6 +97,12 @@ package com.ludofactory.mobile.core
 				
 				GlobalConfig.stageWidth = stage.stageWidth;
 				GlobalConfig.stageHeight = stage.stageHeight;
+				
+				//stage.displayState = StageDisplayState.NORMAL;
+				if (AndroidFullScreen.isImmersiveModeSupported) // Is immersive mode supported? (Android 4.4+)
+					AndroidFullScreen.immersiveMode();
+				else
+					stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			}
 			
 			Remote.getInstance();
