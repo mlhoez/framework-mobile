@@ -11,7 +11,9 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.maker.CustomCheckBox;
 	import com.ludofactory.mobile.core.avatar.maker.data.AvatarItemData;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
@@ -32,6 +34,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	
 	import starling.display.Image;
 	import starling.events.Event;
+	import starling.events.EventDispatcher;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	import starling.utils.deg2rad;
@@ -41,7 +44,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		
 	// ---------- Textures
 		
-		//private static const 
+		// private static const 
 		
 	// ---------- Constants
 		
@@ -50,7 +53,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		public static const INVALIDATION_FLAG_ITEMS:String = "items";
 		/**
 		 * Maximum list height (8 items * 54 height). */
-		private static var MAXIMUM_LIST_HEIGHT:int = 475;
+		private static var MAXIMUM_LIST_HEIGHT:int = 0;
 		/**
 		 * Whether the filters are applied or reset on category change. */
 		public static const KEEP_FILTERS_ON_CATEGORY_CHANGE:Boolean = true;
@@ -94,39 +97,52 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		{
 			super();
 			
-			MAXIMUM_LIST_HEIGHT = scaleAndRoundToDpi(MAXIMUM_LIST_HEIGHT);
+			//MAXIMUM_LIST_HEIGHT = scaleAndRoundToDpi(MAXIMUM_LIST_HEIGHT);
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-			_background = new Scale9Image(new Scale9Textures(AvatarAssets.panelBackground, new Rectangle(10, 10, 12, 12)));
+			_background = new Scale9Image(new Scale9Textures(AvatarMakerAssets.panelBackground, new Rectangle(10, 10, 12, 12)));
 			_background.touchable = false;
+			_background.alpha = 0.5;
 			addChild(_background);
-
-			const layout:HorizontalLayout = new HorizontalLayout();
-			layout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_TOP;
-			layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_JUSTIFY;
-			layout.gap = scaleAndRoundToDpi(5);
-			layout.hasVariableItemDimensions = true;
+			
+			var layout:*;
+			if(AbstractGameInfo.LANDSCAPE)
+			{
+				layout = new VerticalLayout();
+				VerticalLayout(layout).verticalAlign = VerticalLayout.VERTICAL_ALIGN_TOP;
+				VerticalLayout(layout).horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_JUSTIFY;
+				VerticalLayout(layout).hasVariableItemDimensions = true;
+				VerticalLayout(layout).gap = scaleAndRoundToDpi(5);
+			}
+			else
+			{
+				layout = new HorizontalLayout();
+				HorizontalLayout(layout).verticalAlign = HorizontalLayout.VERTICAL_ALIGN_TOP;
+				HorizontalLayout(layout).horizontalAlign = HorizontalLayout.VERTICAL_ALIGN_JUSTIFY;
+				HorizontalLayout(layout).hasVariableItemDimensions = true;
+				HorizontalLayout(layout).gap = scaleAndRoundToDpi(5);
+			}
 			
 			_itemsList = new List();
 			_itemsList.isSelectable = false;
 			_itemsList.layout = layout;
 			_itemsList.itemRendererType = AvatarItemRenderer;
 			addChild(_itemsList);
-			_itemsList.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_itemsList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
+			_itemsList.verticalScrollPolicy = AbstractGameInfo.LANDSCAPE ? Scroller.SCROLL_POLICY_AUTO : Scroller.SCROLL_POLICY_OFF;
+			_itemsList.horizontalScrollPolicy = AbstractGameInfo.LANDSCAPE ? Scroller.SCROLL_POLICY_OFF : Scroller.SCROLL_POLICY_AUTO;
 			_itemsList.addEventListener(Event.SCROLL, onScroll);
 			_itemsList.addEventListener(LKAvatarMakerEventTypes.ITEM_SELECTED, onItemSelected);
 			
-			_listTopShadow = new Image(AbstractEntryPoint.assets.getTexture("list-shadow"));
+			_listTopShadow = new Image(AbstractEntryPoint.assets.getTexture("avatar-list-shadow"));
 			_listTopShadow.touchable = false;
 			_listTopShadow.scaleX = _listTopShadow.scaleY = GlobalConfig.dpiScale;
 			addChild(_listTopShadow);
 
-			_listBottomShadow = new Image(AbstractEntryPoint.assets.getTexture("list-shadow"));
+			_listBottomShadow = new Image(AbstractEntryPoint.assets.getTexture("avatar-list-shadow"));
 			_listBottomShadow.touchable = false;
 			_listBottomShadow.alignPivot(HAlign.RIGHT, VAlign.BOTTOM);
 			_listBottomShadow.rotation = deg2rad(180);
@@ -147,18 +163,20 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				_background.width = actualWidth;
 				_background.height = actualHeight;
 				
+				_checkBox.x = -scaleAndRoundToDpi(50);
+				_checkBox.y = actualHeight - _checkBox.height;
+				
+				
 				_itemsList.x = scaleAndRoundToDpi(10);
 				_itemsList.y = scaleAndRoundToDpi(5);
+				MAXIMUM_LIST_HEIGHT = _checkBox.y - _itemsList.y;
 				_itemsList.width = roundUp(this.actualWidth - (_itemsList.x * 2));
 				_itemsList.height = MAXIMUM_LIST_HEIGHT;
 				
-				_checkBox.x = -scaleAndRoundToDpi(50);
-				_checkBox.y = _itemsList.y + _itemsList.height + scaleAndRoundToDpi(5);
-				
-				_listTopShadow.x = scaleAndRoundToDpi(10);
+				_listTopShadow.x = scaleAndRoundToDpi(16);
 				_listTopShadow.y = _itemsList.y;
 				
-				_listBottomShadow.x = scaleAndRoundToDpi(10);
+				_listBottomShadow.x = scaleAndRoundToDpi(16);
 				_listBottomShadow.y = _itemsList.y + _itemsList.height - _listBottomShadow.height;
 				
 				this.invalidate(INVALIDATION_FLAG_ITEMS);
@@ -167,7 +185,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			if( isInvalid(INVALIDATION_FLAG_ITEMS) )
 			{
 				_itemsList.validate();
-				_listTopShadow.width = _listBottomShadow.width = _itemsList.width + (_itemsList.viewPort.height <= MAXIMUM_LIST_HEIGHT ? 0 : scaleAndRoundToDpi(-14));
+				_listTopShadow.width = _listBottomShadow.width = _itemsList.width + scaleAndRoundToDpi(-8);
 
 				if( _itemsList.dataProvider )
 				{
