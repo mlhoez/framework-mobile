@@ -16,6 +16,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.common.sound.SoundManager;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.logs.LogDisplayer;
+	import com.ludofactory.common.utils.logs.logWarning;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.avatar.AvatarGenderChoiceScreen;
 	import com.ludofactory.mobile.core.avatar.AvatarMakerHomeScreen;
@@ -460,6 +461,7 @@ package com.ludofactory.mobile.core
 			{
 				GAnalytics.create(AbstractGameInfo.GOOGLE_ANALYTICS_TRACKER);
 				GAnalytics.analytics.defaultTracker.setAdvertisingIdCollectionEnabled(true);
+				logWarning("Install Referrer is : " + GAnalytics.analytics.getInstallReferrer());
 			}
 			
 			// parse device info
