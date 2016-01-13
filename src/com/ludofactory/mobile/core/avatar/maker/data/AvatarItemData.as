@@ -91,7 +91,7 @@ package com.ludofactory.mobile.core.avatar.maker.data
 			_armatureSectionType = String(data.armatureSectionType);
 			_armatureGroup = String(data.armatureGroup);
 			_linkageName = String(data.flashId);
-			_extractedId = _linkageName.split("_")[1];
+			_extractedId = _linkageName.split("_")[2];
 			_isEmptyable = _extractedId == 0 && ItemManager.isEmptiable(_armatureSectionType);
 			_name = _isEmptyable ? _("Retirer") : String(data.name);
 			_hasBehaviors = (data.behaviors as Array).length > 1;
