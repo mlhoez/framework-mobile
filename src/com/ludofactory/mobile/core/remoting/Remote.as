@@ -11,6 +11,9 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
+	import com.ludofactory.mobile.core.avatar.test.manager.AvatarManager;
+	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
@@ -114,6 +117,7 @@ package com.ludofactory.mobile.core.remoting
 		{
 			var params:Object = getGenericParams();
 			params.acces_tournoi = MemberManager.getInstance().isTournamentUnlocked ? 1 : 0;
+			//params.avatarsAssetsInfos = AvatarManager.getInstance().getAssetsLastModificationDate();
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "init", params);
 		}
 		
@@ -761,6 +765,62 @@ package com.ludofactory.mobile.core.remoting
 		{
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "addRewardAfterSharing", getGenericParams());
 		}
+		
+		
+	// avatars
+		
+		/**
+		 * Insert a line in the database whenever a video starts to display (VidCoin).
+		 */
+		public function initAvatarMaker(installedassetsDta:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = mergeWithGenericParams( { avatarsAssetsInfos:installedassetsDta } );
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Avatar", "init", params);
+		}
+		
+		/**
+		 * Insert a line in the database whenever a video starts to display (VidCoin).
+		 */
+		public function getItemsList(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = mergeWithGenericParams( { idGender:LKConfigManager.currentGenderId } );
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Avatar", "getItems", params);
+		}
+		
+		/**
+		 * Insert a line in the database whenever a video starts to display (VidCoin).
+		 */
+		public function saveAvatar(imgData:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = mergeWithGenericParams( { avatar:LKConfigManager.getTemporaryConfig(), imageData:imgData } );
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Avatar", "saveAvatar", params);
+		}
+		
+		/**
+		 * Requests an avatar change.
+		 *
+		 * This function will NOT change the avatar already, but only fetch the configurations of the others and their
+		 * price (based on the idGender the Flash sends) in order to display the two other genders in the popup.
+		 */
+		public function requestAvatarChange(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = mergeWithGenericParams( { idGender:LKConfigManager.currentGenderId } );
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Avatar", "requestResetAvatar", params);
+		}
+		
+		/**
+		 * Confirms the change of the avatar.
+		 */
+		public function confirmAvatarChange(imgData:String, newGenderId:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = mergeWithGenericParams( { idNewGender:newGenderId, imageData:imgData } );
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Avatar", "confirmResetAvatar", params);
+		}
+		
+		
+		
+		
+		
 		
 		/**
 		 * Generic test function (must return a string, not an object because of the addslash)
