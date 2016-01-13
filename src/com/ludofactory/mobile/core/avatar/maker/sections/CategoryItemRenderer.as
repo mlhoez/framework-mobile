@@ -7,6 +7,8 @@ Created : 17 sept. 2013
 package com.ludofactory.mobile.core.avatar.maker.sections
 {
 	
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	
 	import feathers.controls.GroupedList;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IGroupedListItemRenderer;
@@ -48,14 +50,14 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		{
 			super.initialize();
 			
-			_itemHeight = BASE_HEIGHT;
-			_strokeThickness = BASE_STROKE_THICKNESS;
+			_itemHeight = scaleAndRoundToDpi(BASE_HEIGHT);
+			_strokeThickness = scaleAndRoundToDpi(BASE_STROKE_THICKNESS);
 			
 			var listLayout:FlowLayout = new FlowLayout();
 			listLayout.horizontalAlign = FlowLayout.HORIZONTAL_ALIGN_CENTER;
 			listLayout.rowVerticalAlign = FlowLayout.HORIZONTAL_ALIGN_CENTER;
-			listLayout.horizontalGap = 6;
-			listLayout.verticalGap = 6;
+			listLayout.horizontalGap = scaleAndRoundToDpi(6);
+			listLayout.verticalGap = scaleAndRoundToDpi(6);
 			
 			_list = new List();
 			_list.layout = listLayout;
@@ -93,7 +95,7 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		
 		protected function layout():void
 		{
-			_list.y = 10;
+			_list.y = scaleAndRoundToDpi(10);
 			_list.width = this.actualWidth;
 			_list.validate();
 			

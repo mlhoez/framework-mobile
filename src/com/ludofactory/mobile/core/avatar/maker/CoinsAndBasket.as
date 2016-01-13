@@ -5,7 +5,7 @@ package com.ludofactory.mobile.core.avatar.maker
 {
 	
 	import com.greensock.TweenMax;
-	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -28,14 +28,14 @@ package com.ludofactory.mobile.core.avatar.maker
 		{
 			super();
 
-			_basketBackgroundIcon = new Image(AvatarAssets.cartIconBackground);
+			_basketBackgroundIcon = new Image(AvatarMakerAssets.cartIconBackground);
 			_basketBackgroundIcon.visible = false;
 			addChild(_basketBackgroundIcon);
 
-			_cookieIcon = new Image(AvatarAssets.cartPointsIcon);
+			_cookieIcon = new Image(AvatarMakerAssets.cartPointsIcon);
 			addChild(_cookieIcon);
 
-			_basketForegroundIcon = new Image(AvatarAssets.cartIconForeground);
+			_basketForegroundIcon = new Image(AvatarMakerAssets.cartIconForeground);
 			_basketForegroundIcon.visible = false;
 			addChild(_basketForegroundIcon);
 			

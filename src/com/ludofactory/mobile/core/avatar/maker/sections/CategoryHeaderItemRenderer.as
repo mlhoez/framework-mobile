@@ -7,7 +7,8 @@ Created : 14 oct. 2013
 package com.ludofactory.mobile.core.avatar.maker.sections
 {
 	
-	import com.ludofactory.server.starling.theme.Theme;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.GroupedList;
 	import feathers.controls.renderers.IGroupedListHeaderOrFooterRenderer;
@@ -45,13 +46,13 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		{
 			super.initialize();
 			
-			this.height = BASE_HEIGHT;
+			this.height = scaleAndRoundToDpi(BASE_HEIGHT);
 			
 			_stripe = new Quad(5, 1, 0xffffff);
 			_stripe.alpha = 0.75;
 			addChild(_stripe);
 			
-			_title = new TextField(10, BASE_HEIGHT, "", Theme.FONT_OSWALD, 16, 0xffffff, true);
+			_title = new TextField(10, BASE_HEIGHT, "", Theme.FONT_OSWALD, scaleAndRoundToDpi(16), 0xffffff, true);
 			_title.hAlign = HAlign.LEFT;
 			_title.vAlign = VAlign.BOTTOM;
 			addChild(_title);
@@ -106,12 +107,12 @@ package com.ludofactory.mobile.core.avatar.maker.sections
 		
 		protected function layout():void
 		{
-			_title.x = 8;
+			_title.x = scaleAndRoundToDpi(8);
 			_title.width = actualWidth - _title.x;
 			
 			_stripe.width = actualWidth * 0.89;
 			_stripe.x = (actualWidth - _stripe.width) * 0.5;
-			_stripe.y = _title.height - _stripe.height - 2;
+			_stripe.y = _title.height - _stripe.height - scaleAndRoundToDpi(2);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

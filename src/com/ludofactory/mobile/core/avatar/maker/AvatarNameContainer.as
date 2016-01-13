@@ -7,7 +7,9 @@
 package com.ludofactory.mobile.core.avatar.maker
 {
 	
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -36,9 +38,10 @@ package com.ludofactory.mobile.core.avatar.maker
 			touchable = false;
 			
 			_background = new Image(AbstractEntryPoint.assets.getTexture("avatar-name-background"));
+			_background.scaleX = _background.scaleY = GlobalConfig.dpiScale;
 			addChild(_background);
 			
-			_avatarName = new TextField(_background.width, _background.height, MemberManager.getInstance().pseudo, Theme.FONT_SANSITA, 34, 0x802b00);
+			_avatarName = new TextField(_background.width, _background.height, MemberManager.getInstance().pseudo, Theme.FONT_SANSITA, scaleAndRoundToDpi(34), 0x802b00);
 			_avatarName.nativeFilters = [ new DropShadowFilter(4, 45, 0xffffff, 0.5, 3, 3, 3) ];
 			_avatarName.batchable = true;
 			_avatarName.touchable = false;

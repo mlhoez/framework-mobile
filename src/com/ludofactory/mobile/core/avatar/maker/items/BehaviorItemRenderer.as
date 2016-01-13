@@ -10,7 +10,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.maker.CoinsAndBasket;
 	import com.ludofactory.mobile.core.avatar.maker.TouchableItemRenderer;
 	import com.ludofactory.mobile.core.avatar.maker.data.AvatarFrameData;
@@ -79,7 +79,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			
 			this.height = MAX_ITEM_HEIGHT;
 			
-			_background = new Image(AvatarAssets.expandTexture);
+			_background = new Image(AvatarMakerAssets.expandTexture);
 			_background.alpha = 0;
 			addChild(_background);
 			
@@ -98,7 +98,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			//_itemPriceLabel.border = true;
 			addChild(_itemPriceLabel);
 			
-			_iconBackground = new Image(AvatarAssets.iconBuyableBackgroundTexture);
+			_iconBackground = new Image(AvatarMakerAssets.iconBuyableBackgroundTexture);
 			_iconBackground.touchable = false;
 			_iconBackground.alignPivot();
 			_iconBackground.scaleX = _iconBackground.scaleY = Utilities.getScaleToFill(_iconBackground.width, _iconBackground.height, NaN, (MAX_ITEM_HEIGHT - 10));
@@ -119,7 +119,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			_basket.scaleX = _basket.scaleY = 0.8;
 			addChild(_basket);
 			
-			_isNewIcon = new Image(AvatarAssets.newItemSmallIconTexture);
+			_isNewIcon = new Image(AvatarMakerAssets.newItemSmallIconTexture);
 			_isNewIcon.touchable = false;
 			_isNewIcon.visible = false;
 			addChild(_isNewIcon);
@@ -175,12 +175,12 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		{
 			if(this._owner && _data)
 			{
-				_iconBackground.texture = _data.isSelected ? AvatarAssets.iconEquippedBackgroundTexture : (_data.isOwned ? AvatarAssets.iconBoughtNotEquippedBackgroundTexture : AvatarAssets.iconBuyableBackgroundTexture);
+				_iconBackground.texture = _data.isSelected ? AvatarMakerAssets.iconEquippedBackgroundTexture : (_data.isOwned ? AvatarMakerAssets.iconBoughtNotEquippedBackgroundTexture : AvatarMakerAssets.iconBuyableBackgroundTexture);
 				
 				// the new icon is displayed when the behavior is a new one
 				_isNewIcon.visible = _data.isNew || _data.isNewVip;
 				
-				_vipIconBackground.texture = _data.isLocked ? Theme["vip_locked_small_icon_rank_" + _data.rank] : _vipIconBackground.texture;
+				_vipIconBackground.texture = _data.isLocked ? AvatarMakerAssets["vip_locked_small_icon_rank_" + _data.rank] : _vipIconBackground.texture;
 				_vipIconBackground.visible = _data.isLocked;
 				
 				_itemNameLabel.visible = _itemPriceLabel.visible = true;

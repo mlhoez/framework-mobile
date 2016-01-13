@@ -17,7 +17,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 	import com.ludofactory.mobile.ButtonFactory;
 	import com.ludofactory.mobile.MobileButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
 	import com.ludofactory.mobile.core.avatar.test.manager.AvatarManager;
 	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
@@ -98,7 +98,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		{
 			super();
 			
-			_background = new Image(AvatarAssets.cartConfirmationPopupBackgroundTexture);
+			_background = new Image(AvatarMakerAssets.cartConfirmationPopupBackgroundTexture);
 			addChild(_background);
 
 			_title = new TextField(430, 50, _("RECAPITULATIF"), Theme.FONT_OSWALD, 40, 0xffffff);
@@ -138,13 +138,13 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_itemsList.addEventListener(Event.SCROLL, onScroll);
 			_itemsList.addEventListener(LKAvatarMakerEventTypes.ITEM_SELECTED_OR_DESELECTED, onBasketItemSelectedOrDeselected);
 
-			_listTopShadow = new Image(AvatarAssets.listShadow);
+			_listTopShadow = new Image(AvatarMakerAssets.listShadow);
 			_listTopShadow.touchable = false;
 			_listTopShadow.x = _itemsList.x;
 			_listTopShadow.y = _itemsList.y;
 			addChild(_listTopShadow);
 
-			_listBottomShadow = new Image(AvatarAssets.listShadow);
+			_listBottomShadow = new Image(AvatarMakerAssets.listShadow);
 			_listBottomShadow.touchable = false;
 			_listBottomShadow.alignPivot(HAlign.RIGHT, VAlign.BOTTOM);
 			_listBottomShadow.rotation = deg2rad(180);
@@ -176,7 +176,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_purchaseTotalValueLabel.y = 127;
 			addChild(_purchaseTotalValueLabel);
 			
-			_purchaseTotalPointsIcon = new Image(AvatarAssets.cartPointBigIconTexture);
+			_purchaseTotalPointsIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
 			_purchaseTotalPointsIcon.x = _purchaseTotalValueLabel.x + _purchaseTotalValueLabel.width + 5;
 			_purchaseTotalPointsIcon.y = _purchaseTotalValueLabel.y + 8;
 			addChild(_purchaseTotalPointsIcon);
@@ -200,7 +200,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_currentPointsValueLabel.y = 180;
 			addChild(_currentPointsValueLabel);
 
-			_currentPointsIcon = new Image(AvatarAssets.cartPointBigIconTexture);
+			_currentPointsIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
 			_currentPointsIcon.scaleX = _currentPointsIcon.scaleY = 0.8;
 			_currentPointsIcon.x = _currentPointsValueLabel.x + _currentPointsValueLabel.width + 8;
 			_currentPointsIcon.y = _currentPointsValueLabel.y + 10;
@@ -223,7 +223,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_remainingCookiesValueLabel.y = 228;
 			addChild(_remainingCookiesValueLabel);
 
-			_remainingPointsIcon = new Image(AvatarAssets.cartPointBigIconTexture);
+			_remainingPointsIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
 			_remainingPointsIcon.scaleX = _remainingPointsIcon.scaleY = 0.8;
 			_remainingPointsIcon.x = _remainingCookiesValueLabel.x + _remainingCookiesValueLabel.width + 8;
 			_remainingPointsIcon.y = _remainingCookiesValueLabel.y + 10;
@@ -231,7 +231,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			
 			// buttons
 			
-			_closeButton = new Button(AvatarAssets.closeButton);
+			_closeButton = new Button(AvatarMakerAssets.closeButton);
 			_closeButton.addEventListener(Event.TRIGGERED, onClose);
 			_closeButton.x = _background.width - _closeButton.width - 16;
 			_closeButton.y = 34;
@@ -337,7 +337,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			if(result.code == 1)
 			{
 				// then parse the configuration (it will validate what have been bought)
-				LKConfigManager.parseData(result.data["avatarConfiguration"]);
+				LKConfigManager.parseData(result["avatarConfiguration"]);
 				// hide the loader
 				InfoManager.hide(_("Votre personnage a bien été sauvegardé !"), InfoContent.ICON_CHECK);
 				

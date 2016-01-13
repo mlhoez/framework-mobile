@@ -12,7 +12,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.avatar.AvatarAssets;
+	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.maker.TouchableItemRenderer;
 	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
@@ -99,7 +99,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_background = new Quad(10, IMAGE_REF_HEIGHT, 0xdddddd);
 			addChild(_background);
 			
-			_itemImageBackground = new Image(AvatarAssets.cartItemIconBackgroundTexture);
+			_itemImageBackground = new Image(AvatarMakerAssets.cartItemIconBackgroundTexture);
 			addChild(_itemImageBackground);
 			
 			_itemImage = new ImageLoader();
@@ -110,7 +110,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_itemImage.addEventListener(Event.COMPLETE, onImageloaded);
 			addChild(_itemImage);
 			
-			_pointsIcon = new Image(AvatarAssets.cartPointBigIconTexture);
+			_pointsIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
 			_pointsIcon.scaleX = _pointsIcon.scaleY = 0.8;
 			addChild(_pointsIcon);
 			
