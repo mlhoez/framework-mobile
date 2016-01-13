@@ -10,14 +10,15 @@
 
 package com.ludofactory.mobile.core.avatar.maker
 {
-	
-	import com.ludofactory.desktop.tools.log;
-	
-	import starling.display.*;
+    
+    import com.ludofactory.common.utils.logs.log;
+    import com.ludofactory.mobile.core.config.GlobalConfig;
+    
     import flash.geom.Rectangle;
     import flash.ui.Mouse;
     import flash.ui.MouseCursor;
     
+    import starling.display.*;
     import starling.events.Event;
     import starling.events.Touch;
     import starling.events.TouchEvent;
@@ -26,7 +27,7 @@ package com.ludofactory.mobile.core.avatar.maker
     import starling.textures.Texture;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
-
+    
     /** Dispatched when the user triggers the button. Bubbles. */
     [Event(name="triggered", type="starling.events.Event")]
     
@@ -82,6 +83,7 @@ package com.ludofactory.mobile.core.avatar.maker
 
             mState = ButtonState.UP;
             mBody = new Image(upState);
+            mBody.scaleX = mBody.scaleY = GlobalConfig.dpiScale;
             mScaleWhenDown = downState ? 1.0 : 0.9;
             mScaleWhenOver = mAlphaWhenDown = 1.0;
             mAlphaWhenDisabled = disabledState ? 1.0: 0.5;

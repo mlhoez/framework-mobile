@@ -66,7 +66,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		/**
 		 * Resets the bone configuration with default values (when a section in the config could not be found).
 		 */
-		private function resetToDefaults():void
+		public function resetToDefaults():void
 		{
 			_id = _tempId = 0;
 			_linkageName = _tempLinkageName = "";
@@ -125,7 +125,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		public function get frameName():String { return _frameName; }
 		/**
 		 * The flash name. */
-		public function get linkageExtractedId():int { return String(_linkageName).split("_")[1]; }
+		public function get linkageExtractedId():int { return String(_linkageName).split("_")[2]; }
 		
 		/**
 		 * Temporary id updated when the user is playing with the editor. */
@@ -142,7 +142,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		
 		/**
 		 * The flash name. */
-		public function get tempLinkageExtractedId():int { return String(_tempLinkageName).split("_")[1]; }
+		public function get tempLinkageExtractedId():int { return String(_tempLinkageName).split("_")[2]; }
 		
 		/**
 		 * Boolean used to tell the php to buy or not this item. */
