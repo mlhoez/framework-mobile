@@ -224,7 +224,7 @@ package com.ludofactory.mobile.core.avatar
 		
 		private function onCancel(event:Event = null):void
 		{
-			advancedOwner.showBackScreen();
+			onBack();
 		}
 		
 		private var _savedGenderId:int = 0;
