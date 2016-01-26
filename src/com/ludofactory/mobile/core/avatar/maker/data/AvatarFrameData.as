@@ -50,6 +50,9 @@ package com.ludofactory.mobile.core.avatar.maker.data
 		/**
 		 * Whether this behavior is owned by the user. */
 		private var _isOwned:Boolean = false;
+		/**
+		 * Armature section type. */
+		private var _armatureSectionType:String;
 		
 	// ---------- Item renderer properties
 
@@ -59,8 +62,9 @@ package com.ludofactory.mobile.core.avatar.maker.data
 		
 		/**
 		 * @param data The data to be parsed
+		 * @param armatureSectionType 
 		 */
-		public function AvatarFrameData(data:Object)
+		public function AvatarFrameData(data:Object, armatureSectionType:String)
 		{
 			// paiementType is not used for the moment
 			
@@ -75,6 +79,7 @@ package com.ludofactory.mobile.core.avatar.maker.data
 			_rankName = String(data.rankName);
 			_isLocked = MemberManager.getInstance().rank < int(data.rang);
 			_imageUrl = String(data.urlImage);
+			_armatureSectionType = armatureSectionType;
 		}
 
 //------------------------------------------------------------------------------------------------------------
@@ -116,6 +121,10 @@ package com.ludofactory.mobile.core.avatar.maker.data
 		 * Whether this behavior is owned by the user. */
 		public function get isOwned():Boolean { return _isOwned; }
 		public function set isOwned(value:Boolean):void { _isOwned = value; }
+		/**
+		 * Armature section type. */
+		public function get armatureSectionType():String { return _armatureSectionType; }
+		public function set armatureSectionType(value:String):void { _armatureSectionType = value; }
 		
 		// ---------- Item renderer getters and setters
 		

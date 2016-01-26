@@ -102,7 +102,7 @@ package com.ludofactory.mobile.core.avatar.maker.data
 				// parse behaviors
 				for (var i:int = 0; i < (data.behaviors as Array).length; i++)
 				{
-					frameData = new AvatarFrameData(data.behaviors[i]);
+					frameData = new AvatarFrameData(data.behaviors[i], _armatureSectionType);
 					_behaviors.push(frameData);
 					
 					if(frameData.id == LudokadoBoneConfiguration(LKConfigManager.currentConfig[_armatureSectionType]).tempId)
@@ -114,7 +114,7 @@ package com.ludofactory.mobile.core.avatar.maker.data
 			}
 			else
 			{
-				frameData = new AvatarFrameData(data.behaviors[0]);
+				frameData = new AvatarFrameData(data.behaviors[0], _armatureSectionType);
 				_id = frameData.id;
 				_isOwned = frameData.isOwned;
 				_price = frameData.price;
