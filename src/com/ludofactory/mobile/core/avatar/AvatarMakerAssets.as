@@ -5,9 +5,13 @@ package com.ludofactory.mobile.core.avatar
 {
 	
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import feathers.textures.Scale3Textures;
 	import feathers.textures.Scale9Textures;
+	import feathers.textures.Scale9Textures;
+	
+	import flash.geom.Rectangle;
 	
 	import flash.system.System;
 	
@@ -23,13 +27,14 @@ package com.ludofactory.mobile.core.avatar
 		protected static const PARTICLE_STARS_XML_CLASS:Class;
 		public static var particleStarsXml:XML;
 		
-		public static var panelBackground:Texture;
+		public static var panelBackground:Scale9Textures;
 		
 		public static var itemListBackgroundTexture:Texture;
 		
 		public static var iconBuyableBackgroundTexture:Texture;
 		public static var iconBoughtNotEquippedBackgroundTexture:Texture;
 		public static var iconEquippedBackgroundTexture:Texture;
+		public static var iconBehaviorBackgroundTexture:Texture;
 		
 		// arrow used in the list
 		public static var expandTexture:Texture;
@@ -162,6 +167,37 @@ package com.ludofactory.mobile.core.avatar
 		public static var iconsMask:Texture;
 		public static var iconsBackground:Texture;
 		
+		public static var sectionPlusButton:Texture;
+		
+		public static var section_button:Texture;
+		public static var section_selected_button:Texture;
+		public static var section_beard_button:Texture;
+		public static var section_epaulet_button:Texture;
+		public static var section_eyebrows_button:Texture;
+		public static var section_eyes_button:Texture;
+		public static var section_faceCustom_button:Texture;
+		public static var section_hair_button:Texture;
+		public static var section_hat_button:Texture;
+		public static var section_leftHand_button:Texture;
+		public static var section_moustache_button:Texture;
+		public static var section_mouth_button:Texture;
+		public static var section_nose_button:Texture;
+		public static var section_rightHand_button:Texture;
+		public static var section_shirt_button:Texture;
+		public static var section_age_button:Texture;
+		
+		public static var sectionGlow:Texture;
+		
+		public static var backButton:Texture;
+		
+		public static var listColorButton:Texture;
+		public static var listColorSelectedButton:Texture;
+		public static var listSectionButton:Texture;
+		public static var listSectionSelectedButton:Texture;
+		
+		public static var newItemsButton:Texture;
+		
+		
 		private static var _isInitializd:Boolean = false;
 		
 		public function AvatarMakerAssets()
@@ -173,28 +209,30 @@ package com.ludofactory.mobile.core.avatar
 		{
 			particleStarsXml = XML(new PARTICLE_STARS_XML_CLASS());
 			
-			panelBackground = AbstractEntryPoint.assets.getTexture("panel-background");
+			panelBackground = new Scale9Textures(AbstractEntryPoint.assets.getTexture("panel-background"), new Rectangle(10, 10, 12, 12));
 			
 			itemListBackgroundTexture = AbstractEntryPoint.assets.getTexture("item-renderer-background");
 			
 			iconBuyableBackgroundTexture = AbstractEntryPoint.assets.getTexture("item-renderer-icon-background-buyable");
 			iconBoughtNotEquippedBackgroundTexture = AbstractEntryPoint.assets.getTexture("item-renderer-icon-background-bought-not-equipped");
 			iconEquippedBackgroundTexture = AbstractEntryPoint.assets.getTexture("item-renderer-icon-background-equipped");
+			iconBehaviorBackgroundTexture = AbstractEntryPoint.assets.getTexture("item-renderer-icon-background-behavior");
 			
-			expandTexture = AbstractEntryPoint.assets.getTexture("expand-icon");
-			collapseTexture = AbstractEntryPoint.assets.getTexture("collapse-icon");
+			expandTexture = AbstractEntryPoint.assets.getTexture("expand-icon" + (GlobalConfig.isPhone ? "" : "-hd"));
+			collapseTexture = AbstractEntryPoint.assets.getTexture("collapse-icon" + (GlobalConfig.isPhone ? "" : "-hd"));
 			removeIconTexture = AbstractEntryPoint.assets.getTexture("remove-icon");
 			
-			behaviorListBackground = new Scale3Textures(AbstractEntryPoint.assets.getTexture("behaviors-background"), 30, 10, Scale3Textures.DIRECTION_VERTICAL);
+			//behaviorListBackground = new Scale3Textures(AbstractEntryPoint.assets.getTexture("behaviors-background"), 30, 10, Scale3Textures.DIRECTION_HORIZONTAL);
+			behaviorListBackground = new Scale3Textures(AbstractEntryPoint.assets.getTexture("behaviors-background"), 30, 10, Scale3Textures.DIRECTION_HORIZONTAL);
 			
 			newItemIconTexture = AbstractEntryPoint.assets.getTexture("new-item-icon");
 			newItemSmallIconTexture = AbstractEntryPoint.assets.getTexture("new-item-small-icon");
 			
 			checkBoxArrow = AbstractEntryPoint.assets.getTexture("checkbox-arrow");
 			
-			cartIconBackground = AbstractEntryPoint.assets.getTexture("basket-icon-background");
-			cartPointsIcon = AbstractEntryPoint.assets.getTexture("points-list-icon");
-			cartIconForeground = AbstractEntryPoint.assets.getTexture("basket-icon-foreground");
+			cartIconBackground = AbstractEntryPoint.assets.getTexture("basket-icon-background" + (GlobalConfig.isPhone ? "" : "-hd"));
+			cartPointsIcon = AbstractEntryPoint.assets.getTexture("points-list-icon" + (GlobalConfig.isPhone ? "" : "-hd"));
+			cartIconForeground = AbstractEntryPoint.assets.getTexture("basket-icon-foreground" + (GlobalConfig.isPhone ? "" : "-hd"));
 			
 			vip_locked_icon_rank_1 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-1");
 			vip_locked_icon_rank_2 = AbstractEntryPoint.assets.getTexture("vip-locked-icon-rank-2");
@@ -248,7 +286,7 @@ package com.ludofactory.mobile.core.avatar
 			cartConfirmationPopupBackgroundTexture = AbstractEntryPoint.assets.getTexture("popup-cart-background");
 			notEnoughPointsPopupBackgroundTexture = AbstractEntryPoint.assets.getTexture("popup-not-enough-points");
 			
-			listShadow = AbstractEntryPoint.assets.getTexture("list-shadow");
+			listShadow = AbstractEntryPoint.assets.getTexture("avatar-list-shadow");
 			
 			closeButton = AbstractEntryPoint.assets.getTexture("close-button-background");
 			
@@ -310,6 +348,37 @@ package com.ludofactory.mobile.core.avatar
 			
 			iconsMask = AbstractEntryPoint.assets.getTexture("icons-mask");
 			iconsBackground = AbstractEntryPoint.assets.getTexture("icons-background");
+			
+			sectionPlusButton = AbstractEntryPoint.assets.getTexture("add-item-icon" + (GlobalConfig.isPhone ? "" : "-hd"));
+			
+			section_button =  AbstractEntryPoint.assets.getTexture("section-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_selected_button =  AbstractEntryPoint.assets.getTexture("section-selected-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			
+			section_beard_button = AbstractEntryPoint.assets.getTexture("section-beard-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_epaulet_button = AbstractEntryPoint.assets.getTexture("section-epaulet-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_eyebrows_button = AbstractEntryPoint.assets.getTexture("section-eyebrows-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_eyes_button = AbstractEntryPoint.assets.getTexture("section-eyes-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_faceCustom_button = AbstractEntryPoint.assets.getTexture("section-faceCustom-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_hair_button = AbstractEntryPoint.assets.getTexture("section-hair-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_hat_button = AbstractEntryPoint.assets.getTexture("section-hat-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_leftHand_button = AbstractEntryPoint.assets.getTexture("section-leftHand-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_moustache_button = AbstractEntryPoint.assets.getTexture("section-moustache-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_mouth_button = AbstractEntryPoint.assets.getTexture("section-mouth-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_nose_button = AbstractEntryPoint.assets.getTexture("section-nose-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_rightHand_button = AbstractEntryPoint.assets.getTexture("section-rightHand-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_shirt_button = AbstractEntryPoint.assets.getTexture("section-shirt-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_age_button = AbstractEntryPoint.assets.getTexture("section-age-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			
+			sectionGlow = AbstractEntryPoint.assets.getTexture("section-glow");
+			
+			backButton = AbstractEntryPoint.assets.getTexture("avatar-maker-back-button");
+			
+			listColorButton = AbstractEntryPoint.assets.getTexture("list-color-button");
+			listColorSelectedButton = AbstractEntryPoint.assets.getTexture("list-color-selected-button");
+			listSectionButton = AbstractEntryPoint.assets.getTexture("list-section-button");
+			listSectionSelectedButton = AbstractEntryPoint.assets.getTexture("list-section-selected-button");
+			
+			newItemsButton = AbstractEntryPoint.assets.getTexture("new-items-button");
 			
 			_isInitializd = true;
 		}
