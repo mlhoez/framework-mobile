@@ -7,9 +7,13 @@
 package com.ludofactory.mobile.core.avatar.maker.newItems
 {
 	
+	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.roundUp;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.maker.items.ItemManager;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import starling.core.Starling;
 	import starling.display.Button;
@@ -59,61 +63,66 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			_particles = new PDParticleSystem(AvatarMakerAssets.particleStarsXml, AvatarMakerAssets.starParticle);
 			_particles.touchable = false;
 			_particles.maxNumParticles = 75;
-			_particles.emitterXVariance = _displayBoth ? 400 : 200;
-			_particles.emitterYVariance = 180;
+			_particles.emitterXVariance = GlobalConfig.stageWidth * 0.5//_displayBoth ? scaleAndRoundToDpi(400) : scaleAndRoundToDpi(200);
+			_particles.emitterYVariance = GlobalConfig.stageHeight * 0.5//scaleAndRoundToDpi(180);
 			addChild(_particles);
 			
 			_stripes = new Image(AvatarMakerAssets.newItemsStripes);
+			_stripes.scaleX = _stripes.scaleY = Utilities.getScaleToFill(_stripes.width, _stripes.height, GlobalConfig.stageWidth, GlobalConfig.stageHeight, true);
 			_stripes.touchable = false;
+			_stripes.x = roundUp((GlobalConfig.stageWidth - _stripes.width) * 0.5);
+			_stripes.y = roundUp((GlobalConfig.stageHeight - _stripes.height) * 0.5);
 			addChild(_stripes);
 			
-			_particles.emitterX = _stripes.width * 0.5;
-			_particles.emitterY = _stripes.height * 0.5;
+			_particles.emitterX = GlobalConfig.stageWidth * 0.5;
+			_particles.emitterY = GlobalConfig.stageHeight * 0.5;
 			
 			_background = new Image(_displayBoth ? AvatarMakerAssets.newItemsPopupBothBackground : AvatarMakerAssets.newItemsPopupSingleBackground);
-			_background.x = (_stripes.width - _background.width) * 0.5;
-			_background.y = (_stripes.height - _background.height) * 0.5;
+			_background.scaleX = _background.scaleY = GlobalConfig.dpiScale;
+			_background.x = roundUp((GlobalConfig.stageWidth - _background.width) * 0.5);
+			_background.y = roundUp((GlobalConfig.stageHeight - _background.height) * 0.5);
 			addChild(_background);
 			
 			_closeButton = new Button(AvatarMakerAssets.newItemsCloseButton);
+			_closeButton.scaleX = _closeButton.scaleY = GlobalConfig.dpiScale;
 			_closeButton.addEventListener(Event.TRIGGERED, onClose);
 			addChild(_closeButton);
 			
 			if(_displayBoth)
 			{
 				// we need to display new common items (when we add new ones in database) and new vip items (when the rank changes)
-				_closeButton.x = 758;
-				_closeButton.y = 293;
+				_closeButton.x = _background.x + _background.width - scaleAndRoundToDpi(46);
+				_closeButton.y = _background.y + scaleAndRoundToDpi(26);
 				
-				_newVipItemContainer = new NewVipItemsContainer();
-				_newVipItemContainer.x = 360;
-				_newVipItemContainer.y = 280;
+				_newVipItemContainer = new NewVipItemsContainer(_background.width, _background.height, true);
+				_newVipItemContainer.x = _background.x + scaleAndRoundToDpi(14);
+				_newVipItemContainer.y = _background.y + scaleAndRoundToDpi(-4);
 				addChild(_newVipItemContainer);
 				
-				_newCommonItemContainer = new NewCommonItemsContainer(true);
-				_newCommonItemContainer.x = -35;
-				_newCommonItemContainer.y = 280;
+				_newCommonItemContainer = new NewCommonItemsContainer(_background.width, _background.height, true);
+				_newCommonItemContainer.x = _background.x + _background.width - _newCommonItemContainer.width - scaleAndRoundToDpi(30);
+				_newCommonItemContainer.y = _background.y + scaleAndRoundToDpi(30);
 				addChild(_newCommonItemContainer);
 			}
 			else
 			{
-				_closeButton.x = 600;
-				_closeButton.y = 288;
+				_closeButton.x = _background.x + _background.width - scaleAndRoundToDpi(59);
+				_closeButton.y = _background.y + scaleAndRoundToDpi(16);
 				
 				if(ItemManager.getInstance().newVipItems.length > 0)
 				{
 					// we need to displya new vip items (when the rank changes)
-					_newVipItemContainer = new NewVipItemsContainer();
-					_newVipItemContainer.x = 200;
-					_newVipItemContainer.y = 275;
+					_newVipItemContainer = new NewVipItemsContainer(_background.width, _background.height);
+					_newVipItemContainer.x = _background.x + scaleAndRoundToDpi(20);
+					_newVipItemContainer.y = _background.y + scaleAndRoundToDpi(10);
 					addChild(_newVipItemContainer);
 				}
 				else if(ItemManager.getInstance().newCommonItems.length > 0)
 				{
 					// we need to display new common items (when we add new ones in database)
-					_newCommonItemContainer = new NewCommonItemsContainer();
-					_newCommonItemContainer.x = 200;
-					_newCommonItemContainer.y = 275;
+					_newCommonItemContainer = new NewCommonItemsContainer(_background.width, _background.height);
+					_newCommonItemContainer.x = _background.x + scaleAndRoundToDpi(90);
+					_newCommonItemContainer.y = _background.y + scaleAndRoundToDpi(40);
 					addChild(_newCommonItemContainer);
 				}
 			}

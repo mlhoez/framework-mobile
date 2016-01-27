@@ -7,17 +7,21 @@
 package com.ludofactory.mobile.core.avatar.maker.newItems
 {
 	
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.roundUp;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.maker.TouchableItemRenderer;
 	import com.ludofactory.mobile.core.avatar.maker.data.AvatarItemData;
 	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.events.FeathersEventType;
 	
 	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.events.Event;
 	
 	/**
@@ -31,10 +35,10 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 		
 		/**
 		 * Maximum height of an item in the list. */
-		public static const MAX_ITEM_HEIGHT:int = 106;
+		public static const MAX_ITEM_HEIGHT:int = 130;
 		/**
 		 * Maximum width of an item in the list. */
-		public static const MAX_ITEM_WIDTH:int = 106;
+		public static const MAX_ITEM_WIDTH:int = 130;
 		
 	// ---------- Layout properties
 		
@@ -63,10 +67,11 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 		{
 			super.initialize();
 			
-			this.width = MAX_ITEM_WIDTH;
-			this.height = MAX_ITEM_HEIGHT;
+			this.width = scaleAndRoundToDpi(MAX_ITEM_WIDTH);
+			this.height = scaleAndRoundToDpi(MAX_ITEM_HEIGHT);
 			
 			_background = new Image(AvatarMakerAssets.newItemRendererBackgroundTexture);
+			_background.scaleX = _background.scaleY = GlobalConfig.dpiScale;
 			addChild(_background);
 			
 			_itemIcon = new ImageLoader();
@@ -121,7 +126,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 		protected function onImageLoaded(event:Event):void
 		{
 			//invalidate(INVALIDATION_FLAG_SIZE);
-			if(_data.armatureSectionType == LudokadoBones.EYES_COLOR || _data.armatureSectionType == LudokadoBones.HAIR_COLOR
+			/*if(_data.armatureSectionType == LudokadoBones.EYES_COLOR || _data.armatureSectionType == LudokadoBones.HAIR_COLOR
 					|| _data.armatureSectionType == LudokadoBones.LIPS_COLOR || _data.armatureSectionType == LudokadoBones.SKIN_COLOR)
 				_itemIcon.scaleX = _itemIcon.scaleY = 0.75;
 			else if( _data.armatureSectionType == LudokadoBones.MOUSTACHE || _data.armatureSectionType == LudokadoBones.BEARD ||
@@ -130,7 +135,12 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 					_data.armatureSectionType == LudokadoBones.AGE )
 				_itemIcon.scaleX = _itemIcon.scaleY = 0.5;
 			else
-				_itemIcon.scaleX = _itemIcon.scaleY = 0.6;
+				_itemIcon.scaleX = _itemIcon.scaleY = 0.6;*/
+			
+			_itemIcon.scaleX = _itemIcon.scaleY = 1;
+			_itemIcon.validate();
+			
+			_itemIcon.scaleX = _itemIcon.scaleY = Utilities.getScaleToFillHeight(_itemIcon.height, _background.height * 0.8);
 			
 			_itemIcon.validate();
 			_itemIcon.alignPivot();
