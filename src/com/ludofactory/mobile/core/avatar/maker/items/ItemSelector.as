@@ -8,14 +8,16 @@ package com.ludofactory.mobile.core.avatar.maker.items
 {
 	
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
+	import com.ludofactory.mobile.core.avatar.maker.ColorListButton;
 	import com.ludofactory.mobile.core.avatar.maker.CustomCheckBox;
+	import com.ludofactory.mobile.core.avatar.maker.SectionListButton;
 	import com.ludofactory.mobile.core.avatar.maker.data.AvatarItemData;
+	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
+	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
 	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
 	import com.ludofactory.mobile.core.avatar.test.manager.LudokadoBoneConfiguration;
@@ -27,14 +29,9 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	import feathers.data.ListCollection;
 	import feathers.display.Scale9Image;
 	import feathers.layout.HorizontalLayout;
-	import feathers.layout.VerticalLayout;
-	import feathers.textures.Scale9Textures;
-	
-	import flash.geom.Rectangle;
 	
 	import starling.display.Image;
 	import starling.events.Event;
-	import starling.events.EventDispatcher;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	import starling.utils.deg2rad;
@@ -42,18 +39,11 @@ package com.ludofactory.mobile.core.avatar.maker.items
 	public class ItemSelector extends FeathersControl
 	{
 		
-	// ---------- Textures
-		
-		// private static const 
-		
 	// ---------- Constants
 		
 		/**
 		 * Invalidation flag to indicate that the dimensions of the UI control have changed. */
 		public static const INVALIDATION_FLAG_ITEMS:String = "items";
-		/**
-		 * Maximum list height (8 items * 54 height). */
-		private static var MAXIMUM_LIST_HEIGHT:int = 0;
 		/**
 		 * Whether the filters are applied or reset on category change. */
 		public static const KEEP_FILTERS_ON_CATEGORY_CHANGE:Boolean = true;
@@ -93,56 +83,56 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		 * Check box used to filter owned items. */
 		private var _checkBox:CustomCheckBox;
 		
+		/**
+		 * Color button for section that can be color-customized. */
+		private var _colorButton:ColorListButton;
+		/**
+		 * section button for section that can be color-customized. */
+		private var _sectionButton:SectionListButton;
+		
 		public function ItemSelector()
 		{
 			super();
-			
-			//MAXIMUM_LIST_HEIGHT = scaleAndRoundToDpi(MAXIMUM_LIST_HEIGHT);
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-			_background = new Scale9Image(new Scale9Textures(AvatarMakerAssets.panelBackground, new Rectangle(10, 10, 12, 12)));
+			_background = new Scale9Image(AvatarMakerAssets.panelBackground);
 			_background.touchable = false;
-			_background.alpha = 0.5;
 			addChild(_background);
 			
-			var layout:*;
-			if(AbstractGameInfo.LANDSCAPE)
-			{
-				layout = new VerticalLayout();
-				VerticalLayout(layout).verticalAlign = VerticalLayout.VERTICAL_ALIGN_TOP;
-				VerticalLayout(layout).horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_JUSTIFY;
-				VerticalLayout(layout).hasVariableItemDimensions = true;
-				VerticalLayout(layout).gap = scaleAndRoundToDpi(5);
-			}
-			else
-			{
-				layout = new HorizontalLayout();
-				HorizontalLayout(layout).verticalAlign = HorizontalLayout.VERTICAL_ALIGN_TOP;
-				HorizontalLayout(layout).horizontalAlign = HorizontalLayout.VERTICAL_ALIGN_JUSTIFY;
-				HorizontalLayout(layout).hasVariableItemDimensions = true;
-				HorizontalLayout(layout).gap = scaleAndRoundToDpi(5);
-			}
+			_colorButton = new ColorListButton(AvatarMakerAssets.listColorButton, "", AvatarMakerAssets.listColorSelectedButton);
+			_colorButton.addEventListener(Event.TRIGGERED, onSideButtonTriggered);
+			addChild(_colorButton);
+			
+			_sectionButton = new SectionListButton(AvatarMakerAssets.listSectionButton, "ddd", AvatarMakerAssets.listSectionSelectedButton);
+			_sectionButton.addEventListener(Event.TRIGGERED, onSideButtonTriggered);
+			addChild(_sectionButton);
+			
+			var layout:HorizontalLayout = new HorizontalLayout();
+			HorizontalLayout(layout).verticalAlign = HorizontalLayout.VERTICAL_ALIGN_TOP;
+			HorizontalLayout(layout).horizontalAlign = HorizontalLayout.VERTICAL_ALIGN_JUSTIFY;
+			HorizontalLayout(layout).hasVariableItemDimensions = true;
+			HorizontalLayout(layout).gap = scaleAndRoundToDpi(5);
 			
 			_itemsList = new List();
 			_itemsList.isSelectable = false;
 			_itemsList.layout = layout;
 			_itemsList.itemRendererType = AvatarItemRenderer;
 			addChild(_itemsList);
-			_itemsList.verticalScrollPolicy = AbstractGameInfo.LANDSCAPE ? Scroller.SCROLL_POLICY_AUTO : Scroller.SCROLL_POLICY_OFF;
-			_itemsList.horizontalScrollPolicy = AbstractGameInfo.LANDSCAPE ? Scroller.SCROLL_POLICY_OFF : Scroller.SCROLL_POLICY_AUTO;
+			_itemsList.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
+			_itemsList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 			_itemsList.addEventListener(Event.SCROLL, onScroll);
 			_itemsList.addEventListener(LKAvatarMakerEventTypes.ITEM_SELECTED, onItemSelected);
 			
-			_listTopShadow = new Image(AbstractEntryPoint.assets.getTexture("avatar-list-shadow"));
+			_listTopShadow = new Image(AvatarMakerAssets.listShadow);
 			_listTopShadow.touchable = false;
 			_listTopShadow.scaleX = _listTopShadow.scaleY = GlobalConfig.dpiScale;
 			addChild(_listTopShadow);
 
-			_listBottomShadow = new Image(AbstractEntryPoint.assets.getTexture("avatar-list-shadow"));
+			_listBottomShadow = new Image(AvatarMakerAssets.listShadow);
 			_listBottomShadow.touchable = false;
 			_listBottomShadow.alignPivot(HAlign.RIGHT, VAlign.BOTTOM);
 			_listBottomShadow.rotation = deg2rad(180);
@@ -151,6 +141,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			
 			_checkBox = new CustomCheckBox();
 			_checkBox.addEventListener(Event.TRIGGERED, onFilterSelected);
+			_checkBox.visible = false;
 			addChild(_checkBox);
 		}
 		
@@ -160,24 +151,25 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_background.width = actualWidth;
+				
 				_background.height = actualHeight;
 				
-				_checkBox.x = -scaleAndRoundToDpi(50);
-				_checkBox.y = actualHeight - _checkBox.height;
+				//_checkBox.x = -scaleAndRoundToDpi(50);
+				//_checkBox.y = actualHeight - _checkBox.height;
+				_colorButton.height = _sectionButton.height = _colorButton.width =_sectionButton.width = actualHeight * 0.5;
+				_sectionButton.y = actualHeight * 0.5;
 				
 				
-				_itemsList.x = scaleAndRoundToDpi(10);
-				_itemsList.y = scaleAndRoundToDpi(5);
-				MAXIMUM_LIST_HEIGHT = _checkBox.y - _itemsList.y;
-				_itemsList.width = roundUp(this.actualWidth - (_itemsList.x * 2));
-				_itemsList.height = MAXIMUM_LIST_HEIGHT;
+				_background.x = _itemsList.x = _colorButton.width;
+				_background.width = _itemsList.width = roundUp(this.actualWidth - _itemsList.x);
+				_itemsList.height = actualHeight;
 				
 				_listTopShadow.x = scaleAndRoundToDpi(16);
 				_listTopShadow.y = _itemsList.y;
 				
 				_listBottomShadow.x = scaleAndRoundToDpi(16);
 				_listBottomShadow.y = _itemsList.y + _itemsList.height - _listBottomShadow.height;
+				
 				
 				this.invalidate(INVALIDATION_FLAG_ITEMS);
 			}
@@ -307,30 +299,81 @@ package com.ludofactory.mobile.core.avatar.maker.items
 //	Update
 		
 		/**
+		 * 
+		 */
+		private function onSideButtonTriggered(event:Event):void
+		{
+			if(event.target == _colorButton)
+			{
+				_sectionButton.isSelected = false;
+				updateItems(_colorButton.section, false);
+			}
+			else
+			{
+				updateItems(_sectionButton.section, false);
+				_colorButton.isSelected = false;
+			}
+				
+		}
+		
+		/**
 		 * Updates the items list and 
 		 */
-		public function updateItems(items:Vector.<AvatarItemData>, armatureSectionGroup:String):void
+		public function updateItems(armatureSectionGroup:String, forceUpdate:Boolean = true):void
 		{
-			/*switch (armatureSectionGroup)
+			var items:Vector.<AvatarItemData> = ItemManager.getInstance().items[armatureSectionGroup];
+			
+			if(forceUpdate)
 			{
-				case LudokadoBones.HAT:          { _titleLabel.text = _("Chapeau");             break; }
-				case LudokadoBones.HAIR:         { _titleLabel.text = _("Cheveux");             break; }
-				case LudokadoBones.EYEBROWS:     { _titleLabel.text = _("Sourcils");            break; }
-				case LudokadoBones.EYES:         { _titleLabel.text = _("Yeux");                break; }
-				case LudokadoBones.NOSE:         { _titleLabel.text = _("Nez");                 break; }
-				case LudokadoBones.MOUTH:        { _titleLabel.text = _("Bouche");              break; }
-				case LudokadoBones.FACE_CUSTOM:  { _titleLabel.text = _("Visage");              break; }
-				case LudokadoBones.MOUSTACHE:    { _titleLabel.text = _("Moustache");           break; }
-				case LudokadoBones.BEARD:        { _titleLabel.text = _("Barbe");               break; }
-				case LudokadoBones.SHIRT:        { _titleLabel.text = _("T-Shirt");             break; }
-				case LudokadoBones.EPAULET:      { _titleLabel.text = _("Epaulettes");          break; }
-				case LudokadoBones.LEFT_HAND:    { _titleLabel.text = _("Main gauche");         break; }
-				case LudokadoBones.RIGHT_HAND:   { _titleLabel.text = _("Main droite");         break; }
-				case LudokadoBones.HAIR_COLOR:   { _titleLabel.text = _("Couleur des cheveux"); break; }
-				case LudokadoBones.EYES_COLOR:   { _titleLabel.text = _("Couleur des yeux");    break; }
-				case LudokadoBones.SKIN_COLOR:   { _titleLabel.text = _("Couleur de peau");     break; }
-				case LudokadoBones.LIPS_COLOR:   { _titleLabel.text = _("Couleur des lèvres");  break; }
-			}*/
+				switch (armatureSectionGroup)
+				{
+					case LudokadoBones.HAT:          { _sectionButton.setTextAndIcon(_("Chapeau"), armatureSectionGroup);             break; }
+					case LudokadoBones.HAIR:         { _sectionButton.setTextAndIcon(_("Cheveux"), armatureSectionGroup);             break; }
+					case LudokadoBones.EYEBROWS:     { _sectionButton.setTextAndIcon(_("Sourcils"), armatureSectionGroup);            break; }
+					case LudokadoBones.EYES:         { _sectionButton.setTextAndIcon(_("Yeux"), armatureSectionGroup);                break; }
+					case LudokadoBones.NOSE:         { _sectionButton.setTextAndIcon(_("Nez"), armatureSectionGroup);                 break; }
+					case LudokadoBones.MOUTH:        { _sectionButton.setTextAndIcon(_("Bouche"), armatureSectionGroup);              break; }
+					case LudokadoBones.FACE_CUSTOM:  { _sectionButton.setTextAndIcon(_("Visage"), armatureSectionGroup);              break; }
+					case LudokadoBones.MOUSTACHE:    { _sectionButton.setTextAndIcon(_("Moustache"), armatureSectionGroup);           break; }
+					case LudokadoBones.BEARD:        { _sectionButton.setTextAndIcon(_("Barbe"), armatureSectionGroup);               break; }
+					case LudokadoBones.SHIRT:        { _sectionButton.setTextAndIcon(_("T-Shirt"), armatureSectionGroup);             break; }
+					case LudokadoBones.EPAULET:      { _sectionButton.setTextAndIcon(_("Epaulettes"), armatureSectionGroup);          break; }
+					case LudokadoBones.LEFT_HAND:    { _sectionButton.setTextAndIcon(_("Main gauche"), armatureSectionGroup);         break; }
+					case LudokadoBones.RIGHT_HAND:   { _sectionButton.setTextAndIcon(_("Main droite"), armatureSectionGroup);         break; }
+					case LudokadoBones.AGE:          { _sectionButton.setTextAndIcon(_("Age"), armatureSectionGroup);                 break; }
+						
+					case LudokadoBones.HAIR_COLOR:   { _sectionButton.setTextAndIcon(_("Cheveux"), LudokadoBones.HAIR); break; }
+					case LudokadoBones.EYES_COLOR:   { _sectionButton.setTextAndIcon(_("Yeux"), LudokadoBones.EYES);    break; }
+					case LudokadoBones.SKIN_COLOR:   { _sectionButton.setTextAndIcon(_("Age"), LudokadoBones.AGE);     break; }
+					case LudokadoBones.LIPS_COLOR:   { _sectionButton.setTextAndIcon(_("Bouche"), LudokadoBones.MOUTH);  break; }
+				}
+				
+				switch (armatureSectionGroup)
+				{
+					case LudokadoBones.HAT:
+					case LudokadoBones.EYEBROWS:
+					case LudokadoBones.NOSE:
+					case LudokadoBones.FACE_CUSTOM:
+					case LudokadoBones.MOUSTACHE:
+					case LudokadoBones.BEARD:
+					case LudokadoBones.SHIRT:
+					case LudokadoBones.EPAULET:
+					case LudokadoBones.LEFT_HAND:
+					case LudokadoBones.RIGHT_HAND:  { _colorButton.disable(); break; }
+					case LudokadoBones.HAIR:        { _colorButton.enableWithSection(LudokadoBones.HAIR_COLOR); break; }
+					case LudokadoBones.EYES:        { _colorButton.enableWithSection(LudokadoBones.EYES_COLOR); break; }
+					case LudokadoBones.MOUTH:       { LKConfigManager.currentGenderId == AvatarGenderType.GIRL ? _colorButton.enableWithSection(LudokadoBones.LIPS_COLOR) : _colorButton.disable(); break; }
+					case LudokadoBones.AGE:         { _colorButton.enableWithSection(LudokadoBones.SKIN_COLOR); break; } // for boys and girls
+				}
+				
+				if(armatureSectionGroup != LudokadoBones.LIPS_COLOR && armatureSectionGroup != LudokadoBones.HAIR_COLOR &&
+						armatureSectionGroup != LudokadoBones.EYES_COLOR && armatureSectionGroup != LudokadoBones.SKIN_COLOR)
+				{
+					// deselect the color button and select he section button instead
+					_colorButton.isSelected = false;
+					_sectionButton.isSelected = true;
+				}
+			}
 			
 			if( !KEEP_FILTERS_ON_CATEGORY_CHANGE )
 				_checkBox.isSelected = false;
@@ -353,7 +396,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		
 		public function onNewItemSelected(itemData:AvatarItemData):void
 		{
-			updateItems(ItemManager.getInstance().items[itemData.armatureSectionType], itemData.armatureSectionType);
+			updateItems(itemData.armatureSectionType);
 			// once updated, scroll to the item
 			if(_itemsList.dataProvider)
 			{
@@ -392,6 +435,11 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			_background.removeFromParent(true);
 			_background = null;
 			
+			_itemsList.removeEventListener(Event.SCROLL, onScroll);
+			_itemsList.removeEventListener(LKAvatarMakerEventTypes.ITEM_SELECTED, onItemSelected);
+			_itemsList.removeFromParent(true);
+			_itemsList = null;
+			
 			TweenMax.killTweensOf(_listTopShadow);
 			_listTopShadow.removeFromParent(true);
 			_listTopShadow = null;
@@ -399,11 +447,6 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			TweenMax.killTweensOf(_listBottomShadow);
 			_listBottomShadow.removeFromParent(true);
 			_listBottomShadow = null;
-			
-			_itemsList.removeEventListener(Event.SCROLL, onScroll);
-			_itemsList.removeEventListener(LKAvatarMakerEventTypes.ITEM_SELECTED, onItemSelected);
-			_itemsList.removeFromParent(true);
-			_itemsList = null;
 			
 			_checkBox.removeEventListener(Event.TRIGGERED, onFilterSelected);
 			_checkBox.removeFromParent(true);
@@ -413,6 +456,14 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			_currentDataList = null;
 			
 			_currentArmatureSectionType = "";
+			
+			_colorButton.removeEventListener(Event.TRIGGERED, onSideButtonTriggered);
+			_colorButton.removeFromParent(true);
+			_colorButton = null;
+			
+			_sectionButton.removeEventListener(Event.TRIGGERED, onSideButtonTriggered);
+			_sectionButton.removeFromParent(true);
+			_sectionButton = null;
 			
 			super.dispose();
 		}
