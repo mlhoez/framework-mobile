@@ -9,10 +9,8 @@ package com.ludofactory.mobile.core.avatar
 	
 	import feathers.textures.Scale3Textures;
 	import feathers.textures.Scale9Textures;
-	import feathers.textures.Scale9Textures;
 	
 	import flash.geom.Rectangle;
-	
 	import flash.system.System;
 	
 	import starling.textures.Texture;
@@ -127,42 +125,12 @@ package com.ludofactory.mobile.core.avatar
 		
 		public static var avatarChoicePriceBackground:Scale3Textures;
 		
-		public static var ageSelector:Texture;
-		public static var ageSelectorSelected:Texture;
-		
 		public static var paletteBackground:Texture;
 		public static var paletteIcon:Texture;
 		public static var paletteColorRed:Texture;
 		public static var paletteColorYellow:Texture;
 		public static var paletteColorBlue:Texture;
 		public static var paletteColorGreen:Texture;
-		
-		public static var selectorBeardHuman:Texture;
-		public static var selectorEyebrows:Texture;
-		public static var selectorEyesPotato:Texture;
-		public static var selectorEyesHuman:Texture;
-		public static var selectorFaceCustomHuman:Texture;
-		public static var selectorHairHuman:Texture;
-		public static var selectorHat:Texture;
-		public static var selectorLeftHand:Texture;
-		public static var selectorRightHand:Texture;
-		public static var selectorMoustache:Texture;
-		public static var selectorMouth:Texture;
-		public static var selectorNosePotato:Texture;
-		public static var selectorNoseHuman:Texture;
-		public static var selectorShirt:Texture;
-		public static var selectorEpaulet:Texture;
-		public static var lipsColor:Texture;
-		public static var lipsColorSelected:Texture;
-		public static var skinColor:Texture;
-		public static var skinColorSelected:Texture;
-		public static var eyesColor:Texture;
-		public static var eyesColorSelected:Texture;
-		public static var hairColor:Texture;
-		public static var hairColorSelected:Texture;
-		
-		public static var sectionButtonIdleBackground:Texture;
-		public static var sectionButtonSelectedBackground:Texture;
 		
 		public static var iconsMask:Texture;
 		public static var iconsBackground:Texture;
@@ -310,42 +278,12 @@ package com.ludofactory.mobile.core.avatar
 			
 			avatarChoicePriceBackground = new Scale3Textures(AbstractEntryPoint.assets.getTexture("avatar-choice-price-background"), 10, 26, Scale3Textures.DIRECTION_HORIZONTAL);
 			
-			ageSelector = AbstractEntryPoint.assets.getTexture("selector-age");
-			ageSelectorSelected = AbstractEntryPoint.assets.getTexture("selector-age-selected");
-			
 			paletteBackground = AbstractEntryPoint.assets.getTexture("palette-background");
 			paletteIcon = AbstractEntryPoint.assets.getTexture("palette-icon");
 			paletteColorRed = AbstractEntryPoint.assets.getTexture("palette-color-red");
 			paletteColorYellow = AbstractEntryPoint.assets.getTexture("palette-color-yellow");
 			paletteColorBlue = AbstractEntryPoint.assets.getTexture("palette-color-blue");
 			paletteColorGreen= AbstractEntryPoint.assets.getTexture("palette-color-green");
-			
-			selectorBeardHuman = AbstractEntryPoint.assets.getTexture("selector-beard-human");
-			selectorEyebrows = AbstractEntryPoint.assets.getTexture("selector-eyebrows");
-			selectorEyesPotato = AbstractEntryPoint.assets.getTexture("selector-eyes-potato");
-			selectorEyesHuman = AbstractEntryPoint.assets.getTexture("selector-eyes-human");
-			selectorFaceCustomHuman = AbstractEntryPoint.assets.getTexture("selector-faceCustom-human");
-			selectorHairHuman = AbstractEntryPoint.assets.getTexture("selector-hair-human");
-			selectorHat = AbstractEntryPoint.assets.getTexture("selector-hat");
-			selectorLeftHand = AbstractEntryPoint.assets.getTexture("selector-leftHand");
-			selectorRightHand = AbstractEntryPoint.assets.getTexture("selector-rightHand");
-			selectorMoustache = AbstractEntryPoint.assets.getTexture("selector-moustache");
-			selectorMouth = AbstractEntryPoint.assets.getTexture("selector-mouth");
-			selectorNosePotato = AbstractEntryPoint.assets.getTexture("selector-nose-potato");
-			selectorNoseHuman = AbstractEntryPoint.assets.getTexture("selector-nose-human");
-			selectorShirt = AbstractEntryPoint.assets.getTexture("selector-shirt");
-			selectorEpaulet = AbstractEntryPoint.assets.getTexture("selector-epaulet");
-			lipsColor = AbstractEntryPoint.assets.getTexture("selector-lips-color");
-			lipsColorSelected = AbstractEntryPoint.assets.getTexture("selector-lips-color-selected");
-			skinColor = AbstractEntryPoint.assets.getTexture("selector-skin-color");
-			skinColorSelected = AbstractEntryPoint.assets.getTexture("selector-skin-color-selected");
-			eyesColor = AbstractEntryPoint.assets.getTexture("selector-eyes-color");
-			eyesColorSelected = AbstractEntryPoint.assets.getTexture("selector-eyes-color-selected");
-			hairColor = AbstractEntryPoint.assets.getTexture("selector-hair-color");
-			hairColorSelected = AbstractEntryPoint.assets.getTexture("selector-hair-color-selected");
-			
-			sectionButtonIdleBackground = AbstractEntryPoint.assets.getTexture("section-button-idle");
-			sectionButtonSelectedBackground = AbstractEntryPoint.assets.getTexture("section-button-selected");
 			
 			iconsMask = AbstractEntryPoint.assets.getTexture("icons-mask");
 			iconsBackground = AbstractEntryPoint.assets.getTexture("icons-background");
@@ -389,6 +327,254 @@ package com.ludofactory.mobile.core.avatar
 		public static function dispose():void
 		{
 			// TODO
+			panelBackground.texture.dispose();
+			panelBackground = null;
+			
+			itemListBackgroundTexture.dispose();
+			itemListBackgroundTexture = null;
+			
+			iconBuyableBackgroundTexture.dispose();
+			iconBuyableBackgroundTexture = null;
+			iconBoughtNotEquippedBackgroundTexture.dispose();
+			iconBoughtNotEquippedBackgroundTexture = null;
+			iconEquippedBackgroundTexture.dispose();
+			iconEquippedBackgroundTexture = null;
+			iconBehaviorBackgroundTexture.dispose();
+			iconBehaviorBackgroundTexture = null;
+			
+			// arrow used in the list
+			expandTexture.dispose();
+			expandTexture = null;
+			collapseTexture.dispose();
+			collapseTexture = null;
+			removeIconTexture.dispose();
+			removeIconTexture = null;
+			
+			behaviorListBackground.texture.dispose();
+			behaviorListBackground = null;
+			
+			newItemIconTexture.dispose();
+			newItemIconTexture = null;
+			newItemSmallIconTexture.dispose();
+			newItemSmallIconTexture = null;
+			
+			checkBoxArrow.dispose();
+			checkBoxArrow = null;
+			
+			cartIconBackground.dispose();
+			cartIconBackground = null;
+			cartPointsIcon.dispose();
+			cartPointsIcon = null;
+			cartIconForeground.dispose();
+			cartIconForeground = null;
+			
+			vip_locked_icon_rank_12.dispose();
+			vip_locked_icon_rank_12 = null;
+			vip_locked_icon_rank_11.dispose();
+			vip_locked_icon_rank_11 = null;
+			vip_locked_icon_rank_10.dispose();
+			vip_locked_icon_rank_10 = null;
+			vip_locked_icon_rank_9.dispose();
+			vip_locked_icon_rank_9 = null;
+			vip_locked_icon_rank_8.dispose();
+			vip_locked_icon_rank_8 = null;
+			vip_locked_icon_rank_7.dispose();
+			vip_locked_icon_rank_7 = null;
+			vip_locked_icon_rank_6.dispose();
+			vip_locked_icon_rank_6 = null;
+			vip_locked_icon_rank_5.dispose();
+			vip_locked_icon_rank_5 = null;
+			vip_locked_icon_rank_4.dispose();
+			vip_locked_icon_rank_4 = null;
+			vip_locked_icon_rank_3.dispose();
+			vip_locked_icon_rank_3 = null;
+			vip_locked_icon_rank_2.dispose();
+			vip_locked_icon_rank_2 = null;
+			vip_locked_icon_rank_1.dispose();
+			vip_locked_icon_rank_1 = null;
+			
+			vip_locked_small_icon_rank_12.dispose();
+			vip_locked_small_icon_rank_12 = null;
+			vip_locked_small_icon_rank_11.dispose();
+			vip_locked_small_icon_rank_11 = null;
+			vip_locked_small_icon_rank_10.dispose();
+			vip_locked_small_icon_rank_10 = null;
+			vip_locked_small_icon_rank_9.dispose();
+			vip_locked_small_icon_rank_9 = null;
+			vip_locked_small_icon_rank_8.dispose();
+			vip_locked_small_icon_rank_8 = null;
+			vip_locked_small_icon_rank_7.dispose();
+			vip_locked_small_icon_rank_7 = null;
+			vip_locked_small_icon_rank_6.dispose();
+			vip_locked_small_icon_rank_6 = null;
+			vip_locked_small_icon_rank_5.dispose();
+			vip_locked_small_icon_rank_5 = null;
+			vip_locked_small_icon_rank_4.dispose();
+			vip_locked_small_icon_rank_4 = null;
+			vip_locked_small_icon_rank_3.dispose();
+			vip_locked_small_icon_rank_3 = null;
+			vip_locked_small_icon_rank_2.dispose();
+			vip_locked_small_icon_rank_2 = null;
+			vip_locked_small_icon_rank_1.dispose();
+			vip_locked_small_icon_rank_1 = null;
+			
+			rank_1_texture.dispose();
+			rank_1_texture = null;
+			rank_2_texture.dispose();
+			rank_2_texture = null;
+			rank_3_texture.dispose();
+			rank_3_texture = null;
+			rank_4_texture.dispose();
+			rank_4_texture = null;
+			rank_5_texture.dispose();
+			rank_5_texture = null;
+			rank_6_texture.dispose();
+			rank_6_texture = null;
+			rank_7_texture.dispose();
+			rank_7_texture = null;
+			rank_8_texture.dispose();
+			rank_8_texture = null;
+			rank_9_texture.dispose();
+			rank_9_texture = null;
+			rank_10_texture.dispose();
+			rank_10_texture = null;
+			rank_11_texture.dispose();
+			rank_11_texture = null;
+			rank_12_texture.dispose();
+			rank_12_texture = null;
+			
+			previewButtonTexture.dispose();
+			previewButtonTexture = null;
+			
+			cartIrCheckboxBackground.dispose();
+			cartIrCheckboxBackground = null;
+			cartIrCheckboxCheck.dispose();
+			cartIrCheckboxCheck = null;
+			
+			cartItemIconBackgroundTexture.dispose();
+			cartItemIconBackgroundTexture = null;
+			cartPointBigIconTexture.dispose();
+			cartPointBigIconTexture = null;
+			
+			cartConfirmationPopupBackgroundTexture.dispose();
+			cartConfirmationPopupBackgroundTexture = null;
+			notEnoughPointsPopupBackgroundTexture.dispose();
+			notEnoughPointsPopupBackgroundTexture = null;
+			newItemsPopupBothBackground.dispose();
+			newItemsPopupBothBackground = null;
+			newItemsPopupSingleBackground.dispose();
+			newItemsPopupSingleBackground = null;
+			
+			listShadow.dispose();
+			listShadow = null;
+			
+			closeButton.dispose();
+			closeButton = null;
+			
+			newItemRendererBackgroundTexture.dispose();
+			newItemRendererBackgroundTexture = null;
+			
+			newItemsLeftArrow.dispose();
+			newItemsLeftArrow = null;
+			newItemsRightArrow.dispose();
+			newItemsRightArrow = null;
+			
+			rankStripes.dispose();
+			rankStripes = null;
+			newItemsStripes.dispose();
+			newItemsStripes = null;
+			
+			newItemsCloseButton.dispose();
+			newItemsCloseButton = null;
+			
+			starParticle.dispose();
+			starParticle = null;
+			
+			avatarChoiceLeftArrow.dispose();
+			avatarChoiceLeftArrow = null;
+			avatarChoiceRightArrow.dispose();
+			avatarChoiceRightArrow = null;
+			
+			infoIcon.dispose();
+			infoIcon = null;
+			
+			avatarChoicePriceBackground.texture.dispose();
+			avatarChoicePriceBackground = null;
+			
+			paletteBackground.dispose();
+			paletteBackground = null;
+			paletteIcon.dispose();
+			paletteIcon = null;
+			paletteColorRed.dispose();
+			paletteColorRed = null;
+			paletteColorYellow.dispose();
+			paletteColorYellow = null;
+			paletteColorBlue.dispose();
+			paletteColorBlue = null;
+			paletteColorGreen.dispose();
+			paletteColorGreen = null;
+			
+			iconsMask.dispose();
+			iconsMask = null;
+			iconsBackground.dispose();
+			iconsBackground = null;
+			
+			sectionPlusButton.dispose();
+			sectionPlusButton = null;
+			
+			section_button.dispose();
+			section_button = null;
+			section_selected_button.dispose();
+			section_selected_button = null;
+			section_beard_button.dispose();
+			section_beard_button = null;
+			section_epaulet_button.dispose();
+			section_epaulet_button = null;
+			section_eyebrows_button.dispose();
+			section_eyebrows_button = null;
+			section_eyes_button.dispose();
+			section_eyes_button = null;
+			section_faceCustom_button.dispose();
+			section_faceCustom_button = null;
+			section_hair_button.dispose();
+			section_hair_button = null;
+			section_hat_button.dispose();
+			section_hat_button = null;
+			section_leftHand_button.dispose();
+			section_leftHand_button = null;
+			section_moustache_button.dispose();
+			section_moustache_button = null;
+			section_mouth_button.dispose();
+			section_mouth_button = null;
+			section_nose_button.dispose();
+			section_nose_button = null;
+			section_rightHand_button.dispose();
+			section_rightHand_button = null;
+			section_shirt_button.dispose();
+			section_shirt_button = null;
+			section_age_button.dispose();
+			section_age_button = null;
+			
+			sectionGlow.dispose();
+			sectionGlow = null;
+			
+			backButton.dispose();
+			backButton= null;
+			
+			listColorButton.dispose();
+			listColorButton = null;
+			listColorSelectedButton.dispose();
+			listColorSelectedButton = null;
+			listSectionButton.dispose();
+			listSectionButton = null;
+			listSectionSelectedButton.dispose();
+			listSectionSelectedButton = null;
+			
+			newItemsButton.dispose();
+			newItemsButton = null;
+			
+			avatarNameBackground.dispose();
+			avatarNameBackground = null;
 			
 			System.disposeXML(particleStarsXml);
 			particleStarsXml = null;
