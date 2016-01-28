@@ -58,18 +58,19 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		/**
 		 * Image dimensions. */
 		private static var _imageDimensions:Dimension = new Dimension();
-		
 		/**
-		 * Reference width and height of the avatar (to which width they have been designed).
+		 * Reference dimensions of the avatar (to which width they have been designed).
 		 * This value is used by the AvatarManager in order to scale the avatar depending on desired png size. */
 		private static var _imageRefDimensions:Dimension = new Dimension();
-		
 		/**
 		 * Default animation name. */
 		private static var _defaultAnimationName:String = "idle";
 		
+		/**
+		 * Last connection timestamp (used to determine which are the new common items). */
 		private var _lastConnectionDate:Number = 0;
-		
+		/**
+		 * Last connection rank (used to determine which are the new vip items). */
 		private var _lastConnectionRank:int = 0;
 		
 		public function LKAvatarConfig()
@@ -241,30 +242,12 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		public function get epaulet():LudokadoBoneConfiguration { return _epaulet; }
 		public function get age():LudokadoBoneConfiguration { return _age; }
 		
+		public function get lastConnectionDate():Number { return _lastConnectionDate; }
+		public function get lastConnectionRank():int { return _lastConnectionRank; }
 		
-		public function get lastConnectionDate():Number
-		{
-			return _lastConnectionDate;
-		}
+		public function get imageDimensions():Dimension { return _imageDimensions; }
+		public function get imageRefDimensions():Dimension { return _imageRefDimensions; }
+		public function get defaultAnimationName():String { return _defaultAnimationName; }
 		
-		public function get lastConnectionRank():int
-		{
-			return _lastConnectionRank;
-		}
-		
-		public function get imageDimensions():Dimension
-		{
-			return _imageDimensions;
-		}
-		
-		public function get imageRefDimensions():Dimension
-		{
-			return _imageRefDimensions;
-		}
-		
-		public function get defaultAnimationName():String
-		{
-			return _defaultAnimationName;
-		}
 	}
 }
