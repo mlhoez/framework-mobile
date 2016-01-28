@@ -783,7 +783,7 @@ package com.ludofactory.mobile.core.remoting
 		 */
 		public function getItemsList(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
-			var params:Object = mergeWithGenericParams( { idGender:LKConfigManager.currentGenderId } );
+			var params:Object = mergeWithGenericParams( { idGender:LKConfigManager.currentGenderId, lastConnection:LKConfigManager.currentConfig.lastConnectionDate, lastRank:LKConfigManager.currentConfig.lastConnectionRank } );
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Avatar", "getItems", params);
 		}
 		
