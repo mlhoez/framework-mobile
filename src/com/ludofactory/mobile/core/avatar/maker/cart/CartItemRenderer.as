@@ -14,7 +14,6 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
 	import com.ludofactory.mobile.core.avatar.maker.TouchableItemRenderer;
-	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
 	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
 	import com.ludofactory.mobile.core.avatar.test.manager.LudokadoBoneConfiguration;
@@ -32,6 +31,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.text.TextField;
+	import starling.text.TextFieldAutoSize;
 	import starling.utils.HAlign;
 	import starling.utils.formatString;
 	
@@ -42,17 +42,10 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 	{
 		
 	// ---------- Placement properties
-
-		/**
-		 * Reference width of an item image (used to help the layout). */
-		private static const IMAGE_REF_WIDTH:int = 45;
-		/**
-		 * Reference height of an item image (used to help the layout). */
-		private static const IMAGE_REF_HEIGHT:int = 45;
 		
 		/**
 		 * Maximum height of an item in the list. */		
-		public static const MAX_ITEM_HEIGHT:int = 80;
+		public var MAX_ITEM_HEIGHT:int = 60;
 
 	// ---------- Properties
 
@@ -75,16 +68,17 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		 * Cookie icon (displayed when an item is buyable). */
 		private var _pointsIcon:Image;
 		/**
-		 * The remove button. */
-		//private var _removeButton:Button;
-				
+		 * Information button (when the user does not have the rank). */
 		private var _infoButton:Button;
-		
+		/**
+		 * The check box. */
 		private var _checkbox:CartCheckBox;
 		
 		public function CartItemRenderer()
 		{
 			super();
+			
+			this.height = MAX_ITEM_HEIGHT = scaleAndRoundToDpi(MAX_ITEM_HEIGHT);
 			
 			// act as a single container for touch events (improves performances)
 			touchGroup = true;
@@ -94,12 +88,12 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		{
 			super.initialize();
 			
-			this.height = scaleAndRoundToDpi(MAX_ITEM_HEIGHT);
 			
-			_background = new Quad(10, IMAGE_REF_HEIGHT, 0xdddddd);
+			_background = new Quad(10, this.height, 0xdddddd);
 			addChild(_background);
 			
 			_itemImageBackground = new Image(AvatarMakerAssets.cartItemIconBackgroundTexture);
+			_itemImageBackground.scaleX = _itemImageBackground.scaleY = Utilities.getScaleToFillHeight(_itemImageBackground.height, (this.height * 0.9));
 			addChild(_itemImageBackground);
 			
 			_itemImage = new ImageLoader();
@@ -111,19 +105,23 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			addChild(_itemImage);
 			
 			_pointsIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
-			_pointsIcon.scaleX = _pointsIcon.scaleY = 0.8;
+			_pointsIcon.scaleX = _pointsIcon.scaleY = GlobalConfig.dpiScale;
 			addChild(_pointsIcon);
 			
 			_checkbox = new CartCheckBox();
 			_checkbox.isSelected = true;
 			addChild(_checkbox);
 			
-			_itemNameLabel = new TextField(100, MAX_ITEM_HEIGHT, "", Theme.FONT_OSWALD, 15, 0x676462);
+			_itemNameLabel = new TextField(scaleAndRoundToDpi(100), MAX_ITEM_HEIGHT, "", Theme.FONT_OSWALD, scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 24), 0x676462);
 			_itemNameLabel.hAlign = HAlign.LEFT;
+			_itemNameLabel.autoScale = true;
+			//_itemNameLabel.border = true;
 			addChild(_itemNameLabel);
 			
-			_itemPriceLabel = new TextField(100, MAX_ITEM_HEIGHT, "", Theme.FONT_OSWALD, 15, 0x676462);
-			_itemPriceLabel.hAlign = HAlign.RIGHT;
+			_itemPriceLabel = new TextField(scaleAndRoundToDpi(100), MAX_ITEM_HEIGHT, "", Theme.FONT_OSWALD, scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 24), 0x676462);
+			_itemPriceLabel.autoSize = TextFieldAutoSize.HORIZONTAL;
+			//_itemPriceLabel.hAlign = HAlign.RIGHT;
+			//_itemPriceLabel.border = true;
 			addChild(_itemPriceLabel);
 			
 			_infoButton = new Button(AbstractEntryPoint.assets.getTexture("info-icon"));
@@ -142,29 +140,27 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			if(dataInvalid || sizeInvalid)
 			{
 				_background.width = actualWidth;
-				_background.height = MAX_ITEM_HEIGHT - 3;
+				_background.height = MAX_ITEM_HEIGHT - scaleAndRoundToDpi(3);
 				
 				_itemImage.validate();
 				_itemImage.alignPivot();
 				_itemImage.x = roundUp(_itemImageBackground.x + (_itemImageBackground.width * 0.5));
 				_itemImage.y = roundUp(_itemImageBackground.y + (_itemImageBackground.height * 0.5));
 				
-				_checkbox.x = roundUp(actualWidth - _checkbox.width - 10);
+				_checkbox.x = roundUp(actualWidth - _checkbox.width - scaleAndRoundToDpi(10));
 				_checkbox.y = roundUp((actualHeight - _checkbox.height) * 0.5);
 				
-				_pointsIcon.x = _checkbox.x - _pointsIcon.width - 3 - 5;
-				_pointsIcon.y = roundUp((MAX_ITEM_HEIGHT - _pointsIcon.height) * 0.5) - 2;
+				_pointsIcon.x = _checkbox.x - _pointsIcon.width - scaleAndRoundToDpi(3) - scaleAndRoundToDpi(5);
+				_pointsIcon.y = roundUp((MAX_ITEM_HEIGHT - _pointsIcon.height) * 0.5) - scaleAndRoundToDpi(2);
 				
-				_infoButton.x = actualWidth - _infoButton.width - 5;
-				_infoButton.y = roundUp((MAX_ITEM_HEIGHT - _pointsIcon.height) * 0.5) - 1;
+				_infoButton.x = actualWidth - _infoButton.width;
+				_infoButton.y = roundUp((MAX_ITEM_HEIGHT - _infoButton.height) * 0.5);
 				
-				_itemNameLabel.x = IMAGE_REF_WIDTH;
-				_itemNameLabel.y = -1;
-				_itemNameLabel.width = _pointsIcon.x - IMAGE_REF_WIDTH - 6;
+				_itemPriceLabel.x = _data.isLocked ? (_infoButton.x - _itemPriceLabel.width + scaleAndRoundToDpi(5)) : (_pointsIcon.x - _itemPriceLabel.width - scaleAndRoundToDpi(5));
+				_itemPriceLabel.width = _data.isLocked ? (_infoButton.x - _infoButton.width) : (_pointsIcon.x - _itemImageBackground.width - scaleAndRoundToDpi(6)); // 3 + 3
 				
-				_itemPriceLabel.x = IMAGE_REF_WIDTH + 3;
-				_itemPriceLabel.y = -1;
-				_itemPriceLabel.width = _data.isLocked ? (_pointsIcon.x - 14) : (_pointsIcon.x - IMAGE_REF_WIDTH - 6); // 3 + 3
+				_itemNameLabel.x = _itemImageBackground.width + scaleAndRoundToDpi(10);
+				_itemNameLabel.width = _itemPriceLabel.x - _itemNameLabel.x;
 			}
 		}
 		
@@ -209,14 +205,6 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			}
 		}
 		
-		/**
-		 * 
-		 */
-		/*private function onVipInfoTriggered(event:Event):void
-		{
-			ExternalInterfaceManager.call(ServerData.vipJSFunctionName, true, _data.rank, true);
-		}*/
-		
 //------------------------------------------------------------------------------------------------------------
 //	Image
 		
@@ -225,12 +213,9 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		 */
 		private function onImageloaded(event:Event):void
 		{
-			//invalidate(INVALIDATION_FLAG_SIZE);
-			if(_data.armatureSectionType == LudokadoBones.EYES_COLOR || _data.armatureSectionType == LudokadoBones.HAIR_COLOR
-					|| _data.armatureSectionType == LudokadoBones.LIPS_COLOR || _data.armatureSectionType == LudokadoBones.SKIN_COLOR)
-				_itemImage.scaleX = _itemImage.scaleY = 0.4;
-			else
-				_itemImage.scaleX = _itemImage.scaleY = 0.3;
+			_itemImage.scaleX = _itemImage.scaleY = 1;
+			_itemImage.validate();
+			_itemImage.scaleX = _itemImage.scaleY = Utilities.getScaleToFillHeight(_itemImage.height, _itemImageBackground.height * 0.9);
 			
 			_itemImage.validate();
 			_itemImage.alignPivot();
@@ -293,6 +278,9 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			
 			_infoButton.removeFromParent(true);
 			_infoButton = null;
+			
+			_checkbox.removeFromParent(true);
+			_checkbox = null;
 			
 			_data = null;
 			
