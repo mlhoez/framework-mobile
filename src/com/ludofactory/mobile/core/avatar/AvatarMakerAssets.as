@@ -197,6 +197,7 @@ package com.ludofactory.mobile.core.avatar
 		
 		public static var newItemsButton:Texture;
 		
+		public static var avatarNameBackground:Texture;
 		
 		private static var _isInitializd:Boolean = false;
 		
@@ -379,6 +380,8 @@ package com.ludofactory.mobile.core.avatar
 			listSectionSelectedButton = AbstractEntryPoint.assets.getTexture("list-section-selected-button");
 			
 			newItemsButton = AbstractEntryPoint.assets.getTexture("new-items-button");
+			
+			avatarNameBackground = AbstractEntryPoint.assets.getTexture("avatar-name-background");
 			
 			_isInitializd = true;
 		}
