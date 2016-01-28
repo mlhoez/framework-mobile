@@ -117,6 +117,13 @@ package com.ludofactory.mobile.core.avatar.maker.items
 				];
 			}*/
 			
+			
+			/*
+				Important :
+				In order to test the new items, we need to go to the back office, in "Configuration des déclinaisons", then
+				select one item, a gender and change the start date to "now"
+			 */
+			
 			// fetch the new items
 			_newVipItems = new Vector.<AvatarItemData>();
 			_newCommonItems = new Vector.<AvatarItemData>();
