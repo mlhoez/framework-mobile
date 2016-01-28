@@ -153,6 +153,7 @@ package com.ludofactory.mobile.core.avatar
 		public static var section_rightHand_button:Texture;
 		public static var section_shirt_button:Texture;
 		public static var section_age_button:Texture;
+		public static var section_age_potato_button:Texture;
 		
 		public static var sectionGlow:Texture;
 		
@@ -307,6 +308,7 @@ package com.ludofactory.mobile.core.avatar
 			section_rightHand_button = AbstractEntryPoint.assets.getTexture("section-rightHand-button" + (GlobalConfig.isPhone ? "" : "-hd"));
 			section_shirt_button = AbstractEntryPoint.assets.getTexture("section-shirt-button" + (GlobalConfig.isPhone ? "" : "-hd"));
 			section_age_button = AbstractEntryPoint.assets.getTexture("section-age-button" + (GlobalConfig.isPhone ? "" : "-hd"));
+			section_age_potato_button = AbstractEntryPoint.assets.getTexture("section-age-potato-button" + (GlobalConfig.isPhone ? "" : "-hd"));
 			
 			sectionGlow = AbstractEntryPoint.assets.getTexture("section-glow");
 			
@@ -554,6 +556,8 @@ package com.ludofactory.mobile.core.avatar
 			section_shirt_button = null;
 			section_age_button.dispose();
 			section_age_button = null;
+			section_age_potato_button.dispose();
+			section_age_potato_button = null;
 			
 			sectionGlow.dispose();
 			sectionGlow = null;
