@@ -190,7 +190,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * User avatar configuration. */
-		private var _avatarConfig:Object= { idGender:0 };
+		private var _avatarConfig:Object = { idGender:0 };
 		
 		public function Member() { }
 		

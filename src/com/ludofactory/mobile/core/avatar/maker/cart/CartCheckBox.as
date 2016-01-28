@@ -7,7 +7,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
-	import com.ludofactory.mobile.core.avatar.AvatarScreen;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import flash.geom.Rectangle;
 	import flash.ui.Mouse;
@@ -45,9 +45,11 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			super();
 			
 			_background = new Image(AvatarMakerAssets.cartIrCheckboxBackground);
+			_background.scaleX = _background.scaleY = GlobalConfig.dpiScale;
 			addChild(_background);
 			
 			_checkIcon = new Image(AvatarMakerAssets.cartIrCheckboxCheck);
+			_checkIcon.scaleX = _checkIcon.scaleY = GlobalConfig.dpiScale;
 			_checkIcon.visible = false;
 			_checkIcon.alpha = 0;
 			_checkIcon.alignPivot();
