@@ -10,10 +10,9 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.Utilities;
-	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.logs.log;
+	import com.ludofactory.common.utils.roundUp;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.ButtonFactory;
 	import com.ludofactory.mobile.MobileButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
@@ -21,6 +20,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
 	import com.ludofactory.mobile.core.avatar.test.manager.AvatarManager;
 	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
@@ -99,20 +99,21 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			super();
 			
 			_background = new Image(AvatarMakerAssets.cartConfirmationPopupBackgroundTexture);
+			_background.scaleX = _background.scaleY = GlobalConfig.dpiScale;
 			addChild(_background);
 
-			_title = new TextField(430, 50, _("RECAPITULATIF"), Theme.FONT_OSWALD, 40, 0xffffff);
-			_title.x = 120;
-			_title.y = 18;
+			_title = new TextField(_background.width, scaleAndRoundToDpi(50), _("RECAPITULATIF"), Theme.FONT_OSWALD, scaleAndRoundToDpi(40), 0xffffff);
+			_title.y = scaleAndRoundToDpi(16);
 			_title.autoScale = true;
 			_title.batchable = true;
+			//_title.border = true;
 			addChild(_title);
 			
 			// first part
 			
-			_itemsTitleLabel = new TextField(354, 30, _("Votre liste d'achats"), Theme.FONT_OSWALD, 28, 0x676462);
-			_itemsTitleLabel.x = 9;
-			_itemsTitleLabel.y = 76;
+			_itemsTitleLabel = new TextField(scaleAndRoundToDpi(496), scaleAndRoundToDpi(50), _("Votre liste d'achats"), Theme.FONT_OSWALD, scaleAndRoundToDpi(40), 0x676462);
+			_itemsTitleLabel.x = scaleAndRoundToDpi(9);
+			_itemsTitleLabel.y = scaleAndRoundToDpi(76);
 			_itemsTitleLabel.autoScale = true;
 			_itemsTitleLabel.batchable = true;
 			//_itemsTitleLabel.border = true;
@@ -130,10 +131,10 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_itemsList.verticalScrollPolicy = Scroller.SCROLL_POLICY_ON;
 			_itemsList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			//_itemsList.customVerticalScrollBarStyleName = Theme.SCROLL_BAR_CART_STYLE_NAME;
-			_itemsList.x = 9;
-			_itemsList.y = 105;
-			_itemsList.width = 354;
-			_itemsList.height = 236;
+			_itemsList.x = _itemsTitleLabel.x;
+			_itemsList.y = _itemsTitleLabel.y + _itemsTitleLabel.height;
+			_itemsList.width = _itemsTitleLabel.width;
+			_itemsList.height = scaleAndRoundToDpi(332);
 			addChild(_itemsList);
 			_itemsList.addEventListener(Event.SCROLL, onScroll);
 			_itemsList.addEventListener(LKAvatarMakerEventTypes.ITEM_SELECTED_OR_DESELECTED, onBasketItemSelectedOrDeselected);
@@ -153,95 +154,108 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			addChild(_listBottomShadow);
 
 			_itemsList.validate();
-			_listTopShadow.width = _listBottomShadow.width = _itemsList.width + (_itemsList.viewPort.height <= _itemsList.height ? 0 : -16);
+			_listTopShadow.width = _listBottomShadow.width = _itemsTitleLabel.width; /*+ (_itemsList.viewPort.height <= _itemsList.height ? 0 : -16);*/
 			
 			// second part
 			
 			// total
-			_purchaseTotalTitleLabel = new TextField(200, 40, _("Total du panier :"), Theme.FONT_OSWALD, 28, 0xff6600);
+			_purchaseTotalTitleLabel = new TextField(scaleAndRoundToDpi(200), scaleAndRoundToDpi(53), _("Total du panier :"), Theme.FONT_OSWALD, scaleAndRoundToDpi(28), 0xff6600);
 			_purchaseTotalTitleLabel.touchable = false;
 			_purchaseTotalTitleLabel.batchable = true;
+			_purchaseTotalTitleLabel.autoScale = true;
 			//_purchaseTotalTitleLabel.border = true;
 			_purchaseTotalTitleLabel.hAlign = HAlign.LEFT;
-			_purchaseTotalTitleLabel.x = 385;
-			_purchaseTotalTitleLabel.y = 127;
+			_purchaseTotalTitleLabel.x = _itemsList.x + _itemsList.width + scaleAndRoundToDpi(5);
+			_purchaseTotalTitleLabel.y = _itemsList.y;
 			addChild(_purchaseTotalTitleLabel);
 			
-			_purchaseTotalValueLabel = new TextField(90, 40, Utilities.splitThousands(9999999), Theme.FONT_OSWALD, 26, 0xff6600);
+			_purchaseTotalPointsIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
+			_purchaseTotalPointsIcon.scaleX = _purchaseTotalPointsIcon.scaleY = GlobalConfig.dpiScale;
+			
+			_purchaseTotalValueLabel = new TextField(scaleAndRoundToDpi(100), scaleAndRoundToDpi(53), Utilities.splitThousands(9999999), Theme.FONT_OSWALD, scaleAndRoundToDpi(26), 0xff6600);
 			_purchaseTotalValueLabel.touchable = false;
 			_purchaseTotalValueLabel.batchable = true;
+			_purchaseTotalValueLabel.autoScale = true;
 			//_purchaseTotalValueLabel.border = true;
 			_purchaseTotalValueLabel.hAlign = HAlign.RIGHT;
-			_purchaseTotalValueLabel.x = 515;
-			_purchaseTotalValueLabel.y = 127;
+			_purchaseTotalValueLabel.x = _background.width - _purchaseTotalValueLabel.width - _purchaseTotalPointsIcon.width - scaleAndRoundToDpi(5) - scaleAndRoundToDpi(15);
+			_purchaseTotalValueLabel.y = _itemsList.y;
 			addChild(_purchaseTotalValueLabel);
 			
-			_purchaseTotalPointsIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
-			_purchaseTotalPointsIcon.x = _purchaseTotalValueLabel.x + _purchaseTotalValueLabel.width + 5;
-			_purchaseTotalPointsIcon.y = _purchaseTotalValueLabel.y + 8;
+			_purchaseTotalPointsIcon.x = _purchaseTotalValueLabel.x + _purchaseTotalValueLabel.width + scaleAndRoundToDpi(5);
+			_purchaseTotalPointsIcon.y = _purchaseTotalValueLabel.y + scaleAndRoundToDpi(8);
 			addChild(_purchaseTotalPointsIcon);
 			
 			// current
-			_currentPointsTitleLabel = new TextField(200, 41, _("Vos Points"), Theme.FONT_OSWALD, 16, 0x676462);
+			_currentPointsTitleLabel = new TextField(scaleAndRoundToDpi(200), scaleAndRoundToDpi(53), _("Vos Points"), Theme.FONT_OSWALD, scaleAndRoundToDpi(30), 0x676462);
 			_currentPointsTitleLabel.touchable = false;
 			_currentPointsTitleLabel.batchable = true;
+			_currentPointsTitleLabel.autoScale = true;
 			//_currentPointsTitleLabel.border = true;
 			_currentPointsTitleLabel.hAlign = HAlign.LEFT;
-			_currentPointsTitleLabel.x = 385;
-			_currentPointsTitleLabel.y = 180;
+			_currentPointsTitleLabel.x = _itemsList.x + _itemsList.width + scaleAndRoundToDpi(5);
+			_currentPointsTitleLabel.y = scaleAndRoundToDpi(212);
 			addChild(_currentPointsTitleLabel);
 			
-			_currentPointsValueLabel = new TextField(90, 41, Utilities.splitThousands(9999999), Theme.FONT_OSWALD, 16, 0x676462);
+			_currentPointsIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
+			_currentPointsIcon.scaleX = _currentPointsIcon.scaleY = GlobalConfig.dpiScale //- (0.2 * GlobalConfig.dpiScale);
+			
+			_currentPointsValueLabel = new TextField(scaleAndRoundToDpi(100), scaleAndRoundToDpi(53), Utilities.splitThousands(9999999), Theme.FONT_OSWALD, scaleAndRoundToDpi(30), 0x676462);
 			_currentPointsValueLabel.touchable = false;
 			_currentPointsValueLabel.batchable = true;
+			_currentPointsValueLabel.autoScale = true;
 			//_currentPointsValueLabel.border = true;
 			_currentPointsValueLabel.hAlign = HAlign.RIGHT;
-			_currentPointsValueLabel.x = 515;
-			_currentPointsValueLabel.y = 180;
+			_currentPointsValueLabel.x = _background.width - _purchaseTotalValueLabel.width - _currentPointsIcon.width - scaleAndRoundToDpi(8) - scaleAndRoundToDpi(15);
+			_currentPointsValueLabel.y = scaleAndRoundToDpi(212);
 			addChild(_currentPointsValueLabel);
 
-			_currentPointsIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
-			_currentPointsIcon.scaleX = _currentPointsIcon.scaleY = 0.8;
-			_currentPointsIcon.x = _currentPointsValueLabel.x + _currentPointsValueLabel.width + 8;
-			_currentPointsIcon.y = _currentPointsValueLabel.y + 10;
+			_currentPointsIcon.x = _currentPointsValueLabel.x + _currentPointsValueLabel.width + scaleAndRoundToDpi(8);
+			_currentPointsIcon.y = _currentPointsValueLabel.y + scaleAndRoundToDpi(10);
 			addChild(_currentPointsIcon);
 			
 			// remaining
-			_remainingCookiesTitleLabel = new TextField(300, 41, _("Points restants"), Theme.FONT_OSWALD, 16, 0x676462);
+			_remainingCookiesTitleLabel = new TextField(scaleAndRoundToDpi(200), scaleAndRoundToDpi(53), _("Points restants"), Theme.FONT_OSWALD, scaleAndRoundToDpi(30), 0x676462);
 			_remainingCookiesTitleLabel.touchable = false;
 			_remainingCookiesTitleLabel.batchable = true;
+			_remainingCookiesTitleLabel.autoScale = true;
+			//_remainingCookiesTitleLabel.border = true;
 			_remainingCookiesTitleLabel.hAlign = HAlign.LEFT;
-			_remainingCookiesTitleLabel.x = 385;
-			_remainingCookiesTitleLabel.y = 228;
+			_remainingCookiesTitleLabel.x = _itemsList.x + _itemsList.width + scaleAndRoundToDpi(5);
+			_remainingCookiesTitleLabel.y = scaleAndRoundToDpi(282);
 			addChild(_remainingCookiesTitleLabel);
 
-			_remainingCookiesValueLabel = new TextField(90, 41, Utilities.splitThousands(-99999999), Theme.FONT_OSWALD, 16, 0x676462);
+			_remainingPointsIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
+			_remainingPointsIcon.scaleX = _remainingPointsIcon.scaleY = GlobalConfig.dpiScale //- (0.2 * GlobalConfig.dpiScale);
+			
+			_remainingCookiesValueLabel = new TextField(scaleAndRoundToDpi(100), scaleAndRoundToDpi(53), Utilities.splitThousands(-99999999), Theme.FONT_OSWALD, scaleAndRoundToDpi(30), 0x676462);
 			_remainingCookiesValueLabel.touchable = false;
 			_remainingCookiesValueLabel.batchable = true;
+			_remainingCookiesValueLabel.autoScale = true;
+			//_remainingCookiesValueLabel.border = true;
 			_remainingCookiesValueLabel.hAlign = HAlign.RIGHT;
-			_remainingCookiesValueLabel.x = 515;
-			_remainingCookiesValueLabel.y = 228;
+			_remainingCookiesValueLabel.x = _background.width - _purchaseTotalValueLabel.width - _remainingPointsIcon.width - scaleAndRoundToDpi(8) - scaleAndRoundToDpi(15);
+			_remainingCookiesValueLabel.y = scaleAndRoundToDpi(282);
 			addChild(_remainingCookiesValueLabel);
 
-			_remainingPointsIcon = new Image(AvatarMakerAssets.cartPointBigIconTexture);
-			_remainingPointsIcon.scaleX = _remainingPointsIcon.scaleY = 0.8;
-			_remainingPointsIcon.x = _remainingCookiesValueLabel.x + _remainingCookiesValueLabel.width + 8;
-			_remainingPointsIcon.y = _remainingCookiesValueLabel.y + 10;
+			_remainingPointsIcon.x = _remainingCookiesValueLabel.x + _remainingCookiesValueLabel.width + scaleAndRoundToDpi(8);
+			_remainingPointsIcon.y = _remainingCookiesValueLabel.y + scaleAndRoundToDpi(10);
 			addChild(_remainingPointsIcon);
 			
 			// buttons
 			
 			_closeButton = new Button(AvatarMakerAssets.closeButton);
+			_closeButton.scaleX = _closeButton.scaleY = GlobalConfig.dpiScale;
 			_closeButton.addEventListener(Event.TRIGGERED, onClose);
-			_closeButton.x = _background.width - _closeButton.width - 16;
-			_closeButton.y = 34;
-			_closeButton.scaleWhenDown = 0.9;
+			_closeButton.x = _background.width - _closeButton.width - scaleAndRoundToDpi(16);
+			_closeButton.y = scaleAndRoundToDpi(34);
+			_closeButton.scaleWhenDown = GlobalConfig.dpiScale - (0.1*GlobalConfig.dpiScale);
 			addChild(_closeButton);
 			
 			_validateButton = ButtonFactory.getButton(_("VALIDER"), ButtonFactory.GREEN);
 			_validateButton.addEventListener(Event.TRIGGERED, onValidate);
-			_validateButton.x = 415;
-			_validateButton.y = 291;
+			_validateButton.x = roundUp(_itemsList.x + _itemsList.width + ((_background.width - _itemsList.x - _itemsList.width) - _validateButton.width) * 0.5);
+			_validateButton.y = _remainingCookiesTitleLabel.y + _remainingCookiesTitleLabel.height + roundUp(((_background.height - _remainingCookiesTitleLabel.y - _remainingCookiesTitleLabel.height) - _validateButton.height) * 0.5);
 			addChild(_validateButton);
 		}
 
@@ -260,7 +274,7 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_itemsList.dataProvider = new ListCollection(CartManager.getInstance().generateDataProvider());
 			_itemsList.validate();
 			
-			_listTopShadow.width = _listBottomShadow.width = _itemsList.width + (_itemsList.viewPort.height <= _itemsList.height ? 0 : -16);
+			//_listTopShadow.width = _listBottomShadow.width = _itemsList.width + (_itemsList.viewPort.height <= _itemsList.height ? 0 : -16);
 			
 			_validateButton.enabled = CartManager.getInstance().hasCheckedItem();
 			
@@ -303,7 +317,8 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 		{
 			log("[BasketConfirmationPopup] Purchasing items...");
 			
-			if((MemberManager.getInstance().points - CartManager.getInstance().getTotal()) < 0)
+			// FIXME A remettre comme avant (sans le true ||)
+			if(true || (MemberManager.getInstance().points - CartManager.getInstance().getTotal()) < 0)
 			{
 				// the user does not have enought points, we let him click the button but we display an information popup
 				dispatchEventWith(LKAvatarMakerEventTypes.CLOSE_BASKET_POPUP, false, LKAvatarMakerEventTypes.CONFIRM_NOT_ENOUGH_COOKIES);
@@ -398,6 +413,14 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			_listBottomShadow.removeFromParent(true);
 			_listBottomShadow = null;
 			
+			_closeButton.removeEventListener(Event.TRIGGERED, onClose);
+			_closeButton.removeFromParent(true);
+			_closeButton = null;
+			
+			_validateButton.removeEventListener(Event.TRIGGERED, onValidate);
+			_validateButton.removeFromParent(true);
+			_validateButton = null;
+			
 			_purchaseTotalTitleLabel.removeFromParent(true);
 			_purchaseTotalTitleLabel = null;
 			
@@ -424,14 +447,6 @@ package com.ludofactory.mobile.core.avatar.maker.cart
 			
 			_remainingPointsIcon.removeFromParent(true);
 			_remainingPointsIcon = null;
-			
-			_closeButton.removeEventListener(Event.TRIGGERED, onClose);
-			_closeButton.removeFromParent(true);
-			_closeButton = null;
-			
-			_validateButton.removeEventListener(Event.TRIGGERED, onValidate);
-			_validateButton.removeFromParent(true);
-			_validateButton = null;
 			
 			super.dispose();
 		}
