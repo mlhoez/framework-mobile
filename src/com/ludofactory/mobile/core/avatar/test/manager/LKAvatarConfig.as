@@ -68,6 +68,10 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		 * Default animation name. */
 		private static var _defaultAnimationName:String = "idle";
 		
+		private var _lastConnectionDate:Number = 0;
+		
+		private var _lastConnectionRank:int = 0;
+		
 		public function LKAvatarConfig()
 		{
 			
@@ -94,6 +98,8 @@ package com.ludofactory.mobile.core.avatar.test.manager
 				if( "paiementType" in config && config.paiementType != null ) _priceType = int(config.paiementType);
 				if( "isOwned" in config && config.isOwned != null ) _isOwned = Boolean(config.isOwned);
 				
+				_lastConnectionDate = "lastConnection" in config ? config.lastConnection : 0;
+				_lastConnectionRank = "lastRank" in config ? config.lastRank : 0;
 				_imageDimensions.width = "pngWidth" in config ? config.pngWidth : 1;
 				_imageDimensions.height = "pngHeight" in config ? config.pngHeight : 1;
 				_imageRefDimensions.width = "pngRefWidth" in config ? config.pngRefWidth : 1;
@@ -116,6 +122,8 @@ package com.ludofactory.mobile.core.avatar.test.manager
 				if( "paiementType" in config && config.paiementType != null ) _priceType = int(config.paiementType);
 				if( "isOwned" in config && config.isOwned != null ) _isOwned = Boolean(config.isOwned);
 				
+				_lastConnectionDate = "lastConnection" in config ? config.lastConnection : 0;
+				_lastConnectionRank = "lastRank" in config ? config.lastRank : 0;
 				_imageDimensions.width = "pngWidth" in config ? config.pngWidth : 1;
 				_imageDimensions.height = "pngHeight" in config ? config.pngHeight : 1;
 				_imageRefDimensions.width = "pngRefWidth" in config ? config.pngRefWidth : 1;
@@ -232,6 +240,17 @@ package com.ludofactory.mobile.core.avatar.test.manager
 		public function get lipsColor():LudokadoBoneConfiguration { return _lipsColor; }
 		public function get epaulet():LudokadoBoneConfiguration { return _epaulet; }
 		public function get age():LudokadoBoneConfiguration { return _age; }
+		
+		
+		public function get lastConnectionDate():Number
+		{
+			return _lastConnectionDate;
+		}
+		
+		public function get lastConnectionRank():int
+		{
+			return _lastConnectionRank;
+		}
 		
 		public function get imageDimensions():Dimension
 		{
