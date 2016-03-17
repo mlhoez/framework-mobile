@@ -1,8 +1,8 @@
 /*
- Copyright © 2006-2015 Ludo Factory
- Avatar Maker - Ludokado
+ Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
+ Framework mobile
  Author  : Maxime Lhoez
- Created : 24 août 2015
+ Created : 24 Août 2015
 */
 package com.ludofactory.mobile.core.avatar.maker.items
 {
@@ -39,7 +39,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		private var _items:Object;
 		/**
 		 * Selector data. */
-		private var _selectorData:Array = [];
+		//private var _selectorData:Array = [];
 		/**
 		 * New VIP items to display at launch. */
 		private var _newVipItems:Vector.<AvatarItemData>;
@@ -78,7 +78,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 			}
 			
 			// build the selector
-			_selectorData = [];
+			/*_selectorData = [];
 			if(data.selector)
 			{
 				var categoryData:Object;
@@ -97,7 +97,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 					elementToPush.children.push( tempList );
 					_selectorData.push(elementToPush);
 				}
-			}
+			}*/
 			
 			/*log(LKConfigManager.currentGenderId);
 			if(LKConfigManager.currentGenderId == AvatarGenderType.GIRL)
@@ -291,7 +291,7 @@ package com.ludofactory.mobile.core.avatar.maker.items
 		public function get items():Object { return _items; }
 		public function get newVipItems():Vector.<AvatarItemData> { return _newVipItems; }
 		public function get newCommonItems():Vector.<AvatarItemData> { return _newCommonItems; }
-		public function get selectorData():Array { return _selectorData; }
+		//public function get selectorData():Array { return _selectorData; }
 		
 //------------------------------------------------------------------------------------------------------------
 //	Singleton

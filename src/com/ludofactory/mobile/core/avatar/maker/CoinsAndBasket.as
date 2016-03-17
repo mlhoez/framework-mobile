@@ -5,14 +5,23 @@ package com.ludofactory.mobile.core.avatar.maker
 {
 	
 	import com.greensock.TweenMax;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.avatar.AvatarMakerAssets;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import starling.display.Image;
 	import starling.display.Sprite;
 	
 	public class CoinsAndBasket extends Sprite
 	{
-		private static const BASKET_TARGET_X:int = 30;
+		private static var BASKET_TARGET_X:int = 30;
 		
 		/**
 		 * Basket background icon. */
@@ -27,20 +36,30 @@ package com.ludofactory.mobile.core.avatar.maker
 		public function CoinsAndBasket()
 		{
 			super();
+			
+			_cookieIcon = new Image(AvatarMakerAssets.cartPointsIcon);
+			_cookieIcon.scaleX = _cookieIcon.scaleY = GlobalConfig.dpiScale;
+			addChild(_cookieIcon);
+			
+			return;
 
 			_basketBackgroundIcon = new Image(AvatarMakerAssets.cartIconBackground);
 			_basketBackgroundIcon.visible = false;
+			_basketBackgroundIcon.scaleX = _basketBackgroundIcon.scaleY = GlobalConfig.dpiScale;
 			addChild(_basketBackgroundIcon);
 
 			_cookieIcon = new Image(AvatarMakerAssets.cartPointsIcon);
+			_cookieIcon.scaleX = _cookieIcon.scaleY = GlobalConfig.dpiScale;
 			addChild(_cookieIcon);
 
 			_basketForegroundIcon = new Image(AvatarMakerAssets.cartIconForeground);
 			_basketForegroundIcon.visible = false;
+			_basketForegroundIcon.scaleX = _basketForegroundIcon.scaleY = GlobalConfig.dpiScale;
 			addChild(_basketForegroundIcon);
 			
-			this.touchable = false;
+			BASKET_TARGET_X = scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50);
 			
+			this.touchable = false;
 		}
 
 		/**
@@ -48,6 +67,8 @@ package com.ludofactory.mobile.core.avatar.maker
 		 */
 		public function animateInBasket(skipAnimation:Boolean = false):void
 		{
+			return;
+			
 			TweenMax.killTweensOf(_basketBackgroundIcon);
 			TweenMax.killTweensOf(_basketForegroundIcon);
 			TweenMax.killTweensOf(_cookieIcon);
@@ -62,7 +83,7 @@ package com.ludofactory.mobile.core.avatar.maker
 				_basketBackgroundIcon.x = 0;
 				_basketForegroundIcon.x = 0;
 				_cookieIcon.y = 0;
-				_cookieIcon.x = 4;
+				_cookieIcon.x = scaleAndRoundToDpi(GlobalConfig.isPhone ? 4 : 24);
 			}
 			else
 			{
@@ -73,7 +94,7 @@ package com.ludofactory.mobile.core.avatar.maker
 					_basketForegroundIcon.visible = true;
 					_basketBackgroundIcon.alpha = 0;
 					_basketForegroundIcon.alpha = 0;
-					TweenMax.to(_cookieIcon, 0.25, { x:4, y:-5 });
+					TweenMax.to(_cookieIcon, 0.25, { x:scaleAndRoundToDpi(GlobalConfig.isPhone ? 4 : 24), y:scaleAndRoundToDpi(GlobalConfig.isPhone ? -5 : -25) });
 					TweenMax.to(_cookieIcon, 0.25, { delay:0.25, y:0 });
 					TweenMax.allTo([_basketBackgroundIcon, _basketForegroundIcon], 0.25, { delay: 0.15, autoAlpha:1, x:0 });
 				}
@@ -85,6 +106,8 @@ package com.ludofactory.mobile.core.avatar.maker
 		 */
 		public function animateOutBasket(skipAnimation:Boolean = false):void
 		{
+			return;
+			
 			TweenMax.killTweensOf(_basketBackgroundIcon);
 			TweenMax.killTweensOf(_basketForegroundIcon);
 			TweenMax.killTweensOf(_cookieIcon);
@@ -96,15 +119,15 @@ package com.ludofactory.mobile.core.avatar.maker
 				_basketForegroundIcon.alpha = 0;
 				_basketBackgroundIcon.x = BASKET_TARGET_X;
 				_basketForegroundIcon.x = BASKET_TARGET_X;
-				_cookieIcon.y = (30 - _cookieIcon.height - 8);
+				_cookieIcon.y = (scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50) - _cookieIcon.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 8 : 28));
 				_cookieIcon.x = 2;
 			}
 			else
 			{
-				if( _cookieIcon.y != (30 - _cookieIcon.height - 8) )
+				if( _cookieIcon.y != (scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50) - _cookieIcon.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 8 : 28)) )
 				{
-					TweenMax.to(_cookieIcon, 0.25, { x:2, y:-5 });
-					TweenMax.to(_cookieIcon, 0.25, { delay:0.25, y:(30 - _cookieIcon.height - 8) });
+					TweenMax.to(_cookieIcon, 0.25, { x:scaleAndRoundToDpi(GlobalConfig.isPhone ? 2 : 22), y:scaleAndRoundToDpi(GlobalConfig.isPhone ? -5 : -25) });
+					TweenMax.to(_cookieIcon, 0.25, { delay:0.25, y:(scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 50) - _cookieIcon.height - scaleAndRoundToDpi(GlobalConfig.isPhone ? 8 : 28)) });
 					TweenMax.allTo([_basketBackgroundIcon, _basketForegroundIcon], 0.25, { delay:0.15, autoAlpha:0, x:BASKET_TARGET_X, onComplete:function():void
 						{
 							_basketBackgroundIcon.visible = _basketForegroundIcon.visible = false;

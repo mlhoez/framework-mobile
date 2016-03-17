@@ -26,12 +26,17 @@ package com.ludofactory.mobile.core.avatar.maker
 		
 		public function set owner(value:List):void
 		{
+			if(this._owner) // first remove the listener
+				owner.removeEventListener(Event.SCROLL, onScroll);
+			
 			if(this._owner == value)
-			{
 				return;
-			}
+			
 			this._owner = value;
 			this.invalidate(INVALIDATION_FLAG_DATA);
+			
+			if(this.owner)
+				owner.addEventListener(Event.SCROLL, onScroll)
 		}
 		
 		protected var _index:int = -1;
@@ -65,8 +70,8 @@ package com.ludofactory.mobile.core.avatar.maker
 		}
 		
 		/**
-		 * @private
-		 */
+		 * @private*/
+		 
 		public function set factoryID(value:String):void
 		{
 			this._factoryID = value;
@@ -98,6 +103,11 @@ package com.ludofactory.mobile.core.avatar.maker
 			this._isSelected = value;
 			this.invalidate(INVALIDATION_FLAG_SELECTED);
 			this.dispatchEventWith(Event.CHANGE);
+		}
+		
+		public function onScroll(event:Event = null):void
+		{
+			
 		}
 		
 	}

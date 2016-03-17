@@ -225,6 +225,8 @@ package com.ludofactory.mobile.core.remoting
 		 */		
 		private function announceSocket(event:StatusEvent):void
 		{
+			// FIXME Sometimes some calls are made before the _nc is connected to the host, resulting in errors like
+			// "Une requête a échoué", so we need to figure out how to make sur we pass by his function before any call !
 			logRemote("[NetConnectionManager] Host " + (_baseGatewayUrl + (_gatewayPortNumber ? (":" + _gatewayPortNumber) : "")) + " available : " + _socketMonitor.available);
 			
 			/*if( _socketMonitor.available || GlobalConfig.DEBUG )
@@ -446,15 +448,15 @@ package com.ludofactory.mobile.core.remoting
 			// then call the success callback function
 			if( _genericSuccessCallback )
 			{
-				try
-				{
+				/*try
+				{*/
 					_genericSuccessCallback(result, responderManager.command, responderManager.successCallback);
-				} 
+				/*} 
 				catch(error:Error) 
 				{
 					Flox.logWarning("[NetConnectionManager] Try/Catch of onValidCall.");
 					if( CONFIG::DEBUG ) throw error;
-				}
+				}*/
 			}
 			else
 			{

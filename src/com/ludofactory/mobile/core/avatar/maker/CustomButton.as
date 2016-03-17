@@ -83,18 +83,20 @@ package com.ludofactory.mobile.core.avatar.maker
 
             mState = ButtonState.UP;
             mBody = new Image(upState);
-            mBody.scaleX = mBody.scaleY = GlobalConfig.dpiScale;
-            mScaleWhenDown = downState ? 1.0 : 0.9;
-            mScaleWhenOver = mAlphaWhenDown = 1.0;
+            mScaleWhenDown = (/*downState ? 1.0 :*/ 0.9) * GlobalConfig.dpiScale;
+            mScaleWhenOver = GlobalConfig.dpiScale;
+            mAlphaWhenDown = 1;
             mAlphaWhenDisabled = disabledState ? 1.0: 0.5;
             mEnabled = true;
             mUseHandCursor = true;
-            mTextBounds = new Rectangle(0, 0, mBody.width, mBody.height);
-            
+    
             mContents = new Sprite();
+            mContents.scaleX = mContents.scaleY = GlobalConfig.dpiScale;
             mContents.addChild(mBody);
             addChild(mContents);
             addEventListener(TouchEvent.TOUCH, onTouch);
+            
+            mTextBounds = new Rectangle(0, 0, mContents.width, mContents.height);
             
             this.touchGroup = true;
             this.text = text;
@@ -117,9 +119,9 @@ package com.ludofactory.mobile.core.avatar.maker
         public function readjustSize(resetTextBounds:Boolean=true):void
         {
             mBody.readjustSize();
-
+            
             if (resetTextBounds && mTextField != null)
-                textBounds = new Rectangle(0, 0, mBody.width, mBody.height);
+                textBounds = new Rectangle(0, 0, mContents.width, mContents.height);
         }
 
         private function createTextField():void
@@ -140,7 +142,7 @@ package com.ludofactory.mobile.core.avatar.maker
             mTextField.y = mTextBounds.y;
         }
         
-        private function onTouch(event:TouchEvent):void
+        protected function onTouch(event:TouchEvent):void
         {
             Mouse.cursor = (mUseHandCursor && mEnabled && event.interactsWith(this)) ?
                 MouseCursor.BUTTON : MouseCursor.AUTO;
@@ -189,7 +191,6 @@ package com.ludofactory.mobile.core.avatar.maker
                 {
 	                if(_isToggle && !_isSelected)
 	                {
-		                log("selected");
 		                _isSelected = true;
 		                state = ButtonState.OVER;
 	                }
@@ -213,7 +214,8 @@ package com.ludofactory.mobile.core.avatar.maker
         {
             mState = value;
             mContents.x = mContents.y = 0;
-            mContents.scaleX = mContents.scaleY = mContents.alpha = 1.0;
+            mContents.scaleX = mContents.scaleY = GlobalConfig.dpiScale;
+            mContents.alpha = 1;
 
             switch (mState)
             {
@@ -221,8 +223,8 @@ package com.ludofactory.mobile.core.avatar.maker
                     setStateTexture(mDownState);
                     mContents.alpha = mAlphaWhenDown;
                     mContents.scaleX = mContents.scaleY = mScaleWhenDown;
-                    mContents.x = (1.0 - mScaleWhenDown) / 2.0 * mBody.width;
-                    mContents.y = (1.0 - mScaleWhenDown) / 2.0 * mBody.height;
+                    mContents.x = (GlobalConfig.dpiScale - mScaleWhenDown) / 2.0 * mContents.width;
+                    mContents.y = (GlobalConfig.dpiScale - mScaleWhenDown) / 2.0 * mContents.height;
                     break;
                 case ButtonState.UP:
                         
@@ -230,9 +232,9 @@ package com.ludofactory.mobile.core.avatar.maker
                     break;
                 case ButtonState.OVER:
                     setStateTexture(_isSelected ? mDownState : mOverState);
-                    mContents.scaleX = mContents.scaleY = mScaleWhenOver;
-                    mContents.x = (1.0 - mScaleWhenOver) / 2.0 * mBody.width;
-                    mContents.y = (1.0 - mScaleWhenOver) / 2.0 * mBody.height;
+                    /*mContents.scaleX = mContents.scaleY = mScaleWhenOver;
+                    mContents.x = (1.0 - mScaleWhenOver) / 2.0 * mContents.width;
+                    mContents.y = (1.0 - mScaleWhenOver) / 2.0 * mContents.height;*/
                     break;
                 case ButtonState.DISABLED:
                     setStateTexture(mDisabledState);
@@ -436,9 +438,14 @@ package com.ludofactory.mobile.core.avatar.maker
 	    public function get isSelected():Boolean { return _isSelected; }
 	    public function set isSelected(value:Boolean):void
 	    {
+            if(_isSelected == value)
+                return;
+            
 		    _isSelected = value;
 		    if(!_isSelected)
 			    state = ButtonState.UP;
+            else
+                state = ButtonState.DOWN;
 	    }
 	
 	    /** Indicates if the mouse cursor should transform into a hand while it's over the button. 

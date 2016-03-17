@@ -136,6 +136,7 @@ package com.ludofactory.mobile.core.avatar
 		public static var iconsBackground:Texture;
 		
 		public static var sectionPlusButton:Texture;
+		public static var sectionMinusButton:Texture;
 		
 		public static var section_button:Texture;
 		public static var section_selected_button:Texture;
@@ -167,6 +168,8 @@ package com.ludofactory.mobile.core.avatar
 		public static var newItemsButton:Texture;
 		
 		public static var avatarNameBackground:Texture;
+		
+		public static var sectionStripe:Texture;
 		
 		private static var _isInitializd:Boolean = false;
 		
@@ -289,7 +292,8 @@ package com.ludofactory.mobile.core.avatar
 			iconsMask = AbstractEntryPoint.assets.getTexture("icons-mask");
 			iconsBackground = AbstractEntryPoint.assets.getTexture("icons-background");
 			
-			sectionPlusButton = AbstractEntryPoint.assets.getTexture("add-item-icon" + (GlobalConfig.isPhone ? "" : "-hd"));
+			sectionPlusButton = AbstractEntryPoint.assets.getTexture("open-sections-icon" + (GlobalConfig.isPhone ? "" : "-hd"));
+			sectionMinusButton = AbstractEntryPoint.assets.getTexture("close-sections-icon" + (GlobalConfig.isPhone ? "" : "-hd"));
 			
 			section_button =  AbstractEntryPoint.assets.getTexture("section-button" + (GlobalConfig.isPhone ? "" : "-hd"));
 			section_selected_button =  AbstractEntryPoint.assets.getTexture("section-selected-button" + (GlobalConfig.isPhone ? "" : "-hd"));
@@ -322,6 +326,8 @@ package com.ludofactory.mobile.core.avatar
 			newItemsButton = AbstractEntryPoint.assets.getTexture("new-items-button");
 			
 			avatarNameBackground = AbstractEntryPoint.assets.getTexture("avatar-name-background");
+			
+			sectionStripe = AbstractEntryPoint.assets.getTexture("add-item-stripe" + (GlobalConfig.isPhone ? "" : "-hd"));
 			
 			_isInitializd = true;
 		}
@@ -523,6 +529,8 @@ package com.ludofactory.mobile.core.avatar
 			
 			sectionPlusButton.dispose();
 			sectionPlusButton = null;
+			sectionMinusButton.dispose();
+			sectionMinusButton = null;
 			
 			section_button.dispose();
 			section_button = null;
@@ -579,6 +587,9 @@ package com.ludofactory.mobile.core.avatar
 			
 			avatarNameBackground.dispose();
 			avatarNameBackground = null;
+			
+			sectionStripe.dispose();
+			sectionStripe = null;
 			
 			System.disposeXML(particleStarsXml);
 			particleStarsXml = null;

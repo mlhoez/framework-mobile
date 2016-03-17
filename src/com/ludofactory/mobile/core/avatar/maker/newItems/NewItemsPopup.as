@@ -1,8 +1,8 @@
 /*
- Copyright © 2006-2015 Ludo Factory
- Avatar Maker - Ludokado
+ Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
+ Framework mobile
  Author  : Maxime Lhoez
- Created : 24 août 2015
+ Created : 24 Août 2015
 */
 package com.ludofactory.mobile.core.avatar.maker.newItems
 {
@@ -42,29 +42,27 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 		private var _overlay:Quad;
 		
 		/**
-		 * Clowe button. */
-		private var _closeButton:Button;
-		
-		/**
 		 * New vip items container. */
 		private var _newVipItemContainer:NewVipItemsContainer;
 		/**
 		 * New common items container. */
 		private var _newCommonItemContainer:NewCommonItemsContainer;
 		
-		private var _displayBoth:Boolean = false;
+		/**
+		 * Clowe button. */
+		private var _closeButton:Button;
 		
 		public function NewItemsPopup()
 		{
 			super();
 			
-			_displayBoth = ItemManager.getInstance().newVipItems.length > 0 && ItemManager.getInstance().newCommonItems.length > 0;
+			var displayBoth:Boolean = ItemManager.getInstance().newVipItems.length > 0 && ItemManager.getInstance().newCommonItems.length > 0;
 			
 			_particles = new PDParticleSystem(AvatarMakerAssets.particleStarsXml, AvatarMakerAssets.starParticle);
 			_particles.touchable = false;
 			_particles.maxNumParticles = 75;
-			_particles.emitterXVariance = GlobalConfig.stageWidth * 0.5//_displayBoth ? scaleAndRoundToDpi(400) : scaleAndRoundToDpi(200);
-			_particles.emitterYVariance = GlobalConfig.stageHeight * 0.5//scaleAndRoundToDpi(180);
+			_particles.emitterXVariance = GlobalConfig.stageWidth * 0.5;
+			_particles.emitterYVariance = GlobalConfig.stageHeight * 0.5;
 			addChild(_particles);
 			
 			_stripes = new Image(AvatarMakerAssets.newItemsStripes);
@@ -77,7 +75,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			_particles.emitterX = GlobalConfig.stageWidth * 0.5;
 			_particles.emitterY = GlobalConfig.stageHeight * 0.5;
 			
-			_background = new Image(_displayBoth ? AvatarMakerAssets.newItemsPopupBothBackground : AvatarMakerAssets.newItemsPopupSingleBackground);
+			_background = new Image(displayBoth ? AvatarMakerAssets.newItemsPopupBothBackground : AvatarMakerAssets.newItemsPopupSingleBackground);
 			_background.scaleX = _background.scaleY = GlobalConfig.dpiScale;
 			_background.x = roundUp((GlobalConfig.stageWidth - _background.width) * 0.5);
 			_background.y = roundUp((GlobalConfig.stageHeight - _background.height) * 0.5);
@@ -88,18 +86,18 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			_closeButton.addEventListener(Event.TRIGGERED, onClose);
 			addChild(_closeButton);
 			
-			if(_displayBoth)
+			if(displayBoth)
 			{
 				// we need to display new common items (when we add new ones in database) and new vip items (when the rank changes)
 				_closeButton.x = _background.x + _background.width - scaleAndRoundToDpi(46);
 				_closeButton.y = _background.y + scaleAndRoundToDpi(26);
 				
-				_newVipItemContainer = new NewVipItemsContainer(_background.width, _background.height, true);
+				_newVipItemContainer = new NewVipItemsContainer(true);
 				_newVipItemContainer.x = _background.x + scaleAndRoundToDpi(14);
 				_newVipItemContainer.y = _background.y + scaleAndRoundToDpi(-4);
 				addChild(_newVipItemContainer);
 				
-				_newCommonItemContainer = new NewCommonItemsContainer(_background.width, _background.height, true);
+				_newCommonItemContainer = new NewCommonItemsContainer(true);
 				_newCommonItemContainer.x = _background.x + _background.width - _newCommonItemContainer.width - scaleAndRoundToDpi(30);
 				_newCommonItemContainer.y = _background.y + scaleAndRoundToDpi(30);
 				addChild(_newCommonItemContainer);
@@ -112,7 +110,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 				if(ItemManager.getInstance().newVipItems.length > 0)
 				{
 					// we need to displya new vip items (when the rank changes)
-					_newVipItemContainer = new NewVipItemsContainer(_background.width, _background.height);
+					_newVipItemContainer = new NewVipItemsContainer();
 					_newVipItemContainer.x = _background.x + scaleAndRoundToDpi(20);
 					_newVipItemContainer.y = _background.y + scaleAndRoundToDpi(10);
 					addChild(_newVipItemContainer);
@@ -120,7 +118,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 				else if(ItemManager.getInstance().newCommonItems.length > 0)
 				{
 					// we need to display new common items (when we add new ones in database)
-					_newCommonItemContainer = new NewCommonItemsContainer(_background.width, _background.height);
+					_newCommonItemContainer = new NewCommonItemsContainer();
 					_newCommonItemContainer.x = _background.x + scaleAndRoundToDpi(90);
 					_newCommonItemContainer.y = _background.y + scaleAndRoundToDpi(40);
 					addChild(_newCommonItemContainer);
@@ -151,7 +149,6 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			_particles.stop();
 			
 			if(_newVipItemContainer) _newVipItemContainer.onMinimize();
-			if(_newCommonItemContainer) _newCommonItemContainer.onMinimize();
 		}
 		
 		/**
@@ -163,7 +160,6 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			_particles.start();
 			
 			if(_newVipItemContainer) _newVipItemContainer.onMaximize();
-			if(_newCommonItemContainer) _newCommonItemContainer.onMaximize();
 		}
 
 //------------------------------------------------------------------------------------------------------------
@@ -171,7 +167,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 		
 		override public function dispose():void
 		{
-			Starling.juggler.remove( _particles );
+			Starling.juggler.remove(_particles);
 			_particles.stop(true);
 			_particles.removeFromParent(true);
 			_particles = null;
@@ -199,6 +195,10 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 				_newCommonItemContainer.removeFromParent(true);
 				_newCommonItemContainer = null;
 			}
+			
+			_closeButton.removeEventListener(Event.TRIGGERED, onClose);
+			_closeButton.removeFromParent(true);
+			_closeButton = null;
 			
 			super.dispose();
 		}

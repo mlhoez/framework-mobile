@@ -1,6 +1,6 @@
 /*
- Copyright © 2006-2015 Ludo Factory
- Avatar Maker - Ludokado
+ Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
+ Framework mobile
  Author  : Maxime Lhoez
  Created : 14 Décembre 2014
 */

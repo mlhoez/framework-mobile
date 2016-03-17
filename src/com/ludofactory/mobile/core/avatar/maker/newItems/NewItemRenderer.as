@@ -1,8 +1,8 @@
 /*
- Copyright © 2006-2015 Ludo Factory
- Game Server - Ludokado
+ Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
+ Framework mobile
  Author  : Maxime Lhoez
- Created : 25 août 2014
+ Created : 25 Août 2014
 */
 package com.ludofactory.mobile.core.avatar.maker.newItems
 {

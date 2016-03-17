@@ -28,7 +28,7 @@ package com.ludofactory.mobile.core.avatar
 	import com.ludofactory.mobile.core.avatar.maker.items.ItemSelector;
 	import com.ludofactory.mobile.core.avatar.maker.newItems.NewItemsPopup;
 	import com.ludofactory.mobile.core.avatar.maker.sections.SectionSelector;
-	import com.ludofactory.mobile.core.avatar.test.config.AvatarDisplayerType;
+	import com.ludofactory.mobile.core.avatar.test.NewSectionGroupButton;
 	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
 	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
@@ -37,22 +37,26 @@ package com.ludofactory.mobile.core.avatar
 	import com.ludofactory.mobile.core.avatar.test.manager.LudokadoBoneConfiguration;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.ludofactory.mobile.navigation.game.StakeButtonToken;
 	
 	import starling.core.Starling;
-	import starling.display.BlendMode;
 	import starling.display.Button;
+	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	import starling.filters.ColorMatrixFilter;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	
@@ -86,9 +90,6 @@ package com.ludofactory.mobile.core.avatar
 		/**
 		 * Item selector (list of items). */
 		private var _itemSelector:ItemSelector;
-		/**
-		 * Section selector. */
-		private var _sectionSelector:SectionSelector;
 		
 	// ---------- Buttons
 		
@@ -98,6 +99,8 @@ package com.ludofactory.mobile.core.avatar
 		/**
 		 * The preview button. */
 		private var _previewButton:MobileSimpleButton;
+		
+		private var _backButton:Button;
 		
 		private var _cancelButton:MobileButton;
 		
@@ -120,13 +123,11 @@ package com.ludofactory.mobile.core.avatar
 		 * Popup displaying the new items (new items with the new vip rank or recently added in the database). */
 		private var _newItemsPopup:NewItemsPopup;
 		
-		
-		private var _isChangingGender:Boolean = false;
-		
-		
 		public function AvatarMakerScreen()
 		{
 			super();
+			
+			_fullScreen = true;
 		}
 		
 		override protected function initialize():void
@@ -147,14 +148,11 @@ package com.ludofactory.mobile.core.avatar
 			_itemSelector.addEventListener(LKAvatarMakerEventTypes.ITEM_SELECTED, onItemSelected);
 			addChild(_itemSelector);
 			
-			_sectionSelector = new SectionSelector();
-			addChild(_sectionSelector);
-			_sectionSelector.addEventListener(LKAvatarMakerEventTypes.PART_SELECTED, onSectionSelected);
-			
-			_newItemsbutton = new Button(AbstractEntryPoint.assets.getTexture("new-items-button"));
+			_newItemsbutton = new Button(AvatarMakerAssets.newItemsButton);
+			_newItemsbutton.scaleX = _newItemsbutton.scaleY = GlobalConfig.dpiScale;
 			_newItemsbutton.alpha = 0;
 			_newItemsbutton.visible = false;
-			_newItemsbutton.alignPivot(HAlign.CENTER, VAlign.TOP);
+			_newItemsbutton.alignPivot(HAlign.RIGHT, VAlign.CENTER);
 			_newItemsbutton.addEventListener(Event.TRIGGERED, onDisplayNewItems);
 			addChild(_newItemsbutton);
 			
@@ -169,10 +167,17 @@ package com.ludofactory.mobile.core.avatar
 			_randomizeButton.scaleWhenDown = 0.9;
 			addChild(_randomizeButton);
 			
+			
+			_backButton = new Button(AvatarMakerAssets.backButton);
+			_backButton.scaleX = _backButton.scaleY = GlobalConfig.dpiScale;
+			_backButton.addEventListener(Event.TRIGGERED, onGoBack);
+			addChild(_backButton);
+			
 			_cancelButton = ButtonFactory.getButton("Reset", ButtonFactory.RED);
 			_cancelButton.enabled = false;
 			_cancelButton.addEventListener(Event.TRIGGERED, onCancel);
 			_cancelButton.scaleWhenDown = 0.9;
+			_cancelButton.visible = false;
 			addChild(_cancelButton);
 			
 			_saveButton = ButtonFactory.getButton("Save", ButtonFactory.GREEN);
@@ -210,30 +215,24 @@ package com.ludofactory.mobile.core.avatar
 				
 				if(AbstractGameInfo.LANDSCAPE)
 				{
-					_itemSelector.height = scaleAndRoundToDpi(170); // the size must be 10 less than the item renderer max height
+					_backButton.x = scaleAndRoundToDpi(5);
+					_backButton.y = scaleAndRoundToDpi(5);
 					
-					_saveButton.x = roundUp((actualWidth - _saveButton.width) * 0.5);
+					_saveButton.width = _randomizeButton.width = scaleAndRoundToDpi(GlobalConfig.isPhone ? 130 : 230);
+					_saveButton.height = _randomizeButton.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 170 : 240) * 0.5; // half the size of the list
+					_saveButton.x = _randomizeButton.x = actualWidth - _saveButton.width;
 					_saveButton.y = actualHeight - _saveButton.height;
+					_randomizeButton.y = _saveButton.y - _randomizeButton.height;
 					
-					_cancelButton.width = _randomizeButton.width = scaleAndRoundToDpi(130);
+					_itemSelector.x = scaleAndRoundToDpi(10);
+					_itemSelector.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? 170 : 240); // the size must be 10 more than the item renderer max height
+					_itemSelector.width = _saveButton.x - _itemSelector.x;
+					_itemSelector.y = actualHeight - _itemSelector.height - scaleAndRoundToDpi(10);
 					
-					_cancelButton.y = _randomizeButton.y = _saveButton.y;
-					_cancelButton.x = _saveButton.x + _saveButton.width;
-					_randomizeButton.x = _saveButton.x - _randomizeButton.width;
+					_previewButton.x = actualWidth - _previewButton.width;
 					
-					_itemSelector.x = scaleAndRoundToDpi(5);
-					_itemSelector.y = scaleAndRoundToDpi(5);
-					_itemSelector.width = scaleAndRoundToDpi(GlobalConfig.isPhone ? 200 : 270);
-					_itemSelector.height = actualHeight - (_itemSelector.y * 2);
-					
-					_sectionSelector.y = scaleAndRoundToDpi(5);
-					_sectionSelector.height = actualHeight - (_itemSelector.y * 2);
-					_sectionSelector.width = scaleAndRoundToDpi(150);
-					_sectionSelector.x = actualWidth - _sectionSelector.width - scaleAndRoundToDpi(5);
-					
-					_previewButton.x = (actualWidth - _previewButton.width) * 0.5;
-					
-					_newItemsbutton.x = 600;
+					_newItemsbutton.x = actualWidth + scaleAndRoundToDpi(5);
+					_newItemsbutton.y = _previewButton.y + _previewButton.height + (_newItemsbutton.height * 0.5);
 					
 					/*var matrix:Vector.<Number> = new Vector.<Number>();
 					matrix = matrix.concat([0, 0, 0, 0, 0]); // red
@@ -250,9 +249,9 @@ package com.ludofactory.mobile.core.avatar
 					//(AvatarManager.getInstance().currentAvatar.display as Sprite).filter = filter;
 					AvatarManager.getInstance().currentAvatar.display.scaleX = AvatarManager.getInstance().currentAvatar.display.scaleY = 1;
 					AvatarManager.getInstance().currentAvatar.display.scaleX =
-							AvatarManager.getInstance().currentAvatar.display.scaleY = Utilities.getScaleToFillHeight(AvatarManager.getInstance().currentAvatar.display.height, actualHeight * 0.9);
+							AvatarManager.getInstance().currentAvatar.display.scaleY = Utilities.getScaleToFillHeight(AvatarManager.getInstance().currentAvatar.display.height, (_itemSelector.y * (GlobalConfig.isPhone ? 0.9 : 0.9)));
 					AvatarManager.getInstance().currentAvatar.display.x = actualWidth * 0.5;
-					AvatarManager.getInstance().currentAvatar.display.y = actualHeight;
+					AvatarManager.getInstance().currentAvatar.display.y = _itemSelector.y;
 					
 					_cartPopup.x = roundUp(actualWidth * 0.5);
 					_cartPopup.y = roundUp(actualHeight * 0.5);
@@ -262,12 +261,68 @@ package com.ludofactory.mobile.core.avatar
 					
 					InfoManager.show(_("Chargement..."));
 					Remote.getInstance().getItemsList(onGetItemsSuccess, onGetItemsFail, onGetItemsFail, 2, advancedOwner.activeScreenID);
+					
+					if(!_isMenuAdded)
+						addMenu();
 				}
 				else
 				{
 					
 				}
 			}
+		}
+		
+		private var _isMenuAdded:Boolean = false;
+		
+		
+		private var _headButton:NewSectionGroupButton;
+		private var _bottomButton:NewSectionGroupButton;
+		
+		private function addMenu():void
+		{
+			_isMenuAdded = true;
+			
+			// boy :
+			//      Top : eyebrows, eyes, hair, hat, moustache, mouth, nose, faceCustom, beard
+			//      Bottom : body, leftHand, rightHand
+			
+			// girl :
+			//      Top : eyebrows, eyes, hair, hat, mouth, nose, faceCustom
+			//      Bottom : body, leftHand, rightHand
+			
+			// potato :
+			//      eyebrows, eyes, hat, moustache, mouth, nose
+			//      bottom : body, epaulet, leftHand, rightHand
+			
+			var topSectionsToBuild:Array = [];
+			topSectionsToBuild.push(LudokadoBones.EYEBROWS);
+			topSectionsToBuild.push(LudokadoBones.EYES);
+			topSectionsToBuild.push(LudokadoBones.HAT);
+			topSectionsToBuild.push(LudokadoBones.MOUTH);
+			topSectionsToBuild.push(LudokadoBones.NOSE);
+			if(LKConfigManager.currentGenderId != AvatarGenderType.POTATO) topSectionsToBuild.push(LudokadoBones.HAIR);
+			if(LKConfigManager.currentGenderId != AvatarGenderType.POTATO) topSectionsToBuild.push(LudokadoBones.FACE_CUSTOM);
+			if(LKConfigManager.currentGenderId != AvatarGenderType.GIRL) topSectionsToBuild.push(LudokadoBones.MOUSTACHE);
+			if(LKConfigManager.currentGenderId == AvatarGenderType.BOY) topSectionsToBuild.push(LudokadoBones.BEARD);
+			if(LKConfigManager.currentGenderId != AvatarGenderType.POTATO) topSectionsToBuild.push(LudokadoBones.AGE);
+			
+			var bottomSectionsToBuild:Array = [];
+			bottomSectionsToBuild.push(LudokadoBones.SHIRT);
+			bottomSectionsToBuild.push(LudokadoBones.LEFT_HAND);
+			bottomSectionsToBuild.push(LudokadoBones.RIGHT_HAND);
+			if(LKConfigManager.currentGenderId == AvatarGenderType.POTATO) bottomSectionsToBuild.push(LudokadoBones.EPAULET);
+			
+			_headButton = new NewSectionGroupButton(topSectionsToBuild, "left");
+			_headButton.x = AvatarManager.getInstance().currentAvatar.display.x + (AvatarManager.getInstance().currentAvatar.getBone("head").global.x * AvatarManager.getInstance().currentAvatar.display.scaleY) - (_headButton.width * (GlobalConfig.isPhone ? 0.6 : 0.7));
+			_headButton.y = AvatarManager.getInstance().currentAvatar.display.y + (AvatarManager.getInstance().currentAvatar.getBone("head").global.y * AvatarManager.getInstance().currentAvatar.display.scaleY) + scaleAndRoundToDpi(20);
+			addChild(_headButton);
+			
+			_bottomButton = new NewSectionGroupButton(bottomSectionsToBuild, "right");
+			_bottomButton.x = AvatarManager.getInstance().currentAvatar.display.x + (AvatarManager.getInstance().currentAvatar.getBone("shirt").global.x * AvatarManager.getInstance().currentAvatar.display.scaleY) + (_bottomButton.width * (GlobalConfig.isPhone ? 0.6 : 0.65));
+			_bottomButton.y = AvatarManager.getInstance().currentAvatar.display.y + (AvatarManager.getInstance().currentAvatar.getBone("shirt").global.y * AvatarManager.getInstance().currentAvatar.display.scaleY) + scaleAndRoundToDpi(20);
+			addChild(_bottomButton);
+			
+			addEventListener(LKAvatarMakerEventTypes.PART_SELECTED, onSectionSelected);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -281,9 +336,9 @@ package com.ludofactory.mobile.core.avatar
 			if(result.code == 1)
 			{
 				ItemManager.getInstance().parseData(result);
-				_sectionSelector.setData();
+				_headButton.setData(); // set the default selected section
 				
-				//_itemSelector.updateItems(ItemManager.getInstance().items[LudokadoBones.EYES], LudokadoBones.EYES); // FIXME A bouger, juste pour le temps du test la
+				LKConfigManager.parseData(result["avatarConfiguration"]);
 				
 				_newItemsbutton.alpha = 0;
 				_newItemsbutton.visible = false;
@@ -291,27 +346,12 @@ package com.ludofactory.mobile.core.avatar
 				if(ItemManager.getInstance().hasNewItemsToShow())
 				{
 					TweenMax.to(_newItemsbutton, 0.5, { autoAlpha:1 });
-					TweenMax.to(_newItemsbutton, 0.5, { scaleX:1.1, scaleY:1.1, ease:Power1.easeInOut, yoyo:true, repeat:-1 });
+					TweenMax.to(_newItemsbutton, 0.5, { scaleX:(GlobalConfig.dpiScale + (0.1 * GlobalConfig.dpiScale)), scaleY:(GlobalConfig.dpiScale + (0.1 * GlobalConfig.dpiScale)), ease:Power1.easeInOut, yoyo:true, repeat:-1 });
 				}
 				
-				if(_isChangingGender)
-				{
-					// FIXME Bloc à décommenter
-					/*Starling.juggler.delayCall(hidePopup, 1, _avatarChangePopup, function():void
-					{
-						_avatarChangePopup.dispose();
-						_avatarChangePopup = null;
-					});*/
-					Starling.juggler.delayCall(InfoManager.hide, 1 , ["", InfoContent.ICON_CROSS, 0]);
-					if(ItemManager.getInstance().hasNewItemsToShow())
-						TweenMax.delayedCall(1.75, onDisplayNewItems);
-				}
-				else
-				{
-					InfoManager.hide("", InfoContent.ICON_CROSS, 0);
-					if(ItemManager.getInstance().hasNewItemsToShow())
-						onDisplayNewItems();
-				}
+				InfoManager.hide("", InfoContent.ICON_CROSS, 0);
+				if(ItemManager.getInstance().hasNewItemsToShow())
+					onDisplayNewItems();
 			}
 			else
 			{
@@ -462,6 +502,12 @@ package com.ludofactory.mobile.core.avatar
 				updateDisplayer(LudokadoBones.EPAULET, LKConfigManager.currentConfig.epaulet.linkageName);
 		}
 		
+		private function onGoBack(event:Event):void
+		{
+			// TOOD afficher une confirmation si besoin
+			onBack();
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
 		
@@ -473,7 +519,9 @@ package com.ludofactory.mobile.core.avatar
 		 */
 		private function onSectionSelected(event:Event):void
 		{
-			_itemSelector.updateItems(ItemManager.getInstance().items[String(event.data)], String(event.data));
+			_headButton.onSectionSelected(String(event.data));
+			_bottomButton.onSectionSelected(String(event.data));
+			_itemSelector.updateItems(String(event.data));
 		}
 		
 		/**
@@ -508,7 +556,7 @@ package com.ludofactory.mobile.core.avatar
 			// update the basket
 			CartManager.getInstance().updateCart(new CartData(HELPER_ITEM_DATA, HELPER_FRAME_DATA));
 			// update the state icon on the section selector
-			_sectionSelector.onBasketUpdated(HELPER_ITEM_DATA.armatureSectionType);
+			//_sectionSelector.onBasketUpdated(HELPER_ITEM_DATA.armatureSectionType); // FIXME a remettre si besoin
 			
 			checkButtonsState();
 		}
@@ -624,7 +672,7 @@ package com.ludofactory.mobile.core.avatar
 		/**
 		 * Shows a popup.
 		 */
-		private function showPopup(popupToShow:starling.display.DisplayObject):void
+		private function showPopup(popupToShow:DisplayObject):void
 		{
 			_overlay.alpha = 0;
 			_overlay.visible = false;
@@ -663,7 +711,7 @@ package com.ludofactory.mobile.core.avatar
 		/**
 		 * Hides a popup.
 		 */
-		private function hidePopup(popupToHide:starling.display.DisplayObject, callback:Function = null):void
+		private function hidePopup(popupToHide:DisplayObject, callback:Function = null):void
 		{
 			_overlay.removeEventListener(TouchEvent.TOUCH, onTouchOverlay);
 			
@@ -738,10 +786,6 @@ package com.ludofactory.mobile.core.avatar
 		 */
 		private function onDisplayNewItems(event:Event = null):void
 		{
-			
-		}
-		/*private function onDisplayNewItems(event:Event = null):void
-		{
 			if(!_newItemsPopup)
 			{
 				_newItemsPopup = new NewItemsPopup();
@@ -752,23 +796,23 @@ package com.ludofactory.mobile.core.avatar
 			
 			_newItemsPopup.onMaximize();
 			showPopup(_newItemsPopup);
-		}*/
+		}
 		
 		/**
 		 * The new items popup have been minimized.
 		 */
-		/*private function onNewItemsPopupClosed(event:Event):void
+		private function onNewItemsPopupClosed(event:Event):void
 		{
 			_newItemsPopup.removeEventListener(LKAvatarMakerEventTypes.CLOSE_NEW_ITEMS_POPUP, onNewItemsPopupClosed);
 			_newItemsPopup.removeEventListener(LKAvatarMakerEventTypes.ON_NEW_ITEM_SELECTED, onItemSelectFromNewItemsPopup);
 			_newItemsPopup.onMinimize();
 			hidePopup(_newItemsPopup);
-		}*/
+		}
 		
 		/**
 		 * When a new item have been selected from the new items popup.
 		 */
-		/*private function onItemSelectFromNewItemsPopup(event:Event):void
+		private function onItemSelectFromNewItemsPopup(event:Event):void
 		{
 			_newItemsPopup.dispatchEventWith(LKAvatarMakerEventTypes.CLOSE_NEW_ITEMS_POPUP);
 			
@@ -778,7 +822,7 @@ package com.ludofactory.mobile.core.avatar
 			ItemManager.getInstance().updateSelectedStates(false);
 			_itemSelector.onNewItemSelected(itemData);
 			checkButtonsState();
-		}*/
+		}
 		
 		private function onPreviewEnabled(event:Event):void
 		{
@@ -813,6 +857,8 @@ package com.ludofactory.mobile.core.avatar
 		
 		override public function dispose():void
 		{
+			removeEventListener(LKAvatarMakerEventTypes.PART_SELECTED, onSectionSelected);
+			
 			CartManager.getInstance().emptyCart();
 			
 			onCancel();
@@ -823,14 +869,14 @@ package com.ludofactory.mobile.core.avatar
 			_itemSelector.removeFromParent(true);
 			_itemSelector = null;
 			
-			_sectionSelector.removeEventListener(LKAvatarMakerEventTypes.PART_SELECTED, onSectionSelected);
-			_sectionSelector.removeFromParent(true);
-			_sectionSelector = null;
-			
 			_previewButton.removeEventListener(MobileEventTypes.BUTTON_DOWN, onPreviewEnabled);
 			_previewButton.removeEventListener(MobileEventTypes.BUTTON_UP, onPreviewDisabled);
 			_previewButton.removeFromParent(true);
 			_previewButton = null;
+			
+			_backButton.removeEventListener(Event.TRIGGERED, onGoBack);
+			_backButton.removeFromParent(true);
+			_backButton = null;
 			
 			
 			super.dispose();

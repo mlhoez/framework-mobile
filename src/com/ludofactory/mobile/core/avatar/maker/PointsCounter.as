@@ -4,9 +4,12 @@
 package com.ludofactory.mobile.core.avatar.maker
 {
 	
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.desktop.ServerEventType;
 	import com.ludofactory.desktop.tools.log;
 	import com.ludofactory.desktop.tools.splitThousands;
+	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.server.data.ServerData;
 	import com.ludofactory.server.starling.theme.Theme;
 	
@@ -45,7 +48,7 @@ package com.ludofactory.mobile.core.avatar.maker
 			_background = new Scale3Image(Theme.counterPointsBackground);
 			addChild(_background);
 			
-			_counterLabel = new TextField(5, this.height, splitThousands(ServerData.totalPoints.value), Theme.FONT_OSWALD, 20, 0xffffff);
+			_counterLabel = new TextField(5, this.height, Utilities.splitThousands(MemberManager.getInstance().points), Theme.FONT_OSWALD, 20, 0xffffff);
 			_counterLabel.autoSize = TextFieldAutoSize.HORIZONTAL;
 			addChild(_counterLabel);
 			

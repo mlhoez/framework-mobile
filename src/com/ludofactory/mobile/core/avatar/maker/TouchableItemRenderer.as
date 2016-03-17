@@ -7,10 +7,13 @@ Created : 15 Décembre 2014
 package com.ludofactory.mobile.core.avatar.maker
 {
 	
+	import com.ludofactory.common.utils.logs.log;
+	
 	import flash.geom.Rectangle;
 	
 	import starling.display.ButtonState;
 	import starling.display.DisplayObject;
+	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
@@ -151,6 +154,11 @@ package com.ludofactory.mobile.core.avatar.maker
 		protected function onRollOut():void
 		{
 			
+		}
+		
+		override public function onScroll(event:Event = null):void
+		{
+			state = ButtonState.UP;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

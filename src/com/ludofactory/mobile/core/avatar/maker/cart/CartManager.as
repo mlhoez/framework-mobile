@@ -1,6 +1,9 @@
-/**
- * Created by Maxime on 17/12/14.
- */
+/*
+ Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
+ Framework mobile
+ Author  : Maxime Lhoez
+ Created : 17 Décembre 2014
+*/
 package com.ludofactory.mobile.core.avatar.maker.cart
 {
 	

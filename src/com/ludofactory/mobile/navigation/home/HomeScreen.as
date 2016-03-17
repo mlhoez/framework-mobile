@@ -183,7 +183,8 @@ package com.ludofactory.mobile.navigation.home
 		private function onPlay(event:Event):void
 		{
 			Flox.logInfo("<strong>&rarr; Affichage du choix du mode de jeu</strong>");
-			AbstractEntryPoint.gameTypeSelectionManager.show();
+			//AbstractEntryPoint.gameTypeSelectionManager.show();
+			advancedOwner.showScreen(ScreenIds.AVATAR_HOME_SCREEN);
 		}
 		
 		private function onShowDebugScreen(event:Event):void

@@ -1,8 +1,8 @@
 /*
- Copyright © 2006-2015 Ludo Factory
- Avatar Maker - Ludokado
+ Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
+ Framework mobile
  Author  : Maxime Lhoez
- Created : 24 août 2015
+ Created : 24 Août 2015
 */
 package com.ludofactory.mobile.core.avatar.maker.newItems
 {
@@ -24,9 +24,6 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 	import feathers.data.ListCollection;
 	import feathers.layout.TiledColumnsLayout;
 	
-	import flash.filters.DropShadowFilter;
-	
-	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
@@ -46,17 +43,6 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 		/**
 		 * Items list. */
 		private var _itemsList:List;
-		/**
-		 * Left arrow used for the navigation in the list. */
-		//private var _leftArrow:Button;
-		/**
-		 * Right arrow used for the navigation in the list. */
-		//private var _rightArrow:Button;
-		/**
-		 * Helper used to calculate the state of the arrows. */
-		private var _helperIndex:int;
-		
-		
 		
 		/**
 		 * Page indicator */
@@ -72,7 +58,7 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 		 * The tripe displayed between the title and the message. */
 		private var _separator:Quad;
 		
-		public function NewVipItemsContainer(refWidth:int, refHeight:int, isInBothLayout:Boolean = false)
+		public function NewVipItemsContainer(isInBothLayout:Boolean = false)
 		{
 			super();
 			
@@ -126,7 +112,6 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			_itemsList.layout = listLayout;
 			_itemsList.itemRendererType = NewItemRenderer;
 			_itemsList.snapToPages = true;
-			//_itemsList.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_NONE;
 			_itemsList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 			_itemsList.width = scaleAndRoundToDpi(130*3+10*3);
 			_itemsList.x = scaleAndRoundToDpi(50);
@@ -147,59 +132,11 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 			_pageIndicator.x = _itemsList.x;
 			_pageIndicator.validate();
 			_pageIndicator.y = _itemsList.y + _itemsList.height;
-			
-			if( ItemManager.getInstance().newVipItems.length > 3 )
-			{
-				_itemsList.validate();
-				
-				/*_leftArrow = new Button(AvatarMakerAssets.newItemsLeftArrow);
-				_leftArrow.addEventListener(Event.TRIGGERED, onGoLeft);
-				_leftArrow.x = _itemsList.x - _leftArrow.width;
-				_leftArrow.y = _itemsList.y + (_itemsList.height - _leftArrow.height) * 0.5;
-				addChild(_leftArrow);
-				
-				_rightArrow = new Button(AvatarMakerAssets.newItemsRightArrow);
-				_rightArrow.addEventListener(Event.TRIGGERED, onGoRight);
-				_rightArrow.x = _itemsList.x + _itemsList.width;
-				_rightArrow.y = _itemsList.y + (_itemsList.height - _rightArrow.height) * 0.5;
-				addChild(_rightArrow);*/
-				
-				_helperIndex = _itemsList.horizontalPageIndex;
-				//_leftArrow.enabled = _helperIndex > 0;
-				//_rightArrow.enabled = _helperIndex < (_itemsList.horizontalPageCount - 1);
-			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Navigation
 		
-		/**
-		 * Navigate to the left.
-		 */
-		private function onGoLeft(event:Event):void
-		{
-			checkArrows(true);
-			_itemsList.scrollToPageIndex((_itemsList.horizontalPageIndex - 1) < 0 ? 0 : (_itemsList.horizontalPageIndex - 1), 0, 0.5);
-		}
-		
-		/**
-		 * Navigate to the right.
-		 */
-		private function onGoRight(event:Event):void
-		{
-			checkArrows(false);
-			_itemsList.scrollToPageIndex((_itemsList.horizontalPageIndex + 1) > (_itemsList.horizontalPageCount - 1) ? (_itemsList.horizontalPageCount - 1) : (_itemsList.horizontalPageIndex + 1), 0, 0.5);
-		}
-		
-		/**
-		 * Checks the state of the arrows.
-		 */
-		private function checkArrows(left:Boolean):void
-		{
-			_helperIndex = _itemsList.horizontalPageIndex + (left ? -1 : 1);
-			//_leftArrow.enabled = _helperIndex > 0;
-			///_rightArrow.enabled = _helperIndex < (_itemsList.horizontalPageCount - 1);
-		}
 		
 		/**
 		 * Allow the user to change the page by touching the page indicators.
@@ -243,31 +180,20 @@ package com.ludofactory.mobile.core.avatar.maker.newItems
 		
 		override public function dispose():void
 		{
-			_newRankIcon.removeFromParent(true);
-			_newRankIcon = null;
-			
 			TweenMax.killTweensOf(_rankStripes);
 			_rankStripes.removeFromParent(true);
 			_rankStripes = null;
 			
+			_newRankIcon.removeFromParent(true);
+			_newRankIcon = null;
+			
+			_itemsList.removeEventListener(Event.SCROLL, onScrollList);
 			_itemsList.removeFromParent(true);
 			_itemsList = null;
 			
-			/*if(_leftArrow)
-			{
-				_leftArrow.removeEventListener(Event.TRIGGERED, onGoLeft);
-				_leftArrow.removeFromParent(true);
-				_leftArrow = null;
-			}
-			
-			if(_rightArrow)
-			{
-				_rightArrow.removeEventListener(Event.TRIGGERED, onGoRight);
-				_rightArrow.removeFromParent(true);
-				_rightArrow = null;
-			}*/
-			
-			_helperIndex = 0;
+			_pageIndicator.removeEventListener(Event.CHANGE, onPageIndicatorChange);
+			_pageIndicator.removeFromParent(true);
+			_pageIndicator = null;
 			
 			_title.removeFromParent(true);
 			_title = null;

@@ -14,18 +14,24 @@ package com.ludofactory.mobile.core.avatar.test.manager
 	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.logs.logError;
 	import com.ludofactory.common.utils.logs.logWarning;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.avatar.test.config.AvatarDisplayerType;
 	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
 	import com.ludofactory.mobile.core.avatar.test.config.LudokadoBones;
 	import com.ludofactory.mobile.core.avatar.test.events.LKAvatarMakerEventTypes;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	
 	import dragonBones.Armature;
 	import dragonBones.Bone;
+	import dragonBones.Slot;
 	import dragonBones.animation.WorldClock;
+	import dragonBones.core.DBObject;
+	import dragonBones.display.StarlingSlot;
+	import dragonBones.objects.DBTransform;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -58,6 +64,7 @@ package com.ludofactory.mobile.core.avatar.test.manager
 	
 	import starling.core.Starling;
 	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.events.EventDispatcher;
 	import starling.textures.TextureSmoothing;
@@ -719,11 +726,12 @@ package com.ludofactory.mobile.core.avatar.test.manager
 					else
 					{
 						// starling
-						var image:Image = Image.fromBitmap(HELPER_BITMAP, false); // FIXME PAs de mipmaps : très important pour l'appli du site, peut améliorer les perfs surement si false au lie ude ture par défaut
+						var image:Image = Image.fromBitmap(HELPER_BITMAP, false); // FIXME Pas de mipmaps : très important pour l'appli du site, peut améliorer les perfs surement si false au lie ude ture par défaut
 						image.smoothing = TextureSmoothing.BILINEAR;
 						image.pivotX = -bounds.x;
 						image.pivotY = -bounds.y;
 						return image;
+						// TODO essayer de renvoyer uniquement la texture au lieu d'une image, et faire un refreshSize ensuite
 					}
 				
 					// just in case, stop it

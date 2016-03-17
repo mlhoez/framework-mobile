@@ -25,6 +25,7 @@ package com.ludofactory.mobile.core.avatar
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	
@@ -122,7 +123,6 @@ package com.ludofactory.mobile.core.avatar
 				else
 				{
 					// TODO
-					
 				}
 			}
 		}
@@ -191,16 +191,22 @@ package com.ludofactory.mobile.core.avatar
 		 */
 		private function onChangeGender(event:Event):void
 		{
-			if(AirNetworkInfo.networkInfo.isConnected())
+			if(MemberManager.getInstance().isLoggedIn())
 			{
-				InfoManager.show(_("Chargement..."));
-				Remote.getInstance().requestAvatarChange(onChangeAvatarRequestSuccess, onChangeAvatarRequestFail, onChangeAvatarRequestFail, 1, advancedOwner.activeScreenID);
+				if(AirNetworkInfo.networkInfo.isConnected())
+				{
+					InfoManager.show(_("Chargement..."));
+					Remote.getInstance().requestAvatarChange(onChangeAvatarRequestSuccess, onChangeAvatarRequestFail, onChangeAvatarRequestFail, 1, advancedOwner.activeScreenID);
+				}
+				else
+				{
+					InfoManager.showTimed(_("Vous devez être connecté à Internet pour pouvoir changer de personnage."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				}
 			}
 			else
 			{
-				InfoManager.showTimed(_("Vous devez être connecté à Internet pour pouvoir changer de personnage."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+				advancedOwner.showScreen(ScreenIds.REGISTER_SCREEN);
 			}
-			
 		}
 		
 		/**
@@ -208,7 +214,14 @@ package com.ludofactory.mobile.core.avatar
 		 */
 		private function onModifiy(event:Event):void
 		{
-			advancedOwner.showScreen(ScreenIds.AVATAR_MAKER_SCREEN);
+			if(MemberManager.getInstance().isLoggedIn())
+			{
+				advancedOwner.showScreen(ScreenIds.AVATAR_MAKER_SCREEN);
+			}
+			else
+			{
+				advancedOwner.showScreen(ScreenIds.REGISTER_SCREEN);
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -253,8 +266,14 @@ package com.ludofactory.mobile.core.avatar
 		
 		override public function dispose():void
 		{
+			log("Active screen : " + AbstractEntryPoint.screenNavigator.activeScreenID);
+			
 			// just in case
 			AvatarManager.getInstance().removeEventListener(LKAvatarMakerEventTypes.AVATAR_READY, onAvatarsReady);
+			this.removeChild(AvatarManager.getInstance().currentAvatar.display as Sprite);
+			
+			_background.removeFromParent(true);
+			_background = null;
 			
 			if(_avatarNameContainer)
 			{
@@ -280,6 +299,15 @@ package com.ludofactory.mobile.core.avatar
 			{
 				_facebookButton.removeFromParent(true);
 				_facebookButton = null;
+			}
+			
+			if(AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.AVATAR_GENDER_CHOICE_SCREEN &&
+					AbstractEntryPoint.screenNavigator.activeScreenID != ScreenIds.AVATAR_MAKER_SCREEN )
+			{
+				// clear texture
+				AvatarMakerAssets.dispose();
+				AbstractEntryPoint.assets.removeTextureAtlas("avatar-maker", true);
+				AbstractEntryPoint.assets.removeTexture("avatars-background", true);
 			}
 			
 			super.dispose();
