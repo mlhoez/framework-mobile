@@ -7,11 +7,8 @@ Created : 9 janv. 2014
 package com.ludofactory.mobile.navigation
 {
 	
-	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -29,6 +26,7 @@ package com.ludofactory.mobile.navigation
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
+	import starling.text.TextFormat;
 	
 	public class UpdateScreen extends AdvancedScreen
 	{
@@ -49,7 +47,6 @@ package com.ludofactory.mobile.navigation
 		{
 			super();
 			
-			_fullScreen = true;
 			_blueBackground = true;
 			_canBack = false;
 		}
@@ -64,10 +61,10 @@ package com.ludofactory.mobile.navigation
 			_logo.textureScale = GlobalConfig.dpiScale;
 			addChild( _logo );
 			
-			_message = new TextField(5, 5, Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE_TEXT), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 60), Theme.COLOR_WHITE);
+			_message = new TextField(5, 5, Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE_TEXT), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 60), Theme.COLOR_WHITE));
 			//_("Une mise à jour de l'application est disponible !\n\nMerci de la télécharger pour assurer son bon fonctionnement.");
 			_message.touchable = false;
-			_message.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
+			//_message.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
 			_message.autoScale = true;
 			addChild(_message);
 			

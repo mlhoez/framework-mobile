@@ -329,7 +329,7 @@ package com.ludofactory.mobile.navigation.faq
 				{
 					this._touchPointID = -1;
 					touch.getLocation(this, HELPER_POINT);
-					var isInBounds:Boolean = this.hitTest(HELPER_POINT, true) != null;
+					var isInBounds:Boolean = this.hitTest(HELPER_POINT) != null;
 					if(isInBounds && owner)
 					{
 						owner.dispatchEventWith(Event.OPEN, false, _data);
@@ -348,6 +348,18 @@ package com.ludofactory.mobile.navigation.faq
 				}
 			}
 			HELPER_TOUCHES_VECTOR.length = 0;
+		}
+		
+		protected var _factoryID:String;
+		
+		public function get factoryID():String
+		{
+			return this._factoryID;
+		}
+		
+		public function set factoryID(value:String):void
+		{
+			this._factoryID = value;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

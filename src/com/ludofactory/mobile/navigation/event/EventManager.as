@@ -13,7 +13,7 @@ package com.ludofactory.mobile.navigation.event
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.EventPushNotificationContent;
 	import com.ludofactory.mobile.core.notification.content.RateNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -46,14 +46,14 @@ package com.ludofactory.mobile.navigation.event
 		/**
 		 * Checks if there is an event to display for this player.
 		 */		
-		public function getEvent():void
+		/*public function getEvent():void
 		{
 			if( !_isFetchingEvent && AirNetworkInfo.networkInfo.isConnected() )
 			{
 				_isFetchingEvent = true;
 				Remote.getInstance().getEvent(onGetEventSuccess, onGetEventFailure, onGetEventFailure, 1);
 			}
-		}
+		}*/
 		
 		/**
 		 * The event have been retreived successfully.
@@ -92,12 +92,12 @@ package com.ludofactory.mobile.navigation.event
 					}
 					case AppEventType.RATE_EVENT:
 					{
-						NotificationPopupManager.addNotification( new RateNotificationContent( new EventData(result) ) );
+						CustomPopupManager.addNotification( new RateNotificationContent( new EventData(result) ) );
 						break;
 					}
 					case AppEventType.PUSH_EVENT:
 					{
-						NotificationPopupManager.addNotification( new EventPushNotificationContent(AbstractEntryPoint.screenNavigator.activeScreenID) );
+						CustomPopupManager.addNotification( new EventPushNotificationContent(AbstractEntryPoint.screenNavigator.activeScreenID) );
 						break;
 					}
 					case AppEventType.FACEBOOK_EVENT:

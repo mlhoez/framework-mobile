@@ -23,7 +23,6 @@ package com.ludofactory.mobile.core.purchases
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.navigation.store.StoreData;
-	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.android.AndroidIAB;
 	import com.milkmangames.nativeextensions.android.AndroidItemDetails;
 	import com.milkmangames.nativeextensions.android.events.AndroidBillingErrorEvent;

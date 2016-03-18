@@ -24,7 +24,7 @@ package com.ludofactory.mobile.navigation.authentication
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.RetrievePasswordNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -43,6 +43,7 @@ package com.ludofactory.mobile.navigation.authentication
 	import starling.events.TouchEvent;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
+	import starling.text.TextFormat;
 	
 	/**
 	 * This is the screen displayed when the user needs to log in the application.
@@ -84,15 +85,13 @@ package com.ludofactory.mobile.navigation.authentication
 		public function LoginScreen()
 		{
 			super();
-			
-			_whiteBackground = true;
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-			_headerTitle = _("Connexion");
+			//_headerTitle = _("Connexion");
 			
 			_textInputsContainer = new LayoutGroup();
 			_textInputsContainer.layout = new VerticalLayout();
@@ -102,7 +101,7 @@ package com.ludofactory.mobile.navigation.authentication
 			_facebookButton.addEventListener(FacebookManagerEventType.AUTHENTICATED, onFacebookAuthenticated);
 			addChild(_facebookButton);
 			
-			_warningLabel = new TextField(5, 5, _("Nous ne publierons jamais sur votre mur sans votre accord"), Theme.FONT_ARIAL, scaleAndRoundToDpi(25), 0x6d6d6d, true);
+			_warningLabel = new TextField(5, 5, _("Nous ne publierons jamais sur votre mur sans votre accord"), new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), 0x6d6d6d));
 			_warningLabel.autoSize = TextFieldAutoSize.VERTICAL;
 			addChild(_warningLabel);
 			
@@ -251,12 +250,12 @@ package com.ludofactory.mobile.navigation.authentication
 				this.advancedOwner.screenData.defaultPseudo = result.pseudo_defaut;
 				// we don't need te define a previous screen because in the pseudo selection screen
 				// the user cannot go back for obious reason
-				this.advancedOwner.showScreen( ScreenIds.PSEUDO_CHOICE_SCREEN );
+				this.advancedOwner.replaceScreen( ScreenIds.PSEUDO_CHOICE_SCREEN );
 				return;
 			}
 			
 			NavigationManager.resetNavigation(false);
-			InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ScreenIds.HOME_SCREEN ]);
+			InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.HOME_SCREEN ]);
 		}
 		
 		/**
@@ -274,7 +273,7 @@ package com.ludofactory.mobile.navigation.authentication
 		 */		
 		private function onRegister(event:Event):void
 		{
-			this.advancedOwner.showScreen( ScreenIds.REGISTER_SCREEN );
+			this.advancedOwner.replaceScreen( ScreenIds.REGISTER_SCREEN );
 		}
 		
 		/**
@@ -283,7 +282,7 @@ package com.ludofactory.mobile.navigation.authentication
 		 */		
 		private function onForgotPasswordTouched(event:Event):void
 		{
-			NotificationPopupManager.addNotification( new RetrievePasswordNotificationContent() );
+			CustomPopupManager.addNotification( new RetrievePasswordNotificationContent() );
 		}
 		
 		/**
@@ -292,7 +291,7 @@ package com.ludofactory.mobile.navigation.authentication
 		private function onFacebookAuthenticated(event:Event):void
 		{
 			if(event.data)
-				advancedOwner.showScreen(ScreenIds.HOME_SCREEN);
+				advancedOwner.replaceScreen(ScreenIds.HOME_SCREEN);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -39,7 +39,7 @@ package com.ludofactory.mobile.core.notification.content
 		
 		protected function close():void
 		{
-			NotificationPopupManager.closeNotification();
+			CustomPopupManager.closePopup();
 		}
 	}
 }

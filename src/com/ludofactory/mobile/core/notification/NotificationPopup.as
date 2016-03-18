@@ -10,6 +10,7 @@ package com.ludofactory.mobile.core.notification
 	import com.greensock.TweenMax;
 	import com.greensock.easing.ElasticOut;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
@@ -18,6 +19,8 @@ package com.ludofactory.mobile.core.notification
 	import feathers.core.FeathersControl;
 	import feathers.display.Scale9Image;
 	import feathers.display.TiledImage;
+	
+	import flash.geom.Rectangle;
 	
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -45,7 +48,7 @@ package com.ludofactory.mobile.core.notification
 		
 		/**
 		 * The background skin of the popup. */		
-		private var _backgroundSkin:Scale9Image;
+		private var _backgroundSkin:Image;
 		/**
 		 * The top left decoration displayed between the two backgrounds. */
 		private var _topLeftDecoration:Image;
@@ -60,10 +63,10 @@ package com.ludofactory.mobile.core.notification
 		private var _bottomRightDecoration:Image;
 		/**
 		 * The front skin of the popup. */		
-		private var _frontSkin:Scale9Image;
+		private var _frontSkin:Image;
 		/**
 		 * The tiled background displayed behind the content. */
-		private var _tiledBackground:TiledImage;
+		private var _tiledBackground:Image;
 
 		/**
 		 * A quad used as a button to close the popup. */
@@ -92,8 +95,9 @@ package com.ludofactory.mobile.core.notification
 			_shadowThickness = scaleAndRoundToDpi(10);
 			_buttonAdjustment = scaleAndRoundToDpi(23);
 			
-			_backgroundSkin = new Scale9Image(Theme.gameModeSelectionBackgroundTextures, GlobalConfig.dpiScale);
-			_backgroundSkin.useSeparateBatch = false;
+			_backgroundSkin = new Image(AbstractEntryPoint.assets.getTexture("game-type-selection-background-skin"));
+			_backgroundSkin.scaleX = _backgroundSkin.scaleY = GlobalConfig.dpiScale;
+			_backgroundSkin.scale9Grid = new Rectangle(30, 30, 20, 20);
 			addChild(_backgroundSkin);
 			
 			_topLeftDecoration = new Image(Theme.topLeftLeavesTexture);
@@ -120,12 +124,14 @@ package com.ludofactory.mobile.core.notification
 			_bottomRightDecoration.scaleX = _bottomRightDecoration.scaleY = GlobalConfig.dpiScale;
 			addChild(_bottomRightDecoration);
 			
-			_frontSkin = new Scale9Image(Theme.gameModeSelectionFrontTextures, GlobalConfig.dpiScale);
-			_frontSkin.useSeparateBatch = false;
+			_frontSkin = new Image(AbstractEntryPoint.assets.getTexture("game-type-selection-front-skin"));
+			_frontSkin.scaleX = _frontSkin.scaleY = GlobalConfig.dpiScale;
+			_frontSkin.scale9Grid = new Rectangle(38, 72, 19, 13);
 			addChild(_frontSkin);
 			
-			_tiledBackground = new TiledImage(Theme.gameModeSelectionTileTexture, GlobalConfig.dpiScale);
-			_tiledBackground.useSeparateBatch = false;
+			_tiledBackground = new Image(AbstractEntryPoint.assets.getTexture("game-type-selection-tile"));
+			_tiledBackground.scaleX = _tiledBackground.scaleY = GlobalConfig.dpiScale;
+			_tiledBackground.tileGrid = new Rectangle();
 			addChild(_tiledBackground);
 			
 			_closeQuad = new Quad(scaleAndRoundToDpi(100), scaleAndRoundToDpi(100));
@@ -287,8 +293,6 @@ package com.ludofactory.mobile.core.notification
 			invalidate(INVALIDATION_FLAG_SIZE);
 		}
 		
-		public function set backgroundSkin(val:Scale9Image):void { _backgroundSkin = val; }
-		
 		private var _maxContentHeight:Number;
 		
 		public function get offset():Number
@@ -296,7 +300,6 @@ package com.ludofactory.mobile.core.notification
 			// offset used to help centering the popup once validated in the NotificationPopupManager
 			return _content.height > _maxContentHeight ? 0 : ((_maxContentHeight - _content.height) * 0.5);
 		}
-		
 		
 		public function get maxContentHeight():Number
 		{

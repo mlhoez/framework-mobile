@@ -6,17 +6,15 @@ Created : 19 Juin 2013
 */
 package com.ludofactory.mobile.core.controls.display
 {
-	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	
-	import flash.display.GradientType;
-	import flash.geom.Matrix;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	
 	import feathers.core.FeathersControl;
 	
-	import starling.display.Image;
+	import flash.geom.Matrix;
+	
+	import starling.display.MeshBatch;
 	import starling.display.Quad;
-	import starling.display.QuadBatch;
-	import starling.textures.GradientTexture;
 	
 	public class TiledBackground extends FeathersControl
 	{
@@ -29,11 +27,11 @@ package com.ludofactory.mobile.core.controls.display
 		
 		/**
 		 * Gradient background */		
-		private var _gradientBackground:Image;
+		//private var _gradientBackground:Image;
 		
 		/**
 		 * Quad batch. */		
-		private var _backgroundQuadBatch:QuadBatch;
+		private var _backgroundQuadBatch:MeshBatch;
 		
 		public function TiledBackground(color:int)
 		{
@@ -49,7 +47,7 @@ package com.ludofactory.mobile.core.controls.display
 		{
 			super.initialize();
 			
-			_backgroundQuadBatch = new QuadBatch();
+			_backgroundQuadBatch = new MeshBatch();
 			addChild(_backgroundQuadBatch);
 		}
 		
@@ -69,8 +67,8 @@ package com.ludofactory.mobile.core.controls.display
 			{
 				const matrix:Matrix = new Matrix();
 				matrix.createGradientBox(this.actualWidth , this.actualHeight, Math.PI/2); // rotation here - 45°
-				_gradientBackground = new Image( GradientTexture.create( this.actualWidth, this.actualHeight, GradientType.LINEAR, [0x02649b, 0x53e5ff, 0x02649b], [1, 1, 1], [0, 75, 255], matrix) );
-				addChildAt(_gradientBackground, 0);
+				//_gradientBackground = new Image( GradientTexture.create( this.actualWidth, this.actualHeight, GradientType.LINEAR, [0x02649b, 0x53e5ff, 0x02649b], [1, 1, 1], [0, 75, 255], matrix) );
+				//addChildAt(_gradientBackground, 0);
 				
 				stripe = new Quad(_stripeWidth, this.actualHeight, 0xffffff);
 				stripe.alpha = 0.08;
@@ -78,14 +76,14 @@ package com.ludofactory.mobile.core.controls.display
 				for(i = 0; i < numStripes; i++)
 				{
 					stripe.x = step;
-					_backgroundQuadBatch.addQuad(stripe);
+					_backgroundQuadBatch.addMesh(stripe);
 					step += _stripeStep;
 				}
 			}
 			else
 			{
 				stripe = new Quad(this.actualWidth, this.actualHeight, 0xaeaeae);
-				_backgroundQuadBatch.addQuad(stripe);
+				_backgroundQuadBatch.addMesh(stripe);
 				
 				stripe.width = _stripeWidth
 				stripe.color = 0xffffff;
@@ -94,7 +92,7 @@ package com.ludofactory.mobile.core.controls.display
 				for(i = 0; i < numStripes; i++)
 				{
 					stripe.x = step;
-					_backgroundQuadBatch.addQuad(stripe);
+					_backgroundQuadBatch.addMesh(stripe);
 					step += _stripeStep;
 				}
 				
@@ -103,20 +101,18 @@ package com.ludofactory.mobile.core.controls.display
 				stripe.width = this.actualWidth * 0.75;
 				stripe.setVertexAlpha(1, 0);
 				stripe.setVertexAlpha(3, 0);
-				_backgroundQuadBatch.addQuad(stripe);
+				_backgroundQuadBatch.addMesh(stripe);
 				
 				stripe.x = this.actualWidth * 0.25;
 				stripe.setVertexAlpha(1, 1);
 				stripe.setVertexAlpha(3, 1);
 				stripe.setVertexAlpha(0, 0);
 				stripe.setVertexAlpha(2, 0);
-				_backgroundQuadBatch.addQuad(stripe);
+				_backgroundQuadBatch.addMesh(stripe);
 			}
 			
 			stripe.dispose();
 			stripe = null;
-			
-			this.flatten();
 		}
 		
 //------------------------------------------------------------------------------------------------------------

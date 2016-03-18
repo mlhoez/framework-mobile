@@ -34,8 +34,6 @@ package com.ludofactory.mobile.navigation.news
 		public function CGUScreen()
 		{
 			super();
-			
-			_whiteBackground = true;
 		}
 		
 		/**

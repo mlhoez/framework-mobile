@@ -6,6 +6,7 @@ Created : 4 oct. 2013
 */
 package com.ludofactory.mobile.navigation.alert
 {
+	
 	import com.ludofactory.common.gettext.ISO_639_1;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.gettext.aliases._n;
@@ -13,14 +14,10 @@ package com.ludofactory.mobile.navigation.alert
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.model.GameMode;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.navigation.achievements.TrophyData;
-	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.push.AlertType;
 	import com.ludofactory.mobile.core.push.GameSession;
@@ -29,25 +26,28 @@ package com.ludofactory.mobile.navigation.alert
 	import com.ludofactory.mobile.core.push.PushState;
 	import com.ludofactory.mobile.core.push.PushTrophy;
 	import com.ludofactory.mobile.core.push.PushType;
+	import com.ludofactory.mobile.core.storage.Storage;
+	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import feathers.skins.IStyleProvider;
-	
-	import flash.geom.Point;
-	import flash.text.TextFormat;
+	import com.ludofactory.mobile.navigation.achievements.TrophyData;
+	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
+	import feathers.skins.IStyleProvider;
+	
+	import flash.geom.Point;
+	import flash.text.TextFormat;
 	
 	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	import starling.utils.formatString;
+	import starling.utils.StringUtil;
 	
 	/**
 	 * Custom item renderer used in the CSThreadScreen to display
@@ -137,7 +137,7 @@ package com.ludofactory.mobile.navigation.alert
 			_accessButton.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(24), 0x00a9f4, true);
 			
 			_icon = new ImageLoader();
-			_icon.snapToPixels = true;
+			_icon.pixelSnapping = true;
 			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale;
 			_icon.alpha = 0.75;
 			addChild(_icon);
@@ -219,7 +219,7 @@ package com.ludofactory.mobile.navigation.alert
 								
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-game-session-simple-icon");
 								
-								_message.text = formatString( GameSession(_data).gameType == GameMode.SOLO ? _n("{0} Point sera définitivement crédité sur votre compte dès que vous serez connecté à internet.", "{0} Points seront définitivement crédités sur votre compte dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned) : _n("{0} Rubis sera définitivement comptabilisée pour le tournoi en cours dès que vous serez connecté à internet.", "{0} Rubis seront définitivement comptabilisées pour le tournoi en cours dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned),
+								_message.text = StringUtil.format( GameSession(_data).gameType == GameMode.SOLO ? _n("{0} Point sera définitivement crédité sur votre compte dès que vous serez connecté à internet.", "{0} Points seront définitivement crédités sur votre compte dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned) : _n("{0} Rubis sera définitivement comptabilisée pour le tournoi en cours dès que vous serez connecté à internet.", "{0} Rubis seront définitivement comptabilisées pour le tournoi en cours dès que vous serez connecté à internet.", GameSession(_data).numStarsOrPointsEarned),
 									GameSession(_data).numStarsOrPointsEarned);
 								
 								break;
@@ -232,7 +232,7 @@ package com.ludofactory.mobile.navigation.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-trophy-simple-icon");
 								
 								var trophy:TrophyData = TrophyManager.getInstance().getTrophyDataById( PushTrophy(_data).trophyId);
-								_message.text = formatString(_("Votre coupe {0} est en attente d'envoi."), trophy.title );
+								_message.text = StringUtil.format(_("Votre coupe {0} est en attente d'envoi."), trophy.title );
 								
 								break;
 							}
@@ -242,7 +242,7 @@ package com.ludofactory.mobile.navigation.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-cs-simple-icon");
 								
 								textToDisplay = PushNewCSThread(_data).message.length <= 50 ? PushNewCSThread(_data).message : (PushNewCSThread(_data).message.slice(0, 50) + "...");
-								_message.text = formatString(_("Votre message « {0} » adressé au service client sera envoyé dès que vous serez connecté à internet."), textToDisplay );
+								_message.text = StringUtil.format(_("Votre message « {0} » adressé au service client sera envoyé dès que vous serez connecté à internet."), textToDisplay );
 								
 								break;
 							}
@@ -252,7 +252,7 @@ package com.ludofactory.mobile.navigation.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-cs-simple-icon");
 								
 								textToDisplay = PushNewCSMessage(_data).message.length <= 50 ? PushNewCSMessage(_data).message : (PushNewCSMessage(_data).message.slice(0, 50) + "...");
-								_message.text = formatString(_("Votre message « {0} » adressé au service client sera envoyé dès que vous serez connecté à internet."), textToDisplay );
+								_message.text = StringUtil.format(_("Votre message « {0} » adressé au service client sera envoyé dès que vous serez connecté à internet."), textToDisplay );
 								
 								break;
 							}
@@ -261,7 +261,7 @@ package com.ludofactory.mobile.navigation.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-cs-simple-icon");
 								
 								_accessButton.visible = true;
-								_message.text = formatString(_n("Vous avez reçu {0} message du service client.", "Vous avez reçu {0} messages du service client.", AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts), AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts);
+								_message.text = StringUtil.format(_n("Vous avez reçu {0} message du service client.", "Vous avez reçu {0} messages du service client.", AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts), AbstractEntryPoint.alertData.numCustomerServiceImportantAlerts);
 								
 								break;
 							}
@@ -270,7 +270,7 @@ package com.ludofactory.mobile.navigation.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-sponsoring-simple-icon");
 								
 								_accessButton.visible = true;
-								_message.text = formatString(_n("Vous avez {0} filleul accepté dans votre espace parrainage.", "Vous avez {0} filleuls acceptés dans votre espace parrainage.", AbstractEntryPoint.alertData.numSponsorAlerts), AbstractEntryPoint.alertData.numSponsorAlerts);
+								_message.text = StringUtil.format(_n("Vous avez {0} filleul accepté dans votre espace parrainage.", "Vous avez {0} filleuls acceptés dans votre espace parrainage.", AbstractEntryPoint.alertData.numSponsorAlerts), AbstractEntryPoint.alertData.numSponsorAlerts);
 								
 								break;
 							}
@@ -279,7 +279,7 @@ package com.ludofactory.mobile.navigation.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-gifts-simple-icon");
 								
 								_accessButton.visible = true;
-								_message.text = formatString(_n("Vous avez gagné {0} récompense.", "Vous avez gagné {0} récompenses.", AbstractEntryPoint.alertData.numGainAlerts), AbstractEntryPoint.alertData.numGainAlerts);
+								_message.text = StringUtil.format(_n("Vous avez gagné {0} récompense.", "Vous avez gagné {0} récompenses.", AbstractEntryPoint.alertData.numGainAlerts), AbstractEntryPoint.alertData.numGainAlerts);
 								break;
 							}
 							case AlertType.TROPHIES:
@@ -287,7 +287,7 @@ package com.ludofactory.mobile.navigation.alert
 								_icon.source = AbstractEntryPoint.assets.getTexture("header-trophy-simple-icon");
 								
 								_accessButton.visible = true;
-								_message.text = formatString(_n("Vous avez gagné {0} coupe.", "Vous avez gagné {0} coupes.", AbstractEntryPoint.alertData.numTrophiesAlerts), AbstractEntryPoint.alertData.numTrophiesAlerts);
+								_message.text = StringUtil.format(_n("Vous avez gagné {0} coupe.", "Vous avez gagné {0} coupes.", AbstractEntryPoint.alertData.numTrophiesAlerts), AbstractEntryPoint.alertData.numTrophiesAlerts);
 								break;
 							}
 							case AlertType.ANONYMOUS_GAME_SESSION:
@@ -296,7 +296,7 @@ package com.ludofactory.mobile.navigation.alert
 								
 								_accessButton.text = _("S'identifier");
 								_accessButton.visible = true;
-								_message.text = formatString(_n("{0} Rubis sera comptabilisé pour le tournoi en cours dès que vous serez identifié.", "{0} Rubis seront comptabilisés pour le tournoi en cours dès que vous serez identifié.", MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions());
+								_message.text = StringUtil.format(_n("{0} Rubis sera comptabilisé pour le tournoi en cours dès que vous serez identifié.", "{0} Rubis seront comptabilisés pour le tournoi en cours dès que vous serez identifié.", MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumStarsEarnedInAnonymousGameSessions());
 								break;
 							}
 							case AlertType.ANONYMOUS_TROPHIES:
@@ -305,7 +305,7 @@ package com.ludofactory.mobile.navigation.alert
 								
 								_accessButton.text = _("S'identifier");
 								_accessButton.visible = true;
-								_message.text = formatString(_n("{0} Coupe sera définitivement validée dès que vous serez identifié.", "{0} Coupes seront définitivement validées dès que vous serez identifié.", MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions());
+								_message.text = StringUtil.format(_n("{0} Coupe sera définitivement validée dès que vous serez identifié.", "{0} Coupes seront définitivement validées dès que vous serez identifié.", MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions()), MemberManager.getInstance().getNumTrophiesEarnedInAnonymousGameSessions());
 								break;
 							}
 							case AlertType.NEW_LANGAUGES:
@@ -318,7 +318,7 @@ package com.ludofactory.mobile.navigation.alert
 								
 								_accessButton.text = _("Accéder");
 								_accessButton.visible = true;
-								_message.text = formatString(_n("Une nouvelle langue est disponible : {0} !", "De nouvelles langues sont disponibles : {0} !", newLanguages.length), newLanguages.join(", "));
+								_message.text = StringUtil.format(_n("Une nouvelle langue est disponible : {0} !", "De nouvelles langues sont disponibles : {0} !", newLanguages.length), newLanguages.join(", "));
 								break;
 							}
 						}
@@ -502,41 +502,41 @@ package com.ludofactory.mobile.navigation.alert
 				{
 					this._touchPointID = -1;
 					touch.getLocation(this, HELPER_POINT);
-					var isInBounds:Boolean = this.hitTest(HELPER_POINT, true) != null;
+					var isInBounds:Boolean = this.hitTest(HELPER_POINT) != null;
 					if(isInBounds)
 					{
 						switch(_data.pushType)
 						{
 							case AlertType.CUSTOMER_SERVICE:
 							{
-								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.HELP_HOME_SCREEN );
+								AbstractEntryPoint.screenNavigator.replaceScreen( ScreenIds.HELP_HOME_SCREEN );
 								break;
 							}
 							case AlertType.GIFTS:
 							{
-								AbstractEntryPoint.screenNavigator.screenData.indexToDisplayInMyAccount = 2;
-								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.MY_ACCOUNT_SCREEN );
+								//AbstractEntryPoint.screenNavigator.screenData.indexToDisplayInMyAccount = 2;
+								AbstractEntryPoint.screenNavigator.replaceScreen( ScreenIds.MY_ACCOUNT_SCREEN );
 								break;
 							}
 							case AlertType.SPONSOR:
 							{
-								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.SPONSOR_FRIENDS_SCREEN );
+								AbstractEntryPoint.screenNavigator.replaceScreen( ScreenIds.SPONSOR_FRIENDS_SCREEN );
 								break;
 							}
 							case AlertType.TROPHIES:
 							{
-								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.TROPHY_SCREEN );
+								AbstractEntryPoint.screenNavigator.replaceScreen( ScreenIds.TROPHY_SCREEN );
 								break;
 							}
 							case AlertType.ANONYMOUS_GAME_SESSION:
 							case AlertType.ANONYMOUS_TROPHIES:
 							{
-								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.REGISTER_SCREEN );
+								AbstractEntryPoint.screenNavigator.replaceScreen( ScreenIds.REGISTER_SCREEN );
 								break;
 							}
 							case AlertType.NEW_LANGAUGES:
 							{
-								AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.SETTINGS_SCREEN );
+								AbstractEntryPoint.screenNavigator.replaceScreen( ScreenIds.SETTINGS_SCREEN );
 								break;
 							}
 						}
@@ -563,6 +563,18 @@ package com.ludofactory.mobile.navigation.alert
 		override protected function get defaultStyleProvider():IStyleProvider
 		{
 			return AlertItemRenderer.globalStyleProvider;
+		}
+		
+		protected var _factoryID:String;
+		
+		public function get factoryID():String
+		{
+			return this._factoryID;
+		}
+		
+		public function set factoryID(value:String):void
+		{
+			this._factoryID = value;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -7,6 +7,7 @@ Created : 8 oct. 2013
 package com.ludofactory.mobile.navigation.settings
 {
 	import com.ludofactory.common.gettext.aliases._;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -85,7 +86,7 @@ package com.ludofactory.mobile.navigation.settings
 			_padding *= GlobalConfig.dpiScale;
 			_backgroundBorderWidth = scaleAndRoundToDpi(40);
 			
-			this.width = GlobalConfig.stageWidth;
+			//this.width = GlobalConfig.stageWidth;
 			this.height = _itemHeight;
 			
 			_background = new Quad(this.width - _backgroundBorderWidth, _itemHeight, 0xf7f7f7);
@@ -141,10 +142,11 @@ package com.ludofactory.mobile.navigation.settings
 			_title.width = NaN;
 			_title.height = NaN;
 			_title.validate();
+			
 			var newWidth:Number = this.explicitWidth;
 			if(needsWidth)
 			{
-				newWidth = _title.width;
+				newWidth = owner.width;
 			}
 			var newHeight:Number = this.explicitHeight;
 			if(needsHeight)
@@ -285,6 +287,18 @@ package com.ludofactory.mobile.navigation.settings
 			this._isSelected = value;
 			this.invalidate(INVALIDATION_FLAG_SELECTED);
 			this.dispatchEventWith(Event.CHANGE);
+		}
+		
+		protected var _factoryID:String;
+		
+		public function get factoryID():String
+		{
+			return this._factoryID;
+		}
+		
+		public function set factoryID(value:String):void
+		{
+			this._factoryID = value;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

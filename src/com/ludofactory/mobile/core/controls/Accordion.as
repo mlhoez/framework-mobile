@@ -7,15 +7,12 @@ Created : 2 sept. 2013
 package com.ludofactory.mobile.core.controls
 {
 	
-	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
-	import com.ludofactory.mobile.navigation.vip.VipAccordionItem;
 	
 	import feathers.controls.ScrollContainer;
 	import feathers.layout.VerticalLayout;
 	
 	import starling.core.Starling;
-	
 	import starling.events.Event;
 	
 	public class Accordion extends ScrollContainer
@@ -80,7 +77,6 @@ package com.ludofactory.mobile.core.controls
 					abstractAccordionItem.visible = false;
 					abstractAccordionItem.includeInLayout = false;
 					abstractAccordionItem.collapse(0);
-					VipAccordionItem(abstractAccordionItem).isNew = false;
 				}
 				
 				for each(abstractAccordionItem in _dataProvider )
@@ -89,8 +85,8 @@ package com.ludofactory.mobile.core.controls
 					{
 						if( abstractAccordionItem.index == index )
 						{
-							if( newPrivilegesIndexes.indexOf( abstractAccordionItem.index ) != -1 )
-								VipAccordionItem(abstractAccordionItem).isNew = true;
+							//if( newPrivilegesIndexes.indexOf( abstractAccordionItem.index ) != -1 )
+							//	VipAccordionItem(abstractAccordionItem).isNew = true;
 							abstractAccordionItem.visible = true;
 							abstractAccordionItem.includeInLayout = true;
 						}

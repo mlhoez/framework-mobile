@@ -43,15 +43,11 @@ package com.ludofactory.mobile.navigation.achievements
 		public function TrophyScreen()
 		{
 			super();
-			
-			_whiteBackground = true;
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
-			
-			_headerTitle = _("Coupes");
 			
 			_trophiesList = new List();
 			_trophiesList.isSelectable = false;
@@ -61,7 +57,7 @@ package com.ludofactory.mobile.navigation.achievements
 			_trophiesList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			addChild(_trophiesList);
 			
-			AbstractEntryPoint.alertData.numTrophiesAlerts = 0;
+			//AbstractEntryPoint.alertData.numTrophiesAlerts = 0;
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
 				_loader = new MovieClip( Theme.blackLoaderTextures );

@@ -7,22 +7,22 @@ Created : 13 Juin 2013
 package com.ludofactory.mobile.core.controls
 {
 	
-	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.ScreenData;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	
-	import feathers.controls.ScreenNavigator;
-	import feathers.controls.ScreenNavigatorItem;
+	import feathers.controls.StackScreenNavigator;
+	import feathers.controls.StackScreenNavigatorItem;
 	
 	import starling.display.DisplayObject;
 	
 	/**
 	 * A more advanced screen navigator.
 	 */	
-	public class AdvancedScreenNavigator extends ScreenNavigator
+	public class AdvancedScreenNavigator extends StackScreenNavigator
 	{
 		/**
 		 * Some data that can be used by the displayed screen. */		
@@ -39,17 +39,17 @@ package com.ludofactory.mobile.core.controls
 			_screenData = new ScreenData();
 		}
 		
-		override public function showScreen(id:String, transition:Function = null):DisplayObject
+		override public function replaceScreen(id:String, transition:Function = null):DisplayObject
 		{
 			// a new version have been released and must be forced
 			if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE)) == true )
 			{
-				return super.showScreen(ScreenIds.UPDATE_SCREEN, transition);
+				return super.replaceScreen(ScreenIds.UPDATE_SCREEN, transition);
 			}
 			else
 			{
 				NavigationManager.addScreenId( id );
-				return super.showScreen(id, transition);
+				return super.replaceScreen(id, transition);
 			}
 		}
 		
@@ -60,7 +60,7 @@ package com.ludofactory.mobile.core.controls
 			// a new version have been released and must be forced
 			if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE)) == true )
 			{
-				super.showScreen(ScreenIds.UPDATE_SCREEN);
+				super.replaceScreen(ScreenIds.UPDATE_SCREEN);
 			}
 			else
 			{
@@ -76,7 +76,7 @@ package com.ludofactory.mobile.core.controls
 					}
 					else
 					{
-						super.showScreen( _backScreenId );
+						super.replaceScreen( _backScreenId );
 					}
 				}
 				NavigationManager.addScreenId( _activeScreenID ); // FIXME A vérifier
@@ -94,7 +94,7 @@ package com.ludofactory.mobile.core.controls
 		{
 			var len:int = screens.length;
 			for(var i:int = 0; i < len; i++)
-				addScreen(screens[i].id, new ScreenNavigatorItem(screens[i].clazz));
+				addScreen(screens[i].id, new StackScreenNavigatorItem(screens[i].clazz));
 		}
 		
 //------------------------------------------------------------------------------------------------------------

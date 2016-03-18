@@ -56,16 +56,12 @@ package com.ludofactory.mobile.navigation.faq
 		{
 			super();
 			
-			_whiteBackground = true;
 			_appClearBackground = false;
-			_fullScreen = false;
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
-			
-			_headerTitle = _("Aide générale");
 			
 			if( !AbstractGameInfo.LANDSCAPE )
 			{

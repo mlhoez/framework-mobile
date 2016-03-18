@@ -7,13 +7,11 @@ Created : 13 Juin 2013
 package com.ludofactory.mobile.core.controls
 {
 	
-	import com.gamua.flox.Flox;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.milkmangames.nativeextensions.GAnalytics;
+	import com.ludofactory.newClasses.Analytics;
 	
 	import feathers.controls.Screen;
 	
@@ -42,11 +40,7 @@ package com.ludofactory.mobile.core.controls
 			addChildAt(_touchQuad, 0);
 			
 			// track screens with Google Analytics
-			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackScreenView(screenID, MemberManager.getInstance().id);
-			
-			// log the navigation in Flox
-			Flox.logInfo("\t<strong>&rarr; " + screenID + "</strong>");
+			Analytics.trackScreen(screenID);
 			
 			this.backButtonHandler = onBack;
 		}
@@ -84,9 +78,9 @@ package com.ludofactory.mobile.core.controls
 		 */		
 		public function onBack():void
 		{
-			if( NotificationPopupManager.isNotificationDisplaying )
+			if( CustomPopupManager.isNotificationDisplaying )
 			{
-				NotificationPopupManager.closeNotification();
+				CustomPopupManager.closePopup();
 				return;
 			}
 
@@ -99,15 +93,6 @@ package com.ludofactory.mobile.core.controls
 //------------------------------------------------------------------------------------------------------------
 //	Get / Set
 		
-		/**
-		 * The title displayed in the header when this screen
-		 * is displayed. */		
-		protected var _headerTitle:String = "";
-		
-		public function get headerTitle():String
-		{
-			return this._headerTitle;
-		}
 		
 		/**
 		 * Whether the user can back while in this screen. */		
@@ -135,24 +120,6 @@ package com.ludofactory.mobile.core.controls
 		}
 		
 		/**
-		 * Whether this is a full screen. No header & footer will be displayed if set to true. */		
-		protected var _fullScreen:Boolean;
-		
-		public function get fullScreen():Boolean
-		{
-			return this._fullScreen;
-		}
-		
-		/**
-		 * Whether we need to use the white background. */		
-		protected var _whiteBackground:Boolean = false;
-		
-		public function get whiteBackground():Boolean
-		{
-			return this._whiteBackground;
-		}
-		
-		/**
 		 * Whether we need to use the blue background. */		
 		protected var _blueBackground:Boolean = false;
 		
@@ -177,24 +144,6 @@ package com.ludofactory.mobile.core.controls
 		public function get appDarkBackground():Boolean
 		{
 			return this._appDarkBackground;
-		}
-		
-		/**
-		 * Whether we need to use the "how to win gifts" background. */		
-		protected var _howToWinGiftsBackground:Boolean = false;
-		
-		public function get howToWinGiftsBackground():Boolean
-		{
-			return this._howToWinGiftsBackground;
-		}
-		
-		/**
-		 * Whether the screen is in landscape mode. */		
-		protected var _isLandscape:Boolean = false;
-		
-		public function get isLandscape():Boolean
-		{
-			return _isLandscape;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

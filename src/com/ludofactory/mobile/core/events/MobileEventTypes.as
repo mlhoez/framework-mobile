@@ -126,11 +126,6 @@ package com.ludofactory.mobile.core.events
 		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
 		 * the AccordionElement class when a panel has fully collapsed.
 		 */
-		public static const OPEN_ALERTS_FROM_HEADER:String = "openAlerts";
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
 		public static const ALERT_COUNT_UPDATED:String = "alertCountUpdated";
 		/**
 		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by

@@ -33,7 +33,7 @@ package com.ludofactory.mobile.debug
 	{
 		/**
 		 * The base height of a line in the list. */		
-		private static const BASE_HEIGHT:int = 100;
+		private static const BASE_HEIGHT:int = 80;
 		/**
 		 * The scaled item height. */		
 		private var _itemHeight:Number;
@@ -91,7 +91,7 @@ package com.ludofactory.mobile.debug
 			_padding *= GlobalConfig.dpiScale;
 			_backgroundBorderWidth = scaleAndRoundToDpi(40);
 			
-			this.width = GlobalConfig.stageWidth;
+			//this.width = GlobalConfig.stageWidth;
 			this.height = _itemHeight;
 			
 			_background = new Quad(this.width - _backgroundBorderWidth, _itemHeight, 0xf7f7f7);
@@ -149,7 +149,7 @@ package com.ludofactory.mobile.debug
 			var newWidth:Number = this.explicitWidth;
 			if(needsWidth)
 			{
-				newWidth = _title.width;
+				newWidth = owner.width;
 			}
 			var newHeight:Number = this.explicitHeight;
 			if(needsHeight)
@@ -304,6 +304,18 @@ package com.ludofactory.mobile.debug
 			this._isSelected = value;
 			this.invalidate(INVALIDATION_FLAG_SELECTED);
 			this.dispatchEventWith(Event.CHANGE);
+		}
+		
+		protected var _factoryID:String;
+		
+		public function get factoryID():String
+		{
+			return this._factoryID;
+		}
+		
+		public function set factoryID(value:String):void
+		{
+			this._factoryID = value;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -8,13 +8,14 @@ package com.ludofactory.mobile.navigation.engine
 {
 	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.core.FeathersControl;
-	import feathers.display.Scale9Image;
-	import feathers.display.TiledImage;
+	
+	import flash.geom.Rectangle;
 	
 	import starling.display.Image;
 	
@@ -39,7 +40,7 @@ package com.ludofactory.mobile.navigation.engine
 
 		/**
 		 * The background skin of the popup. */
-		private var _backgroundPopupSkin:Scale9Image;
+		private var _backgroundPopupSkin:Image;
 		/**
 		 * The top left decoration displayed between the two backgrounds. */
 		private var _topLeftDecoration:Image;
@@ -54,10 +55,10 @@ package com.ludofactory.mobile.navigation.engine
 		private var _bottomRightDecoration:Image;
 		/**
 		 * The front skin of the popup. */
-		private var _frontSkin:Scale9Image;
+		private var _frontSkin:Image;
 		/**
 		 * The tiled background displayed behind the content. */
-		private var _tiledBackground:TiledImage;
+		private var _tiledBackground:Image;
 
 		/**
 		 * The content to display inside the popup. */
@@ -78,12 +79,9 @@ package com.ludofactory.mobile.navigation.engine
 			_shadowThickness = scaleAndRoundToDpi(10);
 			_buttonAdjustment = scaleAndRoundToDpi(23);
 
-			_backgroundPopupSkin = new Scale9Image(Theme.gameModeSelectionBackgroundTextures, GlobalConfig.dpiScale);
-			_backgroundPopupSkin.useSeparateBatch = false;
-			addChild(_backgroundPopupSkin);
-
-			_backgroundPopupSkin = new Scale9Image(Theme.gameModeSelectionBackgroundTextures, GlobalConfig.dpiScale);
-			_backgroundPopupSkin.useSeparateBatch = false;
+			_backgroundPopupSkin = new Image(AbstractEntryPoint.assets.getTexture("game-type-selection-background-skin"));
+			_backgroundPopupSkin.scale = GlobalConfig.dpiScale;
+			_backgroundPopupSkin.scale9Grid = new Rectangle(30, 30, 20, 20);
 			addChild(_backgroundPopupSkin);
 
 			_topLeftDecoration = new Image(Theme.topLeftLeavesTexture);
@@ -110,12 +108,14 @@ package com.ludofactory.mobile.navigation.engine
 			_bottomRightDecoration.scaleX = _bottomRightDecoration.scaleY = GlobalConfig.dpiScale;
 			addChild(_bottomRightDecoration);
 
-			_frontSkin = new Scale9Image(Theme.gameModeSelectionFrontTextures, GlobalConfig.dpiScale);
-			_frontSkin.useSeparateBatch = false;
+			_frontSkin = new Image(AbstractEntryPoint.assets.getTexture("game-type-selection-front-skin"));
+			_frontSkin.scale = GlobalConfig.dpiScale;
+			_frontSkin.scale9Grid = new Rectangle(38, 72, 19, 13);
 			addChild(_frontSkin);
 
-			_tiledBackground = new TiledImage(Theme.gameModeSelectionTileTexture, GlobalConfig.dpiScale);
-			_tiledBackground.useSeparateBatch = false;
+			_tiledBackground = new Image(AbstractEntryPoint.assets.getTexture("game-type-selection-tile"));
+			_tiledBackground.scale = GlobalConfig.dpiScale;
+			_tiledBackground.tileGrid = new Rectangle();;
 			addChild(_tiledBackground);
 
 			if( _content )

@@ -22,7 +22,7 @@ package com.ludofactory.mobile.navigation.game
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.MarketingRegisterNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -288,7 +288,7 @@ package com.ludofactory.mobile.navigation.game
 				else
 				{
 					if(!MemberManager.getInstance().isLoggedIn())
-						NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(_("Vous n'avez plus assez de Jetons."), ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
+						CustomPopupManager.addNotification( new MarketingRegisterNotificationContent(_("Vous n'avez plus assez de Jetons."), ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
 				}
 			}
 		}

@@ -6,6 +6,9 @@ Created : 9 janv. 2014
 */
 package com.ludofactory.mobile.core.controls
 {
+	
+	import feathers.controls.Button;
+	import feathers.controls.Button;
 	import feathers.controls.ToggleButton;
 	import feathers.controls.ToggleSwitch;
 	
@@ -31,12 +34,12 @@ package com.ludofactory.mobile.core.controls
 			const trackScrollableWidth:Number = this.actualWidth - this._paddingLeft - this._paddingRight - this.thumb.width;
 			if( this.thumb.x > (this._paddingLeft + trackScrollableWidth / 2) )
 			{
-				this.thumb.label = _onThumbText;
+				Button(this.thumb).label = _onThumbText;
 				(this.thumb as ToggleButton).isSelected = true;
 			}
 			else
 			{
-				this.thumb.label = _offThumbText;
+				Button(this.thumb).label = _offThumbText;
 				(this.thumb as ToggleButton).isSelected = false;
 			}
 		}

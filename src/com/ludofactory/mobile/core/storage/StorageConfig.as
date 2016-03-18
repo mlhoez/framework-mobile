@@ -8,13 +8,9 @@ package com.ludofactory.mobile.core.storage
 {
 	
 	import com.ludofactory.mobile.core.model.StakeType;
-	import com.ludofactory.mobile.core.scoring.ScoreToPointsData;
-	import com.ludofactory.mobile.core.scoring.ScoreToStarsData;
 	import com.ludofactory.mobile.core.storage.defaults.DefaultFaq;
 	import com.ludofactory.mobile.core.storage.defaults.DefaultNews;
 	import com.ludofactory.mobile.core.storage.defaults.DefaultTermsAndConditions;
-	import com.ludofactory.mobile.core.storage.defaults.DefaultVip;
-	import com.ludofactory.mobile.navigation.cs.CSThemeData;
 	import com.ludofactory.mobile.navigation.settings.LanguageData;
 	
 	/**
@@ -69,35 +65,7 @@ package com.ludofactory.mobile.core.storage
 		 * @see #PROPERTY_FIRST_LAUNCH
 		 * 
 		 */		
-		internal static const GLOBAL_CONFIG_SO_NAME:String = "pyramid_config";
-		
-	// ----------------------- STAKES
-		
-		/**
-		 * Number of tokens required to play in solo mode. */
-		public static const NUM_TOKENS_IN_SOLO_MODE:String = "DEFAULT_NUM_TOKENS_IN_SOLO_MODE";
-		public static const DEFAULT_NUM_TOKENS_IN_SOLO_MODE:int = 5;
-		/**
-		 * Number of credits required to play in solo mode. */
-		public static const PROPERTY_NUM_CREDITS_IN_FREE_MODE:String = "DEFAULT_NUM_CREDITS_IN_FREE_MODE";
-		public static const DEFAULT_NUM_CREDITS_IN_FREE_MODE:int = 1;
-		
-		/**
-		 * Number of tokens required to play in tournament mode. Without VIP bonus, so 30 instead of 20 (30 -10 VIP). */
-		public static const NUM_TOKENS_IN_TOURNAMENT_MODE:String = "DEFAULT_NUM_TOKENS_IN_TOURNAMENT_MODE";
- 		public static const DEFAULT_NUM_TOKENS_IN_TOURNAMENT_MODE:int = 30;
-		/**
-		 * Number of points required to play in tournament mode. */
-		public static const PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE:String = "DEFAULT_NUM_POINTS_IN_TOURNAMENT_MODE";
- 		public static const DEFAULT_NUM_POINTS_IN_TOURNAMENT_MODE:int = 2000;
-		/**
-		 * Number of credits required to play in tournament mode. */
-		public static const PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE:String = "DEFAULT_NUM_CREDITS_IN_TOURNAMENT_MODE";
- 		public static const DEFAULT_NUM_CREDITS_IN_TOURNAMENT_MODE:int = 5;
-		
-		/**
-		 * The number of token allowed to use and that will allow the user to cumulate points when not authenticated. */
- 		public static const DEFAULT_NUM_TOKENS_ALLOWED_TO_COUNT_POINTS:int = 100;
+		internal static const GLOBAL_CONFIG_SO_NAME:String = "pyramid_battle_config";
 		
 	// ----------------------- LANGUAGE
 		
@@ -144,96 +112,8 @@ package com.ludofactory.mobile.core.storage
 		public static const PROPERTY_TERMS_AND_CONDITIONS:String = "DEFAULT_TERMS_AND_CONDITIONS";
 		public static const DEFAULT_TERMS_AND_CONDITIONS:Object = { fr:DefaultTermsAndConditions.FR, en:DefaultTermsAndConditions.EN };
 		
-		/**
-		 * The VIP (must be by default without gifts). */
-		public static const PROPERTY_VIP:String = "DEFAULT_VIP";
-		public static const DEFAULT_VIP:Object = { fr:DefaultVip.FR, en:DefaultVip.EN };
-		
-	// -----
-		
-		/**
-		 * The VIP (must be by default without gifts). */
-		public static const PROPERTY_AVATARS_NEED_UPDATE:String = "DEFAULT_AVATARS_NEED_UPDATE";
-		public static const DEFAULT_AVATARS_NEED_UPDATE:Boolean = true;
-		
 //------------------------------------------------------------------------------------------------------------
 //	Configuration default values
-		
-		/**
-		 * <strong>This is the default value for the points table</strong><br />
-		 * This is an array containing for each level of score (defined by
-		 * an inferior and a superior limit) the corresponding value in terms
-		 * of points (for both free and paid game sessions).<br />
-		 * <i>Ex for one row : { credit:30, gratuit:5, inf:0, sup:500 }</i></p>
-		 */		
-		public static const DEFAULT_POINTS_TABLE:Array = [ new ScoreToPointsData( { credit:30,  gratuit:5,  inf:0,     sup:5000,    coef:[5,6] } ),
-														   new ScoreToPointsData( { credit:60,  gratuit:10, inf:5001,  sup:10000,   coef:[5,6] } ),
-														   new ScoreToPointsData( { credit:120, gratuit:20, inf:10001, sup:20000,   coef:[5,6] } ),
-														   new ScoreToPointsData( { credit:180, gratuit:30, inf:20001, sup:30000,   coef:[5,6] } ),
-														   new ScoreToPointsData( { credit:240, gratuit:40, inf:30001, sup:8388607, coef:[5,6] } ) ];
-		
-		/**
-		 * <strong>This is the default value for the stars table</strong><br />
-		 * This is an array containing for each level of score (defined by
-		 * an inferior and a superior limit) the corresponding value in terms
-		 * of points (for both free and paid game sessions).<br />
-		 * <i>Ex for one row : { items:1, inf:0, sup:250 }</i></p>
-		 */	
-		public static const DEFAULT_STARS_TABLE:Array = [ new ScoreToStarsData( { items:1,  inf:0,      sup:5000 } ),
-														  new ScoreToStarsData( { items:2,  inf:5001,   sup:10000 } ),
-														  new ScoreToStarsData( { items:3,  inf:10001,  sup:15000 } ),
-														  new ScoreToStarsData( { items:4,  inf:15001,  sup:23000 } ),
-														  new ScoreToStarsData( { items:5,  inf:23001,  sup:31000 } ),
-														  new ScoreToStarsData( { items:6,  inf:31001,  sup:39000 } ),
-														  new ScoreToStarsData( { items:7,  inf:39001,  sup:47000 } ),
-														  new ScoreToStarsData( { items:8,  inf:47001,  sup:55000 } ),
-														  new ScoreToStarsData( { items:9,  inf:55001,  sup:63000 } ),
-														  new ScoreToStarsData( { items:10, inf:63001,  sup:8388607 } ) ];
-		
-		
-		
-	
-		
-		/**
-		 * <strong>This is the default value for the customer service themes</strong><br />Theses values are
-		 * ordered so that we can change in which index each theme should be placed. Penser à changer en base
-		 * T_ServiceClientMobilec si on change une clef ici.
-		 * 
-		 * // Hack for POEdit
-		 * _("Partie Solo");
-		 * _("Tournoi");
-		 * _("Problème technique");
-		 * _("Cadeaux");
-		 * _("Mon Compte");
-		 * _("Informations");
-		 * _("Autre");
-		 * 
-		 * */	
-		public static const DEFAULT_CUSTOMER_SERVICE_THEMES:Array = [ new CSThemeData( { id:1, key:"Partie Solo",        index:1 } ),
-																	  new CSThemeData( { id:2, key:"Tournoi",            index:2 } ),
-																	  new CSThemeData( { id:3, key:"Problème technique", index:3 } ),
-																	  new CSThemeData( { id:4, key:"Cadeaux",            index:4 } ),
-																	  new CSThemeData( { id:5, key:"Mon Compte",         index:5 } ),
-																	  new CSThemeData( { id:6, key:"Informations",       index:6 } ),
-																	  new CSThemeData( { id:7, key:"Autre",              index:7 } ) ];
-
-        /**
-         * Different version for the non-gift players
-         */
-        public static const DEFAULT_CUSTOMER_SERVICE_THEMES_WITHOUT_GIFTS:Array = [ new CSThemeData( { id:1, key:"Partie Solo",        index:1 } ),
-                                                                                    new CSThemeData( { id:2, key:"Tournoi",            index:2 } ),
-                                                                                    new CSThemeData( { id:3, key:"Problème technique", index:3 } ),
-	                                                                                new CSThemeData( { id:5, key:"Mon Compte",         index:5 } ),
-                                                                                    new CSThemeData( { id:6, key:"Informations",       index:6 } ),
-                                                                                    new CSThemeData( { id:7, key:"Autre",              index:7 } ) ];
-
-		
-		
-		
-		
-		
-		
-		
 		
 		public static const DEFAULT_SOUND_ENABLED:Boolean = true;
 		
@@ -268,31 +148,6 @@ package com.ludofactory.mobile.core.storage
 		 * 
 		 */		
 		public static const DEFAULT_USE_SECURED_CALLS:Boolean = false;
-		
-		/**
-		 * <strong>This is the default value for the sponsor
-		 * reward value.</strong><br />
-		 * Whether some points or money (ex : "40€" or "100 000").
-		 * Default is "100000"
-		 */		
-		public static const DEFAULT_SPONSOR_REWARD_VALUE:String = "100 000";
-		
-		/**
-		 * <strong>This is the default value for the sponsor
-		 * reward type.</strong><br />
-		 * 1 = display points
-		 * 2 = display currency
-		 * Default is 1 
-		 */		
-		public static const DEFAULT_SPONSOR_REWARD_TYPE:int = 1;
-		
-		/**
-		 * Whether we need todisplay an arrow above the back arrow
-		 * the first time the user will see this button. */		
-		public static const DEFAULT_NEED_HELP_ARROW:Boolean = true;
-		
-		
-		public static const DEFAULT_COEF:Array = [5, 6];
 		
 		/**
 		 * Whether we need to force the user to update the application. */		
@@ -333,16 +188,6 @@ package com.ludofactory.mobile.core.storage
 		public static const PROPERTY_FIRST_LAUNCH:String = "first-launch";
 		
 		/**
-		 * Access the score-to-points correspondance table.
-		 */			
-		public static const PROPERTY_POINTS_TABLE:String = "DEFAULT_POINTS_TABLE";
-		
-		/**
-		 * Access the score-to-stars correspondance table.
-		 */			
-		public static const PROPERTY_STARS_TABLE:String = "DEFAULT_STARS_TABLE";
-		
-		/**
 		 * Access the user's preferred language.
 		 * 
 		 * <p>See the Localizer's language constants for more informations
@@ -362,15 +207,6 @@ package com.ludofactory.mobile.core.storage
 		 * @see com.ludofactory.mobile.core.Localizer
 		 */			
 		public static const PROPERTY_TRANSLATIONS:String = "translations";
-		
-		
-		
-		/**
-		 * Access the customer service themes. */		
-		public static const PROPERTY_CUSTOMER_SERVICE_THEMES:String = "DEFAULT_CUSTOMER_SERVICE_THEMES";
-        /**
-		 * Access the customer service themes. */
-		public static const PROPERTY_CUSTOMER_SERVICE_THEMES_WITHOUT_GIFTS:String = "DEFAULT_CUSTOMER_SERVICE_THEMES_WITHOUT_GIFTS";
 		
 		/**
 		 * Access the sound. */		
@@ -395,19 +231,6 @@ package com.ludofactory.mobile.core.storage
 		/**
 		 * Access the push initialized value. */		
 		public static const PROPERTY_USE_SECURED_CALLS:String = "DEFAULT_USE_SECURED_CALLS";
-		
-		/**
-		 * Access the sponsor reward value. */		
-		public static const PROPERTY_SPONSOR_REWARD_VALUE:String = "DEFAULT_SPONSOR_REWARD_VALUE";
-		
-		/**
-		 * Access the sponsor reward type. */		
-		public static const PROPERTY_SPONSOR_REWARD_TYPE:String = "DEFAULT_SPONSOR_REWARD_TYPE";
-		
-		public static const PROPERTY_NEED_HELP_ARROW:String = "DEFAULT_NEED_HELP_ARROW";
-		
-		
-		public static const PROPERTY_COEF:String = "DEFAULT_COEF";
 		
 		public static const PROPERTY_FORCE_UPDATE:String = "DEFAULT_FORCE_UPDATE";
 		public static const PROPERTY_FORCE_UPDATE_LINK:String = "DEFAULT_FORCE_UPDATE_LINK";

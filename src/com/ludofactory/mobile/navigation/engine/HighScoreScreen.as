@@ -27,10 +27,8 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	import com.milkmangames.nativeextensions.GoViral;
-	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
@@ -44,8 +42,8 @@ package com.ludofactory.mobile.navigation.engine
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.extensions.PDParticleSystem;
+	import starling.utils.StringUtil;
 	import starling.utils.deg2rad;
-	import starling.utils.formatString;
 	
 	public class HighScoreScreen extends AdvancedScreen
 	{
@@ -76,7 +74,6 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super();
 			
-			_fullScreen = true;
 			_appDarkBackground = true;
 			_canBack = false;
 		}
@@ -122,14 +119,14 @@ package com.ludofactory.mobile.navigation.engine
 			
 			_highScoreLabel = new Label();
 			_highScoreLabel.alpha = 0;
-			_highScoreLabel.text = formatString(_("Nouveau High Score !\n{0}"), Utilities.splitThousands( advancedOwner.screenData.gameData.score ));
+			_highScoreLabel.text = StringUtil.format(_("Nouveau High Score !\n{0}"), Utilities.splitThousands( advancedOwner.screenData.gameData.score ));
 			addChild(_highScoreLabel);
 			_highScoreLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 50 : 76), Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_highScoreLabel.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
 			
 			_particles = new PDParticleSystem(Theme.particleSparklesXml, Theme.particleSparklesTexture);
 			_particles.touchable = false;
-			_particles.maxNumParticles = 500;
+			_particles.capacity = 500;
 			_particles.scaleX = _particles.scaleY = GlobalConfig.dpiScale;
 			addChild(_particles);
 			Starling.juggler.add(_particles);
@@ -143,18 +140,18 @@ package com.ludofactory.mobile.navigation.engine
 			_continueButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, true, true, null, null, null, TextFormatAlign.CENTER);
 			_continueButton.height = _continueButton.minHeight = scaleAndRoundToDpi(60);
 			
-			_facebookButton = ButtonFactory.getFacebookButton(_("Partager mon exploit !"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("Nouveau meilleur score : {0} !"), advancedOwner.screenData.gameData.score),
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager mon exploit !"), ButtonFactory.FACEBOOK_TYPE_SHARE, StringUtil.format(_("Nouveau meilleur score : {0} !"), advancedOwner.screenData.gameData.score),
 					"",
-					formatString(_("Venez me défier et tenter de battre mon score de {0} sur {1} !"), advancedOwner.screenData.gameData.score, AbstractGameInfo.GAME_NAME),
+					StringUtil.format(_("Venez me défier et tenter de battre mon score de {0} sur {1} !"), advancedOwner.screenData.gameData.score, AbstractGameInfo.GAME_NAME),
 					_("http://www.ludokado.com/"),
-					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
+					StringUtil.format(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
 			_facebookButton.alpha = 0;
 			_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 			addChild(_facebookButton);
 			
 			_confettis = new PDParticleSystem(Theme.particleConfettiXml, Theme.particleConfettiTexture);
 			_confettis.touchable = false;
-			_confettis.maxNumParticles = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 750 : 500);
+			_confettis.capacity = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 750 : 500);
 			_confettis.lifespan *= AbstractGameInfo.LANDSCAPE ? 1 : 2;
 			_confettis.scaleX = _confettis.scaleY = GlobalConfig.dpiScale;
 			addChild(_confettis);
@@ -265,11 +262,11 @@ package com.ludofactory.mobile.navigation.engine
 			if( advancedOwner.screenData.gameData.facebookFriends )
 			{
 				// animation des amis
-				advancedOwner.showScreen( ScreenIds.FACEBOOK_END_SCREEN );
+				advancedOwner.replaceScreen( ScreenIds.FACEBOOK_END_SCREEN );
 			}
 			else
 			{
-				advancedOwner.showScreen( advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN:ScreenIds.TOURNAMENT_END_SCREEN) );
+				advancedOwner.replaceScreen( advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN:ScreenIds.TOURNAMENT_END_SCREEN) );
 			}
 		}
 		

@@ -35,27 +35,6 @@ package com.ludofactory.mobile.core.controls
 		public static const INVALIDATION_FLAG_REFRESHABLE_STATE:String = "refreshable-state";
 		
 		/**
-		 * Flag to indicate that the fake header should be redrawn. */
-		public static const INVALIDATION_FLAG_FAKE_HEADER:String = "fake-header";
-		
-		/**
-		 * Container used to clip the fake header. */		
-		private var _fakeClipRectContainer:Sprite;
-		
-		/**
-		 * The fake header displayed on top of the list. */		
-		private var _fakeHeaderItemRenderer:IGroupedListHeaderOrFooterRenderer;
-		
-		/**
-		 * The cached header height used to calculate when we should
-		 * move the faker header. */		
-		private var _headerHeight:Number = 0;
-		
-		/**
-		 * The cached topmost header item renderer. */		
-		private var _cachedHeaderItemRenderer:IGroupedListHeaderOrFooterRenderer;
-		
-		/**
 		 * Whether the list is refreshable on top. */		
 		private var _isRefreshableUp:Boolean = false;
 		/**
@@ -95,35 +74,6 @@ package com.ludofactory.mobile.core.controls
 		public function CustomGroupedList()
 		{
 			super();
-		}
-		
-		override protected function initialize():void
-		{
-			super.initialize();
-			
-			// because the fake item renderer needs to be moved to create the desired
-			// effect, we need to clip its content
-			_fakeClipRectContainer = new Sprite();
-			addChild(_fakeClipRectContainer);
-			
-			// we need to create a fake header in the style of
-			// the one defined for the list.
-			if(this._headerRendererFactory != null)
-			{
-				_fakeHeaderItemRenderer = IGroupedListHeaderOrFooterRenderer(this._headerRendererFactory());
-			}
-			else
-			{
-				_fakeHeaderItemRenderer = new this._headerRendererType();
-			}
-			var uiRenderer:IFeathersControl = IFeathersControl(_fakeHeaderItemRenderer);
-			if(this._customHeaderRendererStyleName && this._customHeaderRendererStyleName.length > 0)
-			{
-				uiRenderer.styleName = this._customHeaderRendererStyleName;
-			}
-			_fakeClipRectContainer.addChild(DisplayObject(_fakeHeaderItemRenderer));
-			_fakeHeaderItemRenderer.visible = false;
-			_fakeHeaderItemRenderer.owner = this;
 		}
 		
 		/**
@@ -197,15 +147,6 @@ package com.ludofactory.mobile.core.controls
 		{
 			super.draw();
 			
-			if( isInvalid(INVALIDATION_FLAG_FAKE_HEADER) )
-			{
-				// position and clip the fake header
-				_fakeHeaderItemRenderer.width = parent.width;;
-				_fakeHeaderItemRenderer.validate();
-				_fakeClipRectContainer.clipRect = _fakeHeaderItemRenderer.bounds;
-				_headerHeight = _fakeHeaderItemRenderer.height;
-			}
-			
 			if( isInvalid(INVALIDATION_FLAG_REFRESHABLE_STATE) )
 			{
 				if( _isRefreshableDown && _loaderDown )
@@ -223,52 +164,6 @@ package com.ludofactory.mobile.core.controls
 			
 			if( _dataProvider )
 			{
-				if( (viewPort as GroupedListDataViewPort).activeHeaderRenderers.length == 0)
-					return;
-				
-				// the cached header is the first visible header item renderer currently
-				// displaying in the list. Note that its data will be null if the header
-				// is currently visible (it will happen if there are lots of data between
-				// two header, so in consequence, no header will be displaying so no data
-				// available.
-				_cachedHeaderItemRenderer = IGroupedListHeaderOrFooterRenderer((viewPort as GroupedListDataViewPort).activeHeaderRenderers[0]);
-				
-				// the fake header will be invisible only in one case : when the list
-				// is scrolled down too much (so when the vertical scroll position is
-				// less than 0
-				_fakeHeaderItemRenderer.visible = _verticalScrollPosition >= 0;
-				
-				
-				// If the data of the cached header is null, it means that we are displaying
-				// large amout of data between two sections (headers), so the fake header's
-				// data and position are already correct, so no need to enter this condition
-				if( _cachedHeaderItemRenderer.data && _cachedHeaderItemRenderer.y <= (_verticalScrollPosition + _headerHeight) )
-				{
-					// if we get here, it means that the cached header's y position is above
-					// the limit (whether because the list is scrolling up or down), so we
-					// need to position the fake header accordingly : it will be right below
-					// the cached header
-					_fakeHeaderItemRenderer.y = _cachedHeaderItemRenderer.y - (_verticalScrollPosition + _headerHeight);
-					
-					// update the fake header's data
-					_fakeHeaderItemRenderer.data = _dataProvider.data[ (_cachedHeaderItemRenderer.groupIndex - 1) < 0 ? 0 : (_cachedHeaderItemRenderer.groupIndex - 1) ]["header"];
-					
-					if( _fakeHeaderItemRenderer.y <= -_headerHeight )
-					{
-						// the fake header have reached the top of the list and isn't visible
-						// anymore, it means that a new header have replaced its position so
-						// we need to update its data and bring it back to the top
-						_fakeHeaderItemRenderer.y = 0;
-						_fakeHeaderItemRenderer.data = _cachedHeaderItemRenderer.data;
-					}
-				}
-				else
-				{
-					// if we scroll too quickly, the fake header can be stuck at the wrong
-					// position, so we always need to force the y position to 0 here
-					_fakeHeaderItemRenderer.y = 0;
-				}
-				
 				if( !_isRefreshingDown && _isRefreshableDown && _verticalScrollPosition >= (_maxVerticalScrollPosition - _offsetDown))
 				{
 					_isRefreshingDown = true;
@@ -411,14 +306,6 @@ package com.ludofactory.mobile.core.controls
 		
 		override public function dispose():void
 		{
-			_cachedHeaderItemRenderer = null;
-			
-			_fakeHeaderItemRenderer.removeFromParent(true);
-			_fakeHeaderItemRenderer = null;
-			
-			_fakeClipRectContainer.removeFromParent(true);
-			_fakeClipRectContainer = null;
-			
 			clearBottomLoader();
 			clearTopLoader();
 			

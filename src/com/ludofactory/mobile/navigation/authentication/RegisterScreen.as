@@ -23,7 +23,7 @@ package com.ludofactory.mobile.navigation.authentication
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.FaqNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -44,6 +44,7 @@ package com.ludofactory.mobile.navigation.authentication
 	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
+	import starling.text.TextFormat;
 	
 	/**
 	 * This is the screen where the user can register a new account.
@@ -87,21 +88,20 @@ package com.ludofactory.mobile.navigation.authentication
 		public function RegisterScreen()
 		{
 			super();
-			
-			_whiteBackground = true;
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-			_headerTitle = _("Inscription");
+			//_headerTitle = _("Inscription");
 			
 			_facebookButton = ButtonFactory.getFacebookButton(_("Facebook"), ButtonFactory.FACEBOOK_TYPE_CONNECT);
 			_facebookButton.addEventListener(FacebookManagerEventType.AUTHENTICATED, onFacebookAuthenticated);
 			addChild(_facebookButton);
 			
-			_warningLabel = new TextField(5, 5, _("Nous ne publierons jamais sur votre mur sans votre accord"), Theme.FONT_ARIAL, scaleAndRoundToDpi(25), 0x6d6d6d, true);
+			_warningLabel = new TextField(5, 5, _("Nous ne publierons jamais sur votre mur sans votre accord"), new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), 0x6d6d6d));
+			_warningLabel.format.bold = true;
 			_warningLabel.autoSize = TextFieldAutoSize.VERTICAL;
 			addChild(_warningLabel);
 			
@@ -302,13 +302,13 @@ package com.ludofactory.mobile.navigation.authentication
 					// The account have been successfully created with the standard process, now we
 					// go to the pseudo choice screen with the default pseudo returned.
 					this.advancedOwner.screenData.defaultPseudo = result.pseudo_defaut;
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
 					break;
 				}
 				case 6:
 				{
 					// The user have successfully logged in with his Facebook account
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ScreenIds.HOME_SCREEN ] );
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.HOME_SCREEN ] );
 					break;
 				}
 				case 7: 
@@ -316,7 +316,7 @@ package com.ludofactory.mobile.navigation.authentication
 					// The user have successfully logged in with his Facebook account but the pseudo field
 					// is missing, thus we redirect the user to the pseudo choice screen
 					this.advancedOwner.screenData.defaultPseudo = result.pseudo_defaut;
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
 					break;
 				}
 				case 9:
@@ -325,7 +325,7 @@ package com.ludofactory.mobile.navigation.authentication
 					// in this case, we need to redirect him to the sponsor screen, and then the
 					// pseudo choice screen
 					this.advancedOwner.screenData.defaultPseudo = result.pseudo_defaut;
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ScreenIds.SPONSOR_REGISTER_SCREEN ]);
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.SPONSOR_REGISTER_SCREEN ]);
 					break;
 				}
 				case 10:
@@ -338,7 +338,7 @@ package com.ludofactory.mobile.navigation.authentication
 				case 11:
 				{
 					// The user have successfully logged in
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ScreenIds.HOME_SCREEN ] );
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.HOME_SCREEN ] );
 					break;
 				}
 				case 12:
@@ -346,7 +346,7 @@ package com.ludofactory.mobile.navigation.authentication
 					// The account have been successfully created with the standard process, now we
 					// go to the pseudo choice screen with the default pseudo returned.
 					this.advancedOwner.screenData.defaultPseudo = result.pseudo_defaut;
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
 					break;
 				}
 					
@@ -373,7 +373,7 @@ package com.ludofactory.mobile.navigation.authentication
 		 */		
 		private function onLogin(event:Event):void
 		{
-			this.advancedOwner.showScreen( ScreenIds.LOGIN_SCREEN );
+			this.advancedOwner.replaceScreen( ScreenIds.LOGIN_SCREEN );
 		}
 		
 		/**
@@ -382,7 +382,7 @@ package com.ludofactory.mobile.navigation.authentication
 		 */
 		private function onInfoTouched(event:Event):void
 		{
-			NotificationPopupManager.addNotification( new FaqNotificationContent(new FaqQuestionAnswerData({question:_("Qu'est-ce que le code parrain ?"), reponse:_("Le code parrain est un numéro correspondant à l'identifiant d'un joueur sur l'application.\n\nLorsqu'un joueur ou un ami souhaite vous parrainer, il vous envoie son code joueur que vous pouvez saisir dans ce champ en vous inscrivant.")})));
+			CustomPopupManager.addNotification( new FaqNotificationContent(new FaqQuestionAnswerData({question:_("Qu'est-ce que le code parrain ?"), reponse:_("Le code parrain est un numéro correspondant à l'identifiant d'un joueur sur l'application.\n\nLorsqu'un joueur ou un ami souhaite vous parrainer, il vous envoie son code joueur que vous pouvez saisir dans ce champ en vous inscrivant.")})));
 		}
 		
 		/**
@@ -391,7 +391,7 @@ package com.ludofactory.mobile.navigation.authentication
 		private function onFacebookAuthenticated(event:Event):void
 		{
 			if(event.data)
-				advancedOwner.showScreen(ScreenIds.HOME_SCREEN);
+				advancedOwner.replaceScreen(ScreenIds.HOME_SCREEN);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

@@ -6,7 +6,7 @@ Created : 13 Aoü 2013
 */
 package com.ludofactory.mobile.navigation.engine
 {
-
+	
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
 	import com.greensock.easing.Bounce;
@@ -26,23 +26,22 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
-	import com.milkmangames.nativeextensions.events.GVFacebookEvent;
-
+	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
-
+	
 	import flash.events.Event;
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.extensions.PDParticleSystem;
+	import starling.utils.StringUtil;
 	import starling.utils.deg2rad;
-	import starling.utils.formatString;
-
+	
 	public class PodiumScreen extends AdvancedScreen
 	{
 		/**
@@ -78,7 +77,6 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super();
 			
-			_fullScreen = true;
 			_appDarkBackground = true;
 			_canBack = false;
 		}
@@ -137,7 +135,7 @@ package com.ludofactory.mobile.navigation.engine
 			
 			_podiumMessage = new Label();
 			_podiumMessage.alpha = 0;
-			_podiumMessage.text = formatString( AbstractGameInfo.LANDSCAPE ? _("Bravo !\nVous êtes {0} du tournoi !") : _("Bravo !\n\nVous êtes\n{0} du tournoi !"), formatString(Utilities.translatePosition(advancedOwner.screenData.gameData.position), this.advancedOwner.screenData.gameData.position));
+			_podiumMessage.text = StringUtil.format( AbstractGameInfo.LANDSCAPE ? _("Bravo !\nVous êtes {0} du tournoi !") : _("Bravo !\n\nVous êtes\n{0} du tournoi !"), StringUtil.format(Utilities.translatePosition(advancedOwner.screenData.gameData.position), this.advancedOwner.screenData.gameData.position));
 			addChild(_podiumMessage);
 			var test:int = ((GlobalConfig.isPhone ? 50 : 76) * _podiumLogo.scaleX) << 0;
 			_podiumMessage.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, test, Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
@@ -158,7 +156,7 @@ package com.ludofactory.mobile.navigation.engine
 				
 				particleSystem = new PDParticleSystem(Theme.particleSparklesXml, Theme.particleSparklesTexture);
 				particleSystem.touchable = false;
-				particleSystem.maxNumParticles = 500;
+				particleSystem.capacity = 500;
 				particleSystem.emitterXVariance = scoreLabel.width * 0.25;
 				particleSystem.emitterYVariance = scoreLabel.height * 0.25;
 				particleSystem.scaleX = particleSystem.scaleY = GlobalConfig.dpiScale;
@@ -177,18 +175,18 @@ package com.ludofactory.mobile.navigation.engine
 			_continueButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, true, true, null, null, null, TextFormatAlign.CENTER);
 			_continueButton.height = _continueButton.minHeight = scaleAndRoundToDpi(60);
 			
-			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("Je suis dans le TOP {0} sur le tournoi {1}"), advancedOwner.screenData.gameData.top, AbstractGameInfo.GAME_NAME),
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, StringUtil.format(_("Je suis dans le TOP {0} sur le tournoi {1}"), advancedOwner.screenData.gameData.top, AbstractGameInfo.GAME_NAME),
 					"",
-					formatString(_("La fin du tournoi approche ! Rejoignez moi vite et remportez vous aussi cette récompense : {0}"), advancedOwner.screenData.gameData.topDotationName),
+					StringUtil.format(_("La fin du tournoi approche ! Rejoignez moi vite et remportez vous aussi cette récompense : {0}"), "test"),
 					_("http://www.ludokado.com/"),
-					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_top_{1}.jpg"), LanguageManager.getInstance().lang, advancedOwner.screenData.gameData.top));
+					StringUtil.format(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_top_{1}.jpg"), LanguageManager.getInstance().lang, advancedOwner.screenData.gameData.top));
 			_facebookButton.alpha = 0;
 			_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 			addChild(_facebookButton);
 			
 			_confettis = new PDParticleSystem(Theme.particleConfettiXml, Theme.particleConfettiTexture);
 			_confettis.touchable = false;
-			_confettis.maxNumParticles = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 750 : 500);
+			_confettis.capacity = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 750 : 500);
 			_confettis.lifespan *= AbstractGameInfo.LANDSCAPE ? 1 : 2;
 			_confettis.scaleX = _confettis.scaleY = GlobalConfig.dpiScale;
 			addChild(_confettis);
@@ -318,7 +316,7 @@ package com.ludofactory.mobile.navigation.engine
 		 */		
 		private function goToNextScreen():void
 		{
-			advancedOwner.showScreen( ScreenIds.TOURNAMENT_END_SCREEN );
+			advancedOwner.replaceScreen( ScreenIds.TOURNAMENT_END_SCREEN );
 		}
 		
 //------------------------------------------------------------------------------------------------------------

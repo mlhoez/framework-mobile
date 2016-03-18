@@ -15,23 +15,20 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.milkmangames.nativeextensions.GAnalytics;
+	import com.ludofactory.newClasses.Analytics;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
+	import starling.text.TextFormat;
 	
 	public class EventPushNotificationContent extends AbstractPopupContent
 	{
@@ -78,13 +75,13 @@ package com.ludofactory.mobile.core.notification.content
 			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale;
 			addChild(_icon);
 			
-			_notificationTitle = new TextField(5, scaleAndRoundToDpi(50), _("Soyez avertis !"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 44 : 60), Theme.COLOR_DARK_GREY);
+			_notificationTitle = new TextField(5, scaleAndRoundToDpi(50), _("Soyez avertis !"), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 44 : 60), Theme.COLOR_DARK_GREY));
 			addChild(_notificationTitle);
 			
 			_message = new Label();
 			_message.text = _("Soyez immédiatement informé en cas de dépassement dans un tournoi en activant les notifications !\n\nVous pourrez changer ce paramètre plus tard dans la partie Mon Compte du menu.");
 			addChild(_message);
-			_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 34), Theme.COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
+			//_message.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 34), Theme.COLOR_DARK_GREY, true, false, null, null, null, TextFormatAlign.CENTER);
 			
 			_yesButton = new Button();
 			_yesButton.label = _("Activer");
@@ -93,7 +90,7 @@ package com.ludofactory.mobile.core.notification.content
 			
 			_cancelButton = new Button();
 			_cancelButton.label = _("Plus tard");
-			_cancelButton.styleName = Theme.BUTTON_BLUE;
+			//_cancelButton.styleName = Theme.BUTTON_BLUE;
 			_cancelButton.addEventListener(Event.TRIGGERED, onCancel);
 			addChild(_cancelButton);
 		}
@@ -162,8 +159,7 @@ package com.ludofactory.mobile.core.notification.content
 			PushNotification.getInstance().addEventListener(PushNotificationEvent.PERMISSION_REFUSED_EVENT, onPermissionRefused);
 			PushNotification.getInstance().registerForPushNotification(AbstractGameInfo.GCM_SENDER_ID);
 			
-			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Popup activation notifications push", "Activation", null, NaN, MemberManager.getInstance().id);
+			Analytics.trackEvent("Popup activation notifications push", "Activation");
 		}
 		
 		/**
@@ -180,7 +176,7 @@ package com.ludofactory.mobile.core.notification.content
 				Remote.getInstance().accountUpdateNotifications({ etat:1 }, null, null, null, 1);
 				Remote.getInstance().updatePushToken(event.token, null, null, null, 1);
 			}
-			AbstractEntryPoint.screenNavigator.showScreen(_completeScreenId);
+			AbstractEntryPoint.screenNavigator.replaceScreen(_completeScreenId);
 			close();
 		}
 		
@@ -188,15 +184,14 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			PushNotification.getInstance().removeEventListener(PushNotificationEvent.PERMISSION_GIVEN_WITH_TOKEN_EVENT, onPermissionGiven);
 			PushNotification.getInstance().removeEventListener(PushNotificationEvent.PERMISSION_REFUSED_EVENT, onPermissionRefused);
-			AbstractEntryPoint.screenNavigator.showScreen(_completeScreenId);
+			AbstractEntryPoint.screenNavigator.replaceScreen(_completeScreenId);
 			close();
 		}
 		
 		private function onCancel(event:Event):void
 		{
-			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Popup activation notifications push", "Annulation", null, NaN, MemberManager.getInstance().id);
-			AbstractEntryPoint.screenNavigator.showScreen(_completeScreenId);
+			Analytics.trackEvent("Popup activation notifications push", "Annulation");
+			AbstractEntryPoint.screenNavigator.replaceScreen(_completeScreenId);
 			close();
 		}
 		

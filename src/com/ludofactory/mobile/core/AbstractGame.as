@@ -8,9 +8,7 @@ package com.ludofactory.mobile.core
 {
 	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.ButtonFactory;
 	import com.ludofactory.mobile.MobileButton;
@@ -22,14 +20,10 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.model.StakeType;
 	import com.ludofactory.mobile.core.pause.PauseManager;
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.push.PushType;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.scoring.ScoreConverter;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
@@ -75,7 +69,6 @@ package com.ludofactory.mobile.core
 		{
 			super();
 			
-			_fullScreen = true;
 			_canBack = false;
 			_gaveUp = false;
 		}
@@ -84,62 +77,10 @@ package com.ludofactory.mobile.core
 		{
 			super.initialize();
 			
-			// We need to check first if the user can really play, this case can can happen if the user played
-			// while being logged out and at the end of the game, he chooses to play again and then logged in
-			// but the account didn't have enought free game sessions points or credits.
-			switch( advancedOwner.screenData.gamePrice )
-			{
-				case StakeType.TOKEN:
-				{
-					if( MemberManager.getInstance().tokens < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE ) )
-					{
-						advancedOwner.screenData.purgeData();
-						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
-						return;
-					}
-					else
-					{
-						// he can play with free game sessions
-						MemberManager.getInstance().tokens = ( MemberManager.getInstance().tokens - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.NUM_TOKENS_IN_SOLO_MODE:StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE ) );
-					}
-					break;
-				}
-				case StakeType.CREDIT:
-				{
-					if( MemberManager.getInstance().credits < Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) )
-					{
-						advancedOwner.screenData.purgeData();
-						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
-						return;
-					}
-					else
-					{
-						// he can play with credits
-						MemberManager.getInstance().credits = ( MemberManager.getInstance().credits - Storage.getInstance().getProperty( advancedOwner.screenData.gameType == GameMode.SOLO ? StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE:StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE ) );
-					}
-					break;
-				}
-				case StakeType.POINT:
-				{
-					if( MemberManager.getInstance().points < Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) )
-					{
-						advancedOwner.screenData.purgeData();
-						advancedOwner.showScreen( ScreenIds.HOME_SCREEN );
-						return;
-					}
-					else
-					{
-						// he can play with points
-						MemberManager.getInstance().points = ( MemberManager.getInstance().points - Storage.getInstance().getProperty( StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE ) );
-					}
-					break;
-				}
-			}
-			
 			// if the user can really play, we now initialize a game session which will be saved until the
 			// end of the game and we decrement the associated stake (whether free game sessions, points or credits).
-			log("Démarrage d'une partie en mode <strong>" + advancedOwner.screenData.gameType + ", mise : " + advancedOwner.screenData.gamePrice + "</strong>");
-			Flox.logEvent("Parties", { "1. Nombre total de parties":"Total", "2. Mode":(advancedOwner.screenData.gameType == GameMode.SOLO ? "Solo":"Tournoi"), "3. Mise":advancedOwner.screenData.gamePrice });
+			//log("Démarrage d'une partie en mode <strong>" + advancedOwner.screenData.gameType + ", mise : " + advancedOwner.screenData.gamePrice + "</strong>");
+			//Flox.logEvent("Parties", { "1. Nombre total de parties":"Total", "2. Mode":(advancedOwner.screenData.gameType == GameMode.SOLO ? "Solo":"Tournoi"), "3. Mise":advancedOwner.screenData.gamePrice });
 			
 			// create banners in order to display them faster when the game is paused
 			AdManager.createiAdBanner(IAdBannerAlignment.BOTTOM);
@@ -149,7 +90,7 @@ package com.ludofactory.mobile.core
 			
 			// disable the push manager while playing
 			AbstractEntryPoint.pushManager.isEnabled = false;
-			_gameSession = new GameSession(PushType.GAME_SESSION, advancedOwner.screenData.gameType, advancedOwner.screenData.gamePrice );
+			_gameSession = new GameSession(PushType.GAME_SESSION, advancedOwner.screenData.gameType);
 			
 			TrophyManager.getInstance().currentGameSession = _gameSession;
 			
@@ -313,7 +254,7 @@ package com.ludofactory.mobile.core
 			// to override
 			
 			InfoManager.show(_("Validation de votre partie en cours.\nMerci de patienter quelques secondes..."));
-			Flox.logEvent("Parties", { "4. Etat de la partie":(_gaveUp ? "Abandonnee" : "Terminee"), "5. Connectivité en fin de partie":( AirNetworkInfo.networkInfo.isConnected() ? "Connecte" : "Deconnecte") });
+			//Flox.logEvent("Parties", { "4. Etat de la partie":(_gaveUp ? "Abandonnee" : "Terminee"), "5. Connectivité en fin de partie":( AirNetworkInfo.networkInfo.isConnected() ? "Connecte" : "Deconnecte") });
 			
 			// update tutorial state
 			if( MemberManager.getInstance().getDisplayTutorial() == true )
@@ -348,11 +289,10 @@ package com.ludofactory.mobile.core
 				
 				// update the score and the gain (note that the value of gain might be replaced if the push is a success
 				// and if the scoring have changed in the server side)
-				var scoreConverter:ScoreConverter = new ScoreConverter();
 				_gameSession.score = finalScore;
 				_gameSession.elapsedTime = totalElapsedTime;
 				advancedOwner.screenData.gameData.score = _gameSession.score;
-				advancedOwner.screenData.gameData.numStarsOrPointsEarned = _gameSession.numStarsOrPointsEarned = scoreConverter.convertScore(_gameSession.score, _gameSession.gamePrice, _gameSession.gameType);
+				advancedOwner.screenData.gameData.numStarsOrPointsEarned = _gameSession.numStarsOrPointsEarned = 999; // FIXME A modifier
 				
 				// report iOS Leaderboard
 				GameCenterManager.reportLeaderboardScore(AbstractGameInfo.LEADERBOARD_HIGHSCORE, _gameSession.score);
@@ -452,7 +392,7 @@ package com.ludofactory.mobile.core
 						else
 						{
 							InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-							advancedOwner.showScreen( int(result.isHighscore) == 1 ? ScreenIds.NEW_HIGH_SCORE_SCREEN : ScreenIds.SOLO_END_SCREEN );
+							advancedOwner.replaceScreen( int(result.isHighscore) == 1 ? ScreenIds.NEW_HIGH_SCORE_SCREEN : ScreenIds.SOLO_END_SCREEN );
 						}
 					}
 					else
@@ -461,18 +401,9 @@ package com.ludofactory.mobile.core
 						advancedOwner.screenData.gameData.numStarsOrPointsEarned = int(result.items);
 						advancedOwner.screenData.gameData.position = int(result.classement);
 						advancedOwner.screenData.gameData.top = int(result.top);
-						advancedOwner.screenData.gameData.actualGiftImageUrl = result.lot_actuel.image;
-						advancedOwner.screenData.gameData.actualGiftName = Utilities.replaceCurrency(result.lot_actuel.nom);
-						if( "lot_suivant" in result )
-						{
-							advancedOwner.screenData.gameData.nextGiftImageUrl = result.lot_suivant.image;
-							advancedOwner.screenData.gameData.nextGiftName = Utilities.replaceCurrency(result.lot_suivant.nom);
-							advancedOwner.screenData.gameData.numStarsForNextGift = int(result.lot_suivant.nb_items);
-						}
+						
 						advancedOwner.screenData.gameData.hasReachNewTop = int(result.podium) == 1;
-						advancedOwner.screenData.gameData.timeUntilTournamentEnd = int(result.temps_fin_tournoi);
 						advancedOwner.screenData.gameData.displayPushAlert = int(result.afficher_alerte_push) == 1;
-						advancedOwner.screenData.gameData.topDotationName = result.top_dotation;
 						
 						if( result.isHighscore == 1 )
 						{
@@ -484,7 +415,7 @@ package com.ludofactory.mobile.core
 							else
 							{
 								InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-								advancedOwner.showScreen( ScreenIds.NEW_HIGH_SCORE_SCREEN );
+								advancedOwner.replaceScreen( ScreenIds.NEW_HIGH_SCORE_SCREEN );
 							}
 						}
 						else
@@ -498,7 +429,7 @@ package com.ludofactory.mobile.core
 							else
 							{
 								InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-								advancedOwner.showScreen( int(advancedOwner.screenData.gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN );
+								advancedOwner.replaceScreen( int(advancedOwner.screenData.gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN );
 							}
 						}
 					}
@@ -541,8 +472,7 @@ package com.ludofactory.mobile.core
 			// update earned values in any cases
 			if( _gameSession.gameType == GameMode.SOLO )
 			{
-				if( MemberManager.getInstance().isLoggedIn() || (!MemberManager.getInstance().isLoggedIn() && MemberManager.getInstance().getNumTokenUsedInAnonymousGameSessions() <= StorageConfig.DEFAULT_NUM_TOKENS_ALLOWED_TO_COUNT_POINTS) )
-					MemberManager.getInstance().points = ( MemberManager.getInstance().points + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+				MemberManager.getInstance().points = ( MemberManager.getInstance().points + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			}
 			else
 			{
@@ -562,7 +492,7 @@ package com.ludofactory.mobile.core
 				else
 				{
 					InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-					advancedOwner.showScreen( _nextScreenId );
+					advancedOwner.replaceScreen( _nextScreenId );
 				}
 			}
 			else
@@ -578,7 +508,7 @@ package com.ludofactory.mobile.core
 				else
 				{
 					InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-					advancedOwner.showScreen( _nextScreenId );
+					advancedOwner.replaceScreen( _nextScreenId );
 				}
 			}
 			
@@ -600,7 +530,7 @@ package com.ludofactory.mobile.core
 		{
 			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
 			TrophyManager.getInstance().removeEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
-			AbstractEntryPoint.screenNavigator.showScreen( _nextScreenId ); // bug des fois si AdvancedOwner utilisé à la place
+			AbstractEntryPoint.screenNavigator.replaceScreen( _nextScreenId ); // bug des fois si AdvancedOwner utilisé à la place
 		}
 		
 //------------------------------------------------------------------------------------------------------------

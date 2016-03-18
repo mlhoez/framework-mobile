@@ -7,19 +7,15 @@ Created : 9 avril 2013
 package com.ludofactory.mobile.core.remoting
 {
 	
-	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.utils.logs.log;
+	import com.ludofactory.common.utils.logs.logError;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.avatar.test.config.AvatarGenderType;
-	import com.ludofactory.mobile.core.avatar.test.manager.AvatarManager;
-	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.InvalidSessionNotificationContent;
 	import com.ludofactory.mobile.core.promo.PromoManager;
 	import com.ludofactory.mobile.core.push.GameSession;
@@ -29,10 +25,8 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.navigation.store.StoreData;
 	import com.milkmangames.nativeextensions.GoViral;
 	
-	import flash.system.Capabilities;
-	
 	import starling.events.EventDispatcher;
-	import starling.utils.formatString;
+	import starling.utils.StringUtil;
 	
 	/**
 	 * Simplifies the amfphp connection and the remote calls.
@@ -43,7 +37,7 @@ package com.ludofactory.mobile.core.remoting
 		
 		/**
 		 * The amf php path. */		
-		private const AMF_PATH:String = "/amfphp2/";
+		private const AMF_PATH:String = "/Amfphp/";
 		
 		// url quand on n'est pas sur le réseau local
 		//private const DEV_PORT:int = 9999;
@@ -53,13 +47,7 @@ package com.ludofactory.mobile.core.remoting
 		private const DEV_PORT:int = 80;
 		//private const DEV_URL:String = "http://www.ludokado.com";
 		//private const DEV_URL:String = "http://www.ludokado.dev";
-		//private const DEV_URL:String = "http://ludomobile.ludokado.dev";
-		//private const DEV_URL:String = "http://ludokado2.pterrier.ludofactory.dev";
-		private const DEV_URL:String = "http://ludokado.mlhoez.ludofactory.dev";
-		//private const DEV_URL:String = "http://ludokado.aguerreiro.ludofactory.dev";
-		//private const DEV_URL:String = "http://ludokado.tadiasse.ludofactory.dev";
-		//private const DEV_URL:String = "http://ludokado3.sravet.ludofactory.dev";
-		//private const DEV_URL:String = "http://semiprod.ludokado.com";
+		private const DEV_URL:String = "http://framework-php-mobile.mlhoez.ludofactory.dev";
 		
 		/**
 		 * Production PORT. Automatically used when the GlobalConfig.DEBUG variable
@@ -117,18 +105,11 @@ package com.ludofactory.mobile.core.remoting
 		{
 			var params:Object = getGenericParams();
 			params.acces_tournoi = MemberManager.getInstance().isTournamentUnlocked ? 1 : 0;
-			//params.avatarsAssetsInfos = AvatarManager.getInstance().getAssetsLastModificationDate();
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "init", params);
 		}
 		
 		/**
-		 * Retrieves the list of all trophies associated to this game, in order to dynamise them.
-		 * 
-		 * @param callbackSuccess
-		 * @param callbackFail
-		 * @param callbackMaxAttempts
-		 * @param maxAttempts
-		 * @param screenName
+		 * Retrieves the list of all trophies associated to this game, in order to dynamize them.
 		 */
 		public function getTrophies(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
@@ -144,13 +125,6 @@ package com.ludofactory.mobile.core.remoting
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "majToken", params);
 		}
 		
-		/**
-		 * Updates the push token
-		 */		
-		public function getEvent(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "evenementiel", getGenericParams());
-		}
 		
 		/**
 		 * Connect the user.
@@ -164,7 +138,6 @@ package com.ludofactory.mobile.core.remoting
 			params.mail = login;
 			params.mdp = password;
 			params.transactionIds = MemberManager.getInstance().transactionIds;
-			params = addAnonymousGameSessionsIfNeeded( params );
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Identification", "logIn", params);
 		}
 		
@@ -199,7 +172,6 @@ package com.ludofactory.mobile.core.remoting
 		 */		
 		public function registerUser(userData:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
-			userData = addAnonymousGameSessionsIfNeeded( userData );
 			userData = mergeWithGenericParams(userData);
 			userData.transactionIds = MemberManager.getInstance().transactionIds;
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "nouveauJoueur", userData);
@@ -214,35 +186,9 @@ package com.ludofactory.mobile.core.remoting
 		 */		
 		public function registerUserViaFacebook(userData:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
-			userData = addAnonymousGameSessionsIfNeeded( userData );
 			userData = mergeWithGenericParams(userData);
 			userData.transactionIds = MemberManager.getInstance().transactionIds;
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "nouveauJoueur", userData);
-		}
-		
-		/**
-		 * Connect the user via facebook.
-		 * 
-		 * @param userData All the data already formatted into an object
-		 */		
-		/*public function connectUserViaFacebook(userData:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			userData = addAnonymousGameSessionsIfNeeded( userData );
-			userData = mergeWithGenericParams(userData);
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Identification", "logInFacebook", userData);
-		}*/
-		
-		/**
-		 * Set the member sponsor.
-		 * 
-		 * @param memberId The member id
-		 * @param sponsorId The sponsor id
-		 */		
-		public function setParrainage(sponsorId:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = getGenericParams();
-			params.id_parrain = sponsorId;
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "setParrainage", params);
 		}
 		
 		/**
@@ -275,7 +221,7 @@ package com.ludofactory.mobile.core.remoting
 		 */		
 		public function pushGame(gameSession:GameSession, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
-			var params:Object = mergeWithGenericParams( { info_client:GlobalConfig.userHardwareData, type_mise:gameSession.gamePrice, type_partie:gameSession.gameType, score:gameSession.score, date_partie:gameSession.playDate, connected:gameSession.connected, coupes:gameSession.trophiesWon, temps_ecoule:gameSession.elapsedTime, id_partie:gameSession.uniqueId } );
+			var params:Object = mergeWithGenericParams( { info_client:GlobalConfig.userHardwareData, type_partie:gameSession.gameType, score:gameSession.score, date_partie:gameSession.playDate, connected:gameSession.connected, coupes:gameSession.trophiesWon, temps_ecoule:gameSession.elapsedTime, id_partie:gameSession.uniqueId } );
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServeurJeux", "pushPartie", params);
 		}
 		
@@ -298,123 +244,6 @@ package com.ludofactory.mobile.core.remoting
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServeurJeux", "resetAlerteCoupe", getGenericParams());
 		}
 		
-		public function updateMises(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServeurJeux", "majMise", getGenericParams());
-		}
-		
-		/**
-		 * Get sub categories
-		 */		
-		public function getSubCategories(idCategory:int, idSubCategory:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_rub:idCategory, id_ssrub:idSubCategory } );
-			if( !idSubCategory )
-				delete params.id_ssrub;
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Boutique", "listingBoutiqueVIP", params);
-		}
-		
-		/**
-		 * Order a gift
-		 */		
-		public function order(idLot:int, lotName:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_article:idLot, nom_article:lotName } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Boutique", "commander", params);
-		}
-		
-		/**
-		 * Retreive pending bids.
-		 */		
-		public function getPendingBids(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Boutique", "listingBoutiqueEnchereEncours", getGenericParams());
-		}
-		
-		/**
-		 * Retreive finished bids.
-		 */		
-		public function getFinishedBids(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Boutique", "listingBoutiqueEnchereTerminer", getGenericParams());
-		}
-		
-		/**
-		 * Retreive coming soon bids.
-		 */		
-		public function getComingSoonBids(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Boutique", "listingBoutiqueEnchereAVenir", getGenericParams());
-		}
-		
-		/**
-		 * Bid.
-		 */		
-		public function bid(bidId:int, value:int, minimumBid:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id:bidId, montant:value, enchere_mini:minimumBid } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Boutique", "encherir", params);
-		}
-		
-		/**
-		 * Retreive a specific bid information.
-		 */		
-		public function getSpecificBid(bidId:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_enchere:bidId } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Boutique", "listingBoutiqueEnchereEncoursSpe", params);
-		}
-		
-		
-		/**
-		 * 
-		 */		
-		public function getCustomerServiceThreads(state:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { etat:state } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServiceClient", "getListeSujets", params);
-		}
-		
-		/**
-		 * 
-		 */		
-		public function createNewCustomerServiceThread(themeId:int, mail:String, message:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object;
-			if( !mail )
-				params = mergeWithGenericParams( { id_theme:themeId, message:message } );
-			else
-				params = mergeWithGenericParams( { id_theme:themeId, mail:mail, message:message } );
-				
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServiceClient", "creationSujet", params);
-		}
-		
-		/**
-		 * 
-		 */		
-		public function getThread(threadId:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_sujet:threadId } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServiceClient", "getDiscussion", params);
-		}
-		
-		/**
-		 * 
-		 */		
-		public function createNewMessage(threadId:int, message:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_sujet:threadId, message:message } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServiceClient", "creationMessage", params);
-		}
-		
-		/**
-		 * 
-		 */		
-		public function initCustomerService(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServiceClient", "init", getGenericParams());
-		}
-		
 		/**
 		 * Updates only the FAQ translations (and add new ones if there were not already there).
 		 */		
@@ -422,15 +251,6 @@ package com.ludofactory.mobile.core.remoting
 		{
 			var params:Object = getGenericParams();
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getFAQ", params);
-		}
-		
-		/**
-		 * Updates only the VIP translations (and add new ones if there were not already there).
-		 */		
-		public function getVip(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = getGenericParams();
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getVIP", params);
 		}
 		
 		/**
@@ -443,67 +263,12 @@ package com.ludofactory.mobile.core.remoting
 		}
 		
 		/**
-		 * Retreive the tournament ranking (id in parameter)
-		 */		
-		public function getCurrentTournamentRanking(tournamentId:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object;
-			if( !tournamentId )
-				params = getGenericParams();
-			else
-				params = mergeWithGenericParams( { id_tournoi:tournamentId } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Tournoi", "getClassementTournoi", params);
-		}
-		
-		/**
-		 * Retreive the list of previous tournaments (10 by default).
-		 */		
-		public function getPreviousTournaments(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Tournoi", "getDerniersTournoisTerminer", getGenericParams());
-		}
-		
-		/**
-		 * 
-		 */		
-		public function getInfBloc(tournamentId:int, rank:int, stars:int, date:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_tournoi:tournamentId, reference:rank, score_membre:stars, date_score:date } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Tournoi", "getClassementInf", params);
-		}
-		
-		/**
-		 * 
-		 */		
-		public function getSupBloc(tournamentId:int, rank:int, stars:int, date:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_tournoi:tournamentId, reference:rank, score_membre:stars, date_score:date } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Tournoi", "getClassementSup", params);
-		}
-		
-		/**
 		 * 
 		 */		
 		public function parrainer(type:String, filleuls:Array, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			var params:Object = mergeWithGenericParams( { type:type, parrainages:filleuls } );
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Parrainage", "parrainer", params);
-		}
-		
-		/**
-		 * 
-		 */		
-		public function getFilleuls(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Parrainage", "suivi_filleul", getGenericParams());
-		}
-		
-		/**
-		 * 
-		 */		
-		public function initParrainage(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Parrainage", "init", getGenericParams());
 		}
 		
 // HighScore list
@@ -630,61 +395,6 @@ package com.ludofactory.mobile.core.remoting
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Compte", "setNotification", params);
 		}
 		
-		/**
-		 * Retreive the payments history.
-		 */		
-		public function getPaymentsHistory(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Compte", "getHistoriquePaiement", getGenericParams());
-		}
-		
-		/**
-		 * Retreive the account history.
-		 * 
-		 * <p>startIndex here is the sum of _dataProvider.data[i].children.length</p>
-		 */		
-		public function getAccountHistory(startIndex:int, count:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { debut:startIndex, limite:count } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Compte", "getHistoriqueCompte", params);
-		}
-		
-		/**
-		 * Resends a validation email.
-		 */		
-		public function resendValidationEmail(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Compte", "getMailValidation", getGenericParams());
-		}
-		
-		/**
-		 * Retreive de gifts history.
-		 * 
-		 * <p>startIndex here is the sum of _dataProvider.data[i].children.length</p>
-		 */		
-		public function getGiftsHistory(startIndex:int, count:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { debut:startIndex, limite:count } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Gains", "getHistoriqueGains", params);
-		}
-		
-		public function initGifts(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Gains", "init", getGenericParams());
-		}
-		
-		public function exchangeWithCheque(idGain:int, tableType:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_gain:idGain, type_table:tableType } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Gains", "echangerChequeCadeauCheque", params);
-		}
-		
-		public function exchangeWithPoints(idGain:int, tableType:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_gain:idGain, type_table:tableType } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Gains", "echangerLotPoints", params);
-		}
-		
 // Store
 		
 		public function getProductIds(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
@@ -711,34 +421,9 @@ package com.ludofactory.mobile.core.remoting
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "AchatCredits", "changementEtatDemande", params);
 		}
 		
-		
-		
-		
 		public function getAlerts(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Menu", "Init", getGenericParams());
-		}
-		
-		
-		
-		
-		/**
-		 * Save the device settings
-		 */		
-		public function sendSettings(data:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = getGenericParams();
-			data.os = Capabilities.os;
-			params.obj_reglages = data;
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Reglages", "maj", params);
-		}
-		
-		/**
-		 * Save the device settings
-		 */		
-		public function getBoutiqueCategories(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Boutique", "listingBoutiqueCategorie", getGenericParams());
 		}
 		
 		/**
@@ -765,62 +450,6 @@ package com.ludofactory.mobile.core.remoting
 		{
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "addRewardAfterSharing", getGenericParams());
 		}
-		
-		
-	// avatars
-		
-		/**
-		 * Insert a line in the database whenever a video starts to display (VidCoin).
-		 */
-		public function initAvatarMaker(installedassetsDta:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { avatarsAssetsInfos:installedassetsDta } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Avatar", "init", params);
-		}
-		
-		/**
-		 * Insert a line in the database whenever a video starts to display (VidCoin).
-		 */
-		public function getItemsList(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { idGender:LKConfigManager.currentGenderId, lastConnection:LKConfigManager.currentConfig.lastConnectionDate, lastRank:LKConfigManager.currentConfig.lastConnectionRank } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Avatar", "getItems", params);
-		}
-		
-		/**
-		 * Insert a line in the database whenever a video starts to display (VidCoin).
-		 */
-		public function saveAvatar(imgData:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { avatar:LKConfigManager.getTemporaryConfig(), imageData:imgData } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Avatar", "saveAvatar", params);
-		}
-		
-		/**
-		 * Requests an avatar change.
-		 *
-		 * This function will NOT change the avatar already, but only fetch the configurations of the others and their
-		 * price (based on the idGender the Flash sends) in order to display the two other genders in the popup.
-		 */
-		public function requestAvatarChange(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { idGender:LKConfigManager.currentGenderId } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Avatar", "requestResetAvatar", params);
-		}
-		
-		/**
-		 * Confirms the change of the avatar.
-		 */
-		public function confirmAvatarChange(imgData:String, newGenderId:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { idNewGender:newGenderId, imageData:imgData } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Avatar", "confirmResetAvatar", params);
-		}
-		
-		
-		
-		
-		
 		
 		/**
 		 * Generic test function (must return a string, not an object because of the addslash)
@@ -861,7 +490,7 @@ package com.ludofactory.mobile.core.remoting
 			{
 				log("[Remote] onQueryComplete : The user could not be reconnected on the server side (error 999).");
 				MemberManager.getInstance().disconnect();
-				NotificationPopupManager.addNotification(new InvalidSessionNotificationContent());
+				CustomPopupManager.addNotification(new InvalidSessionNotificationContent());
 				InfoManager.hide("", InfoContent.ICON_NOTHING, 0); // just in case
 			}
 			else
@@ -984,9 +613,9 @@ package com.ludofactory.mobile.core.remoting
 			{
 				if( error.queryName == "useClass" )
 					error.queryName += "\n onQueryFail : Une requête a échoué.";
-				Flox.logError(log(error), "<br><br><strong>Erreur PHP :</strong><br><strong>Requête : </strong>{0}<br><strong>FaultCode : </strong>{1}<br><strong>FaultString : </strong>{2}<br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail);
-				if( CONFIG::DEBUG )
-					ErrorDisplayer.showError(formatString("<strong>Erreur PHP :</strong><br><br><strong>Requête : </strong>{0}<br><br><strong>FaultCode : </strong>{1}<br><br><strong>FaultString : </strong>{2}<br><br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail));
+				logError(error + StringUtil.format("<br><br><strong>Erreur PHP :</strong><br><strong>Requête : </strong>{0}<br><strong>FaultCode : </strong>{1}<br><strong>FaultString : </strong>{2}<br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail));
+				//if( CONFIG::DEBUG )
+				//	ErrorDisplayer.showError(StringUtil.format("<strong>Erreur PHP :</strong><br><br><strong>Requête : </strong>{0}<br><br><strong>FaultCode : </strong>{1}<br><br><strong>FaultString : </strong>{2}<br><br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail));
 			} 
 			catch(error:Error) 
 			{
@@ -1052,31 +681,6 @@ package com.ludofactory.mobile.core.remoting
 			for( var key:String in objectToMerge )
 				genericParams[key] = objectToMerge[key];
 			return genericParams;
-		}
-		
-		/**
-		 * For login, login with Facebook, account creation and account creation
-		 * with Facebook, this function will add an extra parameter containing all
-		 * anonymous game sessions so that they can be taken in account when the user
-		 * either login or create an account.
-		 */		
-		private function addAnonymousGameSessionsIfNeeded( params:Object ):Object
-		{
-			params.parties = [];
-			params.acces_tournoi = MemberManager.getInstance().isTournamentUnlocked ? 1 : 0;
-			
-			// we can send them
-			var gameSession:GameSession;
-			var len:int = MemberManager.getInstance().anonymousGameSessions.length;
-			for(var i:int = 0; i < len; i++)
-			{
-				gameSession = MemberManager.getInstance().anonymousGameSessions[i];
-				params.parties.push( { info_client:GlobalConfig.userHardwareData, type_mise:gameSession.gamePrice, type_partie:gameSession.gameType, score:gameSession.score, date_partie:gameSession.playDate, connected:gameSession.connected, coupes:gameSession.trophiesWon, temps_ecoule:gameSession.elapsedTime, id_partie:gameSession.uniqueId } );
-			}
-			
-			Flox.logEvent("Nombre de parties jouées avant authentification", { Nombre:len });
-			
-			return params;
 		}
 		
 		public function reconnect(url:String, port:int):void

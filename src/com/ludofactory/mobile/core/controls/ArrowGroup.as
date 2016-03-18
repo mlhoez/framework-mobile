@@ -21,6 +21,7 @@ package com.ludofactory.mobile.core.controls
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
+	import starling.text.TextFormat;
 	
 	public class ArrowGroup extends Sprite
 	{
@@ -48,7 +49,7 @@ package com.ludofactory.mobile.core.controls
 			_arrow.scaleX = _arrow.scaleY = GlobalConfig.dpiScale;
 			addChild(_arrow);
 			
-			_label = new TextField(5, scaleAndRoundToDpi(50), _labelName, Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 25 : 33), 0x6d6d6d, true);
+			_label = new TextField(5, scaleAndRoundToDpi(50), _labelName, new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 25 : 33), 0x6d6d6d));
 			_label.text = _labelName;
 			_label.autoSize = TextFieldAutoSize.HORIZONTAL;
 			_label.x = _arrow.x + _arrow.width + scaleAndRoundToDpi(3);

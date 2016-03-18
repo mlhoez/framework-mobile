@@ -15,12 +15,15 @@ package com.ludofactory.mobile.navigation.achievements
 	
 	import feathers.controls.ImageLoader;
 	import feathers.core.FeathersControl;
-	import feathers.display.Scale9Image;
 	import feathers.skins.IStyleProvider;
 	
+	import flash.geom.Rectangle;
+	
 	import starling.core.Starling;
+	import starling.display.Image;
 	import starling.extensions.PDParticleSystem;
 	import starling.text.TextField;
+	import starling.text.TextFormat;
 	
 	/**
 	 * A trophy message.
@@ -29,7 +32,7 @@ package com.ludofactory.mobile.navigation.achievements
 	{
 		/**
 		 * The trophy background. */		
-		private var _background:Scale9Image;
+		private var _background:Image;
 		
 		/**
 		 * The trophy image. */		
@@ -61,12 +64,14 @@ package com.ludofactory.mobile.navigation.achievements
 			this.width = scaleAndRoundToDpi(500);
 			this.height = scaleAndRoundToDpi(130);
 			
-			_background = new Scale9Image(Theme.trophyBackgroundSkinTextures, GlobalConfig.dpiScale);
+			_background = new Image(AbstractEntryPoint.assets.getTexture("trophy-background-skin"));
+			_background.scale9Grid = new Rectangle(11, 11, 18, 18);
+			_background.scale = GlobalConfig.dpiScale;
 			addChild(_background);
 			
 			_particles = new PDParticleSystem(Theme.particleSlowXml, Theme.particleRoundTexture);
 			_particles.touchable = false;
-			_particles.maxNumParticles = scaleAndRoundToDpi(100);
+			_particles.capacity = scaleAndRoundToDpi(100);
 			_particles.startSizeVariance = scaleAndRoundToDpi(15);
 			_particles.endSize = scaleAndRoundToDpi(10);
 			_particles.endSizeVariance = scaleAndRoundToDpi(10);
@@ -78,10 +83,10 @@ package com.ludofactory.mobile.navigation.achievements
 			
 			_image = new ImageLoader();
 			_image.source = _trophyData.textureName.indexOf("http") >= 0 ? _trophyData.textureName : AbstractEntryPoint.assets.getTexture(_trophyData.textureName);
-			_image.snapToPixels = true;
+			_image.pixelSnapping = true;
 			addChild(_image);
 			
-			_message = new TextField(10, 10, _trophyData.description, Theme.FONT_SANSITA, scaleAndRoundToDpi(24), Theme.COLOR_WHITE);
+			_message = new TextField(10, 10, _trophyData.description, new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), Theme.COLOR_WHITE));
 			_message.autoScale = true;
 			addChild(_message);
 		}
@@ -117,7 +122,7 @@ package com.ludofactory.mobile.navigation.achievements
 		private function displayReward():void
 		{
 			_message.text = _trophyData.reward;
-			_message.fontSize = scaleAndRoundToDpi(38);
+			_message.format.size = scaleAndRoundToDpi(38);
 			_message.y = (Math.max(actualHeight, _message.height) - Math.min(actualHeight, _message.height)) * 0.5;
 			TweenLite.to(_message, 0.5, { alpha:1 });
 		}
@@ -125,11 +130,6 @@ package com.ludofactory.mobile.navigation.achievements
 //------------------------------------------------------------------------------------------------------------
 //	Get / Set
 //------------------------------------------------------------------------------------------------------------
-		
-		public function set background(val:Scale9Image):void
-		{
-			_background = val;
-		}
 		
 		/**
 		 * Required for the new Theme. */

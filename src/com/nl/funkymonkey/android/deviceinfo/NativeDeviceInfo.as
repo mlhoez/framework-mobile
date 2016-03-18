@@ -6,8 +6,9 @@ Created : 9 avril 2014
 */
 package com.nl.funkymonkey.android.deviceinfo
 {
-	import com.gamua.flox.Flox;
+	
 	import com.ludofactory.common.utils.logs.log;
+	import com.ludofactory.common.utils.logs.logWarning;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import flash.filesystem.File;
@@ -132,14 +133,14 @@ package com.nl.funkymonkey.android.deviceinfo
 				} 
 				catch(error:Error) 
 				{
-					Flox.logWarning("Impossible de parser le fichier build.prop du téléphone.");
-					Flox.logInfo("Type d'appareil : <strong>{0} sur {1}</strong>", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
+					logWarning("Impossible de parser le fichier build.prop du téléphone.");
+					log("Type d'appareil : <strong>{0} sur {1}</strong>", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
 				}
 			}
 			else
 			{
 				// for ios
-				Flox.logInfo("Type d'appareil : <strong>{0} sur {1}</strong>", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
+				log("Type d'appareil : <strong>{0} sur {1}</strong>", (GlobalConfig.isPhone ? "Smartphone" : "Tablette"), (GlobalConfig.ios ? "iOS" : (GlobalConfig.android ? "Android" : "Simulateur")));
 			}
 		}
 		

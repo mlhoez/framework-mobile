@@ -6,6 +6,7 @@ Created : 17 sept. 2013
 */
 package com.ludofactory.mobile.navigation.account.history.settings
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Bounce;
@@ -13,11 +14,11 @@ package com.ludofactory.mobile.navigation.account.history.settings
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.CustomToggleSwitch;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.Button;
@@ -31,7 +32,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 	import starling.display.MovieClip;
 	import starling.display.Quad;
 	import starling.events.Event;
-	import starling.utils.formatString;
+	import starling.utils.StringUtil;
 	
 	/**
 	 * Item renderer used to display the customer service messages.
@@ -197,7 +198,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 					if( _data.hasOwnProperty("isSaveButton") )
 					{
 						_saveButton = new Button();
-						_saveButton.styleName = Theme.BUTTON_FLAT_GREEN;
+						//_saveButton.styleName = Theme.BUTTON_FLAT_GREEN;
 						_saveButton.label = _("Sauvegarder");
 						_saveButton.addEventListener(Event.TRIGGERED, onSave);
 						addChild(_saveButton);
@@ -293,7 +294,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			if( _data.hasOwnProperty("helpTextTranslation") )
 			{
 				_helpText.visible = true;
-				_helpText.text = formatString(_data.helpTextTranslation, AbstractGameInfo.GAME_NAME);
+				_helpText.text = StringUtil.format(_data.helpTextTranslation, AbstractGameInfo.GAME_NAME);
 				_helpText.x = _backgroundBorder.width + _padding;
 				_helpText.width = this.actualWidth - _backgroundBorder.width - _padding * 2;
 				_helpText.validate();
@@ -402,6 +403,18 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			
 			TweenMax.to(_saveButton, 0.75, { delay:0.5, scaleX:1, scaleY:1, autoAlpha:1, ease:Bounce.easeOut });
 			TweenMax.to(_loader, 0.75, { scaleX:0, scaleY:0, autoAlpha:0, ease:Bounce.easeOut });
+		}
+		
+		protected var _factoryID:String;
+		
+		public function get factoryID():String
+		{
+			return this._factoryID;
+		}
+		
+		public function set factoryID(value:String):void
+		{
+			this._factoryID = value;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

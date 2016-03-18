@@ -69,7 +69,7 @@ package com.ludofactory.mobile.navigation.account.history.payments
 				_retryContainer.visible = true;
 				if( AirNetworkInfo.networkInfo.isConnected() )
 				{
-					Remote.getInstance().getPaymentsHistory(onGetMessagesSuccess, onGetMessagesFailure, onGetMessagesFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
+					//Remote.getInstance().getPaymentsHistory(onGetMessagesSuccess, onGetMessagesFailure, onGetMessagesFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 				}
 				else
 				{
@@ -193,7 +193,7 @@ package com.ludofactory.mobile.navigation.account.history.payments
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
 				_retryContainer.loadingMode = true;
-				Remote.getInstance().getPaymentsHistory(onGetMessagesSuccess, onGetMessagesFailure, onGetMessagesFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
+				//Remote.getInstance().getPaymentsHistory(onGetMessagesSuccess, onGetMessagesFailure, onGetMessagesFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 			}
 			else
 			{

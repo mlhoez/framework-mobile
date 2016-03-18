@@ -6,32 +6,27 @@ Created : 13 oct. 2013
 */
 package com.ludofactory.mobile.navigation.engine
 {
+	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import flash.geom.Rectangle;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
-	import feathers.controls.ImageLoader;
-	import feathers.controls.Label;
 	import feathers.core.FeathersControl;
-	import feathers.display.Scale9Image;
-	import feathers.textures.Scale9Textures;
+	
+	import flash.geom.Rectangle;
 	
 	import starling.display.Image;
 	import starling.text.TextField;
-	import starling.utils.HAlign;
-	import starling.utils.VAlign;
+	import starling.text.TextFormat;
+	import starling.utils.Align;
 	import starling.utils.deg2rad;
 	
 	public class SoloEndElement extends FeathersControl
 	{
 		/**
 		 * The background. */		
-		private var _background:Scale9Image;
+		private var _background:Image;
 		
 		/**
 		 * The icon. */		
@@ -65,15 +60,18 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super.initialize();
 			
-			_background = new Scale9Image( new Scale9Textures( AbstractEntryPoint.assets.getTexture("scroll-container-result-grey-background-skin"), new Rectangle(15, 15, 2, 2) ), GlobalConfig.dpiScale );
+			_background = new Image(AbstractEntryPoint.assets.getTexture("scroll-container-result-grey-background-skin"));
+			_background.scale = GlobalConfig.dpiScale;
+			_background.scale9Grid = new Rectangle(15, 15, 2, 2);
 			addChild(_background);
 			
 			_icon = new Image( AbstractEntryPoint.assets.getTexture(_imageTextureName) );
 			_icon.scaleX = _icon.scaleY = GlobalConfig.dpiScale * 0.6;
-			_icon.alignPivot(HAlign.LEFT, VAlign.CENTER);
+			_icon.alignPivot(Align.LEFT, Align.CENTER);
 			addChild( _icon );
 			
-			_messageLabel =  new TextField(5, 5, _message, Theme.FONT_ARIAL, scaleAndRoundToDpi(36), 0xffffff, true);
+			_messageLabel =  new TextField(5, 5, _message, new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(36), 0xffffff));
+			_messageLabel.format.bold = true;
 			_messageLabel.autoScale = true;
 			addChild(_messageLabel);
 			

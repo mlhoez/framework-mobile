@@ -19,18 +19,17 @@ package com.ludofactory.mobile.navigation.tournament.listing
 	import feathers.core.FeathersControl;
 	
 	import flash.geom.Point;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import starling.display.Image;
+	import starling.display.MeshBatch;
 	import starling.display.Quad;
-	import starling.display.QuadBatch;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
-	import starling.utils.HAlign;
+	import starling.text.TextFormat;
+	import starling.utils.Align;
 	
 	public class RankItemRenderer extends FeathersControl implements IGroupedListItemRenderer
 	{
@@ -76,10 +75,10 @@ package com.ludofactory.mobile.navigation.tournament.listing
 		
 		/**
 		 * The idle background. */		
-		private var _idleBackground:QuadBatch;
+		private var _idleBackground:MeshBatch;
 		/**
 		 * 	The selected background. */		
-		private var _selectedBackground:QuadBatch;
+		private var _selectedBackground:MeshBatch;
 		
 		/**
 		 * The rank label. */		
@@ -113,37 +112,37 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			this.width = ITEM_WIDTH;
 			this.height = _itemHeight;
 			
-			if( !_selectedTextFormat )
-				_selectedTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0xffdd00, false, false, null, null, null, TextFormatAlign.CENTER);
-			if( !_normalTextFormat )
-				_normalTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0x353535, false, false, null, null, null, TextFormatAlign.CENTER);
+			//if( !_selectedTextFormat )
+			//	_selectedTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0xffdd00, false, false, null, null, null, TextFormatAlign.CENTER);
+			//if( !_normalTextFormat )
+				//_normalTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0x353535, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			// idle
-			_idleBackground = new QuadBatch();
+			_idleBackground = new MeshBatch();
 			const background:Quad = new Quad( this.actualWidth, _itemHeight, 0xfbfbfb );
-			_idleBackground.addQuad( background );
+			_idleBackground.addMesh( background );
 			background.x = _sideWidth;
 			background.width = _middleWidth;
 			background.color = 0xeeeeee;
-			_idleBackground.addQuad( background );
+			_idleBackground.addMesh( background );
 			background.x = 0;
 			background.y = _itemHeight - _strokeThickness;
 			background.width  = _sideWidth * 2 + _middleWidth;
 			background.height = _strokeThickness;
 			background.color  = 0xbfbfbf;
-			_idleBackground.addQuad( background );
+			_idleBackground.addMesh( background );
 			addChild( _idleBackground );
 			
 			// selected
-			_selectedBackground = new QuadBatch();
+			_selectedBackground = new MeshBatch();
 			background.y = 0;
 			background.color = 0x401800;
 			background.height = _itemHeight;
-			_selectedBackground.addQuad( background );
+			_selectedBackground.addMesh( background );
 			background.x = _sideWidth;
 			background.width = _middleWidth;
 			background.color = 0x3e1600;
-			_selectedBackground.addQuad( background );
+			_selectedBackground.addMesh( background );
 			addChild( _selectedBackground );
 			
 			_starIcon = new Image( AbstractEntryPoint.assets.getTexture("ruby") );
@@ -164,9 +163,9 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			addChild(_nameLabel);
 			_nameLabel.textRendererProperties.textFormat = _normalTextFormat;
 			
-			_numStarsLabel = new TextField(5, 5, "999999", Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0x353535);
+			_numStarsLabel = new TextField(5, 5, "999999", new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0x353535));
 			_numStarsLabel.touchable = false;
-			_numStarsLabel.hAlign = HAlign.RIGHT;
+			_numStarsLabel.format.horizontalAlign = Align.RIGHT;
 			addChild(_numStarsLabel);
 			
 			if( !_calloutLabel )
@@ -223,7 +222,7 @@ package com.ludofactory.mobile.navigation.tournament.listing
 				if( _data )
 				{
 					_rankLabel.textRendererProperties.textFormat = _nameLabel.textRendererProperties.textFormat = _data.isMe ? _selectedTextFormat : _normalTextFormat;
-					_numStarsLabel.color = _data.isMe ? 0xffdd00 : 0x353535;
+					_numStarsLabel.format.color = _data.isMe ? 0xffdd00 : 0x353535;
 					
 					_rankLabel.text =  _data.rankFormatted;
 					_nameLabel.text = _data.truncatedPseudo + " (" + _data.country + ")";
@@ -484,7 +483,7 @@ package com.ludofactory.mobile.navigation.tournament.listing
 				{
 					this._touchPointID = -1;
 					touch.getLocation(this, HELPER_POINT);
-					var isInBounds:Boolean = this.hitTest(HELPER_POINT, true) != null;
+					var isInBounds:Boolean = this.hitTest(HELPER_POINT) != null;
 					if(isInBounds)
 					{
 						if( _data.isTruncated )
@@ -501,7 +500,7 @@ package com.ludofactory.mobile.navigation.tournament.listing
 								_callout.disposeContent = false;
 								_callout.touchable = false;
 								_callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
-								_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
+								//_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 								_calloutLabel.textRendererProperties.wordWrap = false;
 							}
 						}
@@ -538,6 +537,18 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			}
 		}
 		
+		protected var _factoryID:String;
+		
+		public function get factoryID():String
+		{
+			return this._factoryID;
+		}
+		
+		public function set factoryID(value:String):void
+		{
+			this._factoryID = value;
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 //------------------------------------------------------------------------------------------------------------
@@ -552,11 +563,11 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			_starIcon.removeFromParent(true);
 			_starIcon = null;
 			
-			_idleBackground.reset();
+			_idleBackground.clear();
 			_idleBackground.removeFromParent(true);
 			_idleBackground = null;
 			
-			_selectedBackground.reset();
+			_selectedBackground.clear();
 			_selectedBackground.removeFromParent(true);
 			_selectedBackground = null;
 			

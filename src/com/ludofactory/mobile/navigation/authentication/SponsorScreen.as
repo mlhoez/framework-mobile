@@ -6,23 +6,17 @@ Created : 30 juil. 2013
 */
 package com.ludofactory.mobile.navigation.authentication
 {
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.ReturnKeyLabel;
-	import flash.text.SoftKeyboardType;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
@@ -30,8 +24,12 @@ package com.ludofactory.mobile.navigation.authentication
 	import feathers.controls.TextInput;
 	import feathers.events.FeathersEventType;
 	
-	import starling.core.Starling;
+	import flash.text.ReturnKeyLabel;
+	import flash.text.SoftKeyboardType;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
+	import starling.core.Starling;
 	import starling.events.Event;
 	
 	public class SponsorScreen extends AdvancedScreen
@@ -58,22 +56,16 @@ package com.ludofactory.mobile.navigation.authentication
 		public function SponsorScreen()
 		{
 			super();
-			
-			_whiteBackground = true;
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-			AbstractEntryPoint.isSelectingPseudo = true;
-			
-			_headerTitle = _("Inscription");
-			
 			_logo = new ImageLoader();
 			_logo.source = Theme.ludokadoLogoTexture;
 			_logo.textureScale = GlobalConfig.dpiScale;
-			_logo.snapToPixels = true;
+			_logo.pixelSnapping = true;
 			_logo.touchable = false;
 			addChild( _logo );
 			
@@ -98,7 +90,7 @@ package com.ludofactory.mobile.navigation.authentication
 			
 			_cancelButton = new Button();
 			_cancelButton.label = _("Pas de code parrain");
-			_cancelButton.styleName = Theme.BUTTON_BLUE;
+			//_cancelButton.styleName = Theme.BUTTON_BLUE;
 			_cancelButton.addEventListener(Event.TRIGGERED, onIgnoreStep);
 			addChild( _cancelButton );
 		}
@@ -173,7 +165,7 @@ package com.ludofactory.mobile.navigation.authentication
 			InfoManager.show(_("Chargement..."));
 			_sponsorInput.clearFocus();
 			Starling.current.nativeStage.focus = null;
-			Remote.getInstance().setParrainage(_sponsorInput.text, onSetParrainageSuccess, onSetParrainageFailure, onSetParrainageFailure, 2, advancedOwner.activeScreenID);
+			//Remote.getInstance().setParrainage(_sponsorInput.text, onSetParrainageSuccess, onSetParrainageFailure, onSetParrainageFailure, 2, advancedOwner.activeScreenID);
 		}
 		
 		private function onSetParrainageSuccess(result:Object):void
@@ -182,8 +174,7 @@ package com.ludofactory.mobile.navigation.authentication
 			{
 				case 1: // ok
 				{
-					AbstractEntryPoint.isSelectingPseudo = false;
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.showScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
 					break;
 				}
 					
@@ -215,14 +206,12 @@ package com.ludofactory.mobile.navigation.authentication
 		 */		
 		private function onIgnoreStep(event:Event):void
 		{
-			AbstractEntryPoint.isSelectingPseudo = false;
-			this.advancedOwner.showScreen( ScreenIds.PSEUDO_CHOICE_SCREEN );
+			this.advancedOwner.replaceScreen( ScreenIds.PSEUDO_CHOICE_SCREEN );
 		}
 		
 		override public function onBack():void
 		{
-			AbstractEntryPoint.isSelectingPseudo = false;
-			this.advancedOwner.showScreen( ScreenIds.PSEUDO_CHOICE_SCREEN );
+			this.advancedOwner.replaceScreen( ScreenIds.PSEUDO_CHOICE_SCREEN );
 		}
 		
 //------------------------------------------------------------------------------------------------------------

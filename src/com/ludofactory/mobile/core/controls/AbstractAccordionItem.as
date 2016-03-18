@@ -115,7 +115,7 @@ package com.ludofactory.mobile.core.controls
 					this._touchPointID = -1;
 					
 					touch.getLocation(this, HELPER_POINT);
-					if(this.hitTest(HELPER_POINT, true) != null )
+					if(this.hitTest(HELPER_POINT) != null )
 					{
 						//this.isSelected = true;
 						if(!isExpanded) expand();

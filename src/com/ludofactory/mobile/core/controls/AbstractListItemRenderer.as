@@ -201,7 +201,7 @@ package com.ludofactory.mobile.core.controls
 				{
 					this._touchPointID = -1;
 					touch.getLocation(this, HELPER_POINT);
-					var isInBounds:Boolean = this.hitTest(HELPER_POINT, true) != null;
+					var isInBounds:Boolean = this.hitTest(HELPER_POINT) != null;
 					if(isInBounds)
 					{
 						onTouched();
@@ -230,6 +230,18 @@ package com.ludofactory.mobile.core.controls
 		public function onScroll(event:Event):void
 		{
 			_touchPointID = -1;
+		}
+		
+		protected var _factoryID:String;
+		
+		public function get factoryID():String
+		{
+			return this._factoryID;
+		}
+		
+		public function set factoryID(value:String):void
+		{
+			this._factoryID = value;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

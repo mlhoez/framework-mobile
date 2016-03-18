@@ -6,13 +6,11 @@ Created : 18 Août 2013
 */
 package com.ludofactory.mobile.core.model
 {
-	import com.ludofactory.mobile.navigation.shop.vip.BoutiqueItemData;
-	import com.ludofactory.mobile.navigation.cs.display.CSMessageData;
+	
 
 	public class ScreenData
 	{
 		public var gameType:int;
-		public var gamePrice:int;
 		
 		public var defaultPseudo:String;
 		
@@ -25,30 +23,15 @@ package com.ludofactory.mobile.core.model
 		 * The game data. */		
 		public var gameData:GameData = new GameData();
 		
-		// Boutique
-		public var idCategory:int;
-		public var categoryName:String;
-		public var idSubCategory:int = -1;
-		public var selectedItemData:BoutiqueItemData = null;
-		
-		// Customer Service
-		public var thread:CSMessageData;
-		
-		/**
-		 * The sponsor type. */		
-		public var sponsorType:String;
-		
 		/**
 		 * The previous tournement id. */		
-		public var previousTournementId:int;
+		//public var previousTournementId:int;
 		
 		public var highscoreRankingType:int;
 		
-		public var vipScreenInitializedFromStore:Boolean = false;
-		
 		public var displayPopupOnHome:Boolean = false;
 		
-		public var indexToDisplayInMyAccount:int = 0;
+		//public var indexToDisplayInMyAccount:int = 0;
 		
 		public function ScreenData()
 		{
@@ -60,7 +43,6 @@ package com.ludofactory.mobile.core.model
 			// bug si on va sur la sélection de mise, puis on se connecte, quand on revient => comme on fait
 			// un purgeData au changement d'écran, la push partie merde
 			gameType = 0;
-			gamePrice = 0;
 			
 			defaultPseudo = "";
 			
@@ -71,21 +53,11 @@ package com.ludofactory.mobile.core.model
 			
 			gameData = new GameData();
 			
-			idCategory = -1;
-			idSubCategory = -1;
-			selectedItemData = null;
-			
-			thread = null;
-			
-			sponsorType = "";
-			
-			previousTournementId = -1;
+			//previousTournementId = -1;
 			
 			highscoreRankingType = -1;
 			
-			vipScreenInitializedFromStore = false;
-			
-			indexToDisplayInMyAccount = 0;
+			//indexToDisplayInMyAccount = 0;
 		}
 	}
 }

@@ -15,10 +15,6 @@ package com.ludofactory.mobile.core.push
 		private var _score:int;
 		
 		/**
-		 * The price paid by the user to play : free, paid or point */		
-		private var _gamePrice:int;
-		
-		/**
 		 * The game type (whether free or tournament). */		
 		private var _gameType:int;
 		
@@ -50,16 +46,15 @@ package com.ludofactory.mobile.core.push
 		 * The time elapsed on the game in seconds. */		
 		private var _elapsedTime:int;
 		
-		public function GameSession(pushType:String = null, gameType:int = 0, gamePrice:int = 0)
+		public function GameSession(pushType:String = null, gameType:int = 0)
 		{
 			super(pushType);
 			
-			if( gamePrice == 0 )
+			if( pushType == null ) // restaured from encrypted local store
 				return;
 			
 			_uniqueId = String(new Date().getTime());
 			_gameType = gameType;
-			_gamePrice = gamePrice;
 			_score = -1;
 			_playDate = MemberManager.getInstance().lastUpdateDate ? MemberManager.getInstance().lastUpdateDate : Utilities.formatDateUS(new Date());
 			_trophiesWon = [];
@@ -78,9 +73,6 @@ package com.ludofactory.mobile.core.push
 		
 		public function get gameType():int { return _gameType; }
 		public function set gameType(val:int):void { _gameType = val; }
-		
-		public function get gamePrice():int { return _gamePrice; }
-		public function set gamePrice(val:int):void { _gamePrice = val; }
 		
 		public function get score():int { return _score; }
 		public function set score(val:int):void { _score = val; }

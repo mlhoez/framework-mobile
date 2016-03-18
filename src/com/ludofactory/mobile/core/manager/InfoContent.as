@@ -24,7 +24,8 @@ package com.ludofactory.mobile.core.manager
 	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
-	import starling.utils.VAlign;
+	import starling.text.TextFormat;
+	import starling.utils.Align;
 	
 	/**
 	 * InfoContent is the content displayed by the InfoManager when
@@ -127,13 +128,13 @@ package com.ludofactory.mobile.core.manager
 			_loader.touchable = false;
 			addChild(_loader);
 			
-			_message = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_WHITE);
+			_message = new TextField(5, 5, "", new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(32), Theme.COLOR_WHITE));
 			_message.touchable = false;
-			_message.vAlign = VAlign.TOP;
+			_message.format.verticalAlign = Align.TOP;
 			_message.autoScale = true;
 			addChild(_message);
 			
-			_tapToCloseLabel = new TextField(5, 5, _("Tapotez n'importe où pour continuer..."), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 24 : 30), Theme.COLOR_WHITE);
+			_tapToCloseLabel = new TextField(5, 5, _("Tapotez n'importe où pour continuer..."), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 24 : 30), Theme.COLOR_WHITE));
 			_tapToCloseLabel.touchable = false;
 			_tapToCloseLabel.autoSize = TextFieldAutoSize.VERTICAL;
 			addChild(_tapToCloseLabel);

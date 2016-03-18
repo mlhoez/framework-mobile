@@ -22,7 +22,7 @@ package com.ludofactory.mobile
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.StakeType;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.FacebookNotificationContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -33,13 +33,7 @@ package com.ludofactory.mobile
 	import com.ludofactory.mobile.navigation.FacebookPublicationData;
 	
 	import feathers.controls.LayoutGroup;
-	import feathers.core.FeathersControl;
-	import feathers.display.Scale9Image;
-	import feathers.textures.Scale9Textures;
 	
-	import flash.filters.BitmapFilterQuality;
-	import flash.filters.DropShadowFilter;
-	import flash.filters.GlowFilter;
 	import flash.geom.Rectangle;
 	
 	import starling.display.ButtonState;
@@ -51,8 +45,9 @@ package com.ludofactory.mobile
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
-	import starling.utils.HAlign;
-	import starling.utils.VAlign;
+	import starling.text.TextFormat;
+	import starling.textures.Texture;
+	import starling.utils.Align;
 	
 	/** Dispatched when the user triggers the button. Bubbles. */
 	[Event(name="triggered", type="starling.events.Event")]
@@ -76,15 +71,15 @@ package com.ludofactory.mobile
 		
 	// ----------- Textures
 		
-		private var _upTextures:Scale9Textures;
-		private var _downTextures:Scale9Textures;
-		private var _overTextures:Scale9Textures;
-		private var _disabledTextures:Scale9Textures;
+		private var _upTextures:Texture;
+		private var _downTextures:Texture;
+		private var _overTextures:Texture;
+		private var _disabledTextures:Texture;
 		
 	// ----------- Textures
 		
 		protected var mContents:Sprite;
-		private var mBody:Scale9Image;
+		private var mBody:Image;
 		private var mTextField:TextField;
 		private var mOverlay:Sprite;
 		
@@ -109,7 +104,7 @@ package com.ludofactory.mobile
 		 * Any state that is left 'null' will display the up-state texture. Beware that all
 		 * state textures should have the same dimensions.
 		 **/
-		public function FacebookButton(upState:Scale9Textures, text:String = "", downState:Scale9Textures = null, overState:Scale9Textures = null, disabledState:Scale9Textures = null, buttonType:String = ButtonFactory.FACEBOOK_TYPE_CONNECT, publicationData:FacebookPublicationData = null)
+		public function FacebookButton(upState:Texture, text:String = "", downState:Texture = null, overState:Texture = null, disabledState:Texture = null, buttonType:String = ButtonFactory.FACEBOOK_TYPE_CONNECT, publicationData:FacebookPublicationData = null)
 		{
 			if (upState == null) throw new ArgumentError("Texture 'upState' cannot be null");
 			
@@ -123,15 +118,16 @@ package com.ludofactory.mobile
 			
 			mState = ButtonState.UP;
 			
-			mBody = new Scale9Image(upState);
-			mBody.useSeparateBatch = false;
+			mBody = new Image(upState);
+			mBody.scale = GlobalConfig.dpiScale;
+			mBody.scale9Grid = new Rectangle(32, 32, 24, 24);
 			mScaleWhenDown = downState ? 1.0 : 0.9;
 			mAlphaWhenDisabled = disabledState ? 1.0: 0.5;
 			
 			//scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 148) : 128)
-			mTextField = new TextField(5, 5, text, Theme.FONT_SANSITA, scaleAndRoundToDpi(40));
-			mTextField.vAlign = VAlign.CENTER;
-			mTextField.hAlign = HAlign.CENTER;
+			mTextField = new TextField(5, 5, text, new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40)));
+			mTextField.format.verticalAlign = Align.CENTER;
+			mTextField.format.horizontalAlign = Align.CENTER;
 			mTextField.touchable = false;
 			mTextField.batchable = true;
 			mTextField.wordWrap = false;
@@ -209,10 +205,10 @@ package com.ludofactory.mobile
 			{
 				_incentive.scaleX = _incentive.scaleY = GlobalConfig.dpiScale;
 				
-				_incentiveLabel = new TextField(scaleAndRoundToDpi(48), scaleAndRoundToDpi(34), ("+" + stakeValue), Theme.FONT_SANSITA, scaleAndRoundToDpi(22), 0xffffff);
+				_incentiveLabel = new TextField(scaleAndRoundToDpi(48), scaleAndRoundToDpi(34), ("+" + stakeValue), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(22), 0xffffff));
 				_incentiveLabel.autoScale = true;
-				_incentiveLabel.nativeFilters = [ new GlowFilter(0xa00000, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
-					new DropShadowFilter(2, 75, 0xa00000, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
+				//_incentiveLabel.nativeFilters = [ new GlowFilter(0xa00000, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
+				//	new DropShadowFilter(2, 75, 0xa00000, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
 			}
 		}
 		
@@ -228,11 +224,9 @@ package com.ludofactory.mobile
 			_icon.y = roundUp(((mTextField.height + (_padding * 2)) - _icon.height) * 0.5);
 			
 			//log("zob = " + mTextField.width + " - " + _padding)
-			mBody.validate();
 			mBody.width = _icon.width + mTextField.width + (_incentive ? (_incentive.width * 0.5) : 0) + (_padding * 3);
 			mBody.height = mTextField.height + (_padding * 2);
 			
-			mBody.validate();
 			if(_incentive)
 			{
 				_incentive.x = mBody.width - _incentive.width;
@@ -247,7 +241,7 @@ package com.ludofactory.mobile
 			mTextField.x = _icon.x + _icon.width + _padding;
 			mTextField.y = mBody.y + _padding;
 			mTextField.autoScale = true;
-			mTextField.redraw();
+			mTextField.setRequiresRedraw();
 
 			mBody.width = mBody.width - (_incentive ? (_incentive.width * 0.2) : 0);
 		}
@@ -308,7 +302,7 @@ package com.ludofactory.mobile
 				case ButtonFactory.FACEBOOK_TYPE_CONNECT:
 				{
 					// display the Facebook popup to inform the player of what we will do / grant him
-					NotificationPopupManager.addNotification(new FacebookNotificationContent(), onFacebookPopupClosed);
+					CustomPopupManager.addNotification(new FacebookNotificationContent(), onFacebookPopupClosed);
 					break;
 				}
 					
@@ -330,7 +324,7 @@ package com.ludofactory.mobile
 						// the popup. When the user closes the popup or is authenticated with Facebook, the callback
 						// onFacebookPopupClosed will be called. If the data of the callback is true, it means that the
 						// user is authenticated and that we can automatically launch the publication.
-						NotificationPopupManager.addNotification(new FacebookNotificationContent(_publicationData), onFacebookPopupClosed);
+						CustomPopupManager.addNotification(new FacebookNotificationContent(_publicationData), onFacebookPopupClosed);
 					}
 					else
 					{
@@ -489,9 +483,9 @@ package com.ludofactory.mobile
 			}
 		}
 		
-		private function setStateTexture(texture:Scale9Textures):void
+		private function setStateTexture(texture:Texture):void
 		{
-			mBody.textures = texture ? texture : _upTextures;
+			mBody.texture = texture ? texture : _upTextures;
 		}
 		
 		
@@ -587,7 +581,7 @@ package com.ludofactory.mobile
 		 */
 		public function set nativeFilters(value:Array):void
 		{
-			mTextField.nativeFilters = value;
+			//mTextField.nativeFilters = value;
 		}
 		
 		private var _padding:Number = 20;
@@ -595,7 +589,7 @@ package com.ludofactory.mobile
 		{
 			_padding = value;
 			
-			if(mBody is FeathersControl) mBody.validate();
+			//if(mBody is FeathersControl) mBody.validate();
 			mTextField.width  = mBody.width - (_padding * 4);
 			mTextField.height = mBody.height - (_padding * 2);
 			mTextField.x = mBody.x + _padding;
@@ -606,8 +600,8 @@ package com.ludofactory.mobile
 //	Get - Set
 		
 		/** The texture that is displayed when the button is not being touched. */
-		public function get upState():Scale9Textures { return _upTextures; }
-		public function set upState(value:Scale9Textures):void
+		public function get upState():Texture { return _upTextures; }
+		public function set upState(value:Texture):void
 		{
 			if (value == null)
 				throw new ArgumentError("Texture 'upState' cannot be null");
@@ -626,8 +620,8 @@ package com.ludofactory.mobile
 		}
 		
 		/** The texture that is displayed while the button is touched. */
-		public function get downState():Scale9Textures { return _downTextures; }
-		public function set downState(value:Scale9Textures):void
+		public function get downState():Texture { return _downTextures; }
+		public function set downState(value:Texture):void
 		{
 			if (_downTextures != value)
 			{
@@ -637,8 +631,8 @@ package com.ludofactory.mobile
 		}
 		
 		/** The texture that is displayed while mouse hovers over the button. */
-		public function get overState():Scale9Textures { return _overTextures; }
-		public function set overState(value:Scale9Textures):void
+		public function get overState():Texture { return _overTextures; }
+		public function set overState(value:Texture):void
 		{
 			if (_overTextures != value)
 			{
@@ -648,8 +642,8 @@ package com.ludofactory.mobile
 		}
 		
 		/** The texture that is displayed when the button is disabled. */
-		public function get disabledState():Scale9Textures { return _disabledTextures; }
-		public function set disabledState(value:Scale9Textures):void
+		public function get disabledState():Texture { return _disabledTextures; }
+		public function set disabledState(value:Texture):void
 		{
 			if (_disabledTextures != value)
 			{
@@ -660,28 +654,28 @@ package com.ludofactory.mobile
 		
 		/** The name of the font displayed on the button. May be a system font or a registered
 		 *  bitmap font. */
-		public function get fontName():String { return mTextField ? mTextField.fontName : "Verdana"; }
-		public function set fontName(value:String):void { mTextField.fontName = value; }
+		public function get fontName():String { return mTextField ? mTextField.format.font : "Verdana"; }
+		public function set fontName(value:String):void { mTextField.format.font = value; }
 		
 		/** The size of the font. */
-		public function get fontSize():Number { return mTextField ? mTextField.fontSize : 12; }
-		public function set fontSize(value:Number):void { mTextField.fontSize = value; }
+		public function get fontSize():Number { return mTextField ? mTextField.format.size : 12; }
+		public function set fontSize(value:Number):void { mTextField.format.size = value; }
 		
 		/** The color of the font. */
-		public function get fontColor():uint { return mTextField ? mTextField.color : 0x0; }
-		public function set fontColor(value:uint):void { mTextField.color = value; }
+		public function get fontColor():uint { return mTextField ? mTextField.format.color : 0x0; }
+		public function set fontColor(value:uint):void { mTextField.format.color = value; }
 		
 		/** Indicates if the font should be bold. */
-		public function get fontBold():Boolean { return mTextField ? mTextField.bold : false; }
-		public function set fontBold(value:Boolean):void { mTextField.bold = value; }
+		public function get fontBold():Boolean { return mTextField ? mTextField.format.bold : false; }
+		public function set fontBold(value:Boolean):void { mTextField.format.bold = value; }
 		
 		/** The vertical alignment of the text on the button. */
-		public function get textVAlign():String { return mTextField ? mTextField.vAlign : VAlign.CENTER; }
-		public function set textVAlign(value:String):void { mTextField.vAlign = value; }
+		public function get textVAlign():String { return mTextField ? mTextField.format.verticalAlign : Align.CENTER; }
+		public function set textVAlign(value:String):void { mTextField.format.verticalAlign = value; }
 		
 		/** The horizontal alignment of the text on the button. */
-		public function get textHAlign():String { return mTextField ? mTextField.hAlign : HAlign.CENTER; }
-		public function set textHAlign(value:String):void { mTextField.hAlign = value; }
+		public function get textHAlign():String { return mTextField ? mTextField.format.horizontalAlign : Align.CENTER; }
+		public function set textHAlign(value:String):void { mTextField.format.horizontalAlign = value; }
 		
 		
 		/** The scale factor of the button on touch. Per default, a button without a down state

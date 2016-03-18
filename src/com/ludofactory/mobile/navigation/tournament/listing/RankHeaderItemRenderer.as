@@ -6,6 +6,7 @@ Created : 14 oct. 2013
 */
 package com.ludofactory.mobile.navigation.tournament.listing
 {
+	
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
@@ -17,8 +18,8 @@ package com.ludofactory.mobile.navigation.tournament.listing
 	import feathers.controls.renderers.IGroupedListHeaderOrFooterRenderer;
 	import feathers.core.FeathersControl;
 	
+	import starling.display.MeshBatch;
 	import starling.display.Quad;
-	import starling.display.QuadBatch;
 	import starling.events.Event;
 	
 	/**
@@ -46,16 +47,16 @@ package com.ludofactory.mobile.navigation.tournament.listing
 		
 		/**
 		 * The background. */		
-		private var _backgroundFirst:QuadBatch;
+		private var _backgroundFirst:MeshBatch;
 		/**
 		 * The background. */		
-		private var _backgroundSecond:QuadBatch;
+		private var _backgroundSecond:MeshBatch;
 		/**
 		 * The background. */		
-		private var _backgroundThird:QuadBatch;
+		private var _backgroundThird:MeshBatch;
 		/**
 		 * The background. */		
-		private var _background:QuadBatch;
+		private var _background:MeshBatch;
 		
 		
 		/**
@@ -101,69 +102,69 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			
 			// Version plusieurs couleurs
 			// background
-			_backgroundFirst = new QuadBatch();
+			_backgroundFirst = new MeshBatch();
 			_backgroundFirst.visible = false;
 			addChild(_backgroundFirst);
 			
 			background = new Quad( this.actualWidth, _itemHeight, 0xffdd00 );
-			_backgroundFirst.addQuad( background );
+			_backgroundFirst.addMesh( background );
 			
 			background.setVertexColor(0, 0xffc313);
 			background.setVertexColor(1, 0xffc313);
 			background.setVertexColor(2, 0xffdd00);
 			background.setVertexColor(3, 0xffdd00);
-			_backgroundFirst.addQuad( background );
+			_backgroundFirst.addMesh( background );
 			
 			// second
-			_backgroundSecond = new QuadBatch();
+			_backgroundSecond = new MeshBatch();
 			_backgroundSecond.visible = false;
 			addChild(_backgroundSecond);
 			
 			background = new Quad( this.actualWidth, _itemHeight, 0xffdd00 );
-			_backgroundSecond.addQuad( background );
+			_backgroundSecond.addMesh( background );
 			
 			background.setVertexColor(0, 0x7e7e7e);
 			background.setVertexColor(1, 0x7e7e7e);
 			background.setVertexColor(2, 0xdbdbdb);
 			background.setVertexColor(3, 0xdbdbdb);
-			_backgroundSecond.addQuad( background );
+			_backgroundSecond.addMesh( background );
 			
 			// third
-			_backgroundThird = new QuadBatch();
+			_backgroundThird = new MeshBatch();
 			_backgroundThird.visible = false;
 			addChild(_backgroundThird);
 			
 			background = new Quad( this.actualWidth, _itemHeight, 0xffdd00 );
-			_backgroundThird.addQuad( background );
+			_backgroundThird.addMesh( background );
 			
 			background.setVertexColor(0, 0xa74b2a);
 			background.setVertexColor(1, 0xa74b2a);
 			background.setVertexColor(2, 0xde846d);
 			background.setVertexColor(3, 0xde846d);
-			_backgroundThird.addQuad( background );
+			_backgroundThird.addMesh( background );
 			
 			// common
-			_background = new QuadBatch();
+			_background = new MeshBatch();
 			_background.visible = false;
 			addChild(_background);
 			
 			background = new Quad( this.actualWidth, _itemHeight, 0xffdd00 );
-			_background.addQuad( background );
+			_background.addMesh( background );
 			
 			background.setVertexColor(0, 0x01c6f5);
 			background.setVertexColor(1, 0x01c6f5);
 			background.setVertexColor(2, 0xb6f1ff);
 			background.setVertexColor(3, 0xb6f1ff);
-			_background.addQuad( background );
+			_background.addMesh( background );
 			
 			// common stroke
 			background.color = 0xbfbfbf;
 			background.height = _strokeThickness;
 			background.y = _itemHeight - _strokeThickness;
-			_backgroundFirst.addQuad( background );
-			_backgroundSecond.addQuad( background );
-			_backgroundThird.addQuad( background );
-			_background.addQuad( background );
+			_backgroundFirst.addMesh( background );
+			_backgroundSecond.addMesh( background );
+			_backgroundThird.addMesh( background );
+			_background.addMesh( background );
 			
 			// we don't need this anymore
 			background.dispose();
@@ -176,7 +177,7 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			
 			_medal = new ImageLoader();
 			//_medal.scaleX = _medal.scaleY = GlobalConfig.dpiScalez;
-			_medal.snapToPixels = true;
+			_medal.pixelSnapping = true;
 			addChild(_medal);
 		}
 		
@@ -376,6 +377,18 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			this.invalidate(INVALIDATION_FLAG_DATA);
 		}
 		
+		protected var _factoryID:String;
+		
+		public function get factoryID():String
+		{
+			return this._factoryID;
+		}
+		
+		public function set factoryID(value:String):void
+		{
+			this._factoryID = value;
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 //------------------------------------------------------------------------------------------------------------
@@ -387,7 +400,7 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			_title.removeFromParent(true);
 			_title = null;
 			
-			_background.reset();
+			_background.clear();
 			_background.removeFromParent(true);
 			_background = null;
 			

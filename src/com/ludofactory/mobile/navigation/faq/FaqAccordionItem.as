@@ -11,7 +11,7 @@ package com.ludofactory.mobile.navigation.faq
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.FaqNotificationContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -24,6 +24,8 @@ package com.ludofactory.mobile.navigation.faq
 	import feathers.layout.VerticalLayout;
 	
 	import flash.text.TextFormat;
+	
+	import starling.display.MeshBatch;
 	
 	import starling.display.Quad;
 	import starling.display.QuadBatch;
@@ -39,7 +41,7 @@ package com.ludofactory.mobile.navigation.faq
 		
 		/**
 		 * The header. */		
-		private var _headerBackground:QuadBatch;
+		private var _headerBackground:MeshBatch;
 		
 		/**
 		 * The header title. */		
@@ -75,15 +77,15 @@ package com.ludofactory.mobile.navigation.faq
 			_headerContainer.addEventListener(TouchEvent.TOUCH, expandOrCollapseContent);
 			addChild(_headerContainer);
 			
-			_headerBackground = _headerBackground = new QuadBatch();
+			_headerBackground = _headerBackground = new MeshBatch();
 			_headerContainer.addChild(_headerBackground);
 			
 			var quad:Quad = new Quad(50, scaleAndRoundToDpi(84), 0xffffff);
-			_headerBackground.addQuad( quad );
+			_headerBackground.addMesh( quad );
 			quad.height = scaleAndRoundToDpi(2);
 			quad.color = 0xbfbfbf;
 			quad.y = scaleAndRoundToDpi(82);
-			_headerBackground.addQuad( quad );
+			_headerBackground.addMesh( quad );
 			
 			headerHeight = scaleAndRoundToDpi(84);
 			
@@ -97,7 +99,7 @@ package com.ludofactory.mobile.navigation.faq
 			_arrow = new ImageLoader();
 			_arrow.source = AbstractEntryPoint.assets.getTexture("arrow_down");
 			_arrow.scaleX = _arrow.scaleY = GlobalConfig.dpiScale;
-			_arrow.snapToPixels = true;
+			_arrow.pixelSnapping = true;
 			_headerContainer.addChild(_arrow);
 			
 			_contentContainer = new ScrollContainer();
@@ -164,7 +166,7 @@ package com.ludofactory.mobile.navigation.faq
 			if( _touchPointID != -1 )
 			{
 				//NotificationManager.addNotification( new FaqNotification(FaqQuestionAnswerData(event.data)) );
-				NotificationPopupManager.addNotification( new FaqNotificationContent(FaqQuestionAnswerData(event.data)) );
+				CustomPopupManager.addNotification( new FaqNotificationContent(FaqQuestionAnswerData(event.data)) );
 			}
 		}
 		
@@ -176,7 +178,7 @@ package com.ludofactory.mobile.navigation.faq
 		{
 			_headerContainer.removeEventListener(TouchEvent.TOUCH, expandOrCollapseContent);
 			
-			_headerBackground.reset();
+			_headerBackground.clear();
 			_headerBackground.removeFromParent(true);
 			_headerBackground = null;
 			

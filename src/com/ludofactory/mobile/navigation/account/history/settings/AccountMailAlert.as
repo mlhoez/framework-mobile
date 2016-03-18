@@ -6,19 +6,20 @@ Created : 24 sept. 2013
 */
 package com.ludofactory.mobile.navigation.account.history.settings
 {
+	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import flash.text.TextFormat;
-	
 	import feathers.controls.Label;
 	import feathers.core.FeathersControl;
 	
+	import flash.text.TextFormat;
+	
 	import starling.display.Image;
+	import starling.display.MeshBatch;
 	import starling.display.Quad;
-	import starling.display.QuadBatch;
 	
 	/**
 	 * Alert displayed at the top of the CSThreadScreen when a message have
@@ -43,7 +44,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 		
 		/**
 		 * The background. */		
-		private var _background:QuadBatch;
+		private var _background:MeshBatch;
 		
 		/**
 		 * The message to display. */		
@@ -163,18 +164,18 @@ package com.ludofactory.mobile.navigation.account.history.settings
 		
 		private function createBackground():void
 		{
-			_background = new QuadBatch();
+			_background = new MeshBatch();
 			addChildAt(_background, 0);
 			
 			var quad:Quad = new Quad(this.actualWidth, this.actualHeight, _success ? COLOR_SUCCESS_STROKE:COLOR_FAILURE_STROKE);
-			_background.addQuad(quad);
+			_background.addMesh(quad);
 			
 			quad.width = this.actualWidth - scaleAndRoundToDpi(4);
 			quad.height = this.actualHeight - scaleAndRoundToDpi(4);
 			quad.x = scaleAndRoundToDpi(2);
 			quad.y = scaleAndRoundToDpi(2);
 			quad.color = _success ? COLOR_SUCCESS:COLOR_FAILURE;
-			_background.addQuad(quad);
+			_background.addMesh(quad);
 			
 			quad.color = _success ? COLOR_SUCCESS_SHADOW:COLOR_FAILURE_SHADOW;
 			quad.width = scaleAndRoundToDpi(5);
@@ -182,14 +183,14 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			quad.setVertexAlpha(1, 0);
 			quad.setVertexAlpha(2, 1);
 			quad.setVertexAlpha(3, 0);
-			_background.addQuad(quad);
+			_background.addMesh(quad);
 			
 			quad.x = this.actualWidth - scaleAndRoundToDpi(2) - quad.width;
 			quad.setVertexAlpha(0, 0);
 			quad.setVertexAlpha(1, 1);
 			quad.setVertexAlpha(2, 0);
 			quad.setVertexAlpha(3, 1);
-			_background.addQuad(quad);
+			_background.addMesh(quad);
 			
 			quad.x = scaleAndRoundToDpi(2);
 			quad.width = this.actualWidth - scaleAndRoundToDpi(4);
@@ -199,14 +200,14 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			quad.setVertexAlpha(1, 1);
 			quad.setVertexAlpha(2, 0);
 			quad.setVertexAlpha(3, 0);
-			_background.addQuad(quad);
+			_background.addMesh(quad);
 			
 			quad.y = this.actualHeight - scaleAndRoundToDpi(2) - quad.height;
 			quad.setVertexAlpha(0, 0);
 			quad.setVertexAlpha(1, 0);
 			quad.setVertexAlpha(2, 1);
 			quad.setVertexAlpha(3, 1);
-			_background.addQuad(quad);
+			_background.addMesh(quad);
 			
 			quad.dispose();
 			quad = null;
@@ -220,7 +221,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 		{
 			if( _background )
 			{
-				_background.reset();
+				_background.clear();
 				_background.removeFromParent(true);
 				_background = null;
 			}

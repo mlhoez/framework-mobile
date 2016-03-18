@@ -33,6 +33,7 @@ package com.ludofactory.mobile.core.pause
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
+	import starling.text.TextFormat;
 	
 	public class PauseView extends FeathersControl
 	{
@@ -69,7 +70,7 @@ package com.ludofactory.mobile.core.pause
 			_overlay.visible = false;
 			addChild(_overlay);
 			
-			_title = new TextField(5, 5, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(34), Theme.COLOR_WHITE);
+			_title = new TextField(5, 5, "", new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(34), Theme.COLOR_WHITE));
 			_title.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
 			_title.alpha = 0;
 			_title.visible = false;

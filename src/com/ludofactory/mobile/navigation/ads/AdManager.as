@@ -9,7 +9,9 @@ package com.ludofactory.mobile.navigation.ads
 	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.logs.log;
+	import com.ludofactory.common.utils.logs.logError;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.TimerManager;
 	import com.milkmangames.nativeextensions.AdMob;
 	import com.milkmangames.nativeextensions.AdMobAdType;
@@ -21,6 +23,9 @@ package com.ludofactory.mobile.navigation.ads
 	import com.milkmangames.nativeextensions.ios.IAdContentSize;
 	import com.milkmangames.nativeextensions.ios.events.IAdErrorEvent;
 	import com.milkmangames.nativeextensions.ios.events.IAdEvent;
+	import com.vidcoin.extension.ane.VidCoinController;
+	
+	import flash.utils.Dictionary;
 	
 	/**
 	 * This is the main ad manager. It handles both iAd and AdMob networks so that both
@@ -47,6 +52,10 @@ package com.ludofactory.mobile.navigation.ads
 		
 		private static var _timeriAd:TimerManager;
 		private static var _timerAdMob:TimerManager;
+		
+		/**
+		 * VidCoin. */
+		private static var _vidCoin:VidCoinController;
 		
 		/**
 		 * Initializes both iAd and adMob ad networks.
@@ -118,6 +127,38 @@ package com.ludofactory.mobile.navigation.ads
 				
 
 				_adMobAvailable = true;
+			}
+			
+			// initialize VidCoin
+			try
+			{
+				_vidCoin = new VidCoinController();
+				_vidCoin.startWithGameId(AbstractGameInfo.VID_COIN_GAME_ID);
+				_vidCoin.setLoggingEnabled(CONFIG::DEBUG);
+				if( MemberManager.getInstance().isLoggedIn() )
+				{
+					var dict:Dictionary = new Dictionary();
+					dict[VidCoinController.kVCUserGameID] = MemberManager.getInstance().id;
+					dict[VidCoinController.kVCUserBirthYear] = MemberManager.getInstance().birthDate.split("-")[0];
+					dict[VidCoinController.kVCUserGenderKey]= MemberManager.getInstance().title == "Mr." ? VidCoinController.kVCUserGenderMale : VidCoinController.kVCUserGenderFemale;
+					_vidCoin.updateUserDictionary(dict);
+				}
+			}
+			catch(error:Error)
+			{
+				logError("Erreur lors de l'intialisation de VidCoin.")
+			}
+		}
+		
+		public static function updateVidCoinData():void
+		{
+			if( _vidCoin )
+			{
+				var dict:Dictionary = new Dictionary();
+				dict[VidCoinController.kVCUserGameID] = MemberManager.getInstance().id;
+				dict[VidCoinController.kVCUserBirthYear] = MemberManager.getInstance().birthDate.split("-")[0];
+				dict[VidCoinController.kVCUserGenderKey]= MemberManager.getInstance().title == "Mr." ? VidCoinController.kVCUserGenderMale : VidCoinController.kVCUserGenderFemale;
+				_vidCoin.updateUserDictionary(dict);
 			}
 		}
 		

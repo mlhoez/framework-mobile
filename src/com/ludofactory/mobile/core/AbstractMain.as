@@ -7,7 +7,6 @@ Created : 29 Mars 2013
 package com.ludofactory.mobile.core
 {
 	
-	import com.gamua.flox.Flox;
 	import com.ludofactory.ane.DeviceUtils;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.sound.SoundManager;
@@ -20,9 +19,9 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.debug.TouchMarkerManager;
+	import com.ludofactory.newClasses.Analytics;
 	import com.mesmotronic.ane.AndroidFullScreen;
 	import com.milkmangames.nativeextensions.CoreMobile;
-	import com.milkmangames.nativeextensions.GAnalytics;
 	
 	import feathers.system.DeviceCapabilities;
 	
@@ -56,8 +55,7 @@ package com.ludofactory.mobile.core
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 	import starling.textures.Texture;
-	import starling.utils.HAlign;
-	import starling.utils.VAlign;
+	import starling.utils.Align;
 	
 	// don't forget to add this in the subclasses :
 	// [SWF(frameRate="60", backgroundColor="#000000")]
@@ -282,12 +280,8 @@ package com.ludofactory.mobile.core
 		{
 			loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onUncaughtError);
 			
-			Flox.init(AbstractGameInfo.FLOX_ID, AbstractGameInfo.FLOX_KEY, AbstractGameInfo.GAME_VERSION);
-			Flox.traceLogs = false;
-			
 			// launch Starling
 			Starling.multitouchEnabled = false;  // useful on mobile devices
-			Starling.handleLostContext = true; //!GlobalConfig.ios;  // not necessary on iOS. Saves a lot of memory! // FIXME Fait buguer vid coin sur ipad voir si ça vient pas du UI qq chose aussi (statusbar visible en haut)
 			_starling = new Starling(_rootClass, stage, null, null, "auto", "auto");
 			_starling.enableErrorChecking = CONFIG::DEBUG;
 			_starling.simulateMultitouch  = false;
@@ -296,7 +290,7 @@ package com.ludofactory.mobile.core
 			if(CONFIG::DEBUG)
 			{
 				_starling.showStats = true;
-				_starling.showStatsAt(HAlign.LEFT, VAlign.TOP);
+				_starling.showStatsAt(Align.LEFT, Align.TOP);
 			}
 			
 			stage.addEventListener(flash.events.Event.RESIZE, onResize, false, int.MAX_VALUE, true);
@@ -340,7 +334,7 @@ package com.ludofactory.mobile.core
 			
 			NativeApplication.nativeApplication.addEventListener(flash.events.Event.DEACTIVATE, onPause, false, 0, true);
 		}
-		
+
 		/**
 		 * Good when the application can change the orientation, otherwise, this function is called
 		 * only once when the application is starting.
@@ -356,8 +350,8 @@ package com.ludofactory.mobile.core
 			try
 			{
 				this._starling.viewPort = viewPort;
-				if(_starling.root)
-					(_starling.root as AbstractEntryPoint).onResize();
+				//if(_starling.root)
+				//	(_starling.root as AbstractEntryPoint).onResize();
 			}
 			catch(error:Error) {}
 			
@@ -370,7 +364,7 @@ package com.ludofactory.mobile.core
 			}
 			
 			if(CONFIG::DEBUG)
-				this._starling.showStatsAt(HAlign.LEFT, VAlign.TOP);
+				this._starling.showStatsAt(Align.LEFT, Align.TOP);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -394,10 +388,8 @@ package com.ludofactory.mobile.core
 		 */		
 		private function onPause(event:flash.events.Event):void
 		{
-			Flox.flushLocalData();
-			
-			if( AbstractEntryPoint.pushManager )
-				CoreMobile.mobile.setNotificationBadgeNumber(AbstractEntryPoint.numAlerts);
+			//if( AbstractEntryPoint.pushManager )
+			//	CoreMobile.mobile.setNotificationBadgeNumber(AbstractEntryPoint.numAlerts); // TODO a gérer si besoin
 			PauseManager.pause();
 			NativeApplication.nativeApplication.addEventListener(flash.events.Event.ACTIVATE, onResume, false, 0, true);
 			
@@ -460,9 +452,8 @@ package com.ludofactory.mobile.core
 				var stackTrace:String = error.getStackTrace();
 				reportError(error);
 				
-				Flox.logError("<strong>Uncaught error :</strong>", "[{0}] {1}<br><br><strong>Occured at :</strong><br>{2}", Error(event.error).errorID, Error(event.error).message, stackTrace);
-				if( GAnalytics.isSupported() )
-					GAnalytics.analytics.defaultTracker.trackException(stackTrace, false, MemberManager.getInstance());
+				//Flox.logError("<strong>Uncaught error :</strong>", "[{0}] {1}<br><br><strong>Occured at :</strong><br>{2}", Error(event.error).errorID, Error(event.error).message, stackTrace);
+				Analytics.trackError(stackTrace)
 			}
 		}
 		

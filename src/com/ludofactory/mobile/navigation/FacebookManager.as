@@ -238,7 +238,7 @@ package com.ludofactory.mobile.navigation
 						if( !formattedUserData.hasOwnProperty("mail") || formattedUserData.mail == null || formattedUserData.mail == "" )
 						{
 							AbstractEntryPoint.screenNavigator.screenData.tempFacebookData = formattedUserData;
-							InfoManager.hide(_("Nous n'avons pas pu récupérer votre email via Facebook. Merci de compléter l'inscription normalement."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.REGISTER_SCREEN ]);
+							InfoManager.hide(_("Nous n'avons pas pu récupérer votre email via Facebook. Merci de compléter l'inscription normalement."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.replaceScreen, [ ScreenIds.REGISTER_SCREEN ]);
 							return;
 						}
 						
@@ -355,7 +355,7 @@ package com.ludofactory.mobile.navigation
 		/**
 		 * The Amfphp request is complete. This function will check if the user could be
 		 * logged in or registered in the database.
-		 */		
+		 */		 
 		private function onFacebookAssociationSuccess(result:Object):void
 		{
 			switch(result.code)
@@ -465,7 +465,7 @@ package com.ludofactory.mobile.navigation
 						// The user have successfully logged in with his Facebook account but the pseudo field
 						// is missing, thus we redirect the user to the pseudo choice screen
 						AbstractEntryPoint.screenNavigator.screenData.defaultPseudo = result.pseudo_defaut;
-						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.showScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
+						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.replaceScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
 
 						// no event dispatched here because we redirect to the pseudo choixe screen already
 						// if we dispatch an event, the popup will close, redirect to the pseudo choixe screen and

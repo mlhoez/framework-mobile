@@ -11,19 +11,13 @@ package com.ludofactory.mobile.core.storage
 	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.logs.logWarning;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.scoring.ScoreToPointsData;
-	import com.ludofactory.mobile.core.scoring.ScoreToStarsData;
 	import com.ludofactory.mobile.navigation.achievements.TrophyData;
 	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
-	import com.ludofactory.mobile.navigation.cs.CSThemeData;
 	import com.ludofactory.mobile.navigation.faq.FaqData;
 	import com.ludofactory.mobile.navigation.faq.FaqQuestionAnswerData;
 	import com.ludofactory.mobile.navigation.news.NewsData;
 	import com.ludofactory.mobile.navigation.settings.LanguageData;
-	import com.ludofactory.mobile.navigation.vip.VipData;
-	import com.ludofactory.mobile.navigation.vip.VipPrivilegeData;
 	
 	import flash.data.EncryptedLocalStore;
 	import flash.net.SharedObject;
@@ -46,14 +40,9 @@ package com.ludofactory.mobile.core.storage
 			// reset du storage pour récupérer les bonnes valeurs ?
 			
 			registerClassAlias("DictionaryClass", Dictionary);
-			registerClassAlias("ScoreToPointsDataClass", ScoreToPointsData);
-			registerClassAlias("ScoreToStarsDataClass", ScoreToStarsData);
-			registerClassAlias("CSThemeDataClass", CSThemeData);
 			registerClassAlias("TrophyDataClass", TrophyData);
 			registerClassAlias("FaqDataClass", FaqData);
 			registerClassAlias("FaqQuestionAnswerDataClass", FaqQuestionAnswerData);
-			registerClassAlias("VipDataClass", VipData);
-			registerClassAlias("VipPrivilegeDataClass", VipPrivilegeData);
 			registerClassAlias("NewsGameDataClass", NewsData);
 			registerClassAlias("LanguageDataClass", LanguageData);
 			_configurationSharedObject = SharedObject.getLocal( StorageConfig.GLOBAL_CONFIG_SO_NAME );
@@ -122,58 +111,6 @@ package com.ludofactory.mobile.core.storage
 			if( result.hasOwnProperty( "maxIdleTime" ) && result.maxIdleTime != null && result.maxIdleTime > 10000 ) // min 10 sec
 				Storage.getInstance().setProperty(StorageConfig.PROPERTY_IDLE_TIME, Number(result.maxIdleTime));
 			
-			if( result.hasOwnProperty( "correspondance_score" ) && result.correspondance_score != null )
-			{
-				var arr:Array;
-				var row:Object;
-				if( result.correspondance_score.hasOwnProperty( "points" ) && result.correspondance_score.points != null )
-				{
-					// parse points table
-					arr = [];
-					for each(row in result.correspondance_score.points)
-					{
-						row.coef = result.correspondance_score.coef;
-						arr.push( new ScoreToPointsData( row ) );
-					}
-					setProperty(StorageConfig.PROPERTY_POINTS_TABLE, arr);
-					setProperty(StorageConfig.PROPERTY_COEF, result.correspondance_score.coef as Array);
-				}
-				
-				if( result.correspondance_score.hasOwnProperty( "items" ) && result.correspondance_score.items != null )
-				{
-					// parse stars table
-					arr = [];
-					for each(row in result.correspondance_score.items)
-						arr.push( new ScoreToStarsData( row ) );
-					setProperty(StorageConfig.PROPERTY_STARS_TABLE, arr);
-				}
-			}
-			
-			// parse costs to play
-			if( result.hasOwnProperty("participation") && result.participation != null )
-			{
-				if( result.participation.hasOwnProperty("solo") && result.participation.solo != null )
-				{
-					if( result.participation.solo.hasOwnProperty("credits") && result.participation.solo.credits != null )
-						setProperty(StorageConfig.PROPERTY_NUM_CREDITS_IN_FREE_MODE, int(result.participation.solo.credits));
-					
-					if( result.participation.solo.hasOwnProperty("jetons") && result.participation.solo.jetons != null )
-						setProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE, int(result.participation.solo.jetons));
-				}
-				
-				if( result.participation.hasOwnProperty("tournoi") && result.participation.tournoi != null )
-				{
-					if( result.participation.tournoi.hasOwnProperty("credits") && result.participation.tournoi.credits != null )
-						setProperty(StorageConfig.PROPERTY_NUM_CREDITS_IN_TOURNAMENT_MODE, int(result.participation.tournoi.credits));
-					
-					if( result.participation.tournoi.hasOwnProperty("points") && result.participation.tournoi.points != null )
-						setProperty(StorageConfig.PROPERTY_NUM_POINTS_IN_TOURNAMENT_MODE, int(result.participation.tournoi.points));
-					
-					if( result.participation.tournoi.hasOwnProperty("jetons") && result.participation.tournoi.jetons != null )
-						setProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE, int(result.participation.tournoi.jetons));
-				}
-			}
-			
 			// replace the stored trophies : we must replace it and not simply update because we may need to remove
 			// some trophies at some time
 			if( result.hasOwnProperty("tab_trophies") && result.tab_trophies != null )
@@ -224,16 +161,6 @@ package com.ludofactory.mobile.core.storage
 			var faq:Object = Storage.getInstance().getProperty(StorageConfig.PROPERTY_FAQ);
 			faq[LanguageManager.getInstance().lang] = JSON.stringify(data.tabFaq);
 			setProperty(StorageConfig.PROPERTY_FAQ, faq);
-		}
-		
-		/**
-		 * Updates the VIP.
-		 */		
-		public function updateVip(data:Object):void
-		{
-			var vip:Object = Storage.getInstance().getProperty(StorageConfig.PROPERTY_VIP);
-			vip[LanguageManager.getInstance().lang] = JSON.stringify(data.tab_vip as Array);
-			setProperty(StorageConfig.PROPERTY_VIP, vip);
 		}
 		
 		/**
@@ -299,13 +226,7 @@ package com.ludofactory.mobile.core.storage
 		{
 			if( propertyName in _configurationSharedObject.data && _configurationSharedObject.data[propertyName] != null )
 			{
-				// FIXME This is a temporary hack in order to change the value of the number
-				// of tokens required to play in tournament when the rank is equal or greater
-				// than the rank 2 (which is : ...).
-				if( propertyName == StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE && MemberManager.getInstance().rank >= 2)
-					return int(_configurationSharedObject.data[propertyName]) - 10; // -10 jetons si le grade est ok
-				else
-					return _configurationSharedObject.data[propertyName];
+				return _configurationSharedObject.data[propertyName];
 			}
 			else
 			{

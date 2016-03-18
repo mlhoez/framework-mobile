@@ -7,14 +7,15 @@ Created : 7 mai 2014
 */
 package com.ludofactory.common.gettext
 {
-	import com.gamua.flox.Flox;
+	
 	import com.ludofactory.common.utils.logs.log;
+	import com.ludofactory.common.utils.logs.logWarning;
 	
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.utils.Dictionary;
-
+	
 	/**
 	 * Parses the bytes representing a PO file, extracting the metadatas and
 	 * the translations.
@@ -104,7 +105,7 @@ package com.ludofactory.common.gettext
 		} 
 		catch(error:Error) 
 		{
-			Flox.logWarning("Could not parse language file " + error);
+			logWarning("Could not parse language file " + error);
 		}
 		
 		return parsedPOFile;

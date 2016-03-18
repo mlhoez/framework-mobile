@@ -380,18 +380,6 @@ package com.ludofactory.mobile.core.push
 										Remote.getInstance().pushTrophy( PushTrophy(elementToPush).trophyId, onPushSuccess, onPushFailure, onPushFailure, 2 );
 										break;
 									}
-										
-									case PushType.CUSTOMER_SERVICE_NEW_THREAD:
-									{
-										Remote.getInstance().createNewCustomerServiceThread( PushNewCSThread(elementToPush).themeId, null, PushNewCSThread(elementToPush).message, onPushSuccess, onPushFailure, onPushFailure, 2);
-										break;
-									}
-										
-									case PushType.CUSTOMER_SERVICE_NEW_MESSAGE:
-									{
-										Remote.getInstance().createNewMessage( PushNewCSMessage(elementToPush).threadId,PushNewCSMessage(elementToPush).message, onPushSuccess, onPushFailure, onPushFailure, 2 );
-										break;
-									}
 								}
 								break;
 							}

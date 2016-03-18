@@ -6,7 +6,7 @@ Created : 12 nov. 2013
 */
 package com.ludofactory.mobile.navigation.engine
 {
-
+	
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
@@ -21,18 +21,18 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
-
+	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
-
+	
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.events.Event;
-	import starling.utils.formatString;
-
+	import starling.utils.StringUtil;
+	
 	public class FacebookEndScreen extends AdvancedScreen
 	{
 		/**
@@ -95,7 +95,6 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super();
 			
-			_fullScreen = true;
 			_appDarkBackground = true;
 			_canBack = false;
 		}
@@ -178,11 +177,11 @@ package com.ludofactory.mobile.navigation.engine
 			_friendToSwitch = _all[switchId];
 			_me = getMe();
 			
-			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("{0} a dépassé {1} sur le jeu {2}"), _me.friendName, _friendToSwitch.friendName, AbstractGameInfo.GAME_NAME),
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, StringUtil.format(_("{0} a dépassé {1} sur le jeu {2}"), _me.friendName, _friendToSwitch.friendName, AbstractGameInfo.GAME_NAME),
 					"",
-					formatString(_("Avec un score de {0}, je pense devenir rapidement le meilleur sur ce jeu."), _me.currentScore),
+					StringUtil.format(_("Avec un score de {0}, je pense devenir rapidement le meilleur sur ce jeu."), _me.currentScore),
 					_("http://www.ludokado.com/"),
-					formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
+					StringUtil.format(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/pyramid.jpg"), LanguageManager.getInstance().lang));
 			_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 			addChild(_facebookButton);
 		}
@@ -249,7 +248,7 @@ package com.ludofactory.mobile.navigation.engine
 		 */		
 		private function onContinue(event:Event = null):void
 		{
-			advancedOwner.showScreen( this.advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN:ScreenIds.TOURNAMENT_END_SCREEN) );
+			advancedOwner.replaceScreen( this.advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN:ScreenIds.TOURNAMENT_END_SCREEN) );
 		}
 		
 		private function animate():void

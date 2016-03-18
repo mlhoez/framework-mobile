@@ -45,29 +45,10 @@ package com.ludofactory.mobile.core
 			
 //------------------------------------------------------------------------------------------------------------
 //	Tracking and logging
-			
-		/**
-		 * The Flox id.
-		 * 
-		 * @see http://www.flox.cc */		
-		public static var FLOX_ID:String;
-		/**
-		 * The Flox key.
-		 * 
-		 * @see http://www.flox.cc */		
-		public static var FLOX_KEY:String;
 		
 		/**
 		 * The Google Analytics tracker id. */		
 		public static var GOOGLE_ANALYTICS_TRACKER:String;
-		
-		/**
-		 * HasOffers (MobileAppTracking) advertiser id. */		
-		public static var HAS_OFFERS_ADVERTISER_ID:String;
-		
-		/**
-		 * HasOffers (MobileAppTracking) conversion key. */		
-		public static var HAS_OFFERS_CONVERSION_KEY:String;
 			
 //------------------------------------------------------------------------------------------------------------
 //	Google Play and Facebook
@@ -163,8 +144,6 @@ package com.ludofactory.mobile.core
 			
 //------------------------------------------------------------------------------------------------------------
 //	Rules and trophies
-			
-		public static var RULES:Array;
 		
 		public static var CUPS:Array;
 	}

@@ -84,7 +84,7 @@ package com.ludofactory.mobile.core.notification.content
 			
 			_cancelButton = new Button();
 			_cancelButton.label = _("Plus tard...");
-			_cancelButton.styleName = Theme.BUTTON_BLUE;
+			//_cancelButton.styleName = Theme.BUTTON_BLUE;
 			_cancelButton.addEventListener(Event.TRIGGERED, onCancel);
 			addChild(_cancelButton);
 		}
@@ -110,7 +110,7 @@ package com.ludofactory.mobile.core.notification.content
 		
 		private function onCancel(event:Event):void
 		{
-			AbstractEntryPoint.screenNavigator.showScreen( ScreenIds.HOME_SCREEN );
+			AbstractEntryPoint.screenNavigator.replaceScreen( ScreenIds.HOME_SCREEN );
 			close();
 		}
 		

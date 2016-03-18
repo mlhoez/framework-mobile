@@ -188,10 +188,6 @@ package com.ludofactory.mobile.core.manager
 		 * the user creates an account et simply log in. */
 		private var _anonymousGameSessionsAlreadyUsed:Boolean = false;
 		
-		/**
-		 * User avatar configuration. */
-		private var _avatarConfig:Object = { idGender:0 };
-		
 		public function Member() { }
 		
 		/**
@@ -222,7 +218,6 @@ package com.ludofactory.mobile.core.manager
 			if( "isAdmin" in memberData && memberData.isAdmin != null )                         _isAdmin = Boolean(memberData.isAdmin);
 			if( "displayInterstitial" in memberData && memberData.displayInterstitial != null ) _canDisplayInterstitial = Boolean(memberData.displayInterstitial);
 			if( "canHaveRewardAfterPublish" in memberData && memberData.canHaveRewardAfterPublish != null ) _canHaveRewardAfterPublish = Boolean(memberData.canHaveRewardAfterPublish);
-			if( "avatarConfiguration" in memberData && memberData.avatarConfiguration != null ) _avatarConfig = memberData.avatarConfiguration; // raw object
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
 		
@@ -344,9 +339,6 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get anonymousGameSessionsAlreadyUsed():Boolean { return _anonymousGameSessionsAlreadyUsed; }
 		public function set anonymousGameSessionsAlreadyUsed(val:Boolean):void { _anonymousGameSessionsAlreadyUsed = val; }
-		
-		public function get avatarConfig():Object { return _avatarConfig; }
-		public function set avatarConfig(value:Object):void { _avatarConfig = value; }
 		
 	}
 }

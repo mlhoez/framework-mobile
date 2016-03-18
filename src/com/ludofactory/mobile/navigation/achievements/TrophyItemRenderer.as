@@ -21,12 +21,12 @@ package com.ludofactory.mobile.navigation.achievements
 	import feathers.core.FeathersControl;
 	
 	import starling.display.Image;
+	import starling.display.MeshBatch;
 	import starling.display.Quad;
-	import starling.display.QuadBatch;
 	import starling.events.Event;
 	import starling.text.TextField;
-	import starling.utils.HAlign;
-	import starling.utils.VAlign;
+	import starling.text.TextFormat;
+	import starling.utils.Align;
 	import starling.utils.deg2rad;
 	
 	/**
@@ -41,7 +41,7 @@ package com.ludofactory.mobile.navigation.achievements
 		
 		/**
 		 * The base height of a line in the list. */		
-		private static const BASE_HEIGHT:int = 170;
+		private static const BASE_HEIGHT:int = 130;
 		/**
 		 * The scaled item height. */		
 		private var _itemHeight:Number;
@@ -57,7 +57,7 @@ package com.ludofactory.mobile.navigation.achievements
 		
 		/**
 		 * The background. */
-		private var _background:QuadBatch;
+		private var _background:MeshBatch;
 		/**
 		 * The bottom stripe only displayed in the last item renderer. */
 		private var _bottomStripe:Quad;
@@ -70,7 +70,7 @@ package com.ludofactory.mobile.navigation.achievements
 		private var _description:TextField;
 		/**
 		 * The reward of the trophy. */		
-		private var _reward:TextField;
+		//private var _reward:TextField;
 		
 		/**
 		 * The gradient displayed when the trophy is owned. */		
@@ -113,7 +113,7 @@ package com.ludofactory.mobile.navigation.achievements
 			
 			buildBackground();
 			
-			_obtainedGradient = new Quad(scaleAndRoundToDpi(186), _itemHeight, 0xff0000);
+			_obtainedGradient = new Quad(scaleAndRoundToDpi(130), _itemHeight, 0xff0000);
 			addChild(_obtainedGradient);
 			
 			_highlights = new Image(Theme.trophyHighlightTexture);
@@ -126,59 +126,59 @@ package com.ludofactory.mobile.navigation.achievements
 			_bottomStripe.visible = false;
 			addChild(_bottomStripe);
 			
-			_title = new TextField(5, 5, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(28), 0xffffff, true);
+			_title = new TextField(5, 5, "", new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(28), 0xffffff));
 			_title.autoScale = true;
-			_title.vAlign = VAlign.CENTER;
-			_title.hAlign = HAlign.LEFT;
+			_title.format.verticalAlign = Align.CENTER;
+			_title.format.horizontalAlign = Align.LEFT;
 			addChild(_title);
 			
-			_description = new TextField(5, 5, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_LIGHT_GREY, false);
-			_description.italic = true;
+			_description = new TextField(5, 5, "", new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_LIGHT_GREY));
+			_description.format.italic = true;
 			_description.autoScale = true;
-			_description.vAlign = VAlign.CENTER;
-			_description.hAlign = HAlign.LEFT;
+			_description.format.verticalAlign = Align.CENTER;
+			_description.format.horizontalAlign = Align.LEFT;
 			addChild(_description);
 			
-			_reward = new TextField(5, 5, "", Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_LIGHT_GREY, true);
-			_reward.italic = true;
+			/*_reward = new TextField(5, 5, "", new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_LIGHT_GREY));
+			_reward.format.italic = true;
 			_reward.autoScale = true;
-			_reward.vAlign = VAlign.CENTER;
-			_reward.hAlign = HAlign.LEFT;
-			addChild(_reward);
+			_reward.format.verticalAlign = Align.CENTER;
+			_reward.format.horizontalAlign = Align.LEFT;
+			addChild(_reward);*/
 			
 			_ownedLabelImage = new Image(Theme.trophyOwnedTexture);
 			_ownedLabelImage.scaleX = _ownedLabelImage.scaleY = GlobalConfig.dpiScale;
 			addChild(_ownedLabelImage);
 			
 			_trophyImage = new ImageLoader();
-			_trophyImage.snapToPixels = true;
+			_trophyImage.pixelSnapping = true;
 			addChild(_trophyImage);
 			
-			_ownedLabel = new TextField(_ownedLabelImage.width - scaleAndRoundToDpi(20), scaleAndRoundToDpi(40), "", Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_WHITE, true);
+			_ownedLabel = new TextField(_ownedLabelImage.width - scaleAndRoundToDpi(20), scaleAndRoundToDpi(40), "", new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(28), Theme.COLOR_WHITE));
 			_ownedLabel.autoScale = true;
-			_ownedLabel.vAlign = VAlign.CENTER;
+			_ownedLabel.format.verticalAlign = Align.CENTER;
 			_ownedLabel.text = _("Obtenue");
 			// wordwrap = false ?
 			addChild(_ownedLabel);
-			_ownedLabel.alignPivot(HAlign.LEFT, VAlign.BOTTOM);
+			_ownedLabel.alignPivot(Align.LEFT, Align.BOTTOM);
 			_ownedLabel.rotation = deg2rad(30);
 		}
 		
 		private function buildBackground():void
 		{
-			_background = new QuadBatch();
+			_background = new MeshBatch();
 			addChild(_background);
 			addChild(_background);
 			
 			// white background
 			var helperQuad:Quad;
 			helperQuad = new Quad(GlobalConfig.stageWidth, _itemHeight);
-			_background.addQuad(helperQuad);
+			_background.addMesh(helperQuad);
 			
 			// top stripe
 			helperQuad.color = 0xbfbfbf;
 			helperQuad.height = _strokeThickness;
-			_background.addQuad(helperQuad);
+			_background.addMesh(helperQuad);
 			
 			// title background
 			helperQuad.width = GlobalConfig.stageWidth;
@@ -188,7 +188,7 @@ package com.ludofactory.mobile.navigation.achievements
 			helperQuad.setVertexColor(1, 0x4d4d4d);
 			helperQuad.setVertexColor(2, 0x292929);
 			helperQuad.setVertexColor(3, 0x4d4d4d);
-			_background.addQuad(helperQuad);
+			_background.addMesh(helperQuad);
 			
 		}
 		
@@ -238,11 +238,11 @@ package com.ludofactory.mobile.navigation.achievements
 			{
 				if( _data )
 				{
-					_title.visible = _description.visible = _reward.visible = true;
+					_title.visible = _description.visible = /*_reward.visible =*/ true;
 					
 					_title.text = _d(Domains.GAME, _data.title);
 					_description.text = _d(Domains.GAME, _data.description);
-					_reward.text = _d(Domains.GAME, _data.reward);
+					//_reward.text = _d(Domains.GAME, _data.reward);
 					_trophyImage.source = _data.textureName.indexOf("http") >= 0 ? _data.textureName : AbstractEntryPoint.assets.getTexture(_data.textureName);
 					
 					// not owned
@@ -268,7 +268,7 @@ package com.ludofactory.mobile.navigation.achievements
 						_obtainedGradient.setVertexColor(2, 0x919191);
 						_obtainedGradient.setVertexColor(3, 0x919191);
 						
-						_reward.color = Theme.COLOR_ORANGE;
+						//_reward.format.color = Theme.COLOR_ORANGE;
 					}
 					else
 					{
@@ -284,17 +284,17 @@ package com.ludofactory.mobile.navigation.achievements
 						_obtainedGradient.setVertexColor(2, 0x2a6514);
 						_obtainedGradient.setVertexColor(3, 0x2a6514);
 						
-						_reward.color = Theme.COLOR_LIGHT_GREY;
+						//_reward.format.color = Theme.COLOR_LIGHT_GREY;
 					}
 				}
 				else
 				{
-					_title.text = _description.text = _reward.text = "";
+					_title.text = _description.text = /*_reward.text =*/ "";
 				}
 			}
 			else
 			{
-				_title.visible = _description.visible = _reward.visible = false;
+				_title.visible = _description.visible = /*_reward.visible =*/ false;
 			}
 		}
 		
@@ -318,15 +318,15 @@ package com.ludofactory.mobile.navigation.achievements
 			_title.width = this.actualWidth - _obtainedGradient.width - _padding * 2;
 			_title.height = _titleHeight;
 			
-			_reward.x = _obtainedGradient.width + _padding;
+			/*_reward.x = _obtainedGradient.width + _padding;
 			_reward.y = actualHeight - _strokeThickness - _titleHeight;
 			_reward.width = this.actualWidth - _obtainedGradient.width - _padding * 2;
-			_reward.height = _titleHeight;
+			_reward.height = _titleHeight;*/
 			
 			_description.x = _obtainedGradient.width + _padding;
 			_description.y = _title.y + _titleHeight;
 			_description.width = this.actualWidth - _obtainedGradient.width - _padding * 2;
-			_description.height = _reward.y - _description.y;
+			_description.height = this.actualHeight - _description.y;
 			
 			_ownedLabelImage.x = this.actualWidth - _ownedLabelImage.width;
 			
@@ -407,12 +407,24 @@ package com.ludofactory.mobile.navigation.achievements
 			this.dispatchEventWith(Event.CHANGE);
 		}
 		
+		protected var _factoryID:String;
+		
+		public function get factoryID():String
+		{
+			return this._factoryID;
+		}
+		
+		public function set factoryID(value:String):void
+		{
+			this._factoryID = value;
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
 		override public function dispose():void
 		{
-			_background.reset();
+			_background.clear();
 			_background.removeFromParent(true);
 			_background = null;
 			
@@ -425,8 +437,8 @@ package com.ludofactory.mobile.navigation.achievements
 			_description.removeFromParent(true);
 			_description = null;
 			
-			_reward.removeFromParent(true);
-			_reward = null;
+			/*_reward.removeFromParent(true);
+			_reward = null;*/
 			
 			_obtainedGradient.removeFromParent(true);
 			_obtainedGradient = null;

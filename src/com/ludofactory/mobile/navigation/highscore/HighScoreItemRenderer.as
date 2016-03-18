@@ -6,7 +6,7 @@ Created : 18 sept. 2013
 */
 package com.ludofactory.mobile.navigation.highscore
 {
-
+	
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
@@ -18,27 +18,25 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.navigation.FacebookManager;
-	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
-
+	
 	import feathers.controls.Callout;
 	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
-
+	
 	import flash.geom.Point;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
+	import starling.display.MeshBatch;
 	import starling.display.Quad;
-	import starling.display.QuadBatch;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	import starling.utils.formatString;
-
+	import starling.utils.StringUtil;
+	
 	public class HighScoreItemRenderer extends FeathersControl implements IListItemRenderer
 	{
 		private static const HELPER_POINT:Point = new Point();
@@ -79,10 +77,10 @@ package com.ludofactory.mobile.navigation.highscore
 		
 		/**
 		 * The idle background. */		
-		private var _idleBackground:QuadBatch;
+		private var _idleBackground:MeshBatch;
 		/**
 		 * 	The selected background. */		
-		private var _selectedBackground:QuadBatch;
+		private var _selectedBackground:MeshBatch;
 		
 		/**
 		 * The rank label. */		
@@ -123,31 +121,31 @@ package com.ludofactory.mobile.navigation.highscore
 				_normalTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0x353535, false, false, null, null, null, TextFormatAlign.CENTER);
 			
 			// idle
-			_idleBackground = new QuadBatch();
+			_idleBackground = new MeshBatch();
 			const background:Quad = new Quad( this.actualWidth, _itemHeight, 0xfbfbfb );
-			_idleBackground.addQuad( background );
+			_idleBackground.addMesh( background );
 			background.x = _sideWidth;
 			background.width = _middleWidth;
 			background.color = 0xeeeeee;
-			_idleBackground.addQuad( background );
+			_idleBackground.addMesh( background );
 			background.x = 0;
 			background.y = _itemHeight - _strokeThickness;
 			background.width  = _sideWidth * 2 + _middleWidth;
 			background.height = _strokeThickness;
 			background.color  = 0xbfbfbf;
-			_idleBackground.addQuad( background );
+			_idleBackground.addMesh( background );
 			addChild( _idleBackground );
 			
 			// selected
-			_selectedBackground = new QuadBatch();
+			_selectedBackground = new MeshBatch();
 			background.y = 0;
 			background.color = 0xffd800;
 			background.height = _itemHeight;
-			_selectedBackground.addQuad( background );
+			_selectedBackground.addMesh( background );
 			background.x = _sideWidth;
 			background.width = _middleWidth;
 			background.color = 0xffb400;
-			_selectedBackground.addQuad( background );
+			_selectedBackground.addMesh( background );
 			addChild( _selectedBackground );
 			
 			// labels
@@ -262,11 +260,11 @@ package com.ludofactory.mobile.navigation.highscore
 			{
 				if(!_facebookButton)
 				{
-					_facebookButton = ButtonFactory.getFacebookButton(_("Partager mon score !"), ButtonFactory.FACEBOOK_TYPE_SHARE, formatString(_("Qui sera capable de me battre sur {0} ?"), AbstractGameInfo.GAME_NAME),
+					_facebookButton = ButtonFactory.getFacebookButton(_("Partager mon score !"), ButtonFactory.FACEBOOK_TYPE_SHARE, StringUtil.format(_("Qui sera capable de me battre sur {0} ?"), AbstractGameInfo.GAME_NAME),
 							"",
-							formatString(_("Venez me défiez et tenter de battre mon meilleur score de {0} !"), MemberManager.getInstance().highscore),
+							StringUtil.format(_("Venez me défiez et tenter de battre mon meilleur score de {0} !"), MemberManager.getInstance().highscore),
 							_("http://www.ludokado.com/"),
-							formatString(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
+							StringUtil.format(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
 					_facebookButton.y = _itemHeight;
 					_facebookButton.x = roundUp((this.owner.width - _facebookButton.width) * 0.5);
 					addChild(_facebookButton);
@@ -469,7 +467,7 @@ package com.ludofactory.mobile.navigation.highscore
 				{
 					this._touchPointID = -1;
 					touch.getLocation(this, HELPER_POINT);
-					var isInBounds:Boolean = this.hitTest(HELPER_POINT, true) != null;
+					var isInBounds:Boolean = this.hitTest(HELPER_POINT) != null;
 					if(isInBounds)
 					{
 						if( _data.isTruncated )
@@ -523,6 +521,18 @@ package com.ludofactory.mobile.navigation.highscore
 			}
 		}
 		
+		protected var _factoryID:String;
+		
+		public function get factoryID():String
+		{
+			return this._factoryID;
+		}
+		
+		public function set factoryID(value:String):void
+		{
+			this._factoryID = value;
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		
@@ -533,11 +543,11 @@ package com.ludofactory.mobile.navigation.highscore
 			if( this._owner )
 				this._owner.removeEventListener(Event.SCROLL, owner_scrollHandler);
 			
-			_idleBackground.reset();
+			_idleBackground.clear();
 			_idleBackground.removeFromParent(true);
 			_idleBackground = null;
 			
-			_selectedBackground.reset();
+			_selectedBackground.clear();
 			_selectedBackground.removeFromParent(true);
 			_selectedBackground = null;
 			

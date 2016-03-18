@@ -11,7 +11,6 @@ package com.ludofactory.mobile.core.purchases
 	import com.amazon.nativeextensions.android.AmazonPurchaseReceipt;
 	import com.amazon.nativeextensions.android.events.AmazonPurchaseEvent;
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.gamua.flox.Flox;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
@@ -29,7 +28,6 @@ package com.ludofactory.mobile.core.purchases
 	import com.milkmangames.nativeextensions.android.events.AndroidBillingErrorEvent;
 	import com.milkmangames.nativeextensions.android.events.AndroidBillingErrorID;
 	import com.milkmangames.nativeextensions.android.events.AndroidBillingEvent;
-	import com.milkmangames.nativeextensions.ios.StoreKit;
 	import com.milkmangames.nativeextensions.ios.StoreKit;
 	import com.milkmangames.nativeextensions.ios.events.StoreKitErrorEvent;
 	import com.milkmangames.nativeextensions.ios.events.StoreKitEvent;
@@ -345,7 +343,7 @@ package com.ludofactory.mobile.core.purchases
 			_currentProductData = null;
 			_currentRequest = null;
 			
-			Flox.logWarning("Item " + itemId + " successfully purchased, giving " + numCreditsBought + " Game Credits.");
+			//Flox.logWarning("Item " + itemId + " successfully purchased, giving " + numCreditsBought + " Game Credits.");
 			logPurchaseEvent(itemId, PURCHASE_TYPE_SUCCEED);
 			
 			if(!MemberManager.getInstance().isLoggedIn())
@@ -943,7 +941,7 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function logPurchaseEvent(itemId:String, purchaseReturnType:String):void
 		{
-			var packNumber:int = int(itemId.charAt( itemId.length - 1 ));
+			/*var packNumber:int = int(itemId.charAt( itemId.length - 1 ));
 			switch(packNumber)
 			{
 				case 1:  { Flox.logEvent("Achats", { "Pack 1":purchaseReturnType }); break; }
@@ -953,7 +951,7 @@ package com.ludofactory.mobile.core.purchases
 				case 5:  { Flox.logEvent("Achats", { "Pack 5":purchaseReturnType }); break; }
 				case 6:  { Flox.logEvent("Achats", { "Pack 6":purchaseReturnType }); break; }
 				default: { Flox.logError("Impossible de loguer l'event " + purchaseReturnType + " du pack " + itemId); break; }
-			}
+			}*/
 		}
 		
 //------------------------------------------------------------------------------------------------------------

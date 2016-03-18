@@ -24,7 +24,6 @@ package com.ludofactory.mobile.navigation.tournament
 	import com.ludofactory.mobile.core.manager.TimerManager;
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.ads.tournament.AdTournamentContainer;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
@@ -46,7 +45,7 @@ package com.ludofactory.mobile.navigation.tournament
 	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.filters.BlurFilter;
-	import starling.utils.formatString;
+	import starling.utils.StringUtil;
 	
 	public class TournamentRankingScreen extends AdvancedScreen
 	{
@@ -55,7 +54,7 @@ package com.ludofactory.mobile.navigation.tournament
 		
 		/**
 		 * The ad container */		
-		private var _adContainer:AdTournamentContainer;
+		//private var _adContainer:AdTournamentContainer;
 		
 		/**
 		 * The play button */		
@@ -107,16 +106,12 @@ package com.ludofactory.mobile.navigation.tournament
 		{
 			super();
 			
-			_whiteBackground = true;
 			_appClearBackground = false;
-			_fullScreen = false;
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
-			
-			_headerTitle = _("Tournoi en cours");
 			
 			_listHeader = new TournamentListHeader();
 			_listHeader.visible = false;
@@ -213,7 +208,7 @@ package com.ludofactory.mobile.navigation.tournament
 			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
-				Remote.getInstance().getCurrentTournamentRanking(null, onGetCurrentTournamentRankingSuccess, onGetCurrentTournamentRankingFailure, onGetCurrentTournamentRankingFailure, 2, advancedOwner.activeScreenID);
+				//Remote.getInstance().getCurrentTournamentRanking(null, onGetCurrentTournamentRankingSuccess, onGetCurrentTournamentRankingFailure, onGetCurrentTournamentRankingFailure, 2, advancedOwner.activeScreenID);
 			}
 			else
 			{
@@ -258,19 +253,13 @@ package com.ludofactory.mobile.navigation.tournament
 			{
 				if( AbstractGameInfo.LANDSCAPE )
 				{
-					if( _adContainer )
-					{
-						_adContainer.height = actualHeight;
-						_adContainer.width = scaleAndRoundToDpi(350);
-						_adContainer.x = actualWidth - _adContainer.width;
-					}
 					
 					_playButton.width = scaleAndRoundToDpi(300);
 					_playButton.validate();
 					_playButton.y = actualHeight - _playButton.height - scaleAndRoundToDpi(10);
-					_playButton.x = _adContainer ? (_adContainer.x + (((actualWidth - _adContainer.x) - _playButton.width) * 0.5)) : ((actualWidth - _playButton.width) * 0.5);//(_adContainer ? _adContainer.x : actualWidth) + scaleAndRoundToDpi(25);
+					_playButton.x = (actualWidth - _playButton.width) * 0.5;//(_adContainer ? _adContainer.x : actualWidth) + scaleAndRoundToDpi(25);
 					
-					_listHeader.width = _adContainer ? (actualWidth - _adContainer.width) : actualWidth;
+					_listHeader.width = actualWidth;
 					_listHeader.validate();
 					
 					_ranksList.width = _listHeader.width;
@@ -278,7 +267,7 @@ package com.ludofactory.mobile.navigation.tournament
 					_ranksList.y = _listHeader.y + _listHeader.height;
 					
 					_listBottomShadow.height = actualHeight;
-					_listBottomShadow.x = (_adContainer ? _adContainer.x : 0) - _listBottomShadow.width;
+					_listBottomShadow.x = -_listBottomShadow.width;
 					
 					_retryContainer.width = actualWidth;
 					_retryContainer.y = _ranksList.y;
@@ -298,11 +287,7 @@ package com.ludofactory.mobile.navigation.tournament
 				}
 				else
 				{
-					if( _adContainer )
-						_adContainer.width = this.actualWidth;
-					
 					_listShadow.width = this.actualWidth;
-					_listShadow.y = _adContainer ? _adContainer.height : 0;
 					
 					_playButton.width = this.actualWidth * 0.8;
 					_playButton.validate();
@@ -310,7 +295,6 @@ package com.ludofactory.mobile.navigation.tournament
 					_playButton.x = (this.actualWidth - _playButton.width) * 0.5;
 					
 					_listHeader.width = this.actualWidth;
-					_listHeader.y = _adContainer ? _adContainer.height : 0;
 					_listHeader.validate();
 					
 					_ranksList.width = this.actualWidth;
@@ -380,13 +364,8 @@ package com.ludofactory.mobile.navigation.tournament
 					if( result.id_tournoi )
 						_currentTournamentId = int(result.id_tournoi);
 					
-					if( result.hasOwnProperty("podium") && !_adContainer )
+					if( result.hasOwnProperty("podium") )
 					{
-						_adContainer = new AdTournamentContainer();
-						_adContainer.dataProvider = result.podium as Array;
-						_adContainer.width = actualWidth;
-						addChildAt(_adContainer, getChildIndex(_playButton) - 1);
-						
 						invalidate( INVALIDATION_FLAG_SIZE );
 					}
 					
@@ -562,7 +541,7 @@ package com.ludofactory.mobile.navigation.tournament
 				// clear fake data if necessary
 				if( _ranksList.dataProvider )
 					_ranksList.dataProvider = new HierarchicalCollection([]);
-				Remote.getInstance().getCurrentTournamentRanking(null, onGetCurrentTournamentRankingSuccess, onGetCurrentTournamentRankingFailure, onGetCurrentTournamentRankingFailure, 2, advancedOwner.activeScreenID);
+				//Remote.getInstance().getCurrentTournamentRanking(null, onGetCurrentTournamentRankingSuccess, onGetCurrentTournamentRankingFailure, onGetCurrentTournamentRankingFailure, 2, advancedOwner.activeScreenID);
 			}
 			else
 			{
@@ -578,7 +557,7 @@ package com.ludofactory.mobile.navigation.tournament
 			if( MemberManager.getInstance().isTournamentUnlocked )
 			{
 				advancedOwner.screenData.gameType = GameMode.TOURNAMENT;
-				advancedOwner.showScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
+				advancedOwner.replaceScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 			}
 			else
 			{
@@ -593,7 +572,7 @@ package com.ludofactory.mobile.navigation.tournament
 					if( !_calloutLabel )
 					{
 						_calloutLabel = new Label();
-						_calloutLabel.text = formatString(_n("Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !" , "Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !", MemberManager.getInstance().tournamentUnlockCounter), MemberManager.getInstance().tournamentUnlockCounter);
+						_calloutLabel.text = StringUtil.format(_n("Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !" , "Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !", MemberManager.getInstance().tournamentUnlockCounter), MemberManager.getInstance().tournamentUnlockCounter);
 						_calloutLabel.width = GlobalConfig.stageWidth * 0.9;
 						_calloutLabel.textRendererProperties.isHTML = true;
 						_calloutLabel.validate();
@@ -642,7 +621,7 @@ package com.ludofactory.mobile.navigation.tournament
 		{
 			_isInUpdateMode = true;
 			var rankData:RankData = (_ranksList.dataProvider.data[ _ranksList.dataProvider.data.length - 1 ]["children"] as Array)[ (_ranksList.dataProvider.data[ _ranksList.dataProvider.data.length - 1 ]["children"] as Array).length - 1 ];
-			Remote.getInstance().getInfBloc(_currentTournamentId, rankData.rank, rankData.stars, rankData.lastDateScore, onGetCurrentTournamentRankingSuccess, onGetCurrentTournamentRankingFailure, onGetCurrentTournamentRankingFailure, 2, advancedOwner.activeScreenID);
+			//Remote.getInstance().getInfBloc(_currentTournamentId, rankData.rank, rankData.stars, rankData.lastDateScore, onGetCurrentTournamentRankingSuccess, onGetCurrentTournamentRankingFailure, onGetCurrentTournamentRankingFailure, 2, advancedOwner.activeScreenID);
 		}
 		/**
 		 * The user scrolled until the end of the list. In this case
@@ -652,7 +631,7 @@ package com.ludofactory.mobile.navigation.tournament
 		{
 			_isInUpdateMode = true;
 			var rankData:RankData = (_ranksList.dataProvider.data[ 0 ]["children"] as Array)[ 0 ];
-			Remote.getInstance().getSupBloc(_currentTournamentId, rankData.rank, rankData.stars, rankData.lastDateScore, onGetCurrentTournamentRankingSuccess, onGetCurrentTournamentRankingFailure, onGetCurrentTournamentRankingFailure, 2, advancedOwner.activeScreenID);
+			//Remote.getInstance().getSupBloc(_currentTournamentId, rankData.rank, rankData.stars, rankData.lastDateScore, onGetCurrentTournamentRankingSuccess, onGetCurrentTournamentRankingFailure, onGetCurrentTournamentRankingFailure, 2, advancedOwner.activeScreenID);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -717,12 +696,6 @@ package com.ludofactory.mobile.navigation.tournament
 		
 		override public function dispose():void
 		{
-			if( _adContainer )
-			{
-				_adContainer.removeFromParent(true);
-				_adContainer = null;
-			}
-			
 			if( _calloutLabel )
 			{
 				_calloutLabel.removeFromParent(true);

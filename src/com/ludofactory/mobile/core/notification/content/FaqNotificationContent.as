@@ -13,15 +13,12 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.faq.*;
 	
-	import feathers.controls.Label;
 	import feathers.layout.VerticalLayout;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
-	import starling.utils.HAlign;
+	import starling.text.TextFormat;
+	import starling.utils.Align;
 	
 	public class FaqNotificationContent extends AbstractPopupContent
 	{
@@ -53,12 +50,12 @@ package com.ludofactory.mobile.core.notification.content
 			layout.gap = scaleAndRoundToDpi( GlobalConfig.isPhone ? 40:60 );
 			this.layout = layout;
 			
-			_notificationTitle = new TextField(10, 10, _faqData.question, Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY);
+			_notificationTitle = new TextField(10, 10, _faqData.question, new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), Theme.COLOR_DARK_GREY));
 			_notificationTitle.autoSize = TextFieldAutoSize.VERTICAL;
 			addChild(_notificationTitle);
 			
-			_message = new TextField(10, 10, _faqData.answer, Theme.FONT_SANSITA, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY, true);
-			_message.hAlign = HAlign.LEFT;
+			_message = new TextField(10, 10, _faqData.answer, new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(25), Theme.COLOR_LIGHT_GREY));
+			_message.format.horizontalAlign = Align.LEFT;
 			_message.autoSize = TextFieldAutoSize.VERTICAL;
 			addChild(_message);
 		}

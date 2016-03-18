@@ -17,10 +17,9 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.MobileButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
+	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -34,6 +33,7 @@ package com.ludofactory.mobile.core.notification.content
 	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
+	import starling.text.TextFormat;
 	
 	public class RetrievePasswordNotificationContent extends AbstractPopupContent
 	{
@@ -68,7 +68,7 @@ package com.ludofactory.mobile.core.notification.content
 		{
 			super.initialize();
 			
-			_title = new TextField(5, 5, _("Entrez l'email de votre compte pour recevoir dans quelques minutes votre mot de passe."), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 40), 0x6d6d6d);
+			_title = new TextField(5, 5, _("Entrez l'email de votre compte pour recevoir dans quelques minutes votre mot de passe."), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 26 : 40), 0x6d6d6d));
 			_title.autoSize = TextFieldAutoSize.VERTICAL;
 			addChild(_title);
 			
@@ -104,9 +104,9 @@ package com.ludofactory.mobile.core.notification.content
 			if(isInvalid(INVALIDATION_FLAG_NEEDS_RESIZE_FOCUS))
 			{
 				if(_mailInput.hasFocus)
-					NotificationPopupManager.moveCurrentToTop();
+					CustomPopupManager.moveCurrentToTop();
 				else
-					NotificationPopupManager.centerCurrent();
+					CustomPopupManager.centerCurrent();
 			}
 			
 			super.draw();
@@ -120,7 +120,7 @@ package com.ludofactory.mobile.core.notification.content
 		 */
 		private function onFocusIn(event:Event):void
 		{
-			NotificationPopupManager.moveCurrentToTop();
+			CustomPopupManager.moveCurrentToTop();
 		}
 		
 		/**

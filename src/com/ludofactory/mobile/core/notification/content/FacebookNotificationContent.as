@@ -6,7 +6,7 @@ Created : 1 septembre 2013
 */
 package com.ludofactory.mobile.core.notification.content
 {
-
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
@@ -21,7 +21,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	import com.ludofactory.mobile.navigation.sponsor.info.FacebookBonusData;
 	import com.ludofactory.mobile.navigation.sponsor.info.FacebookBonusItemRenderer;
-
+	
 	import feathers.controls.Callout;
 	import feathers.controls.List;
 	import feathers.controls.Scroller;
@@ -29,17 +29,16 @@ package com.ludofactory.mobile.core.notification.content
 	import feathers.data.ListCollection;
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalLayout;
-
+	
 	import flash.text.ReturnKeyLabel;
 	import flash.text.SoftKeyboardType;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-
+	
 	import starling.display.Button;
 	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
-
+	import starling.text.TextFormat;
+	
 	public class FacebookNotificationContent extends AbstractPopupContent
 	{
 		/**
@@ -86,7 +85,7 @@ package com.ludofactory.mobile.core.notification.content
 			
 			data = false;
 			
-			_notificationTitle = new TextField(5, 5, _("Connexion Facebook"), Theme.FONT_SANSITA, scaleAndRoundToDpi(34), Theme.COLOR_DARK_GREY);
+			_notificationTitle = new TextField(5, 5, _("Connexion Facebook"), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(34), Theme.COLOR_DARK_GREY));
 			_notificationTitle.autoSize = TextFieldAutoSize.VERTICAL;
 			addChild(_notificationTitle);
 
@@ -127,7 +126,7 @@ package com.ludofactory.mobile.core.notification.content
 			_facebookButton.addEventListener(Event.TRIGGERED, onConnectFacebook);
 			addChild(_facebookButton);
 
-			_warningLabel = new TextField(5, 5, _("Nous ne publierons jamais sur votre mur sans votre accord"), Theme.FONT_ARIAL, scaleAndRoundToDpi(25), 0x6d6d6d, true);
+			_warningLabel = new TextField(5, 5, _("Nous ne publierons jamais sur votre mur sans votre accord"), new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(25), 0x6d6d6d));
 			_warningLabel.autoSize = TextFieldAutoSize.VERTICAL;
 			addChild(_warningLabel);
 		}
@@ -242,7 +241,7 @@ package com.ludofactory.mobile.core.notification.content
 				{
 					_calloutLabel = new TextField(actualWidth * 0.9, 5,
 							_("Le code parrain est un numéro correspondant à l'identifiant d'un joueur sur l'application.\n\nLorsqu'un joueur ou un ami souhaite vous parrainer, il vous envoie son code joueur que vous pouvez saisir dans ce champ en vous inscrivant."),
-							Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY);
+							new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY));
 					_calloutLabel.autoSize = TextFieldAutoSize.VERTICAL;
 				}
 				_isCalloutDisplaying = true;

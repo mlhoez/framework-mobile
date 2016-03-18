@@ -6,6 +6,7 @@ Created : 25 nov. 2013
 */
 package com.ludofactory.mobile.navigation.tournament
 {
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
@@ -13,17 +14,17 @@ package com.ludofactory.mobile.navigation.tournament
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.core.FeathersControl;
 	
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
+	
 	import starling.display.Image;
 	import starling.display.Quad;
+	import starling.utils.StringUtil;
 	import starling.utils.deg2rad;
-	import starling.utils.formatString;
 	
 	public class PreviousTournamentGiftBloc extends FeathersControl
 	{
@@ -143,7 +144,7 @@ package com.ludofactory.mobile.navigation.tournament
 		
 		public function set title(val:String):void
 		{
-			_title.text = formatString(_("Votre gain sur ce tournoi :\n{0}"), val);
+			_title.text = StringUtil.format(_("Votre gain sur ce tournoi :\n{0}"), val);
 			invalidate( INVALIDATION_FLAG_SIZE );
 		}
 	}

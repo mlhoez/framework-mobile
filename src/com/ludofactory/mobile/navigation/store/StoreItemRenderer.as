@@ -19,16 +19,15 @@ package com.ludofactory.mobile.navigation.store
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
-	import feathers.display.Scale3Image;
-	import feathers.display.Scale9Image;
 	import feathers.skins.IStyleProvider;
 	
 	import flash.filters.DropShadowFilter;
+	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
 	import starling.display.Image;
-	import starling.utils.formatString;
+	import starling.utils.StringUtil;
 	
 	/**
 	 * Item renderer used in the store screen to display
@@ -70,8 +69,10 @@ package com.ludofactory.mobile.navigation.store
 			_paddingBottom = scaleAndRoundToDpi(20);
 			_headerHeight = scaleAndRoundToDpi(54);
 			
-			_backgroundSkin = new Scale9Image(Theme.storeBackgroundSkinTextures, GlobalConfig.dpiScale);
-			addChild( _backgroundSkin );
+			_backgroundSkin = new Image(AbstractEntryPoint.assets.getTexture("store-background"));
+			_backgroundSkin.scale = GlobalConfig.dpiScale;
+			_backgroundSkin.scale9Grid = new Rectangle(20, 55, 20, 30);
+			addChild(_backgroundSkin);
 			
 			_gainLabel = new Label();
 			addChild(_gainLabel);
@@ -85,14 +86,18 @@ package com.ludofactory.mobile.navigation.store
 			_promoLabel.textRendererProperties.wordWrap = false;
 			
 			_priceButton = new Button();
-			_priceButton.styleName = Theme.BUTTON_GREEN;
+			//_priceButton.styleName = Theme.BUTTON_GREEN;
 			addChild(_priceButton);
 			
-			_topOfferImage =  new Scale3Image(Theme.storeTopOfferTexture, GlobalConfig.dpiScale);
+			_topOfferImage =  new Image(AbstractEntryPoint.assets.getTexture("top-offer"));
+			_topOfferImage.scale = GlobalConfig.dpiScale;
+			_topOfferImage.scale9Grid = new Rectangle(30, 0, 50, _topOfferImage.texture.frameHeight);
 			addChild(_topOfferImage);
 			_topOfferImage.visible = false;
 			
-			_playersChoiceImage = new Scale3Image(Theme.storePlayersChoiceTexture, GlobalConfig.dpiScale);
+			_playersChoiceImage = new Image(AbstractEntryPoint.assets.getTexture("players-choice"));
+			_playersChoiceImage.scale = GlobalConfig.dpiScale;
+			_playersChoiceImage.scale9Grid = new Rectangle(30, 0, 50, _playersChoiceImage.texture.frameHeight);
 			addChild(_playersChoiceImage);
 			_playersChoiceImage.visible = false;
 			
@@ -109,8 +114,8 @@ package com.ludofactory.mobile.navigation.store
 			{
 				if(this._data)
 				{
-					_gainLabel.text = formatString(_("{0} crédits"), _data.gain);
-					_promoLabel.text = _data.promo > 0 ? formatString(_n("+{0} crédit offert", "+{0} crédits offerts", _data.promo), _data.promo) : "";
+					_gainLabel.text = StringUtil.format(_("{0} crédits"), _data.gain);
+					_promoLabel.text = _data.promo > 0 ? StringUtil.format(_n("+{0} crédit offert", "+{0} crédits offerts", _data.promo), _data.promo) : "";
 					
 					if( !_icon )
 					{
@@ -212,32 +217,17 @@ package com.ludofactory.mobile.navigation.store
 		/**
 		 * The main background skin.
 		 */		
-		private var _backgroundSkin:Scale9Image;
-		
-		public function set backgroundSkin(val:Scale9Image):void
-		{
-			_backgroundSkin = val;
-		}
+		private var _backgroundSkin:Image;
 		
 		/**
 		 * The "Top Offer" image.
 		 */		
-		private var _topOfferImage:Scale3Image;
-		
-		public function set topOfferTexture(val:Scale3Image):void
-		{
-			_topOfferImage = val;
-		}
+		private var _topOfferImage:Image;
 		
 		/**
 		 * The "Players Choice" image.
 		 */		
-		private var _playersChoiceImage:Scale3Image;
-		
-		public function set playersChoiceTexture(val:Scale3Image):void
-		{
-			_playersChoiceImage = val;
-		}
+		private var _playersChoiceImage:Image;
 		
 		/**
 		 * Padding left.

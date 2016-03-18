@@ -58,18 +58,18 @@ package com.ludofactory.mobile.core.manager
 					// user is logged in, but he may have not finished all the steps such as the validation
 					// of his pseudo, thus we need to send him to the PseudoChoiceScreen.
 					log("[AuthenticationManager] User is logged in and have NOT completed the registering process (didn't choose a pseudo).");
-					advancedScreenNavigator.showScreen( ScreenIds.PSEUDO_CHOICE_SCREEN );
+					advancedScreenNavigator.replaceScreen( ScreenIds.PSEUDO_CHOICE_SCREEN );
 				}
 				else
 				{
 					log("[AuthenticationManager] User is logged in and have completed the registering process.");
-					advancedScreenNavigator.showScreen( completeScreenId );
+					advancedScreenNavigator.replaceScreen( completeScreenId );
 				}
 			}
 			else
 			{
 				log("[AuthenticationManager] User is not logged in, start authentication...");
-				advancedScreenNavigator.showScreen( ScreenIds.REGISTER_SCREEN );
+				advancedScreenNavigator.replaceScreen( ScreenIds.REGISTER_SCREEN );
 			}
 		}
 	}

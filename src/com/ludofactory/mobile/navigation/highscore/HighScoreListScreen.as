@@ -29,7 +29,7 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
-	import com.milkmangames.nativeextensions.GAnalytics;
+	import com.ludofactory.newClasses.Analytics;
 	import com.milkmangames.nativeextensions.GoViral;
 	
 	import feathers.controls.Callout;
@@ -42,25 +42,23 @@ package com.ludofactory.mobile.navigation.highscore
 	import feathers.data.ListCollection;
 	import feathers.layout.VerticalLayout;
 	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
 	import starling.display.Button;
 	import starling.display.Image;
+	import starling.display.MeshBatch;
 	import starling.display.Quad;
-	import starling.display.QuadBatch;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
+	import starling.text.TextFormat;
 	
 	public class HighScoreListScreen extends AdvancedScreen
 	{
 		/**
 		 * Country choice background */		
-		private var _countryChoiceBackground:QuadBatch;
+		private var _countryChoiceBackground:MeshBatch;
 		/**
 		 * Country choice value */		
 		private var _countryChoiceValue:TextField;
@@ -113,16 +111,12 @@ package com.ludofactory.mobile.navigation.highscore
 		{
 			super();
 			
-			_whiteBackground = true;
 			_appClearBackground = false;
-			_fullScreen = false;
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
-			
-			_headerTitle = _("Meilleurs scores");
 			
 			_listHeader = new HighScoreListHeader();
 			_listHeader.visible = false;
@@ -130,7 +124,6 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			const layout:VerticalLayout = new VerticalLayout();
 			layout.hasVariableItemDimensions = true;
-			layout.manageVisibility = true;
 			layout.useVirtualLayout = true;
 			
 			_list = new AutoRefreshableList();
@@ -145,7 +138,7 @@ package com.ludofactory.mobile.navigation.highscore
 			_countriesList = new GroupedList();
 			_countriesList.verticalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 			_countriesList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
-			_countriesList.styleName = Theme.SUB_CATEGORY_GROUPED_LIST;
+			//_countriesList.styleName = Theme.SUB_CATEGORY_GROUPED_LIST;
 			_countriesList.isSelectable = true;
 			var arr:Array = GlobalConfig.COUNTRIES.concat();
 			arr.push(new CountryData( { id:-1, nameTranslationKey:_("Amis Facebook"), diminutive:"", textureName:"" } ));
@@ -153,14 +146,14 @@ package com.ludofactory.mobile.navigation.highscore
 			_countriesList.setSelectedLocation(0,advancedOwner.screenData.highscoreRankingType == -1 ? (arr.length-1) : advancedOwner.screenData.highscoreRankingType);
 			_countriesList.addEventListener(Event.CHANGE, onCountrySelected);
 			
-			_countryChoiceBackground = new QuadBatch();
+			_countryChoiceBackground = new MeshBatch();
 			_countryChoiceBackground.addEventListener(TouchEvent.TOUCH, onShowCountries);
 			const qd:Quad = new Quad(50, scaleAndRoundToDpi(100), 0xfbfbfb);
-			_countryChoiceBackground.addQuad(qd);
+			_countryChoiceBackground.addMesh(qd);
 			qd.height = scaleAndRoundToDpi(4);
 			qd.color = 0xe6e6e6;
 			qd.y = scaleAndRoundToDpi(100);
-			_countryChoiceBackground.addQuad(qd);
+			_countryChoiceBackground.addMesh(qd);
 			addChild(_countryChoiceBackground);
 			
 			_leftTrophyIcon = new Image(AbstractEntryPoint.assets.getTexture("high-score-list-trophy-icon"));
@@ -174,7 +167,7 @@ package com.ludofactory.mobile.navigation.highscore
 			_rightTrophyIcon.touchable = false;
 			addChild(_rightTrophyIcon);
 			
-			_countryChoiceValue = new TextField(5, _countryChoiceBackground.height, "", Theme.FONT_SANSITA, scaleAndRoundToDpi(28), 0x401800, true);
+			_countryChoiceValue = new TextField(5, _countryChoiceBackground.height, "", new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(28), 0x401800));
 			_countryChoiceValue.text = arr[advancedOwner.screenData.highscoreRankingType == -1 ? (arr.length-1) : advancedOwner.screenData.highscoreRankingType];
 			_countryChoiceValue.autoSize = TextFieldAutoSize.HORIZONTAL;
 			_countryChoiceValue.touchable = false;
@@ -218,7 +211,7 @@ package com.ludofactory.mobile.navigation.highscore
 			_associateLabel.text = _("Vous devez associer votre compte à Facebook pour voir la progression de vos amis !");
 			_associateLabel.visible = false;
 			addChild(_associateLabel);
-			_associateLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 38), Theme.COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
+			//_associateLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 38), Theme.COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
 			
 			_selectedCountryId = advancedOwner.screenData.highscoreRankingType;
 			
@@ -481,8 +474,7 @@ package com.ludofactory.mobile.navigation.highscore
 			_leftTrophyIcon.x = _countryChoiceValue.x - _leftTrophyIcon.width - scaleAndRoundToDpi(15);
 			_rightTrophyIcon.x = _arrowDown.x + _arrowDown.width + _rightTrophyIcon.width + scaleAndRoundToDpi(15);
 			
-			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("HighScores", "Affichage du classement " + _countryChoiceValue, null, NaN, MemberManager.getInstance().id);
+			Analytics.trackEvent("HighScores", "Affichage du classement " + _countryChoiceValue)
 			
 			_isInUpdateMode = false;
 			
@@ -704,7 +696,7 @@ package com.ludofactory.mobile.navigation.highscore
 			callout.touchable = false;
 			callout.disposeContent = false;
 			callout.addEventListener(Event.REMOVED_FROM_STAGE, onCalloutRemoved);
-			_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
+			//_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 		}
 
 		private function onCalloutRemoved(event:Event):void
@@ -739,7 +731,7 @@ package com.ludofactory.mobile.navigation.highscore
 			_associateButton = null;
 			
 			_countryChoiceBackground.removeEventListener(TouchEvent.TOUCH, onShowCountries);
-			_countryChoiceBackground.reset();
+			_countryChoiceBackground.clear();
 			_countryChoiceBackground.removeFromParent(true);
 			_countryChoiceBackground = null;
 			

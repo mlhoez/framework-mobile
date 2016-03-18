@@ -7,15 +7,13 @@ Created : 12 Août 2013
 package com.ludofactory.mobile.core.manager
 {
 	
-	import com.gamua.flox.Flox;
 	import com.ludofactory.ane.DeviceUtils;
 	import com.ludofactory.common.encryption.Encryption;
 	import com.ludofactory.common.utils.logs.log;
+	import com.ludofactory.common.utils.logs.logError;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.AbstractMain;
-	import com.ludofactory.mobile.core.avatar.test.manager.LKAvatarConfig;
-	import com.ludofactory.mobile.core.avatar.test.manager.LKConfigManager;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.model.GameMode;
@@ -26,18 +24,15 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.push.PushNewCSThread;
 	import com.ludofactory.mobile.core.push.PushTrophy;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.core.storage.Storage;
-	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
-	import com.ludofactory.mobile.navigation.home.HomeScreen;
-	import com.milkmangames.nativeextensions.GAnalytics;
+	import com.ludofactory.mobile.navigation.ads.AdManager;
+	import com.ludofactory.mobile.navigation.home.OldHomeScreen;
+	import com.ludofactory.newClasses.Analytics;
 	import com.milkmangames.nativeextensions.GoViral;
-	import com.vidcoin.extension.ane.VidCoinController;
 	
 	import flash.data.EncryptedLocalStore;
 	import flash.net.registerClassAlias;
 	import flash.utils.ByteArray;
-	import flash.utils.Dictionary;
 	
 	import starling.events.EventDispatcher;
 	
@@ -148,8 +143,6 @@ package com.ludofactory.mobile.core.manager
 			_member.parseData(memberData);
 			setEncryptedMember();
 			
-			LKConfigManager.parseData(_member.avatarConfig);
-			
 			// check if we can enable logs
 			AbstractMain.checkToEnableLogs();
 			
@@ -194,7 +187,7 @@ package com.ludofactory.mobile.core.manager
 			}
 			catch(error:Error)
 			{
-				Flox.logError("Erreur de décryptage de l'objet membre : " + error.message);
+				logError("Erreur de décryptage de l'objet membre : " + error.message);
 				EncryptedLocalStore.reset();
 				loadEncryptedMember(DEFAULT_MEMBER_ID);
 				return;
@@ -207,18 +200,10 @@ package com.ludofactory.mobile.core.manager
 					AbstractEntryPoint.pushManager.onUserLoggedIn();
 				
 				// track the log in
-				try{
-					
-				if( GAnalytics.isSupported() )
-					GAnalytics.analytics.defaultTracker.trackEvent("Connexions", "Connexion au compte", null, NaN, memberId);
-				}
-				catch(error:Error)
-				{
-					
-				}
+				Analytics.trackEvent("Connexions", "Connexion au compte");
 				//log("<strong>Connexion du joueur " + memberId + "</strong>");
 				
-				updateVidCoinData();
+				AdManager.updateVidCoinData();
 			}
 			
 			// update the values of the footer
@@ -226,21 +211,6 @@ package com.ludofactory.mobile.core.manager
 			
 			if( checkForAdminParameters ) // not done the first time
 				AbstractMain.checkToEnableLogs();
-			
-			// when the user logs in, we need to initialize the LKConfigManager
-			LKConfigManager.initialize(_member.avatarConfig);
-		}
-		
-		public function updateVidCoinData():void
-		{
-			if( AbstractEntryPoint.vidCoin )
-			{
-				var dict:Dictionary = new Dictionary();
-				dict[VidCoinController.kVCUserGameID] = _member.id;
-				dict[VidCoinController.kVCUserBirthYear] = birthDate.split("-")[0];
-				dict[VidCoinController.kVCUserGenderKey]= title == "Mr." ? VidCoinController.kVCUserGenderMale : VidCoinController.kVCUserGenderFemale;
-				AbstractEntryPoint.vidCoin.updateUserDictionary(dict);
-			}
 		}
 		
 		/**
@@ -295,15 +265,7 @@ package com.ludofactory.mobile.core.manager
 			InfoManager.hide("Toutes les données ont été envoyées.\n\nVous pouvez changer de compte.", InfoContent.ICON_CHECK);
 			
 			// track the log off
-			try{
-				
-			if( GAnalytics.isSupported() )
-				GAnalytics.analytics.defaultTracker.trackEvent("Déconnexions", "Déconnexion du compte", null, NaN, _member.id);
-			}
-			catch(error:Error)
-			{
-				
-			}
+			Analytics.trackEvent("Déconnexions", "Déconnexion du compte")
 			log("<strong>Déconnexion du joueur (" + _member.id + ")</strong>");
 			
 			// before the user log off, we save the state of the tournament and
@@ -312,14 +274,11 @@ package com.ludofactory.mobile.core.manager
 			isTournamentAnimPending = false;
 			
 			AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = false;
-			AbstractEntryPoint.isSelectingPseudo = false;
 			
 			loadEncryptedMember( DEFAULT_MEMBER_ID );
 			AbstractEntryPoint.pushManager.onUserLoggedOut();
-			AbstractEntryPoint.alertData.onUserLoggedOut();
-			AbstractEntryPoint.eventManager.onUserLoggedOut();
 			if(AbstractEntryPoint.screenNavigator && AbstractEntryPoint.screenNavigator.activeScreenID == ScreenIds.HOME_SCREEN)
-				HomeScreen(AbstractEntryPoint.screenNavigator.activeScreen).onUserDisconnected(); // re-add the Facebook button if disconnected while the home screen is showing
+				OldHomeScreen(AbstractEntryPoint.screenNavigator.activeScreen).onUserDisconnected(); // re-add the Facebook button if disconnected while the home screen is showing
 			
 			// if the
 			if( !_member.tournamentUnlocked && tournamentUnlocked )
@@ -630,15 +589,6 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
-		/**
-		 * Updates the value of <code>avatarConfig</code>. */
-		public function get avatarConfig():Object { return _member.avatarConfig; }
-		public function set avatarConfig(value:Object):void
-		{
-			_member.avatarConfig = value;
-			setEncryptedMember();
-		}
-		
 //------------------------------------------------------------------------------------------------------------
 //	Get - Set
 		
@@ -704,19 +654,6 @@ package com.ludofactory.mobile.core.manager
 			}
 			return count;
 		}
-		
-		public function getNumTokenUsedInAnonymousGameSessions():int
-		{
-			var count:int = 0;
-			var gameSession:GameSession;
-			for(var i:int = 0; i < anonymousGameSessions.length; i++)
-			{
-				gameSession = anonymousGameSessions[i];
-				count += gameSession.gameType == GameMode.TOURNAMENT ? Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_TOURNAMENT_MODE) : Storage.getInstance().getProperty(StorageConfig.NUM_TOKENS_IN_SOLO_MODE);
-			}
-			return count;
-		}
-		
 		
 		public function get member():Member
 		{

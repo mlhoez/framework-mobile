@@ -16,13 +16,12 @@ package com.ludofactory.mobile
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.core.FeathersControl;
-	import feathers.display.Scale9Image;
-	import feathers.textures.Scale9Textures;
 	
 	import flash.geom.Rectangle;
 	
 	import starling.display.ButtonState;
 	import starling.display.DisplayObjectContainer;
+	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
@@ -30,8 +29,9 @@ package com.ludofactory.mobile
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.text.TextFieldAutoSize;
-	import starling.utils.HAlign;
-	import starling.utils.VAlign;
+	import starling.text.TextFormat;
+	import starling.textures.Texture;
+	import starling.utils.Align;
 	
 	/** Dispatched when the user triggers the button. Bubbles. */
 	[Event(name="triggered", type="starling.events.Event")]
@@ -55,15 +55,15 @@ package com.ludofactory.mobile
 		
 	// ----------- Textures
 		
-		private var _upTextures:Scale9Textures;
-		private var _downTextures:Scale9Textures;
-		private var _overTextures:Scale9Textures;
-		private var _disabledTextures:Scale9Textures;
+		private var _upTextures:Texture;
+		private var _downTextures:Texture;
+		private var _overTextures:Texture;
+		private var _disabledTextures:Texture;
 		
 	// ----------- Textures
 		
 		protected var mContents:Sprite;
-		private var mBody:Scale9Image;
+		private var mBody:Image;
 		private var mTextField:TextField;
 		private var mOverlay:Sprite;
 		
@@ -81,7 +81,7 @@ package com.ludofactory.mobile
 		 * Any state that is left 'null' will display the up-state texture. Beware that all
 		 * state textures should have the same dimensions.
 		 **/
-		public function MobileButton(upState:Scale9Textures, text:String = "", downState:Scale9Textures = null, overState:Scale9Textures = null, disabledState:Scale9Textures = null)
+		public function MobileButton(upState:Texture, text:String = "", downState:Texture = null, overState:Texture = null, disabledState:Texture = null)
 		{
 			if (upState == null) throw new ArgumentError("Texture 'upState' cannot be null");
 			
@@ -92,15 +92,16 @@ package com.ludofactory.mobile
 			
 			mState = ButtonState.UP;
 			
-			mBody = new Scale9Image(upState);
-			mBody.useSeparateBatch = false;
+			mBody = new Image(upState);
+			mBody.scale = GlobalConfig.dpiScale;
+			mBody.scale9Grid = new Rectangle(32, 32, 24, 24);
 			mScaleWhenDown = downState ? 1.0 : 0.9;
 			mAlphaWhenDisabled = disabledState ? 1.0: 0.5;
 			
 			//scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 148) : 128)
-			mTextField = new TextField(5, 5, text, Theme.FONT_SANSITA, scaleAndRoundToDpi(50));
-			mTextField.vAlign = VAlign.CENTER;
-			mTextField.hAlign = HAlign.CENTER;
+			mTextField = new TextField(5, 5, text, new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(50)));
+			mTextField.format.verticalAlign = Align.CENTER;
+			mTextField.format.horizontalAlign = Align.CENTER;
 			mTextField.touchable = false;
 			mTextField.batchable = true;
 			mTextField.wordWrap = false;
@@ -122,7 +123,6 @@ package com.ludofactory.mobile
 			mTextField.autoScale = false;
 			mTextField.text = text;
 			
-			mBody.validate();
 			mBody.width = mTextField.width + (_padding * 2);
 			mBody.height = mTextField.height + (_padding * 2);
 			
@@ -213,9 +213,9 @@ package com.ludofactory.mobile
 			}
 		}
 		
-		private function setStateTexture(texture:Scale9Textures):void
+		private function setStateTexture(texture:Texture):void
 		{
-			mBody.textures = texture ? texture : _upTextures;
+			mBody.texture = texture ? texture : _upTextures;
 		}
 		
 		
@@ -293,7 +293,7 @@ package com.ludofactory.mobile
 		 */
 		public function set nativeFilters(value:Array):void
 		{
-			mTextField.nativeFilters = value;
+			//mTextField.nativeFilters = value;
 		}
 		
 		private var _padding:Number = 20;
@@ -301,7 +301,7 @@ package com.ludofactory.mobile
 		{
 			_padding = value;
 			
-			if(mBody is FeathersControl) mBody.validate();
+			//if(mBody is FeathersControl) mBody.validate();
 			mTextField.width  = mBody.width - (_padding * 4);
 			mTextField.height = mBody.height - (_padding * 2);
 			mTextField.x = mBody.x + _padding;
@@ -312,8 +312,8 @@ package com.ludofactory.mobile
 //	Get - Set
 		
 		/** The texture that is displayed when the button is not being touched. */
-		public function get upState():Scale9Textures { return _upTextures; }
-		public function set upState(value:Scale9Textures):void
+		public function get upState():Texture { return _upTextures; }
+		public function set upState(value:Texture):void
 		{
 			if (value == null)
 				throw new ArgumentError("Texture 'upState' cannot be null");
@@ -332,8 +332,8 @@ package com.ludofactory.mobile
 		}
 		
 		/** The texture that is displayed while the button is touched. */
-		public function get downState():Scale9Textures { return _downTextures; }
-		public function set downState(value:Scale9Textures):void
+		public function get downState():Texture { return _downTextures; }
+		public function set downState(value:Texture):void
 		{
 			if (_downTextures != value)
 			{
@@ -343,8 +343,8 @@ package com.ludofactory.mobile
 		}
 		
 		/** The texture that is displayed while mouse hovers over the button. */
-		public function get overState():Scale9Textures { return _overTextures; }
-		public function set overState(value:Scale9Textures):void
+		public function get overState():Texture { return _overTextures; }
+		public function set overState(value:Texture):void
 		{
 			if (_overTextures != value)
 			{
@@ -354,8 +354,8 @@ package com.ludofactory.mobile
 		}
 		
 		/** The texture that is displayed when the button is disabled. */
-		public function get disabledState():Scale9Textures { return _disabledTextures; }
-		public function set disabledState(value:Scale9Textures):void
+		public function get disabledState():Texture { return _disabledTextures; }
+		public function set disabledState(value:Texture):void
 		{
 			if (_disabledTextures != value)
 			{
@@ -366,28 +366,28 @@ package com.ludofactory.mobile
 		
 		/** The name of the font displayed on the button. May be a system font or a registered
 		 *  bitmap font. */
-		public function get fontName():String { return mTextField ? mTextField.fontName : "Verdana"; }
-		public function set fontName(value:String):void { mTextField.fontName = value; }
+		public function get fontName():String { return mTextField ? mTextField.format.font : "Verdana"; }
+		public function set fontName(value:String):void { mTextField.format.font = value; }
 		
 		/** The size of the font. */
-		public function get fontSize():Number { return mTextField ? mTextField.fontSize : 12; }
-		public function set fontSize(value:Number):void { mTextField.fontSize = value; }
+		public function get fontSize():Number { return mTextField ? mTextField.format.size : 12; }
+		public function set fontSize(value:Number):void { mTextField.format.size = value; }
 		
 		/** The color of the font. */
-		public function get fontColor():uint { return mTextField ? mTextField.color : 0x0; }
-		public function set fontColor(value:uint):void { mTextField.color = value; }
+		public function get fontColor():uint { return mTextField ? mTextField.format.color : 0x0; }
+		public function set fontColor(value:uint):void { mTextField.format.color = value; }
 		
 		/** Indicates if the font should be bold. */
-		public function get fontBold():Boolean { return mTextField ? mTextField.bold : false; }
-		public function set fontBold(value:Boolean):void { mTextField.bold = value; }
+		public function get fontBold():Boolean { return mTextField ? mTextField.format.bold : false; }
+		public function set fontBold(value:Boolean):void { mTextField.format.bold = value; }
 		
 		/** The vertical alignment of the text on the button. */
-		public function get textVAlign():String { return mTextField ? mTextField.vAlign : VAlign.CENTER; }
-		public function set textVAlign(value:String):void { mTextField.vAlign = value; }
+		public function get textVAlign():String { return mTextField ? mTextField.format.verticalAlign : Align.CENTER; }
+		public function set textVAlign(value:String):void { mTextField.format.verticalAlign = value; }
 		
 		/** The horizontal alignment of the text on the button. */
-		public function get textHAlign():String { return mTextField ? mTextField.hAlign : HAlign.CENTER; }
-		public function set textHAlign(value:String):void { mTextField.hAlign = value; }
+		public function get textHAlign():String { return mTextField ? mTextField.format.horizontalAlign : Align.CENTER; }
+		public function set textHAlign(value:String):void { mTextField.format.horizontalAlign = value; }
 		
 		
 		/** The scale factor of the button on touch. Per default, a button without a down state
@@ -413,7 +413,7 @@ package com.ludofactory.mobile
 			// text field might be disconnected from parent, so we have to dispose it manually
 			if (mTextField)
 			{
-				mTextField.nativeFilters = [];
+				//mTextField.nativeFilters = [];
 				mTextField.dispose();
 			}
 			

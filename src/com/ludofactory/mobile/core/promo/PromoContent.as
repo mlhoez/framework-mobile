@@ -10,9 +10,6 @@ package com.ludofactory.mobile.core.promo
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.model.ScreenIds;
-	import com.ludofactory.mobile.core.notification.NotificationPopupManager;
-	import com.ludofactory.mobile.core.notification.content.CreditsNotificationContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import starling.core.Starling;
@@ -24,9 +21,9 @@ package com.ludofactory.mobile.core.promo
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
 	import starling.text.TextField;
+	import starling.text.TextFormat;
 	import starling.textures.TextureSmoothing;
-	import starling.utils.HAlign;
-	import starling.utils.VAlign;
+	import starling.utils.Align;
 	
 	/**
 	 * Used in the stake selection screen.
@@ -84,7 +81,7 @@ package com.ludofactory.mobile.core.promo
 			_timerContainer.scaleX = _timerContainer.scaleY = GlobalConfig.dpiScale;
 			addChild(_timerContainer);
 			
-			_timer = new TextField((_timerContainer.width - scaleToSize(_isCompact ? 35 : 45)), (_timerContainer.height - scaleToSize(_isCompact ? 5 : 0)), _("--:--"), Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 50), 0xa1a1a1);
+			_timer = new TextField((_timerContainer.width - scaleToSize(_isCompact ? 35 : 45)), (_timerContainer.height - scaleToSize(_isCompact ? 5 : 0)), _("--:--"), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 50), 0xa1a1a1));
 			_timer.autoScale = true;
 			//_timer.border = true;
 			addChild(_timer);
@@ -94,14 +91,14 @@ package com.ludofactory.mobile.core.promo
 			addChild(_titleContainer);
 			
 			// 8 = height of the shadow - 12 to adjust because of the design of the title background
-			_title = new TextField((_titleContainer.width - scaleToSize(30)), (_titleContainer.height - scaleToSize(8)), promoData.title, Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 36 : 46), 0xffffff);
+			_title = new TextField((_titleContainer.width - scaleToSize(30)), (_titleContainer.height - scaleToSize(8)), promoData.title, new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 36 : 46), 0xffffff));
 			_title.autoScale = true;
 			//_title.border = true;
 			addChild(_title);
 			
 			_creditIcon = new Image(AbstractEntryPoint.assets.getTexture(_isSD ? "promo-credit-icon" : "promo-credit-icon-hd"));
 			_creditIcon.scaleX = _creditIcon.scaleY = GlobalConfig.dpiScale;
-			_creditIcon.smoothing = TextureSmoothing.TRILINEAR;
+			_creditIcon.textureSmoothing = TextureSmoothing.TRILINEAR;
 			_creditIcon.alignPivot();
 			addChild(_creditIcon);
 			
@@ -109,17 +106,17 @@ package com.ludofactory.mobile.core.promo
 			{
 				_particles = new PDParticleSystem(Theme.particleStarsXml, Theme.particleStarTexture);
 				_particles.touchable = false;
-				_particles.maxNumParticles = 100;
+				_particles.capacity = 100;
 				_particles.scaleX = _particles.scaleY = GlobalConfig.dpiScale;
 				addChildAt(_particles, this.getChildIndex(_creditIcon));
 				Starling.juggler.add(_particles);
 				
-				_message = new TextField((_titleContainer.width - scaleToSize(16)), (_titleContainer.height * 0.75), promoData.message, Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40), 0xe10000);
+				_message = new TextField((_titleContainer.width - scaleToSize(16)), (_titleContainer.height * 0.75), promoData.message, new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 20 : 40), 0xe10000));
 				_message.isHtmlText = true;
 				_message.autoScale = true;
 				//_message.border = true;
-				_message.vAlign = VAlign.TOP;
-				_message.hAlign = HAlign.RIGHT;
+				_message.format.verticalAlign = Align.TOP;
+				_message.format.horizontalAlign = Align.RIGHT;
 				addChild(_message);
 			}
 			else
@@ -210,7 +207,7 @@ package com.ludofactory.mobile.core.promo
 		
 		public function updateLabelColor():void
 		{
-			_timer.color = 0xe10000;
+			_timer.format.color = 0xe10000;
 		}
 		
 		public function onTimerOver():void
@@ -230,8 +227,8 @@ package com.ludofactory.mobile.core.promo
 			var touch:Touch = event.getTouch(this);
 			if( touch && touch.phase == TouchPhase.ENDED )
 			{
-				if(_isCompact) // else it's full size in the credits popup
-					NotificationPopupManager.addNotification( new CreditsNotificationContent() );
+				//if(_isCompact) // else it's full size in the credits popup
+				//	CustomPopupManager.addNotification( new CreditsNotificationContent() );
 			}
 			touch = null;
 		}

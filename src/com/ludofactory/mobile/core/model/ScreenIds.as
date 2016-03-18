@@ -180,5 +180,7 @@ package com.ludofactory.mobile.core.model
 		public static const LOG_IN_OUT:String = "log_in_out";
 		public static const SHOW_MENU:String = "show-menu";
 		
+		public static const GAME_CHOICE_SCREEN:String = "game-choice-screen";
+		
 	}
 }

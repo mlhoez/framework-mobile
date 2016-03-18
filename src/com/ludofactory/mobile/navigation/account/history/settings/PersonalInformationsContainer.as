@@ -6,23 +6,24 @@ Created : 19 sept. 2013
 */
 package com.ludofactory.mobile.navigation.account.history.settings
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.greensock.TweenMax;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.navigation.authentication.NotLoggedInContainer;
-	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.controls.Accordion;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.ludofactory.mobile.navigation.authentication.NotLoggedInContainer;
+	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	
 	import feathers.core.FeathersControl;
 	
 	import starling.events.Event;
-	import starling.utils.formatString;
+	import starling.utils.StringUtil;
 	
 	public class PersonalInformationsContainer extends FeathersControl
 	{
@@ -133,7 +134,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 						// of the screen to indicate that he must do this to validate his
 						// account.
 						
-						_mailAlert = new AccountMailAlert( formatString(_("Validez votre compte et bénéficier d'avantages VIP en cliquant sur le lien envoyé à l'adresse : {0}"), result.connexion.mail), false);
+						_mailAlert = new AccountMailAlert( StringUtil.format(_("Validez votre compte et bénéficier d'avantages VIP en cliquant sur le lien envoyé à l'adresse : {0}"), result.connexion.mail), false);
 						addChild( _mailAlert );
 					}
 					else if( result.alerte.changement_mail != null )
@@ -142,7 +143,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 						// case we need to tell him that a request is pending on that he
 						// must click on this email to validate this adress.
 						
-						_mailAlert = new AccountMailAlert( formatString(_("Validez la modification de votre email en cliquant sur le lien envoyé à l'adresse : {0}"), result.alerte.changement_mail), false);
+						_mailAlert = new AccountMailAlert( StringUtil.format(_("Validez la modification de votre email en cliquant sur le lien envoyé à l'adresse : {0}"), result.alerte.changement_mail), false);
 						addChild( _mailAlert );
 					}
 					invalidate( INVALIDATION_FLAG_DATA );

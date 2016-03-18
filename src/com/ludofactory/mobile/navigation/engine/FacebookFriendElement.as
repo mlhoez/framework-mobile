@@ -6,23 +6,23 @@ Created : 12 nov. 2013
 */
 package com.ludofactory.mobile.navigation.engine
 {
+	
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	
-	import feathers.skins.IStyleProvider;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
+	import com.ludofactory.mobile.core.theme.Theme;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	import feathers.core.FeathersControl;
-	import feathers.display.Scale9Image;
+	import feathers.skins.IStyleProvider;
+	
+	import flash.geom.Rectangle;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -32,7 +32,7 @@ package com.ludofactory.mobile.navigation.engine
 	{
 		/**
 		 * The container's background. */		
-		private var _background:Scale9Image;
+		private var _background:Image;
 		
 		/**
 		 * The rank flag. */		
@@ -86,7 +86,9 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super();
 			
-			_background = new Scale9Image(Theme.facebookFriendBackgroundSkinTextures, GlobalConfig.dpiScale);
+			_background = new Image(AbstractEntryPoint.assets.getTexture("facebook-friend-background-skin"));
+			_background.scale = GlobalConfig.dpiScale;
+			_background.scale9Grid = new Rectangle(22, 24, 17, 2);
 			this.height = scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? 100 : 160);
 			
 			_currentRank = int(data.classement);
@@ -123,7 +125,7 @@ package com.ludofactory.mobile.navigation.engine
 			addChild(_loader);
 			
 			_picture = new ImageLoader();
-			_picture.snapToPixels = true;
+			_picture.pixelSnapping = true;
 			addChild(_picture);
 			
 			_flag = new Image( AbstractEntryPoint.assets.getTexture("facebook-friend-rank-flag") );
@@ -166,11 +168,6 @@ package com.ludofactory.mobile.navigation.engine
 //------------------------------------------------------------------------------------------------------------
 //	Get / Set
 //------------------------------------------------------------------------------------------------------------
-		
-		public function set background(val:Scale9Image):void
-		{
-			_background = val;
-		}
 		
 		public function setScoreAndRankValue():void
 		{

@@ -361,7 +361,7 @@ package com.ludofactory.common.gettext
 					var arr:Array = Storage.getInstance().getProperty(StorageConfig.PROPERTY_NEW_LANGUAGES).concat();
 					arr.push(fileToLoadInfo.language);
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_NEW_LANGUAGES, arr);
-					dispatcher.dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
+					//dispatcher.dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
 				}
 				
 				// Important : use : (?>\r\n|[\r\n]) to match the \r or \n on all OS

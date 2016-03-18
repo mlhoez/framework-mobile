@@ -62,42 +62,42 @@ package com.ludofactory.mobile.navigation.home
 			_numCustomerServiceAlerts = 0;
 			_numCustomerServiceImportantAlerts = 0;
 			_numTrophiesAlerts = 0;
-			dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
+			//dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
 		}
 		
 		public function get numGainAlerts():int { return _numGainAlerts; }
 		public function set numGainAlerts(val:int):void
 		{
 			_numGainAlerts = val;
-			dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
+			//dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
 		}
 		
 		public function get numSponsorAlerts():int { return _numSponsorAlerts; }
 		public function set numSponsorAlerts(val:int):void
 		{
 			_numSponsorAlerts = val;
-			dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
+			//dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
 		}
 		
 		public function get numCustomerServiceAlerts():int { return _numCustomerServiceAlerts; }
 		public function set numCustomerServiceAlerts(val:int):void
 		{
 			_numCustomerServiceAlerts = val;
-			dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
+			//dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
 		}
 		
 		public function get numCustomerServiceImportantAlerts():int { return _numCustomerServiceImportantAlerts; }
 		public function set numCustomerServiceImportantAlerts(val:int):void
 		{
 			_numCustomerServiceImportantAlerts = val;
-			dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
+			//dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
 		}
 		
 		public function get numTrophiesAlerts():int { return _numTrophiesAlerts; }
 		public function set numTrophiesAlerts(val:int):void
 		{
 			_numTrophiesAlerts = val;
-			dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
+			//dispatchEventWith(MobileEventTypes.ALERT_COUNT_UPDATED);
 		}
 		
 		public function get numAlerts():int { return (_numGainAlerts + _numSponsorAlerts + _numCustomerServiceImportantAlerts + _numTrophiesAlerts) }

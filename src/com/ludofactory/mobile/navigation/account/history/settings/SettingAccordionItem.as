@@ -6,13 +6,12 @@ Created : 5 nov. 2013
 */
 package com.ludofactory.mobile.navigation.account.history.settings
 {
+	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AbstractAccordionItem;
 	import com.ludofactory.mobile.core.theme.Theme;
-	
-	import flash.text.TextFormat;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
@@ -21,8 +20,10 @@ package com.ludofactory.mobile.navigation.account.history.settings
 	import feathers.controls.Scroller;
 	import feathers.layout.VerticalLayout;
 	
+	import flash.text.TextFormat;
+	
+	import starling.display.MeshBatch;
 	import starling.display.Quad;
-	import starling.display.QuadBatch;
 	import starling.display.Sprite;
 	import starling.events.TouchEvent;
 	
@@ -34,7 +35,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 		
 		/**
 		 * The header. */		
-		private var _headerBackground:QuadBatch;
+		private var _headerBackground:MeshBatch;
 		
 		/**
 		 * The header title. */		
@@ -69,15 +70,15 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			_headerContainer.addEventListener(TouchEvent.TOUCH, expandOrCollapseContent);
 			addChild(_headerContainer);
 			
-			_headerBackground = _headerBackground = new QuadBatch();
+			_headerBackground = _headerBackground = new MeshBatch();
 			_headerContainer.addChild(_headerBackground);
 			
 			var quad:Quad = new Quad(50, scaleAndRoundToDpi(84), 0xffffff);
-			_headerBackground.addQuad( quad );
+			_headerBackground.addMesh( quad );
 			quad.height = scaleAndRoundToDpi(2);
 			quad.color = 0xbfbfbf;
 			quad.y = scaleAndRoundToDpi(82);
-			_headerBackground.addQuad( quad );
+			_headerBackground.addMesh( quad );
 
 			headerHeight = scaleAndRoundToDpi(84);
 			
@@ -91,7 +92,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 			_arrow = new ImageLoader();
 			_arrow.source = AbstractEntryPoint.assets.getTexture("arrow_down");
 			_arrow.scaleX = _arrow.scaleY = GlobalConfig.dpiScale;
-			_arrow.snapToPixels = true;
+			_arrow.pixelSnapping = true;
 			_headerContainer.addChild(_arrow);
 			
 			_contentContainer = new ScrollContainer();
@@ -153,7 +154,7 @@ package com.ludofactory.mobile.navigation.account.history.settings
 		{
 			_headerContainer.removeEventListener(TouchEvent.TOUCH, expandOrCollapseContent);
 			
-			_headerBackground.reset();
+			_headerBackground.clear();
 			_headerBackground.removeFromParent(true);
 			_headerBackground = null;
 			

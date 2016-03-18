@@ -13,12 +13,10 @@ package com.ludofactory.mobile.navigation.authentication
 	
 	import feathers.controls.LayoutGroup;
 	
-	import feathers.core.FeathersControl;
-	
 	import starling.display.Image;
-	
 	import starling.display.Quad;
 	import starling.text.TextField;
+	import starling.text.TextFormat;
 	
 	public class OrContainer extends LayoutGroup
 	{
@@ -56,7 +54,7 @@ package com.ludofactory.mobile.navigation.authentication
 			_ellipse.scaleX = _ellipse.scaleY = GlobalConfig.dpiScale;
 			addChild(_ellipse);
 			
-			_label = new TextField(_ellipse.width, _ellipse.height, _("OU"), Theme.FONT_SANSITA, scaleAndRoundToDpi(25), 0xffffff);
+			_label = new TextField(_ellipse.width, _ellipse.height, _("OU"), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(25), 0xffffff));
 			_label.autoScale = true;
 			addChild(_label);
 		}

@@ -6,26 +6,26 @@ Created : 27 sept. 2013
 */
 package com.ludofactory.mobile.navigation.sponsor.info
 {
-
-	import com.ludofactory.common.gettext.aliases._;
+	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-
+	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.List;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.core.FeathersControl;
-	import feathers.display.Scale3Image;
 	import feathers.skins.IStyleProvider;
-
+	
+	import flash.geom.Rectangle;
+	
+	import starling.display.Image;
 	import starling.events.Event;
 	import starling.text.TextField;
-	import starling.text.TextFieldAutoSize;
-	import starling.utils.HAlign;
-	import starling.utils.VAlign;
-
+	import starling.text.TextFormat;
+	import starling.utils.Align;
+	
 	/**
 	 * Item renderer used to display the customer service messages.
 	 */	
@@ -46,7 +46,7 @@ package com.ludofactory.mobile.navigation.sponsor.info
 		
 		/**
 		 * The background. */		
-		private var _backgroundSkin:Scale3Image;
+		private var _backgroundSkin:Image;
 		
 		public function FacebookBonusItemRenderer()
 		{
@@ -61,12 +61,14 @@ package com.ludofactory.mobile.navigation.sponsor.info
 			
 			this.height = _itemHeight;
 			
-			_backgroundSkin = new Scale3Image(Theme.facebookBonusBackground, GlobalConfig.dpiScale);
+			_backgroundSkin = new Image(AbstractEntryPoint.assets.getTexture("facebook-popup-single-container"));
+			_backgroundSkin.scale = GlobalConfig.dpiScale;
+			_backgroundSkin.scale9Grid = new Rectangle(28, 0, 10, _backgroundSkin.texture.frameHeight);
 			addChild(_backgroundSkin);
 			
-			_title = new TextField(5, _itemHeight, "sdfdsfsdfdsfsfds", Theme.FONT_SANSITA, scaleAndRoundToDpi(35), Theme.COLOR_WHITE);
-			_title.hAlign = HAlign.LEFT;
-			_title.vAlign = VAlign.CENTER;
+			_title = new TextField(5, _itemHeight, "sdfdsfsdfdsfsfds", new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(35), Theme.COLOR_WHITE));
+			_title.format.horizontalAlign = Align.LEFT;
+			_title.format.verticalAlign = Align.CENTER;
 			_title.autoScale = true;
 			addChild(_title);
 			
@@ -74,8 +76,6 @@ package com.ludofactory.mobile.navigation.sponsor.info
 			_image.textureScale = GlobalConfig.dpiScale;
 			addChild(_image);
 		}
-		
-		public function set backgroundSkin(val:Scale3Image):void { _backgroundSkin = val; }
 		
 		override protected function draw():void
 		{
@@ -184,7 +184,19 @@ package com.ludofactory.mobile.navigation.sponsor.info
 		public static var globalStyleProvider:IStyleProvider;
 		override protected function get defaultStyleProvider():IStyleProvider
 		{
-			return SponsorBonusItemRenderer.globalStyleProvider;
+			return FacebookBonusItemRenderer.globalStyleProvider;
+		}
+		
+		protected var _factoryID:String;
+		
+		public function get factoryID():String
+		{
+			return this._factoryID;
+		}
+		
+		public function set factoryID(value:String):void
+		{
+			this._factoryID = value;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

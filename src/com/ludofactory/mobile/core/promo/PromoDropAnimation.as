@@ -13,6 +13,7 @@ package com.ludofactory.mobile.core.promo
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.text.TextField;
+	import starling.text.TextFormat;
 	import starling.utils.deg2rad;
 	
 	/**
@@ -66,7 +67,7 @@ package com.ludofactory.mobile.core.promo
 			
 			percentText = percentText.replace(/#size#/g, scaleToSize(GlobalConfig.isPhone ? 15 : 25).toString());
 			
-			_percent = new TextField((_mainDrop.width - scaleToSize(10)), (_mainDrop.height - scaleToSize(10)), percentText, Theme.FONT_SANSITA, scaleToSize(GlobalConfig.isPhone ? 30 : 50), 0xe10000);
+			_percent = new TextField((_mainDrop.width - scaleToSize(10)), (_mainDrop.height - scaleToSize(10)), percentText, new TextFormat(Theme.FONT_SANSITA, scaleToSize(GlobalConfig.isPhone ? 30 : 50), 0xe10000));
 			_percent.isHtmlText = true;
 			_percent.autoScale = true;
 			//_percent.border = true;

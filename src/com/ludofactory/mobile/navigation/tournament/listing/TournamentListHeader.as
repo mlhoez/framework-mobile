@@ -6,6 +6,7 @@ Created : 9 sept. 2013
 */
 package com.ludofactory.mobile.navigation.tournament.listing
 {
+	
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -13,8 +14,8 @@ package com.ludofactory.mobile.navigation.tournament.listing
 	import feathers.controls.Label;
 	import feathers.core.FeathersControl;
 	
+	import starling.display.MeshBatch;
 	import starling.display.Quad;
-	import starling.display.QuadBatch;
 	
 	public class TournamentListHeader extends FeathersControl
 	{
@@ -34,7 +35,7 @@ package com.ludofactory.mobile.navigation.tournament.listing
 		
 		/**
 		 * The header quad batch. */		
-		private var _header:QuadBatch;
+		private var _header:MeshBatch;
 		
 		/**
 		 * The rank label. */		
@@ -60,7 +61,7 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			_itemHeight = scaleAndRoundToDpi(BASE_HEIGHT);
 			_strokeThickness = scaleAndRoundToDpi(BASE_STROKE_THICKNESS);
 			
-			_header = new QuadBatch();
+			_header = new MeshBatch();
 			addChild(_header);
 			
 			_rankLabel = new Label();
@@ -85,21 +86,21 @@ package com.ludofactory.mobile.navigation.tournament.listing
 			
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_header.reset(); // FIXME améliorer ça
+				_header.clear(); // FIXME améliorer ça
 				var quad:Quad = new Quad(this.actualWidth, _itemHeight, 0xfbfbfb);
-				_header.addQuad( quad );
+				_header.addMesh( quad );
 				
 				quad.x = this.actualWidth * 0.25;
 				quad.width = this.actualWidth * 0.5;
 				quad.color = 0xeeeeee;
-				_header.addQuad( quad );
+				_header.addMesh( quad );
 				
 				quad.x = 0;
 				quad.y = _itemHeight - _strokeThickness;
 				quad.width  = this.actualWidth;
 				quad.height = _strokeThickness;
 				quad.color  = 0xbfbfbf;
-				_header.addQuad( quad );
+				_header.addMesh( quad );
 				
 				_rankLabel.width = _starsLabel.width = this.actualWidth * 0.25;
 				_nameLabel.width = this.actualWidth * 0.5;
@@ -118,7 +119,7 @@ package com.ludofactory.mobile.navigation.tournament.listing
 		
 		override public function dispose():void
 		{
-			_header.reset();
+			_header.clear();
 			_header.removeFromParent(true);
 			_header = null;
 			
