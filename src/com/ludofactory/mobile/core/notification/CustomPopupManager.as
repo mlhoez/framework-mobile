@@ -73,12 +73,12 @@ package com.ludofactory.mobile.core.notification
 		/**
 		 * Adds a notification on the screen.
 		 */
-		public static function addNotification(content:AbstractPopupContent, callback:Function = null):void
+		public static function addPopup(content:AbstractPopupContent, callback:Function = null):void
 		{
 			if( isNotificationDisplaying )
 			{
 				closePopup();
-				TweenMax.delayedCall(0.75, addNotification, [content]);
+				TweenMax.delayedCall(0.75, addPopup, [content]);
 				return;
 			}
 

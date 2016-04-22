@@ -24,7 +24,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 	import starling.text.TextFieldAutoSize;
 	import starling.text.TextFormat;
 	
-	public class PlayerNotificationContent extends AbstractPopupContent
+	public class PlayerProfilePopupContent extends AbstractPopupContent
 	{
 		/**
 		 * The disconnect icon. */		
@@ -42,7 +42,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 		 * The canel button. */		
 		private var _cancelButton:MobileButton;
 		
-		public function PlayerNotificationContent()
+		public function PlayerProfilePopupContent()
 		{
 			super();
 		}

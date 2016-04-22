@@ -282,7 +282,7 @@ package com.ludofactory.mobile.navigation.authentication
 		 */		
 		private function onForgotPasswordTouched(event:Event):void
 		{
-			CustomPopupManager.addNotification( new RetrievePasswordNotificationContent() );
+			CustomPopupManager.addPopup( new RetrievePasswordNotificationContent() );
 		}
 		
 		/**

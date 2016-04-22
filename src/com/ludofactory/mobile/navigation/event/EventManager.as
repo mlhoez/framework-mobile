@@ -92,12 +92,12 @@ package com.ludofactory.mobile.navigation.event
 					}
 					case AppEventType.RATE_EVENT:
 					{
-						CustomPopupManager.addNotification( new RateNotificationContent( new EventData(result) ) );
+						CustomPopupManager.addPopup( new RateNotificationContent( new EventData(result) ) );
 						break;
 					}
 					case AppEventType.PUSH_EVENT:
 					{
-						CustomPopupManager.addNotification( new EventPushNotificationContent(AbstractEntryPoint.screenNavigator.activeScreenID) );
+						CustomPopupManager.addPopup( new EventPushNotificationContent(AbstractEntryPoint.screenNavigator.activeScreenID) );
 						break;
 					}
 					case AppEventType.FACEBOOK_EVENT:

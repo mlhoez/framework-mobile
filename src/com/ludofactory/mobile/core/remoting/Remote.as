@@ -490,7 +490,7 @@ package com.ludofactory.mobile.core.remoting
 			{
 				log("[Remote] onQueryComplete : The user could not be reconnected on the server side (error 999).");
 				MemberManager.getInstance().disconnect();
-				CustomPopupManager.addNotification(new InvalidSessionNotificationContent());
+				CustomPopupManager.addPopup(new InvalidSessionNotificationContent());
 				InfoManager.hide("", InfoContent.ICON_NOTHING, 0); // just in case
 			}
 			else

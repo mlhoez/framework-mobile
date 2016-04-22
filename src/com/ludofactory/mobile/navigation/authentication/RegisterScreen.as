@@ -382,7 +382,7 @@ package com.ludofactory.mobile.navigation.authentication
 		 */
 		private function onInfoTouched(event:Event):void
 		{
-			CustomPopupManager.addNotification( new FaqNotificationContent(new FaqQuestionAnswerData({question:_("Qu'est-ce que le code parrain ?"), reponse:_("Le code parrain est un numéro correspondant à l'identifiant d'un joueur sur l'application.\n\nLorsqu'un joueur ou un ami souhaite vous parrainer, il vous envoie son code joueur que vous pouvez saisir dans ce champ en vous inscrivant.")})));
+			CustomPopupManager.addPopup( new FaqNotificationContent(new FaqQuestionAnswerData({question:_("Qu'est-ce que le code parrain ?"), reponse:_("Le code parrain est un numéro correspondant à l'identifiant d'un joueur sur l'application.\n\nLorsqu'un joueur ou un ami souhaite vous parrainer, il vous envoie son code joueur que vous pouvez saisir dans ce champ en vous inscrivant.")})));
 		}
 		
 		/**

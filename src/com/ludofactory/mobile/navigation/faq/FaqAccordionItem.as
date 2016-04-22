@@ -166,7 +166,7 @@ package com.ludofactory.mobile.navigation.faq
 			if( _touchPointID != -1 )
 			{
 				//NotificationManager.addNotification( new FaqNotification(FaqQuestionAnswerData(event.data)) );
-				CustomPopupManager.addNotification( new FaqNotificationContent(FaqQuestionAnswerData(event.data)) );
+				CustomPopupManager.addPopup( new FaqNotificationContent(FaqQuestionAnswerData(event.data)) );
 			}
 		}
 		

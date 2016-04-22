@@ -302,7 +302,7 @@ package com.ludofactory.mobile
 				case ButtonFactory.FACEBOOK_TYPE_CONNECT:
 				{
 					// display the Facebook popup to inform the player of what we will do / grant him
-					CustomPopupManager.addNotification(new FacebookNotificationContent(), onFacebookPopupClosed);
+					CustomPopupManager.addPopup(new FacebookNotificationContent(), onFacebookPopupClosed);
 					break;
 				}
 					
@@ -324,7 +324,7 @@ package com.ludofactory.mobile
 						// the popup. When the user closes the popup or is authenticated with Facebook, the callback
 						// onFacebookPopupClosed will be called. If the data of the callback is true, it means that the
 						// user is authenticated and that we can automatically launch the publication.
-						CustomPopupManager.addNotification(new FacebookNotificationContent(_publicationData), onFacebookPopupClosed);
+						CustomPopupManager.addPopup(new FacebookNotificationContent(_publicationData), onFacebookPopupClosed);
 					}
 					else
 					{

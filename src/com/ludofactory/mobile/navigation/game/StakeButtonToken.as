@@ -288,7 +288,7 @@ package com.ludofactory.mobile.navigation.game
 				else
 				{
 					if(!MemberManager.getInstance().isLoggedIn())
-						CustomPopupManager.addNotification( new MarketingRegisterNotificationContent(_("Vous n'avez plus assez de Jetons."), ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
+						CustomPopupManager.addPopup( new MarketingRegisterNotificationContent(_("Vous n'avez plus assez de Jetons."), ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
 				}
 			}
 		}

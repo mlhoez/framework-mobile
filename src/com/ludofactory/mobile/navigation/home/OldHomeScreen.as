@@ -222,7 +222,7 @@ package com.ludofactory.mobile.navigation.home
 		
 		private function onShowDebugScreen(event:Event):void
 		{
-			CustomPopupManager.addNotification(new DebugNotificationContent());
+			CustomPopupManager.addPopup(new DebugNotificationContent());
 		}
 		
 		/**
@@ -257,17 +257,17 @@ package com.ludofactory.mobile.navigation.home
 		
 		private function onSettingsTriggered(event:Event):void
 		{
-			CustomPopupManager.addNotification(new SettingsNotificationContent());
+			CustomPopupManager.addPopup(new SettingsNotificationContent());
 		}
 		
 		private function onHighscoresTriggered(event:Event):void
 		{
-			CustomPopupManager.addNotification(new TrophiesNotificationContent());
+			CustomPopupManager.addPopup(new TrophiesNotificationContent());
 		}
 		
 		private function onSponsorTriggered(event:Event):void
 		{
-			CustomPopupManager.addNotification(new SponsorNotificationContent());
+			CustomPopupManager.addPopup(new SponsorNotificationContent());
 		}
 		
 //------------------------------------------------------------------------------------------------------------
