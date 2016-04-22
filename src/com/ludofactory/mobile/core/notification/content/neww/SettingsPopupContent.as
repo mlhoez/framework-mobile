@@ -31,7 +31,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 	
 	use namespace dispatcher;
 	
-	public class SettingsNotificationContent extends AbstractPopupContent
+	public class SettingsPopupContent extends AbstractPopupContent
 	{
 		/**
 		 * The list. */
@@ -59,7 +59,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 		private var _savedTutoChoice:Boolean;
 		private var _savedLanguageChoice:int;
 		
-		public function SettingsNotificationContent()
+		public function SettingsPopupContent()
 		{
 			super();
 		}

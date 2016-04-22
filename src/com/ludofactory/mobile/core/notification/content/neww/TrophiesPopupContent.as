@@ -31,7 +31,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 	import starling.text.TextFieldAutoSize;
 	import starling.text.TextFormat;
 	
-	public class TrophiesNotificationContent extends AbstractPopupContent
+	public class TrophiesPopupContent extends AbstractPopupContent
 	{
 		/**
 		 * Flag to indicate that the trophies list data provider have been updated. */
@@ -49,7 +49,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 		 * The loader. */
 		private var _loader:MovieClip;
 		
-		public function TrophiesNotificationContent()
+		public function TrophiesPopupContent()
 		{
 			super();
 		}
@@ -57,6 +57,8 @@ package com.ludofactory.mobile.core.notification.content.neww
 		override protected function initialize():void
 		{
 			super.initialize();
+			
+			// TODO add the Game Center button here
 			
 			data = false;
 			

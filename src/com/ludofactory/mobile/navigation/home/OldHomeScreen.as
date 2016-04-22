@@ -23,9 +23,9 @@ package com.ludofactory.mobile.navigation.home
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.neww.DebugNotificationContent;
-	import com.ludofactory.mobile.core.notification.content.neww.SettingsNotificationContent;
+	import com.ludofactory.mobile.core.notification.content.neww.SettingsPopupContent;
 	import com.ludofactory.mobile.core.notification.content.neww.SponsorNotificationContent;
-	import com.ludofactory.mobile.core.notification.content.neww.TrophiesNotificationContent;
+	import com.ludofactory.mobile.core.notification.content.neww.TrophiesPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
@@ -257,12 +257,12 @@ package com.ludofactory.mobile.navigation.home
 		
 		private function onSettingsTriggered(event:Event):void
 		{
-			CustomPopupManager.addPopup(new SettingsNotificationContent());
+			CustomPopupManager.addPopup(new SettingsPopupContent());
 		}
 		
 		private function onHighscoresTriggered(event:Event):void
 		{
-			CustomPopupManager.addPopup(new TrophiesNotificationContent());
+			CustomPopupManager.addPopup(new TrophiesPopupContent());
 		}
 		
 		private function onSponsorTriggered(event:Event):void
