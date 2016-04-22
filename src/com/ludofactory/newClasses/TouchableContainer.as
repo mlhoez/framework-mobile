@@ -4,18 +4,14 @@
 package com.ludofactory.newClasses
 {
 	
-	import com.greensock.TweenMax;
-	import com.greensock.easing.Back;
-	import com.ludofactory.common.utils.logs.log;
-	
 	import flash.geom.Rectangle;
 	
 	import starling.animation.Transitions;
-	
 	import starling.core.Starling;
-	
 	import starling.display.ButtonState;
+	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
+	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -23,6 +19,9 @@ package com.ludofactory.newClasses
 	
 	public class TouchableContainer extends DisplayObjectContainer
 	{
+		
+		// TODO Gérer un bage pour afficher un comteur dessus !
+		
 		/**
 		 * Maximum drag distance to count the touch events. */
 		private static const MAX_DRAG_DIST:Number = 50;
@@ -43,9 +42,14 @@ package com.ludofactory.newClasses
 		 * Trigger bounds. */
 		private var _triggerBounds:Rectangle = new Rectangle();
 		
+		private var _container:Sprite;
+		
 		public function TouchableContainer()
 		{
 			super();
+			
+			_container = new Sprite();
+			addChild(_container);
 			
 			addEventListener(TouchEvent.TOUCH, onTouch);
 			
@@ -130,28 +134,28 @@ package com.ludofactory.newClasses
 			
 			_state = value;
 			// Max : added so that we can animate the button with tweens
-			//TweenMax.killTweensOf(this);
-			Starling.juggler.removeTweens(this);
+			//TweenMax.killTweensOf(_container);
+			Starling.juggler.removeTweens(_container);
 			/* Max : commented because I animated it in the up state
-				this.x = this.y = 0;
-				this.scaleX = this.scaleY = this.alpha = 1.0;
+				 _container.x = _container.y = 0;
+				 _container.scaleX = _container.scaleY = _container.alpha = 1.0;
 			 */
 			
 			switch (_state)
 			{
 				case ButtonState.DOWN:
 				{
-					this.scaleX = this.scaleY = _scaleWhenDown;
-					this.x = (1.0 - _scaleWhenDown) / 2.0 * this.width;
-					this.y = (1.0 - _scaleWhenDown) / 2.0 * this.height;
+					_container.scaleX = _container.scaleY = _scaleWhenDown;
+					_container.x = (1.0 - _scaleWhenDown) / 2.0 * _container.width;
+					_container.y = (1.0 - _scaleWhenDown) / 2.0 * _container.height;
 					
 					break;
 				}
 				case ButtonState.UP:
 				{
 					// Max : added to animate the up state and make it more alive
-					//TweenMax.to(this, 0.25, { x:0, y:0, scaleX:1.0, scaleY:1.0, alpha:1.0, ease:Back.easeOut });
-					Starling.juggler.tween(this, 0.25, { x:0, y:0, scaleX:1.0, scaleY:1.0, alpha:1.0, transition:Transitions.EASE_OUT_BACK });
+					//TweenMax.to(_container, 0.25, { x:0, y:0, scaleX:1.0, scaleY:1.0, alpha:1.0, ease:Back.easeOut });
+					Starling.juggler.tween(_container, 0.25, { x:0, y:0, scaleX:1.0, scaleY:1.0, alpha:1.0, transition:Transitions.EASE_OUT_BACK });
 					break;
 				}
 				case ButtonState.OVER:
@@ -161,7 +165,7 @@ package com.ludofactory.newClasses
 				}
 				case ButtonState.DISABLED:
 				{
-					this.alpha = _alphaWhenDisabled;
+					_container.alpha = _alphaWhenDisabled;
 					
 					break;
 				}
@@ -223,6 +227,22 @@ package com.ludofactory.newClasses
 				_enabled = value;
 				state = value ? ButtonState.UP : ButtonState.DISABLED;
 			}
+		}
+		
+		override public function addChild(child:DisplayObject):DisplayObject
+		{
+			if(child == _container)
+				return super.addChild(child);
+			else
+				return _container.addChild(child);
+		}
+		
+		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
+		{
+			if(child == _container)
+				return super.addChildAt(child, index);
+			else
+				return _container.addChildAt(child, index);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
