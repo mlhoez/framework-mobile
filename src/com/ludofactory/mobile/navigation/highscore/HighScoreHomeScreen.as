@@ -15,13 +15,11 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.newClasses.Analytics;
 	
 	import feathers.controls.Button;
-	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
 	
 	import flash.text.TextFormat;
@@ -50,22 +48,11 @@ package com.ludofactory.mobile.navigation.highscore
 		private var _background:Quad;
 		
 		/**
-		 * The international icon. */		
-		private var _internationalIcon:ImageLoader;
-		/**
 		 * The international button. */		
 		private var _internationalButton:Button;
-		
-		/**
-		 * The national icon. */		
-		private var _nationalIcon:ImageLoader;
 		/**
 		 * The national button. */		
 		private var _nationalButton:Button;
-		
-		/**
-		 * The Facebook icon. */		
-		private var _facebookIcon:ImageLoader;
 		/**
 		 * The friends button. */		
 		private var _facebookButton:Button;
@@ -103,63 +90,26 @@ package com.ludofactory.mobile.navigation.highscore
 				addChild(_background);
 			}
 			
-			_internationalIcon = new ImageLoader();
-			_internationalIcon.source = AbstractEntryPoint.assets.getTexture("flag-international");
-			_internationalIcon.pixelSnapping = true;
-			_internationalIcon.textureScale = GlobalConfig.dpiScale;
-			
 			_internationalButton = new Button();
 			_internationalButton.horizontalAlign = Button.HORIZONTAL_ALIGN_LEFT;
 			_internationalButton.addEventListener(Event.TRIGGERED, onShowInternational);
 			_internationalButton.label = _("International");
-			_internationalButton.defaultIcon = _internationalIcon;
 			addChild(_internationalButton);
 			_internationalButton.gap = scaleAndRoundToDpi(40);
 			_internationalButton.iconOffsetX = scaleAndRoundToDpi(20);
-			
-			var nationalTextureName:String;
-			var countryData:CountryData;
-			if( MemberManager.getInstance().isLoggedIn() )
-			{
-				for(var i:int = 0; i < GlobalConfig.COUNTRIES.length; i++)
-				{
-					countryData = GlobalConfig.COUNTRIES[i];
-					if( countryData.id == MemberManager.getInstance().getCountryId() )
-					{
-						nationalTextureName = countryData.textureName;
-						break;
-					}
-				}
-			}
-			else
-			{
-				nationalTextureName = "flag-france";
-			}
-			
-			_nationalIcon = new ImageLoader();
-			_nationalIcon.source = AbstractEntryPoint.assets.getTexture( nationalTextureName );
-			_nationalIcon.pixelSnapping = true;
-			_nationalIcon.textureScale = GlobalConfig.dpiScale;
 			
 			_nationalButton = new Button();
 			_nationalButton.horizontalAlign = Button.HORIZONTAL_ALIGN_LEFT;
 			_nationalButton.addEventListener(Event.TRIGGERED, onShowNational);
 			_nationalButton.label = _("National");
-			_nationalButton.defaultIcon = _nationalIcon;
 			addChild(_nationalButton);
 			_nationalButton.gap = scaleAndRoundToDpi(40);
 			_nationalButton.iconOffsetX = scaleAndRoundToDpi(20);
-			
-			_facebookIcon = new ImageLoader();
-			_facebookIcon.source = AbstractEntryPoint.assets.getTexture("facebook-icon-normal");
-			_facebookIcon.pixelSnapping = true;
-			_facebookIcon.textureScale = GlobalConfig.dpiScale;
 			
 			_facebookButton = new Button();
 			_facebookButton.horizontalAlign = Button.HORIZONTAL_ALIGN_LEFT;
 			_facebookButton.addEventListener(Event.TRIGGERED, onShowFacebook);
 			_facebookButton.label = _("Amis");
-			_facebookButton.defaultIcon = _facebookIcon;
 			addChild(_facebookButton);
 			_facebookButton.gap = scaleAndRoundToDpi(40);
 			_facebookButton.iconOffsetX = scaleAndRoundToDpi(20);
@@ -246,7 +196,6 @@ package com.ludofactory.mobile.navigation.highscore
 		private function onShowInternational(event:Event):void
 		{
 			Analytics.trackEvent("HighScores", "Affichage du classement International");
-			advancedOwner.screenData.highscoreRankingType = 0;
 			advancedOwner.replaceScreen( ScreenIds.HIGH_SCORE_LIST_SCREEN );
 		}
 		
@@ -256,7 +205,6 @@ package com.ludofactory.mobile.navigation.highscore
 		private function onShowNational(event:Event):void
 		{
 			Analytics.trackEvent("HighScores", "Affichage du classement National");
-			advancedOwner.screenData.highscoreRankingType = MemberManager.getInstance().isLoggedIn() ? MemberManager.getInstance().getCountryId() : 1;
 			advancedOwner.replaceScreen( ScreenIds.HIGH_SCORE_LIST_SCREEN );
 		}
 		
@@ -266,7 +214,6 @@ package com.ludofactory.mobile.navigation.highscore
 		private function onShowFacebook(event:Event):void
 		{
 			Analytics.trackEvent("HighScores", "Affichage du classement des Amis Facebook");
-			advancedOwner.screenData.highscoreRankingType = -1;
 			advancedOwner.replaceScreen( ScreenIds.HIGH_SCORE_LIST_SCREEN );
 		}
 		
@@ -293,27 +240,17 @@ package com.ludofactory.mobile.navigation.highscore
 				_background = null;
 			}
 			
-			_internationalIcon.removeFromParent(true);
-			_internationalIcon = null;
-			
 			_internationalButton.removeEventListener(Event.TRIGGERED, onShowInternational);
 			_internationalButton.removeFromParent(true);
 			_internationalButton = null;
-			
-			_nationalIcon.removeFromParent(true);
-			_nationalIcon = null;
 			
 			_nationalButton.removeEventListener(Event.TRIGGERED, onShowNational);
 			_nationalButton.removeFromParent(true);
 			_nationalButton = null;
 			
-			_facebookIcon.removeFromParent(true);
-			_facebookIcon = null;
-			
 			_facebookButton.removeEventListener(Event.TRIGGERED, onShowFacebook);
 			_facebookButton.removeFromParent(true);
 			_facebookButton = null;
-			
 			
 			super.dispose();
 		}

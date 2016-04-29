@@ -12,11 +12,6 @@ package com.ludofactory.mobile.core.model
 	public class GameData
 	{
 		/**
-		 * Whether the game session have been pushed.
-		 * It will determine which content should be initialized in the tournament end screen. */		
-		private var _gameSessionPushed:Boolean;
-		
-		/**
 		 * The number of stars or pointq earned in tournament or free mode. If the game session have been pushed,
 		 * this value is the one from the database, otherwise, it is calculated thanks
 		 * to the <code>ScoreToStarsConverter</code> class. */		
@@ -49,9 +44,6 @@ package com.ludofactory.mobile.core.model
 		{
 			
 		}
-		
-		public function get gameSessionPushed():Boolean { return _gameSessionPushed; }
-		public function set gameSessionPushed(val:Boolean):void { _gameSessionPushed = val; }
 		
 		public function get numStarsOrPointsEarned():int { return _numStarsEarned; }
 		public function set numStarsOrPointsEarned(val:int):void { _numStarsEarned = val; }

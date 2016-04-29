@@ -556,7 +556,6 @@ package com.ludofactory.mobile.navigation.tournament
 		{
 			if( MemberManager.getInstance().isTournamentUnlocked )
 			{
-				advancedOwner.screenData.gameType = GameMode.TOURNAMENT;
 				advancedOwner.replaceScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN );
 			}
 			else

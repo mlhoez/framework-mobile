@@ -351,7 +351,6 @@ package com.ludofactory.mobile.core.theme
 			baseLabelTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(24), COLOR_BLACK);
 			
 			// Game
-			inGameScoreTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(38), 0xffff05, false, false, null, null, null, TextFormatAlign.CENTER);
 			inGameSuccessTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(46), 0xc6d29d);
 			inGameFailTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(46), 0xc52828);
 			
@@ -451,8 +450,8 @@ package com.ludofactory.mobile.core.theme
 			buttonDisabledSkinTextures               = AbstractEntryPoint.assets.getTexture("button-grey");
 			buttonTransparentBlueDarkerUpSkinTexture = AbstractEntryPoint.assets.getTexture("button-transparent-blue-darker");
 			
-			this.verticalSimpleScrollBarThumbTexture = AbstractEntryPoint.assets.getTexture("simple-scroll-bar-vertical-thumb-skin0000");
-			this.horizontalSimpleScrollBarThumbTexture = AbstractEntryPoint.assets.getTexture("simple-scroll-bar-horizontal-thumb-skin0000");
+			this.verticalSimpleScrollBarThumbTexture = AbstractEntryPoint.assets.getTexture("vertical-scroll-bar-thumb-skin");
+			this.horizontalSimpleScrollBarThumbTexture = AbstractEntryPoint.assets.getTexture("horizontal-scroll-bar-thumb-skin");
 			
 			// PageIndicator
 			pageIndicatorSelectedTexture = AbstractEntryPoint.assets.getTexture("page-indicator-selected-skin");
@@ -1152,7 +1151,6 @@ package com.ludofactory.mobile.core.theme
 		public static var labelPodiumTopTextFormat:TextFormat;                  // Game top podium
 		public static var downArrowLists:Texture;                               // Arrows and shadow for the lists
 		public static var downArrowShadow:Texture;                              // Arrows and shadow for the lists
-		public static var inGameScoreTextFormat:TextFormat;                     // In game
 		public static var inGameSuccessTextFormat:TextFormat;                   // In game
 		public static var inGameFailTextFormat:TextFormat;                      // In game
 		

@@ -94,37 +94,8 @@ package com.ludofactory.mobile.core.manager
 		private var _title:String = "Mr.";
 		
 		/**
-		 * The member's number of credits */		
-		private var _credits:int = 0;
-		
-		/**
-		 * The member's number of tokens (default is 100 for an anonymous member) */		
-		private var _numTokens:int = 100;
-		
-		/**
-		 * The total of tokens available each day (50 by default with a common rank). (this is static unlike _numTokens
-		 * which is decremented). */		
-		private var _totalTokensADay:int = 50;
-		
-		/**
-		 * Bonus tokens. */
-		private var _totalBonusTokensADay:int = 0;
-		
-		/**
-		 * The member's number of points */		
-		private var _points:int = 0;
-		
-		/**
 		 * The member's number of cumulated stars for the current tournament. */		
 		private var _cumulatedStars:int = 0;
-		
-		/**
-		 * The member's number of bought credits. */		
-		private var _numCreditsBought:int = 0;
-		
-		/**
-		 * The member's rank id */		
-		private var _rank:int = 0;
 		
 		/**
 		 * The member's facebook id */		
@@ -136,15 +107,6 @@ package com.ludofactory.mobile.core.manager
 		 * of the correct day are decremented at the moment of the
 		 * push. */		
 		private var _updateDate:String;
-		
-		/**
-		 * The country id associated to the pseudo. */		
-		private var _countryId:int = 0;
-
-        /**
-         * Whether it is a player with the gifts enabled.
-         * Default is false so that we don't have problems with Apple. */
-        private var _giftsEnabled:Boolean = false;
 
 		/**
 		 * Whether the player can watch a VidCoin video in order to get 1 (or more)
@@ -174,11 +136,6 @@ package com.ludofactory.mobile.core.manager
 		private var _tokenDate:Date;
 		
 		/**
-		 * How many times we grant 50 tokens to the player after 20 min.
-		 * When this value is below 0, the user has to wait 40 min. */
-		private var _numRecreditations:int = 5;
-		
-		/**
 		 * Whether the player can have the reward after its first publish.
 		 * True by default so that a non authenticated user will see it. */
 		private var _canHaveRewardAfterPublish:Boolean = true;
@@ -203,17 +160,9 @@ package com.ludofactory.mobile.core.manager
 			if( "pseudo" in memberData && memberData.pseudo != null )                           _pseudo = String(memberData.pseudo);
 			if( "date_naissance" in memberData && memberData.date_naissance != null )           _birthDate = String(memberData.date_naissance);
 			if( "sexe" in memberData && memberData.sexe != null )                               _title = String(memberData.sexe);
-			if( "credits" in memberData && memberData.credits != null )                         _credits = int(memberData.credits);
-			if( "jetons" in memberData && memberData.jetons != null )                           _numTokens = int(memberData.jetons);
 			if( "score_cumule" in memberData && memberData.score_cumule != null )               _cumulatedStars = int(memberData.score_cumule);
-			if( "points" in memberData && memberData.points != null )                           _points = int(memberData.points);
-			if( "rang" in memberData && memberData.rang != null )                               _rank = int(memberData.rang);
 			if( "id_facebook" in memberData && memberData.id_facebook != null )                 _facebookId = Number(memberData.id_facebook);
-			if( "nb_credit_acheter" in memberData && memberData.nb_credit_acheter != null )     _numCreditsBought = int(memberData.nb_credit_acheter);
 			if( "date_jetons" in memberData && memberData.date_jetons != null )                 _updateDate = String(memberData.date_jetons);
-			if( "id_pays_pseudo" in memberData && memberData.id_pays_pseudo != null )           _countryId = int(memberData.id_pays_pseudo);
-			if( "jetons_quotidiens" in memberData && memberData.jetons_quotidiens != null )     _totalTokensADay = int(memberData.jetons_quotidiens);
-			if( "jetons_bonus" in memberData && memberData.jetons_bonus != null )               _totalBonusTokensADay = int(memberData.jetons_bonus);
 			if( "video_disponible" in memberData && memberData.video_disponible != null )       _canWatchVideo = Boolean(memberData.video_disponible);
 			if( "isAdmin" in memberData && memberData.isAdmin != null )                         _isAdmin = Boolean(memberData.isAdmin);
 			if( "displayInterstitial" in memberData && memberData.displayInterstitial != null ) _canDisplayInterstitial = Boolean(memberData.displayInterstitial);
@@ -235,29 +184,11 @@ package com.ludofactory.mobile.core.manager
 		public function get title():String { return _title; }
 		public function set title(val:String):void { _title = val; }
 		
-		public function get numTokens():int { return _numTokens; }
-		public function set numTokens(val:int):void { _numTokens = val; }
-		
-		public function get totalTokensADay():int { return _totalTokensADay; }
-		public function set totalTokensADay(val:int):void { _totalTokensADay = val; }
-		
-		public function get totalBonusTokensADay():int { return _totalBonusTokensADay; }
-		public function set totalBonusTokensADay(val:int):void { _totalBonusTokensADay = val; }
-		
-		public function get credits():int { return _credits; }
-		public function set credits(val:int):void { _credits = val; }
-		
 		public function get highscore():int { return _highscore; }
 		public function set highscore(val:int):void { _highscore = val; }
 		
-		public function get points():int { return _points; }
-		public function set points(val:int):void { _points = val; }
-		
 		public function get cumulatedStars():int { return _cumulatedStars; }
 		public function set cumulatedStars(val:int):void { _cumulatedStars = val; }
-		
-		public function get numCreditsBought():int { return _numCreditsBought; }
-		public function set numCreditsBought(val:int):void { _numCreditsBought = val; }
 		
 		public function get id():Number { return _id; }
 		public function set id(val:Number):void { _id = val; }
@@ -267,9 +198,6 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get password():String { return _password; }
 		public function set password(val:String):void { _password = val; }
-		
-		public function get rank():int { return _rank; }
-		public function set rank(val:int):void { _rank = val; }
 		
 		public function get facebookId():Number { return _facebookId; }
 		public function set facebookId(val:Number):void { _facebookId = val; }
@@ -289,9 +217,6 @@ package com.ludofactory.mobile.core.manager
 		public function get lastTrophyWonId():int { return _lastTrophyWonId; }
 		public function set lastTrophyWonId(val:int):void { _lastTrophyWonId = val; }
 		
-		public function get countryId():int { return _countryId; }
-		public function set countryId(val:int):void { _countryId = val; }
-		
 		public function get displayTutorial():Boolean { return _displayTutorial; }
 		public function set displayTutorial(val:Boolean):void { _displayTutorial = val; }
 		
@@ -300,9 +225,6 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get tournamentUnlocked():Boolean { return _tournamentUnlocked; }
 		public function set tournamentUnlocked(val:Boolean):void { _tournamentUnlocked = val; }
-
-        public function get giftsEnabled():Boolean { return _giftsEnabled; }
-        public function set giftsEnabled(val:Boolean):void { _giftsEnabled = val; }
 
 		public function get canWatchVideo():Boolean { return _canWatchVideo; }
 		public function set canWatchVideo(val:Boolean):void { _canWatchVideo = val; }
@@ -330,9 +252,6 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get tournamentUnlockCounter():int { return _tournamentUnlockCounter; }
 		public function set tournamentUnlockCounter(value:int):void { _tournamentUnlockCounter = value; }
-		
-		public function get numRecreditations():int { return _numRecreditations; }
-		public function set numRecreditations(value:int):void { _numRecreditations = value; }
 		
 		public function get canHaveRewardAfterPublish():Boolean { return _canHaveRewardAfterPublish; }
 		public function set canHaveRewardAfterPublish(value:Boolean):void { _canHaveRewardAfterPublish = value; }

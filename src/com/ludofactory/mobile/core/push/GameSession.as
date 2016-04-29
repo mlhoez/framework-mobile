@@ -9,42 +9,29 @@ package com.ludofactory.mobile.core.push
 		/**
 		 * A unique id generated at creation. */		
 		private var _uniqueId:String;
-		
 		/**
-		 * Score of the game session */		
+		 * The game mode (whether solo or duel). */
+		private var _gameMode:int;
+		/**
+		 * Score of this game session */		
 		private var _score:int;
-		
 		/**
-		 * The game type (whether free or tournament). */		
-		private var _gameType:int;
-		
-		/**
-		 * The date the game session was played so that when the
-		 * push occur, when decrement the free game sessions of
-		 * the correct day, and not the actual one. 
-		 * <p>This date is only used when a game session is pushed
-		 * later, not when the push was successfully made after a game
-		 * (in this case it's the date of the server on the server side
-		 * that is taken.</p> */		
+		 * The date the game session was played (it's the device date so it might not be the real one).
+		 * <p>Note that this is just for information because the real server date is used instead.</p> */		
 		private var _playDate:String;
-		
 		/**
-		 * Whether this game session was stored.
-		 * Default is false. */		
-		private var _connected:Boolean;
-		
-		/**
-		 * The number of stars or points earned, at the moment only used in
-		 * the AlertItemRenderer for information. */		
-		private var _numStarsOrPointsEarned:int;
-		
-		/**
-		 * Trophies won on the game session. */		
+		 * Trophies won on the game session. */
 		private var _trophiesWon:Array = [];
+		/**
+		 * The time elapsed on the game in seconds. */
+		private var _elapsedTime:int;
 		
 		/**
-		 * The time elapsed on the game in seconds. */		
-		private var _elapsedTime:int;
+		 * Whether this game session was stored. Default is false. */		
+		private var _connected:Boolean;
+		/**
+		 * The number of stars or points earned, at the moment only used in the AlertItemRenderer for information. */		
+		private var _numStarsOrPointsEarned:int;
 		
 		public function GameSession(pushType:String = null, gameType:int = 0)
 		{
@@ -54,7 +41,7 @@ package com.ludofactory.mobile.core.push
 				return;
 			
 			_uniqueId = String(new Date().getTime());
-			_gameType = gameType;
+			_gameMode = gameType;
 			_score = -1;
 			_playDate = MemberManager.getInstance().lastUpdateDate ? MemberManager.getInstance().lastUpdateDate : Utilities.formatDateUS(new Date());
 			_trophiesWon = [];
@@ -71,8 +58,8 @@ package com.ludofactory.mobile.core.push
 		public function get uniqueId():String { return _uniqueId; }
 		public function set uniqueId(val:String):void { _uniqueId = val; }
 		
-		public function get gameType():int { return _gameType; }
-		public function set gameType(val:int):void { _gameType = val; }
+		public function get gameMode():int { return _gameMode; }
+		public function set gameMode(val:int):void { _gameMode = val; }
 		
 		public function get score():int { return _score; }
 		public function set score(val:int):void { _score = val; }
@@ -80,18 +67,16 @@ package com.ludofactory.mobile.core.push
 		public function get playDate():String { return _playDate; }
 		public function set playDate(val:String):void { _playDate = val; }
 		
+		public function get trophiesWon():Array { return _trophiesWon; }
+		public function set trophiesWon(val:Array):void { _trophiesWon = val; }
+		
+		public function get elapsedTime():int { return _elapsedTime; }
+		public function set elapsedTime(val:int):void { _elapsedTime = val; }
+		
 		public function get connected():Boolean { return _connected; }
 		public function set connected(val:Boolean):void { _connected = val; }
 		
 		public function get numStarsOrPointsEarned():int { return _numStarsOrPointsEarned; }
 		public function set numStarsOrPointsEarned(val:int):void { _numStarsOrPointsEarned = val; }
-		
-		public function get trophiesWon():Array { return _trophiesWon; }
-		public function set trophiesWon(val:Array):void { _trophiesWon = val; }
-		
-		/**
-		 * The time elapsed on the game in seconds. */
-		public function get elapsedTime():int { return _elapsedTime; }
-		public function set elapsedTime(val:int):void { _elapsedTime = val; }
 	}
 }

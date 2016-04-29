@@ -10,6 +10,7 @@ package com.ludofactory.mobile.core.model
 
 	public class ScreenData
 	{
+		
 		public var gameType:int;
 		
 		public var defaultPseudo:String;
@@ -23,16 +24,6 @@ package com.ludofactory.mobile.core.model
 		 * The game data. */		
 		public var gameData:GameData = new GameData();
 		
-		/**
-		 * The previous tournement id. */		
-		//public var previousTournementId:int;
-		
-		public var highscoreRankingType:int;
-		
-		public var displayPopupOnHome:Boolean = false;
-		
-		//public var indexToDisplayInMyAccount:int = 0;
-		
 		public function ScreenData()
 		{
 			
@@ -40,8 +31,6 @@ package com.ludofactory.mobile.core.model
 		
 		public function purgeData():void
 		{
-			// bug si on va sur la sélection de mise, puis on se connecte, quand on revient => comme on fait
-			// un purgeData au changement d'écran, la push partie merde
 			gameType = 0;
 			
 			defaultPseudo = "";
@@ -52,12 +41,6 @@ package com.ludofactory.mobile.core.model
 			tempMemberId = -1;
 			
 			gameData = new GameData();
-			
-			//previousTournementId = -1;
-			
-			highscoreRankingType = -1;
-			
-			//indexToDisplayInMyAccount = 0;
 		}
 	}
 }

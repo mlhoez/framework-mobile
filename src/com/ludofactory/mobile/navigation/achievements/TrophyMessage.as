@@ -7,7 +7,6 @@ Created : 4 nov. 2013
 package com.ludofactory.mobile.navigation.achievements
 {
 	
-	import com.greensock.TweenLite;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -112,24 +111,10 @@ package com.ludofactory.mobile.navigation.achievements
 			_particles.emitterXVariance = (actualWidth * 0.5);
 			_particles.emitterYVariance = (actualHeight * 0.5);
 			_particles.start();
-			
-			TweenLite.to(_message, 0.5, { delay:3, alpha:0, onComplete:displayReward });
-		}
-		
-		/**
-		 * Replaces the trophy description by the rewerd.
-		 */		
-		private function displayReward():void
-		{
-			_message.text = _trophyData.reward;
-			_message.format.size = scaleAndRoundToDpi(38);
-			_message.y = (Math.max(actualHeight, _message.height) - Math.min(actualHeight, _message.height)) * 0.5;
-			TweenLite.to(_message, 0.5, { alpha:1 });
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Get / Set
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Required for the new Theme. */
@@ -141,7 +126,6 @@ package com.ludofactory.mobile.navigation.achievements
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
-//------------------------------------------------------------------------------------------------------------
 		
 		override public function dispose():void
 		{

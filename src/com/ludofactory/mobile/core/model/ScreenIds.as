@@ -18,43 +18,12 @@ package com.ludofactory.mobile.core.model
 		public static const MY_ACCOUNT_SCREEN:String = "Mon Compte";
 		
 //------------------------------------------------------------------------------------------------------------
-//	VIP
-		
-		/** Ecran VIP. */		
-		public static const VIP_SCREEN:String = "Rangs VIP";
-		/**
-		 * Ecran de montée en grade VIP. */		
-		public static const VIP_UP_SCREEN:String = "Nouveau rang VIP";
-		
-//------------------------------------------------------------------------------------------------------------
 //	Aide
 		
 		/** Ecran de la FAQ. */		
 		public static const FAQ_SCREEN:String = "Aide - FAQ";
 		/** Ecran d'accueil de l'aide. */		
 		public static const HELP_HOME_SCREEN:String = "Aide - Accueil";
-		/** Page de suivi de conversation de l'aide du service client. */		
-		public static const CUSTOMER_SERVICE_THREAD_SCREEN:String = "Aide - Conversation SC";
-		
-//------------------------------------------------------------------------------------------------------------
-//	Crédits
-		
-		/**
-		 * Ecran d'achat de crédits */		
-		public static const POPUP_IAP:String = "Popup des achats intégrés";
-		
-//------------------------------------------------------------------------------------------------------------
-//	Boutique
-		
-		/** Ecran des enchères. */		
-		public static const BIDS_HOME_SCREEN:String = "Enchères";
-		
-		/** Ecran d'accueil de la boutique. */		
-		public static const BOUTIQUE_HOME:String = "Boutique - Accueil";
-		/** Ecran de listing des catégories. */		
-		public static const BOUTIQUE_CATEGORY_LISTING:String = "Boutique - Listing des catégories";
-		/** Ecran de listing des lots. */		
-		public static const BOUTIQUE_SUB_CATEGORY_LISTING:String = "Boutique - Listing des lots";
 		
 //------------------------------------------------------------------------------------------------------------
 //	Authentification

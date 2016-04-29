@@ -1,7 +1,7 @@
 /**
  * Created by Maxime on 21/04/2016.
  */
-package com.ludofactory.mobile.navigation
+package com.ludofactory.newClasses
 {
 	
 	import com.greensock.TweenMax;

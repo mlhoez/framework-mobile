@@ -150,7 +150,6 @@ package com.ludofactory.mobile.navigation.account.history.settings
 					
 					var panels:Vector.<AbstractAccordionItem> = new Vector.<AbstractAccordionItem>();
 					panels.push( new SettingAccordionItem( _("Informations personnelles"), new PersonalSettingsContainer( result.perso ) ) );
-					panels.push( new SettingAccordionItem( _("Adresse"), new AddressSettingsContainer( result.adresse ) ) );
 					//if( result.pseudo && "modifiy" in result.pseudo && result.pseudo.modifiy == true )
 						panels.push( new SettingAccordionItem( _("Pseudo"), new PseudoSettingsContainer( result.pseudo ) ) );
 					panels.push( new SettingAccordionItem( _("Email"), new EmailSettingsContainer( result.connexion ) ) );

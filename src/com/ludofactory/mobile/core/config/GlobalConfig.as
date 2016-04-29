@@ -48,28 +48,7 @@ package com.ludofactory.mobile.core.config
 		/**
 		 * This is the device id. */		
 		public static var deviceId:String = "";
-		
-		/**
-		 * The countries
-		 * 
-		 * Hack for Poedit
-		 * _("International");
-		 * _("France");
-		 * _("Belgique");
-		 * _("Suisse");
-		 * _("Canada");
-		 * _("Royaume-Uni");
-		 * _("Espagne");
-		 * 
-		 * */		
-		public static const COUNTRIES:Array = [ new CountryData( { id:0, nameTranslationKey:"International", diminutive:"",   textureName:"flag-international" } ),
-												new CountryData( { id:1, nameTranslationKey:"France",        diminutive:"FR", textureName:"flag-france" } ),
-												new CountryData( { id:2, nameTranslationKey:"Belgique",      diminutive:"BE", textureName:"flag-belgique" } ),
-												new CountryData( { id:3, nameTranslationKey:"Suisse",        diminutive:"CH", textureName:"flag-suisse" } ),
-												new CountryData( { id:4, nameTranslationKey:"Canada",        diminutive:"CA", textureName:"flag-canada" } ),
-												new CountryData( { id:5, nameTranslationKey:"Royaume-Uni",   diminutive:"GB", textureName:"flag-uk" } ),
-												new CountryData( { id:6, nameTranslationKey:"Espagne",       diminutive:"ES", textureName:"flag-espagne" } ) ];
-		
+	    
 		// personal settings
 		public static const DAYS:Vector.<int>   = Vector.<int>( [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31] );
 		/**

@@ -278,10 +278,9 @@ package com.ludofactory.mobile.navigation.engine
 				{
 					// logged in content
 					
-					_convertShop = new SoloEndElement("convert-shop-icon", (MemberManager.getInstance().getGiftsEnabled() ? (AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Cadeaux dans la boutique"):_("Convertir mes Points en\nCadeaux dans la boutique")) : (AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Crédits dans la boutique"):_("Convertir mes Points en\nCrédits dans la boutique"))) ) ;
+					_convertShop = new SoloEndElement("convert-shop-icon", AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Crédits dans la boutique"):_("Convertir mes Points en\nCrédits dans la boutique") );
 					_convertShop.alpha = 0;
 					_convertShop.visible = false;
-					_convertShop.addEventListener(TouchEvent.TOUCH, onGoShop);
 					addChild(_convertShop);
 					
 					_convertTournament = new SoloEndElement("convert-tournament-icon", (AbstractGameInfo.LANDSCAPE ? _("Utiliser mes Points sur le tournoi pour me classer"):_("Utiliser mes Points sur\nle tournoi pour me classer")));
@@ -294,7 +293,7 @@ package com.ludofactory.mobile.navigation.engine
 				{
 					// not logged in content
 					
-					var msg:String = MemberManager.getInstance().getGiftsEnabled() ? _("Créez votre compte et convertissez\nvos Points en Cadeaux !") : _("Créez votre compte et convertissez\nvos Points en Crédits !");
+					var msg:String = _("Créez votre compte et convertissez\nvos Points en Crédits !");
 					
 					_convertShopNotLoggedIn = new SoloEndElement("points-to-gift-icon", msg);
 					_convertShopNotLoggedIn.alpha = 0;
@@ -469,7 +468,7 @@ package com.ludofactory.mobile.navigation.engine
 			
 			if( true )
 			{
-				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture( "WinMorePoints" + (MemberManager.getInstance().rank < 5 ? "X5" : "X6") + LanguageManager.getInstance().lang ) );
+				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture("WinMorePointsX6" + LanguageManager.getInstance().lang));
 				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = GlobalConfig.dpiScale;
 				_winMorePointsImage.alignPivot();
 				_winMorePointsImage.alpha = 0;
@@ -606,20 +605,6 @@ package com.ludofactory.mobile.navigation.engine
 		}
 		
 		/**
-		 * Go to the shop screen.
-		 */
-		private function onGoShop(event:TouchEvent):void
-		{
-			var touch:Touch = event.getTouch(_convertShop);
-			if( touch && touch.phase == TouchPhase.ENDED )
-			{
-				Analytics.trackEvent("Fin mode solo", "Redirection boutique");
-				advancedOwner.replaceScreen( ScreenIds.BOUTIQUE_HOME );
-			}
-			touch = null;
-		}
-		
-		/**
 		 * Go to the tournament ranking screen.
 		 */
 		private function onGoTournament(event:TouchEvent):void
@@ -719,7 +704,6 @@ package com.ludofactory.mobile.navigation.engine
 			if(_convertShop)
 			{
 				TweenMax.killTweensOf(_convertShop);
-				_convertShop.removeEventListener(TouchEvent.TOUCH, onGoShop);
 				_convertShop.removeFromParent(true);
 				_convertShop = null;
 			}

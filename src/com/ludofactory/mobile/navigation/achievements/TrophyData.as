@@ -26,10 +26,6 @@ package com.ludofactory.mobile.navigation.achievements
 		private var _description:String;
 		
 		/**
-		 * The trophy reward description. */		
-		private var _reward:String;
-		
-		/**
 		 * The values used in the code to trigger the trophy. */		
 		private var _values:Array;
 		
@@ -57,7 +53,6 @@ package com.ludofactory.mobile.navigation.achievements
 			_id = int(data.id);
 			_title = data.title;
 			_description = data.description;
-			_reward = data.reward;
 			_values = data.values;
 			_textureName = (data.textureName && textureName != "" && data.textureName.indexOf("http") > -1) ? data.textureName : ("trophy" + _id);
 			_currentValue = (data.currentValue != null) ? Number(data.currentValue) : 0;
@@ -75,9 +70,6 @@ package com.ludofactory.mobile.navigation.achievements
 		
 		public function get description():String { return _description; }
 		public function set description(val:String):void { _description = val; }
-		
-		public function get reward():String { return _reward; }
-		public function set reward(val:String):void { _reward = val; }
 		
 		public function get values():Array { return _values; }
 		public function set values(val:Array):void { _values = val; }

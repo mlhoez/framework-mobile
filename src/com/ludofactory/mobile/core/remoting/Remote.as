@@ -221,7 +221,7 @@ package com.ludofactory.mobile.core.remoting
 		 */		
 		public function pushGame(gameSession:GameSession, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
-			var params:Object = mergeWithGenericParams( { info_client:GlobalConfig.userHardwareData, type_partie:gameSession.gameType, score:gameSession.score, date_partie:gameSession.playDate, connected:gameSession.connected, coupes:gameSession.trophiesWon, temps_ecoule:gameSession.elapsedTime, id_partie:gameSession.uniqueId } );
+			var params:Object = mergeWithGenericParams( { info_client:GlobalConfig.userHardwareData, type_partie:gameSession.gameMode, score:gameSession.score, date_partie:gameSession.playDate, connected:gameSession.connected, coupes:gameSession.trophiesWon, temps_ecoule:gameSession.elapsedTime, id_partie:gameSession.uniqueId } );
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServeurJeux", "pushPartie", params);
 		}
 		
@@ -505,9 +505,6 @@ package com.ludofactory.mobile.core.remoting
 						log("[Remote] Inscription ou connexion réussie, parties anonymes retirées.");
 						// because the sign in/up is ok, we need to clear the credits he potentially bought
 						MemberManager.getInstance().anonymousGameSessionsAlreadyUsed = true;
-						MemberManager.getInstance().credits = 0;
-						MemberManager.getInstance().tokens = 0;
-						MemberManager.getInstance().points = 0;
 						MemberManager.getInstance().cumulatedRubies = 0;
 						MemberManager.getInstance().anonymousGameSessions = [];
 						// empty the transaction ids
@@ -517,12 +514,6 @@ package com.ludofactory.mobile.core.remoting
 				
 				if( "obj_membre_mobile" in result && result.obj_membre_mobile)
 					MemberManager.getInstance().parseData(result.obj_membre_mobile);
-				
-				if( "afficher_cadeau" in result && result.afficher_cadeau != null )
-				{
-					delete result.afficher_cadeau; // can cause some problems with some screens so just in case, we remove it
-					MemberManager.getInstance().setGetGiftsEnabled(Boolean(result.afficher_cadeau));
-				}
 				
 				if( MemberManager.getInstance().isLoggedIn() && "highscore" in result )
 					MemberManager.getInstance().highscore = int(result.highscore);

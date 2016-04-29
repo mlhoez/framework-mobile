@@ -22,7 +22,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.navigation.GameChoiceScreen;
+	import com.ludofactory.newClasses.GameChoiceScreen;
 	import com.ludofactory.mobile.navigation.UpdateScreen;
 	import com.ludofactory.mobile.navigation.account.MyAccountScreen;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;

@@ -140,10 +140,10 @@ package com.ludofactory.mobile.navigation.highscore
 			_countriesList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			//_countriesList.styleName = Theme.SUB_CATEGORY_GROUPED_LIST;
 			_countriesList.isSelectable = true;
-			var arr:Array = GlobalConfig.COUNTRIES.concat();
+			var arr:Array = ["inter", "local", "amis"];
 			arr.push(new CountryData( { id:-1, nameTranslationKey:_("Amis Facebook"), diminutive:"", textureName:"" } ));
 			_countriesList.dataProvider = new HierarchicalCollection([ { header: "", children:arr } ]);
-			_countriesList.setSelectedLocation(0,advancedOwner.screenData.highscoreRankingType == -1 ? (arr.length-1) : advancedOwner.screenData.highscoreRankingType);
+			_countriesList.setSelectedLocation(0, 0);
 			_countriesList.addEventListener(Event.CHANGE, onCountrySelected);
 			
 			_countryChoiceBackground = new MeshBatch();
@@ -168,7 +168,7 @@ package com.ludofactory.mobile.navigation.highscore
 			addChild(_rightTrophyIcon);
 			
 			_countryChoiceValue = new TextField(5, _countryChoiceBackground.height, "", new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(28), 0x401800));
-			_countryChoiceValue.text = arr[advancedOwner.screenData.highscoreRankingType == -1 ? (arr.length-1) : advancedOwner.screenData.highscoreRankingType];
+			_countryChoiceValue.text = arr[0];
 			_countryChoiceValue.autoSize = TextFieldAutoSize.HORIZONTAL;
 			_countryChoiceValue.touchable = false;
 			addChild( _countryChoiceValue );
@@ -213,7 +213,7 @@ package com.ludofactory.mobile.navigation.highscore
 			addChild(_associateLabel);
 			//_associateLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(GlobalConfig.isPhone ? 30 : 38), Theme.COLOR_LIGHT_GREY, true, true, null, null, null, TextFormatAlign.CENTER);
 			
-			_selectedCountryId = advancedOwner.screenData.highscoreRankingType;
+			_selectedCountryId = 1;
 			
 			// FIXME mettre la bonne icone 70x70 en fonction de l'os
 			if(GlobalConfig.ios) // TODO rajouter android ici lors de l'intégration de Google Play Games

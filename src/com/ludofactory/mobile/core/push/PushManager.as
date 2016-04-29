@@ -6,14 +6,13 @@ Created : 1 oct. 2013
 */
 package com.ludofactory.mobile.core.push
 {
+	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.mobile.core.HeartBeat;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	
-	import flash.utils.getTimer;
 	
 	import starling.events.EventDispatcher;
 	
@@ -449,16 +448,6 @@ package com.ludofactory.mobile.core.push
 					
 					break;
 				}
-				case PushType.CUSTOMER_SERVICE_NEW_THREAD:
-				{
-					
-					break;
-				}
-				case PushType.CUSTOMER_SERVICE_NEW_MESSAGE:
-				{
-					
-					break;
-				}
 			}
 			
 			var len:int = _elementsToPush.length;
@@ -561,25 +550,6 @@ package com.ludofactory.mobile.core.push
 		public function get numElementsToPush():int
 		{
 			return MemberManager.getInstance().isLoggedIn() ? _elementsToPush.length : 0;
-		}
-		
-		public function get numCSMessagesToPush():int
-		{
-			if( MemberManager.getInstance().isLoggedIn() )
-			{
-				var len:int = _elementsToPush.length;
-				var count:int = 0;
-				for(var i:int = 0; i < len; i++)
-				{
-					if( AbstractElementToPush( _elementsToPush[i] ).state == PushState.WAITING && ( AbstractElementToPush( _elementsToPush[i] ).pushType == PushType.CUSTOMER_SERVICE_NEW_MESSAGE || AbstractElementToPush( _elementsToPush[i] ).pushType == PushType.CUSTOMER_SERVICE_NEW_THREAD ) )
-							count++;
-				}
-				return count;
-			}
-			else
-			{
-				return 0;
-			}
 		}
 		
 		public function get numGameSessionsToPush():int

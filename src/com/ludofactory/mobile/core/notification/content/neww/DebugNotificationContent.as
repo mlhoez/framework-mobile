@@ -332,15 +332,6 @@ package com.ludofactory.mobile.core.notification.content.neww
 			//onBack();
 		}
 		
-		private function giveTokens(event:Event):void
-		{
-			MemberManager.getInstance().tokens += 5;
-		}
-		private function removeTokens(event:Event):void
-		{
-			MemberManager.getInstance().tokens -= 5;
-		}
-		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose
 		

@@ -29,7 +29,6 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.ads.AdManager;
 	import com.milkmangames.nativeextensions.ios.IAdBannerAlignment;
 	
-	import flash.events.Event;
 	import flash.filesystem.File;
 	
 	import starling.core.Starling;
@@ -47,11 +46,12 @@ package com.ludofactory.mobile.core
 		private var _gameSession:GameSession;
 		
 		/**
+		 * The transparent black overlay. */
+		protected var _playOverlay:Image;
+		/**
 		 * Loader */		
 		private var _loader:MovieClip;
-		/**
-		 * The transparent black overlay. */		
-		protected var _playOverlay:Image;
+		
 		/**
 		 * The play button displayed at the begining of a game session. */		
 		protected var _playButton:MobileButton;
@@ -73,80 +73,46 @@ package com.ludofactory.mobile.core
 			_gaveUp = false;
 		}
 		
+		/**
+		 * Initializes the core data of a game session.
+		 */
 		override protected function initialize():void
 		{
 			super.initialize();
-			
-			// if the user can really play, we now initialize a game session which will be saved until the
-			// end of the game and we decrement the associated stake (whether free game sessions, points or credits).
-			//log("Démarrage d'une partie en mode <strong>" + advancedOwner.screenData.gameType + ", mise : " + advancedOwner.screenData.gamePrice + "</strong>");
-			//Flox.logEvent("Parties", { "1. Nombre total de parties":"Total", "2. Mode":(advancedOwner.screenData.gameType == GameMode.SOLO ? "Solo":"Tournoi"), "3. Mise":advancedOwner.screenData.gamePrice });
 			
 			// create banners in order to display them faster when the game is paused
 			AdManager.createiAdBanner(IAdBannerAlignment.BOTTOM);
 			AdManager.crateAdMobBanner();
 			
-			advancedOwner.screenData.displayPopupOnHome = false;
-			
 			// disable the push manager while playing
 			AbstractEntryPoint.pushManager.isEnabled = false;
+			
+			// create the game session data, link it to the TrophyManager and add it to the PushManager in case
+			// the user quits the game while playing
 			_gameSession = new GameSession(PushType.GAME_SESSION, advancedOwner.screenData.gameType);
-			
 			TrophyManager.getInstance().currentGameSession = _gameSession;
+			AbstractEntryPoint.pushManager.addElementToPush(_gameSession);
 			
-			if( MemberManager.getInstance().isLoggedIn() )
-			{
-				AbstractEntryPoint.pushManager.addElementToPush( _gameSession );
-			}
-			else
-			{
-				MemberManager.getInstance().anonymousGameSessions.push( _gameSession );
-				MemberManager.getInstance().anonymousGameSessions = MemberManager.getInstance().anonymousGameSessions;
-			}
+			// ----- finally initialze the game by loading all the assets
 			
-			initializeGame();
-		}
-		
-		private function onOrientationChanged(event:flash.events.Event):void
-		{
-			Starling.current.nativeStage.removeEventListener(flash.events.Event.RESIZE, onOrientationChanged, false);
-			initializeGame();
-		}
-		
-		/**
-		 * The application has finished resizing, we can start loading all the assets for
-		 * the game. Depending on which type of device we are we will load a specific
-		 * size of the game assets so that it fits any device.
-		 * 
-		 * <p>When we initialize the game, we need to store the current GameSession
-		 * so that we can push it at the end of the game if possible and if not, later
-		 * in the PushManager. Thus, while the user plays, we disable the PushManager
-		 * so that no information is pushed while he is playing.</p>
-		 * 
-		 * <p>We need to do this in the resize function because otherwise, we will get a
-		 * contect error (context = dispose while resizing).</p>
-		 * 
-		 * @see com.ludofactory.mobile.push.PushManager
-		 * @see com.ludofactory.mobile.push.GameSession
-		 */		
-		private function initializeGame():void
-		{
-			// create the loader
-			_loader = new MovieClip( AbstractEntryPoint.assets.getTextures("Loader") );
-			_loader.scaleX = _loader.scaleY = GlobalConfig.dpiScale;
+			_loader = new MovieClip(AbstractEntryPoint.assets.getTextures("Loader")); // TODO a stocker en constante dans le theme car sera récupéré souvent
+			_loader.scale = GlobalConfig.dpiScale;
 			_loader.x = (GlobalConfig.stageWidth - _loader.width) * 0.5;
 			_loader.y = (GlobalConfig.stageHeight - _loader.height) * 0.5;
 			Starling.juggler.add(_loader);
 			addChild(_loader);
 			
+			// load the main atlas
 			var path:File = File.applicationDirectory.resolvePath( GlobalConfig.isPhone ? "assets/game/sd/" : "assets/game/hd/");
-			AbstractEntryPoint.assets.enqueue( path.url + "/game.atf" );
+			AbstractEntryPoint.assets.enqueue( path.url + "/game.png" );
 			AbstractEntryPoint.assets.enqueue( path.url + "/game.xml" );
+			
 			// load common assets if found
 			path = File.applicationDirectory.resolvePath("assets/game/common/");
 			if(path.exists)
 				AbstractEntryPoint.assets.enqueue(path);
-			// load tutorial if necessary
+			
+			// load tutorial elements if necessary
 			if(MemberManager.getInstance().getDisplayTutorial())
 			{
 				path = File.applicationDirectory.resolvePath("assets/game/tutorial/");
@@ -154,15 +120,9 @@ package com.ludofactory.mobile.core
 					AbstractEntryPoint.assets.enqueue(path);
 			}
 			path = null;
+			
+			// load !
 			AbstractEntryPoint.assets.loadQueue( function onLoading(ratio:Number):void{ if(ratio == 1) initializeContent(); });
-		}
-		
-		/**
-		 * @inheritDoc
-		 */		
-		public function initializeSounds():void
-		{
-			// to override in GameScreen
 		}
 		
 		/**
@@ -184,28 +144,40 @@ package com.ludofactory.mobile.core
 			addChild(_playOverlay);
 			
 			_playButton = ButtonFactory.getButton(_("Commencer"), ButtonFactory.SPECIAL);
-			_playButton.addEventListener(starling.events.Event.TRIGGERED, onPlay);
-			addChild(_playButton);
 			_playButton.x = (GlobalConfig.stageWidth - _playButton.width) * 0.5;
 			_playButton.y = (GlobalConfig.stageHeight - _playButton.height) * 0.5;
+			_playButton.addEventListener(Event.TRIGGERED, onPlay);
+			addChild(_playButton);
 			
 			// enable the pause view and listeners
 			PauseManager.dispatcher.addEventListener(MobileEventTypes.EXIT, giveUp);
 			PauseManager.dispatcher.addEventListener(MobileEventTypes.RESUME, resume);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
+		public function initializeSounds():void
+		{
+			// to override in GameScreen
+		}
+		
 		
 		/**
 		 * The user touched the play button.
+		 * 
+		 * <p>Here we remove the overlay and the play button, then we call the startLevel function
+		 * which is overridden in the subclass.</p>
 		 */		
-		protected function onPlay(event:starling.events.Event):void
+		protected function onPlay(event:Event):void
 		{
+			// truly playing when the play button have been touched, not before !
 			PauseManager.isPlaying = true;
 			
 			_playOverlay.removeFromParent(true);
 			_playOverlay = null;
 			
-			_playButton.removeEventListener(starling.events.Event.TRIGGERED, onPlay);
+			_playButton.removeEventListener(Event.TRIGGERED, onPlay);
 			_playButton.removeFromParent(true);
 			_playButton = null;
 			
@@ -217,15 +189,15 @@ package com.ludofactory.mobile.core
 		 */		
 		public function startLevel():void
 		{
-			// to override
+			// to override in GameScreen
 		}
 		
 		/**
 		 * @inheritDoc
 		 */		
-		public function giveUp(event:starling.events.Event):void
+		public function giveUp(event:Event):void
 		{
-			if(!_gaveUp)
+			if(!_gaveUp) // avoid multiple calls by securité
 			{
 				_gaveUp = true;
 				PauseManager.isPlaying = false;
@@ -241,9 +213,9 @@ package com.ludofactory.mobile.core
 		/**
 		 * @inheritDoc
 		 */		
-		public function resume(event:starling.events.Event):void
+		public function resume(event:Event):void
 		{
-			// to override
+			// to override in GameScreen
 		}
 		
 		/**
@@ -251,7 +223,7 @@ package com.ludofactory.mobile.core
 		 */		
 		public function gameOver():void
 		{
-			// to override
+			// to override in GameScreen
 			
 			InfoManager.show(_("Validation de votre partie en cours.\nMerci de patienter quelques secondes..."));
 			//Flox.logEvent("Parties", { "4. Etat de la partie":(_gaveUp ? "Abandonnee" : "Terminee"), "5. Connectivité en fin de partie":( AirNetworkInfo.networkInfo.isConnected() ? "Connecte" : "Deconnecte") });
@@ -267,28 +239,28 @@ package com.ludofactory.mobile.core
 //	Game validation
 		
 		/**
-		 * <p>This function will convert the final score to retrieve the appropriate gain : whether
-		 * stars or points depending on which type of game have been choose (classic or tournament).</p>
+		 * Validates the game session.
 		 * 
-		 * <p>The score is updated in the GameSession object (which have been initialized at the beginning
-		 * of the game) so that we can push it right after (if we can).</p>
+		 * <p>In solo mode, there are no rewards so we don't really care about if we can send it right now or later.</p>
 		 * 
-		 * <p>Those informations (score and gain) are also stored in the <code>advancedOwner.screenData.gameData</code>
-		 * object in order to be passed to the next screen.</p>
+		 * <p>On the other hand, in duel mode, the reward is calculated at the beginning of the game session (because we
+		 * match the user to an opponent and the reward is pre-determined), so that no matter if the user is connected
+		 * to the netward or not at the end of the game, we can push the game session later but still show the rewards.<p/>
 		 */		
 		protected function validateGame(finalScore:int, totalElapsedTime:int):void
 		{
-			if( !_isValidatingGame )
+			if(!_isValidatingGame) // avoid multiple validations
 			{
-				// we add this by security
+				log("Score" + finalScore + " made in " + (totalElapsedTime / 1000) + " seconds.");
+				
 				_isValidatingGame = true;
 				
-				log("Score <strong>" + finalScore + "</strong> made in <strong>" + (totalElapsedTime / 1000) +" seconds</strong>.");
+				// dissociate the game session from the trophy manager
 				TrophyManager.getInstance().currentGameSession = null;
+				// dispose banners
 				AdManager.disposeBanners();
 				
-				// update the score and the gain (note that the value of gain might be replaced if the push is a success
-				// and if the scoring have changed in the server side)
+				// update the score and the gain
 				_gameSession.score = finalScore;
 				_gameSession.elapsedTime = totalElapsedTime;
 				advancedOwner.screenData.gameData.score = _gameSession.score;
@@ -297,17 +269,15 @@ package com.ludofactory.mobile.core
 				// report iOS Leaderboard
 				GameCenterManager.reportLeaderboardScore(AbstractGameInfo.LEADERBOARD_HIGHSCORE, _gameSession.score);
 				
-				// Try to directly push this game session
-				if( MemberManager.getInstance().isLoggedIn() && AirNetworkInfo.networkInfo.isConnected() )
+				// if connected to internet, we validate the game session directly
+				if(AirNetworkInfo.networkInfo.isConnected())
 				{
 					_gameSession.connected = true;
 					Remote.getInstance().pushGame(_gameSession, onGamePushSuccess, onGamePushFailure, onGamePushFailure, 1);
 				}
 				else
 				{
-					if(AirNetworkInfo.networkInfo.isConnected()) // if not logged in but has network, we sent the game sessions for stats
-						Remote.getInstance().pushGame(_gameSession, null, null, null, 1);
-					
+					// otherwise we save it for later
 					onGamePushFailure();
 				}
 			}
@@ -328,41 +298,27 @@ package com.ludofactory.mobile.core
 			switch(result.code)
 			{
 				case 0:  // invalid data
-				case 2:  // game with credits but not enough in database ( ask to buy credits ? )
-				case 3:  // cannot retreive the score to points array in php
-				case 4:  // game with free game but not enough free game sessions in database
-				case 5:  // id jeux arcade not defined in config
-				case 6:  // not tournament actually for this game
-				case 7:  // not enough points for this tournament
-				case 8:  // not enough credits for this tournament
-				case 9:  // cannot retreive the score to stars array in php
-				case 10: // given date is higher than the one of the server
-				case 11: // the game session could not be counted because the tournament is over
-				case 12: // classic game too old to be taken in account
+				case 10: // given date is higher than the one of the server // ?
+				case 12: // classic game too old to be taken in account // ?
 				case 13: // game session already pushed
 				{
-					// false = no update because even if there is an error, an object obj_membre_mobile
-					// will be returned
-					onGamePushFailure(false);
+					onGamePushFailure();
 					break;
 				}
 				case 1: // ok
 				{
-					advancedOwner.screenData.gameData.gameSessionPushed = true;
-					
 					// Facebook data - only returned when the user is connected with Facebook and have a valid token
-					if( result.hasOwnProperty("fb_hs_friends") && result.fb_hs_friends )
+					if("fb_hs_friends" in result && result.fb_hs_friends)
 					{
-						if( result.fb_hs_friends.hasOwnProperty("classement") && (result.fb_hs_friends.classement as Array).length > 0 )
+						if("classement" in result.fb_hs_friends && (result.fb_hs_friends.classement as Array).length > 0)
 						{
 							advancedOwner.screenData.gameData.facebookFriends = (result.fb_hs_friends.classement as Array).concat();
 							advancedOwner.screenData.gameData.facebookMoving = int(result.fb_hs_friends.deplacement);
 							advancedOwner.screenData.gameData.facebookPosition = int(result.fb_hs_friends.key_position);
 						}
 					}
-					/*else
+					/*else // Temporary for debugging
 					{
-						// FIXME Temporaire !!!
 						advancedOwner.screenData.gameData.facebookFriends = [ { classement:1, id:7526441, id_facebook:1087069645, last_classement:1, last_score:350, nom:"Maxime Lhoez", score:350 },
 																			  { classement:2, id:7525967, id_facebook:100001491084445, last_classement:3, last_score:220, nom:"Nicolas Alexandre", score:220 },
 																			  { classement:2, id:7525969, id_facebook:100003577159732, last_classement:4, last_score:100, nom:"Maxime Lhz", score:250 } ];
@@ -370,9 +326,10 @@ package com.ludofactory.mobile.core
 						advancedOwner.screenData.gameData.facebookPosition = 2;
 					}*/
 					
-					if( result.hasOwnProperty("tab_php_trophy_win") && result.tab_php_trophy_win && result.tab_php_trophy_win.length > 0 )
+					// show the trophies that can be earned after a server side validation // TODO maybe get this whe nthe game is initialzed ?
+					if("tab_php_trophy_win" in result && result.tab_php_trophy_win && (result.tab_php_trophy_win as Array).length > 0)
 					{
-						for each( var idTrophy:int in result.tab_php_trophy_win )
+						for each(var idTrophy:int in result.tab_php_trophy_win)
 						{
 							// Display trophy only once
 							if( TrophyManager.getInstance().canWinTrophy(idTrophy) )
@@ -380,37 +337,34 @@ package com.ludofactory.mobile.core
 						}
 					}
 					
-					if( _gameSession.gameType == GameMode.SOLO )
+					if(_gameSession.gameMode == GameMode.SOLO) // solo
 					{
-						// classic game
 						this.advancedOwner.screenData.gameData.numStarsOrPointsEarned = int(result.gains);
-						if( TrophyManager.getInstance().isTrophyMessageDisplaying )
+						_nextScreenId = int(result.isHighscore) == 1 ? ScreenIds.NEW_HIGH_SCORE_SCREEN : ScreenIds.SOLO_END_SCREEN;
+						if(TrophyManager.getInstance().isTrophyMessageDisplaying )
 						{
-							_nextScreenId = int(result.isHighscore) == 1 ? ScreenIds.NEW_HIGH_SCORE_SCREEN : ScreenIds.SOLO_END_SCREEN;
-							TrophyManager.getInstance().addEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
+							TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
 						}
 						else
 						{
 							InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-							advancedOwner.replaceScreen( int(result.isHighscore) == 1 ? ScreenIds.NEW_HIGH_SCORE_SCREEN : ScreenIds.SOLO_END_SCREEN );
+							advancedOwner.replaceScreen(_nextScreenId);
 						}
 					}
-					else
+					else // duel
 					{
-						// tournament
 						advancedOwner.screenData.gameData.numStarsOrPointsEarned = int(result.items);
 						advancedOwner.screenData.gameData.position = int(result.classement);
 						advancedOwner.screenData.gameData.top = int(result.top);
-						
 						advancedOwner.screenData.gameData.hasReachNewTop = int(result.podium) == 1;
 						advancedOwner.screenData.gameData.displayPushAlert = int(result.afficher_alerte_push) == 1;
 						
-						if( result.isHighscore == 1 )
+						if(result.isHighscore == 1)
 						{
 							if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 							{
 								_nextScreenId = ScreenIds.NEW_HIGH_SCORE_SCREEN;
-								TrophyManager.getInstance().addEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
+								TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
 							}
 							else
 							{
@@ -424,7 +378,7 @@ package com.ludofactory.mobile.core
 							if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 							{
 								_nextScreenId = int(advancedOwner.screenData.gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
-								TrophyManager.getInstance().addEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
+								TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
 							}
 							else
 							{
@@ -438,7 +392,7 @@ package com.ludofactory.mobile.core
 					
 				default:
 				{
-					onGamePushFailure(false);
+					onGamePushFailure();
 					break;
 				}
 			}
@@ -459,10 +413,8 @@ package com.ludofactory.mobile.core
 		 * might be replaced at any time when a <code>obj_membre_mobile</code> is returned
 		 * by a query in <code>Remote</code>.</p>
 		 */		
-		private function onGamePushFailure(error:Object = null):void
+		private function onGamePushFailure():void
 		{
-			advancedOwner.screenData.gameData.gameSessionPushed = false;
-
 			/*this.advancedOwner.screenData.gameData.top = 15;
 			this.advancedOwner.screenData.gameData.hasReachNewTop = true;
 			advancedOwner.showScreen( ScreenIds.PODIUM_SCREEN );
@@ -470,16 +422,16 @@ package com.ludofactory.mobile.core
 			return;*/
 			
 			// update earned values in any cases
-			if( _gameSession.gameType == GameMode.SOLO )
+			if( _gameSession.gameMode == GameMode.SOLO )
 			{
-				MemberManager.getInstance().points = ( MemberManager.getInstance().points + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+				
 			}
 			else
 			{
 				MemberManager.getInstance().cumulatedRubies = ( MemberManager.getInstance().cumulatedRubies + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
 			}
 			
-			_nextScreenId = _gameSession.gameType == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
+			_nextScreenId = _gameSession.gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
 			if( MemberManager.getInstance().highscore != 0 && _gameSession.score > MemberManager.getInstance().highscore )
 			{
 				// the user got a new high score
@@ -487,7 +439,7 @@ package com.ludofactory.mobile.core
 				_nextScreenId = ScreenIds.NEW_HIGH_SCORE_SCREEN;
 				if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 				{
-					TrophyManager.getInstance().addEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
+					TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
 				}
 				else
 				{
@@ -503,7 +455,7 @@ package com.ludofactory.mobile.core
 				
 				if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 				{
-					TrophyManager.getInstance().addEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
+					TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
 				}
 				else
 				{
@@ -526,11 +478,11 @@ package com.ludofactory.mobile.core
 		/**
 		 * All the trophies have been displayed, in this case we can show the next screen.
 		 */		
-		private function onTrophiesDisplayed(event:starling.events.Event):void
+		private function onTrophiesDisplayed(event:Event):void
 		{
 			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-			TrophyManager.getInstance().removeEventListener(starling.events.Event.COMPLETE, onTrophiesDisplayed);
-			AbstractEntryPoint.screenNavigator.replaceScreen( _nextScreenId ); // bug des fois si AdvancedOwner utilisé à la place
+			TrophyManager.getInstance().removeEventListener(Event.COMPLETE, onTrophiesDisplayed);
+			AbstractEntryPoint.screenNavigator.replaceScreen(_nextScreenId);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -562,7 +514,7 @@ package com.ludofactory.mobile.core
 			
 			if( _playButton )
 			{
-				_playButton.removeEventListener(starling.events.Event.TRIGGERED, onPlay);
+				_playButton.removeEventListener(Event.TRIGGERED, onPlay);
 				_playButton.removeFromParent(true);
 				_playButton = null;
 			}

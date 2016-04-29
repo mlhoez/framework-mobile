@@ -16,7 +16,6 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.AbstractMain;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
-	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.push.GameSession;
@@ -265,7 +264,7 @@ package com.ludofactory.mobile.core.manager
 			InfoManager.hide("Toutes les données ont été envoyées.\n\nVous pouvez changer de compte.", InfoContent.ICON_CHECK);
 			
 			// track the log off
-			Analytics.trackEvent("Déconnexions", "Déconnexion du compte")
+			Analytics.trackEvent("Déconnexions", "Déconnexion du compte");
 			log("<strong>Déconnexion du joueur (" + _member.id + ")</strong>");
 			
 			// before the user log off, we save the state of the tournament and
@@ -273,9 +272,7 @@ package com.ludofactory.mobile.core.manager
 			var tournamentUnlocked:Boolean = _member.tournamentUnlocked;
 			isTournamentAnimPending = false;
 			
-			AbstractEntryPoint.screenNavigator.screenData.displayPopupOnHome = false;
-			
-			loadEncryptedMember( DEFAULT_MEMBER_ID );
+			loadEncryptedMember(DEFAULT_MEMBER_ID);
 			AbstractEntryPoint.pushManager.onUserLoggedOut();
 			if(AbstractEntryPoint.screenNavigator && AbstractEntryPoint.screenNavigator.activeScreenID == ScreenIds.HOME_SCREEN)
 				OldHomeScreen(AbstractEntryPoint.screenNavigator.activeScreen).onUserDisconnected(); // re-add the Facebook button if disconnected while the home screen is showing
@@ -320,12 +317,6 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * The member title. */
 		public function get title():String { return _member.title; }
-		/**
-		 * The member rank. */
-		public function get rank():int { return _member.rank; }
-		/**
-		 * The member number of credits bought. */
-		public function get numCreditsBought():int { return _member.numCreditsBought; }
 		/**
 		 * The update date (when the member object have been updated for the last time). */
 		public function get lastUpdateDate():String { return _member.updateDate; }
@@ -379,68 +370,6 @@ package com.ludofactory.mobile.core.manager
 		}
 		
 		/**
-		 * The member number of credits. */
-		public function get credits():int { return _member.credits; }
-		public function set credits(val:int):void
-		{
-			if( _member.credits != val )
-			{
-				_member.credits = val;
-				setEncryptedMember();
-				
-				// the data changed, so we need to update the footer
-				dispatchEventWith(MobileEventTypes.MEMBER_UPDATED);
-			}
-		}
-		
-		/**
-		 * The member number of points. */
-		public function get points():int { return _member.points; }
-		public function set points(val:int):void
-		{
-			if( _member.points != val )
-			{
-				_member.points = val;
-				setEncryptedMember();
-				
-				// the data changed, so we need to update the footer
-				dispatchEventWith(MobileEventTypes.MEMBER_UPDATED);
-			}
-		}
-		
-		/**
-		 * The member number of tokens. */
-		public function get tokens():int { return _member.numTokens; }
-		public function set tokens(val:int):void
-		{
-			if( _member.numTokens != val )
-			{
-				_member.numTokens = val;
-				
-				if( ((isLoggedIn() && _member.numTokens <= 0) || (!isLoggedIn() && _member.numTokens <= 0)) ) // avant < 50 pour !isLoggedIn
-				{
-					// check isNan to knwo if already set or not
-					if( isNaN(_member.bootTime) )
-					{
-						_member.bootTime = DeviceUtils.getInstance().getBootTime();
-						_member.tokenDate = new Date();
-					}
-				}
-				else if( ((isLoggedIn() && _member.numTokens > 0) || (!isLoggedIn() && _member.numTokens > 0)) ) // avant >= 50 pour !isLoggedIn
-				{
-					// we have neough tokens
-					_member.bootTime = NaN;
-					_member.tokenDate = null;
-				}
-				
-				setEncryptedMember();
-				
-				// the data changed, so we need to update the footer
-				dispatchEventWith(MobileEventTypes.MEMBER_UPDATED);
-			}
-		}
-		
-		/**
 		 * The array of anonymous game sessions. */
 		public function get anonymousGameSessions():Array { return _member.anonymousGameSessions; }
 		public function set anonymousGameSessions(val:Array):void
@@ -457,14 +386,6 @@ package com.ludofactory.mobile.core.manager
 			_member.transactionIds = val;
 			setEncryptedMember();
 		}
-		
-		/** 
-		 * The member total of tokens available for a day. */
-		public function get totalTokensADay():int { return _member.totalTokensADay; }
-		
-		/**
-		 * The member total of bonus tokens for a day. */
-		public function get totalBonusTokensADay():int { return _member.totalBonusTokensADay; }
 		
 		/**
 		 * The highscore is updated only when a push of a GameSession has failed (if there is a highscore of course),
@@ -535,14 +456,6 @@ package com.ludofactory.mobile.core.manager
 		}
 		
 		/** Updates the value of <code>numRecreditations</code>. */
-		public function get numRecreditations():int { return _member.numRecreditations; }
-		public function set numRecreditations(val:int):void
-		{
-			_member.numRecreditations = val;
-			setEncryptedMember();
-		}
-		
-		/** Updates the value of <code>numRecreditations</code>. */
 		public function get canHaveRewardAfterPublish():Boolean { return _member.canHaveRewardAfterPublish; }
 		public function set canHaveRewardAfterPublish(val:Boolean):void
 		{
@@ -604,24 +517,8 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
-		
-		
-		
-		
-		public function setGetGiftsEnabled(value:Boolean):void
-		{
-			_member.giftsEnabled = value;
-		}
-		
-		
-		
-		/** Returns */		
-		public function getCountryId():int { return _member.countryId; }
 		/** Returns */		
 		public function getDisplayTutorial():Boolean { return _member.displayTutorial; }
-		
-        /** Returns */
-        public function getGiftsEnabled():Boolean { return _member.giftsEnabled; }
 		/** Returns */
 		public function getCanWatchVideo():Boolean { return _member.canWatchVideo; }
 		/** Returns */
@@ -629,7 +526,7 @@ package com.ludofactory.mobile.core.manager
 		/** Returns */
 		public function canDisplayInterstitial():Boolean { return _member.canDisplayInterstitial; }
 		
-		public function getNumStarsEarnedInAnonymousGameSessions():int
+		/*public function getNumStarsEarnedInAnonymousGameSessions():int
 		{
 			var count:int = 0;
 			var gameSession:GameSession;
@@ -653,7 +550,7 @@ package com.ludofactory.mobile.core.manager
 					count += gameSession.trophiesWon.length;
 			}
 			return count;
-		}
+		}*/
 		
 		public function get member():Member
 		{

@@ -8,23 +8,23 @@ package com.ludofactory.mobile.core
 	public interface IGame
 	{
 		/**
+		 * Initializes the game content.
+		 *
+		 * <p>Override this function to create the content of the game and then DO NOT
+		 * forget to call the parent function by doing a super.initializeContent in order
+		 * to automatically create the overlay and play button.</p>
+		 */
+		function initializeContent():void;
+		
+		/**
 		 * Initializes all the game sounds. This function is automatically called
-		 * by the function <code>initializeContent</code> when the assets have been
-		 * all loaded.
+		 * by the function <code>initializeContent</code> which itself is being
+		 * called when the assets have been all loaded.
 		 * 
-		 * <p>Override this function in the GameScreen in order to load all the
-		 * necessary sounds.</p>
+		 * <p>Override this function in the GameScreen in order to add and load all
+		 * the necessary sounds.</p>
 		 */		
 		function initializeSounds():void;
-			
-		/**
-		 * Initializes the base content (only once).
-		 * 
-		 * <p>Override this function to create the base content of the game and then,
-		 * DO NOT forget to call this function by doing a super.initializeBaseContent
-		 * in order to remove the loader and create the overlay and play button.</p>
-		 */		
-		function initializeContent():void;
 		
 		/**
 		 * Starts the level.
@@ -40,6 +40,7 @@ package com.ludofactory.mobile.core
 		 * the game is resume (i.e unhide cards).</p>
 		 */		
 		function resume(event:Event):void;
+		
 		/**
 		 * Called when the player touches the "Give up" button within the pause view.
 		 * 
