@@ -264,7 +264,7 @@ package com.ludofactory.mobile.core.manager
 			
 			// before the user log off, we save the state of the tournament and
 			// we set the the animation pending to false for the current user
-			var tournamentUnlocked:Boolean = _member.tournamentUnlocked;
+			var tournamentUnlocked:Boolean = _member.isDuelUnlocked;
 			isTournamentAnimPending = false;
 			
 			loadEncryptedMember(DEFAULT_MEMBER_ID);
@@ -273,7 +273,7 @@ package com.ludofactory.mobile.core.manager
 				OldHomeScreen(AbstractEntryPoint.screenNavigator.activeScreen).onUserDisconnected(); // re-add the Facebook button if disconnected while the home screen is showing
 			
 			// if the
-			if( !_member.tournamentUnlocked && tournamentUnlocked )
+			if( !_member.isDuelUnlocked && tournamentUnlocked )
 				isTournamentUnlocked = true;
 			
 			// clear Facebook session
@@ -365,15 +365,6 @@ package com.ludofactory.mobile.core.manager
 		}
 		
 		/**
-		 * The array of anonymous game sessions. */
-		public function get anonymousGameSessions():Array { return _member.anonymousGameSessions; }
-		public function set anonymousGameSessions(val:Array):void
-		{
-			_member.anonymousGameSessions = val;
-			setEncryptedMember();
-		}
-		
-		/**
 		 * The highscore is updated only when a push of a GameSession has failed (if there is a highscore of course),
 		 * and on the handler onQueryComplete of Remote. */
 		public function get highscore():int { return _member.highscore; }
@@ -396,12 +387,12 @@ package com.ludofactory.mobile.core.manager
 		}
 		
 		/** Updates the value of <code>tournamentUnlocked</code>. */
-		public function get isTournamentUnlocked():Boolean { return _member.tournamentUnlocked; }
+		public function get isTournamentUnlocked():Boolean { return _member.isDuelUnlocked; }
 		public function set isTournamentUnlocked(val:Boolean):void
 		{
-			if( _member.tournamentUnlocked != val )
+			if( _member.isDuelUnlocked != val )
 			{
-				_member.tournamentUnlocked = val;
+				_member.isDuelUnlocked = val;
 				setEncryptedMember();
 			}
 		}
@@ -433,14 +424,6 @@ package com.ludofactory.mobile.core.manager
 			setEncryptedMember();
 		}
 		
-		/** Updates the value of <code>bootTime</code>. */
-		public function get tournamentUnlockCounter():int { return _member.tournamentUnlockCounter; }
-		public function set tournamentUnlockCounter(val:int):void
-		{
-			_member.tournamentUnlockCounter = val;
-			setEncryptedMember();
-		}
-		
 		/** Updates the value of <code>numRecreditations</code>. */
 		public function get canHaveRewardAfterPublish():Boolean { return _member.canHaveRewardAfterPublish; }
 		public function set canHaveRewardAfterPublish(val:Boolean):void
@@ -448,18 +431,6 @@ package com.ludofactory.mobile.core.manager
 			if(_member.canHaveRewardAfterPublish != val)
 			{
 				_member.canHaveRewardAfterPublish = val;
-				setEncryptedMember();
-			}
-		}
-		
-		/**
-		 * Updates the value of <code>anonymousGameSessionsAlreadyUsed</code>. */
-		public function get anonymousGameSessionsAlreadyUsed():Boolean { return _member.anonymousGameSessionsAlreadyUsed; }
-		public function set anonymousGameSessionsAlreadyUsed(val:Boolean):void
-		{
-			if( _member.anonymousGameSessionsAlreadyUsed != val )
-			{
-				_member.anonymousGameSessionsAlreadyUsed = val;
 				setEncryptedMember();
 			}
 		}

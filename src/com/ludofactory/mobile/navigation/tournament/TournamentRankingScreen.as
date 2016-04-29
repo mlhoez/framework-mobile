@@ -569,7 +569,7 @@ package com.ludofactory.mobile.navigation.tournament
 					if( !_calloutLabel )
 					{
 						_calloutLabel = new Label();
-						_calloutLabel.text = StringUtil.format(_n("Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !" , "Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !", MemberManager.getInstance().tournamentUnlockCounter), MemberManager.getInstance().tournamentUnlockCounter);
+						//_calloutLabel.text = StringUtil.format(_n("Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !" , "Pour débloquer les parties en Tournoi, il suffit de terminer {0} partie Solo !", MemberManager.getInstance().tournamentUnlockCounter), MemberManager.getInstance().tournamentUnlockCounter);
 						_calloutLabel.width = GlobalConfig.stageWidth * 0.9;
 						_calloutLabel.textRendererProperties.isHTML = true;
 						_calloutLabel.validate();

@@ -24,7 +24,6 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
-	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
@@ -165,14 +164,10 @@ package com.ludofactory.mobile.navigation.engine
 			NavigationManager.resetNavigation(false);
 			InfoManager.forceClose();
 			
-			if( !MemberManager.getInstance().isTournamentUnlocked )
+			if(!MemberManager.getInstance().isTournamentUnlocked)
 			{
-				MemberManager.getInstance().tournamentUnlockCounter--;
-				if(MemberManager.getInstance().tournamentUnlockCounter <= 0)
-				{
-					MemberManager.getInstance().isTournamentUnlocked = true;
-					MemberManager.getInstance().isTournamentAnimPending = true;
-				}
+				MemberManager.getInstance().isTournamentUnlocked = true;
+				MemberManager.getInstance().isTournamentAnimPending = true;
 			}
 			
 			_overlay = new Quad(5, 5, 0x000000);

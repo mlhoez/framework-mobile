@@ -31,11 +31,8 @@ package com.ludofactory.mobile.core.manager
 		private var _tournamentAnimPending:Boolean = false;
 		
 		/**
-		 * Whether we need to display the tutorial the first time. */		
-		private var _tournamentUnlocked:Boolean = false;
-		/**
-		 * How many game sessions in solo mode to play in order to unlock the tournament mode. */
-		private var _tournamentUnlockCounter:int = 2;
+		 * Whether this user has unlocked the duel mode. */		
+		private var _isDuelUnlocked:Boolean = false;
 		
 		/**
 		 * The member's highscore */		
@@ -48,13 +45,6 @@ package com.ludofactory.mobile.core.manager
 		/**
 		 * The elements to push. */		
 		private var _elementsToPush:Vector.<AbstractElementToPush> = new Vector.<AbstractElementToPush>();
-		
-		/**
-		 * Array of anonymous game sessions. 
-		 * This is used only once when the user wants to login
-		 * or create a new account so that anonymous game sessions
-		 * can be taken in account. */		
-		private var _anonymousGameSessions:Array = [];
 		
 		/**
 		 * The id of the last trophy won. */		
@@ -135,11 +125,6 @@ package com.ludofactory.mobile.core.manager
 		 * True by default so that a non authenticated user will see it. */
 		private var _canHaveRewardAfterPublish:Boolean = true;
 		
-		/**
-		 * If the anonymous game sessions can be sent when
-		 * the user creates an account et simply log in. */
-		private var _anonymousGameSessionsAlreadyUsed:Boolean = false;
-		
 		public function Member() { }
 		
 		/**
@@ -154,6 +139,7 @@ package com.ludofactory.mobile.core.manager
 			if( "mdp" in memberData && memberData.mdp != null )                                 _password = String(memberData.mdp);
 			if( "pseudo" in memberData && memberData.pseudo != null )                           _pseudo = String(memberData.pseudo);
 			if( "date_naissance" in memberData && memberData.date_naissance != null )           _birthDate = String(memberData.date_naissance);
+			if( "highscore" in memberData && memberData.highscore != null )                     _highscore = int(memberData.highscore);
 			if( "sexe" in memberData && memberData.sexe != null )                               _title = String(memberData.sexe);
 			if( "score_cumule" in memberData && memberData.score_cumule != null )               _cumulatedStars = int(memberData.score_cumule);
 			if( "id_facebook" in memberData && memberData.id_facebook != null )                 _facebookId = Number(memberData.id_facebook);
@@ -161,6 +147,7 @@ package com.ludofactory.mobile.core.manager
 			if( "video_disponible" in memberData && memberData.video_disponible != null )       _canWatchVideo = Boolean(memberData.video_disponible);
 			if( "isAdmin" in memberData && memberData.isAdmin != null )                         _isAdmin = Boolean(memberData.isAdmin);
 			if( "displayInterstitial" in memberData && memberData.displayInterstitial != null ) _canDisplayInterstitial = Boolean(memberData.displayInterstitial);
+			if( "isDuelUnlocked" in memberData && memberData.isDuelUnlocked != null )           _isDuelUnlocked = Boolean(memberData.isDuelUnlocked);
 			if( "canHaveRewardAfterPublish" in memberData && memberData.canHaveRewardAfterPublish != null ) _canHaveRewardAfterPublish = Boolean(memberData.canHaveRewardAfterPublish);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
@@ -206,9 +193,6 @@ package com.ludofactory.mobile.core.manager
 		public function get updateDate():String { return _updateDate; }
 		public function set updateDate(val:String):void { _updateDate = val; }
 		
-		public function get anonymousGameSessions():Array { return _anonymousGameSessions; }
-		public function set anonymousGameSessions(val:Array):void { _anonymousGameSessions = val; }
-		
 		public function get lastTrophyWonId():int { return _lastTrophyWonId; }
 		public function set lastTrophyWonId(val:int):void { _lastTrophyWonId = val; }
 		
@@ -218,8 +202,8 @@ package com.ludofactory.mobile.core.manager
 		public function get tournamentAnimPending():Boolean { return _tournamentAnimPending; }
 		public function set tournamentAnimPending(val:Boolean):void { _tournamentAnimPending = val; }
 		
-		public function get tournamentUnlocked():Boolean { return _tournamentUnlocked; }
-		public function set tournamentUnlocked(val:Boolean):void { _tournamentUnlocked = val; }
+		public function get isDuelUnlocked():Boolean { return _isDuelUnlocked; }
+		public function set isDuelUnlocked(val:Boolean):void { _isDuelUnlocked = val; }
 
 		public function get canWatchVideo():Boolean { return _canWatchVideo; }
 		public function set canWatchVideo(val:Boolean):void { _canWatchVideo = val; }
@@ -242,14 +226,8 @@ package com.ludofactory.mobile.core.manager
 		public function get tokenDate():Date { return _tokenDate; }
 		public function set tokenDate(value:Date):void { _tokenDate = value; }
 		
-		public function get tournamentUnlockCounter():int { return _tournamentUnlockCounter; }
-		public function set tournamentUnlockCounter(value:int):void { _tournamentUnlockCounter = value; }
-		
 		public function get canHaveRewardAfterPublish():Boolean { return _canHaveRewardAfterPublish; }
 		public function set canHaveRewardAfterPublish(value:Boolean):void { _canHaveRewardAfterPublish = value; }
-		
-		public function get anonymousGameSessionsAlreadyUsed():Boolean { return _anonymousGameSessionsAlreadyUsed; }
-		public function set anonymousGameSessionsAlreadyUsed(val:Boolean):void { _anonymousGameSessionsAlreadyUsed = val; }
 		
 	}
 }

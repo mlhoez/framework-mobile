@@ -463,13 +463,6 @@ package com.ludofactory.mobile.core
 				}
 			}
 			
-			if( !MemberManager.getInstance().isLoggedIn() )
-			{
-				// if the user is not logged in, we need to store the game sessions
-				MemberManager.getInstance().anonymousGameSessions[ (MemberManager.getInstance().anonymousGameSessions.length - 1) ] = _gameSession;
-				MemberManager.getInstance().anonymousGameSessions = ( MemberManager.getInstance().anonymousGameSessions );
-			}
-			
 			// re-enable the PushManager
 			AbstractEntryPoint.pushManager.isEnabled = true;
 		}

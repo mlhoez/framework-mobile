@@ -16,7 +16,6 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.InvalidSessionNotificationContent;
-	import com.ludofactory.mobile.core.promo.PromoManager;
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -428,63 +427,38 @@ package com.ludofactory.mobile.core.remoting
 				result.queryName = queryName;
 				
 				// do it before the member is loaded
-				if( queryName == "LudoMobile.useClass.Identification.logIn" || queryName == "LudoMobile.useClass.Inscription.nouveauJoueur" )
+				if(queryName == "LudoMobile.useClass.Identification.logIn" || queryName == "LudoMobile.useClass.Inscription.nouveauJoueur")
 				{
 					if( result.code == 1 || result.code == 6 || result.code == 7 || result.code == 8 || result.code == 9 || result.code == 11 || result.code == 12 )
 					{
 						log("[Remote] Inscription ou connexion réussie, parties anonymes retirées.");
 						// because the sign in/up is ok, we need to clear the credits he potentially bought
-						MemberManager.getInstance().anonymousGameSessionsAlreadyUsed = true;
 						MemberManager.getInstance().cumulatedRubies = 0;
-						MemberManager.getInstance().anonymousGameSessions = [];
 					}
 				}
 				
-				if( "obj_membre_mobile" in result && result.obj_membre_mobile)
+				// parse the member object
+				if("obj_membre_mobile" in result && result.obj_membre_mobile)
 					MemberManager.getInstance().parseData(result.obj_membre_mobile);
 				
-				if( MemberManager.getInstance().isLoggedIn() && "highscore" in result )
-					MemberManager.getInstance().highscore = int(result.highscore);
+				// sync the trophies (in case the user changed device for example)
+				if(MemberManager.getInstance().isLoggedIn() && "tab_trophy_win" in result)
+					MemberManager.getInstance().trophiesWon = result.tab_trophy_win as Array;
 				
-				// this is used to update the owned trophies, for example when a user change a device, everything
-				// is synchronized
-				if( MemberManager.getInstance().isLoggedIn() && "tab_trophy_win" in result )
-					MemberManager.getInstance().trophiesWon = result.tab_trophy_win as Array; // TODO peut être afficher les trophées ici ? canWin... si oui => onWinTrophy...
-				
-				if( MemberManager.getInstance().isLoggedIn() && "acces_tournoi" in result && queryName.indexOf("LudoMobile.useClass.ServeurJeux.pushPartie") == -1 )
-				{
-					MemberManager.getInstance().isTournamentUnlocked = int(result.acces_tournoi);
-					//MemberManager.getInstance().setTournamentAnimPending( false ); // sinon pas d'anim quand partie classique => popup marketing => inscription => acccueil
-					MemberManager.getInstance().setDisplayTutorial( int(result.acces_tournoi) != 1 );
-				}
+				// TODO voir comment gérer le MemberManager.getInstance().setDisplayTutorial( int(result.acces_tournoi) != 1 );
 				
 				if( callbackSuccess )
 					callbackSuccess(result);
 			}
 
 			// secured calls (https)
-			if( "appels_https" in result && result.appels_https != null )
+			if("appels_https" in result && result.appels_https != null)
 			{
 				delete result.appels_https;
 				Storage.getInstance().setProperty(StorageConfig.PROPERTY_USE_SECURED_CALLS, int(result.appels_https) == 1);
 				// now check if the value is different in order to know if we need to reconnect or not
-				if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_USE_SECURED_CALLS)) != _netConnectionManager.useSecureConnection )
+				if(Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_USE_SECURED_CALLS)) != _netConnectionManager.useSecureConnection)
 					_netConnectionManager.connect(); // reconnect if invalid
-			}
-			
-			// check if there is a promotion
-			if("promo" in result && result.promo)
-			{
-				// if no promotion is currently built, we do so
-				if(!PromoManager.getInstance().isPromoPending)
-					PromoManager.getInstance().buildPromo(result.promo);
-				else
-					PromoManager.getInstance().updateData(result.promo); // just in case we need to update the time left
-			}
-			else // else, by security we need to clear it /!\ 
-			{
-				if(PromoManager.getInstance().isPromoPending)
-					PromoManager.getInstance().clearPromo();
 			}
 			
 			// a force download have been requested for this version
