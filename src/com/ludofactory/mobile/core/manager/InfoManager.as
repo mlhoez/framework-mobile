@@ -132,6 +132,11 @@ package com.ludofactory.mobile.core.manager
 			Starling.juggler.tween(_content, 0.25, { delay:delay, alpha:0, onComplete:removeContent } );
 		}
 		
+		public static function forceClose():void
+		{
+			hide("", InfoContent.ICON_NOTHING, 0);
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
 		
@@ -146,7 +151,7 @@ package com.ludofactory.mobile.core.manager
 				_content.removeEventListener(TouchEvent.TOUCH, onTouchPopup);
 				Starling.juggler.removeTweens(_content);
 				exectueCallback();
-				hide("", InfoContent.ICON_NOTHING, 0);
+				forceClose();
 			}
 			touch = null;
 		}

@@ -32,8 +32,6 @@ package com.ludofactory.mobile.core.model
 		public static const LOGIN_SCREEN:String = "Authentification - Connexion";
 		/** Ecran d'inscription. */		
 		public static const REGISTER_SCREEN:String = "Authentification - Inscription";
-		/** Ecran de fin d'inscription. */		
-		public static const REGISTER_COMPLETE_SCREEN:String = "Authentification - Fin d'inscription";
 		/** Ecran de choix du pseudo. */		
 		public static const PSEUDO_CHOICE_SCREEN:String = "Authentification - Choix du pseudo";
 		/** Ecran de renseignement de l'id parrain (après une inscription Facebook). */		
@@ -50,24 +48,10 @@ package com.ludofactory.mobile.core.model
 		public static const SPONSOR_FRIENDS_SCREEN:String = "Parrainage - Suivi des filleuls";
 		
 //------------------------------------------------------------------------------------------------------------
-//	Mes gains
-		
-		/** Ecran de suivi des gains. */		
-		public static const MY_GIFTS_SCREEN:String = "Mes gains";
-		
-//------------------------------------------------------------------------------------------------------------
 //	Réglages
 		
 		/** Ecran de réglages. */		
 		public static const SETTINGS_SCREEN:String = "Réglages";
-		
-//------------------------------------------------------------------------------------------------------------
-//	Anciens tournois
-		
-		/** Ecran de listing des anciens tournois. */		
-		public static const PREVIOUS_TOURNAMENTS_SCREEN:String = "Listing des anciens tournois";
-		/** Ecran de détail d'un ancien tournoi. */		
-		public static const PREVIOUS_TOURNAMENTS_DETAIL_SCREEN:String = "Détail d'un ancien tournoi";
 		
 //------------------------------------------------------------------------------------------------------------
 //	Jeu
@@ -88,8 +72,6 @@ package com.ludofactory.mobile.core.model
 		public static const FACEBOOK_END_SCREEN:String = "Jeu - Dépassement d'amis Facebook";
 		/** Ecran du classement du tournoi en cours. */		
 		public static const TOURNAMENT_RANKING_SCREEN:String = "Tournoi en cours";
-		/** Ecran des règles du jeu. */		
-		public static const RULES_AND_SCORES_SCREEN:String = "Règles du jeu";
 		
 //------------------------------------------------------------------------------------------------------------
 //	HighScores
@@ -111,33 +93,12 @@ package com.ludofactory.mobile.core.model
 		/** Ecran de news. */		
 		public static const NEWS_SCREEN:String = "News";
 		
-//------------------------------------------------------------------------------------------------------------
-//	News
-		
-		/** Ecran comment gagner des cadeaux. */		
-		public static const HOW_TO_WIN_GIFTS_SCREEN:String = "Comment gagner des cadeaux";
-		
-//------------------------------------------------------------------------------------------------------------
-//	CGU
-		
-		/** Ecran CGU. */		
-		public static const CGU_SCREEN:String = "CGU";
 		
 //------------------------------------------------------------------------------------------------------------
 //	Update screen
 		
 		/** Ecran où l'on indique qu'il est nécessaire de mettre à jour l'application. */		
 		public static const UPDATE_SCREEN:String = "Mise à jour nécessaire";
-		
-//------------------------------------------------------------------------------------------------------------
-//	Avatars
-		
-		/** Avatars home screen. */		
-		public static const AVATAR_HOME_SCREEN:String = "Accueil avatars";
-		/** Avatar maker screen */
-		public static const AVATAR_MAKER_SCREEN:String = "Avatar maker";
-		/** Avatar gender choice screen */
-		public static const AVATAR_GENDER_CHOICE_SCREEN:String = "Avatar - choix du genre";
 		
 //------------------------------------------------------------------------------------------------------------
 //	Debug screen

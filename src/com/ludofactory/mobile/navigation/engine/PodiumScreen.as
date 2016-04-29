@@ -120,7 +120,7 @@ package com.ludofactory.mobile.navigation.engine
 		
 		private function initContent():void
 		{
-			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+			InfoManager.forceClose();
 			
 			_podiumGlow = new Image( AbstractEntryPoint.assets.getTexture("HighScoreGlow") );
 			_podiumGlow.alpha = 0;

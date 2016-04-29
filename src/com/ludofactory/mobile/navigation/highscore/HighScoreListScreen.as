@@ -590,7 +590,7 @@ package com.ludofactory.mobile.navigation.highscore
 			
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
-				InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+				InfoManager.forceClose();
 				if(GoViral.goViral.isFacebookPermissionGranted("user_friends"))
 				{
 					log("Permission user_friends granted");

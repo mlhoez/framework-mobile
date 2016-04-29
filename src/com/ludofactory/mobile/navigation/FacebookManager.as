@@ -260,7 +260,7 @@ package com.ludofactory.mobile.navigation
 						// we don't need to check if me.properties.id equals to MemberManager.getInstance().getFacebookId()
 						// because we don't care if the associated Facebook account matches the current session on the phone
 						// we only want the user to publish
-						InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+						InfoManager.forceClose();
 						
 						publish();
 						
@@ -271,7 +271,7 @@ package com.ludofactory.mobile.navigation
 						// we don't need to check if me.properties.id equals to MemberManager.getInstance().getFacebookId()
 						// because we don't care if the associated Facebook account matches the current session on the phone
 						// we only want a token here to finish all the actions
-						InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+						InfoManager.forceClose();
 						
 						if(_publicationData)
 							publish();

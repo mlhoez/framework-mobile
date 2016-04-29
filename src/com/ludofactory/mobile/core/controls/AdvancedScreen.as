@@ -7,7 +7,6 @@ Created : 13 Juin 2013
 package com.ludofactory.mobile.core.controls
 {
 	
-	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
@@ -73,7 +72,7 @@ package com.ludofactory.mobile.core.controls
 			}
 			
 			// also close all informations displaying on screen
-			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+			InfoManager.forceClose();
 			
 			// finally, check if the user can back (it may be locked for some reasons)
 			if( _canBack )

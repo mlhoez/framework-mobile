@@ -12,7 +12,6 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.common.utils.logs.logError;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
-	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
@@ -21,8 +20,6 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.debug.ErrorDisplayer;
-	import com.ludofactory.mobile.navigation.store.StoreData;
 	import com.milkmangames.nativeextensions.GoViral;
 	
 	import starling.events.EventDispatcher;
@@ -89,11 +86,6 @@ package com.ludofactory.mobile.core.remoting
 //------------------------------------------------------------------------------------------------------------
 //	Requests
 		
-		public function getTermsAndConditions(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getReglement", getGenericParams());
-		}
-		
 		/**
 		 * Initialize function.
 		 * 
@@ -103,10 +95,66 @@ package com.ludofactory.mobile.core.remoting
 		 */		
 		public function init(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
 		{
-			var params:Object = getGenericParams();
-			params.acces_tournoi = MemberManager.getInstance().isTournamentUnlocked ? 1 : 0;
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "init", params);
+			//var params:Object = getGenericParams();
+			//params.acces_tournoi = MemberManager.getInstance().isTournamentUnlocked ? 1 : 0;
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "init", getGenericParams());
 		}
+		
+		// ----- Login / register
+		
+		/**
+		 * Connects the user.
+		 */
+		public function logIn(login:String, password:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = getGenericParams();
+			params.mail = login;
+			params.mdp = password;
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Identification", "logIn", params);
+		}
+		
+		/**
+		 * Registers the user.
+		 */
+		public function registerUser(userData:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			userData = mergeWithGenericParams(userData);
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "nouveauJoueur", userData);
+		}
+		
+		/**
+		 * Register the user via facebook.
+		 *
+		 * Utilisé pour l'inscription ET le login (même fonction commune pour facebook)
+		 */
+		public function registerUserViaFacebook(userData:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			userData = mergeWithGenericParams(userData);
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "nouveauJoueur", userData);
+		}
+		
+		/**
+		 * Associates the facebook account with the ludokado account.
+		 */
+		public function associateAccount(memberId:int, facebookId:String, email:String, prenom:String, nom:String, ville:String, dateNaissance:String, title:int, isPublishing:Boolean, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = mergeWithGenericParams( { id_membre:memberId, id_facebook:facebookId, mail_facebook:email, prenom:prenom, nom:nom, ville:ville, date_naissance:dateNaissance, titre:title, isPublishing:isPublishing } );
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "associationCompteLK", params);
+		}
+		
+		/**
+		 * Retreive the password for the account whose mail is given in parameter
+		 */
+		public function retreivePassword(login:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = mergeWithGenericParams( { mail:login } );
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Identification", "motPasseOublie", params);
+		}
+		
+		
+		// ----- 
+		
+		
 		
 		/**
 		 * Retrieves the list of all trophies associated to this game, in order to dynamize them.
@@ -126,94 +174,14 @@ package com.ludofactory.mobile.core.remoting
 		}
 		
 		
-		/**
-		 * Connect the user.
-		 * 
-		 * @param login Login (mail)
-		 * @param password Password
-		 */		
-		public function logIn(login:String, password:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = getGenericParams();
-			params.mail = login;
-			params.mdp = password;
-			params.transactionIds = MemberManager.getInstance().transactionIds;
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Identification", "logIn", params);
-		}
 		
-		/**
-		 * Creates a pseudo.
-		 * 
-		 * @param userId the user id
-		 * @param pseudo pseudo
-		 */		
-		public function createPseudo(pseudo:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = getGenericParams();
-			params.pseudo = pseudo;
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "creationPseudo", params);
-		}
 		
-		/**
-		 * Get a default pseudo.
-		 * 
-		 * @param userId User id
-		 */		
-		public function getDefaultPseudo(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = getGenericParams();
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "getPseudoDefaut", params);
-		}
 		
-		/**
-		 * Register the user.
-		 * 
-		 * @param userData All the data already formatted into an object
-		 */		
-		public function registerUser(userData:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			userData = mergeWithGenericParams(userData);
-			userData.transactionIds = MemberManager.getInstance().transactionIds;
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "nouveauJoueur", userData);
-		}
 		
-		/**
-		 * Register the user via facebook.
-		 * 
-		 * Utilisé pour l'inscription ET le login (même fonction commune pour facebook)
-		 * 
-		 * @param userData All the data already formatted into an object
-		 */		
-		public function registerUserViaFacebook(userData:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			userData = mergeWithGenericParams(userData);
-			userData.transactionIds = MemberManager.getInstance().transactionIds;
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "nouveauJoueur", userData);
-		}
 		
-		/**
-		 * Associate the facebook account with the ludokado account
-		 * 
-		 * @param memberId The member id
-		 * @param facebookId The facebook id
-		 * @param password The password
-		 */		
-		public function associateAccount(memberId:int, facebookId:String, email:String, prenom:String, nom:String, ville:String, dateNaissance:String, title:int, isPublishing:Boolean, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_membre:memberId, id_facebook:facebookId, mail_facebook:email, prenom:prenom, nom:nom, ville:ville, date_naissance:dateNaissance, titre:title, isPublishing:isPublishing } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Inscription", "associationCompteLK", params);
-		}
 		
-		/**
-		 * Retreive the password for the account whose mail is given in parameter
-		 * 
-		 * @param login The email
-		 */		
-		public function retreivePassword(login:String, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { mail:login } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Identification", "motPasseOublie", params);
-		}
+		
+		
 		
 		/**
 		 * Push a game
@@ -260,15 +228,6 @@ package com.ludofactory.mobile.core.remoting
 		{
 			var params:Object = getGenericParams();
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Accueil", "getActualites", params);
-		}
-		
-		/**
-		 * 
-		 */		
-		public function parrainer(type:String, filleuls:Array, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { type:type, parrainages:filleuls } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Parrainage", "parrainer", params);
 		}
 		
 // HighScore list
@@ -395,36 +354,7 @@ package com.ludofactory.mobile.core.remoting
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Compte", "setNotification", params);
 		}
 		
-// Store
 		
-		public function getProductIds(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "AchatCredits", "getListeOffres", getGenericParams());
-		}
-		
-		public function createRequest(productNumberId:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_offre:productNumberId } ); 
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "AchatCredits", "creationDemande", params);
-		}
-		
-		public function validateRequest(productData:StoreData, result:Object, request:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			log("\n\nValidate request : ");
-			
-			var params:Object = mergeWithGenericParams( { code_paiement:productData.paymentCode, code_retour:result, id_offre:productData.databaseOfferId, id_demande:request.id } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "AchatCredits", "paiementAccepte", params);
-		}
-		public function changeRequestState(productData:StoreData, request:Object, state:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { id_offre:productData.id, id_demande:request.id, etat:state } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "AchatCredits", "changementEtatDemande", params);
-		}
-		
-		public function getAlerts(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "Menu", "Init", getGenericParams());
-		}
 		
 		/**
 		 * Check for language update
@@ -477,7 +407,7 @@ package com.ludofactory.mobile.core.remoting
 		 * Generic function called when a query have been sent successfully.
 		 * 
 		 * <p>If there is a Member object in the result, this function will
-		 * also try to parse this object to update the internal MemberData.</p>
+		 * also try to parse this object to update the internal Member object.</p>
 		 * 
 		 * <p>Moreover, if the error code number 999 is returned, this means that
 		 * the user could not be identified / reconnected on the server side, so
@@ -491,7 +421,7 @@ package com.ludofactory.mobile.core.remoting
 				log("[Remote] onQueryComplete : The user could not be reconnected on the server side (error 999).");
 				MemberManager.getInstance().disconnect();
 				CustomPopupManager.addPopup(new InvalidSessionNotificationContent());
-				InfoManager.hide("", InfoContent.ICON_NOTHING, 0); // just in case
+				InfoManager.forceClose();
 			}
 			else
 			{
@@ -507,8 +437,6 @@ package com.ludofactory.mobile.core.remoting
 						MemberManager.getInstance().anonymousGameSessionsAlreadyUsed = true;
 						MemberManager.getInstance().cumulatedRubies = 0;
 						MemberManager.getInstance().anonymousGameSessions = [];
-						// empty the transaction ids
-						MemberManager.getInstance().transactionIds = [];
 					}
 				}
 				

@@ -346,7 +346,7 @@ package com.ludofactory.mobile.core
 						}
 						else
 						{
-							InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+							InfoManager.forceClose();
 							advancedOwner.replaceScreen(_nextScreenId);
 						}
 					}
@@ -367,7 +367,7 @@ package com.ludofactory.mobile.core
 							}
 							else
 							{
-								InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+								InfoManager.forceClose();
 								advancedOwner.replaceScreen( ScreenIds.NEW_HIGH_SCORE_SCREEN );
 							}
 						}
@@ -381,7 +381,7 @@ package com.ludofactory.mobile.core
 							}
 							else
 							{
-								InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+								InfoManager.forceClose();
 								advancedOwner.replaceScreen( int(ScreenData.getInstance().gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN );
 							}
 						}
@@ -442,7 +442,7 @@ package com.ludofactory.mobile.core
 				}
 				else
 				{
-					InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+					InfoManager.forceClose();
 					advancedOwner.replaceScreen( _nextScreenId );
 				}
 			}
@@ -458,7 +458,7 @@ package com.ludofactory.mobile.core
 				}
 				else
 				{
-					InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+					InfoManager.forceClose();
 					advancedOwner.replaceScreen( _nextScreenId );
 				}
 			}
@@ -479,7 +479,7 @@ package com.ludofactory.mobile.core
 		 */		
 		private function onTrophiesDisplayed(event:Event):void
 		{
-			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+			InfoManager.forceClose();
 			TrophyManager.getInstance().removeEventListener(Event.COMPLETE, onTrophiesDisplayed);
 			AbstractEntryPoint.screenNavigator.replaceScreen(_nextScreenId);
 		}

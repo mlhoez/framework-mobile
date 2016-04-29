@@ -6,7 +6,10 @@ Created : 18 Août 2013
 */
 package com.ludofactory.mobile.core.model
 {
-
+	
+	/**
+	 * Global data used across the screens.
+	 */
 	public class ScreenData
 	{
 		private static var _instance:ScreenData;

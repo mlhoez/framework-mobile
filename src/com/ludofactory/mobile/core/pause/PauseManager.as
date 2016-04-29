@@ -199,5 +199,3 @@ package com.ludofactory.mobile.core.pause
 		public static function set isPlaying(val:Boolean):void { _isPlaying = val; }
 	}
 }
-
-internal class securityKey{}

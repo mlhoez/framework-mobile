@@ -7,7 +7,6 @@ Created : 12 Août 2013
 package com.ludofactory.mobile.core.manager
 {
 	
-	import com.ludofactory.ane.DeviceUtils;
 	import com.ludofactory.common.encryption.Encryption;
 	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.logs.logError;
@@ -19,8 +18,6 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.push.AbstractElementToPush;
 	import com.ludofactory.mobile.core.push.GameSession;
-	import com.ludofactory.mobile.core.push.PushNewCSMessage;
-	import com.ludofactory.mobile.core.push.PushNewCSThread;
 	import com.ludofactory.mobile.core.push.PushTrophy;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
@@ -80,8 +77,6 @@ package com.ludofactory.mobile.core.manager
 			registerClassAlias("AbstractElementToPushClass", AbstractElementToPush);
 			registerClassAlias("GameSessionClass", GameSession);
 			registerClassAlias("PushTrophyClass", PushTrophy);
-			registerClassAlias("PushNewCSThreadClass", PushNewCSThread);
-			registerClassAlias("PushNewCSMessageClass", PushNewCSMessage);
 			registerClassAlias("MemberClass", Member);
 			
 			// this value cannot change once the application have been released,
@@ -375,15 +370,6 @@ package com.ludofactory.mobile.core.manager
 		public function set anonymousGameSessions(val:Array):void
 		{
 			_member.anonymousGameSessions = val;
-			setEncryptedMember();
-		}
-		
-		/**
-		 * The array of transaction ids. */
-		public function get transactionIds():Array { return _member.transactionIds; }
-		public function set transactionIds(val:Array):void
-		{
-			_member.transactionIds = val;
 			setEncryptedMember();
 		}
 		

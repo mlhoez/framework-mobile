@@ -22,7 +22,6 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.newClasses.GameChoiceScreen;
 	import com.ludofactory.mobile.navigation.UpdateScreen;
 	import com.ludofactory.mobile.navigation.account.MyAccountScreen;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
@@ -38,10 +37,9 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.faq.FaqScreen;
 	import com.ludofactory.mobile.navigation.highscore.HighScoreHomeScreen;
 	import com.ludofactory.mobile.navigation.highscore.HighScoreListScreen;
-	import com.ludofactory.mobile.navigation.home.OldHomeScreen;
-	import com.ludofactory.mobile.navigation.news.CGUScreen;
 	import com.ludofactory.mobile.navigation.sponsor.SponsorHomeScreen;
 	import com.ludofactory.mobile.navigation.tournament.TournamentRankingScreen;
+	import com.ludofactory.newClasses.GameChoiceScreen;
 	import com.ludofactory.newClasses.HomeScreen;
 	import com.ludofactory.newClasses.SplashScreen;
 	import com.milkmangames.nativeextensions.CoreMobile;
@@ -85,8 +83,7 @@ package com.ludofactory.mobile.core
 												{ id:ScreenIds.HIGH_SCORE_HOME_SCREEN, clazz:HighScoreHomeScreen },
 												{ id:ScreenIds.FACEBOOK_END_SCREEN, clazz:FacebookEndScreen },
 												{ id:ScreenIds.UPDATE_SCREEN, clazz:UpdateScreen },
-												{ id:ScreenIds.GAME_CHOICE_SCREEN, clazz:GameChoiceScreen },
-												{ id:ScreenIds.CGU_SCREEN, clazz:CGUScreen } ];
+												{ id:ScreenIds.GAME_CHOICE_SCREEN, clazz:GameChoiceScreen } ];
 		
 		/**
 		 * The debug screens concatened to the SCREENS property when the app is in debug mode. */

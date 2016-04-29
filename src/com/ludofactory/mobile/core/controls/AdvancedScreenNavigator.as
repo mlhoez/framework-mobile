@@ -9,7 +9,6 @@ package com.ludofactory.mobile.core.controls
 	
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
-	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
@@ -25,18 +24,12 @@ package com.ludofactory.mobile.core.controls
 	public class AdvancedScreenNavigator extends StackScreenNavigator
 	{
 		/**
-		 * Some data that can be used by the displayed screen. */		
-		//private var _screenData:ScreenData;
-		
-		/**
 		 * Reference of the back screen id (avoid too much memory allocation) */		
 		private var _backScreenId:String;
 		
 		public function AdvancedScreenNavigator()
 		{
 			super();
-			
-			//_screenData = new ScreenData();
 		}
 		
 		override public function replaceScreen(id:String, transition:Function = null):DisplayObject
@@ -96,14 +89,6 @@ package com.ludofactory.mobile.core.controls
 			for(var i:int = 0; i < len; i++)
 				addScreen(screens[i].id, new StackScreenNavigatorItem(screens[i].clazz));
 		}
-		
-//------------------------------------------------------------------------------------------------------------
-//	Get / Set
-		
-		/*public function get screenData():ScreenData
-		{
-			return _screenData;
-		}*/
 		
 	}
 }

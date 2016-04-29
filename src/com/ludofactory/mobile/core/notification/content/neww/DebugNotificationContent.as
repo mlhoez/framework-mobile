@@ -250,7 +250,6 @@ package com.ludofactory.mobile.core.notification.content.neww
 				_counter = DEFAULT_COUNTER;
 				Remote.getInstance().getFaq(onGetFaqSuccess, null, null, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
 				Remote.getInstance().getNews(onGetNewsSuccess, null, null, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
-				Remote.getInstance().getTermsAndConditions(onGetTermsAndConditionsSuccess, null, null, 1, AbstractEntryPoint.screenNavigator.activeScreenID);
 			}
 			else
 			{

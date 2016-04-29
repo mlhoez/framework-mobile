@@ -104,7 +104,7 @@ package com.ludofactory.mobile.navigation.engine
 		
 		private function initContent():void
 		{
-			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+			InfoManager.forceClose();
 			
 			_highScoreGlow = new Image( AbstractEntryPoint.assets.getTexture("HighScoreGlow") );
 			_highScoreGlow.alpha = 0;

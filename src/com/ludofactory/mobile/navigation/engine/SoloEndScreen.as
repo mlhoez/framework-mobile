@@ -163,7 +163,7 @@ package com.ludofactory.mobile.navigation.engine
 			//MemberManager.getInstance().isTournamentAnimPending = true;
 			
 			NavigationManager.resetNavigation(false);
-			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+			InfoManager.forceClose();
 			
 			if( !MemberManager.getInstance().isTournamentUnlocked )
 			{
