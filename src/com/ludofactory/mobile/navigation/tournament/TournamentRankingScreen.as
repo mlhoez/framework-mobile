@@ -105,8 +105,6 @@ package com.ludofactory.mobile.navigation.tournament
 		public function TournamentRankingScreen()
 		{
 			super();
-			
-			_appClearBackground = false;
 		}
 		
 		override protected function initialize():void

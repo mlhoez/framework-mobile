@@ -15,7 +15,7 @@ package com.ludofactory.mobile.core.model
 		 * The number of stars or pointq earned in tournament or free mode. If the game session have been pushed,
 		 * this value is the one from the database, otherwise, it is calculated thanks
 		 * to the <code>ScoreToStarsConverter</code> class. */		
-		private var _numStarsEarned:int;
+		private var _rewardInDuel:int;
 		
 		/**
 		 * The score the user made in this game session. */		
@@ -38,15 +38,13 @@ package com.ludofactory.mobile.core.model
 		private var _facebookMoving:int; // how many places gained
 		private var _facebookPosition:int; // 0, 1 or 2 => where was the user (from top to bottom, so 2 = last)
 		
-		private var _displayPushAlert:Boolean = false;
-		
 		public function GameData()
 		{
 			
 		}
 		
-		public function get numStarsOrPointsEarned():int { return _numStarsEarned; }
-		public function set numStarsOrPointsEarned(val:int):void { _numStarsEarned = val; }
+		public function get rewardInDuel():int { return _rewardInDuel; }
+		public function set rewardInDuel(val:int):void { _rewardInDuel = val; }
 		
 		public function get score():int { return _score; }
 		public function set score(val:int):void { _score = val; }
@@ -68,9 +66,6 @@ package com.ludofactory.mobile.core.model
 		
 		public function get facebookPosition():int { return _facebookPosition; }
 		public function set facebookPosition(val:int):void { _facebookPosition = val; }
-		
-		public function get displayPushAlert():Boolean { return _displayPushAlert; }
-		public function set displayPushAlert(val:Boolean):void { _displayPushAlert = val; }
 		
 	}
 }

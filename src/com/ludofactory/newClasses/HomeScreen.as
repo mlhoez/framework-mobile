@@ -11,6 +11,8 @@ package com.ludofactory.newClasses
 	import com.ludofactory.mobile.MobileButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
+	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.neww.SettingsPopupContent;
@@ -138,15 +140,37 @@ package com.ludofactory.newClasses
 			CustomPopupManager.addPopup(new TrophiesPopupContent());
 		}
 		
+		/**
+		 * Starts a solo game.
+		 * 
+		 * 
+		 */
 		private function onPlaySolo(event:Event):void
 		{
-			// TODO handle game mode
+			ScreenData.getInstance().gameMode = GameMode.SOLO;
 			advancedOwner.replaceScreen(ScreenIds.GAME_SCREEN);
 		}
 		
+		/**
+		 * Starts a duel game
+		 * 
+		 * Before the game can be launched, we need to make a request to our server in order to
+		 * gather some informations about the game that will be played :
+		 * 
+		 *     - The opponenent : if we could find one, otherwise the player initializes a new duel.
+		 *     This value will contain the nickname and current trophies count of the opponenent.
+		 *     
+		 *     - The value of the reward : just like Clash Royale, this value is pre-determined if
+		 *     we found an opponent. In case of a victory, this value is added to the trophies count,
+		 *     otherwise it will be decremented. If there was no opponent, we will indicate to the user
+		 *     that the result will be displayed later in the home screen.
+		 */
 		private function onPlayDuel(event:Event):void
 		{
-			// TODO handle le game mode
+			ScreenData.getInstance().gameMode = GameMode.DUEL;
+			
+			// TODO make the remote call and then launch the game
+			
 			advancedOwner.replaceScreen(ScreenIds.GAME_SCREEN);
 		}
 		

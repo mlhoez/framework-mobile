@@ -19,6 +19,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.pause.PauseManager;
 	import com.ludofactory.mobile.core.push.GameSession;
@@ -89,7 +90,7 @@ package com.ludofactory.mobile.core
 			
 			// create the game session data, link it to the TrophyManager and add it to the PushManager in case
 			// the user quits the game while playing
-			_gameSession = new GameSession(PushType.GAME_SESSION, advancedOwner.screenData.gameType);
+			_gameSession = new GameSession(PushType.GAME_SESSION, ScreenData.getInstance().gameMode);
 			TrophyManager.getInstance().currentGameSession = _gameSession;
 			AbstractEntryPoint.pushManager.addElementToPush(_gameSession);
 			
@@ -261,10 +262,9 @@ package com.ludofactory.mobile.core
 				AdManager.disposeBanners();
 				
 				// update the score and the gain
-				_gameSession.score = finalScore;
+				ScreenData.getInstance().gameData.score = _gameSession.score = finalScore;
 				_gameSession.elapsedTime = totalElapsedTime;
-				advancedOwner.screenData.gameData.score = _gameSession.score;
-				advancedOwner.screenData.gameData.numStarsOrPointsEarned = _gameSession.numStarsOrPointsEarned = 999; // FIXME A modifier
+				//ScreenData.getInstance().numStarsOrPointsEarned = _gameSession.numStarsOrPointsEarned = 999; // FIXME A modifier
 				
 				// report iOS Leaderboard
 				GameCenterManager.reportLeaderboardScore(AbstractGameInfo.LEADERBOARD_HIGHSCORE, _gameSession.score);
@@ -312,9 +312,9 @@ package com.ludofactory.mobile.core
 					{
 						if("classement" in result.fb_hs_friends && (result.fb_hs_friends.classement as Array).length > 0)
 						{
-							advancedOwner.screenData.gameData.facebookFriends = (result.fb_hs_friends.classement as Array).concat();
-							advancedOwner.screenData.gameData.facebookMoving = int(result.fb_hs_friends.deplacement);
-							advancedOwner.screenData.gameData.facebookPosition = int(result.fb_hs_friends.key_position);
+							ScreenData.getInstance().gameData.facebookFriends = (result.fb_hs_friends.classement as Array).concat();
+							ScreenData.getInstance().gameData.facebookMoving = int(result.fb_hs_friends.deplacement);
+							ScreenData.getInstance().gameData.facebookPosition = int(result.fb_hs_friends.key_position);
 						}
 					}
 					/*else // Temporary for debugging
@@ -339,7 +339,6 @@ package com.ludofactory.mobile.core
 					
 					if(_gameSession.gameMode == GameMode.SOLO) // solo
 					{
-						this.advancedOwner.screenData.gameData.numStarsOrPointsEarned = int(result.gains);
 						_nextScreenId = int(result.isHighscore) == 1 ? ScreenIds.NEW_HIGH_SCORE_SCREEN : ScreenIds.SOLO_END_SCREEN;
 						if(TrophyManager.getInstance().isTrophyMessageDisplaying )
 						{
@@ -353,11 +352,11 @@ package com.ludofactory.mobile.core
 					}
 					else // duel
 					{
-						advancedOwner.screenData.gameData.numStarsOrPointsEarned = int(result.items);
-						advancedOwner.screenData.gameData.position = int(result.classement);
-						advancedOwner.screenData.gameData.top = int(result.top);
-						advancedOwner.screenData.gameData.hasReachNewTop = int(result.podium) == 1;
-						advancedOwner.screenData.gameData.displayPushAlert = int(result.afficher_alerte_push) == 1;
+						ScreenData.getInstance().gameData.rewardInDuel = int(result.items);
+						ScreenData.getInstance().gameData.position = int(result.classement);
+						ScreenData.getInstance().gameData.top = int(result.top);
+						ScreenData.getInstance().gameData.hasReachNewTop = int(result.podium) == 1;
+						//ScreenData.getInstance().gameData.displayPushAlert = int(result.afficher_alerte_push) == 1;
 						
 						if(result.isHighscore == 1)
 						{
@@ -377,13 +376,13 @@ package com.ludofactory.mobile.core
 							// no highscore but maybe a new level
 							if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 							{
-								_nextScreenId = int(advancedOwner.screenData.gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
+								_nextScreenId = int(ScreenData.getInstance().gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
 								TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
 							}
 							else
 							{
 								InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
-								advancedOwner.replaceScreen( int(advancedOwner.screenData.gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN );
+								advancedOwner.replaceScreen( int(ScreenData.getInstance().gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN );
 							}
 						}
 					}
@@ -428,7 +427,7 @@ package com.ludofactory.mobile.core
 			}
 			else
 			{
-				MemberManager.getInstance().cumulatedRubies = ( MemberManager.getInstance().cumulatedRubies + advancedOwner.screenData.gameData.numStarsOrPointsEarned );
+				MemberManager.getInstance().cumulatedRubies = ( MemberManager.getInstance().cumulatedRubies + ScreenData.getInstance().gameData.rewardInDuel );
 			}
 			
 			_nextScreenId = _gameSession.gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;

@@ -29,6 +29,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
 	import com.ludofactory.mobile.core.model.GameData;
+	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.newClasses.Analytics;
@@ -146,7 +147,6 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super();
 			
-			_appDarkBackground = true;
 			_canBack = false;
 			
 			PADDING_TOP = scaleAndRoundToDpi(110);
@@ -198,7 +198,7 @@ package com.ludofactory.mobile.navigation.engine
 			//	new DropShadowFilter(2, 75, 0x7e0600, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
 			addChild(_title);
 			
-			_scoreLabel = new TextField((_flag.width * 0.5), scaleAndRoundToDpi(50), StringUtil.format(_("Score final : {0}"), Utilities.splitThousands(advancedOwner.screenData.gameData.score)), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), 0x27220d));
+			_scoreLabel = new TextField((_flag.width * 0.5), scaleAndRoundToDpi(50), StringUtil.format(_("Score final : {0}"), Utilities.splitThousands(ScreenData.getInstance().gameData.score)), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), 0x27220d));
 			_scoreLabel.alpha = 0;
 			_scoreLabel.autoSize = TextFieldAutoSize.HORIZONTAL;
 			addChild(_scoreLabel);
@@ -231,7 +231,7 @@ package com.ludofactory.mobile.navigation.engine
 			_homeButton.scaleX = _homeButton.scaleY = GlobalConfig.dpiScale;
 			addChild(_homeButton);
 			
-			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, StringUtil.format(_("J'ai obtenu {0} Points sur {1} !"), Utilities.splitThousands(advancedOwner.screenData.gameData.numStarsOrPointsEarned), AbstractGameInfo.GAME_NAME),
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, StringUtil.format(_("J'ai obtenu {0} Points sur {1} !"), Utilities.splitThousands(ScreenData.getInstance().gameData.rewardInDuel), AbstractGameInfo.GAME_NAME),
 					"",
 					_("Je peux maintenant obtenir des tas de bonus en les convertissant dans la Boutique !"),
 					_("http://www.ludokado.com/"),
@@ -445,7 +445,7 @@ package com.ludofactory.mobile.navigation.engine
 			// everything is in place, we animate the score now
 			_scoreLabel.text = StringUtil.format(_("Score final : {0}"), 0);
 			_oldTweenValue = 0;
-			_targetTweenValue = advancedOwner.screenData.gameData.score;
+			_targetTweenValue = ScreenData.getInstance().gameData.score;
 			if( _targetTweenValue == 0 )
 				Starling.juggler.delayCall(animateLabelFromScoreToPoints, 1);
 			else
@@ -460,7 +460,7 @@ package com.ludofactory.mobile.navigation.engine
 			if(!_earnedPointsLabel) // if the screen changed after the starling juggler delayed call
 				return;
 			
-			_earnedPointsLabel.text = StringUtil.format(_("+{0}"), advancedOwner.screenData.gameData.numStarsOrPointsEarned);
+			_earnedPointsLabel.text = StringUtil.format(_("+{0}"), ScreenData.getInstance().gameData.rewardInDuel);
 			
 			_pointsParticles.start(0.25);
 			_pointsParticles.emitterX = _earnedPointsLabel.x + _earnedPointsLabel.width * 0.5;
@@ -531,7 +531,7 @@ package com.ludofactory.mobile.navigation.engine
 		
 		private function multiplyReward():void
 		{
-			_earnedPointsLabel.text = StringUtil.format(_("+{0}"), advancedOwner.screenData.gameData.numStarsOrPointsEarned);
+			_earnedPointsLabel.text = StringUtil.format(_("+{0}"), ScreenData.getInstance().gameData.rewardInDuel);
 			_pointsParticles.start(0.25);
 			if( MemberManager.getInstance().isTournamentAnimPending )
 				unlockTournament();
@@ -547,7 +547,7 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			//Flox.logEvent("Choix en fin de jeu solo", { Choix:"Accueil"} );
 			
-			advancedOwner.screenData.gameData = new GameData();
+			ScreenData.getInstance().gameData = new GameData();
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				_homeButton.enabled = false;
@@ -578,7 +578,7 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			//Flox.logEvent("Choix en fin de jeu solo", { Choix:"Rejouer"} );
 			
-			advancedOwner.screenData.gameData = new GameData();
+			ScreenData.getInstance().gameData = new GameData();
 			if( MemberManager.getInstance().isLoggedIn() )
 			{
 				Analytics.trackEvent("Fin mode solo", "Rejouer");

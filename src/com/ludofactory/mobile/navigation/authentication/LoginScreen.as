@@ -15,7 +15,6 @@ package com.ludofactory.mobile.navigation.authentication
 	import com.ludofactory.mobile.ButtonFactory;
 	import com.ludofactory.mobile.FacebookButton;
 	import com.ludofactory.mobile.MobileButton;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
@@ -23,6 +22,7 @@ package com.ludofactory.mobile.navigation.authentication
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.NavigationManager;
+	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.RetrievePasswordNotificationContent;
@@ -244,15 +244,6 @@ package com.ludofactory.mobile.navigation.authentication
 				InfoManager.hide(result.txt, InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 				return;
 			}
-			else if( result.code == 6 ) // pseudo not completed
-			{
-				InfoManager.hide("", InfoContent.ICON_CHECK, 0);
-				this.advancedOwner.screenData.defaultPseudo = result.pseudo_defaut;
-				// we don't need te define a previous screen because in the pseudo selection screen
-				// the user cannot go back for obious reason
-				this.advancedOwner.replaceScreen( ScreenIds.PSEUDO_CHOICE_SCREEN );
-				return;
-			}
 			
 			NavigationManager.resetNavigation(false);
 			InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.HOME_SCREEN ]);
@@ -299,7 +290,7 @@ package com.ludofactory.mobile.navigation.authentication
 		
 		override public function dispose():void
 		{
-			AbstractEntryPoint.screenNavigator.screenData.tempFacebookData = {};
+			ScreenData.getInstance().tempFacebookData = {};
 			
 			_facebookButton.removeEventListener(FacebookManagerEventType.AUTHENTICATED, onFacebookAuthenticated);
 			_facebookButton.removeFromParent(true);

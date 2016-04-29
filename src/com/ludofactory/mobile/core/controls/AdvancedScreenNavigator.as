@@ -26,7 +26,7 @@ package com.ludofactory.mobile.core.controls
 	{
 		/**
 		 * Some data that can be used by the displayed screen. */		
-		private var _screenData:ScreenData;
+		//private var _screenData:ScreenData;
 		
 		/**
 		 * Reference of the back screen id (avoid too much memory allocation) */		
@@ -36,7 +36,7 @@ package com.ludofactory.mobile.core.controls
 		{
 			super();
 			
-			_screenData = new ScreenData();
+			//_screenData = new ScreenData();
 		}
 		
 		override public function replaceScreen(id:String, transition:Function = null):DisplayObject
@@ -100,10 +100,10 @@ package com.ludofactory.mobile.core.controls
 //------------------------------------------------------------------------------------------------------------
 //	Get / Set
 		
-		public function get screenData():ScreenData
+		/*public function get screenData():ScreenData
 		{
 			return _screenData;
-		}
+		}*/
 		
 	}
 }

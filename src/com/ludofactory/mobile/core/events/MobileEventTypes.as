@@ -20,23 +20,7 @@ package com.ludofactory.mobile.core.events
 		 * The <code>LudoEventType.MENU_ICON_TOUCHED</code> event type is
 		 * used by Menu when the user touched an icon.
 		 */
-		public static const MENU_ICON_TOUCHED:String = "menuIconTouched";
-		
-		/**
-		 * The <code>LudoEventType.MENU_ICON_TOUCHED</code> event type is
-		 * used by Menu when the user touched an icon.
-		 */
-		public static const MAIN_MENU_TOUCHED:String = "mainMenuTouched";
-		/**
-		 * The <code>LudoEventType.MENU_ICON_TOUCHED</code> event type is
-		 * used by Menu when the user touched an icon.
-		 */
 		public static const BACK_BUTTON_TOUCHED:String = "backButtonTouched";
-		/**
-		 * The <code>LudoEventType.MENU_ICON_TOUCHED</code> event type is
-		 * used by Menu when the user touched an icon.
-		 */
-		public static const NEWS_BUTTON_TOUCHED:String = "newsButtonTouched";
 		
 		/**
 		 * The <code>LudoEventType.CLOSE_NOTIFICATION</code> event type is
@@ -44,13 +28,6 @@ package com.ludofactory.mobile.core.events
 		 * notification.
 		 */
 		public static const CLOSE_NOTIFICATION:String = "closeNotification";
-		
-		/**
-		 * The <code>LudoEventType.BOUTIQUE_CATEGORY_TOUCHED</code> event
-		 * type is used by the BoutiqueMainCatListing when the user wants to
-		 * display a particlar category.
-		 */
-		public static const BOUTIQUE_CATEGORY_TOUCHED:String = "boutiqueCatTouched";
 		
 		/**
 		 * The <code>LudoEventType.EXPAND_BEGIN</code> event type is used by

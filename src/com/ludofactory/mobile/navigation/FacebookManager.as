@@ -16,6 +16,7 @@ package com.ludofactory.mobile.navigation
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.navigation.authentication.RegisterType;
@@ -237,7 +238,7 @@ package com.ludofactory.mobile.navigation
 						// Connect or register the user with Facebook
 						if( !formattedUserData.hasOwnProperty("mail") || formattedUserData.mail == null || formattedUserData.mail == "" )
 						{
-							AbstractEntryPoint.screenNavigator.screenData.tempFacebookData = formattedUserData;
+							ScreenData.getInstance().tempFacebookData = formattedUserData;
 							InfoManager.hide(_("Nous n'avons pas pu récupérer votre email via Facebook. Merci de compléter l'inscription normalement."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.replaceScreen, [ ScreenIds.REGISTER_SCREEN ]);
 							return;
 						}
@@ -464,7 +465,6 @@ package com.ludofactory.mobile.navigation
 					{
 						// The user have successfully logged in with his Facebook account but the pseudo field
 						// is missing, thus we redirect the user to the pseudo choice screen
-						AbstractEntryPoint.screenNavigator.screenData.defaultPseudo = result.pseudo_defaut;
 						InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, AbstractEntryPoint.screenNavigator.replaceScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
 
 						// no event dispatched here because we redirect to the pseudo choixe screen already

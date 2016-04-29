@@ -23,6 +23,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
@@ -77,7 +78,6 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super();
 			
-			_appDarkBackground = true;
 			_canBack = false;
 		}
 		
@@ -135,20 +135,20 @@ package com.ludofactory.mobile.navigation.engine
 			
 			_podiumMessage = new Label();
 			_podiumMessage.alpha = 0;
-			_podiumMessage.text = StringUtil.format( AbstractGameInfo.LANDSCAPE ? _("Bravo !\nVous êtes {0} du tournoi !") : _("Bravo !\n\nVous êtes\n{0} du tournoi !"), StringUtil.format(Utilities.translatePosition(advancedOwner.screenData.gameData.position), this.advancedOwner.screenData.gameData.position));
+			_podiumMessage.text = StringUtil.format( AbstractGameInfo.LANDSCAPE ? _("Bravo !\nVous êtes {0} du tournoi !") : _("Bravo !\n\nVous êtes\n{0} du tournoi !"), StringUtil.format(Utilities.translatePosition(ScreenData.getInstance().gameData.position), ScreenData.getInstance().gameData.position));
 			addChild(_podiumMessage);
 			var test:int = ((GlobalConfig.isPhone ? 50 : 76) * _podiumLogo.scaleX) << 0;
 			_podiumMessage.textRendererProperties.textFormat = new TextFormat(Theme.FONT_SANSITA, test, Theme.COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			_podiumMessage.textRendererProperties.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
 			
 			_animArray = [];
-			_numLetters = String(this.advancedOwner.screenData.gameData.top).length;
+			_numLetters = String(ScreenData.getInstance().gameData.top).length;
 			var particleSystem:PDParticleSystem;
 			var scoreLabel:Label;
 			
 			for(var i:int = 0; i < _numLetters; i++)
 			{
-				scoreLabel = createLabel( String(this.advancedOwner.screenData.gameData.top).charAt(i) );
+				scoreLabel = createLabel( String(ScreenData.getInstance().gameData.top).charAt(i) );
 				addChild(scoreLabel);
 				scoreLabel.textRendererProperties.textFormat = Theme.labelPodiumTopTextFormat;
 				scoreLabel.validate();
@@ -175,11 +175,11 @@ package com.ludofactory.mobile.navigation.engine
 			_continueButton.defaultLabelProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(30), Theme.COLOR_WHITE, true, true, null, null, null, TextFormatAlign.CENTER);
 			_continueButton.height = _continueButton.minHeight = scaleAndRoundToDpi(60);
 			
-			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, StringUtil.format(_("Je suis dans le TOP {0} sur le tournoi {1}"), advancedOwner.screenData.gameData.top, AbstractGameInfo.GAME_NAME),
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, StringUtil.format(_("Je suis dans le TOP {0} sur le tournoi {1}"), ScreenData.getInstance().gameData.top, AbstractGameInfo.GAME_NAME),
 					"",
 					StringUtil.format(_("La fin du tournoi approche ! Rejoignez moi vite et remportez vous aussi cette récompense : {0}"), "test"),
 					_("http://www.ludokado.com/"),
-					StringUtil.format(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_top_{1}.jpg"), LanguageManager.getInstance().lang, advancedOwner.screenData.gameData.top));
+					StringUtil.format(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_top_{1}.jpg"), LanguageManager.getInstance().lang, ScreenData.getInstance().gameData.top));
 			_facebookButton.alpha = 0;
 			_facebookButton.addEventListener(FacebookManagerEventType.PUBLISHED, onPublished);
 			addChild(_facebookButton);

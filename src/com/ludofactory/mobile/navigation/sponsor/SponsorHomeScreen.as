@@ -77,8 +77,6 @@ package com.ludofactory.mobile.navigation.sponsor
 		public function SponsorHomeScreen()
 		{
 			super();
-			
-			_blueBackground = true;
 		}
 		
 		override protected function initialize():void

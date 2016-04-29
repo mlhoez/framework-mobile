@@ -30,8 +30,6 @@ package com.ludofactory.mobile.navigation.account
 		public function MyAccountScreen()
 		{
 			super();
-			
-			_appClearBackground = false;
 		}
 		
 		override protected function initialize():void

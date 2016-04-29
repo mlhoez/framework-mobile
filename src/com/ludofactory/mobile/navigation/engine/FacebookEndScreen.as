@@ -18,6 +18,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.model.GameMode;
+	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
@@ -95,7 +96,6 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super();
 			
-			_appDarkBackground = true;
 			_canBack = false;
 		}
 		
@@ -103,7 +103,7 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super.initialize();
 			
-			_isThreePeople = advancedOwner.screenData.gameData.facebookFriends.length > 2;
+			_isThreePeople = ScreenData.getInstance().gameData.facebookFriends.length > 2;
 			_all = [];
 			
 			_title = new Label();
@@ -160,20 +160,20 @@ package com.ludofactory.mobile.navigation.engine
 			_downValueBis.textRendererProperties.textFormat = valueTextFormat;
 			_downValueBis.textRendererProperties.wordWrap = false;
 			
-			_firstFriend = new FacebookFriendElement( advancedOwner.screenData.gameData.facebookFriends[0], 0);
+			_firstFriend = new FacebookFriendElement( ScreenData.getInstance().gameData.facebookFriends[0], 0);
 			addChild(_firstFriend);
 			
-			_middleFriend = new FacebookFriendElement( advancedOwner.screenData.gameData.facebookFriends[1], 1 );
+			_middleFriend = new FacebookFriendElement( ScreenData.getInstance().gameData.facebookFriends[1], 1 );
 			addChild(_middleFriend);
 			
 			if( _isThreePeople )
 			{
-				_lastFriend = new FacebookFriendElement( advancedOwner.screenData.gameData.facebookFriends[2], 2 );
+				_lastFriend = new FacebookFriendElement( ScreenData.getInstance().gameData.facebookFriends[2], 2 );
 				addChild(_lastFriend);
 			}
 			
 			_all.push(_firstFriend, _middleFriend, _lastFriend);
-			var switchId:int = advancedOwner.screenData.gameData.facebookPosition - advancedOwner.screenData.gameData.facebookMoving;
+			var switchId:int = ScreenData.getInstance().gameData.facebookPosition - ScreenData.getInstance().gameData.facebookMoving;
 			_friendToSwitch = _all[switchId];
 			_me = getMe();
 			
@@ -248,7 +248,7 @@ package com.ludofactory.mobile.navigation.engine
 		 */		
 		private function onContinue(event:Event = null):void
 		{
-			advancedOwner.replaceScreen( this.advancedOwner.screenData.gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (advancedOwner.screenData.gameType == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN:ScreenIds.TOURNAMENT_END_SCREEN) );
+			advancedOwner.replaceScreen( ScreenData.getInstance().gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (ScreenData.getInstance().gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN:ScreenIds.TOURNAMENT_END_SCREEN) );
 		}
 		
 		private function animate():void
@@ -267,7 +267,7 @@ package com.ludofactory.mobile.navigation.engine
 			_downValue.x = _downArrow.x + (Math.max(_downArrow.width, _downValue.width) - Math.min(_downArrow.width, _downValue.width)) * 0.5;
 			_downValue.y = _downArrow.y + _downArrow.height;
 			
-			if( advancedOwner.screenData.gameData.facebookMoving > 1 )
+			if( ScreenData.getInstance().gameData.facebookMoving > 1 )
 			{
 				var middleFriend:FacebookFriendElement = _all[1];
 				

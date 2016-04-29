@@ -1,5 +1,5 @@
 /*
-Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
+Copyright © 2006-2016 Ludo Factory
 Framework mobile
 Author  : Maxime Lhoez
 Created : 13 Juin 2013
@@ -15,18 +15,15 @@ package com.ludofactory.mobile.core.controls
 	
 	import feathers.controls.Screen;
 	
-	import starling.display.Quad;
-	
 	/**
-	 * A more advanced screen that handles the tracking of the navigation (with
-	 * Google Analytics and Flox) and the disposal of remote call when it is 
-	 * disposed.
+	 * A more advanced screen that handles the tracking of the navigation (with Google Analytics)
+	 * and the cancellation of the asociated remote calls when it is disposed.
 	 */	
 	public class AdvancedScreen extends Screen
 	{
 		/**
-		 * Transparent quad used to help draging the screen back to the right when the push elements are displayed. */
-		private var _touchQuad:Quad;
+		 * Whether the user can back while on this screen. */
+		protected var _canBack:Boolean = true;
 		
 		public function AdvancedScreen()
 		{
@@ -35,22 +32,12 @@ package com.ludofactory.mobile.core.controls
 		
 		override protected function initialize():void
 		{
-			_touchQuad = new Quad(500, 500, 0x0000ff);
-			_touchQuad.alpha = 0;
-			addChildAt(_touchQuad, 0);
+			super.initialize();
 			
 			// track screens with Google Analytics
 			Analytics.trackScreen(screenID);
 			
 			this.backButtonHandler = onBack;
-		}
-		
-		override protected function draw():void
-		{
-			super.draw();
-			
-			_touchQuad.width = actualWidth;
-			_touchQuad.height = actualHeight;
 		}
 		
 		override public function set screenID(value:String):void
@@ -78,14 +65,17 @@ package com.ludofactory.mobile.core.controls
 		 */		
 		public function onBack():void
 		{
-			if( CustomPopupManager.isNotificationDisplaying )
+			// close any popup by security
+			if(CustomPopupManager.isNotificationDisplaying)
 			{
 				CustomPopupManager.closePopup();
 				return;
 			}
-
-			InfoManager.hide("", InfoContent.ICON_NOTHING, 0); // just in case
 			
+			// also close all informations displaying on screen
+			InfoManager.hide("", InfoContent.ICON_NOTHING, 0);
+			
+			// finally, check if the user can back (it may be locked for some reasons)
 			if( _canBack )
 				advancedOwner.showBackScreen();
 		}
@@ -93,69 +83,10 @@ package com.ludofactory.mobile.core.controls
 //------------------------------------------------------------------------------------------------------------
 //	Get / Set
 		
+		public function set canBack(val:Boolean):void { _canBack = val; }
+		public function get canBack():Boolean { return _canBack; }
 		
-		/**
-		 * Whether the user can back while in this screen. */		
-		protected var _canBack:Boolean = true;
-		
-		/**
-		 * Only used by : ErrorDisplayer
-		 */		
-		public function set canBack(val:Boolean):void
-		{
-			_canBack = val;
-		}
-		
-		public function get canBack():Boolean
-		{
-			return _canBack;
-		}
-		
-		/**
-		 * Returns the owner (AdvancedScreenNavigator).
-		 */		
-		public function get advancedOwner():AdvancedScreenNavigator
-		{
-			return this._owner as AdvancedScreenNavigator;
-		}
-		
-		/**
-		 * Whether we need to use the blue background. */		
-		protected var _blueBackground:Boolean = false;
-		
-		public function get blueBackground():Boolean
-		{
-			return this._blueBackground;
-		}
-		
-		/**
-		 * Whether we need to use tha application's clear background. */		
-		protected var _appClearBackground:Boolean = false;
-		
-		public function get appClearBackground():Boolean
-		{
-			return this._appClearBackground;
-		}
-		
-		/**
-		 * Whether we need to use the application's dark background. */		
-		protected var _appDarkBackground:Boolean = false;
-		
-		public function get appDarkBackground():Boolean
-		{
-			return this._appDarkBackground;
-		}
-		
-//------------------------------------------------------------------------------------------------------------
-//	Dispose
-		
-		override public function dispose():void
-		{
-			_touchQuad.removeFromParent(true);
-			_touchQuad = null;
-			
-			super.dispose();
-		}
+		public function get advancedOwner():AdvancedScreenNavigator { return AdvancedScreenNavigator(this._owner); }
 		
 	}
 }

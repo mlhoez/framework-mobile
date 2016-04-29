@@ -22,6 +22,7 @@ package com.ludofactory.mobile.navigation.authentication
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.FaqNotificationContent;
@@ -265,13 +266,13 @@ package com.ludofactory.mobile.navigation.authentication
 				// if _data.tempFacebookData is defined, it means that the user tried to register
 				// via Facebook but no mail could be retreived, thus we need to complete the object
 				// with the data got from the form
-				this.advancedOwner.screenData.tempFacebookData = this.advancedOwner.screenData.tempFacebookData ? this.advancedOwner.screenData.tempFacebookData:{};
-				this.advancedOwner.screenData.tempFacebookData.mail = _mailInput.text;
-				this.advancedOwner.screenData.tempFacebookData.mdp = _passwordInput.text;
-				this.advancedOwner.screenData.tempFacebookData.id_parrain = _sponsorInput.text == "" ? "0":_sponsorInput.text;
-				this.advancedOwner.screenData.tempFacebookData.type_inscription = RegisterType.STANDARD;
+				ScreenData.getInstance().tempFacebookData = ScreenData.getInstance().tempFacebookData ? ScreenData.getInstance().tempFacebookData:{};
+				ScreenData.getInstance().tempFacebookData.mail = _mailInput.text;
+				ScreenData.getInstance().tempFacebookData.mdp = _passwordInput.text;
+				ScreenData.getInstance().tempFacebookData.id_parrain = _sponsorInput.text == "" ? "0":_sponsorInput.text;
+				ScreenData.getInstance().tempFacebookData.type_inscription = RegisterType.STANDARD;
 				
-				Remote.getInstance().registerUser(this.advancedOwner.screenData.tempFacebookData, onSubscriptionSuccess, onSubscriptionFailure, onSubscriptionFailure, 2, advancedOwner.activeScreenID);
+				Remote.getInstance().registerUser(ScreenData.getInstance().tempFacebookData, onSubscriptionSuccess, onSubscriptionFailure, onSubscriptionFailure, 2, advancedOwner.activeScreenID);
 			}
 			else
 			{
@@ -297,56 +298,12 @@ package com.ludofactory.mobile.navigation.authentication
 					InfoManager.hide(result.txt, InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 					break;
 				}
-				case 1:
+				case 1:  // Successful standard login
+				case 6:  // Successful Facebook login
+				case 9:  // Successful Facebook account creation
+				case 11: // Successful standard login
 				{
-					// The account have been successfully created with the standard process, now we
-					// go to the pseudo choice screen with the default pseudo returned.
-					this.advancedOwner.screenData.defaultPseudo = result.pseudo_defaut;
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
-					break;
-				}
-				case 6:
-				{
-					// The user have successfully logged in with his Facebook account
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.HOME_SCREEN ] );
-					break;
-				}
-				case 7: 
-				{
-					// The user have successfully logged in with his Facebook account but the pseudo field
-					// is missing, thus we redirect the user to the pseudo choice screen
-					this.advancedOwner.screenData.defaultPseudo = result.pseudo_defaut;
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
-					break;
-				}
-				case 9:
-				{
-					// The user have successfully created an account with his Facebook data.
-					// in this case, we need to redirect him to the sponsor screen, and then the
-					// pseudo choice screen
-					this.advancedOwner.screenData.defaultPseudo = result.pseudo_defaut;
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.SPONSOR_REGISTER_SCREEN ]);
-					break;
-				}
-				case 10:
-				{
-					// This case should never happen since all the checks are done in the application
-					// If this happens, we simply display an error message
-					onSubscriptionFailure();
-					break;
-				}
-				case 11:
-				{
-					// The user have successfully logged in
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.HOME_SCREEN ] );
-					break;
-				}
-				case 12:
-				{
-					// The account have been successfully created with the standard process, now we
-					// go to the pseudo choice screen with the default pseudo returned.
-					this.advancedOwner.screenData.defaultPseudo = result.pseudo_defaut;
-					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.PSEUDO_CHOICE_SCREEN ]);
+					InfoManager.hide(result.txt, InfoContent.ICON_CHECK, InfoManager.DEFAULT_DISPLAY_TIME, this.advancedOwner.replaceScreen, [ ScreenIds.HOME_SCREEN ]);
 					break;
 				}
 					
@@ -399,7 +356,7 @@ package com.ludofactory.mobile.navigation.authentication
 		
 		override public function dispose():void
 		{
-			AbstractEntryPoint.screenNavigator.screenData.tempFacebookData = {};
+			ScreenData.getInstance().tempFacebookData = {};
 			
 			_facebookButton.removeEventListener(FacebookManagerEventType.AUTHENTICATED, onFacebookAuthenticated);
 			_facebookButton.removeFromParent(true);

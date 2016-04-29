@@ -55,8 +55,6 @@ package com.ludofactory.mobile.navigation.faq
 		public function FaqScreen()
 		{
 			super();
-			
-			_appClearBackground = false;
 		}
 		
 		override protected function initialize():void

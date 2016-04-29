@@ -110,8 +110,6 @@ package com.ludofactory.mobile.navigation.highscore
 		public function HighScoreListScreen()
 		{
 			super();
-			
-			_appClearBackground = false;
 		}
 		
 		override protected function initialize():void

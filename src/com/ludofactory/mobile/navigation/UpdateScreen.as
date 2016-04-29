@@ -47,7 +47,6 @@ package com.ludofactory.mobile.navigation
 		{
 			super();
 			
-			_blueBackground = true;
 			_canBack = false;
 		}
 		

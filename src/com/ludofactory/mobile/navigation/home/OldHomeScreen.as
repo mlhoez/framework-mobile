@@ -20,6 +20,7 @@ package com.ludofactory.mobile.navigation.home
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.controls.ArrowGroup;
 	import com.ludofactory.mobile.core.manager.MemberManager;
+	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.neww.DebugNotificationContent;
@@ -71,15 +72,13 @@ package com.ludofactory.mobile.navigation.home
 		public function OldHomeScreen()
 		{
 			super();
-			
-			_appClearBackground = true;
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-			advancedOwner.screenData.purgeData();
+			ScreenData.getInstance().purgeData();
 			
 			_background = new Image(AbstractEntryPoint.assets.getTexture("dark-background"));
 			addChild(_background);
