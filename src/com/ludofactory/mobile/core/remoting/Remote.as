@@ -400,7 +400,6 @@ package com.ludofactory.mobile.core.remoting
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
 		 * Generic function called when a query have been sent successfully.
@@ -462,7 +461,7 @@ package com.ludofactory.mobile.core.remoting
 			}
 			
 			// a force download have been requested for this version
-			if( "forceDownload" in result && result.forceDownload != null && int(result.forceDownload) == 1 )
+			if("forceDownload" in result && result.forceDownload != null && int(result.forceDownload) == 1)
 			{
 				if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE)) == false )
 				{
@@ -496,24 +495,21 @@ package com.ludofactory.mobile.core.remoting
 		protected function onQueryFail(error:Object, queryName:String, callback:Function):void
 		{
 			// set up query name in the object
-			if( error ) error.queryName = queryName;
+			if(error) error.queryName = queryName;
 			else error = { queryName:queryName };
 			
-			if( callback )
-				callback( error );
+			if(callback)
+				callback(error);
 			
 			try
 			{
-				if( error.queryName == "useClass" )
+				if(error.queryName == "useClass")
 					error.queryName += "\n onQueryFail : Une requête a échoué.";
 				logError(error + StringUtil.format("<br><br><strong>Erreur PHP :</strong><br><strong>Requête : </strong>{0}<br><strong>FaultCode : </strong>{1}<br><strong>FaultString : </strong>{2}<br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail));
 				//if( CONFIG::DEBUG )
 				//	ErrorDisplayer.showError(StringUtil.format("<strong>Erreur PHP :</strong><br><br><strong>Requête : </strong>{0}<br><br><strong>FaultCode : </strong>{1}<br><br><strong>FaultString : </strong>{2}<br><br><strong>FaultDetail :</strong><br>{3}", error.queryName, error.faultCode, error.faultString, error.faultDetail));
 			} 
-			catch(error:Error) 
-			{
-				
-			}
+			catch(error:Error) { }
 		}
 		
 		public function clearAllRespondersOfScreen(screenName:String):void
@@ -592,10 +588,12 @@ package com.ludofactory.mobile.core.remoting
 		{
 			return _netConnectionManager.baseGatewayUrl;
 		}
+		
 		public function get gatewayPortNumber():int
 		{
 			return _netConnectionManager.gatewayPortNumber;
 		}
+		
 	}
 }
 
