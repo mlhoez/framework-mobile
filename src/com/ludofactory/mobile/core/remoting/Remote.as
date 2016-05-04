@@ -82,6 +82,33 @@ package com.ludofactory.mobile.core.remoting
 			return _instance;
 		}
 		
+	// ---------- new calls
+		
+		/**
+		 * Launches a duel. First tries to find an existing duel to challenge, otherwise it will create a new one.
+		 */
+		public function launchDuel(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "?", "?", getGenericParams());
+		}
+		
+		/**
+		 * Pushes a game session.
+		 */
+		public function pushGame(gameSession:GameSession, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = mergeWithGenericParams( {   info_client:GlobalConfig.userHardwareData,
+															gameMode:gameSession.gameMode,
+															score:gameSession.score,
+															playDate:gameSession.playDate,
+															connected:gameSession.connected,
+															trophiesWon:gameSession.trophiesWon,
+															timeElapsed:gameSession.elapsedTime,
+															gameSessionId:gameSession.uniqueId,
+															actions:gameSession.actions } );
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServeurJeux", "pushPartie", params);
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Requests
 		
@@ -182,15 +209,7 @@ package com.ludofactory.mobile.core.remoting
 		
 		
 		
-		/**
-		 * Push a game
-		 * 
-		 */		
-		public function pushGame(gameSession:GameSession, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
-		{
-			var params:Object = mergeWithGenericParams( { info_client:GlobalConfig.userHardwareData, type_partie:gameSession.gameMode, score:gameSession.score, date_partie:gameSession.playDate, connected:gameSession.connected, coupes:gameSession.trophiesWon, temps_ecoule:gameSession.elapsedTime, id_partie:gameSession.uniqueId } );
-			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServeurJeux", "pushPartie", params);
-		}
+		
 		
 		/**
 		 * Push a game
@@ -432,7 +451,7 @@ package com.ludofactory.mobile.core.remoting
 					{
 						log("[Remote] Inscription ou connexion réussie, parties anonymes retirées.");
 						// because the sign in/up is ok, we need to clear the credits he potentially bought
-						MemberManager.getInstance().cumulatedRubies = 0;
+						MemberManager.getInstance().cumulatedTrophies = 0;
 					}
 				}
 				

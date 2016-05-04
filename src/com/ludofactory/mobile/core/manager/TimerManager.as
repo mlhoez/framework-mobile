@@ -40,8 +40,7 @@ package com.ludofactory.mobile.core.manager
 		private var _timeOnStartTurn:int;
 		
 		/**
-		 * The total elapsed time since the counter
-		 * was started. */		
+		 * The total elapsed time since the counter was started. */		
 		private var _totalElapsedTime:int;
 		
 		/**
@@ -59,21 +58,26 @@ package com.ludofactory.mobile.core.manager
 		 * Whether we need to use the total elapsed time in the update function.
 		 * Set this to true if you need to keep the timer updated even when the app is in the background. */
 		private var _useTotalElapsedTime:Boolean = false;
-		private var _helperElapsedTime:int= 0;
+		private var _helperElapsedTime:int = 0;
+		
+		private var _isEndless:Boolean = false;
 		
 		/**
 		 * Creates a timer.
 		 * 
+		 * @param isEndless
 		 * @param timeInSeconds The time in seconds (will be converted into milliseconds).
 		 * @param repeatCount How many times the timer will repeat.
 		 * @param updateFunction The function called on each update.
 		 * @param tickFunction The function called on each tick.
 		 * @param finishFunction The function called at the end.
+		 * @param useTotalElapsedTime
 		 * 
 		 */		
-		public function TimerManager(timeInSeconds:int, repeatCount:int = -1, updateFunction:Function = null, tickFunction:Function = null, finishFunction:Function = null, useTotalElapsedTime:Boolean = false)
+		public function TimerManager(isEndless:Boolean, timeInSeconds:int, repeatCount:int = -1, updateFunction:Function = null, tickFunction:Function = null, finishFunction:Function = null, useTotalElapsedTime:Boolean = false)
 		{
 			// convert timeInSeconds from seconds to milliseconds to adapt
+			_isEndless = isEndless;
 			_baseTime = timeInSeconds * 1000;
 			_currentTime = _baseTime;
 			_updateFunction = updateFunction;
@@ -96,28 +100,24 @@ package com.ludofactory.mobile.core.manager
 		}
 		
 		/**
-		 * Save the current time as a "start point" in order
-		 * to be tracked later when the <code>getTurnTime</code>
+		 * Save the current time as a "start point" in order to be tracked later when the <code>getTurnTime</code>
 		 * is called to report an "end point".
 		 *
-		 * <p>This function can be used when we need to
-		 * track a time to complete something (ex : finish
+		 * <p>This function can be used when we need to track a time to complete something (ex : finish
 		 * a level in less than 50 seconds).</p>
 		 */
 		public function reportStartTurn():void
 		{
-			_timeOnStartTurn = _currentTime / 1000;
+			_timeOnStartTurn = (_isEndless ? _totalElapsedTime : _currentTime) / 1000;
 		}
 		
 		/**
-		 * Returns the time in seconds between the "start point"
-		 * reported earlier with the <code>reportStartTurn</code>
-		 * and the "end point" reported there when this function
-		 * is called.
+		 * Returns the time in seconds between the "start point" reported earlier with the <code>reportStartTurn</code>
+		 * and the "end point" reported there when this function is called.
 		 */
 		public function getTurnTime():int
 		{
-			return _timeOnStartTurn - (_currentTime / 1000);
+			return _isEndless ? ((_totalElapsedTime / 1000) - _timeOnStartTurn ) : (_timeOnStartTurn - (_currentTime / 1000));
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -198,22 +198,17 @@ package com.ludofactory.mobile.core.manager
 		public function updateTime(timeInSeconds:int):void
 		{
 			timeInSeconds = timeInSeconds * 1000;
-			_currentTime += timeInSeconds;
-			_currentTime = _currentTime < 0 ? 0 : _currentTime;
+			if(_isEndless)
+			{
+				_totalElapsedTime += timeInSeconds;
+				_totalElapsedTime = _totalElapsedTime < 0 ? 0 : _totalElapsedTime;
+			}
+			else
+			{
+				_currentTime += timeInSeconds;
+				_currentTime = _currentTime < 0 ? 0 : _currentTime;
+			}
 			computeAndUpdate();
-		}
-		
-//------------------------------------------------------------------------------------------------------------
-//	Utils
-		
-		/**
-		 * Return a formated string for convinience.
-		 * 
-		 * @return A formated string (min:sec)
-		 */		
-		private function getFormatedTime():String
-		{
-			return currentSec < 10 ? (currentMin + ":0" + currentSec) : (currentMin + ":" + currentSec);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -246,7 +241,7 @@ package com.ludofactory.mobile.core.manager
 				computeAndUpdate();
 			}
 			
-			if(_currentTime <= 0)
+			if(!_isEndless && _currentTime <= 0)
 			{
 				_currentTime = 0;
 				if(_currentRepeatCount == -1)
@@ -282,42 +277,45 @@ package com.ludofactory.mobile.core.manager
 		private function computeAndUpdate():void
 		{
 			if(_updateFunction != null && _updateFunction is Function)
-				_updateFunction(getFormatedTime());
+				_updateFunction(formatedTime);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Get
 		
 		/**
-		 * The total elapsed time (in seconds).
-		 * 
-		 * FIXME Avant c'était return _totalElapsedTime et non pas _totalElapsedTime / 1000
+		 * The elapsed time (in seconds).
+		 * Avant c'était return _totalElapsedTime et non pas _totalElapsedTime / 1000
 		 */
 		public function get totalElapsedTime():int { return _totalElapsedTime / 1000; }
 		
 		/**
 		 * Current time in seconds. */
-		public function get currentTime():int { return ((_currentTime / 1000) << 0); }
+		public function get currentTime():int { return (((_isEndless ? _totalElapsedTime : _currentTime) / 1000) << 0); }
 		
 		/**
 		 * How many days left. */
-		public function get currentDay():int { return (((_currentTime / 1000) << 0) / 86400); }
+		public function get currentDay():int { return ((((_isEndless ? _totalElapsedTime : _currentTime) / 1000) << 0) / 86400); }
 		/**
 		 * How many hours left.
 		 * Note that it's not the total of hours left, to get this value, remove the "% 24" */
-		public function get currentHour():int { return ((((_currentTime / 1000) << 0) / 3600) % 24); }
+		public function get currentHour():int { return (((((_isEndless ? _totalElapsedTime : _currentTime) / 1000) << 0) / 3600) % 24); }
 		/**
 		 * How many minutes left.
 		 * Note that it's not the total of minutes left, to get this value, remove the "% 60" */
-		public function get currentMin():int { return ((((_currentTime / 1000) << 0) / 60) % 60); }
+		public function get currentMin():int { return (((((_isEndless ? _totalElapsedTime : _currentTime) / 1000) << 0) / 60) % 60); }
 		/**
 		 * How many seconds left.
 		 * Note that it's not the total of seconds left, to get this value, remove the "% 60" */
-		public function get currentSec():int { return (((_currentTime / 1000) << 0) % 60); }
+		public function get currentSec():int { return ((((_isEndless ? _totalElapsedTime : _currentTime) / 1000) << 0) % 60); }
 		
 		/**
 		 * Whether the timer is running. */
 		public function get isRunning():Boolean { return _isRunning; }
+		
+		/**
+		 * Return a formated string for convinience (min:sec). */
+		private function get formatedTime():String { return currentSec < 10 ? (currentMin + ":0" + currentSec) : (currentMin + ":" + currentSec); }
 		
 //------------------------------------------------------------------------------------------------------------
 //	Destroy

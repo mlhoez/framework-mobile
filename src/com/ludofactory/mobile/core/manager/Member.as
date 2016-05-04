@@ -80,7 +80,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * The member's number of cumulated stars for the current tournament. */		
-		private var _cumulatedStars:int = 0;
+		private var _cumulatedTrophies:int = 0;
 		
 		/**
 		 * The member's facebook id */		
@@ -125,6 +125,10 @@ package com.ludofactory.mobile.core.manager
 		 * True by default so that a non authenticated user will see it. */
 		private var _canHaveRewardAfterPublish:Boolean = true;
 		
+		/**
+		 * The actions associated to the best high score. */
+		private var _highscoreActions:String;
+		
 		public function Member() { }
 		
 		/**
@@ -141,7 +145,7 @@ package com.ludofactory.mobile.core.manager
 			if( "date_naissance" in memberData && memberData.date_naissance != null )           _birthDate = String(memberData.date_naissance);
 			if( "highscore" in memberData && memberData.highscore != null )                     _highscore = int(memberData.highscore);
 			if( "sexe" in memberData && memberData.sexe != null )                               _title = String(memberData.sexe);
-			if( "score_cumule" in memberData && memberData.score_cumule != null )               _cumulatedStars = int(memberData.score_cumule);
+			if( "score_cumule" in memberData && memberData.score_cumule != null )               _cumulatedTrophies = int(memberData.score_cumule);
 			if( "id_facebook" in memberData && memberData.id_facebook != null )                 _facebookId = Number(memberData.id_facebook);
 			if( "date_jetons" in memberData && memberData.date_jetons != null )                 _updateDate = String(memberData.date_jetons);
 			if( "video_disponible" in memberData && memberData.video_disponible != null )       _canWatchVideo = Boolean(memberData.video_disponible);
@@ -149,6 +153,7 @@ package com.ludofactory.mobile.core.manager
 			if( "displayInterstitial" in memberData && memberData.displayInterstitial != null ) _canDisplayInterstitial = Boolean(memberData.displayInterstitial);
 			if( "isDuelUnlocked" in memberData && memberData.isDuelUnlocked != null )           _isDuelUnlocked = Boolean(memberData.isDuelUnlocked);
 			if( "canHaveRewardAfterPublish" in memberData && memberData.canHaveRewardAfterPublish != null ) _canHaveRewardAfterPublish = Boolean(memberData.canHaveRewardAfterPublish);
+			if( "highscoreActions" in memberData && memberData.highscoreActions != null )       _highscoreActions = String(memberData.highscoreActions);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
 		
@@ -169,8 +174,8 @@ package com.ludofactory.mobile.core.manager
 		public function get highscore():int { return _highscore; }
 		public function set highscore(val:int):void { _highscore = val; }
 		
-		public function get cumulatedStars():int { return _cumulatedStars; }
-		public function set cumulatedStars(val:int):void { _cumulatedStars = val; }
+		public function get cumulatedTrophies():int { return _cumulatedTrophies; }
+		public function set cumulatedTrophies(val:int):void { _cumulatedTrophies = val; }
 		
 		public function get id():Number { return _id; }
 		public function set id(val:Number):void { _id = val; }
@@ -229,5 +234,7 @@ package com.ludofactory.mobile.core.manager
 		public function get canHaveRewardAfterPublish():Boolean { return _canHaveRewardAfterPublish; }
 		public function set canHaveRewardAfterPublish(value:Boolean):void { _canHaveRewardAfterPublish = value; }
 		
+		public function get highscoreActions():String { return _highscoreActions; }
+		public function set highscoreActions(value:String):void { _highscoreActions = value; }
 	}
 }

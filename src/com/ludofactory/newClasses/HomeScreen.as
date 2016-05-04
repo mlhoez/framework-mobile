@@ -4,6 +4,7 @@
 package com.ludofactory.newClasses
 {
 	
+	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
@@ -11,12 +12,15 @@ package com.ludofactory.newClasses
 	import com.ludofactory.mobile.MobileButton;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
+	import com.ludofactory.mobile.core.manager.InfoContent;
+	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.notification.content.neww.SettingsPopupContent;
 	import com.ludofactory.mobile.core.notification.content.neww.TrophiesPopupContent;
+	import com.ludofactory.mobile.core.remoting.Remote;
 	
 	import starling.display.Image;
 	import starling.events.Event;
@@ -167,11 +171,51 @@ package com.ludofactory.newClasses
 		 */
 		private function onPlayDuel(event:Event):void
 		{
-			ScreenData.getInstance().gameMode = GameMode.DUEL;
+			if(AirNetworkInfo.networkInfo.isConnected())
+			{
+				InfoManager.show("Recherche d'un duel en cours...");
+				ScreenData.getInstance().gameMode = GameMode.DUEL;
+				onDuelLaunchSuccess({});
+				//Remote.getInstance().launchDuel(onDuelLaunchSuccess, onDuelLaunchFail, onDuelLaunchFail, 1, _screenID);
+			}
+			else
+			{
+				InfoManager.showTimed(_("Vous devez être connecté à Internet pour lancer un duel."), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+			}
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Duel launch callbacks
+		
+		/**
+		 * We could find a duel on the server side.
+		 */
+		private function onDuelLaunchSuccess(result:Object):void
+		{
+			// FIXME DEBUG PURPOSE ONLY !
 			
-			// TODO make the remote call and then launch the game
+			result = {};
+			result.id = 12345;
+			result.reward = 40;
+			result.challenger = {};
+			result.challenger.nickname = "Challenger 1";
+			result.challenger.facebookId = 123456789;
+			result.challenger.trophiesCount = 150;
 			
+			// FIXME END OF DEBUG CODE
+			
+			InfoManager.forceClose();
+			ScreenData.getInstance().gameData.parse(result);
 			advancedOwner.replaceScreen(ScreenIds.GAME_SCREEN);
+		}
+		
+		/**
+		 * The duel could not be initialized
+		 * @param error
+		 */
+		private function onDuelLaunchFail(error:Object):void
+		{
+			InfoManager.hide(_("Une erreur est survenue, veuillez réessayer."), InfoContent.ICON_CROSS, InfoManager.DEFAULT_DISPLAY_TIME);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

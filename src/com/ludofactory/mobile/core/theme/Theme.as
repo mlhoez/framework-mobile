@@ -350,10 +350,6 @@ package com.ludofactory.mobile.core.theme
 			// Base Label
 			baseLabelTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(24), COLOR_BLACK);
 			
-			// Game
-			inGameSuccessTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(46), 0xc6d29d);
-			inGameFailTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(46), 0xc52828);
-			
 			// Top
 			labelMessageHighscorePodiumTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(50), COLOR_WHITE, false, false, null, null, null, TextFormatAlign.CENTER);
 			labelPodiumTopTextFormat = new TextFormat(FONT_SANSITA, scaleAndRoundToDpi(120), COLOR_ORANGE, false, false, null, null, null, TextFormatAlign.CENTER);
@@ -1151,8 +1147,6 @@ package com.ludofactory.mobile.core.theme
 		public static var labelPodiumTopTextFormat:TextFormat;                  // Game top podium
 		public static var downArrowLists:Texture;                               // Arrows and shadow for the lists
 		public static var downArrowShadow:Texture;                              // Arrows and shadow for the lists
-		public static var inGameSuccessTextFormat:TextFormat;                   // In game
-		public static var inGameFailTextFormat:TextFormat;                      // In game
 		
 		
 		
@@ -1207,14 +1201,10 @@ package com.ludofactory.mobile.core.theme
 		
 		// ------- N E W
 		
-		
-		
 		protected static function scrollBarFactory():SimpleScrollBar
 		{
 			return new SimpleScrollBar();
 		}
-		
-		
 		
 	//-------------------------
 	// List
@@ -1226,7 +1216,6 @@ package com.ludofactory.mobile.core.theme
 			//list.backgroundSkin = new Quad(10, 10, COLOR_BACKGROUND_LIGHT); // TODO A remettre si besoin
 		}
 		
-		
 	//-------------------------
 	// Shared
 	//-------------------------
@@ -1236,8 +1225,6 @@ package com.ludofactory.mobile.core.theme
 			scroller.verticalScrollBarFactory = scrollBarFactory;
 			scroller.horizontalScrollBarFactory = scrollBarFactory;
 		}
-		
-		
 		
 	//-------------------------
 	// SimpleScrollBar

@@ -37,7 +37,8 @@ package com.ludofactory.newClasses
 		 */
 		public function add(timeStamp:int, value:int):void
 		{
-			_record.push( { t:timeStamp, s:value } )
+			if(_record.length > 0 && _record[_record.length-1].t == timeStamp) _record[_record.length-1].s += value;
+			else _record.push( { t:timeStamp, s:value } )
 		}
 		
 		/**
@@ -60,6 +61,8 @@ package com.ludofactory.newClasses
 			encoded = encoded.replace(/\//ig, "_"); // replaces any "/" by "_"
 			encoded = encoded.replace(/\+/ig, "-"); // replaces any "+" by "-"
 			encoded = encoded.replace(/=/ig, "*");  // replaces any "=" by "*"
+			
+			_record = [];
 			
 			return encoded;
 		}

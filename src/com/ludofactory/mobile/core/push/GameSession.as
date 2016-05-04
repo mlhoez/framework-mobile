@@ -32,6 +32,9 @@ package com.ludofactory.mobile.core.push
 		/**
 		 * The number of stars or points earned, at the moment only used in the AlertItemRenderer for information. */		
 		private var _numStarsOrPointsEarned:int;
+		/**
+		 * Actions - json format. */
+		private var _actions:String;
 		
 		public function GameSession(pushType:String = null, gameType:int = 0)
 		{
@@ -48,6 +51,7 @@ package com.ludofactory.mobile.core.push
 			_connected = false;
 			_numStarsOrPointsEarned = 0;
 			_elapsedTime = 0;
+			_actions = "";
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -78,5 +82,9 @@ package com.ludofactory.mobile.core.push
 		
 		public function get numStarsOrPointsEarned():int { return _numStarsOrPointsEarned; }
 		public function set numStarsOrPointsEarned(val:int):void { _numStarsOrPointsEarned = val; }
+		
+		public function get actions():String { return _actions; }
+		public function set actions(value:String):void { _actions = value; }
+		
 	}
 }

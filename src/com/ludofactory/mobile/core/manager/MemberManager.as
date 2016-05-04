@@ -330,12 +330,12 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * The member number of cumulated rubies for the current tournament. */
-		public function get cumulatedRubies():int { return _member.cumulatedStars; }
-		public function set cumulatedRubies(val:int):void
+		public function get cumulatedTrophies():int { return _member.cumulatedTrophies; }
+		public function set cumulatedTrophies(val:int):void
 		{
-			if( _member.cumulatedStars != val )
+			if( _member.cumulatedTrophies != val )
 			{
-				_member.cumulatedStars= val;
+				_member.cumulatedTrophies= val;
 				setEncryptedMember();
 			}
 		}
@@ -455,6 +455,18 @@ package com.ludofactory.mobile.core.manager
 			if(_member.facebookTokenExpiryTimestamp != value)
 			{
 				_member.facebookTokenExpiryTimestamp = value;
+				setEncryptedMember();
+			}
+		}
+		
+		/**
+		 * Updates the value of <code>highscoreActions</code>. */
+		public function get highscoreActions():String { return _member.highscoreActions; }
+		public function set highscoreActions(value:String):void
+		{
+			if(_member.highscoreActions != value)
+			{
+				_member.highscoreActions = value;
 				setEncryptedMember();
 			}
 		}

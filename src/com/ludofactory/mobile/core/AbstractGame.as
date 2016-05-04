@@ -10,12 +10,12 @@ package com.ludofactory.mobile.core
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.logs.log;
+	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.ButtonFactory;
 	import com.ludofactory.mobile.MobileButton;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
-	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.model.GameMode;
@@ -28,6 +28,8 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
+	import com.ludofactory.newClasses.GameActionsRecorder;
+	import com.ludofactory.newClasses.GameJauge;
 	import com.milkmangames.nativeextensions.ios.IAdBannerAlignment;
 	
 	import flash.filesystem.File;
@@ -43,27 +45,38 @@ package com.ludofactory.mobile.core
 	public class AbstractGame extends AdvancedScreen implements IGame
 	{
 		/**
-		 * The game session. */		
+		 * The game session that will hold important informations. */		
 		private var _gameSession:GameSession;
 		
 		/**
+		 * Records all the score variations during the game. */
+		protected var _actionsRecorder:GameActionsRecorder;
+		/**
+		 * The user jauge. */
+		protected var _userJauge:GameJauge;
+		/**
+		 * The opponent jauge in duel mode or the self-highscore jauge in solo mode. */
+		protected var _opponentJauge:GameJauge;
+		
+		/**
 		 * The transparent black overlay. */
-		protected var _playOverlay:Image;
+		protected var _blackOverlay:Image;
 		/**
 		 * Loader */		
 		private var _loader:MovieClip;
-		
 		/**
 		 * The play button displayed at the begining of a game session. */		
 		protected var _playButton:MobileButton;
 		
 		/**
 		 * Whether the player gave up this game session. */		
-		private var _gaveUp:Boolean;
+		private var _gaveUp:Boolean = false;
+		
 		/**
 		 * Whether the screen is validating. This is added for security reason in order to avoid multiple validations. */		
 		private var _isValidatingGame:Boolean = false;
-		
+		/**
+		 * Stores the calculated next screen id. */
 		private var _nextScreenId:String;
 		
 		public function AbstractGame()
@@ -71,7 +84,6 @@ package com.ludofactory.mobile.core
 			super();
 			
 			_canBack = false;
-			_gaveUp = false;
 		}
 		
 		/**
@@ -105,8 +117,8 @@ package com.ludofactory.mobile.core
 			
 			// load the main atlas
 			var path:File = File.applicationDirectory.resolvePath( GlobalConfig.isPhone ? "assets/game/sd/" : "assets/game/hd/");
-			AbstractEntryPoint.assets.enqueue( path.url + "/game.png" );
-			AbstractEntryPoint.assets.enqueue( path.url + "/game.xml" );
+			AbstractEntryPoint.assets.enqueue(path.url + "/game.png");
+			AbstractEntryPoint.assets.enqueue(path.url + "/game.xml");
 			
 			// load common assets if found
 			path = File.applicationDirectory.resolvePath("assets/game/common/");
@@ -139,10 +151,10 @@ package com.ludofactory.mobile.core
 			_loader = null;
 			
 			// create the overlay and play button
-			_playOverlay = new Image(AbstractEntryPoint.assets.getTexture("overlay-skin"));
-			_playOverlay.width = GlobalConfig.stageWidth;
-			_playOverlay.height = GlobalConfig.stageHeight;
-			addChild(_playOverlay);
+			_blackOverlay = new Image(AbstractEntryPoint.assets.getTexture("overlay-skin"));
+			_blackOverlay.width = GlobalConfig.stageWidth;
+			_blackOverlay.height = GlobalConfig.stageHeight;
+			addChild(_blackOverlay);
 			
 			_playButton = ButtonFactory.getButton(_("Commencer"), ButtonFactory.SPECIAL);
 			_playButton.x = (GlobalConfig.stageWidth - _playButton.width) * 0.5;
@@ -153,6 +165,23 @@ package com.ludofactory.mobile.core
 			// enable the pause view and listeners
 			PauseManager.dispatcher.addEventListener(MobileEventTypes.EXIT, giveUp);
 			PauseManager.dispatcher.addEventListener(MobileEventTypes.RESUME, resume);
+			
+			// the actions recorder
+			_actionsRecorder = new GameActionsRecorder();
+			
+			_userJauge = new GameJauge(AbstractEntryPoint.assets.getTexture("default-photo"));
+			_userJauge.alpha = 0;
+			addChild(_userJauge);
+			
+			MemberManager.getInstance().highscore = 100; // FIXME A retirer
+			if((ScreenData.getInstance().gameMode == GameMode.SOLO && MemberManager.getInstance().highscore != 0 )|| ScreenData.getInstance().gameMode == GameMode.DUEL)
+			{
+				// display the jauge only in duel mode or when in solo mode but with a highscore reference
+				_opponentJauge = new GameJauge(ScreenData.getInstance().gameMode == GameMode.SOLO ? AbstractEntryPoint.assets.getTexture("high-score-default-jauge") : (ScreenData.getInstance().gameData.challengerFacebookId != 0 ? ("https://graph.facebook.com/" + ScreenData.getInstance().gameData.challengerFacebookId + "/picture?type=large&width=" + scaleAndRoundToDpi(58) + "&height=" + scaleAndRoundToDpi(58)) : AbstractEntryPoint.assets.getTexture("unknown-default-jauge")) ); // TODO mettre l'url de l'image de l'adversaire
+				_opponentJauge.addReader(JSON.parse('[{"s":100,"t":4},{"s":150,"t":5},{"s":200,"t":6},{"s":250,"t":10},{"s":100,"t":15},{"s":150,"t":16},{"s":200,"t":17},{"s":250,"t":18},{"s":300,"t":19},{"s":100,"t":25},{"s":150,"t":26},{"s":200,"t":31},{"s":250,"t":32},{"s":300,"t":33},{"s":250,"t":40},{"s":1100,"t":43},{"s":200,"t":44},{"s":550,"t":45},{"s":100,"t":52},{"s":150,"t":55},{"s":1500,"t":58},{"s":100,"t":60},{"s":100,"t":66},{"s":3000,"t":71},{"s":100,"t":75},{"s":100,"t":82},{"s":350,"t":86},{"s":250,"t":88},{"s":100,"t":94},{"s":250,"t":98},{"s":450,"t":101},{"s":100,"t":104},{"s":150,"t":105},{"s":200,"t":106},{"s":250,"t":110},{"s":200,"t":111},{"s":250,"t":112},{"s":650,"t":113},{"s":400,"t":114},{"s":100,"t":123},{"s":1100,"t":126},{"s":100,"t":129},{"s":100,"t":139},{"s":1500,"t":144},{"s":9900,"t":148},{"s":0,"t":155}]') as Array);
+				_opponentJauge.alpha = 0;
+				addChild(_opponentJauge);
+			}
 		}
 		
 		/**
@@ -175,8 +204,8 @@ package com.ludofactory.mobile.core
 			// truly playing when the play button have been touched, not before !
 			PauseManager.isPlaying = true;
 			
-			_playOverlay.removeFromParent(true);
-			_playOverlay = null;
+			_blackOverlay.removeFromParent(true);
+			_blackOverlay = null;
 			
 			_playButton.removeEventListener(Event.TRIGGERED, onPlay);
 			_playButton.removeFromParent(true);
@@ -252,7 +281,7 @@ package com.ludofactory.mobile.core
 		{
 			if(!_isValidatingGame) // avoid multiple validations
 			{
-				log("Score" + finalScore + " made in " + (totalElapsedTime / 1000) + " seconds.");
+				log("Score" + finalScore + " made in " + totalElapsedTime + " seconds.");
 				
 				_isValidatingGame = true;
 				
@@ -262,9 +291,12 @@ package com.ludofactory.mobile.core
 				AdManager.disposeBanners();
 				
 				// update the score and the gain
-				ScreenData.getInstance().gameData.score = _gameSession.score = finalScore;
+				ScreenData.getInstance().gameData.finalScore = _gameSession.score = finalScore;
 				_gameSession.elapsedTime = totalElapsedTime;
-				//ScreenData.getInstance().numStarsOrPointsEarned = _gameSession.numStarsOrPointsEarned = 999; // FIXME A modifier
+				if(_gameSession.gameMode == GameMode.SOLO)
+					_gameSession.actions = _actionsRecorder.getFinal();
+				
+				log(_actionsRecorder.getFinal())
 				
 				// report iOS Leaderboard
 				GameCenterManager.reportLeaderboardScore(AbstractGameInfo.LEADERBOARD_HIGHSCORE, _gameSession.score);
@@ -307,85 +339,33 @@ package com.ludofactory.mobile.core
 				}
 				case 1: // ok
 				{
-					// Facebook data - only returned when the user is connected with Facebook and have a valid token
-					if("fb_hs_friends" in result && result.fb_hs_friends)
-					{
-						if("classement" in result.fb_hs_friends && (result.fb_hs_friends.classement as Array).length > 0)
-						{
-							ScreenData.getInstance().gameData.facebookFriends = (result.fb_hs_friends.classement as Array).concat();
-							ScreenData.getInstance().gameData.facebookMoving = int(result.fb_hs_friends.deplacement);
-							ScreenData.getInstance().gameData.facebookPosition = int(result.fb_hs_friends.key_position);
-						}
-					}
-					/*else // Temporary for debugging
-					{
-						advancedOwner.screenData.gameData.facebookFriends = [ { classement:1, id:7526441, id_facebook:1087069645, last_classement:1, last_score:350, nom:"Maxime Lhoez", score:350 },
-																			  { classement:2, id:7525967, id_facebook:100001491084445, last_classement:3, last_score:220, nom:"Nicolas Alexandre", score:220 },
-																			  { classement:2, id:7525969, id_facebook:100003577159732, last_classement:4, last_score:100, nom:"Maxime Lhz", score:250 } ];
-						advancedOwner.screenData.gameData.facebookMoving = 1;
-						advancedOwner.screenData.gameData.facebookPosition = 2;
-					}*/
+					// parse the data
+					ScreenData.getInstance().gameData.parse(result);
 					
-					// show the trophies that can be earned after a server side validation // TODO maybe get this whe nthe game is initialzed ?
+					// show the trophies that can be earned after a server side validation
 					if("tab_php_trophy_win" in result && result.tab_php_trophy_win && (result.tab_php_trophy_win as Array).length > 0)
 					{
 						for each(var idTrophy:int in result.tab_php_trophy_win)
 						{
 							// Display trophy only once
-							if( TrophyManager.getInstance().canWinTrophy(idTrophy) )
-								TrophyManager.getInstance().onWinTrophy( idTrophy );
+							if(TrophyManager.getInstance().canWinTrophy(idTrophy))
+								TrophyManager.getInstance().onWinTrophy(idTrophy);
 						}
 					}
 					
-					if(_gameSession.gameMode == GameMode.SOLO) // solo
+					_nextScreenId = ScreenData.getInstance().gameData.isNewHighscore ? ScreenIds.NEW_HIGH_SCORE_SCREEN : // can only be true in solo mode so no need to check the mode here
+							(_gameSession.gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : (ScreenData.getInstance().gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN));
+					
+					if(TrophyManager.getInstance().isTrophyMessageDisplaying )
 					{
-						_nextScreenId = int(result.isHighscore) == 1 ? ScreenIds.NEW_HIGH_SCORE_SCREEN : ScreenIds.SOLO_END_SCREEN;
-						if(TrophyManager.getInstance().isTrophyMessageDisplaying )
-						{
-							TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
-						}
-						else
-						{
-							InfoManager.forceClose();
-							advancedOwner.replaceScreen(_nextScreenId);
-						}
+						TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
 					}
-					else // duel
+					else
 					{
-						ScreenData.getInstance().gameData.rewardInDuel = int(result.items);
-						ScreenData.getInstance().gameData.position = int(result.classement);
-						ScreenData.getInstance().gameData.top = int(result.top);
-						ScreenData.getInstance().gameData.hasReachNewTop = int(result.podium) == 1;
-						//ScreenData.getInstance().gameData.displayPushAlert = int(result.afficher_alerte_push) == 1;
-						
-						if(result.isHighscore == 1)
-						{
-							if( TrophyManager.getInstance().isTrophyMessageDisplaying )
-							{
-								_nextScreenId = ScreenIds.NEW_HIGH_SCORE_SCREEN;
-								TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
-							}
-							else
-							{
-								InfoManager.forceClose();
-								advancedOwner.replaceScreen( ScreenIds.NEW_HIGH_SCORE_SCREEN );
-							}
-						}
-						else
-						{
-							// no highscore but maybe a new level
-							if( TrophyManager.getInstance().isTrophyMessageDisplaying )
-							{
-								_nextScreenId = int(ScreenData.getInstance().gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
-								TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
-							}
-							else
-							{
-								InfoManager.forceClose();
-								advancedOwner.replaceScreen( int(ScreenData.getInstance().gameData.hasReachNewTop) == 1 ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN );
-							}
-						}
+						InfoManager.forceClose();
+						advancedOwner.replaceScreen(_nextScreenId);
 					}
+					
 					break;
 				}
 					
@@ -412,55 +392,33 @@ package com.ludofactory.mobile.core
 		 * might be replaced at any time when a <code>obj_membre_mobile</code> is returned
 		 * by a query in <code>Remote</code>.</p>
 		 */		
-		private function onGamePushFailure():void
+		private function onGamePushFailure(error:Object = null):void
 		{
-			/*this.advancedOwner.screenData.gameData.top = 15;
-			this.advancedOwner.screenData.gameData.hasReachNewTop = true;
-			advancedOwner.showScreen( ScreenIds.PODIUM_SCREEN );
-			
-			return;*/
-			
-			// update earned values in any cases
 			if( _gameSession.gameMode == GameMode.SOLO )
 			{
-				
+				ScreenData.getInstance().gameData.isNewHighscore = MemberManager.getInstance().highscore == 0 || (MemberManager.getInstance().highscore != 0 && _gameSession.score > MemberManager.getInstance().highscore); 
+				if(ScreenData.getInstance().gameData.isNewHighscore)
+				{
+					MemberManager.getInstance().highscore = _gameSession.score;
+					MemberManager.getInstance().highscoreActions = _gameSession.actions;
+				}
 			}
 			else
 			{
-				MemberManager.getInstance().cumulatedRubies = ( MemberManager.getInstance().cumulatedRubies + ScreenData.getInstance().gameData.rewardInDuel );
+				MemberManager.getInstance().cumulatedTrophies += ScreenData.getInstance().gameData.duelReward;
 			}
 			
-			_nextScreenId = _gameSession.gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN;
-			if( MemberManager.getInstance().highscore != 0 && _gameSession.score > MemberManager.getInstance().highscore )
+			_nextScreenId = ScreenData.getInstance().gameData.isNewHighscore ? ScreenIds.NEW_HIGH_SCORE_SCREEN : // can only be true in solo mode so no need to check the mode here
+					(_gameSession.gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN);
+			
+			if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 			{
-				// the user got a new high score
-				MemberManager.getInstance().highscore = _gameSession.score;
-				_nextScreenId = ScreenIds.NEW_HIGH_SCORE_SCREEN;
-				if( TrophyManager.getInstance().isTrophyMessageDisplaying )
-				{
-					TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
-				}
-				else
-				{
-					InfoManager.forceClose();
-					advancedOwner.replaceScreen( _nextScreenId );
-				}
+				TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
 			}
 			else
 			{
-				// set up the new high score, because this is the first one
-				if( MemberManager.getInstance().highscore == 0 )
-					MemberManager.getInstance().highscore = _gameSession.score;
-				
-				if( TrophyManager.getInstance().isTrophyMessageDisplaying )
-				{
-					TrophyManager.getInstance().addEventListener(Event.COMPLETE, onTrophiesDisplayed);
-				}
-				else
-				{
-					InfoManager.forceClose();
-					advancedOwner.replaceScreen( _nextScreenId );
-				}
+				InfoManager.forceClose();
+				advancedOwner.replaceScreen(_nextScreenId);
 			}
 			
 			// re-enable the PushManager
@@ -498,10 +456,10 @@ package com.ludofactory.mobile.core
 				_loader = null;
 			}
 			
-			if( _playOverlay )
+			if( _blackOverlay )
 			{
-				_playOverlay.removeFromParent(true);
-				_playOverlay = null;
+				_blackOverlay.removeFromParent(true);
+				_blackOverlay = null;
 			}
 			
 			if( _playButton )

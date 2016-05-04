@@ -5,11 +5,13 @@ package com.ludofactory.newClasses
 {
 	
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.newClasses.JaugeDataManager;
 	
 	import feathers.controls.ImageLoader;
 	
@@ -111,6 +113,33 @@ package com.ludofactory.newClasses
 			_addLabel.updateValue(value);
 			Starling.juggler.tween(_addLabel, 0.75, { scale:1, transition:Transitions.EASE_OUT_BACK, onComplete:function():void{ _addLabel.visible = false; } });
 			
+		}
+		
+		/**
+		 * Sets up the read data
+		 * 
+		 * @param data Array
+		 */
+		public function addReader(data:Array):void
+		{
+			_reader = new JaugeDataManager(data);
+		}
+		
+		private var _reader:JaugeDataManager;
+		
+		/**
+		 * When the main timer is updated, we need to update the reader and show the score variations accordingly.
+		 * 
+		 * @param currentTime
+		 */
+		public function onTimeUpdate(currentTime:int):void
+		{
+			log("Update " + currentTime);
+			if(_reader.currentData && _reader.currentData.timestamp == currentTime)
+			{
+				updateScore(_reader.currentData.score);
+				_reader.getNext();
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------

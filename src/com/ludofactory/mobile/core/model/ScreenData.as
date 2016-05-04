@@ -21,9 +21,7 @@ package com.ludofactory.mobile.core.model
 		 * The game data. */
 		private var _gameData:GameData;
 		/**
-		 * Temporary Facebook data stored only if the "email" field is missing when Facebook returns the data.
-		 * http://stackoverflow.com/questions/9347104/register-with-facebook-sometimes-doesnt-provide-email
-		 */
+		 * Temporary Facebook data stored only if the "email" field is missing when Facebook returns the data.*/
 		private var _tempFacebookData:Object;
 		
 		public function ScreenData(sk:SecurityKey)
@@ -58,9 +56,7 @@ package com.ludofactory.mobile.core.model
 		public function set gameData(value:GameData):void { _gameData = value; }
 		
 		/**
-		 * Temporary Facebook data stored only if the "email" field is missing when Facebook returns the data.
-		 * http://stackoverflow.com/questions/9347104/register-with-facebook-sometimes-doesnt-provide-email
-		 */
+		 * Temporary Facebook data stored only if the "email" field is missing when Facebook returns the data. */
 		public function get tempFacebookData():Object { return _tempFacebookData; }
 		public function set tempFacebookData(value:Object):void { _tempFacebookData = value; }
 		
