@@ -8,12 +8,18 @@ package com.ludofactory.mobile.core.notification.content.neww
 {
 	
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.logs.log;
+	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
+	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
+	import com.ludofactory.mobile.navigation.ads.AdManager;
 	import com.ludofactory.newClasses.IconButton;
+	import com.ludofactory.newClasses.PremiumContainer;
 	import com.ludofactory.newClasses.StatsData;
 	import com.ludofactory.newClasses.StatsItemRenderer;
 	import com.ludofactory.newClasses.ValueIconContainer;
@@ -21,6 +27,11 @@ package com.ludofactory.mobile.core.notification.content.neww
 	import feathers.controls.List;
 	import feathers.controls.Scroller;
 	import feathers.data.ListCollection;
+	
+	import starling.display.Quad;
+	import starling.events.Event;
+	
+	import starling.filters.BlurFilter;
 	
 	import starling.text.TextField;
 	import starling.text.TextFormat;
@@ -55,6 +66,9 @@ package com.ludofactory.mobile.core.notification.content.neww
 		/**
 		 * Statistics list. */
 		private var _statsList:List;
+		/**
+		 * Premium content displayed if the user is not premium. */
+		private var _premiumContent:PremiumContainer;
 		
 		public function PlayerProfilePopupContent()
 		{
@@ -91,22 +105,53 @@ package com.ludofactory.mobile.core.notification.content.neww
 			_statsList.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_statsList.dataProvider = new ListCollection(TEST_DATA);
 			addChild(_statsList);
+			
+			if(!MemberManager.getInstance().isPremium)
+			{
+				AdManager.getInstance().addEventListener(MobileEventTypes.VIDEO_SUCCESS, onStatsUnlocked);
+				_premiumContent = new PremiumContainer();
+				_statsList.addChild(_premiumContent);
+			}
 		}
 		
 		override protected function draw():void
 		{
-			_userName.x = _photoContainer.width;  
-			
-			_highscoreContainer.width = _trophiesContainer.width = scaleAndRoundToDpi(200);
-			_highscoreContainer.x = _trophiesContainer.x = actualWidth - _highscoreContainer.width;
-			_trophiesContainer.y = _photoContainer.height - _trophiesContainer.height;
-			
-			_userName.width = _highscoreContainer.x - _userName.x;
-			
-			_statsList.y = _photoContainer.y + _photoContainer.height + scaleAndRoundToDpi(10);
-			_statsList.width = actualWidth;
+			if(isInvalid(INVALIDATION_FLAG_SIZE))
+			{
+				_userName.x = _photoContainer.width;  
+				
+				_highscoreContainer.width = _trophiesContainer.width = scaleAndRoundToDpi(200);
+				_highscoreContainer.x = _trophiesContainer.x = actualWidth - _highscoreContainer.width;
+				_trophiesContainer.y = _photoContainer.height - _trophiesContainer.height;
+				
+				_userName.width = _highscoreContainer.x - _userName.x;
+				
+				_statsList.y = _photoContainer.y + _photoContainer.height + scaleAndRoundToDpi(10);
+				_statsList.width = actualWidth;
+				
+				if(_premiumContent)
+				{
+					_premiumContent.width = _statsList.width * 0.8;
+					_premiumContent.y = scaleAndRoundToDpi(20);
+					_premiumContent.x = roundUp((_statsList.width - _premiumContent.width) * 0.5);
+				}
+			}
 			
 			super.draw();
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Handlers
+		
+		private function onStatsUnlocked(event:Event):void
+		{
+			log("[PlayerProfilePopupContent] Statistics unlocked.");
+			
+			AdManager.getInstance().removeEventListener(MobileEventTypes.VIDEO_SUCCESS, onStatsUnlocked);
+			_premiumContent.removeFromParent(true);
+			_premiumContent = null;
+			
+			// TODO update the data within the list
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -114,6 +159,13 @@ package com.ludofactory.mobile.core.notification.content.neww
 		
 		override public function dispose():void
 		{
+			if(_premiumContent)
+			{
+				AdManager.getInstance().removeEventListener(MobileEventTypes.VIDEO_SUCCESS, onStatsUnlocked);
+				_premiumContent.removeFromParent(true);
+				_premiumContent = null;
+			}
+			
 			_photoContainer.removeFromParent(true);
 			_photoContainer = null;
 			

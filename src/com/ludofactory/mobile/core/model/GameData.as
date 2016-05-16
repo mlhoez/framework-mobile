@@ -85,7 +85,7 @@ package com.ludofactory.mobile.core.model
 					_challengerFacebookId = ("facebookId" in data.duel.challenger && data.duel.challenger.facebookId) ? data.duel.challenger.facebookId : 0;
 					_challengerNickname = ("nickname" in data.duel.challenger && data.duel.challenger.nickname) ? data.duel.challenger.nickname : "";
 					_challengerTrophiesCount = ("trophiesCount" in data.duel.challenger && data.duel.challenger.trophiesCount) ? data.duel.challenger.trophiesCount : 0;
-					
+					// TODO ajouter les plateaux + actionRecorder
 				}
 				else
 				{

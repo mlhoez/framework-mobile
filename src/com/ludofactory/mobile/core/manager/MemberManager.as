@@ -197,7 +197,7 @@ package com.ludofactory.mobile.core.manager
 				Analytics.trackEvent("Connexions", "Connexion au compte");
 				//log("<strong>Connexion du joueur " + memberId + "</strong>");
 				
-				AdManager.updateVidCoinData();
+				AdManager.getInstance().updateVidCoinData();
 			}
 			
 			// update the values of the footer
@@ -471,23 +471,33 @@ package com.ludofactory.mobile.core.manager
 			}
 		}
 		
-//------------------------------------------------------------------------------------------------------------
-//	Get - Set
-		
 		/**
-		 * Updates the value of <code>displayTutorial</code>.
-		 */		
-		public function setDisplayTutorial(val:Boolean):void
+		 * Updates the value of <code>displayTutorial</code>. */
+		public function get needsTutorial():Boolean { return _member.needsTutorial; }
+		public function set needsTutorial(value:Boolean):void
 		{
-			if( _member.displayTutorial != val )
+			if(_member.needsTutorial != value)
 			{
-				_member.displayTutorial = val;
+				_member.needsTutorial = value;
 				setEncryptedMember();
 			}
 		}
 		
-		/** Returns */		
-		public function getDisplayTutorial():Boolean { return _member.displayTutorial; }
+		/**
+		 * Updates the value of <code>isPremium</code>. */
+		public function get isPremium():Boolean { return _member.isPremium; }
+		public function set isPremium(value:Boolean):void
+		{
+			if(_member.isPremium != value)
+			{
+				_member.isPremium = value;
+				setEncryptedMember();
+			}
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Get - Set
+		
 		/** Returns */
 		public function getCanWatchVideo():Boolean { return _member.canWatchVideo; }
 		/** Returns */

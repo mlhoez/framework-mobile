@@ -130,18 +130,43 @@ package com.ludofactory.mobile.core
 		public static var ADMOB_IOS_DEFAULT_BANNER_UNIT_ID:String;
 
 //------------------------------------------------------------------------------------------------------------
-//	VidCoin
+//	Videos
+		
+		// ----- VidCoin
+		
+		/**
+		 * The VidCoin game id. */
+		public static var VIDCOIN_GAME_ID:String;
 
 		/**
-		 * The VidCoin game id.
-		 */
-		public static var VID_COIN_GAME_ID:String;
-
+		 * The VidCoin statistics placement id. */
+		public static var VIDCOIN_STATS_PLACEMENT_ID:String;
 		/**
-		 * The VidCoin placement id.
-		 */
-		public static var VID_COIN_PLACEMENT_ID:String;
-			
+		 * The VidCoin game placement id. */
+		public static var VIDCOIN_GAME_PLACEMENT_ID:String;
+		
+		// ----- AdColony
+		
+		/**
+		 * AdColony app id. */
+		public static var ADCOLONY_APP_ID:String;
+		
+		/**
+		 * AdColony game placement id. */
+		public static var ADCOLONY_GAME_PLACEMENT_ID:String;
+		/**
+		 * AdColony statistics placement id. */
+		public static var ADCOLONY_STATS_PLACEMENT_ID:String;
+		
+		// ----- TapJoy
+		
+		/**
+		 * TapJoy iOS key. */
+		public static var TAPJOY_IOS_KEY:String;
+		/**
+		 * TapJoy Android key. */
+		public static var TAPJOY_ANDROID_KEY:String;
+		
 //------------------------------------------------------------------------------------------------------------
 //	Rules and trophies
 		

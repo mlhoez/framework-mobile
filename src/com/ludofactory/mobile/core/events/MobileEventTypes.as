@@ -216,8 +216,12 @@ package com.ludofactory.mobile.core.events
 		
 		
 		
+		public static const NEXT_TUTORIAL_STEP:String   = "next-tutorial-step";
 		
 		
+		public static const VIDEO_SUCCESS:String = "video-success";
+		public static const VIDEO_FAIL:String = "video-fail";
+		public static const VIDEO_AVAILABILITY_UPDATE:String = "video-availability-update";
 		
 	}
 }
