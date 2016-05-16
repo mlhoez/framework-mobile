@@ -1,6 +1,7 @@
 package com.ludofactory.mobile.core.theme
 {
 	
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -121,10 +122,10 @@ package com.ludofactory.mobile.core.theme
 		 */
 		private static function getScaleFactor():Number
 		{
-			var screenResolutionX:int = GlobalConfig.platformName != Platform.SIMULATOR ? Capabilities.screenResolutionX : (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE)); // WARNING : this reports the computer resolution in the simulator !
-			var screenResolutionY:int = GlobalConfig.platformName != Platform.SIMULATOR ? Capabilities.screenResolutionY : (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE)); // WARNING : this reports the computer resolution in the simulator !
-			var ratioX:Number = screenResolutionX / (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE));
-			var ratioY:Number = screenResolutionY / (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE));
+			var screenResolutionX:int = GlobalConfig.platformName != Platform.SIMULATOR ? Capabilities.screenResolutionX : (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE)); // WARNING : this reports the computer resolution in the simulator !
+			var screenResolutionY:int = GlobalConfig.platformName != Platform.SIMULATOR ? Capabilities.screenResolutionY : (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE)); // WARNING : this reports the computer resolution in the simulator !
+			var ratioX:Number = screenResolutionX / (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE));
+			var ratioY:Number = screenResolutionY / (AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? ORIGINAL_X : ORIGINAL_X_TABLETTE) : (GlobalConfig.isPhone ? ORIGINAL_Y : ORIGINAL_Y_TABLETTE));
 			
 			if (ratioX < ratioY)
 			{
@@ -142,7 +143,6 @@ package com.ludofactory.mobile.core.theme
 		public static const COLOR_YELLOW:uint = 0xffea00;
 		public static const COLOR_BROWN:uint = 0x401800;
 		public static const COLOR_WHITE:uint = 0xffffff;
-		public static const COLOR_GREEN:uint = 0x43a01f;
 		public static const COLOR_LIGHT_GREY:uint = 0x939393;
 		public static const COLOR_VERY_LIGHT_GREY:uint = 0xd6d6d6;
 		public static const COLOR_DARK_GREY:uint = 0x333333;
@@ -376,9 +376,6 @@ package com.ludofactory.mobile.core.theme
 		
 		protected function initializeTextures():void
 		{
-			//horizontalScrollBarThumbSkinTextures = new Scale3Textures(AbstractEntryPoint.assets.getTexture("horizontal-scroll-bar-thumb-skin"), SCROLL_BAR_THUMB_REGION1, SCROLL_BAR_THUMB_REGION2, Scale3Textures.DIRECTION_HORIZONTAL);
-			//verticalScrollBarThumbSkinTextures = new Scale3Textures(AbstractEntryPoint.assets.getTexture("vertical-scroll-bar-thumb-skin"), SCROLL_BAR_THUMB_REGION1, SCROLL_BAR_THUMB_REGION2, Scale3Textures.DIRECTION_VERTICAL);
-			
 			infoManagerOverlay = AbstractEntryPoint.assets.getTexture("overlay-skin");
 			
 			// logos
@@ -508,7 +505,6 @@ package com.ludofactory.mobile.core.theme
 		
 		protected function initializeStyleProviders():void
 		{
-			
 			//getStyleProviderForClass(GroupedList).defaultStyleFunction = groupedListInitializer;
 			
 			// Screen
@@ -525,8 +521,6 @@ package com.ludofactory.mobile.core.theme
 			getStyleProviderForClass(ToggleButton).setFunctionForStyleName(BUTTON_TOGGLE_SWITCH_THUMB, buttonToggleSwitchInitializer);
 			//getStyleProviderForClass(Button).setFunctionForStyleName(ToggleSwitch.DEFAULT_CHILD_NAME_ON_TRACK, toggleSwitchTrackInitializer);
 			
-			
-			
 			// PickerList
 			/*getStyleProviderForClass(PickerList).defaultStyleFunction = pickerListInitializer;
 			getStyleProviderForClass(PickerList).setFunctionForStyleName(PICKER_LIST_DEBUG, pickerListDebugInitializer);
@@ -539,9 +533,6 @@ package com.ludofactory.mobile.core.theme
 			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(TOURNAMENT_END_ARROW_CONTAINER, scrollContainerTournamentEndArrowInitializer);
 			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(SCROLL_CONTAINER_RESULT_GREY, scrollContainerResultGreyInitializer);
 			getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(SCROLL_CONTAINER_ALERT, scrollContainerAlertInitializer);
-			
-			
-			
 			
 			// ---------- N E W
 			
