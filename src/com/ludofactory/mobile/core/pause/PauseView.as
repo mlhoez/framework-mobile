@@ -141,7 +141,7 @@ package com.ludofactory.mobile.core.pause
 		{
 			dispatchEventWith(MobileEventTypes.ANIMATION_IN_COMPLETE);
 			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_ADS) == true )
-				AdManager.setBannersVisibility(true);
+				AdManager.getInstance().setBannersVisibility(true);
 		}
 		
 		/**
@@ -159,7 +159,7 @@ package com.ludofactory.mobile.core.pause
 		private function onAnimationOutComplete():void
 		{
 			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_ADS) == true )
-				AdManager.setBannersVisibility(false);
+				AdManager.getInstance().setBannersVisibility(false);
 			dispatchEventWith(MobileEventTypes.ANIMATION_OUT_COMPLETE);
 		}
 		

@@ -24,7 +24,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * Whether we need to display the tutorial the first time. */		
-		private var _displayTutorial:Boolean = true;
+		private var _needsTutorial:Boolean = true;
 		
 		/**
 		 * Whether we need to display the tutorial the first time. */		
@@ -129,6 +129,10 @@ package com.ludofactory.mobile.core.manager
 		 * The actions associated to the best high score. */
 		private var _highscoreActions:String;
 		
+		/**
+		 * Whether the user is premium (no ads anymore and full stats access). */
+		private var _isPremium:Boolean = false;
+		
 		public function Member() { }
 		
 		/**
@@ -154,6 +158,7 @@ package com.ludofactory.mobile.core.manager
 			if( "isDuelUnlocked" in memberData && memberData.isDuelUnlocked != null )           _isDuelUnlocked = Boolean(memberData.isDuelUnlocked);
 			if( "canHaveRewardAfterPublish" in memberData && memberData.canHaveRewardAfterPublish != null ) _canHaveRewardAfterPublish = Boolean(memberData.canHaveRewardAfterPublish);
 			if( "highscoreActions" in memberData && memberData.highscoreActions != null )       _highscoreActions = String(memberData.highscoreActions);
+			if( "isPremium" in memberData && memberData.isPremium != null )                      _isPremium = Boolean(memberData.isPremium);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
 		
@@ -201,8 +206,8 @@ package com.ludofactory.mobile.core.manager
 		public function get lastTrophyWonId():int { return _lastTrophyWonId; }
 		public function set lastTrophyWonId(val:int):void { _lastTrophyWonId = val; }
 		
-		public function get displayTutorial():Boolean { return _displayTutorial; }
-		public function set displayTutorial(val:Boolean):void { _displayTutorial = val; }
+		public function get needsTutorial():Boolean { return _needsTutorial; }
+		public function set needsTutorial(val:Boolean):void { _needsTutorial = val; }
 		
 		public function get tournamentAnimPending():Boolean { return _tournamentAnimPending; }
 		public function set tournamentAnimPending(val:Boolean):void { _tournamentAnimPending = val; }
@@ -236,5 +241,8 @@ package com.ludofactory.mobile.core.manager
 		
 		public function get highscoreActions():String { return _highscoreActions; }
 		public function set highscoreActions(value:String):void { _highscoreActions = value; }
+		
+		public function get isPremium():Boolean { return _isPremium; }
+		public function set isPremium(value:Boolean):void { _isPremium = value; }
 	}
 }

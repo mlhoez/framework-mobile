@@ -41,6 +41,11 @@ package com.ludofactory.newClasses
 			else _record.push( { t:timeStamp, s:value } )
 		}
 		
+		public function reset():void
+		{
+			_record = [];
+		}
+		
 		/**
 		 * 
 		 */

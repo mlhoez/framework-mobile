@@ -150,7 +150,7 @@ package com.ludofactory.mobile.navigation.tournament
 				_rightLock.touchable = false;
 				addChild( _rightLock );
 				
-				_timer = new TimerManager(3, -1, null, onShake);
+				_timer = new TimerManager(false, 3, -1, null, onShake);
 				_timer.restart();
 			}
 			

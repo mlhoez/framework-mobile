@@ -76,6 +76,8 @@ package com.ludofactory.mobile
 		private var mState:String;
 		private var mTriggerBounds:Rectangle;
 		
+		private var _padding:Number = 20;
+		
 		/**
 		 * Creates a button with a set of state-textures and (optionally) some text.
 		 * Any state that is left 'null' will display the up-state texture. Beware that all
@@ -99,12 +101,14 @@ package com.ludofactory.mobile
 			mAlphaWhenDisabled = disabledState ? 1.0: 0.5;
 			
 			//scaleAndRoundToDpi(AbstractGameInfo.LANDSCAPE ? (GlobalConfig.isPhone ? 118 : 148) : 128)
-			mTextField = new TextField(5, 5, text, new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(50)));
+			mTextField = new TextField(5, 5, text, new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40)));
 			mTextField.format.verticalAlign = Align.CENTER;
 			mTextField.format.horizontalAlign = Align.CENTER;
 			mTextField.touchable = false;
 			mTextField.batchable = true;
 			mTextField.wordWrap = false;
+			
+			_padding = scaleAndRoundToDpi(_padding);
 			
 			mContents = new Sprite();
 			mContents.addChild(mBody);
@@ -118,7 +122,7 @@ package com.ludofactory.mobile
 		public function initialize():void
 		{
 			// we need at least the height for the horizontal autosize to work
-			mTextField.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? (98 - _padding*2) : (108 - _padding*2));
+			mTextField.height = scaleAndRoundToDpi(GlobalConfig.isPhone ? (88 - _padding*2) : (98 - _padding*2));
 			mTextField.autoSize = TextFieldAutoSize.HORIZONTAL;
 			mTextField.autoScale = false;
 			mTextField.text = text;
@@ -296,7 +300,7 @@ package com.ludofactory.mobile
 			//mTextField.nativeFilters = value;
 		}
 		
-		private var _padding:Number = 20;
+		
 		public function set textPadding(value:Number):void
 		{
 			_padding = value;

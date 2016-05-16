@@ -176,7 +176,7 @@ package com.ludofactory.mobile.core
 			// initialize Game Center
 			GameCenterManager.initialize();
 			// initialize Ads
-			AdManager.initialize();
+			AdManager.getInstance().initialize();
 			// initialize Popups
 			CustomPopupManager.initializeBasePopup();
 			

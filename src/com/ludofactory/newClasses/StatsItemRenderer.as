@@ -109,7 +109,7 @@ package com.ludofactory.newClasses
 			{
 				_title.text = _data.title;
 				_value.text = _data.value;
-				_background.color = _index % 2 == 0 ? 0x00ff00 : 0x0000ff;
+				_background.color = _index % 2 == 0 ? 0x494848 : 0x686868;
 			}
 		}
 		

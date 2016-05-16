@@ -5,6 +5,7 @@ package com.ludofactory.newClasses
 {
 	
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
@@ -134,12 +135,22 @@ package com.ludofactory.newClasses
 		 */
 		public function onTimeUpdate(currentTime:int):void
 		{
-			log("Update " + currentTime);
+			//log("Update " + currentTime);
 			if(_reader.currentData && _reader.currentData.timestamp == currentTime)
 			{
 				updateScore(_reader.currentData.score);
 				_reader.getNext();
 			}
+		}
+		
+		/**
+		 * Forces a value.
+		 * 
+		 * @param value
+		 */
+		public function setScore(value:int):void
+		{
+			_scoreLabel.text = Utilities.splitThousands(value);
 		}
 		
 //------------------------------------------------------------------------------------------------------------

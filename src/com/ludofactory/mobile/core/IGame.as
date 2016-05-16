@@ -57,5 +57,13 @@ package com.ludofactory.mobile.core
 		 * trophies.</p>
 		 */		
 		function gameOver():void;
+		
+		/**
+		 * When the tutorial is over, call this function to reset the actions recorder
+		 * and the needsTutorial value.
+		 *
+		 * <p>Override this function to do some special treatement in the subclass.</p>
+		 */
+		function onTutorialOver():void;
 	}
 }

@@ -66,7 +66,7 @@ package com.ludofactory.mobile.navigation.ads.store
 			_list.addEventListener(FeathersEventType.SCROLL_COMPLETE, onScrollEnd);
 			addChild(_list);
 			
-			_timer = new TimerManager(4, -1, null, onAutoScroll);
+			_timer = new TimerManager(false, 4, -1, null, onAutoScroll);
 			_timer.resume();
 		}
 		

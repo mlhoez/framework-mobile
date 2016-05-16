@@ -98,7 +98,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 			_tutoToggleSwitch.offText = "";
 			//_tutoToggleSwitch.onThumbText = _("Oui");
 			//_tutoToggleSwitch.offThumbText = _("Non");
-			_tutoToggleSwitch.isSelected = MemberManager.getInstance().getDisplayTutorial();
+			_tutoToggleSwitch.isSelected = MemberManager.getInstance().needsTutorial;
 			_tutoToggleSwitch.addEventListener(Event.CHANGE, onSwitchTuto);
 			_savedTutoChoice = _tutoToggleSwitch.isSelected;
 			
@@ -165,7 +165,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 		
 		private function onSwitchTuto(event:Event):void
 		{
-			MemberManager.getInstance().setDisplayTutorial(_tutoToggleSwitch.isSelected);
+			MemberManager.getInstance().needsTutorial = _tutoToggleSwitch.isSelected;
 		}
 		
 		private function onLanguageChanged(event:Event):void

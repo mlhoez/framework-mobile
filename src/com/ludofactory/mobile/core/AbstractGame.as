@@ -79,6 +79,10 @@ package com.ludofactory.mobile.core
 		 * Stores the calculated next screen id. */
 		private var _nextScreenId:String;
 		
+		/**
+		 * Whether we need to display the tutorial. */
+		protected var _displayTutorial:Boolean = false;
+		
 		public function AbstractGame()
 		{
 			super();
@@ -94,8 +98,8 @@ package com.ludofactory.mobile.core
 			super.initialize();
 			
 			// create banners in order to display them faster when the game is paused
-			AdManager.createiAdBanner(IAdBannerAlignment.BOTTOM);
-			AdManager.crateAdMobBanner();
+			AdManager.getInstance().createiAdBanner(IAdBannerAlignment.BOTTOM);
+			AdManager.getInstance().crateAdMobBanner();
 			
 			// disable the push manager while playing
 			AbstractEntryPoint.pushManager.isEnabled = false;
@@ -126,7 +130,8 @@ package com.ludofactory.mobile.core
 				AbstractEntryPoint.assets.enqueue(path);
 			
 			// load tutorial elements if necessary
-			if(MemberManager.getInstance().getDisplayTutorial())
+			_displayTutorial = MemberManager.getInstance().needsTutorial;
+			if(_displayTutorial)
 			{
 				path = File.applicationDirectory.resolvePath("assets/game/tutorial/");
 				if(path.exists)
@@ -259,10 +264,23 @@ package com.ludofactory.mobile.core
 			//Flox.logEvent("Parties", { "4. Etat de la partie":(_gaveUp ? "Abandonnee" : "Terminee"), "5. Connectivité en fin de partie":( AirNetworkInfo.networkInfo.isConnected() ? "Connecte" : "Deconnecte") });
 			
 			// update tutorial state
-			if( MemberManager.getInstance().getDisplayTutorial() == true )
-				MemberManager.getInstance().setDisplayTutorial(false);
+			if(MemberManager.getInstance().needsTutorial)
+				MemberManager.getInstance().needsTutorial = false;
 			
 			PauseManager.isPlaying = false;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function onTutorialOver():void
+		{
+			MemberManager.getInstance().needsTutorial = false;
+			_displayTutorial = false;
+			
+			_actionsRecorder.reset();
+			
+			PauseManager.isPlaying = true;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -288,7 +306,7 @@ package com.ludofactory.mobile.core
 				// dissociate the game session from the trophy manager
 				TrophyManager.getInstance().currentGameSession = null;
 				// dispose banners
-				AdManager.disposeBanners();
+				AdManager.getInstance().disposeBanners();
 				
 				// update the score and the gain
 				ScreenData.getInstance().gameData.finalScore = _gameSession.score = finalScore;
