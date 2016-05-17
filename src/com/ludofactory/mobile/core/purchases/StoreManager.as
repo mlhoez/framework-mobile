@@ -7,32 +7,15 @@ Created : 22 sept. 2013
 package com.ludofactory.mobile.core.purchases
 {
 	
-	import com.amazon.nativeextensions.android.AmazonPurchase;
-	import com.amazon.nativeextensions.android.AmazonPurchaseReceipt;
-	import com.amazon.nativeextensions.android.events.AmazonPurchaseEvent;
+	import com.amazon.nativeextensions.android.AmazonItemData;
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
-	import com.gamua.flox.Flox;
-	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.logs.log;
-	import com.ludofactory.mobile.core.AbstractEntryPoint;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
-	import com.ludofactory.mobile.core.manager.InfoContent;
-	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.navigation.store.StoreData;
-	import com.milkmangames.nativeextensions.android.AndroidIAB;
 	import com.milkmangames.nativeextensions.android.AndroidItemDetails;
-	import com.milkmangames.nativeextensions.android.events.AndroidBillingErrorEvent;
-	import com.milkmangames.nativeextensions.android.events.AndroidBillingErrorID;
-	import com.milkmangames.nativeextensions.android.events.AndroidBillingEvent;
-	import com.milkmangames.nativeextensions.ios.StoreKit;
-	import com.milkmangames.nativeextensions.ios.StoreKit;
-	import com.milkmangames.nativeextensions.ios.events.StoreKitErrorEvent;
-	import com.milkmangames.nativeextensions.ios.events.StoreKitEvent;
+	import com.milkmangames.nativeextensions.ios.StoreKitProduct;
 	
+	import starling.events.Event;
 	import starling.events.EventDispatcher;
 	
 	/**
@@ -44,6 +27,19 @@ package com.ludofactory.mobile.core.purchases
 		 * MemberManager instance. */
 		private static var _instance:StoreManager;
 		
+		/**
+		 * Whether the manager have been initialized. */
+		private var _isInitialized:Boolean = false;
+		
+		/**
+		 * The store used to make purchases. */
+		private var _store:Store;
+		/**
+		 * Temporary ids used to retreive the product details in the App Store. */
+		private var _temporaryProductsIds:Vector.<String>;
+		
+		private var _productsData:Vector.<StoreData>;
+		
 		public function StoreManager(sk:SecurityKey)
 		{
 			if( sk == null)
@@ -52,7 +48,161 @@ package com.ludofactory.mobile.core.purchases
 		
 		private function initialize():void
 		{
+			if(!_isInitialized)
+			{
+				_store = new Store();
+				_store.addEventListener(MobileEventTypes.STORE_INITIALIZED, onStoreInitialized);
+				if(AirNetworkInfo.networkInfo.isConnected())
+					_store.initialize();
+			}
+		}
+		
+//------------------------------------------------------------------------------------------------------------
+//	Handlers
+		
+		/**
+		 * When the store is initialized and if it is available, we need to fetch
+		 * the product ids we want to load in the application. Since we want this
+		 * to be dynamic and because we need to supply ids to Google or Apple in
+		 * order to retreive the correct currency, we need to know the ids we want
+		 * to load.
+		 *
+		 * <p>If in app purchases are not available, we need to display a message
+		 * indicating that in app purchases are not available on this phone or
+		 * account.</p>
+		 */
+		private function onStoreInitialized(event:Event):void
+		{
+			_store.removeEventListener(MobileEventTypes.STORE_INITIALIZED, onStoreInitialized);
 			
+			if( !_store.available )
+			{
+				// the store is not available, we need to inform the user
+				// FIXME display info message : _("Impossible d'afficher le magasin car vous ne pouvez pas effectuer d'achats (contrôle parental ou autre raison).");
+			}
+			else
+			{
+				//_areProductDetailsLoaded = true;
+				
+				_productsData = new Vector.<StoreData>();
+				_productsData.push(new StoreData({ store_id:"premium" }));
+				
+				// supply ids to Google and Apple in order to get the product details, such as localized price and currency
+				_temporaryProductsIds = new Vector.<String>();
+				_temporaryProductsIds.push("pyramidbattle.premium"); // TODO a externaliser
+				
+				_store.addEventListener(MobileEventTypes.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
+				_store.addEventListener(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
+				_store.requestProductDetails(_temporaryProductsIds); // load products
+			}
+		}
+		
+		/**
+		 * The product detailshave been loaded from Google or Apple. Now we need
+		 * to update the products with the details we got, then populate the list
+		 * data provider.
+		 */
+		private function onProductsDetailsLoaded(event:Event):void
+		{
+			_store.removeEventListener(MobileEventTypes.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
+			_store.removeEventListener(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
+			_store.addEventListener(MobileEventTypes.STORE_PURCHASE_SUCCESS, onPurchaseSuccess);
+			_store.addEventListener(MobileEventTypes.STORE_PURCHASE_CANCELLED, onPurchaseCancelled);
+			_store.addEventListener(MobileEventTypes.STORE_PURCHASE_FAILURE, onPurchaseFailure);
+			
+			if(event.data)
+			{
+				var storeData:StoreData;
+				
+				if (GlobalConfig.ios)
+				{
+					// parse ios specific data
+					for each(var storeKitProduct:StoreKitProduct in event.data)
+					{
+						for each(storeData in _productsData)
+						{
+							if (storeData.generatedId == storeKitProduct.productId)
+								storeData.parseIosData(storeKitProduct);
+						}
+					}
+					
+				}
+				else if (GlobalConfig.android)
+				{
+					// parse android specific data
+					if (GlobalConfig.amazon)
+					{
+						// amazon
+						for each(var amazonItemDetails:AmazonItemData in event.data)
+						{
+							for each(storeData in _productsData)
+							{
+								if (storeData.generatedId == amazonItemDetails.sku)
+									storeData.parseAmazonData(amazonItemDetails);
+							}
+						}
+					}
+					else
+					{
+						// android
+						for each(var androidItemDetails:AndroidItemDetails in event.data)
+						{
+							for each(storeData in _productsData)
+							{
+								if (storeData.generatedId == androidItemDetails.itemId)
+									storeData.parseAndroidData(androidItemDetails);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		private function onProductsDetailsNotLoaded(event:Event):void
+		{
+			// no product details loaded : something is wrong
+			_store.removeEventListener(MobileEventTypes.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
+			_store.removeEventListener(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
+			
+			// TODO issue
+		}
+		
+		/**
+		 * When the player wants to buy a pack, we need to create first a request on the
+		 * server side, for statistic purpose. Then when the creation is done, we launch
+		 * the native window which allows the user to make a purchase.
+		 */
+		private function onPurchaseItem(event:Event):void
+		{
+			//_canBack = false;
+			_store.requestPurchase( StoreData(event.data) );
+		}
+		
+		/**
+		 * Purchase success.
+		 */
+		private function onPurchaseSuccess(event:Event):void
+		{
+			// TODO
+			// TODO track purchase
+		}
+		
+		/**
+		 * Purchase failed.
+		 */
+		private function onPurchaseFailure(event:Event):void
+		{
+			// TODO
+			//_canBack = true;
+		}
+		
+		/**
+		 * Purchase cancelled.
+		 */
+		private function onPurchaseCancelled(event:Event):void
+		{
+			// TODO
+			//_canBack = true;
 		}
 		
 //------------------------------------------------------------------------------------------------------------
