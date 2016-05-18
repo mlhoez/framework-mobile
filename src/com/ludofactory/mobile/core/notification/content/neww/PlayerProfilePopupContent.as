@@ -17,7 +17,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.navigation.ads.AdManager;
+	import com.ludofactory.mobileNew.core.ads.AdManager;
 	import com.ludofactory.mobileNew.IconButton;
 	import com.ludofactory.mobileNew.PremiumContainer;
 	import com.ludofactory.mobileNew.StatsData;

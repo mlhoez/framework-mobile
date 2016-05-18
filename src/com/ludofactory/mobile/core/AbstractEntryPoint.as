@@ -26,7 +26,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.account.MyAccountScreen;
 	import com.ludofactory.mobileNew.core.achievements.GameCenterManager;
 	import com.ludofactory.mobileNew.core.achievements.TrophyScreen;
-	import com.ludofactory.mobile.navigation.ads.AdManager;
+	import com.ludofactory.mobileNew.core.ads.AdManager;
 	import com.ludofactory.mobile.navigation.authentication.LoginScreen;
 	import com.ludofactory.mobile.navigation.authentication.RegisterScreen;
 	import com.ludofactory.mobile.navigation.authentication.SponsorScreen;

@@ -4,7 +4,7 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 27 mai 2013
 */
-package com.ludofactory.mobile.navigation.ads
+package com.ludofactory.mobileNew.core.ads
 {
 	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;

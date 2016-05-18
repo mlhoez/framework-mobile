@@ -21,7 +21,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.push.PushTrophy;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobileNew.core.achievements.GameCenterManager;
-	import com.ludofactory.mobile.navigation.ads.AdManager;
+	import com.ludofactory.mobileNew.core.ads.AdManager;
 	import com.ludofactory.mobile.navigation.home.OldHomeScreen;
 	import com.ludofactory.mobileNew.core.analytics.Analytics;
 	import com.milkmangames.nativeextensions.GoViral;

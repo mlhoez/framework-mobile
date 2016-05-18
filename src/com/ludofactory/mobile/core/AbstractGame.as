@@ -27,7 +27,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobileNew.core.achievements.GameCenterManager;
 	import com.ludofactory.mobileNew.core.achievements.TrophyManager;
-	import com.ludofactory.mobile.navigation.ads.AdManager;
+	import com.ludofactory.mobileNew.core.ads.AdManager;
 	import com.ludofactory.mobileNew.GameActionsRecorder;
 	import com.ludofactory.mobileNew.core.jauge.GameJauge;
 	import com.milkmangames.nativeextensions.ios.IAdBannerAlignment;

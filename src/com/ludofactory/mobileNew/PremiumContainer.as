@@ -19,7 +19,7 @@ package com.ludofactory.mobileNew
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobileNew.core.store.StoreManager;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.navigation.ads.AdManager;
+	import com.ludofactory.mobileNew.core.ads.AdManager;
 	
 	import feathers.core.FeathersControl;
 	

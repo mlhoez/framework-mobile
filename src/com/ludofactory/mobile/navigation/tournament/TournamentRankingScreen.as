@@ -25,7 +25,7 @@ package com.ludofactory.mobile.navigation.tournament
 	import com.ludofactory.mobile.core.model.GameMode;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.navigation.ads.tournament.AdTournamentContainer;
+	import com.ludofactory.mobileNew.core.ads.tournament.AdTournamentContainer;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobile.navigation.tournament.listing.RankData;
 	import com.ludofactory.mobile.navigation.tournament.listing.RankHeaderData;
