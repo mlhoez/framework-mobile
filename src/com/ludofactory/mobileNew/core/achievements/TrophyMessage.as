@@ -38,10 +38,6 @@ package com.ludofactory.mobileNew.core.achievements
 		private var _image:ImageLoader;
 		
 		/**
-		 * The trophy message. */		
-		private var _message:TextField;
-		
-		/**
 		 * The trophy data. */		
 		private var _trophyData:TrophyData;
 		
@@ -60,8 +56,8 @@ package com.ludofactory.mobileNew.core.achievements
 		{
 			super.initialize();
 			
-			this.width = scaleAndRoundToDpi(500);
-			this.height = scaleAndRoundToDpi(130);
+			this.width = scaleAndRoundToDpi(70);
+			this.height = scaleAndRoundToDpi(70);
 			
 			_background = new Image(AbstractEntryPoint.assets.getTexture("trophy-background-skin"));
 			_background.scale9Grid = new Rectangle(11, 11, 18, 18);
@@ -84,10 +80,6 @@ package com.ludofactory.mobileNew.core.achievements
 			_image.source = _trophyData.textureName.indexOf("http") >= 0 ? _trophyData.textureName : AbstractEntryPoint.assets.getTexture(_trophyData.textureName);
 			_image.pixelSnapping = true;
 			addChild(_image);
-			
-			_message = new TextField(10, 10, _trophyData.description, new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), Theme.COLOR_WHITE));
-			_message.autoScale = true;
-			addChild(_message);
 		}
 		
 		override protected function draw():void
@@ -101,10 +93,6 @@ package com.ludofactory.mobileNew.core.achievements
 			_image.validate();
 			_image.x = actualWidth - _image.width - scaleAndRoundToDpi(5);
 			_image.y = (actualHeight - _image.height) * 0.5;
-			
-			_message.x = scaleAndRoundToDpi(10);
-			_message.width = _image.x - _message.x - scaleAndRoundToDpi(5);
-			_message.height = actualHeight;
 			
 			_particles.emitterX = (actualWidth * 0.5);
 			_particles.emitterY = (actualHeight * 0.5);
@@ -139,9 +127,6 @@ package com.ludofactory.mobileNew.core.achievements
 			
 			_image.removeFromParent(true);
 			_image = null;
-			
-			_message.removeFromParent(true);
-			_message = null;
 			
 			_trophyData = null;
 			

@@ -6,14 +6,14 @@ Created : 4 nov. 2013
 */
 package com.ludofactory.mobileNew.core.achievements
 {
-	import com.greensock.TweenLite;
+	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	
 	import starling.core.Starling;
 	import starling.events.Event;
 	import starling.events.EventDispatcher;
-
+	
 	public class TrophyDisplayer extends EventDispatcher
 	{
 		/**
@@ -50,15 +50,15 @@ package com.ludofactory.mobileNew.core.achievements
 			{
 				_isTrophyMessageDisplaying = true;
 				
-				_currentTrophyMessage = new TrophyMessage( trophyData );
+				_currentTrophyMessage = new TrophyMessage(trophyData);
 				_currentTrophyMessage.validate();
 				_currentTrophyMessage.x = GlobalConfig.stageWidth;
 				_currentTrophyMessage.y = scaleAndRoundToDpi(10);
 				Starling.current.stage.addChild( _currentTrophyMessage );
 				//Starling.current.stage.setChildIndex( _currentTrophyMessage, int.MAX_VALUE );
 				
-				TweenLite.to(_currentTrophyMessage, 0.75, { delay:0.5, x:(GlobalConfig.stageWidth - _currentTrophyMessage.width) });
-				TweenLite.to(_currentTrophyMessage, 0.75, { delay:5, x:GlobalConfig.stageWidth, onComplete:onTrophyDisplayed });
+				Starling.juggler.tween(_currentTrophyMessage, 0.25, { x:(GlobalConfig.stageWidth - _currentTrophyMessage.width) });
+				Starling.juggler.tween(_currentTrophyMessage, 0.25, { delay:3, x:GlobalConfig.stageWidth, onComplete:onTrophyDisplayed });
 			}
 		}
 		
