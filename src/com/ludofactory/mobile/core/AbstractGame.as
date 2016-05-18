@@ -372,7 +372,7 @@ package com.ludofactory.mobile.core
 					}
 					
 					_nextScreenId = ScreenData.getInstance().gameData.isNewHighscore ? ScreenIds.NEW_HIGH_SCORE_SCREEN : // can only be true in solo mode so no need to check the mode here
-							(_gameSession.gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : (ScreenData.getInstance().gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN));
+							(_gameSession.gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : (ScreenData.getInstance().gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : ScreenIds.DUEL_END_SCREEN));
 					
 					if(TrophyManager.getInstance().isTrophyMessageDisplaying )
 					{
@@ -427,7 +427,7 @@ package com.ludofactory.mobile.core
 			}
 			
 			_nextScreenId = ScreenData.getInstance().gameData.isNewHighscore ? ScreenIds.NEW_HIGH_SCORE_SCREEN : // can only be true in solo mode so no need to check the mode here
-					(_gameSession.gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.TOURNAMENT_END_SCREEN);
+					(_gameSession.gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN : ScreenIds.DUEL_END_SCREEN);
 			
 			if( TrophyManager.getInstance().isTrophyMessageDisplaying )
 			{

@@ -266,7 +266,7 @@ package com.ludofactory.mobile.navigation.engine
 			}
 			else
 			{
-				advancedOwner.replaceScreen( ScreenData.getInstance().gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (ScreenData.getInstance().gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN:ScreenIds.TOURNAMENT_END_SCREEN) );
+				advancedOwner.replaceScreen( ScreenData.getInstance().gameData.hasReachNewTop ? ScreenIds.PODIUM_SCREEN : (ScreenData.getInstance().gameMode == GameMode.SOLO ? ScreenIds.SOLO_END_SCREEN:ScreenIds.DUEL_END_SCREEN) );
 			}
 		}
 		

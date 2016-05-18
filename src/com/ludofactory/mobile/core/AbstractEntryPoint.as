@@ -24,6 +24,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.navigation.UpdateScreen;
 	import com.ludofactory.mobile.navigation.account.MyAccountScreen;
+	import com.ludofactory.mobile.navigation.engine.DuelEndScreen;
 	import com.ludofactory.mobileNew.core.achievements.GameCenterManager;
 	import com.ludofactory.mobileNew.core.achievements.TrophyScreen;
 	import com.ludofactory.mobileNew.core.ads.AdManager;
@@ -73,6 +74,7 @@ package com.ludofactory.mobile.core
 												{ id:ScreenIds.REGISTER_SCREEN, clazz:RegisterScreen },
 												{ id:ScreenIds.NEW_HIGH_SCORE_SCREEN, clazz:HighScoreScreen },
 												{ id:ScreenIds.SOLO_END_SCREEN, clazz:SoloEndScreen },
+												{ id:ScreenIds.DUEL_END_SCREEN, clazz:DuelEndScreen },
 												{ id:ScreenIds.TOURNAMENT_RANKING_SCREEN, clazz:TournamentRankingScreen },
 												{ id:ScreenIds.SPONSOR_REGISTER_SCREEN, clazz:SponsorScreen },
 												{ id:ScreenIds.PODIUM_SCREEN, clazz:PodiumScreen },

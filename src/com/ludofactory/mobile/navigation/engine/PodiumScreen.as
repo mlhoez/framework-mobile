@@ -316,7 +316,7 @@ package com.ludofactory.mobile.navigation.engine
 		 */		
 		private function goToNextScreen():void
 		{
-			advancedOwner.replaceScreen( ScreenIds.TOURNAMENT_END_SCREEN );
+			advancedOwner.replaceScreen( ScreenIds.DUEL_END_SCREEN );
 		}
 		
 //------------------------------------------------------------------------------------------------------------

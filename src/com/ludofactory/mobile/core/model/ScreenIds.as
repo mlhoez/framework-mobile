@@ -65,7 +65,7 @@ package com.ludofactory.mobile.core.model
 		/** Ecran de fin de jeu libre. */		
 		public static const SOLO_END_SCREEN:String = "Jeu - Fin d'une partie en mode solo";
 		/** Ecran de fin de tournoi. */		
-		public static const TOURNAMENT_END_SCREEN:String = "Jeu - Fin d'une partie en mode tournoi";
+		public static const DUEL_END_SCREEN:String = "Jeu - Fin d'une partie en mode duel";
 		/** Ecran de dépassement de score d'un ami Facebook. */		
 		public static const FACEBOOK_END_SCREEN:String = "Jeu - Dépassement d'amis Facebook";
 		/** Ecran du classement du tournoi en cours. */		
