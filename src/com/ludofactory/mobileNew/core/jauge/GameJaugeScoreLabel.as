@@ -1,7 +1,7 @@
 /**
  * Created by Maxime on 27/04/16.
  */
-package com.ludofactory.mobileNew
+package com.ludofactory.mobileNew.core.jauge
 {
 	
 	import com.ludofactory.common.utils.Utilities;

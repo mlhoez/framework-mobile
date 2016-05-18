@@ -580,19 +580,6 @@ package com.ludofactory.mobile.core.remoting
 		
 		/**
 		 * Returns a generic object used as parameter in every call.
-		 * 
-		 * <p>This generic object will contain the following properties :</p>
-		 * 
-		 * <listing version="3.0">
-		 * - id_membre
-		 * - mail
-		 * - mdp
-		 * - langue
-		 * - id_jeu
-		 * </listing>
-		 * 
-		 * @return 
-		 * 
 		 */		
 		private function getGenericParams():Object
 		{

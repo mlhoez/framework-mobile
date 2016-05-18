@@ -1,8 +1,10 @@
 /**
  * Created by Maxime on 27/04/16.
  */
-package com.ludofactory.mobileNew
+package com.ludofactory.mobileNew.core.jauge
 {
+	
+	import com.ludofactory.mobileNew.*;
 	
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.common.utils.Utilities;
@@ -12,7 +14,7 @@ package com.ludofactory.mobileNew
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobileNew.JaugeDataManager;
+	import com.ludofactory.mobileNew.core.jauge.JaugeDataManager;
 	
 	import feathers.controls.ImageLoader;
 	

@@ -1,7 +1,7 @@
 /**
  * Created by Maxime on 02/05/16.
  */
-package com.ludofactory.mobileNew
+package com.ludofactory.mobileNew.core.jauge
 {
 	
 	public class JaugeData
