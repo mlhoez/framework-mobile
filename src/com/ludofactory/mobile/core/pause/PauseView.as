@@ -18,6 +18,7 @@ package com.ludofactory.mobile.core.pause
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
+	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
@@ -140,7 +141,7 @@ package com.ludofactory.mobile.core.pause
 		private function onAnimationInComplete():void
 		{
 			dispatchEventWith(MobileEventTypes.ANIMATION_IN_COMPLETE);
-			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_ADS) == true )
+			if( !MemberManager.getInstance().isPremium )
 				AdManager.getInstance().setBannersVisibility(true);
 		}
 		
@@ -158,7 +159,7 @@ package com.ludofactory.mobile.core.pause
 		 */		
 		private function onAnimationOutComplete():void
 		{
-			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_DISPLAY_ADS) == true )
+			if( !MemberManager.getInstance().isPremium )
 				AdManager.getInstance().setBannersVisibility(false);
 			dispatchEventWith(MobileEventTypes.ANIMATION_OUT_COMPLETE);
 		}

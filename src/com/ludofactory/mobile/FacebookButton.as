@@ -147,8 +147,8 @@ package com.ludofactory.mobile
 				case ButtonFactory.FACEBOOK_TYPE_CONNECT:
 				{
 					// show the incentive no matter what
-					createIncentiveImage(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_CONNECT_REWARD).rewardType,
-							Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_CONNECT_REWARD).rewardValue);
+					//createIncentiveImage(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_CONNECT_REWARD).rewardType,
+					//		Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_CONNECT_REWARD).rewardValue);
 					break;
 				}
 				
@@ -157,8 +157,8 @@ package com.ludofactory.mobile
 					if(MemberManager.getInstance().canHaveRewardAfterPublish)
 					{
 						// only show the incentive if the player did not already get it
-						createIncentiveImage(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_SHARE_REWARD).rewardType,
-								Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_SHARE_REWARD).rewardValue);
+					//	createIncentiveImage(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_SHARE_REWARD).rewardType,
+					//			Storage.getInstance().getProperty(StorageConfig.PROPERTY_FACEBOOK_SHARE_REWARD).rewardValue);
 					}
 					
 					break;

@@ -116,26 +116,6 @@ package com.ludofactory.mobile.core.storage
 			if( result.hasOwnProperty("tab_trophies") && result.tab_trophies != null )
 				TrophyManager.getInstance().updateTrophies(result.tab_trophies as Array);
 			
-			// parse skip how to win gifts screen value
-			if( result.hasOwnProperty("param_affichage") )
-			{
-				if( result.param_affichage.hasOwnProperty( "afficher_publicite" ) && result.param_affichage.afficher_publicite != null )
-					setProperty(StorageConfig.PROPERTY_DISPLAY_ADS, int(result.param_affichage.afficher_publicite) == 1);
-			}
-			
-			// social
-			if("facebookConnectReward" in result)
-			{
-				// retrieve and update the facebook connect reward
-				setProperty(StorageConfig.PROPERTY_FACEBOOK_CONNECT_REWARD, result.facebookConnectReward);
-			}
-			
-			if("facebookPublishReward" in result)
-			{
-				// retrieve and update the facebook publish reward
-				setProperty(StorageConfig.PROPERTY_FACEBOOK_SHARE_REWARD, result.facebookPublishReward);
-			}
-			
 			log("[Storage] Server configuration have been successfully loaded.");
 			
 			/*if( AbstractEntryPoint.screenNavigator && AbstractEntryPoint.screenNavigator.activeScreen is HomeScreen )
