@@ -12,8 +12,8 @@ package com.ludofactory.mobile.core.storage
 	import com.ludofactory.common.utils.logs.logWarning;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.navigation.achievements.TrophyData;
-	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
+	import com.ludofactory.mobileNew.core.achievements.TrophyData;
+	import com.ludofactory.mobileNew.core.achievements.TrophyManager;
 	import com.ludofactory.mobile.navigation.faq.FaqData;
 	import com.ludofactory.mobile.navigation.faq.FaqQuestionAnswerData;
 	import com.ludofactory.mobile.navigation.news.NewsData;

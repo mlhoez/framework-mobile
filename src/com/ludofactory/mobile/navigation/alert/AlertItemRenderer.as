@@ -29,8 +29,8 @@ package com.ludofactory.mobile.navigation.alert
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobile.navigation.achievements.TrophyData;
-	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
+	import com.ludofactory.mobileNew.core.achievements.TrophyData;
+	import com.ludofactory.mobileNew.core.achievements.TrophyManager;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;

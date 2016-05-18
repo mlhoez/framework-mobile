@@ -24,8 +24,8 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.navigation.UpdateScreen;
 	import com.ludofactory.mobile.navigation.account.MyAccountScreen;
-	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
-	import com.ludofactory.mobile.navigation.achievements.TrophyScreen;
+	import com.ludofactory.mobileNew.core.achievements.GameCenterManager;
+	import com.ludofactory.mobileNew.core.achievements.TrophyScreen;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
 	import com.ludofactory.mobile.navigation.authentication.LoginScreen;
 	import com.ludofactory.mobile.navigation.authentication.RegisterScreen;

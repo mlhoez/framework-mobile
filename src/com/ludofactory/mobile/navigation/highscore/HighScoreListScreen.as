@@ -27,7 +27,7 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.FacebookManager;
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
-	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
+	import com.ludofactory.mobileNew.core.achievements.GameCenterManager;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
 	import com.ludofactory.mobileNew.core.analytics.Analytics;
 	import com.milkmangames.nativeextensions.GoViral;

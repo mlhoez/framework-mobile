@@ -25,7 +25,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.debug.DebugItemRenderer;
-	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
+	import com.ludofactory.mobileNew.core.achievements.TrophyManager;
 	import com.ludofactory.mobile.navigation.settings.LanguageData;
 	import com.milkmangames.nativeextensions.GoViral;
 	

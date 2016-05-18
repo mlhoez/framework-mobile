@@ -2,24 +2,19 @@
 Copyright © 2006-2015 Ludo Factory - http://www.ludokado.com/
 Framework mobile
 Author  : Maxime Lhoez
-Created : 1 septembre 2013
+Created : 31 août 2013
 */
-package com.ludofactory.mobile.core.notification.content.neww
+package com.ludofactory.mobileNew.core.achievements
 {
 	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
-	import com.ludofactory.common.utils.scaleAndRoundToDpi;
-	import com.ludofactory.mobile.core.AbstractGameInfo;
+	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.manager.MemberManager;
-	import com.ludofactory.mobile.core.notification.CustomPopupManager;
-	import com.ludofactory.mobile.core.notification.content.*;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.mobileNew.core.achievements.TrophyData;
-	import com.ludofactory.mobileNew.core.achievements.TrophyItemRenderer;
-	import com.ludofactory.mobileNew.core.achievements.TrophyManager;
 	
 	import feathers.controls.List;
 	import feathers.controls.Scroller;
@@ -27,19 +22,15 @@ package com.ludofactory.mobile.core.notification.content.neww
 	
 	import starling.core.Starling;
 	import starling.display.MovieClip;
-	import starling.text.TextField;
-	import starling.text.TextFieldAutoSize;
-	import starling.text.TextFormat;
 	
-	public class TrophiesPopupContent extends AbstractPopupContent
+	/**
+	 * Screen displaying the in-game trophies.
+	 */	
+	public class TrophyScreen extends AdvancedScreen
 	{
 		/**
 		 * Flag to indicate that the trophies list data provider have been updated. */
 		public static const INVALIDATION_FLAG_TROPHIES:String = "trophies";
-		
-		/**
-		 * The title. */		
-		private var _notificationTitle:TextField;
 		
 		/**
 		 * List containing all trophies for this game. */
@@ -49,7 +40,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 		 * The loader. */
 		private var _loader:MovieClip;
 		
-		public function TrophiesPopupContent()
+		public function TrophyScreen()
 		{
 			super();
 		}
@@ -57,15 +48,6 @@ package com.ludofactory.mobile.core.notification.content.neww
 		override protected function initialize():void
 		{
 			super.initialize();
-			
-			// TODO add the Game Center button here
-			
-			data = false;
-			
-			_notificationTitle = new TextField(10, scaleAndRoundToDpi(50), _("Coupes"), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(50), Theme.COLOR_DARK_GREY));
-			_notificationTitle.autoScale = AbstractGameInfo.LANDSCAPE;
-			_notificationTitle.autoSize = AbstractGameInfo.LANDSCAPE ? TextFieldAutoSize.NONE : TextFieldAutoSize.VERTICAL;
-			addChild(_notificationTitle);
 			
 			_trophiesList = new List();
 			_trophiesList.isSelectable = false;
@@ -85,8 +67,8 @@ package com.ludofactory.mobile.core.notification.content.neww
 				addChild(_loader);
 				
 				if( MemberManager.getInstance().isLoggedIn() )
-					Remote.getInstance().initTrophies(null, null, null, 2, "amodifier"); // TODO à modifier
-				Remote.getInstance().getTrophies(onGetTrophiesSuccess, onGetTrophiesFail, onGetTrophiesFail, 2, "amodifier"); // TODO à modifier
+					Remote.getInstance().initTrophies(null, null, null, 2, advancedOwner.activeScreenID);
+				Remote.getInstance().getTrophies(onGetTrophiesSuccess, onGetTrophiesFail, onGetTrophiesFail, 2, advancedOwner.activeScreenID);
 			}
 			else
 			{
@@ -98,17 +80,14 @@ package com.ludofactory.mobile.core.notification.content.neww
 		{
 			if( isInvalid(INVALIDATION_FLAG_SIZE) )
 			{
-				_notificationTitle.width = this.actualWidth;
+				_trophiesList.width = this.actualWidth;
+				_trophiesList.height = this.actualHeight;
 				
-				if (_loader)
+				if( _loader )
 				{
 					_loader.x = this.actualWidth * 0.5;
-					_loader.y = CustomPopupManager.maxContentHeight * 0.5;
+					_loader.y = this.actualHeight * 0.5;
 				}
-				
-				_trophiesList.y = _notificationTitle.y + _notificationTitle.height;
-				_trophiesList.width = this.actualWidth;
-				_trophiesList.height = CustomPopupManager.maxContentHeight - _trophiesList.y;
 			}
 			
 			if(isInvalid(INVALIDATION_FLAG_TROPHIES))
@@ -118,12 +97,12 @@ package com.ludofactory.mobile.core.notification.content.neww
 		}
 		
 //------------------------------------------------------------------------------------------------------------
-//	Handlers
+//	
 		
 		/**
 		 * The trophies have been successfully fetched from the server, in this case we can update then in the
 		 * local storage and then initialize the list.
-		 *
+		 * 
 		 * @param result
 		 */
 		private function onGetTrophiesSuccess(result:Object):void
@@ -138,7 +117,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 		/**
 		 * The trophies could not be updated, in this case we simply initialize the list with what we've stored
 		 * previously in the local storage.
-		 *
+		 * 
 		 * @param error
 		 */
 		private function onGetTrophiesFail(error:Object = null):void
@@ -186,8 +165,15 @@ package com.ludofactory.mobile.core.notification.content.neww
 		
 		override public function dispose():void
 		{
-			_notificationTitle.removeFromParent(true);
-			_notificationTitle = null;
+			if( _loader )
+			{
+				Starling.juggler.remove( _loader );
+				_loader.removeFromParent(true);
+				_loader = null;
+			}
+			
+			_trophiesList.removeFromParent(true);
+			_trophiesList = null;
 			
 			super.dispose();
 		}
