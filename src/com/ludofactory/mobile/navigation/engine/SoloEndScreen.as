@@ -8,7 +8,6 @@ package com.ludofactory.mobile.navigation.engine
 {
 	
 	import com.greensock.TweenMax;
-	import com.greensock.easing.Bounce;
 	import com.greensock.easing.Expo;
 	import com.greensock.easing.Linear;
 	import com.ludofactory.common.gettext.LanguageManager;
@@ -44,12 +43,8 @@ package com.ludofactory.mobile.navigation.engine
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.events.Event;
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
 	import starling.text.TextField;
-	import starling.text.TextFieldAutoSize;
 	import starling.text.TextFormat;
 	import starling.utils.StringUtil;
 	import starling.utils.deg2rad;
@@ -71,7 +66,7 @@ package com.ludofactory.mobile.navigation.engine
 		
 		/**
 		 * Saved scale for the flag. */
-		private var _savedScale:Number;
+		private var _savedFlagScale:Number;
 		/**
 		 * Container saved final height used to tween it. */
 		private var _containerSavedHeight:Number;
@@ -99,28 +94,14 @@ package com.ludofactory.mobile.navigation.engine
 	// ---------- Content
 		
 		/**
-		 * Score label. */
-		private var _scoreLabel:TextField;
-		/**
 		 * Points container. */
-		private var _pointContainer:Image;
+		private var _scoreContainer:Image;
 		/**
 		 * Earned points label. */
-		private var _earnedPointsLabel:TextField;
-		/**
-		 * Stamp displayed when the user played with credits. */
-		private var _winMorePointsImage:Image;
+		private var _scoreLabel:TextField;
 		/**
 		 * Points particles. */
 		private var _pointsParticles:PDParticleSystem;
-		
-		/**
-		 * The convert elements when logged in. */
-		private var _convertShop:SoloEndElement;
-		private var _convertTournament:SoloEndElement;
-		/**
-		 * This one when not loggd in.*/
-		private var _convertShopNotLoggedIn:SoloEndElement;
 		
 		/**
 		 * When the tournament have been unlocked. */
@@ -158,11 +139,13 @@ package com.ludofactory.mobile.navigation.engine
 		{
 			super.initialize();
 			
-			//advancedOwner.screenData.gameData.score = 0;
-			//MemberManager.getInstance().isTournamentAnimPending = true;
-			
+			// reset the navigation
 			NavigationManager.resetNavigation(false);
+			// just in case
 			InfoManager.forceClose();
+			
+			MemberManager.getInstance().isTournamentAnimPending = false;
+			
 			
 			if(!MemberManager.getInstance().isTournamentUnlocked)
 			{
@@ -183,36 +166,29 @@ package com.ludofactory.mobile.navigation.engine
 			_flag.scale9Grid = new Rectangle(10, 0, 10, _flag.texture.frameHeight);
 			addChild(_flag);
 			_flag.alignPivot();
-			_savedScale = _flag.scaleX;
+			_savedFlagScale = _flag.scaleX;
 			
 			_title = new TextField(_flag.width - (scaleAndRoundToDpi(132*2)), _flag.height, _("FIN DE PARTIE"), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), 0xffffff));
 			_title.alignPivot();
 			_title.alpha = 0;
 			_title.autoScale = true;
-			//_title.nativeFilters = [ new GlowFilter(0x7e0600, 1, scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(1.0), scaleAndRoundToDpi(5), BitmapFilterQuality.LOW),
-			//	new DropShadowFilter(2, 75, 0x7e0600, 0.6, scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), scaleAndRoundToDpi(1), BitmapFilterQuality.LOW) ];
 			addChild(_title);
 			
-			_scoreLabel = new TextField((_flag.width * 0.5), scaleAndRoundToDpi(50), StringUtil.format(_("Score final : {0}"), Utilities.splitThousands(ScreenData.getInstance().gameData.finalScore)), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(40), 0x27220d));
+			_scoreContainer = new Image(AbstractEntryPoint.assets.getTexture("result-container"));
+			_scoreContainer.scale9Grid = new Rectangle(30, 0, 6, _scoreContainer.texture.frameHeight);
+			_scoreContainer.alpha = 0;
+			_scoreContainer.scale = GlobalConfig.dpiScale;
+			addChild(_scoreContainer);
+			
+			_scoreLabel = new TextField(5, _scoreContainer.height, StringUtil.format(_("Score final : {0}"), Utilities.splitThousands(ScreenData.getInstance().gameData.finalScore)), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(50), 0xffffff));
+			_scoreLabel.autoScale = true;
 			_scoreLabel.alpha = 0;
-			_scoreLabel.autoSize = TextFieldAutoSize.HORIZONTAL;
+			_scoreLabel.border = true;
 			addChild(_scoreLabel);
-			
-			_pointContainer = new Image(AbstractEntryPoint.assets.getTexture("point-container"));
-			_pointContainer.alpha = 0;
-			_pointContainer.scaleX = _pointContainer.scaleY = GlobalConfig.dpiScale;
-			addChild(_pointContainer);
-			
-			_earnedPointsLabel = new TextField(scaleAndRoundToDpi(129), _pointContainer.height, "+0", new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(50), 0xffffff));
-			_earnedPointsLabel.autoScale = true;
-			_earnedPointsLabel.alpha = 0;
-			addChild(_earnedPointsLabel);
 			
 			_pointsParticles = new PDParticleSystem(Theme.particleVortexXml, AbstractEntryPoint.assets.getTexture("particle-sparkle-end"));
 			_pointsParticles.touchable = false;
 			_pointsParticles.capacity = 250;
-			//_pointsParticles.blendFactorSource = Context3DBlendFactor.DESTINATION_ALPHA;
-			//_pointsParticles.blendFactorDestination = Context3DBlendFactor.ONE_MINUS_SOURCE_ALPHA;
 			addChild(_pointsParticles);
 			Starling.juggler.add(_pointsParticles);
 			
@@ -234,10 +210,10 @@ package com.ludofactory.mobile.navigation.engine
 			_facebookButton.alpha = 0;
 			addChild(_facebookButton);
 			
-			if( MemberManager.getInstance().isTournamentAnimPending )
+			// duel mode unlocked
+			if(MemberManager.getInstance().isTournamentAnimPending)
 			{
-				// the tournement was unlocked, we need to animate it
-				
+				// the duel mode was unlocked, we need to animate it
 				_tournamentUnlockedContainer = new ScrollContainer();
 				_tournamentUnlockedContainer.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 				_tournamentUnlockedContainer.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
@@ -267,36 +243,6 @@ package com.ludofactory.mobile.navigation.engine
 				addChild(_lockerParticles);
 				Starling.juggler.add(_lockerParticles);
 			}
-			else
-			{
-				if( MemberManager.getInstance().isLoggedIn() )
-				{
-					// logged in content
-					
-					_convertShop = new SoloEndElement("convert-shop-icon", AbstractGameInfo.LANDSCAPE ? _("Convertir mes Points en Crédits dans la boutique"):_("Convertir mes Points en\nCrédits dans la boutique") );
-					_convertShop.alpha = 0;
-					_convertShop.visible = false;
-					addChild(_convertShop);
-					
-					_convertTournament = new SoloEndElement("convert-tournament-icon", (AbstractGameInfo.LANDSCAPE ? _("Utiliser mes Points sur le tournoi pour me classer"):_("Utiliser mes Points sur\nle tournoi pour me classer")));
-					_convertTournament.alpha = 0;
-					_convertTournament.visible = false;
-					_convertTournament.addEventListener(TouchEvent.TOUCH, onGoTournament);
-					addChild(_convertTournament);
-				}
-				else
-				{
-					// not logged in content
-					
-					var msg:String = _("Créez votre compte et convertissez\nvos Points en Crédits !");
-					
-					_convertShopNotLoggedIn = new SoloEndElement("points-to-gift-icon", msg);
-					_convertShopNotLoggedIn.alpha = 0;
-					_convertShopNotLoggedIn.visible = false;
-					_convertShopNotLoggedIn.addEventListener(TouchEvent.TOUCH, onConvertInShop);
-					addChild(_convertShopNotLoggedIn);
-				}
-			}
 		}
 		
 		override protected function draw():void
@@ -313,11 +259,13 @@ package com.ludofactory.mobile.navigation.engine
 				_title.x = _flag.x = actualWidth * 0.5;
 				_title.y = actualHeight * 0.49;
 				_flag.y = actualHeight * 0.5 + _flag.height * 0.15;
-
-				_pointContainer.x = roundUp((actualWidth - _pointContainer.width) * 0.5);
-				_earnedPointsLabel.x = _pointContainer.x;
 				
-				_container.height = PADDING_TOP + PADDING_BOTTOM + _scoreLabel.height + scaleAndRoundToDpi(5) + _pointContainer.height + scaleAndRoundToDpi(10);
+				_scoreContainer.width = _scoreLabel.width = _container.width * 0.7;
+				_scoreContainer.x = roundUp((actualWidth - _scoreContainer.width) * 0.5);
+				_scoreLabel.x = _scoreContainer.x;
+				
+				_container.height = PADDING_TOP + PADDING_BOTTOM + scaleAndRoundToDpi(100) + _scoreContainer.height + scaleAndRoundToDpi(10);
+				
 				if( MemberManager.getInstance().isTournamentAnimPending )
 				{
 					_tournamentUnlockedContainer.width = _container.width * 0.8;
@@ -346,25 +294,6 @@ package com.ludofactory.mobile.navigation.engine
 					_tournamentUnlockedContainer.validate();
 					_container.height += _tournamentUnlockedContainer.height;
 				}
-				else
-				{
-					if( MemberManager.getInstance().isLoggedIn() )
-					{
-						_convertShop.width = _convertTournament.width = _container.width * 0.8;
-						_convertShop.x = _convertTournament.x = (actualWidth - _convertShop.width) * 0.5;
-						_convertShop.validate();
-						
-						_container.height += _convertShop.height * 2 + scaleAndRoundToDpi(5);
-					}
-					else
-					{
-						_convertShopNotLoggedIn.width = _container.width * 0.8;
-						_convertShopNotLoggedIn.x = (actualWidth - _convertShopNotLoggedIn.width) * 0.5;
-						_convertShopNotLoggedIn.validate();
-						
-						_container.height += _convertShopNotLoggedIn.height;
-					}
-				}
 				
 				_containerSavedHeight = _container.height;
 				_container.y = roundUp((actualHeight - _container.height) * 0.5);
@@ -372,7 +301,7 @@ package com.ludofactory.mobile.navigation.engine
 				
 				// start to animate
 				TweenMax.to(_title, 0.5, { delay:0.75, autoAlpha:1 });
-				TweenMax.to(_flag, 0.5, { delay:0.75, scaleX:_savedScale, onComplete:animateFlag });
+				TweenMax.to(_flag, 0.5, { delay:0.75, scaleX:_savedFlagScale, onComplete:animateFlag });
 			}
 
 			super.draw();
@@ -407,32 +336,19 @@ package com.ludofactory.mobile.navigation.engine
 			TweenMax.allTo([_replayButton, _facebookButton], 0.5, { alpha:1 });
 			
 			// common elements (score and earned points
-			_scoreLabel.x = roundUp((actualWidth - _scoreLabel.width) * 0.5);
-			_scoreLabel.y = _flag.y + scaleAndRoundToDpi(55);
-			_pointContainer.y = _scoreLabel.y + _scoreLabel.height + scaleAndRoundToDpi(5);
-			_earnedPointsLabel.y = _pointContainer.y;
-			TweenMax.allTo([_pointContainer, _earnedPointsLabel, _scoreLabel], 0.5, { alpha:1 });
+			_scoreContainer.y = _flag.y + scaleAndRoundToDpi(55) + scaleAndRoundToDpi(5);
+			_scoreLabel.y = _scoreContainer.y;
+			TweenMax.allTo([_scoreContainer, _scoreLabel], 0.5, { alpha:1 });
 			
 			// specific content
 			if( MemberManager.getInstance().isTournamentAnimPending )
 			{
-				_tournamentUnlockedContainer.y = _pointContainer.y + _pointContainer.height + scaleAndRoundToDpi(10);
+				_tournamentUnlockedContainer.y = _scoreContainer.y + _scoreContainer.height + scaleAndRoundToDpi(10);
 				_glow.alpha = 0;
 				TweenMax.to(_tournamentUnlockedContainer, 0.5, { autoAlpha:1 });
 			}
 			else
 			{
-				if (MemberManager.getInstance().isLoggedIn())
-				{
-					_convertShop.y = _pointContainer.y + _pointContainer.height + scaleAndRoundToDpi(10);
-					_convertTournament.y = _convertShop.y + _convertShop.height + scaleAndRoundToDpi(GlobalConfig.isPhone ? 5 : 10);
-					TweenMax.allTo([_convertShop, _convertTournament], 0.5, { autoAlpha:1 });
-				}
-				else
-				{
-					_convertShopNotLoggedIn.y = _pointContainer.y + _pointContainer.height + scaleAndRoundToDpi(10);
-					TweenMax.to(_convertShopNotLoggedIn, 0.5, { autoAlpha:1 });
-				}
 				_replayButton.addEventListener(Event.TRIGGERED, onPlayAgain);
 				_homeButton.addEventListener(Event.TRIGGERED, onGoHome);
 			}
@@ -441,10 +357,17 @@ package com.ludofactory.mobile.navigation.engine
 			_scoreLabel.text = StringUtil.format(_("Score final : {0}"), 0);
 			_oldTweenValue = 0;
 			_targetTweenValue = ScreenData.getInstance().gameData.finalScore;
-			if( _targetTweenValue == 0 )
+			if(_targetTweenValue == 0)
+			{
 				Starling.juggler.delayCall(animateLabelFromScoreToPoints, 1);
+			}
 			else
-				TweenMax.to(this, _targetTweenValue < 500 ? 1 : 2, { delay:0.5, _oldTweenValue : _targetTweenValue, onUpdate : function():void{ _scoreLabel.text = StringUtil.format(_("Score final : {0}"), Utilities.splitThousands(_oldTweenValue)); }, onComplete:animateLabelFromScoreToPoints, ease:Expo.easeInOut } );
+			{
+				TweenMax.to(this, _targetTweenValue < 500 ? 1 : 2, { delay:0.5, _oldTweenValue : _targetTweenValue, onUpdate : function():void
+				{
+					_scoreLabel.text = StringUtil.format(_("Score final : {0}"), Utilities.splitThousands(_oldTweenValue));
+				}, onComplete:animateLabelFromScoreToPoints, ease:Expo.easeInOut } );
+			}
 		}
 		
 		/**
@@ -452,32 +375,17 @@ package com.ludofactory.mobile.navigation.engine
 		 */
 		private function animateLabelFromScoreToPoints():void
 		{
-			if(!_earnedPointsLabel) // if the screen changed after the starling juggler delayed call
+			if(!_scoreLabel) // if the screen changed after the starling juggler delayed call
 				return;
 			
-			_earnedPointsLabel.text = StringUtil.format(_("+{0}"), ScreenData.getInstance().gameData.duelReward);
+			_scoreLabel.text = StringUtil.format(_("Score final : {0}"), Utilities.splitThousands(ScreenData.getInstance().gameData.finalScore));
 			
 			_pointsParticles.start(0.25);
-			_pointsParticles.emitterX = _earnedPointsLabel.x + _earnedPointsLabel.width * 0.5;
-			_pointsParticles.emitterY = _earnedPointsLabel.y + _earnedPointsLabel.height * 0.5;
+			_pointsParticles.emitterX = _scoreLabel.x + _scoreLabel.width * 0.5;
+			_pointsParticles.emitterY = _scoreLabel.y + _scoreLabel.height * 0.5;
 			
-			if( true )
-			{
-				_winMorePointsImage = new Image( AbstractEntryPoint.assets.getTexture("WinMorePointsX6" + LanguageManager.getInstance().lang));
-				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = GlobalConfig.dpiScale;
-				_winMorePointsImage.alignPivot();
-				_winMorePointsImage.alpha = 0;
-				_winMorePointsImage.x = _pointContainer.x + _pointContainer.width + scaleAndRoundToDpi(5) + (_winMorePointsImage.width * 0.5);
-				_winMorePointsImage.y = _pointContainer.y + (_pointContainer.height * 0.5);
-				addChild( _winMorePointsImage );
-				_winMorePointsImage.scaleX = _winMorePointsImage.scaleY = 0;
-				TweenMax.to(_winMorePointsImage, 0.5, { delay:0.5, alpha:1, scaleX:GlobalConfig.dpiScale, scaleY:GlobalConfig.dpiScale, ease:Bounce.easeOut, onComplete:multiplyReward } );
-			}
-			else
-			{
-				if( MemberManager.getInstance().isTournamentAnimPending )
-					unlockTournament();
-			}
+			if( MemberManager.getInstance().isTournamentAnimPending )
+				unlockTournament();
 		}
 		
 		private function unlockTournament():void
@@ -524,14 +432,6 @@ package com.ludofactory.mobile.navigation.engine
 			_homeButton.addEventListener(Event.TRIGGERED, onGoHome);
 		}
 		
-		private function multiplyReward():void
-		{
-			_earnedPointsLabel.text = StringUtil.format(_("+{0}"), ScreenData.getInstance().gameData.duelReward);
-			_pointsParticles.start(0.25);
-			if( MemberManager.getInstance().isTournamentAnimPending )
-				unlockTournament();
-		}
-		
 //------------------------------------------------------------------------------------------------------------
 //	Navigation handlers
 		
@@ -540,30 +440,17 @@ package com.ludofactory.mobile.navigation.engine
 		 */
 		private function onGoHome(event:Event):void
 		{
-			//Flox.logEvent("Choix en fin de jeu solo", { Choix:"Accueil"} );
+			// track the event
+			Analytics.trackEvent("Fin mode solo", "Choix accueil");
 			
+			// reset the game data
 			ScreenData.getInstance().gameData = new GameData();
-			if( MemberManager.getInstance().isLoggedIn() )
-			{
-				_homeButton.enabled = false;
-				_replayButton.enabled = false;
-				_facebookButton.enabled = false;
-				advancedOwner.replaceScreen( ScreenIds.HOME_SCREEN );
-			}
-			else
-			{
-				/*if(MemberManager.getInstance().tokens == 0)
-				{
-					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(_("Vous n'avez plus assez de Jetons pour rejouer ?"), ScreenIds.HOME_SCREEN) );
-				}
-				else
-				{*/
-					_homeButton.enabled = false;
-					_replayButton.enabled = false;
-					_facebookButton.enabled = false;
-					advancedOwner.replaceScreen( ScreenIds.HOME_SCREEN );
-				//}
-			}
+			//disable all button
+			_homeButton.enabled = false;
+			_replayButton.enabled = false;
+			_facebookButton.enabled = false;
+			// tehn redirect
+			advancedOwner.replaceScreen(ScreenIds.HOME_SCREEN);
 		}
 		
 		/**
@@ -571,60 +458,16 @@ package com.ludofactory.mobile.navigation.engine
 		 */
 		private function onPlayAgain(event:Event):void
 		{
-			//Flox.logEvent("Choix en fin de jeu solo", { Choix:"Rejouer"} );
-			
+			// track the event
+			Analytics.trackEvent("Fin mode solo", "Choix rejouer");
+			// reset the game data
 			ScreenData.getInstance().gameData = new GameData();
-			if( MemberManager.getInstance().isLoggedIn() )
-			{
-				Analytics.trackEvent("Fin mode solo", "Rejouer");
-				
-				_homeButton.enabled = false;
-				_replayButton.enabled = false;
-				_facebookButton.enabled = false;
-				advancedOwner.replaceScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
-			}
-			else
-			{
-				/*if(MemberManager.getInstance().tokens == 0)
-				{
-					NotificationPopupManager.addNotification( new MarketingRegisterNotificationContent(_("Vous n'avez plus assez de Jetons pour rejouer ?"), ScreenIds.GAME_TYPE_SELECTION_SCREEN) );
-				}
-				else
-				{*/
-					_homeButton.enabled = false;
-					_replayButton.enabled = false;
-					_facebookButton.enabled = false;
-					advancedOwner.replaceScreen( ScreenIds.GAME_TYPE_SELECTION_SCREEN  );
-				//}
-			}
-		}
-		
-		/**
-		 * Go to the tournament ranking screen.
-		 */
-		private function onGoTournament(event:TouchEvent):void
-		{
-			var touch:Touch = event.getTouch(_convertTournament);
-			if( touch && touch.phase == TouchPhase.ENDED )
-			{
-				Analytics.trackEvent("Fin mode solo", "Redirection tournoi");
-				advancedOwner.replaceScreen( ScreenIds.TOURNAMENT_RANKING_SCREEN );
-			}
-			touch = null;
-		}
-		
-		/**
-		 * Go to the shop screen (when not logged in)
-		 */
-		private function onConvertInShop(event:TouchEvent):void
-		{
-			var touch:Touch = event.getTouch(_convertShopNotLoggedIn);
-			if( touch && touch.phase == TouchPhase.ENDED )
-			{
-				Analytics.trackEvent("Fin mode solo", "Redirection boutique (non connecté)");
-				advancedOwner.replaceScreen( ScreenIds.REGISTER_SCREEN );
-			}
-			touch = null;
+			// disable all buttons
+			_homeButton.enabled = false;
+			_replayButton.enabled = false;
+			_facebookButton.enabled = false;
+			// then redirect
+			advancedOwner.replaceScreen(ScreenIds.GAME_SCREEN);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -649,24 +492,13 @@ package com.ludofactory.mobile.navigation.engine
 			_container.removeFromParent(true);
 			_container = null;
 			
+			TweenMax.killTweensOf(_scoreContainer);
+			_scoreContainer.removeFromParent(true);
+			_scoreContainer = null;
+			
 			TweenMax.killTweensOf(_scoreLabel);
 			_scoreLabel.removeFromParent(true);
 			_scoreLabel = null;
-			
-			TweenMax.killTweensOf(_pointContainer);
-			_pointContainer.removeFromParent(true);
-			_pointContainer = null;
-			
-			TweenMax.killTweensOf(_earnedPointsLabel);
-			_earnedPointsLabel.removeFromParent(true);
-			_earnedPointsLabel = null;
-			
-			if(_winMorePointsImage)
-			{
-				TweenMax.killTweensOf(_winMorePointsImage);
-				_winMorePointsImage.removeFromParent(true);
-				_winMorePointsImage = null;
-			}
 			
 			Starling.juggler.remove(_pointsParticles);
 			_pointsParticles.stop(true);
@@ -694,29 +526,6 @@ package com.ludofactory.mobile.navigation.engine
 				_lockerParticles.stop(true);
 				_lockerParticles.removeFromParent(true);
 				_lockerParticles = null;
-			}
-			
-			if(_convertShop)
-			{
-				TweenMax.killTweensOf(_convertShop);
-				_convertShop.removeFromParent(true);
-				_convertShop = null;
-			}
-			
-			if(_convertTournament)
-			{
-				TweenMax.killTweensOf(_convertTournament);
-				_convertTournament.removeEventListener(TouchEvent.TOUCH, onGoTournament);
-				_convertTournament.removeFromParent(true);
-				_convertTournament = null;
-			}
-			
-			if(_convertShopNotLoggedIn)
-			{
-				TweenMax.killTweensOf(_convertShopNotLoggedIn);
-				_convertShopNotLoggedIn.removeEventListener(TouchEvent.TOUCH, onConvertInShop);
-				_convertShopNotLoggedIn.removeFromParent(true);
-				_convertShopNotLoggedIn = null;
 			}
 			
 			TweenMax.killTweensOf(_replayButton);
