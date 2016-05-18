@@ -27,61 +27,53 @@ package com.ludofactory.mobile.core.storage
 	public class Storage
 	{
 		/**
-		 * Thr singleton. */		
+		 * The singleton. */		
 		private static var _instance:Storage;
-		
 		/**
-		 * The SharedObject of configuration */		
+		 * The configuration SharedObject. */		
 		private var _configurationSharedObject:SharedObject;
 			
 		public function Storage(sk:SecurityKey)
 		{
-			// TODO Si la version actuelle est supériure à l'ancienne version, faire un
-			// reset du storage pour récupérer les bonnes valeurs ?
-			
 			registerClassAlias("DictionaryClass", Dictionary);
 			registerClassAlias("TrophyDataClass", TrophyData);
 			registerClassAlias("FaqDataClass", FaqData);
 			registerClassAlias("FaqQuestionAnswerDataClass", FaqQuestionAnswerData);
 			registerClassAlias("NewsGameDataClass", NewsData);
 			registerClassAlias("LanguageDataClass", LanguageData);
-			_configurationSharedObject = SharedObject.getLocal( StorageConfig.GLOBAL_CONFIG_SO_NAME );
+			_configurationSharedObject = SharedObject.getLocal(StorageConfig.GLOBAL_CONFIG_SO_NAME);
 		}
 			
 		/**
 		 * Initializes the global storage.
 		 * 
-		 * <p>If this is the first time the application is launched or if its data
-		 * have been deleted for some reason, this function will first initialize
-		 * each property with a default value stored by the StorageConfig class, and
-		 * then try to retreive the newest configuration from the server in order
-		 * to update the internal storage.</p>
+		 * <p>If this is the first time the application is launched or if its data have been deleted for some reason
+		 * (not enough space on the phone for example), this function will first initialize each core property with a
+		 * default  value stored by the StorageConfig class, and then try to retreive the newest configuration from the
+		 * server in order to update the internal storage.</p>
 		 * 
-		 * <p>When the application in launched in debug mode and the property "clear
-		 * data" is checked, the SharedObject will be deleted and then recreated here.</p>
+		 * <p>When the application in launched in debug mode and the property "clear data" is checked, the SharedObject
+		 * will be deleted and then recreated here.</p>
 		 * 
-		 * <p>Because the EncryptedLocalStore's data seems to be persistent even if the
-		 * application is deleted, we need to manualy clear its data in this function.</p>
+		 * <p>Because the EncryptedLocalStore's data seems to be persistent even if the application is deleted, we need
+		 * to manualy clear its data in this function.</p>
 		 */		
 		public function initialize():void
 		{
 			if( !_configurationSharedObject.data.hasOwnProperty( StorageConfig.PROPERTY_FIRST_LAUNCH ) )
 			{
-				// if this is the first launch, we update the property so that we won't
-				// get here at each launch., all other properties will be initialized the
-				// first time they are used.
-				
+				// if this is the first launch, we update the property so that we won't fall back here at each launch
 				log("[Storage] This is the first launch of the app.");
-				EncryptedLocalStore.reset();
 				
+				// reset the ELS by security
+				EncryptedLocalStore.reset();
 				// inform the app that it's the first launch
 				setProperty(StorageConfig.PROPERTY_FIRST_LAUNCH, true);
-				
-				// /!\ Set up here all game-specific properties that need to be initialized at first launch, like cups
-				// set up trophies
+				// Set up here all game-specific properties that need to be initialized at first launch
 				setProperty(StorageConfig.PROPERTY_TROPHIES, AbstractGameInfo.CUPS);
 			}
 			
+			// fetch newest data from the server
 			Remote.getInstance().init(onLoadConfigSuccess, onLoadConfigFailure, onLoadConfigFailure, 5);
 		}
 		
@@ -97,29 +89,21 @@ package com.ludofactory.mobile.core.storage
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
-//------------------------------------------------------------------------------------------------------------
 		
 		/**
-		 * The global configuration have been returned. This includes : translations
-		 * updates, score-to-points table, score-to-stars table.
-		 * 
-		 * @param result
-		 * 
+		 * The newest version of the data have been fetched from the server. 
 		 */		
 		private function onLoadConfigSuccess(result:Object):void
 		{
-			if( result.hasOwnProperty( "maxIdleTime" ) && result.maxIdleTime != null && result.maxIdleTime > 10000 ) // min 10 sec
-				Storage.getInstance().setProperty(StorageConfig.PROPERTY_IDLE_TIME, Number(result.maxIdleTime));
-			
-			// replace the stored trophies : we must replace it and not simply update because we may need to remove
-			// some trophies at some time
-			if( result.hasOwnProperty("tab_trophies") && result.tab_trophies != null )
-				TrophyManager.getInstance().updateTrophies(result.tab_trophies as Array);
-			
 			log("[Storage] Server configuration have been successfully loaded.");
 			
-			/*if( AbstractEntryPoint.screenNavigator && AbstractEntryPoint.screenNavigator.activeScreen is HomeScreen )
-				HomeScreen(AbstractEntryPoint.screenNavigator.activeScreen).updateInterface();*/
+			// maximum idle time after which we will fetch the data again
+			if("maxIdleTime" in result && result.maxIdleTime != null && result.maxIdleTime > 10000) // min 10 sec
+				Storage.getInstance().setProperty(StorageConfig.PROPERTY_IDLE_TIME, Number(result.maxIdleTime));
+			
+			// replace the stored trophies : we replace it because some of them could be removed
+			if("tab_trophies" in result && result.tab_trophies != null)
+				TrophyManager.getInstance().updateTrophies(result.tab_trophies as Array);
 		}
 		
 		/**
@@ -127,7 +111,7 @@ package com.ludofactory.mobile.core.storage
 		 */		
 		private function onLoadConfigFailure(error:Object = null):void
 		{
-			logWarning("[Storage] WARNING : The global configuration could not be loaded from the server.");
+			logWarning("[Storage] WARNING : The server configuration could not be loaded.");
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -167,13 +151,9 @@ package com.ludofactory.mobile.core.storage
 //	Utils
 		
 		/**
-		 * <strong>[DEBUG ONLY]</strong>
+		 * <strong>[DEBUG ONLY] Beware that this function is intended to be used for debug purposes ONLY !</strong>
 		 * 
-		 * <strong><p>Beware that this function is intended to be used
-		 * for debug purposes ONLY !</p></strong>
-		 * 
-		 * <p>Clears the storage, forcing the EncryptedLocalStore to be
-		 * cleared at the same time at next launch.</p>
+		 * <p>Clears the storage, forcing the EncryptedLocalStore to be cleared at the same time at next launch.</p>
 		 */		
 		public function clearStorage():void
 		{
@@ -185,8 +165,6 @@ package com.ludofactory.mobile.core.storage
 		 * 
 		 * @param property The property to update.
 		 * @param value The value to assign to the property.
-		 * 
-		 * @see 
 		 */		
 		public function setProperty(property:String, value:*):*
 		{
@@ -196,7 +174,7 @@ package com.ludofactory.mobile.core.storage
 		}
 		
 		/**
-		 * Retrieve a property from the configuration SharedObject.
+		 * Retrieves a property from the configuration SharedObject.
 		 * 
 		 * @param propertyName Name of the property to retrieve.
 		 * 
@@ -204,15 +182,14 @@ package com.ludofactory.mobile.core.storage
 		 */		
 		public function getProperty(propertyName:String):*
 		{
-			if( propertyName in _configurationSharedObject.data && _configurationSharedObject.data[propertyName] != null )
+			if(propertyName in _configurationSharedObject.data && _configurationSharedObject.data[propertyName] != null)
 			{
 				return _configurationSharedObject.data[propertyName];
 			}
 			else
 			{
-				// the property could not be found or is for some reasons null
-				// in this case we need to create this property and assign its
-				// default value (the default value is retrieved thanks to the
+				// the property could not be found or is for some reasons null, in this case we need to create
+				// this property and assign its default value (the default value is retrieved thanks to the
 				// name of the property like this : StorageConfig[propertyName])
 				try
 				{
@@ -230,4 +207,4 @@ package com.ludofactory.mobile.core.storage
 	}
 }
 
-internal class SecurityKey{};
+internal class SecurityKey{}

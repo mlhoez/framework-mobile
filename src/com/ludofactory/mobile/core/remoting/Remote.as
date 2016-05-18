@@ -534,8 +534,6 @@ package com.ludofactory.mobile.core.remoting
 					log("[Remote] onQueryComplete : The user must update the app (forceDownload = 1).");
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE, true);
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_LINK, result.lien_application);
-					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_TEXT, result.text_force_download);
-					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_BUTTON_NAME, result.btn_force_download);
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_GAME_VERSION, AbstractGameInfo.GAME_VERSION);
 				}
 				else
@@ -543,8 +541,6 @@ package com.ludofactory.mobile.core.remoting
 					// if we are here, it's because an update have been requested but we already had the value in
 					// Storage, so we simply update the text, link and button here
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_LINK, result.lien_application);
-					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_TEXT, result.text_force_download);
-					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_BUTTON_NAME, result.btn_force_download);
 				}
 			}
 			

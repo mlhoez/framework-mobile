@@ -7,6 +7,7 @@ Created : 9 janv. 2014
 package com.ludofactory.mobile.navigation
 {
 	
+	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
@@ -18,7 +19,6 @@ package com.ludofactory.mobile.navigation
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	
-	import flash.filters.DropShadowFilter;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	
@@ -60,19 +60,16 @@ package com.ludofactory.mobile.navigation
 			_logo.textureScale = GlobalConfig.dpiScale;
 			addChild( _logo );
 			
-			_message = new TextField(5, 5, Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE_TEXT), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 60), Theme.COLOR_WHITE));
+			_message = new TextField(5, 5, _("Une nouvelle version est disponible !"), new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(GlobalConfig.isPhone ? 40 : 60), Theme.COLOR_WHITE));
 			//_("Une mise à jour de l'application est disponible !\n\nMerci de la télécharger pour assurer son bon fonctionnement.");
 			_message.touchable = false;
 			//_message.nativeFilters = [ new DropShadowFilter(0, 75, 0x000000, 1, 7, 7) ];
 			_message.autoScale = true;
 			addChild(_message);
 			
-			if( Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE_BUTTON_NAME) != "" )
-			{
-				_downloadButton = new Button();
-				_downloadButton.label = Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE_BUTTON_NAME); //_("Télécharger");
-				addChild(_downloadButton);
-			}
+			_downloadButton = new Button();
+			_downloadButton.label = _("Télécharger"); //_("Télécharger");
+			addChild(_downloadButton);
 			
 			addEventListener(TouchEvent.TOUCH, onDownload);
 		}

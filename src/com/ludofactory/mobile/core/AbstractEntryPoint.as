@@ -242,8 +242,6 @@ package com.ludofactory.mobile.core
 					// them we can disable the force update because it means that the user updated the game
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE, false);
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_LINK, ""); // reset it
-					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_TEXT, ""); // reset it
-					Storage.getInstance().setProperty(StorageConfig.PROPERTY_FORCE_UPDATE_BUTTON_NAME, ""); // reset it
 					Storage.getInstance().setProperty(StorageConfig.PROPERTY_GAME_VERSION, AbstractGameInfo.GAME_VERSION);
 					_screenNavigator.replaceScreen(ScreenIds.HOME_SCREEN);
 				}
