@@ -10,19 +10,6 @@ package com.ludofactory.mobile.core.events
 		public static const REFRESH_TOP:String = "refreshTop";
 		
 		/**
-		 * The <code>LudoEventType.REFRESH_TOP</code> event type is used
-		 * by TopDownRefreshableList when the user has requested a down
-		 * refresh.
-		 */
-		public static const REFRESH_DOWN:String = "refreshDown";
-		
-		/**
-		 * The <code>LudoEventType.MENU_ICON_TOUCHED</code> event type is
-		 * used by Menu when the user touched an icon.
-		 */
-		public static const BACK_BUTTON_TOUCHED:String = "backButtonTouched";
-		
-		/**
 		 * The <code>LudoEventType.CLOSE_NOTIFICATION</code> event type is
 		 * used by the NotificationManager when the user wants to close the
 		 * notification.
@@ -75,52 +62,6 @@ package com.ludofactory.mobile.core.events
 		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
 		 * the AccordionElement class when a panel has fully collapsed.
 		 */
-		public static const PURCHASE_ITEM:String = "purchaseItem";
-		
-		
-		
-		
-		
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
-		public static const STORE_INITIALIZED:String = "storeInitialized";
-		
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
-		public static const STORE_PRODUCTS_LOADED:String = "storeProductsLoaded";
-		public static const STORE_PRODUCTS_NOT_LOADED:String = "storeProductsNotLoaded";
-		
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
-		public static const STORE_PURCHASE_SUCCESS:String = "storePurchaseSuccess";
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
-		public static const ALERT_COUNT_UPDATED:String = "alertCountUpdated";
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
-		public static const STORE_PURCHASE_CANCELLED:String = "storePurchaseCancelled";
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
-		public static const STORE_PURCHASE_FAILURE:String = "storePurchaseFailure";
-		
-		
-		
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
 		public static const SAVE_ACCOUNT_INFORMATION:String = "saveAccountInformation";
 		
 		
@@ -129,29 +70,6 @@ package com.ludofactory.mobile.core.events
 		 * the AccordionElement class when a panel has fully collapsed.
 		 */
 		public static const UPDATE_HEADER:String = "updateHeader";
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
-		public static const UPDATE_HEADER_TITLE:String = "updateHeaderTitle";
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
-		public static const UPDATE_ALERT_CONTAINER_LIST:String = "updateAlertContainerList";
-		
-		
-		
-		
-		
-		
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
-		public static const ANIMATE_FOOTER:String = "animate-footer";
-		
-		
 		
 		/**
 		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
@@ -163,21 +81,7 @@ package com.ludofactory.mobile.core.events
 		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
 		 * the AccordionElement class when a panel has fully collapsed.
 		 */
-		public static const REFRESH_GIFTS_LIST:String = "refreshGiftsList";
-		
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
 		public static const SHOW_MAIN_MENU:String = "showMainMenu";
-		
-		/**
-		 * The <code>LudoEventType.COLLAPSE_COMPLETE</code> event type is used by
-		 * the AccordionElement class when a panel has fully collapsed.
-		 */
-		public static const HEADER_VISIBILITY_CHANGED:String = "headerVisibilityChanged";
-		
-		public static const PROMO_UPDATED:String = "promoUpdated";
 		
 		
 //------------------------------------------------------------------------------------------------------------
@@ -189,16 +93,6 @@ package com.ludofactory.mobile.core.events
 		 */
 		public static const MEMBER_UPDATED:String = "update-member";
 		
-		
-		
-		
-//------------------------------------------------------------------------------------------------------------
-//	Game Center
-		
-		public static const GAME_CENTER_AUTHENTICATION_SUCCESS:String = "game-center-authentication-success";
-		
-		public static const GAME_CENTER_AUTHENTICATION_FAILURE:String = "game-center-authentication-failure";
-		
 //------------------------------------------------------------------------------------------------------------
 //	Pause
 		
@@ -208,20 +102,64 @@ package com.ludofactory.mobile.core.events
 		public static const RESUME:String = "resume";
 		public static const EXIT:String   = "exit";
 		
-		
-		
-		
 		public static const BUTTON_DOWN:String   = "button-down";
 		public static const BUTTON_UP:String   = "button-up";
 		
 		
 		
-		public static const NEXT_TUTORIAL_STEP:String   = "next-tutorial-step";
 		
 		
+		
+//------------------------------------------------------------------------------------------------------------
+//	NEW
+		
+		
+	// ----- Store / In-app purchases
+		
+		/**
+		 * Dispatched by <code>Store.as</code> when the store have been initialized. */
+		public static const STORE_INITIALIZED:String = "store-initialized";
+		/**
+		 * Dispatched by <code>Store.as</code> when the products have been loaded. */
+		public static const STORE_PRODUCTS_LOADED:String = "store-products-loaded";
+		/**
+		 * Dispatched by <code>Store.as</code> when the products have NOT been loaded. */
+		public static const STORE_PRODUCTS_NOT_LOADED:String = "store-products-not-loaded";
+		/**
+		 * Dispatched by <code>Store.as</code> when a purchase have been successfully made. */
+		public static const STORE_PURCHASE_SUCCESS:String = "store-purchase-success";
+		/**
+		 * Dispatched by <code>Store.as</code> when a purchase have been cancelled. */
+		public static const STORE_PURCHASE_CANCELLED:String = "store-purchase-cancelled";
+		/**
+		 * Dispatched by <code>Store.as</code> when a purchase have failed. */
+		public static const STORE_PURCHASE_FAILED:String = "store-purchase-failed";
+		
+	// ----- Videos
+		
+		/**
+		 * Dispatched by <code>AdManager.as</code> when a video have been viewed. */
 		public static const VIDEO_SUCCESS:String = "video-success";
+		/**
+		 * Dispatched by <code>AdManager.as</code> when a video could not be viewed or have been cancelled. */
 		public static const VIDEO_FAIL:String = "video-fail";
+		/**
+		 * Dispatched by <code>AdManager.as</code> when a video availability is updated. */
 		public static const VIDEO_AVAILABILITY_UPDATE:String = "video-availability-update";
 		
+	// ----- Game Center
+		
+		/**
+		 * Dispatched by <code>several classes</code> when the Game Center authentication was successfully made. */
+		public static const GAME_CENTER_AUTHENTICATION_SUCCESS:String = "game-center-authentication-success";
+		/**
+		 * Dispatched by <code>several classes</code> when the Game Center authentication failed. */
+		public static const GAME_CENTER_AUTHENTICATION_FAILURE:String = "game-center-authentication-failure";
+		
+	// ----- Tutorial
+		
+		/**
+		 * Dispatched by <code>TutorialManager.as</code> when a new step is displayed. */
+		public static const NEXT_TUTORIAL_STEP:String = "next-tutorial-step";
 	}
 }
