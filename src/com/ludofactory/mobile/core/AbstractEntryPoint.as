@@ -18,7 +18,6 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
-	import com.ludofactory.mobileNew.core.store.StoreManager;
 	import com.ludofactory.mobile.core.push.PushManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -43,6 +42,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobileNew.GameChoiceScreen;
 	import com.ludofactory.mobileNew.HomeScreen;
 	import com.ludofactory.mobileNew.core.splash.SplashScreen;
+	import com.ludofactory.mobileNew.core.store.StoreManager;
 	import com.milkmangames.nativeextensions.CoreMobile;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceInfo;
@@ -221,20 +221,18 @@ package com.ludofactory.mobile.core
 			
 			LanguageManager.getInstance().checkForUpdate(false);
 			
-			if( PushNotification.getInstance().isPushNotificationSupported && (Boolean(Storage.getInstance().getProperty( StorageConfig.PROPERTY_PUSH_INITIALIZED )) || GlobalConfig.android) )
+			// if the push notifications are supported andwe are on Android or it was enabled on iOS, wecan fetch the token
+			if(PushNotification.getInstance().isPushNotificationSupported && (Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_PUSH_INITIALIZED)) || GlobalConfig.android))
 			{
-				// IMPORTANT ! : ajouter dans la condition (?) : ou si le membre est co et qu'il a activé les pushs sur un autre appareil
-				// car si on reset le Storage, ça se mettra jamais à jour...
-				// FIXME Gérer android
 				PushNotification.getInstance().addEventListener(PushNotificationEvent.PERMISSION_GIVEN_WITH_TOKEN_EVENT, onPermissionGiven);
 				PushNotification.getInstance().registerForPushNotification(AbstractGameInfo.GCM_SENDER_ID);
 			}
 			
 			// check if the user has completed all the steps
-			if( Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE)) == true )
+			if(Boolean(Storage.getInstance().getProperty(StorageConfig.PROPERTY_FORCE_UPDATE)) == true)
 			{
 				// we requested the user to update the application, here we check if he did it
-				if( Number(AbstractGameInfo.GAME_VERSION) > Number(Storage.getInstance().getProperty(StorageConfig.PROPERTY_GAME_VERSION)) )
+				if(Number(AbstractGameInfo.GAME_VERSION) > Number(Storage.getInstance().getProperty(StorageConfig.PROPERTY_GAME_VERSION)))
 				{
 					// FIXME Si on downgrade le numéro de version en base, gérer le cas pour réactiver l'appli peut être
 					
