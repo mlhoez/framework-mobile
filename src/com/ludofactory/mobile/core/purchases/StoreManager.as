@@ -46,7 +46,7 @@ package com.ludofactory.mobile.core.purchases
 				throw new Error("[MemberManager] You must call MamberManager.getInstance instead of new.");
 		}
 		
-		private function initialize():void
+		public function initialize():void
 		{
 			if(!_isInitialized)
 			{
@@ -73,6 +73,8 @@ package com.ludofactory.mobile.core.purchases
 		 */
 		private function onStoreInitialized(event:Event):void
 		{
+			_isInitialized = true;
+			
 			_store.removeEventListener(MobileEventTypes.STORE_INITIALIZED, onStoreInitialized);
 			
 			if( !_store.available )
@@ -85,11 +87,11 @@ package com.ludofactory.mobile.core.purchases
 				//_areProductDetailsLoaded = true;
 				
 				_productsData = new Vector.<StoreData>();
-				_productsData.push(new StoreData({ store_id:"premium" }));
+				_productsData.push(new StoreData({ store_id:"premiumaccess" }));
 				
 				// supply ids to Google and Apple in order to get the product details, such as localized price and currency
 				_temporaryProductsIds = new Vector.<String>();
-				_temporaryProductsIds.push("pyramidbattle.premium"); // TODO a externaliser
+				_temporaryProductsIds.push("pyramidbattle.premiumaccess"); // TODO a externaliser
 				
 				_store.addEventListener(MobileEventTypes.STORE_PRODUCTS_LOADED, onProductsDetailsLoaded);
 				_store.addEventListener(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
@@ -108,7 +110,7 @@ package com.ludofactory.mobile.core.purchases
 			_store.removeEventListener(MobileEventTypes.STORE_PRODUCTS_NOT_LOADED, onProductsDetailsNotLoaded);
 			_store.addEventListener(MobileEventTypes.STORE_PURCHASE_SUCCESS, onPurchaseSuccess);
 			_store.addEventListener(MobileEventTypes.STORE_PURCHASE_CANCELLED, onPurchaseCancelled);
-			_store.addEventListener(MobileEventTypes.STORE_PURCHASE_FAILURE, onPurchaseFailure);
+			_store.addEventListener(MobileEventTypes.STORE_PURCHASE_FAILED, onPurchaseFailure);
 			
 			if(event.data)
 			{
@@ -156,6 +158,11 @@ package com.ludofactory.mobile.core.purchases
 					}
 				}
 			}
+			
+			// the user tried to pruchase an item but the store wasn't initialized yet
+			// in this case we'll have a saved item that we will try to buy
+			if(_savedProductIdToPurchase)
+				_store.requestPurchase(_savedProductIdToPurchase);
 		}
 		
 		private function onProductsDetailsNotLoaded(event:Event):void
@@ -167,15 +174,31 @@ package com.ludofactory.mobile.core.purchases
 			// TODO issue
 		}
 		
+		private var _savedProductIdToPurchase:StoreData;
 		/**
 		 * When the player wants to buy a pack, we need to create first a request on the
 		 * server side, for statistic purpose. Then when the creation is done, we launch
 		 * the native window which allows the user to make a purchase.
 		 */
-		private function onPurchaseItem(event:Event):void
+		public function purchaseItem(id:String):void
 		{
-			//_canBack = false;
-			_store.requestPurchase( StoreData(event.data) );
+			for (var i:int = 0; i < _productsData.length; i++)
+			{
+				if(_productsData[i].generatedId == id)
+					_savedProductIdToPurchase = _productsData[i];
+			}
+			
+			if(!_isInitialized)
+			{
+				// is not initialized, we need to initialize first
+				
+			}
+			else
+			{
+				// purchase item
+				_store.requestPurchase(_savedProductIdToPurchase);
+				//_canBack = false;
+			}
 		}
 		
 		/**

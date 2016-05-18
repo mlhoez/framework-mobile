@@ -4,6 +4,7 @@
 package com.ludofactory.newClasses
 {
 	
+	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.roundUp;
@@ -14,6 +15,9 @@ package com.ludofactory.newClasses
 	import com.ludofactory.mobile.core.AbstractGameInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
+	import com.ludofactory.mobile.core.manager.InfoContent;
+	import com.ludofactory.mobile.core.manager.InfoManager;
+	import com.ludofactory.mobile.core.purchases.StoreManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
 	
@@ -79,6 +83,7 @@ package com.ludofactory.newClasses
 			addChild(_watchVideoButton);
 			
 			_becomePremiumButton = ButtonFactory.getButton(_("Devenir premium"));
+			_becomePremiumButton.addEventListener(Event.TRIGGERED, onBecomePremium);
 			addChild(_becomePremiumButton);
 		}
 		
@@ -115,7 +120,21 @@ package com.ludofactory.newClasses
 		 */
 		private function onWatchVideo(event:Event):void
 		{
-			AdManager.getInstance().playVideoForZone(AdManager.VIDEO_ZONE_STATS);
+			if(AirNetworkInfo.networkInfo.isConnected())
+				AdManager.getInstance().playVideoForZone(AdManager.VIDEO_ZONE_STATS);
+			else
+				InfoManager.showTimed(_("Aucune connexion Internet"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
+		}
+		
+		/**
+		 * Become premium.
+		 */
+		private function onBecomePremium(event:Event):void
+		{
+			if(AirNetworkInfo.networkInfo.isConnected())
+				StoreManager.getInstance().purchaseItem("pyramidbattle.premiumaccess");
+			else
+				InfoManager.showTimed(_("Aucune connexion Internet"), InfoManager.DEFAULT_DISPLAY_TIME, InfoContent.ICON_CROSS);
 		}
 		
 		private function onVideoAvailabilityUpdate(event:Event):void

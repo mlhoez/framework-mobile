@@ -19,6 +19,7 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
+	import com.ludofactory.mobile.navigation.store.StoreData;
 	import com.milkmangames.nativeextensions.GoViral;
 	
 	import starling.events.EventDispatcher;
@@ -107,6 +108,42 @@ package com.ludofactory.mobile.core.remoting
 															gameSessionId:gameSession.uniqueId,
 															actions:gameSession.actions } );
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "ServeurJeux", "pushPartie", params);
+		}
+		
+		// ----- in-app purchases
+		
+		/**
+		 * Creates an in-app purchase request in our server.
+		 * 
+		 * It will take in parameter the request id (the one in our database).
+		 */
+		public function createInAppPurchaseRequest(databaseOfferId:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = mergeWithGenericParams({ databaseOfferId:databaseOfferId });
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "AchatCredits", "createInAppPurchaseRequest", params);
+		}
+		
+		/**
+		 * Validates an in-app purchase request in our server.
+		 */
+		public function validateInAppPurchaseRequest(productData:StoreData, returnData:Object, request:Object, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = mergeWithGenericParams({ databaseOfferId:productData.databaseOfferId,
+														 requestId:request.id,
+														 paymentCode:productData.paymentCode,
+													     returnData:returnData });
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "AchatCredits", "validateInAppPurchaseRequest", params);
+		}
+		
+		/**
+		 * Updates an in-app purchase state.
+		 */
+		public function changeInAppPurchaseRequestState(productData:StoreData, request:Object, requestState:int, callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			var params:Object = mergeWithGenericParams({ databaseOfferId:productData.id,
+														 requestId:request.id,
+														 state:requestState });
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "AchatCredits", "changeInAppPurchaseRequestState", params);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -416,6 +453,11 @@ package com.ludofactory.mobile.core.remoting
 		{
 			_netConnectionManager.reportError(errorObject, [null, null, null], screenName, maxAttempts);
 		}
+		
+		
+		
+		
+		
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers

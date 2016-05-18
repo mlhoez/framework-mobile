@@ -185,7 +185,7 @@ package com.ludofactory.mobile.core.purchases
 			// save product data in order to track it through the whole process
 			_currentProductData = productData;
 			// create a request in the server
-			Remote.getInstance().createRequest( _currentProductData.databaseOfferId, onRequestPurchaseSuccess, onRequestPurchaseFailure, onRequestPurchaseFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
+			Remote.getInstance().createInAppPurchaseRequest(_currentProductData.databaseOfferId, onRequestPurchaseSuccess, onRequestPurchaseFailure, onRequestPurchaseFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 		}
 		
 		/**
@@ -245,18 +245,18 @@ package com.ludofactory.mobile.core.purchases
 					if( GlobalConfig.amazon )
 					{
 						log("[Store] Making Amazon purchase of " + productId);
-						AmazonPurchase.amazonPurchase.purchaseItem( productId );
+						AmazonPurchase.amazonPurchase.purchaseItem(productId);
 					}
 					else
 					{
 						log("[Store] Making Android purchase of " + productId);
-						AndroidIAB.androidIAB.purchaseItem( productId );
+						AndroidIAB.androidIAB.purchaseItem(productId);
 					}
 				}
 				else if( GlobalConfig.ios )
 				{
 					log("[Store] Making iOS purchase of " + productId);
-					StoreKit.storeKit.purchaseProduct( productId );
+					StoreKit.storeKit.purchaseProduct(productId);
 				}
 			}
 			else
@@ -280,7 +280,7 @@ package com.ludofactory.mobile.core.purchases
 		{
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
-				Remote.getInstance().validateRequest(_currentProductData, GlobalConfig.amazon ? result : JSON.stringify(result), _currentRequest, onValidatePurchaseSuccess, onValidatePurchaseFailure, onValidatePurchaseFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
+				Remote.getInstance().validateInAppPurchaseRequest(_currentProductData, GlobalConfig.amazon ? result : JSON.stringify(result), _currentRequest, onValidatePurchaseSuccess, onValidatePurchaseFailure, onValidatePurchaseFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 			}
 			else
 			{
@@ -294,7 +294,7 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function onValidatePurchaseSuccess(result:Object = null):void
 		{
-			log("[Store] Request " + _currentRequest.id + " validated with code " + result.code);
+			//log("[Store] Request " + _currentRequest.id + " validated with code " + result.code);
 			log("[Store] Object returned :");
 			log(result);
 			
@@ -318,7 +318,7 @@ package com.ludofactory.mobile.core.purchases
 			
 			if(result.code == 1)
 			{
-				onPurchaseSuccess( _currentProductData.generatedId, result.nb_credits_ajouter, result.txt, int(result.changement_rang) == 1 );
+				onPurchaseSuccess(_currentProductData.generatedId, result);
 			}
 			else
 			{
@@ -338,16 +338,15 @@ package com.ludofactory.mobile.core.purchases
 		/**
 		 * Item successfully purchased.
 		 */		
-		private function onPurchaseSuccess(itemId:String, numCreditsBought:int, textValue:String, newRank:Boolean):void
+		private function onPurchaseSuccess(itemId:String, resultData:Object):void
 		{
 			// clear tracked request and product data
 			_currentProductData = null;
 			_currentRequest = null;
 			
-			//Flox.logWarning("Item " + itemId + " successfully purchased, giving " + numCreditsBought + " Game Credits.");
 			logPurchaseEvent(itemId, PURCHASE_TYPE_SUCCEED);
 			
-			dispatchEventWith(MobileEventTypes.STORE_PURCHASE_SUCCESS, false, { value:numCreditsBought, id:itemId, txt:textValue, newRank:newRank });
+			dispatchEventWith(MobileEventTypes.STORE_PURCHASE_SUCCESS, false, resultData);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
@@ -362,7 +361,7 @@ package com.ludofactory.mobile.core.purchases
 		{
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
-				Remote.getInstance().changeRequestState(_currentProductData, _currentRequest, 2, onChangeRequestStateCanceledSuccess, onChangeRequestStateCanceledFailure, onChangeRequestStateCanceledFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
+				Remote.getInstance().changeInAppPurchaseRequestState(_currentProductData, _currentRequest, 1, onChangeRequestStateCanceledSuccess, onChangeRequestStateCanceledFailure, onChangeRequestStateCanceledFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 			}
 			else
 			{
@@ -375,7 +374,7 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function onChangeRequestStateCanceledSuccess(result:Object = null):void
 		{
-			onPurchaseCancelled( _currentProductData.generatedId );
+			onPurchaseCancelled(_currentProductData.generatedId);
 		}
 		
 		/**
@@ -383,7 +382,7 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function onChangeRequestStateCanceledFailure(error:Object = null):void
 		{
-			onPurchaseCancelled( _currentProductData.generatedId );
+			onPurchaseCancelled(_currentProductData.generatedId);
 		}
 		
 		/**
@@ -415,7 +414,7 @@ package com.ludofactory.mobile.core.purchases
 		{
 			if( AirNetworkInfo.networkInfo.isConnected() )
 			{
-				Remote.getInstance().changeRequestState(_currentProductData, _currentRequest, 0, onChangeRequestStateFailedSuccess, onChangeRequestStateFailedFailure, onChangeRequestStateFailedFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
+				Remote.getInstance().changeInAppPurchaseRequestState(_currentProductData, _currentRequest, 1, onChangeRequestStateFailedSuccess, onChangeRequestStateFailedFailure, onChangeRequestStateFailedFailure, 2, AbstractEntryPoint.screenNavigator.activeScreenID);
 			}
 			else
 			{
@@ -428,7 +427,7 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function onChangeRequestStateFailedSuccess(result:Object):void
 		{
-			onPurchaseFail( _currentProductData.generatedId );
+			onPurchaseFail(_currentProductData.generatedId);
 		}
 		
 		/**
@@ -436,7 +435,7 @@ package com.ludofactory.mobile.core.purchases
 		 */		
 		private function onChangeRequestStateFailedFailure(error:Object = null):void
 		{
-			onPurchaseFail( _currentProductData.generatedId );
+			onPurchaseFail(_currentProductData.generatedId);
 		}
 		
 		/**
@@ -452,7 +451,7 @@ package com.ludofactory.mobile.core.purchases
 			logPurchaseEvent(itemId, PURCHASE_TYPE_FAILED);
 			
 			InfoManager.hide(_("L'achat a échoué."), InfoContent.ICON_CROSS, 3);
-			dispatchEventWith(MobileEventTypes.STORE_PURCHASE_FAILURE, false, itemId);
+			dispatchEventWith(MobileEventTypes.STORE_PURCHASE_FAILED, false, itemId);
 		}
 		
 //------------------------------------------------------------------------------------------------------------
