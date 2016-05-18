@@ -19,7 +19,7 @@ package com.ludofactory.mobile.core.remoting
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
-	import com.ludofactory.mobile.navigation.store.StoreData;
+	import com.ludofactory.newClasses.store.StoreData;
 	import com.milkmangames.nativeextensions.GoViral;
 	
 	import starling.events.EventDispatcher;

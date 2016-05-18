@@ -17,7 +17,7 @@ package com.ludofactory.newClasses
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.mobile.core.purchases.StoreManager;
+	import com.ludofactory.newClasses.store.StoreManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
 	

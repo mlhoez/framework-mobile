@@ -4,14 +4,16 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 22 sept. 2013
 */
-package com.ludofactory.mobile.core.purchases
+package com.ludofactory.newClasses.store
 {
+	
+	import com.ludofactory.mobile.core.purchases.*;
 	
 	import com.amazon.nativeextensions.android.AmazonItemData;
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
-	import com.ludofactory.mobile.navigation.store.StoreData;
+	import com.ludofactory.newClasses.store.StoreData;
 	import com.milkmangames.nativeextensions.android.AndroidItemDetails;
 	import com.milkmangames.nativeextensions.ios.StoreKitProduct;
 	

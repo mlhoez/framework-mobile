@@ -18,7 +18,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
-	import com.ludofactory.mobile.core.purchases.StoreManager;
+	import com.ludofactory.newClasses.store.StoreManager;
 	import com.ludofactory.mobile.core.push.PushManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;

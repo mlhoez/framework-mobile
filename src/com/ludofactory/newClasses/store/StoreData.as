@@ -4,7 +4,7 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 20 sept. 2013
 */
-package com.ludofactory.mobile.navigation.store
+package com.ludofactory.newClasses.store
 {
 	import com.amazon.nativeextensions.android.AmazonItemData;
 	import com.ludofactory.mobile.core.AbstractGameInfo;

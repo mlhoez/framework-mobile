@@ -4,7 +4,7 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 22 sept. 2013
 */
-package com.ludofactory.mobile.core.purchases
+package com.ludofactory.newClasses.store
 {
 	
 	import com.amazon.nativeextensions.android.AmazonPurchase;
@@ -21,7 +21,7 @@ package com.ludofactory.mobile.core.purchases
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.mobile.navigation.store.StoreData;
+	import com.ludofactory.newClasses.store.StoreData;
 	import com.milkmangames.nativeextensions.GAnalytics;
 	import com.milkmangames.nativeextensions.android.AndroidIAB;
 	import com.milkmangames.nativeextensions.android.AndroidItemDetails;
