@@ -10,7 +10,7 @@ package com.ludofactory.mobile.core.controls
 	import com.ludofactory.mobile.core.manager.InfoManager;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
-	import com.ludofactory.newClasses.Analytics;
+	import com.ludofactory.mobileNew.core.analytics.Analytics;
 	
 	import feathers.controls.Screen;
 	

@@ -1,8 +1,10 @@
 /**
  * Created by Maxime on 25/04/2016.
  */
-package com.ludofactory.newClasses
+package com.ludofactory.mobileNew.core.display
 {
+	
+	import com.ludofactory.mobileNew.*;
 	
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.core.config.GlobalConfig;

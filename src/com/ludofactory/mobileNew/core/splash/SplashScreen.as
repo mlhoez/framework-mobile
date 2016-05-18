@@ -1,8 +1,10 @@
 /**
  * Created by Maxime on 22/04/2016.
  */
-package com.ludofactory.newClasses
+package com.ludofactory.mobileNew.core.splash
 {
+	
+	import com.ludofactory.mobileNew.*;
 	
 	import com.ludofactory.common.utils.Utilities;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
@@ -25,9 +27,9 @@ package com.ludofactory.newClasses
 	 */
 	public class SplashScreen extends Sprite
 	{
-		[Embed(source = "./progress-bar-background.png")]
+		[Embed(source="progress-bar-background.png")]
 		public static const ProgressBarBackgroundClass:Class;
-		[Embed(source = "./progress-bar-fill.png")]
+		[Embed(source="progress-bar-fill.png")]
 		public static const ProgressBarFillClass:Class;
 		
 		/**

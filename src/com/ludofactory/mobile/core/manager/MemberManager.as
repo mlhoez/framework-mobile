@@ -23,7 +23,7 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
 	import com.ludofactory.mobile.navigation.home.OldHomeScreen;
-	import com.ludofactory.newClasses.Analytics;
+	import com.ludofactory.mobileNew.core.analytics.Analytics;
 	import com.milkmangames.nativeextensions.GoViral;
 	
 	import flash.data.EncryptedLocalStore;

@@ -1,10 +1,11 @@
 /**
  * Created by Maxime on 22/04/2016.
  */
-package com.ludofactory.newClasses
+package com.ludofactory.mobileNew
 {
 	
 	import com.ludofactory.mobile.core.config.GlobalConfig;
+	import com.ludofactory.mobileNew.core.display.TouchableContainer;
 	
 	import feathers.controls.ImageLoader;
 	

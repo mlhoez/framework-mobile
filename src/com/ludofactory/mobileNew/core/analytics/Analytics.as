@@ -1,7 +1,7 @@
 /**
  * Created by Maxime on 21/04/2016.
  */
-package com.ludofactory.newClasses
+package com.ludofactory.mobileNew.core.analytics
 {
 	
 	import com.ludofactory.common.utils.logs.logWarning;

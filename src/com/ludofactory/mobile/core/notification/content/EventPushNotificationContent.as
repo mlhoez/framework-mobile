@@ -19,7 +19,7 @@ package com.ludofactory.mobile.core.notification.content
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.newClasses.Analytics;
+	import com.ludofactory.mobileNew.core.analytics.Analytics;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;

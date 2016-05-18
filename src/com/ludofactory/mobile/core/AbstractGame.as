@@ -28,8 +28,8 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	import com.ludofactory.mobile.navigation.achievements.TrophyManager;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
-	import com.ludofactory.newClasses.GameActionsRecorder;
-	import com.ludofactory.newClasses.GameJauge;
+	import com.ludofactory.mobileNew.GameActionsRecorder;
+	import com.ludofactory.mobileNew.GameJauge;
 	import com.milkmangames.nativeextensions.ios.IAdBannerAlignment;
 	
 	import flash.filesystem.File;

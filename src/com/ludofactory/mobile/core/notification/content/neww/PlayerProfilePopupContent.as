@@ -18,11 +18,11 @@ package com.ludofactory.mobile.core.notification.content.neww
 	import com.ludofactory.mobile.core.notification.content.AbstractPopupContent;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
-	import com.ludofactory.newClasses.IconButton;
-	import com.ludofactory.newClasses.PremiumContainer;
-	import com.ludofactory.newClasses.StatsData;
-	import com.ludofactory.newClasses.StatsItemRenderer;
-	import com.ludofactory.newClasses.ValueIconContainer;
+	import com.ludofactory.mobileNew.IconButton;
+	import com.ludofactory.mobileNew.PremiumContainer;
+	import com.ludofactory.mobileNew.StatsData;
+	import com.ludofactory.mobileNew.StatsItemRenderer;
+	import com.ludofactory.mobileNew.core.display.ValueIconContainer;
 	
 	import feathers.controls.List;
 	import feathers.controls.Scroller;

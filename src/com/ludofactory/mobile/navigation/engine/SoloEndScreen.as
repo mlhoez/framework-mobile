@@ -31,7 +31,7 @@ package com.ludofactory.mobile.navigation.engine
 	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.newClasses.Analytics;
+	import com.ludofactory.mobileNew.core.analytics.Analytics;
 	
 	import feathers.controls.ImageLoader;
 	import feathers.controls.ScrollContainer;

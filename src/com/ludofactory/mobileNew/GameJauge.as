@@ -1,7 +1,7 @@
 /**
  * Created by Maxime on 27/04/16.
  */
-package com.ludofactory.newClasses
+package com.ludofactory.mobileNew
 {
 	
 	import com.ludofactory.common.utils.Utilities;
@@ -12,7 +12,7 @@ package com.ludofactory.newClasses
 	import com.ludofactory.mobile.core.AbstractEntryPoint;
 	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.newClasses.JaugeDataManager;
+	import com.ludofactory.mobileNew.JaugeDataManager;
 	
 	import feathers.controls.ImageLoader;
 	

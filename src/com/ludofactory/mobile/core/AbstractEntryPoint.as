@@ -18,7 +18,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.controls.AdvancedScreenNavigator;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
-	import com.ludofactory.newClasses.store.StoreManager;
+	import com.ludofactory.mobileNew.core.store.StoreManager;
 	import com.ludofactory.mobile.core.push.PushManager;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	import com.ludofactory.mobile.core.storage.Storage;
@@ -40,9 +40,9 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.navigation.highscore.HighScoreListScreen;
 	import com.ludofactory.mobile.navigation.sponsor.SponsorHomeScreen;
 	import com.ludofactory.mobile.navigation.tournament.TournamentRankingScreen;
-	import com.ludofactory.newClasses.GameChoiceScreen;
-	import com.ludofactory.newClasses.HomeScreen;
-	import com.ludofactory.newClasses.SplashScreen;
+	import com.ludofactory.mobileNew.GameChoiceScreen;
+	import com.ludofactory.mobileNew.HomeScreen;
+	import com.ludofactory.mobileNew.core.splash.SplashScreen;
 	import com.milkmangames.nativeextensions.CoreMobile;
 	import com.milkmangames.nativeextensions.GoViral;
 	import com.nl.funkymonkey.android.deviceinfo.NativeDeviceInfo;

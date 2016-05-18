@@ -1,11 +1,11 @@
 /**
  * Created by Maxime on 02/05/16.
  */
-package com.ludofactory.newClasses
+package com.ludofactory.mobileNew
 {
 	
 	import com.ludofactory.common.utils.logs.log;
-	import com.ludofactory.newClasses.JaugeData;
+	import com.ludofactory.mobileNew.JaugeData;
 	
 	public class JaugeDataManager
 	{

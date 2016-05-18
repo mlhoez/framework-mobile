@@ -17,7 +17,7 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.ludofactory.mobile.core.controls.AdvancedScreen;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.theme.Theme;
-	import com.ludofactory.newClasses.Analytics;
+	import com.ludofactory.mobileNew.core.analytics.Analytics;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;

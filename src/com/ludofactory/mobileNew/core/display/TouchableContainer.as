@@ -1,7 +1,7 @@
 /**
  * Created by Maxime on 22/04/2016.
  */
-package com.ludofactory.newClasses
+package com.ludofactory.mobileNew.core.display
 {
 	
 	import flash.geom.Rectangle;
@@ -11,14 +11,13 @@ package com.ludofactory.newClasses
 	import starling.display.ButtonState;
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
-	import starling.display.Image;
+	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	import starling.textures.Texture;
 	
-	public class TouchableImage extends DisplayObjectContainer
+	public class TouchableContainer extends DisplayObjectContainer
 	{
 		
 		// TODO Gérer un bage pour afficher un comteur dessus !
@@ -43,13 +42,13 @@ package com.ludofactory.newClasses
 		 * Trigger bounds. */
 		private var _triggerBounds:Rectangle = new Rectangle();
 		
-		private var _container:Image;
+		private var _container:Sprite;
 		
-		public function TouchableImage(imageTexture:Texture)
+		public function TouchableContainer()
 		{
 			super();
 			
-			_container = new Image(imageTexture);
+			_container = new Sprite();
 			addChild(_container);
 			
 			addEventListener(TouchEvent.TOUCH, onTouch);
@@ -230,7 +229,7 @@ package com.ludofactory.newClasses
 			}
 		}
 		
-		/*override public function addChild(child:DisplayObject):DisplayObject
+		override public function addChild(child:DisplayObject):DisplayObject
 		{
 			if(child == _container)
 				return super.addChild(child);
@@ -244,7 +243,7 @@ package com.ludofactory.newClasses
 				return super.addChildAt(child, index);
 			else
 				return _container.addChildAt(child, index);
-		}*/
+		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Dispose

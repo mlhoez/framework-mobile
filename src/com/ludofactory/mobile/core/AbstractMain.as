@@ -19,7 +19,7 @@ package com.ludofactory.mobile.core
 	import com.ludofactory.mobile.core.storage.Storage;
 	import com.ludofactory.mobile.core.storage.StorageConfig;
 	import com.ludofactory.mobile.debug.TouchMarkerManager;
-	import com.ludofactory.newClasses.Analytics;
+	import com.ludofactory.mobileNew.core.analytics.Analytics;
 	import com.mesmotronic.ane.AndroidFullScreen;
 	import com.milkmangames.nativeextensions.CoreMobile;
 	

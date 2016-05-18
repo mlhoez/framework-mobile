@@ -29,7 +29,7 @@ package com.ludofactory.mobile.navigation.highscore
 	import com.ludofactory.mobile.navigation.FacebookManagerEventType;
 	import com.ludofactory.mobile.navigation.achievements.GameCenterManager;
 	import com.ludofactory.mobile.navigation.authentication.RetryContainer;
-	import com.ludofactory.newClasses.Analytics;
+	import com.ludofactory.mobileNew.core.analytics.Analytics;
 	import com.milkmangames.nativeextensions.GoViral;
 	
 	import feathers.controls.Callout;

@@ -1,7 +1,7 @@
 /**
  * Created by Maxime on 12/05/16.
  */
-package com.ludofactory.newClasses
+package com.ludofactory.mobileNew
 {
 	
 	import com.freshplanet.nativeExtensions.AirNetworkInfo;
@@ -17,7 +17,7 @@ package com.ludofactory.newClasses
 	import com.ludofactory.mobile.core.events.MobileEventTypes;
 	import com.ludofactory.mobile.core.manager.InfoContent;
 	import com.ludofactory.mobile.core.manager.InfoManager;
-	import com.ludofactory.newClasses.store.StoreManager;
+	import com.ludofactory.mobileNew.core.store.StoreManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	import com.ludofactory.mobile.navigation.ads.AdManager;
 	

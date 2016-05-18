@@ -1,7 +1,7 @@
 /**
  * Created by Maxime on 28/04/16.
  */
-package com.ludofactory.newClasses
+package com.ludofactory.mobileNew
 {
 	
 	import com.ludofactory.common.encryption.Base64;
