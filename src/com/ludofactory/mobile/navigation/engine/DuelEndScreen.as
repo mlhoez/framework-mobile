@@ -172,7 +172,7 @@ package com.ludofactory.mobile.navigation.engine
 			_homeButton.scaleX = _homeButton.scaleY = GlobalConfig.dpiScale;
 			addChild(_homeButton);
 			
-			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, StringUtil.format(_("J'ai obtenu {0} Points sur {1} !"), Utilities.splitThousands(ScreenData.getInstance().gameData.duelReward), AbstractGameInfo.GAME_NAME),
+			_facebookButton = ButtonFactory.getFacebookButton(_("Partager"), ButtonFactory.FACEBOOK_TYPE_SHARE, StringUtil.format(_("J'ai obtenu {0} trophées sur {1} !"), Utilities.splitThousands(ScreenData.getInstance().gameData.duelReward), AbstractGameInfo.GAME_NAME),
 					"",
 					_("Je peux maintenant obtenir des tas de bonus en les convertissant dans la Boutique !"),
 					_("http://www.ludokado.com/"),
@@ -299,7 +299,7 @@ package com.ludofactory.mobile.navigation.engine
 			_homeButton.enabled = false;
 			_replayButton.enabled = false;
 			_facebookButton.enabled = false;
-			// tehn redirect
+			// then redirect
 			advancedOwner.replaceScreen(ScreenIds.HOME_SCREEN);
 		}
 		
