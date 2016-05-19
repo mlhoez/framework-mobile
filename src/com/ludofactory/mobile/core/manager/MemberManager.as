@@ -20,9 +20,9 @@ package com.ludofactory.mobile.core.manager
 	import com.ludofactory.mobile.core.push.GameSession;
 	import com.ludofactory.mobile.core.push.PushTrophy;
 	import com.ludofactory.mobile.core.remoting.Remote;
+	import com.ludofactory.mobile.navigation.home.OldHomeScreen;
 	import com.ludofactory.mobileNew.core.achievements.GameCenterManager;
 	import com.ludofactory.mobileNew.core.ads.AdManager;
-	import com.ludofactory.mobile.navigation.home.OldHomeScreen;
 	import com.ludofactory.mobileNew.core.analytics.Analytics;
 	import com.milkmangames.nativeextensions.GoViral;
 	
@@ -370,7 +370,7 @@ package com.ludofactory.mobile.core.manager
 		public function get highscore():int { return _member.highscore; }
 		public function set highscore(val:int):void
 		{
-			if( _member.highscore < val )
+			if( _member.highscore != val )
 			{
 				_member.highscore = val;
 				setEncryptedMember();
@@ -461,8 +461,8 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * Updates the value of <code>highscoreActions</code>. */
-		public function get highscoreActions():String { return _member.highscoreActions; }
-		public function set highscoreActions(value:String):void
+		public function get highscoreActions():Array { return _member.highscoreActions; }
+		public function set highscoreActions(value:Array):void
 		{
 			if(_member.highscoreActions != value)
 			{

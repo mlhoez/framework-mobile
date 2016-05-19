@@ -127,7 +127,7 @@ package com.ludofactory.mobile.core.manager
 		
 		/**
 		 * The actions associated to the best high score. */
-		private var _highscoreActions:String;
+		private var _highscoreActions:Array;
 		
 		/**
 		 * Whether the user is premium (no ads anymore and full stats access). */
@@ -157,7 +157,7 @@ package com.ludofactory.mobile.core.manager
 			if( "displayInterstitial" in memberData && memberData.displayInterstitial != null ) _canDisplayInterstitial = Boolean(memberData.displayInterstitial);
 			if( "isDuelUnlocked" in memberData && memberData.isDuelUnlocked != null )           _isDuelUnlocked = Boolean(memberData.isDuelUnlocked);
 			if( "canHaveRewardAfterPublish" in memberData && memberData.canHaveRewardAfterPublish != null ) _canHaveRewardAfterPublish = Boolean(memberData.canHaveRewardAfterPublish);
-			if( "highscoreActions" in memberData && memberData.highscoreActions != null )       _highscoreActions = String(memberData.highscoreActions);
+			if( "highscoreActions" in memberData && memberData.highscoreActions != null )        _highscoreActions = JSON.parse(memberData.highscoreActions) as Array;
 			if( "isPremium" in memberData && memberData.isPremium != null )                      _isPremium = Boolean(memberData.isPremium);
 			// Example date for tests = "2012-10-14 11:46:09"
 		}
@@ -239,8 +239,8 @@ package com.ludofactory.mobile.core.manager
 		public function get canHaveRewardAfterPublish():Boolean { return _canHaveRewardAfterPublish; }
 		public function set canHaveRewardAfterPublish(value:Boolean):void { _canHaveRewardAfterPublish = value; }
 		
-		public function get highscoreActions():String { return _highscoreActions; }
-		public function set highscoreActions(value:String):void { _highscoreActions = value; }
+		public function get highscoreActions():Array { return _highscoreActions; }
+		public function set highscoreActions(value:Array):void { _highscoreActions = value; }
 		
 		public function get isPremium():Boolean { return _isPremium; }
 		public function set isPremium(value:Boolean):void { _isPremium = value; }

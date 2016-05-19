@@ -38,6 +38,9 @@ package com.ludofactory.mobile.core.model
 		 * The challenger trophies count. */
 		private var _challengerTrophiesCount:int;
 		/**
+		 * The challenger actions. */
+		private var _challengerActions:Array;
+		/**
 		 * Whether it's a new duel or not. */
 		private var _isAnonymousDuel:Boolean;
 		
@@ -85,7 +88,9 @@ package com.ludofactory.mobile.core.model
 					_challengerFacebookId = ("facebookId" in data.duel.challenger && data.duel.challenger.facebookId) ? data.duel.challenger.facebookId : 0;
 					_challengerNickname = ("nickname" in data.duel.challenger && data.duel.challenger.nickname) ? data.duel.challenger.nickname : "";
 					_challengerTrophiesCount = ("trophiesCount" in data.duel.challenger && data.duel.challenger.trophiesCount) ? data.duel.challenger.trophiesCount : 0;
-					// TODO ajouter les plateaux + actionRecorder
+					// TODO retirer le code en dur
+					_challengerActions = JSON.parse('[{"s":100,"t":4},{"s":150,"t":5},{"s":200,"t":6},{"s":250,"t":10},{"s":100,"t":15},{"s":150,"t":16},{"s":200,"t":17},{"s":250,"t":18},{"s":300,"t":19},{"s":100,"t":25},{"s":150,"t":26},{"s":200,"t":31},{"s":250,"t":32},{"s":300,"t":33},{"s":250,"t":40},{"s":1100,"t":43},{"s":200,"t":44},{"s":550,"t":45},{"s":100,"t":52},{"s":150,"t":55},{"s":1500,"t":58},{"s":100,"t":60},{"s":100,"t":66},{"s":3000,"t":71},{"s":100,"t":75},{"s":100,"t":82},{"s":350,"t":86},{"s":250,"t":88},{"s":100,"t":94},{"s":250,"t":98},{"s":450,"t":101},{"s":100,"t":104},{"s":150,"t":105},{"s":200,"t":106},{"s":250,"t":110},{"s":200,"t":111},{"s":250,"t":112},{"s":650,"t":113},{"s":400,"t":114},{"s":100,"t":123},{"s":1100,"t":126},{"s":100,"t":129},{"s":100,"t":139},{"s":1500,"t":144},{"s":9900,"t":148},{"s":0,"t":155}]') as Array;
+					// TODO ajouter les plateaux
 				}
 				else
 				{
@@ -144,6 +149,9 @@ package com.ludofactory.mobile.core.model
 		/**
 		 * The challenger trophies count. */
 		public function get challengerTrophiesCount():int { return _challengerTrophiesCount; }
+		/**
+		 * The challenger actions. */
+		public function get challengerActions():Array { return _challengerActions; }
 		/**
 		 * Whether it's a new duel or not. */
 		public function get isAnonymousDuel():Boolean { return _isAnonymousDuel; }

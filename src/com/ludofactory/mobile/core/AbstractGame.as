@@ -179,11 +179,11 @@ package com.ludofactory.mobile.core
 			addChild(_userJauge);
 			
 			MemberManager.getInstance().highscore = 100; // FIXME A retirer
-			if((ScreenData.getInstance().gameMode == GameMode.SOLO && MemberManager.getInstance().highscore != 0 )|| ScreenData.getInstance().gameMode == GameMode.DUEL)
+			if((ScreenData.getInstance().gameMode == GameMode.SOLO && MemberManager.getInstance().highscore != 0) || ScreenData.getInstance().gameMode == GameMode.DUEL)
 			{
 				// display the jauge only in duel mode or when in solo mode but with a highscore reference
 				_opponentJauge = new GameJauge(ScreenData.getInstance().gameMode == GameMode.SOLO ? AbstractEntryPoint.assets.getTexture("high-score-default-jauge") : (ScreenData.getInstance().gameData.challengerFacebookId != 0 ? ("https://graph.facebook.com/" + ScreenData.getInstance().gameData.challengerFacebookId + "/picture?type=large&width=" + scaleAndRoundToDpi(58) + "&height=" + scaleAndRoundToDpi(58)) : AbstractEntryPoint.assets.getTexture("unknown-default-jauge")) ); // TODO mettre l'url de l'image de l'adversaire
-				_opponentJauge.addReader(JSON.parse('[{"s":100,"t":4},{"s":150,"t":5},{"s":200,"t":6},{"s":250,"t":10},{"s":100,"t":15},{"s":150,"t":16},{"s":200,"t":17},{"s":250,"t":18},{"s":300,"t":19},{"s":100,"t":25},{"s":150,"t":26},{"s":200,"t":31},{"s":250,"t":32},{"s":300,"t":33},{"s":250,"t":40},{"s":1100,"t":43},{"s":200,"t":44},{"s":550,"t":45},{"s":100,"t":52},{"s":150,"t":55},{"s":1500,"t":58},{"s":100,"t":60},{"s":100,"t":66},{"s":3000,"t":71},{"s":100,"t":75},{"s":100,"t":82},{"s":350,"t":86},{"s":250,"t":88},{"s":100,"t":94},{"s":250,"t":98},{"s":450,"t":101},{"s":100,"t":104},{"s":150,"t":105},{"s":200,"t":106},{"s":250,"t":110},{"s":200,"t":111},{"s":250,"t":112},{"s":650,"t":113},{"s":400,"t":114},{"s":100,"t":123},{"s":1100,"t":126},{"s":100,"t":129},{"s":100,"t":139},{"s":1500,"t":144},{"s":9900,"t":148},{"s":0,"t":155}]') as Array);
+				_opponentJauge.addReader(ScreenData.getInstance().gameMode == GameMode.SOLO ? MemberManager.getInstance().highscoreActions: ScreenData.getInstance().gameData.challengerActions);
 				_opponentJauge.alpha = 0;
 				addChild(_opponentJauge);
 			}
@@ -314,7 +314,7 @@ package com.ludofactory.mobile.core
 				if(_gameSession.gameMode == GameMode.SOLO)
 					_gameSession.actions = _actionsRecorder.getFinal();
 				
-				log(_actionsRecorder.getFinal())
+				log(_actionsRecorder.getFinal());
 				
 				// report iOS Leaderboard
 				GameCenterManager.reportLeaderboardScore(AbstractGameInfo.LEADERBOARD_HIGHSCORE, _gameSession.score);
@@ -418,7 +418,7 @@ package com.ludofactory.mobile.core
 				if(ScreenData.getInstance().gameData.isNewHighscore)
 				{
 					MemberManager.getInstance().highscore = _gameSession.score;
-					MemberManager.getInstance().highscoreActions = _gameSession.actions;
+					MemberManager.getInstance().highscoreActions = _actionsRecorder.getAsArray();
 				}
 			}
 			else
@@ -458,6 +458,8 @@ package com.ludofactory.mobile.core
 		
 		override public function dispose():void
 		{
+			_actionsRecorder.reset();
+			
 			// free memory
 			AbstractEntryPoint.assets.removeTextureAtlas("game", true);
 			AbstractEntryPoint.assets.removeTextureAtlas("common", true);

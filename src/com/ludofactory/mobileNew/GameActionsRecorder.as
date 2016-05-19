@@ -67,9 +67,19 @@ package com.ludofactory.mobileNew
 			encoded = encoded.replace(/\+/ig, "-"); // replaces any "+" by "-"
 			encoded = encoded.replace(/=/ig, "*");  // replaces any "=" by "*"
 			
-			_record = [];
+			//_record = [];
 			
 			return encoded;
+		}
+		
+		public function getAsArray():Array
+		{
+			return _record;
+		}
+		
+		public function getAsJson():String
+		{
+			return JSON.stringify(_record);
 		}
 		
 	}
