@@ -18,8 +18,11 @@ package com.ludofactory.mobileNew
 	import com.ludofactory.mobile.core.model.ScreenData;
 	import com.ludofactory.mobile.core.model.ScreenIds;
 	import com.ludofactory.mobile.core.notification.CustomPopupManager;
+	import com.ludofactory.mobile.core.notification.content.neww.HighscoreRankingPopupContentOld;
 	import com.ludofactory.mobile.core.notification.content.neww.SettingsPopupContent;
 	import com.ludofactory.mobile.core.notification.content.neww.TrophiesPopupContent;
+	import com.ludofactory.mobile.core.notification.content.neww.duel.DuelRankingPopupContent;
+	import com.ludofactory.mobile.core.notification.content.neww.highscore.HighscoreRankingPopupContent;
 	import com.ludofactory.mobile.core.remoting.Remote;
 	
 	import starling.display.Image;
@@ -82,7 +85,7 @@ package com.ludofactory.mobileNew
 			addChild(_highscoresRankingButton);
 			
 			_trophiesRankingButton = new IconButton(AbstractEntryPoint.assets.getTexture("trophies-ranking-button"));
-			_trophiesRankingButton.addEventListener(Event.TRIGGERED, onShowTrophiesRanking);
+			_trophiesRankingButton.addEventListener(Event.TRIGGERED, onShowDuelRanking);
 			addChild(_trophiesRankingButton);
 			
 			_trophiesButton = new IconButton(AbstractEntryPoint.assets.getTexture("trophies-button"));
@@ -119,26 +122,39 @@ package com.ludofactory.mobileNew
 				_duelButton.x = _soloButton.x + _soloButton.width + scaleAndRoundToDpi(5);
 			}
 			
-			super.draw()
+			super.draw();
 		}
 		
 //------------------------------------------------------------------------------------------------------------
 //	Handlers
 		
+		/**
+		 * Settings.
+		 */
 		private function onShowSettings(event:Event):void
 		{
 			CustomPopupManager.addPopup(new SettingsPopupContent());
 		}
 		
+		/**
+		 * Highscore ranking.
+		 */
 		private function onShowHighscoresRanking(event:Event):void
 		{
-			CustomPopupManager.addPopup(new TrophiesPopupContent());
+			CustomPopupManager.addPopup(new HighscoreRankingPopupContent());
 		}
 		
-		private function onShowTrophiesRanking(event:Event):void
+		/**
+		 * Duel ranking.
+		 */
+		private function onShowDuelRanking(event:Event):void
 		{
-			CustomPopupManager.addPopup(new TrophiesPopupContent());
+			CustomPopupManager.addPopup(new DuelRankingPopupContent());
 		}
+		
+		/**
+		 * Trophies.
+		 */
 		private function onShowTrophies(event:Event):void
 		{
 			CustomPopupManager.addPopup(new TrophiesPopupContent());
@@ -237,7 +253,7 @@ package com.ludofactory.mobileNew
 			_highscoresRankingButton.removeFromParent(true);
 			_highscoresRankingButton = null;
 			
-			_trophiesRankingButton.removeEventListener(Event.TRIGGERED, onShowTrophiesRanking);
+			_trophiesRankingButton.removeEventListener(Event.TRIGGERED, onShowDuelRanking);
 			_trophiesRankingButton.removeFromParent(true);
 			_trophiesRankingButton = null;
 			

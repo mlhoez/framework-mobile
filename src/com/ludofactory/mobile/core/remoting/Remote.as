@@ -146,6 +146,15 @@ package com.ludofactory.mobile.core.remoting
 			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "AchatCredits", "changeInAppPurchaseRequestState", params);
 		}
 		
+		
+		/**
+		 * Get the duel ranking.
+		 */
+		public function getDuelRanking(callbackSuccess:Function, callbackFail:Function, callbackMaxAttempts:Function = null, maxAttempts:int = -1, screenName:String = "default"):void
+		{
+			_netConnectionManager.call("useClass", [callbackSuccess, callbackMaxAttempts, callbackFail], screenName, maxAttempts, "?", "?", getGenericParams());
+		}
+		
 //------------------------------------------------------------------------------------------------------------
 //	Requests
 		

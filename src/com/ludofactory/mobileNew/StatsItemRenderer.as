@@ -105,14 +105,12 @@ package com.ludofactory.mobileNew
 			return this.setSizeInternal(newWidth, newHeight, false);
 		}
 		
-		private var _isTemporaryUnlocked:Boolean = false;
-		
 		protected function commitData():void
 		{
 			if( _data )
 			{
 				_title.text = _data.title;
-				_value.text = (MemberManager.getInstance().isPremium || _isTemporaryUnlocked) ? _data.value : _("Masqué");
+				_value.text = (MemberManager.getInstance().isPremium || !_data.isMasked) ? _data.value : _("Masqué");
 				_background.color = _index % 2 == 0 ? 0x494848 : 0x686868;
 			}
 		}
@@ -206,17 +204,6 @@ package com.ludofactory.mobileNew
 		public function set factoryID(value:String):void
 		{
 			this._factoryID = value;
-		}
-		
-		
-		public function get isTemporaryUnlocked():Boolean
-		{
-			return _isTemporaryUnlocked;
-		}
-		
-		public function set isTemporaryUnlocked(value:Boolean):void
-		{
-			_isTemporaryUnlocked = value;
 		}
 		
 //------------------------------------------------------------------------------------------------------------

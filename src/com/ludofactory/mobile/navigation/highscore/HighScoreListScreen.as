@@ -354,7 +354,7 @@ package com.ludofactory.mobile.navigation.highscore
 						{
 							// first add
 							for( i; i < len; i++)
-								newDataProvider.push( new HighScoreData( result.classement[i] ) );
+								newDataProvider.push( new OldHighScoreData( result.classement[i] ) );
 							
 							_list.dataProvider = new ListCollection( newDataProvider );
 							
@@ -366,7 +366,7 @@ package com.ludofactory.mobile.navigation.highscore
 						else
 						{
 							for( i; i < len; i++)
-								newDataProvider.push( new HighScoreData( result.classement[i] ) );
+								newDataProvider.push( new OldHighScoreData( result.classement[i] ) );
 							
 							if( result.queryName == "LudoMobile.useClass.HighScore.getClassementSup" || result.queryName == "LudoMobile.useClass.HighScore.getClassementFacebookSup")
 							{
@@ -514,7 +514,7 @@ package com.ludofactory.mobile.navigation.highscore
 		private function onBottomUpdate(event:Event):void
 		{
 			_isInUpdateMode = true;
-			var rankData:HighScoreData = HighScoreData(_list.dataProvider.getItemAt(_list.dataProvider.length - 1));
+			var rankData:OldHighScoreData = OldHighScoreData(_list.dataProvider.getItemAt(_list.dataProvider.length - 1));
 			Remote.getInstance().getHighScoreRankingInf(rankData.date, rankData.score, rankData.rank, _selectedCountryId, onGetHighScoreRankingSuccess, onGetHighScoreRankingFailure, onGetHighScoreRankingFailure, 2, advancedOwner.activeScreenID);
 		}
 		/**
@@ -524,17 +524,17 @@ package com.ludofactory.mobile.navigation.highscore
 		private function onTopUpdate(event:Event):void
 		{
 			_isInUpdateMode = true;
-			var rankData:HighScoreData = HighScoreData(_list.dataProvider.getItemAt(0));
+			var rankData:OldHighScoreData = OldHighScoreData(_list.dataProvider.getItemAt(0));
 			Remote.getInstance().getHighScoreRankingSup(rankData.date, rankData.score, rankData.rank, _selectedCountryId, onGetHighScoreRankingSuccess, onGetHighScoreRankingFailure, onGetHighScoreRankingFailure, 2, advancedOwner.activeScreenID);
 		}
 		
 		private function findMe():void
 		{
 			var len:int = _list.dataProvider.length;
-			var rankData:HighScoreData;
+			var rankData:OldHighScoreData;
 			for(var i:int = 0; i < len; i++)
 			{
-				rankData = HighScoreData(_list.dataProvider.getItemAt(i));
+				rankData = OldHighScoreData(_list.dataProvider.getItemAt(i));
 				if( rankData.isMe )
 					_list.scrollToDisplayIndex(i, 0);
 			}

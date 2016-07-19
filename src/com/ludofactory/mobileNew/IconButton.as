@@ -37,9 +37,12 @@ package com.ludofactory.mobileNew
 		{
 			super();
 			
-			_background = new Image(backgroundTexture);
-			_background.scale = GlobalConfig.dpiScale;
-			addChild(_background);
+			if(backgroundTexture)
+			{
+				_background = new Image(backgroundTexture);
+				_background.scale = GlobalConfig.dpiScale;
+				addChild(_background);
+			}
 			
 			if(iconSource)
 			{
@@ -47,6 +50,7 @@ package com.ludofactory.mobileNew
 				_icon.maintainAspectRatio = true;
 				_icon.source = iconSource;
 				_icon.scale = GlobalConfig.dpiScale; // FIXME Sure ?
+				_icon.validate();
 				addChild(_icon);
 			}
 		}
@@ -62,6 +66,7 @@ package com.ludofactory.mobileNew
 				_icon.maintainAspectRatio = true;
 				_icon.source = value;
 				_icon.scale = GlobalConfig.dpiScale; // FIXME Sure ?
+				_icon.validate();
 				addChild(_icon);
 			}
 			else
@@ -79,8 +84,11 @@ package com.ludofactory.mobileNew
 		
 		override public function dispose():void
 		{
-			_background.removeFromParent(true);
-			_background = null;
+			if(_background)
+			{
+				_background.removeFromParent(true);
+				_background = null;
+			}
 			
 			if(_icon)
 			{

@@ -11,7 +11,7 @@ package com.ludofactory.mobile.navigation.highscore
 	/**
 	 * 
 	 */	
-	public class HighScoreData
+	public class OldHighScoreData
 	{
 		/**
 		 * The player rank. */		
@@ -53,7 +53,7 @@ package com.ludofactory.mobile.navigation.highscore
 		 * not. */		
 		private var _isTruncated:Boolean = false;
 		
-		public function HighScoreData(data:Object)
+		public function OldHighScoreData(data:Object)
 		{
 			_rank = data.classement;
 			_countryCode = data.code_pays;

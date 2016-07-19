@@ -4,18 +4,18 @@ Framework mobile
 Author  : Maxime Lhoez
 Created : 18 sept. 2013
 */
-package com.ludofactory.mobile.navigation.highscore
+package com.ludofactory.mobile.core.notification.content.neww.duel
 {
 	
 	import com.ludofactory.common.gettext.LanguageManager;
 	import com.ludofactory.common.gettext.aliases._;
 	import com.ludofactory.common.utils.Utilities;
+	import com.ludofactory.common.utils.logs.log;
 	import com.ludofactory.common.utils.roundUp;
 	import com.ludofactory.common.utils.scaleAndRoundToDpi;
 	import com.ludofactory.mobile.ButtonFactory;
 	import com.ludofactory.mobile.FacebookButton;
 	import com.ludofactory.mobile.core.AbstractGameInfo;
-	import com.ludofactory.mobile.core.config.GlobalConfig;
 	import com.ludofactory.mobile.core.manager.MemberManager;
 	import com.ludofactory.mobile.core.theme.Theme;
 	
@@ -26,8 +26,6 @@ package com.ludofactory.mobile.navigation.highscore
 	import feathers.core.FeathersControl;
 	
 	import flash.geom.Point;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	import starling.display.MeshBatch;
 	import starling.display.Quad;
@@ -35,9 +33,11 @@ package com.ludofactory.mobile.navigation.highscore
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.text.TextField;
+	import starling.text.TextFormat;
 	import starling.utils.StringUtil;
 	
-	public class HighScoreItemRenderer extends FeathersControl implements IListItemRenderer
+	public class DuelRankingItemRenderer extends FeathersControl implements IListItemRenderer
 	{
 		private static const HELPER_POINT:Point = new Point();
 		private static const HELPER_TOUCHES_VECTOR:Vector.<Touch> = new <Touch>[];
@@ -50,9 +50,6 @@ package com.ludofactory.mobile.navigation.highscore
 		/**
 		 * The base height of a line in the list. */		
 		private static const BASE_HEIGHT:int = 60;
-		/**
-		 * The scaled item height. */		
-		private var _itemHeight:Number;
 		
 		/**
 		 * The base stroke thickness. */		
@@ -60,16 +57,6 @@ package com.ludofactory.mobile.navigation.highscore
 		/**
 		 * The scaled stroke thickness. */		
 		private var _strokeThickness:Number;
-		
-		/**
-		 * The normal text format. */		
-		private static var _normalTextFormat:TextFormat;
-		/**
-		 * The selected text format. */		
-		private static var _selectedTextFormat:TextFormat;
-		
-		private static var _sideWidth:Number;
-		private static var _middleWidth:Number;
 		
 		/**
 		 * Whether the elements have already been positioned. */		
@@ -84,19 +71,19 @@ package com.ludofactory.mobile.navigation.highscore
 		
 		/**
 		 * The rank label. */		
-		private var _rankLabel:Label;
+		private var _rankLabel:TextField;
 		/**
 		 * The name label. */		
-		private var _nameLabel:Label;
+		private var _pseudoLabel:TextField;
 		/**
 		 * The number of stars label. */		
-		private var _numStarsLabel:Label;
+		private var _numCupsLabel:TextField;
 
 		/**
 		 * Facebook button that will associate the account or directly publish, depending on the actual state. */
 		private var _facebookButton:FacebookButton;
 		
-		public function HighScoreItemRenderer()
+		public function DuelRankingItemRenderer()
 		{
 			super();
 			//this.touchable = false;
@@ -107,68 +94,36 @@ package com.ludofactory.mobile.navigation.highscore
 		{
 			super.initialize();
 			
-			_itemHeight = scaleAndRoundToDpi(BASE_HEIGHT);
 			_strokeThickness = scaleAndRoundToDpi(BASE_STROKE_THICKNESS);
-			_sideWidth = GlobalConfig.stageWidth * 0.25;
-			_middleWidth = GlobalConfig.stageWidth * 0.5;
 			
-			this.width = GlobalConfig.stageWidth;
-			this.height = _itemHeight;
-			
-			if( !_selectedTextFormat )
-				_selectedTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0x401800, false, false, null, null, null, TextFormatAlign.CENTER);
-			if( !_normalTextFormat )
-				_normalTextFormat = new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(24), 0x353535, false, false, null, null, null, TextFormatAlign.CENTER);
-			
-			// idle
-			_idleBackground = new MeshBatch();
-			const background:Quad = new Quad( this.actualWidth, _itemHeight, 0xfbfbfb );
-			_idleBackground.addMesh( background );
-			background.x = _sideWidth;
-			background.width = _middleWidth;
-			background.color = 0xeeeeee;
-			_idleBackground.addMesh( background );
-			background.x = 0;
-			background.y = _itemHeight - _strokeThickness;
-			background.width  = _sideWidth * 2 + _middleWidth;
-			background.height = _strokeThickness;
-			background.color  = 0xbfbfbf;
-			_idleBackground.addMesh( background );
-			addChild( _idleBackground );
-			
-			// selected
-			_selectedBackground = new MeshBatch();
-			background.y = 0;
-			background.color = 0xffd800;
-			background.height = _itemHeight;
-			_selectedBackground.addMesh( background );
-			background.x = _sideWidth;
-			background.width = _middleWidth;
-			background.color = 0xffb400;
-			_selectedBackground.addMesh( background );
-			addChild( _selectedBackground );
+			this.height = scaleAndRoundToDpi(BASE_HEIGHT);
 			
 			// labels
-			_rankLabel = new Label();
-			_rankLabel.text = "999999";
+			_rankLabel = new TextField(50, this.height, "99 999", new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(30), 0x353535));
+			_rankLabel.autoScale = true;
+			//_rankLabel.border = true;
+			_rankLabel.touchable = false;
+			_rankLabel.wordWrap = false;
 			addChild(_rankLabel);
-			_rankLabel.textRendererProperties.textFormat = _normalTextFormat;
 			
-			_nameLabel = new Label();
-			_nameLabel.text = "999999";
-			addChild(_nameLabel);
-			_nameLabel.textRendererProperties.textFormat = _normalTextFormat;
+			_pseudoLabel = new TextField(5, this.height, "99 999", new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(30), 0x353535));
+			_pseudoLabel.autoScale = true;
+			//_pseudoLabel.border = true;
+			_pseudoLabel. touchable = false;
+			_pseudoLabel.wordWrap = false;
+			addChild(_pseudoLabel);
 			
-			_numStarsLabel = new Label();
-			_numStarsLabel.text = "999999";
-			addChild(_numStarsLabel);
-			_numStarsLabel.textRendererProperties.textFormat = _normalTextFormat;
+			_numCupsLabel = new TextField(5, this.height, "99 999", new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(30), 0x353535));
+			_numCupsLabel.autoScale = true;
+			//_numCupsLabel.border = true;
+			_numCupsLabel.touchable = false;
+			_numCupsLabel.wordWrap = false;
+			addChild(_numCupsLabel);
 		}
 		
 		override protected function draw():void
 		{
 			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const selectionInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SELECTED);
 			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
 			
 			if(dataInvalid)
@@ -194,12 +149,10 @@ package com.ludofactory.mobile.navigation.highscore
 			}
 			_rankLabel.width = NaN;
 			_rankLabel.height = NaN;
-			_rankLabel.validate();
 			var newWidth:Number = this.explicitWidth;
 			if(needsWidth)
 			{
 				newWidth = _rankLabel.width;
-				newWidth += this._paddingLeft + this._paddingRight;
 			}
 			var newHeight:Number = this.explicitHeight;
 			if(needsHeight)
@@ -211,47 +164,58 @@ package com.ludofactory.mobile.navigation.highscore
 		
 		protected function commitData():void
 		{
-			if(this._owner)
+			if( _data)
 			{
-				if( _data )
+				_rankLabel.format.color = _pseudoLabel.format.color = _numCupsLabel.format.color = _data.isMe ? 0x401800 : 0x353535;
+				
+				_rankLabel.text =  Utilities.splitThousands(_data.rank);
+				_pseudoLabel.text = _data.pseudo;
+				_numCupsLabel.text =  Utilities.splitThousands(_data.score);
+				
+				if(!_selectedBackground)
 				{
-					_rankLabel.textRendererProperties.textFormat = _nameLabel.textRendererProperties.textFormat = _numStarsLabel.textRendererProperties.textFormat = _data.isMe ? _selectedTextFormat : _normalTextFormat;
+					// idle
+					_idleBackground = new MeshBatch();
+					const background:Quad = new Quad( this.actualWidth, this.height, 0xfbfbfb );
+					_idleBackground.addMesh( background );
+					background.x = actualWidth * 0.25;
+					background.width = actualWidth * 0.5;
+					background.color = 0xeeeeee;
+					_idleBackground.addMesh( background );
+					background.x = 0;
+					background.y = this.height - _strokeThickness;
+					background.width  = actualWidth;
+					background.height = _strokeThickness;
+					background.color  = 0xbfbfbf;
+					_idleBackground.addMesh( background );
+					addChildAt(_idleBackground, 0);
 					
-					_rankLabel.text =  Utilities.splitThousands( _data.rank );
-					if( !_data.countryCode )
-						_nameLabel.text = _data.truncatedPseudo;
-					else
-						_nameLabel.text = _data.truncatedPseudo + " (" + _data.countryCode + ")";
-					_numStarsLabel.text =  Utilities.splitThousands( _data.score );
-					
-					_selectedBackground.visible = _data.isMe;
-					_idleBackground.visible = !_selectedBackground.visible;
+					// selected
+					_selectedBackground = new MeshBatch();
+					background.y = 0;
+					background.color = 0xffd800;
+					background.height = this.height;
+					_selectedBackground.addMesh( background );
+					background.x = actualWidth * 0.25;
+					background.width = actualWidth * 0.5;
+					background.color = 0xffb400;
+					_selectedBackground.addMesh( background );
+					addChildAt(_selectedBackground, 0);
 				}
-				else
-				{
-					_idleBackground.visible = false;
-					_selectedBackground.visible = false;
-				}
-			}
-			else
-			{
-				_idleBackground.visible = false;
-				_selectedBackground.visible = false;
+				_selectedBackground.visible = _data.isMe;
+				_idleBackground.visible = !_selectedBackground.visible;
 			}
 		}
 		
 		protected function layout():void
 		{
-			if( !_elementsPositioned )
+			if(!_elementsPositioned)
 			{
-				_rankLabel.width = _numStarsLabel.width = _sideWidth;
-				_nameLabel.width = _middleWidth;
+				_rankLabel.width = _numCupsLabel.width = actualWidth * 0.25;
+				_pseudoLabel.width = actualWidth * 0.5;
 				
-				_numStarsLabel.x = _sideWidth + _middleWidth;
-				_nameLabel.x = _sideWidth;
-				
-				_rankLabel.validate();
-				_rankLabel.y = _numStarsLabel.y = _nameLabel.y =  (_itemHeight - _rankLabel.height) * 0.5;
+				_numCupsLabel.x = actualWidth * 0.75;
+				_pseudoLabel.x = actualWidth * 0.25;
 				
 				_elementsPositioned = true;
 			}
@@ -265,13 +229,13 @@ package com.ludofactory.mobile.navigation.highscore
 							StringUtil.format(_("Venez me défiez et tenter de battre mon meilleur score de {0} !"), MemberManager.getInstance().highscore),
 							_("http://www.ludokado.com/"),
 							StringUtil.format(_("http://img.ludokado.com/img/frontoffice/{0}/mobile/publication/publication_highscore.jpg"), LanguageManager.getInstance().lang));
-					_facebookButton.y = _itemHeight;
-					_facebookButton.x = roundUp((this.owner.width - _facebookButton.width) * 0.5);
+					_facebookButton.y = actualHeight;
+					_facebookButton.x = roundUp((actualWidth - _facebookButton.width) * 0.5);
 					addChild(_facebookButton);
 				}
 				
-				_selectedBackground.height = _idleBackground.height = _itemHeight + _facebookButton.height + scaleAndRoundToDpi(10);
-				setSize(this.actualWidth, (_itemHeight + _facebookButton.height + scaleAndRoundToDpi(10)));
+				_selectedBackground.height = _idleBackground.height = actualHeight + _facebookButton.height + scaleAndRoundToDpi(10);
+				setSize(this.actualWidth, (actualHeight + _facebookButton.height + scaleAndRoundToDpi(10)));
 			}
 			else
 			{
@@ -281,12 +245,12 @@ package com.ludofactory.mobile.navigation.highscore
 					_facebookButton = null;
 				}
 				
-				_selectedBackground.height = _idleBackground.height = _itemHeight;
-				setSize(this.actualWidth, _itemHeight);
+				_selectedBackground.height = _idleBackground.height = actualHeight;
+				setSize(this.actualWidth, actualHeight);
 			}
 		}
 		
-		protected var _data:OldHighScoreData;
+		protected var _data:DuelRankingData;
 		
 		public function get data():Object
 		{
@@ -299,7 +263,7 @@ package com.ludofactory.mobile.navigation.highscore
 			{
 				return;
 			}
-			this._data = OldHighScoreData(value);
+			this._data = DuelRankingData(value);
 			this.invalidate(INVALIDATION_FLAG_DATA);
 		}
 		
@@ -363,74 +327,6 @@ package com.ludofactory.mobile.navigation.highscore
 			this.dispatchEventWith(Event.CHANGE);
 		}
 		
-		protected var _paddingTop:Number = 0;
-		
-		public function get paddingTop():Number
-		{
-			return this._paddingTop;
-		}
-		
-		public function set paddingTop(value:Number):void
-		{
-			if(this._paddingTop == value)
-			{
-				return;
-			}
-			this._paddingTop = value;
-			this.invalidate(INVALIDATION_FLAG_STYLES);
-		}
-		
-		protected var _paddingRight:Number = 0;
-		
-		public function get paddingRight():Number
-		{
-			return this._paddingRight;
-		}
-		
-		public function set paddingRight(value:Number):void
-		{
-			if(this._paddingRight == value)
-			{
-				return;
-			}
-			this._paddingRight = value;
-			this.invalidate(INVALIDATION_FLAG_STYLES);
-		}
-		
-		protected var _paddingBottom:Number = 0;
-		
-		public function get paddingBottom():Number
-		{
-			return this._paddingBottom;
-		}
-		
-		public function set paddingBottom(value:Number):void
-		{
-			if(this._paddingBottom == value)
-			{
-				return;
-			}
-			this._paddingBottom = value;
-			this.invalidate(INVALIDATION_FLAG_STYLES);
-		}
-		
-		protected var _paddingLeft:Number = 0;
-		
-		public function get paddingLeft():Number
-		{
-			return this._paddingLeft;
-		}
-		
-		public function set paddingLeft(value:Number):void
-		{
-			if(this._paddingLeft == value)
-			{
-				return;
-			}
-			this._paddingLeft = value;
-			this.invalidate(INVALIDATION_FLAG_STYLES);
-		}
-		
 		protected function touchHandler(event:TouchEvent):void
 		{
 			if(!this._isEnabled)
@@ -470,7 +366,7 @@ package com.ludofactory.mobile.navigation.highscore
 					var isInBounds:Boolean = this.hitTest(HELPER_POINT) != null;
 					if(isInBounds)
 					{
-						if( _data.isTruncated )
+						/*if( _data.isTruncated )
 						{
 							if( !_isCalloutDisplaying )
 							{
@@ -487,7 +383,7 @@ package com.ludofactory.mobile.navigation.highscore
 								_calloutLabel.textRendererProperties.textFormat = new TextFormat(Theme.FONT_ARIAL, scaleAndRoundToDpi(26), Theme.COLOR_DARK_GREY, false, false, null, null, null, TextFormatAlign.CENTER);
 								_calloutLabel.textRendererProperties.wordWrap = false;
 							}
-						}
+						}*/
 					}
 				}
 			}
@@ -551,11 +447,11 @@ package com.ludofactory.mobile.navigation.highscore
 			_selectedBackground.removeFromParent(true);
 			_selectedBackground = null;
 			
-			_numStarsLabel.removeFromParent(true);
-			_numStarsLabel = null;
+			_numCupsLabel.removeFromParent(true);
+			_numCupsLabel = null;
 			
-			_nameLabel.removeFromParent(true);
-			_nameLabel = null;
+			_pseudoLabel.removeFromParent(true);
+			_pseudoLabel = null;
 			
 			_rankLabel.removeFromParent(true);
 			_rankLabel = null;

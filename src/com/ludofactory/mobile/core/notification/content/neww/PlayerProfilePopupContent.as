@@ -39,7 +39,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 	
 	public class PlayerProfilePopupContent extends AbstractPopupContent
 	{
-		private static const TEST_DATA:Array = [ new StatsData({ title:"Stat 1", value:"Value 1" }),
+		private const TEST_DATA:Array = [ new StatsData({ title:"Stat 1", value:"Value 1" }),
 												 new StatsData({ title:"Stat 2", value:"Value 2" }),
 												 new StatsData({ title:"Stat 3", value:"Value 3" }),
 												 new StatsData({ title:"Stat 4", value:"Value 4" }),
@@ -83,7 +83,7 @@ package com.ludofactory.mobile.core.notification.content.neww
 			
 			_photoContainer = new IconButton(AbstractEntryPoint.assets.getTexture("photo-container"), null, MemberManager.getInstance().facebookId != 0 ? ("https://graph.facebook.com/" + MemberManager.getInstance().facebookId + "/picture?type=square") : AbstractEntryPoint.assets.getTexture("default-photo"));
 			_photoContainer.enabled = false;
-			_photoContainer.width = _photoContainer.height = scaleAndRoundToDpi(88); // TODO change picture to be 88 naturally
+			_photoContainer.width = _photoContainer.height = scaleAndRoundToDpi(88); // TODO change picture to be 88 natively
 			addChild(_photoContainer);
 			
 			_userName = new TextField(scaleAndRoundToDpi(150), _photoContainer.height, "TEST test", new TextFormat(Theme.FONT_SANSITA, scaleAndRoundToDpi(30), 0x000000, Align.LEFT));
@@ -151,7 +151,15 @@ package com.ludofactory.mobile.core.notification.content.neww
 			_premiumContent.removeFromParent(true);
 			_premiumContent = null;
 			
-			// TODO update the data within the list
+			if(_statsList && _statsList.dataProvider)
+			{
+				var lenList:int = _statsList.dataProvider.length;
+				for(var i:int = 0; i < lenList; i++)
+				{
+					StatsData(_statsList.dataProvider.getItemAt(i)).isMasked = false;
+					_statsList.dataProvider.updateItemAt(i);
+				}
+			}
 		}
 		
 //------------------------------------------------------------------------------------------------------------
